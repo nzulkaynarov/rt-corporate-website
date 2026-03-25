@@ -9,7 +9,7 @@
     {{/* Tags filter */}}
     {{ $allTags := .Site.Taxonomies.tags }}
     {{ if $allTags }}
-    <div class="tags-filter">
+    <div class="tags-filter" role="navigation" aria-label="{{ i18n "blog_tags" }}">
       {{ range $name, $taxonomy := $allTags }}
       <a href="{{ "/tags/" | relLangURL }}{{ $name | urlize }}/" class="tag-pill">{{ $name }}</a>
       {{ end }}
@@ -22,7 +22,7 @@
         <a href="{{ .RelPermalink }}">
           {{ if .Params.image }}
           <div class="blog-card-image">
-            <img src="{{ .Params.image | relURL }}" alt="{{ $.Title }}" loading="lazy" width="400" height="225">
+            <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" loading="lazy" width="400" height="225">
           </div>
           {{ else }}
           <div class="blog-card-image fallback">

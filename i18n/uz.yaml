@@ -108,3 +108,10 @@ tw_4: "Bojxona rasmiylashtiruvi"
 tw_5: "Rasmiy yetkazib berish"
 theme_light: "Yorug' mavzu"
 theme_dark: "To'q mavzu"
+
+about_mission: "Missiya"
+about_vision: "Vizyon"
+about_timeline: "Kompaniya tarixi"
+
+nav_skip: "Asosiy kontentga o'tish"
+search_placeholder_full: "Nimani qidiryapsiz?"

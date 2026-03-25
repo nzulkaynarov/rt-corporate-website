@@ -1,0 +1,31 @@
+# Company data — used across templates and schema.org
+brandName: "RailTech"
+legalName: "ООО «RailTech»"
+legalNameEn: "LLC RailTech"
+legalNameUz: "«RailTech» MChJ"
+foundingYear: "2021"
+
+address:
+  city: "Tashkent"
+  country: "UZ"
+  street: "Index, Office B2-2097"
+
+businessHours: "Mo-Fr 09:00-18:00"
+
+partners:
+  - name: "САУТ"
+    logo: ""
+  - name: "НИИАС"
+    logo: ""
+  - name: "РЖД"
+    logo: ""
+  - name: "ЭЛТЕЗА"
+    logo: ""
+  - name: "Siemens"
+    logo: ""
+  - name: "Knorr-Bremse"
+    logo: ""
+  - name: "Alstom"
+    logo: ""
+  - name: "Bombardier"
+    logo: ""

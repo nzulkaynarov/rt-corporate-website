@@ -108,3 +108,10 @@ tw_4: "Customs Clearance"
 tw_5: "Official Supplies"
 theme_light: "Light Theme"
 theme_dark: "Dark Theme"
+
+about_mission: "Mission"
+about_vision: "Vision"
+about_timeline: "Company History"
+
+nav_skip: "Skip to content"
+search_placeholder_full: "What are you looking for?"

@@ -18,21 +18,28 @@
 ## Architecture
 ```
 content/{ru,en,uz}/    — Markdown content per language
+data/                  — Hugo data files (company.yaml, advantages.yaml)
 layouts/               — Hugo templates
   _default/            — Base templates (baseof, list, single)
   partials/            — 19 reusable components
   {section}/           — Section-specific templates (blog, projects, services, platform, contact)
-assets/css/main.css    — Single CSS file (~1575 lines), processed by Hugo Pipes
-static/js/             — Client-side JavaScript (main.js, contact-form.js)
+assets/css/main.css    — Single CSS file, processed by Hugo Pipes (minify + fingerprint)
+assets/js/             — JavaScript (main.js, contact-form.js), processed by Hugo Pipes
 static/img/            — Images organized by type (brand, blog, projects, partners, hero, icons, platform)
 static/fonts/inter/    — Self-hosted Inter font files (woff2)
 i18n/{ru,en,uz}.yaml   — UI translation strings
 hugo.toml              — Main configuration (languages, menus, params)
-archetypes/            — Content templates (blog.md, projects.md, default.md)
+archetypes/            — Content templates (blog.md, projects.md, services.md, platform.md, default.md)
 docs/                  — Documentation (CONTENT-GUIDE.md, GITHUB-PAGES-DEPLOY.md)
-.github/workflows/     — CI/CD (hugo.yml)
-frontmatter.json       — FrontMatter CMS configuration
+.github/workflows/     — CI/CD (hugo.yml) with caching
+frontmatter.json       — FrontMatter CMS configuration (all content types + all page folders)
 ```
+
+## Data Files (data/)
+- `company.yaml` — Company info (brand name, legal name, founding year, address, business hours, partners list)
+- `advantages.yaml` — Advantages section data (title/desc keys, SVG icons)
+- Used in templates via `.Site.Data.company` and `.Site.Data.advantages`
+- Editable via FrontMatter CMS data files panel
 
 ## Key Configuration (hugo.toml)
 - `baseURL`: Set by GitHub Actions at build time (`actions/configure-pages` output)
@@ -192,6 +199,15 @@ Defined in `layouts/index.html`, each is a partial:
 - Images are organized by content type in `static/img/`
 - Menu structure supports nested items (services and platform have dropdowns in Russian nav)
 - Schema.org structured data in `layouts/partials/schema.html` (Organization, WebSite, LocalBusiness, BreadcrumbList, Article)
+
+## CSS Architecture Details
+- CSS custom properties include `--color-success`, `--color-error`, `--color-warning`
+- `@media (prefers-reduced-motion: reduce)` disables all animations
+- `.icon-accent` class sets `color: var(--color-primary)` for SVG icons using `stroke="currentColor"`
+- `.visually-hidden` class for screen-reader-only content
+- Focus-visible styles on all interactive elements
+- Touch targets minimum 44px on mobile
+- Platform layout uses CSS Grid `order` property (not `direction: rtl`)
 
 ## Known Issues
 - Web3Forms API key is a placeholder — needs real key for contact form to work

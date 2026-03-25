@@ -19,7 +19,7 @@
         <ul class="check-list">
           {{ range . }}
           <li>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <svg class="icon-accent" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             {{ . }}
           </li>
           {{ end }}
@@ -30,7 +30,7 @@
       <div class="platform-feature-image">
         <div class="browser-frame">
           <div class="browser-dots"><span></span><span></span><span></span></div>
-          <img src="{{ . }}" alt="{{ $.Title }}" loading="lazy" width="640" height="400">
+          <img src="{{ . }}" alt="{{ $page.Title }}" loading="lazy" width="640" height="400">
         </div>
       </div>
       {{ end }}
@@ -44,7 +44,7 @@
   <div class="container center">
     <h2>{{ i18n "platform_cta" }}</h2>
     <p class="lead">{{ i18n "platform_desc" }}</p>
-    <a href="{{ .Site.Params.catalogURL }}" class="btn btn-primary btn-lg" target="_blank" rel="noopener">
+    <a href="{{ .Site.Params.catalogURL }}" class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer">
       {{ i18n "platform_cta" }} →
     </a>
   </div>
