@@ -201,10 +201,13 @@
   const searchToggle = document.querySelector('.search-toggle');
   const searchOverlay = document.createElement('div');
   searchOverlay.className = 'search-overlay';
+  searchOverlay.setAttribute('role', 'dialog');
+  searchOverlay.setAttribute('aria-modal', 'true');
+  searchOverlay.setAttribute('aria-label', 'Search');
   searchOverlay.innerHTML = `
     <div class="search-container">
       <button class="search-close" aria-label="Close search">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
       <input type="text" class="search-input" placeholder="${document.documentElement.dataset.searchPlaceholder || 'Search...'}" aria-label="Search site">
       <div class="search-results"></div>
@@ -229,13 +232,26 @@
     if (e.target === searchOverlay) toggleSearch(false);
   });
 
-  /* ─── Mobile Dropdowns ──────────────────────────────────── */
-  document.querySelectorAll('.has-dropdown > .nav-link').forEach(link => {
+  /* ─── Dropdown Accessibility ────────────────────────────── */
+  document.querySelectorAll('.has-dropdown').forEach(item => {
+    const link = item.querySelector('.nav-link');
+
+    // Toggle aria-expanded on hover/focus
+    item.addEventListener('mouseenter', () => link.setAttribute('aria-expanded', 'true'));
+    item.addEventListener('mouseleave', () => link.setAttribute('aria-expanded', 'false'));
+    item.addEventListener('focusin', () => link.setAttribute('aria-expanded', 'true'));
+    item.addEventListener('focusout', (e) => {
+      if (!item.contains(e.relatedTarget)) {
+        link.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Mobile click behavior
     link.addEventListener('click', (e) => {
       if (window.innerWidth <= 768) {
         e.preventDefault();
-        const parent = link.parentElement;
-        parent.classList.toggle('active');
+        const isActive = item.classList.toggle('active');
+        link.setAttribute('aria-expanded', isActive);
       }
     });
   });
