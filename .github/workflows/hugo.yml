@@ -15,7 +15,7 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 defaults:
   run:
@@ -29,15 +29,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
-          fetch-depth: 0
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: ${{ env.HUGO_VERSION }}
           extended: true
+
+      - name: Cache Hugo
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/hugo_cache
+          key: hugo-${{ runner.os }}-${{ hashFiles('**/hugo.toml') }}
+          restore-keys: hugo-${{ runner.os }}-
 
       - name: Setup Pages
         id: pages
@@ -50,6 +54,7 @@ jobs:
           TZ: Asia/Tashkent
         run: |
           hugo \
+            --gc \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
 

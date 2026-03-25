@@ -1,7 +1,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://web3forms.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*; font-src 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://web3forms.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.unsplash.com https://www.google.com; font-src 'self'; frame-src https://www.google.com;">
+<meta name="theme-color" content="#f97316">
 
 {{/* Title */}}
 <title>{{ if .IsHome }}{{ .Site.Title }} — {{ .Site.Params.description }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
@@ -12,14 +13,25 @@
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="{{ .Permalink }}">
 
-{{/* Hreflang for multilingual */}}
+{{/* Hreflang for multilingual — current page + translations + x-default */}}
 {{ if .IsTranslated }}
+  {{/* Self-referencing hreflang */}}
+  <link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}">
   {{ range .Translations }}
   <link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}">
   {{ end }}
-  <link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}">
 {{ end }}
-<link rel="alternate" hreflang="x-default" href="{{ .Site.BaseURL }}">
+{{/* x-default points to the default language version of this page */}}
+{{ if eq .Lang "ru" }}
+<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">
+{{ else }}
+  {{ $defaultPage := index (where .Translations ".Lang" "ru") 0 }}
+  {{ if $defaultPage }}
+  <link rel="alternate" hreflang="x-default" href="{{ $defaultPage.Permalink }}">
+  {{ else }}
+  <link rel="alternate" hreflang="x-default" href="{{ .Site.BaseURL }}">
+  {{ end }}
+{{ end }}
 
 {{/* Open Graph */}}
 <meta property="og:title" content="{{ .Title }}">
@@ -28,10 +40,19 @@
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="og:site_name" content="{{ .Site.Title }}">
 <meta property="og:locale" content="{{ .Site.Language.Params.locale }}">
+{{ if .IsTranslated }}
+  {{ range .Translations }}
+  <meta property="og:locale:alternate" content="{{ .Site.Language.Params.locale }}">
+  {{ end }}
+{{ end }}
 {{ with .Params.image }}
 <meta property="og:image" content="{{ . | absURL }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 {{ else }}
 <meta property="og:image" content="{{ .Site.Params.ogImage | absURL }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 {{ end }}
 
 {{/* Twitter Card */}}
@@ -59,7 +80,7 @@
 
 {{/* Preload Critical Assets */}}
 <link rel="preload" href="/fonts/inter/inter-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/inter/inter-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter/inter-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/inter/inter-700.woff2" as="font" type="font/woff2" crossorigin>
 
 {{/* Main CSS */}}

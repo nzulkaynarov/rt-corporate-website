@@ -1,5 +1,5 @@
 {{/* Skip to content link for accessibility */}}
-<a href="#main-content" class="skip-link">{{ i18n "btn_back" }} → main</a>
+<a href="#main-content" class="skip-link">{{ i18n "nav_skip" }}</a>
 
 <header class="site-header" id="site-header">
   <div class="container">
@@ -7,7 +7,7 @@
       {{/* Logo */}}
       <a href="{{ .Site.Home.RelPermalink }}" class="logo" aria-label="{{ .Site.Title }}">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-icon"><rect x="4" y="3" width="16" height="16" rx="2"></rect><path d="M4 11h16"></path><path d="M12 3v8"></path><path d="M8 19l-2 3"></path><path d="M16 19l2 3"></path><path d="M8 15h8"></path></svg>
-        <span class="logo-text" style="font-weight: 800; font-size: 1.5rem; letter-spacing: -0.05em; margin-left: 8px;">RailTech</span>
+        <span class="logo-text">{{ .Site.Data.company.brandName | default "RailTech" }}</span>
       </a>
 
       {{/* Desktop Nav */}}
@@ -16,7 +16,7 @@
           {{ range .Site.Menus.main }}
           {{ if .HasChildren }}
           <li class="nav-item has-dropdown">
-            <a href="{{ .URL }}" class="nav-link{{ if $.IsMenuCurrent "main" . }} active{{ end }}">{{ .Name }} <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+            <a href="{{ .URL }}" class="nav-link{{ if $.IsMenuCurrent "main" . }} active{{ end }}" aria-haspopup="true">{{ .Name }} <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
             <ul class="dropdown-menu">
               {{ range .Children }}
               <li><a href="{{ .URL }}" class="dropdown-link">{{ .Name }}</a></li>
@@ -35,7 +35,7 @@
       {{/* Right side: language switch + CTA */}}
       <div class="header-actions">
         {{/* Search Toggle */}}
-        <button class="search-toggle btn-icon" aria-label="Search" style="background:none;border:none;color:var(--color-text);cursor:pointer;padding:8px;">
+        <button class="search-toggle btn-icon" aria-label="{{ i18n "search_placeholder" }}">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
         </button>
 
@@ -43,11 +43,11 @@
         {{- partial "theme-toggle.html" . -}}
 
         {{/* Language Switcher */}}
-        <div class="lang-switcher" aria-label="Language switcher">
-          {{ $currentLang := .Lang }}
+        {{ $currentLang := .Lang }}
+        <div class="lang-switcher" role="navigation" aria-label="Language switcher">
           {{ range .Site.Languages }}
             {{ if eq .Lang $currentLang }}
-              <span class="lang-btn active">{{ upper .Lang }}</span>
+              <span class="lang-btn active" aria-current="true">{{ upper .Lang }}</span>
             {{ else }}
               {{ $translationPage := index (where $.Translations ".Lang" .Lang) 0 }}
               {{ if $translationPage }}
@@ -66,7 +66,7 @@
         </a>
 
         {{/* CTA Button */}}
-        <a href="{{ .Site.Params.catalogURL }}" class="btn btn-primary btn-sm" target="_blank" rel="noopener">
+        <a href="{{ .Site.Params.catalogURL }}" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
           {{ i18n "btn_catalog" }}
         </a>
 
@@ -80,12 +80,21 @@
     </div>
   </div>
 
-  {{/* Mobile Menu */}}
+  {{/* Mobile Menu — with dropdown children and language switcher */}}
   <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
     <nav aria-label="Mobile navigation">
       <ul class="mobile-nav-list">
         {{ range .Site.Menus.main }}
-        <li><a href="{{ .URL }}" class="mobile-nav-link">{{ .Name }}</a></li>
+        <li>
+          <a href="{{ .URL }}" class="mobile-nav-link">{{ .Name }}</a>
+          {{ if .HasChildren }}
+          <ul class="mobile-nav-children">
+            {{ range .Children }}
+            <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+            {{ end }}
+          </ul>
+          {{ end }}
+        </li>
         {{ end }}
       </ul>
       <div class="mobile-lang">
@@ -94,11 +103,11 @@
           {{ if $translationPage }}
             <a href="{{ $translationPage.RelPermalink }}" class="lang-btn{{ if eq .Lang $currentLang }} active{{ end }}">{{ .LanguageName }}</a>
           {{ else }}
-            <a href="/{{ if ne .Lang "ru" }}{{ .Lang }}/{{ end }}" class="lang-btn">{{ .LanguageName }}</a>
+            <a href="/{{ if ne .Lang "ru" }}{{ .Lang }}/{{ end }}" class="lang-btn{{ if eq .Lang $currentLang }} active{{ end }}">{{ .LanguageName }}</a>
           {{ end }}
         {{ end }}
       </div>
-      <a href="{{ .Site.Params.catalogURL }}" class="btn btn-primary btn-block" target="_blank" rel="noopener">{{ i18n "btn_catalog" }}</a>
+      <a href="{{ .Site.Params.catalogURL }}" class="btn btn-primary btn-block" target="_blank" rel="noopener noreferrer">{{ i18n "btn_catalog" }}</a>
     </nav>
   </div>
 </header>

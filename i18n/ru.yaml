@@ -108,3 +108,10 @@ tw_4: "Таможенное оформление"
 tw_5: "Официальные поставки"
 theme_light: "Светлая тема"
 theme_dark: "Тёмная тема"
+
+about_mission: "Миссия"
+about_vision: "Видение"
+about_timeline: "История компании"
+
+nav_skip: "Перейти к содержимому"
+search_placeholder_full: "Что вы ищете?"

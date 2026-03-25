@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://railtech.uz/sitemap.xml

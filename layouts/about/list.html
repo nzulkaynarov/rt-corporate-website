@@ -29,27 +29,26 @@
   <div class="container">
     <div class="two-col">
       <div class="card card-glass">
-        <div class="card-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <div class="card-icon icon-accent">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
         </div>
-        {{/* Support both string and map formats */}}
         {{ if reflect.IsMap $mission }}
-          <h3>{{ $mission.title | default "Миссия" }}</h3>
+          <h3>{{ $mission.title | default (i18n "about_mission") }}</h3>
           <p>{{ $mission.description }}</p>
         {{ else }}
-          <h3>{{ $.Params.mission_title | default "Миссия" }}</h3>
+          <h3>{{ $.Params.mission_title | default (i18n "about_mission") }}</h3>
           <p>{{ $mission }}</p>
         {{ end }}
       </div>
       <div class="card card-glass">
-        <div class="card-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <div class="card-icon icon-accent">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
         </div>
         {{ if reflect.IsMap $vision }}
-          <h3>{{ $vision.title | default "Видение" }}</h3>
+          <h3>{{ $vision.title | default (i18n "about_vision") }}</h3>
           <p>{{ $vision.description }}</p>
         {{ else }}
-          <h3>{{ $.Params.vision_title | default "Видение" }}</h3>
+          <h3>{{ $.Params.vision_title | default (i18n "about_vision") }}</h3>
           <p>{{ $vision }}</p>
         {{ end }}
       </div>
@@ -62,8 +61,7 @@
 {{ with .Params.timeline }}
 <section class="section">
   <div class="container">
-    {{/* Support both flat array and nested {title, items} map */}}
-    {{ $timelineTitle := "История компании" }}
+    {{ $timelineTitle := i18n "about_timeline" }}
     {{ $timelineItems := . }}
     {{ if reflect.IsMap . }}
       {{ $timelineTitle = .title | default $timelineTitle }}
