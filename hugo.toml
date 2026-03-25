@@ -1,5 +1,5 @@
-baseURL = 'https://locodep.uz/'
-# Overridden in CI/CD via --baseURL flag if needed
+baseURL = 'https://nzulkaynarov.github.io/rt-website-public/'
+# Overridden in CI/CD via --baseURL flag. Set SITE_URL repo variable to use custom domain.
 title = 'RailTech'
 enableRobotsTXT = true
 enableGitInfo = false

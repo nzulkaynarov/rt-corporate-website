@@ -45,10 +45,12 @@ jobs:
           HUGO_ENVIRONMENT: production
           TZ: Asia/Tashkent
         run: |
+          # Use custom domain if CNAME is set, otherwise fall back to GitHub Pages URL
+          SITE_URL="${{ vars.SITE_URL || 'https://nzulkaynarov.github.io/rt-website-public/' }}"
           hugo \
             --gc \
             --minify \
-            --baseURL "https://locodep.uz/"
+            --baseURL "$SITE_URL"
 
       - name: Deploy to public repo
         uses: peaceiris/actions-gh-pages@v4
@@ -57,4 +59,3 @@ jobs:
           external_repository: nzulkaynarov/rt-website-public
           publish_branch: main
           publish_dir: ./public
-          cname: locodep.uz
