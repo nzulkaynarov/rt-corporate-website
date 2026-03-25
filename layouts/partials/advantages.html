@@ -1,9 +1,12 @@
-<section class="section advantages-section" aria-label="{{ i18n "adv_1_title" }}">
+<section class="section advantages-section" aria-label="{{ i18n "adv_section_title" }}">
   <div class="container">
+    <div class="section-header center">
+      <h2 class="section-title">{{ i18n "adv_section_title" }}</h2>
+    </div>
     <div class="advantages-grid">
       {{ range .Site.Data.advantages.items }}
       <div class="advantage-card card card-glass">
-        <div class="advantage-icon icon-accent">
+        <div class="advantage-icon icon-accent" aria-hidden="true">
           {{ .icon | safeHTML }}
         </div>
         <h3>{{ i18n .titleKey }}</h3>

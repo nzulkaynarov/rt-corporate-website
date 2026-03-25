@@ -24,7 +24,7 @@
     {{ end }}
 
     <div class="center mt-3">
-      <a href="{{ .Site.Params.catalogURL }}" class="btn btn-primary btn-lg" target="_blank" rel="noopener">{{ i18n "platform_cta" }} →</a>
+      <a href="{{ .Site.Params.catalogURL }}" class="btn btn-primary btn-lg" target="_blank" rel="noopener">{{ i18n "platform_cta" }} <span aria-hidden="true">→</span><span class="visually-hidden">{{ i18n "link_new_tab" }}</span></a>
     </div>
   </div>
 </section>

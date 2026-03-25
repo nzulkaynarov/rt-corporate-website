@@ -5,94 +5,310 @@
       "name": "blog",
       "pageBundle": false,
       "fields": [
-        { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string", "description": "SEO description (max 160 chars)" },
-        { "title": "Date", "name": "date", "type": "datetime" },
-        { "title": "Author", "name": "author", "type": "string", "default": "RailTech" },
-        { "title": "Image", "name": "image", "type": "image", "description": "Featured image (16:9 ratio, min 800x450)" },
-        { "title": "Tags", "name": "tags", "type": "tags" },
-        { "title": "Categories", "name": "categories", "type": "categories" },
-        { "title": "Draft", "name": "draft", "type": "draft" }
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string",
+          "description": "SEO description (max 160 chars)"
+        },
+        {
+          "title": "Date",
+          "name": "date",
+          "type": "datetime"
+        },
+        {
+          "title": "Author",
+          "name": "author",
+          "type": "string",
+          "default": "RailTech"
+        },
+        {
+          "title": "Image",
+          "name": "image",
+          "type": "image",
+          "description": "Featured image (16:9 ratio, min 800x450)"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "tags"
+        },
+        {
+          "title": "Categories",
+          "name": "categories",
+          "type": "categories"
+        },
+        {
+          "title": "Draft",
+          "name": "draft",
+          "type": "draft"
+        }
       ]
     },
     {
       "name": "project",
       "pageBundle": false,
       "fields": [
-        { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string" },
-        { "title": "Image", "name": "image", "type": "image", "description": "Project photo (16:10 ratio)" },
-        { "title": "Client", "name": "client", "type": "string" },
-        { "title": "Year", "name": "year", "type": "string" },
-        { "title": "Scope", "name": "scope", "type": "string" },
-        { "title": "Status", "name": "status", "type": "choice", "choices": ["completed", "in_progress"] },
-        { "title": "Category", "name": "category", "type": "string" },
-        { "title": "Weight", "name": "weight", "type": "number", "description": "Display order (lower = first)" },
-        { "title": "Tags", "name": "tags", "type": "tags" },
-        { "title": "Draft", "name": "draft", "type": "draft" }
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Image",
+          "name": "image",
+          "type": "image",
+          "description": "Project photo (16:10 ratio)"
+        },
+        {
+          "title": "Client",
+          "name": "client",
+          "type": "string"
+        },
+        {
+          "title": "Year",
+          "name": "year",
+          "type": "string"
+        },
+        {
+          "title": "Scope",
+          "name": "scope",
+          "type": "string"
+        },
+        {
+          "title": "Status",
+          "name": "status",
+          "type": "choice",
+          "choices": [
+            "completed",
+            "in_progress"
+          ]
+        },
+        {
+          "title": "Category",
+          "name": "category",
+          "type": "string"
+        },
+        {
+          "title": "Weight",
+          "name": "weight",
+          "type": "number",
+          "description": "Display order (lower = first)"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "tags"
+        },
+        {
+          "title": "Draft",
+          "name": "draft",
+          "type": "draft"
+        }
       ]
     },
     {
       "name": "service",
       "pageBundle": false,
       "fields": [
-        { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string" },
-        { "title": "Weight", "name": "weight", "type": "number", "description": "Display order (lower = first)" },
-        { "title": "Icon", "name": "icon", "type": "image", "description": "Service icon (square, 48x48 or 64x64)" },
-        { "title": "Features", "name": "features", "type": "list", "description": "Key features/benefits list" },
-        { "title": "Draft", "name": "draft", "type": "draft" }
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Weight",
+          "name": "weight",
+          "type": "number",
+          "description": "Display order (lower = first)"
+        },
+        {
+          "title": "Icon",
+          "name": "icon",
+          "type": "image",
+          "description": "Service icon (square, 48x48 or 64x64)"
+        },
+        {
+          "title": "Features",
+          "name": "features",
+          "type": "list",
+          "description": "Key features/benefits list"
+        },
+        {
+          "title": "Draft",
+          "name": "draft",
+          "type": "draft"
+        }
       ]
     },
     {
       "name": "platform",
       "pageBundle": false,
       "fields": [
-        { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string" },
-        { "title": "Weight", "name": "weight", "type": "number", "description": "Display order (lower = first)" },
-        { "title": "Tag", "name": "tag", "type": "string", "description": "Badge label above the title" },
-        { "title": "Image", "name": "image", "type": "image", "description": "Platform screenshot (16:10 ratio)" },
-        { "title": "Highlights", "name": "highlights", "type": "list", "description": "Key feature highlights" },
-        { "title": "Draft", "name": "draft", "type": "draft" }
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Weight",
+          "name": "weight",
+          "type": "number",
+          "description": "Display order (lower = first)"
+        },
+        {
+          "title": "Tag",
+          "name": "tag",
+          "type": "string",
+          "description": "Badge label above the title"
+        },
+        {
+          "title": "Image",
+          "name": "image",
+          "type": "image",
+          "description": "Platform screenshot (16:10 ratio)"
+        },
+        {
+          "title": "Highlights",
+          "name": "highlights",
+          "type": "list",
+          "description": "Key feature highlights"
+        },
+        {
+          "title": "Draft",
+          "name": "draft",
+          "type": "draft"
+        }
       ]
     },
     {
       "name": "page",
       "pageBundle": false,
       "fields": [
-        { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string" },
-        { "title": "Image", "name": "image", "type": "image" },
-        { "title": "Draft", "name": "draft", "type": "draft" }
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Image",
+          "name": "image",
+          "type": "image"
+        },
+        {
+          "title": "Draft",
+          "name": "draft",
+          "type": "draft"
+        }
       ]
     },
     {
       "name": "default",
       "pageBundle": false,
       "fields": [
-        { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string" },
-        { "title": "Draft", "name": "draft", "type": "draft" }
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Draft",
+          "name": "draft",
+          "type": "draft"
+        }
       ]
     }
   ],
   "frontMatter.content.pageFolders": [
-    { "title": "Blog (RU)", "path": "[[workspace]]/content/ru/blog", "contentTypes": ["blog"] },
-    { "title": "Blog (EN)", "path": "[[workspace]]/content/en/blog", "contentTypes": ["blog"] },
-    { "title": "Blog (UZ)", "path": "[[workspace]]/content/uz/blog", "contentTypes": ["blog"] },
-    { "title": "Projects (RU)", "path": "[[workspace]]/content/ru/projects", "contentTypes": ["project"] },
-    { "title": "Projects (EN)", "path": "[[workspace]]/content/en/projects", "contentTypes": ["project"] },
-    { "title": "Projects (UZ)", "path": "[[workspace]]/content/uz/projects", "contentTypes": ["project"] },
-    { "title": "Services (RU)", "path": "[[workspace]]/content/ru/services", "contentTypes": ["service"] },
-    { "title": "Services (EN)", "path": "[[workspace]]/content/en/services", "contentTypes": ["service"] },
-    { "title": "Services (UZ)", "path": "[[workspace]]/content/uz/services", "contentTypes": ["service"] },
-    { "title": "Platform (RU)", "path": "[[workspace]]/content/ru/platform", "contentTypes": ["platform"] },
-    { "title": "Platform (EN)", "path": "[[workspace]]/content/en/platform", "contentTypes": ["platform"] },
-    { "title": "Platform (UZ)", "path": "[[workspace]]/content/uz/platform", "contentTypes": ["platform"] },
-    { "title": "Pages (RU)", "path": "[[workspace]]/content/ru", "contentTypes": ["page"] },
-    { "title": "Pages (EN)", "path": "[[workspace]]/content/en", "contentTypes": ["page"] },
-    { "title": "Pages (UZ)", "path": "[[workspace]]/content/uz", "contentTypes": ["page"] }
+    {
+      "title": "Blog (RU)",
+      "path": "[[workspace]]/content/ru/blog",
+      "contentTypes": [
+        "blog"
+      ]
+    },
+    {
+      "title": "Blog (EN)",
+      "path": "[[workspace]]/content/en/blog",
+      "contentTypes": [
+        "blog"
+      ]
+    },
+    {
+      "title": "Blog (UZ)",
+      "path": "[[workspace]]/content/uz/blog",
+      "contentTypes": [
+        "blog"
+      ]
+    },
+    {
+      "title": "Pages (RU)",
+      "path": "[[workspace]]/content/ru",
+      "contentTypes": [
+        "page"
+      ]
+    },
+    {
+      "title": "Pages (EN)",
+      "path": "[[workspace]]/content/en",
+      "contentTypes": [
+        "page"
+      ]
+    },
+    {
+      "title": "Pages (UZ)",
+      "path": "[[workspace]]/content/uz",
+      "contentTypes": [
+        "page"
+      ]
+    },
+    {
+      "path": "[[workspace]]/rt-corporate-website/content/uz"
+    },
+    {
+      "title": "en",
+      "path": "[[workspace]]/rt-corporate-website/content/en"
+    },
+    {
+      "title": "ru",
+      "path": "[[workspace]]/rt-corporate-website/content/ru"
+    }
   ],
   "frontMatter.taxonomy.tags": [],
   "frontMatter.taxonomy.categories": [],

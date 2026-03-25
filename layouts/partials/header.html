@@ -16,7 +16,7 @@
           {{ range .Site.Menus.main }}
           {{ if .HasChildren }}
           <li class="nav-item has-dropdown">
-            <a href="{{ .URL | relURL }}" class="nav-link{{ if $.IsMenuCurrent "main" . }} active{{ end }}" aria-haspopup="true">{{ .Name }} <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+            <a href="{{ .URL | relURL }}" class="nav-link{{ if $.IsMenuCurrent "main" . }} active{{ end }}" aria-haspopup="true" aria-expanded="false">{{ .Name }} <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
             <ul class="dropdown-menu">
               {{ range .Children }}
               <li><a href="{{ .URL | relURL }}" class="dropdown-link">{{ .Name }}</a></li>
@@ -67,7 +67,7 @@
 
         {{/* CTA Button */}}
         <a href="{{ .Site.Params.catalogURL }}" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
-          {{ i18n "btn_catalog" }}
+          {{ i18n "btn_catalog" }}<span class="visually-hidden"> {{ i18n "link_new_tab" }}</span>
         </a>
 
         {{/* Mobile Toggle */}}
@@ -107,7 +107,7 @@
           {{ end }}
         {{ end }}
       </div>
-      <a href="{{ .Site.Params.catalogURL }}" class="btn btn-primary btn-block" target="_blank" rel="noopener noreferrer">{{ i18n "btn_catalog" }}</a>
+      <a href="{{ .Site.Params.catalogURL }}" class="btn btn-primary btn-block" target="_blank" rel="noopener noreferrer">{{ i18n "btn_catalog" }}<span class="visually-hidden"> {{ i18n "link_new_tab" }}</span></a>
     </nav>
   </div>
 </header>

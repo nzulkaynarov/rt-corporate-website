@@ -13,16 +13,16 @@
     </div>
     <div class="services-grid">
       {{ range $servicesPage.Pages }}
-      <a href="{{ .RelPermalink }}" class="service-card card card-glass card-hover">
-        <span class="service-number">{{ printf "%02d" .Weight }}</span>
-        <h3>{{ .Title }}</h3>
+      <div class="service-card card card-glass card-hover">
+        <span class="service-number" aria-hidden="true">{{ printf "%02d" .Weight }}</span>
+        <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
         <p>{{ .Description }}</p>
-        <span class="card-arrow">→</span>
-      </a>
+        <span class="card-arrow" aria-hidden="true">→</span>
+      </div>
       {{ end }}
     </div>
     <div class="center mt-3">
-      <a href="{{ $servicesPage.RelPermalink }}" class="btn btn-outline">{{ i18n "btn_all_services" }} →</a>
+      <a href="{{ $servicesPage.RelPermalink }}" class="btn btn-outline">{{ i18n "btn_all_services" }} <span aria-hidden="true">→</span></a>
       <a href="{{ relLangURL "contact" }}/" class="btn btn-primary ml-2">{{ i18n "btn_contact" }}</a>
     </div>
   </div>
