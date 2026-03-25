@@ -292,10 +292,34 @@
 
   initTicker();
 
-  // Close search on Escape
+  /* ─── Language Dropdown ─────────────────────────────────── */
+  const langDropdown = document.querySelector('.lang-dropdown');
+  const langToggle = document.querySelector('.lang-toggle');
+
+  if (langDropdown && langToggle) {
+    langToggle.addEventListener('click', () => {
+      const isOpen = langDropdown.classList.toggle('open');
+      langToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close on click outside
+    document.addEventListener('click', (e) => {
+      if (!langDropdown.contains(e.target)) {
+        langDropdown.classList.remove('open');
+        langToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // Close search & lang dropdown on Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       if (searchOverlay.classList.contains('active')) toggleSearch(false);
+      if (langDropdown && langDropdown.classList.contains('open')) {
+        langDropdown.classList.remove('open');
+        langToggle.setAttribute('aria-expanded', 'false');
+        langToggle.focus();
+      }
     }
   });
 
