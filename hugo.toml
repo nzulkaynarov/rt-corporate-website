@@ -1,5 +1,5 @@
-baseURL = '/' # Base URL will be overridden in CI/CD via --baseURL flag
-# Production URL: https://railtech.uz/
+baseURL = 'https://locodep.uz/'
+# Overridden in CI/CD via --baseURL flag if needed
 title = 'RailTech'
 enableRobotsTXT = true
 enableGitInfo = false
