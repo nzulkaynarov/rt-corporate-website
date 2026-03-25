@@ -1,6 +1,11 @@
 # Build Hugo in private repo → deploy to public repo for GitHub Pages
 # Source: nzulkaynarov/rt-corporate-website (private)
 # Target: nzulkaynarov/rt-website-public (public, GitHub Pages)
+#
+# Setup required on rt-website-public:
+#   1. Settings → Pages → Source → "Deploy from a branch"
+#   2. Branch: gh-pages / root
+#   3. Deploy key with write access (public part of DEPLOY_KEY)
 
 name: Deploy Hugo Site
 
@@ -45,17 +50,18 @@ jobs:
           HUGO_ENVIRONMENT: production
           TZ: Asia/Tashkent
         run: |
-          # Use custom domain if CNAME is set, otherwise fall back to GitHub Pages URL
           SITE_URL="${{ vars.SITE_URL || 'https://nzulkaynarov.github.io/rt-website-public/' }}"
           hugo \
             --gc \
             --minify \
             --baseURL "$SITE_URL"
+          # Prevent GitHub Pages from processing with Jekyll
+          touch public/.nojekyll
 
       - name: Deploy to public repo
         uses: peaceiris/actions-gh-pages@v4
         with:
           deploy_key: ${{ secrets.DEPLOY_KEY }}
           external_repository: nzulkaynarov/rt-website-public
-          publish_branch: main
+          publish_branch: gh-pages
           publish_dir: ./public
