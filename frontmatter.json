@@ -5,92 +5,246 @@
       "name": "blog",
       "pageBundle": false,
       "fields": [
-        { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string" },
-        { "title": "Date", "name": "date", "type": "datetime" },
-        { "title": "Author", "name": "author", "type": "string", "default": "RailTech" },
-        { "title": "Image", "name": "image", "type": "image" },
-        { "title": "Tags", "name": "tags", "type": "tags" },
-        { "title": "Categories", "name": "categories", "type": "categories" },
-        { "title": "Draft", "name": "draft", "type": "draft" }
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Date",
+          "name": "date",
+          "type": "datetime"
+        },
+        {
+          "title": "Author",
+          "name": "author",
+          "type": "string",
+          "default": "RailTech"
+        },
+        {
+          "title": "Image",
+          "name": "image",
+          "type": "image"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "tags"
+        },
+        {
+          "title": "Categories",
+          "name": "categories",
+          "type": "categories"
+        },
+        {
+          "title": "Draft",
+          "name": "draft",
+          "type": "draft"
+        }
       ]
     },
     {
       "name": "project",
       "pageBundle": false,
       "fields": [
-        { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string" },
-        { "title": "Image", "name": "image", "type": "image" },
-        { "title": "Client", "name": "client", "type": "string" },
-        { "title": "Year", "name": "year", "type": "string" },
-        { "title": "Scope", "name": "scope", "type": "string" },
-        { "title": "Status", "name": "status", "type": "choice", "choices": ["completed", "in_progress"] },
-        { "title": "Category", "name": "category", "type": "string" },
-        { "title": "Tags", "name": "tags", "type": "tags" },
-        { "title": "Draft", "name": "draft", "type": "draft" }
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Image",
+          "name": "image",
+          "type": "image"
+        },
+        {
+          "title": "Client",
+          "name": "client",
+          "type": "string"
+        },
+        {
+          "title": "Year",
+          "name": "year",
+          "type": "string"
+        },
+        {
+          "title": "Scope",
+          "name": "scope",
+          "type": "string"
+        },
+        {
+          "title": "Status",
+          "name": "status",
+          "type": "choice",
+          "choices": [
+            "completed",
+            "in_progress"
+          ]
+        },
+        {
+          "title": "Category",
+          "name": "category",
+          "type": "string"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "tags"
+        },
+        {
+          "title": "Draft",
+          "name": "draft",
+          "type": "draft"
+        }
       ]
     },
     {
       "name": "service",
       "pageBundle": false,
       "fields": [
-        { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string" },
-        { "title": "Weight", "name": "weight", "type": "number" },
-        { "title": "Icon", "name": "icon", "type": "image" },
-        { "title": "Features", "name": "features", "type": "list" },
-        { "title": "Draft", "name": "draft", "type": "draft" }
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Weight",
+          "name": "weight",
+          "type": "number"
+        },
+        {
+          "title": "Icon",
+          "name": "icon",
+          "type": "image"
+        },
+        {
+          "title": "Features",
+          "name": "features",
+          "type": "list"
+        },
+        {
+          "title": "Draft",
+          "name": "draft",
+          "type": "draft"
+        }
       ]
     },
     {
       "name": "platform",
       "pageBundle": false,
       "fields": [
-        { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string" },
-        { "title": "Weight", "name": "weight", "type": "number" },
-        { "title": "Tag", "name": "tag", "type": "string" },
-        { "title": "Image", "name": "image", "type": "image" },
-        { "title": "Highlights", "name": "highlights", "type": "list" },
-        { "title": "Draft", "name": "draft", "type": "draft" }
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Weight",
+          "name": "weight",
+          "type": "number"
+        },
+        {
+          "title": "Tag",
+          "name": "tag",
+          "type": "string"
+        },
+        {
+          "title": "Image",
+          "name": "image",
+          "type": "image"
+        },
+        {
+          "title": "Highlights",
+          "name": "highlights",
+          "type": "list"
+        },
+        {
+          "title": "Draft",
+          "name": "draft",
+          "type": "draft"
+        }
       ]
     },
     {
       "name": "default",
       "pageBundle": false,
       "fields": [
-        { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string" },
-        { "title": "Draft", "name": "draft", "type": "draft" }
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Draft",
+          "name": "draft",
+          "type": "draft"
+        }
       ]
     }
   ],
-  "frontMatter.taxonomy.tags": [
-    "Железная дорога",
-    "САУТ",
-    "Безопасность",
-    "Платформа",
-    "B2B",
-    "Импорт",
-    "Таможня",
-    "Аналитика",
-    "Новости"
-  ],
-  "frontMatter.taxonomy.categories": [
-    "Новости компании",
-    "Аналитика",
-    "Руководства"
-  ],
   "frontMatter.content.pageFolders": [
-    { "title": "Blog (RU)", "path": "[[workspace]]/content/ru/blog" },
-    { "title": "Blog (EN)", "path": "[[workspace]]/content/en/blog" },
-    { "title": "Blog (UZ)", "path": "[[workspace]]/content/uz/blog" },
-    { "title": "Projects (RU)", "path": "[[workspace]]/content/ru/projects" },
-    { "title": "Projects (EN)", "path": "[[workspace]]/content/en/projects" },
-    { "title": "Projects (UZ)", "path": "[[workspace]]/content/uz/projects" },
-    { "title": "Services (RU)", "path": "[[workspace]]/content/ru/services" },
-    { "title": "Platform (RU)", "path": "[[workspace]]/content/ru/platform" }
+    {
+      "title": "Blog (RU)",
+      "path": "[[workspace]]/content/ru/blog"
+    },
+    {
+      "title": "Blog (EN)",
+      "path": "[[workspace]]/content/en/blog"
+    },
+    {
+      "title": "Blog (UZ)",
+      "path": "[[workspace]]/content/uz/blog"
+    },
+    {
+      "title": "Projects (RU)",
+      "path": "[[workspace]]/content/ru/projects"
+    },
+    {
+      "title": "Projects (EN)",
+      "path": "[[workspace]]/content/en/projects"
+    },
+    {
+      "title": "Projects (UZ)",
+      "path": "[[workspace]]/content/uz/projects"
+    },
+    {
+      "title": "Services (RU)",
+      "path": "[[workspace]]/content/ru/services"
+    },
+    {
+      "title": "Platform (RU)",
+      "path": "[[workspace]]/content/ru/platform"
+    }
   ],
   "frontMatter.content.publicFolder": "static",
   "frontMatter.framework.id": "hugo",
