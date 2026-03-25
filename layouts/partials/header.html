@@ -16,16 +16,16 @@
           {{ range .Site.Menus.main }}
           {{ if .HasChildren }}
           <li class="nav-item has-dropdown">
-            <a href="{{ .URL }}" class="nav-link{{ if $.IsMenuCurrent "main" . }} active{{ end }}" aria-haspopup="true">{{ .Name }} <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+            <a href="{{ .URL | relURL }}" class="nav-link{{ if $.IsMenuCurrent "main" . }} active{{ end }}" aria-haspopup="true">{{ .Name }} <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
             <ul class="dropdown-menu">
               {{ range .Children }}
-              <li><a href="{{ .URL }}" class="dropdown-link">{{ .Name }}</a></li>
+              <li><a href="{{ .URL | relURL }}" class="dropdown-link">{{ .Name }}</a></li>
               {{ end }}
             </ul>
           </li>
           {{ else }}
           <li class="nav-item">
-            <a href="{{ .URL }}" class="nav-link{{ if $.IsMenuCurrent "main" . }} active{{ end }}">{{ .Name }}</a>
+            <a href="{{ .URL | relURL }}" class="nav-link{{ if $.IsMenuCurrent "main" . }} active{{ end }}">{{ .Name }}</a>
           </li>
           {{ end }}
           {{ end }}
@@ -86,11 +86,11 @@
       <ul class="mobile-nav-list">
         {{ range .Site.Menus.main }}
         <li>
-          <a href="{{ .URL }}" class="mobile-nav-link">{{ .Name }}</a>
+          <a href="{{ .URL | relURL }}" class="mobile-nav-link">{{ .Name }}</a>
           {{ if .HasChildren }}
           <ul class="mobile-nav-children">
             {{ range .Children }}
-            <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+            <li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>
             {{ end }}
           </ul>
           {{ end }}
