@@ -1,0 +1,53 @@
+{{ define "main" }}
+
+{{/* Page Hero */}}
+{{ partial "page-hero.html" (dict "page" . "title" .Title "desc" .Description) }}
+
+{{/* Platform Features */}}
+<section class="section">
+  <div class="container">
+    {{ range $i, $page := .Pages }}
+    <div class="platform-feature {{ if (modBool $i 2) }}reverse{{ end }}">
+      <div class="platform-feature-text">
+        <span class="badge">{{ .Params.tag }}</span>
+        <h2>{{ .Title }}</h2>
+        <p class="lead">{{ .Description }}</p>
+        <div class="prose">
+          {{ .Content }}
+        </div>
+        {{ with .Params.highlights }}
+        <ul class="check-list">
+          {{ range . }}
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            {{ . }}
+          </li>
+          {{ end }}
+        </ul>
+        {{ end }}
+      </div>
+      {{ with .Params.image }}
+      <div class="platform-feature-image">
+        <div class="browser-frame">
+          <div class="browser-dots"><span></span><span></span><span></span></div>
+          <img src="{{ . }}" alt="{{ $.Title }}" loading="lazy" width="640" height="400">
+        </div>
+      </div>
+      {{ end }}
+    </div>
+    {{ end }}
+  </div>
+</section>
+
+{{/* Platform CTA */}}
+<section class="section section-alt">
+  <div class="container center">
+    <h2>{{ i18n "platform_cta" }}</h2>
+    <p class="lead">{{ i18n "platform_desc" }}</p>
+    <a href="{{ .Site.Params.catalogURL }}" class="btn btn-primary btn-lg" target="_blank" rel="noopener">
+      {{ i18n "platform_cta" }} →
+    </a>
+  </div>
+</section>
+
+{{ end }}

@@ -1,0 +1,20 @@
+<section class="section partners-section" aria-label="Partners">
+  <div class="container">
+    <div class="section-header center">
+      <h2 class="section-title">{{ i18n "partners_title" }}</h2>
+      <p class="section-desc">{{ i18n "partners_desc" }}</p>
+    </div>
+    <div class="partners-container">
+      <div class="partners-grid">
+        {{ $partners := slice "САУТ" "НИИАС" "РЖД" "ЭЛТЕЗА" "Siemens" "Knorr-Bremse" "Alstom" "Bombardier" }}
+        {{ range $partners }}
+        <div class="partner-card">
+          <div class="partner-logo-box">
+            <span>{{ . }}</span>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,7 @@
+{{/* Main JS */}}
+<script src="/js/main.js" defer></script>
+
+{{/* Contact form (only on contact page) */}}
+{{ if eq .Type "contact" }}
+<script src="/js/contact-form.js" defer></script>
+{{ end }}

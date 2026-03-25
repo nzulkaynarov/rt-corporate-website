@@ -1,0 +1,123 @@
+{{/* Organization Schema */}}
+{{ if .IsHome }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "RailTech",
+  "legalName": "ООО «RailTech»",
+  "url": "{{ .Site.BaseURL }}",
+  "logo": "{{ .Site.Params.ogImage | absURL }}",
+  "foundingDate": "2021",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Tashkent",
+    "addressCountry": "UZ",
+    "streetAddress": "Index, Office B2-2097"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "{{ .Site.Params.phone }}",
+    "email": "{{ .Site.Params.email }}",
+    "contactType": "customer service",
+    "availableLanguage": ["Russian", "English", "Uzbek"]
+  },
+  "sameAs": [
+    {{ with .Site.Params.social.telegram }}"{{ . }}"{{ end }}
+    {{ with .Site.Params.social.linkedin }},"{{ . }}"{{ end }}
+    {{ with .Site.Params.social.facebook }},"{{ . }}"{{ end }}
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{ .Site.Title }}",
+  "url": "{{ .Site.BaseURL }}"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "RailTech",
+  "image": "{{ .Site.Params.ogImage | absURL }}",
+  "telephone": "{{ .Site.Params.phone }}",
+  "email": "{{ .Site.Params.email }}",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Tashkent",
+    "addressCountry": "UZ"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": {{ .Site.Params.mapLat }},
+    "longitude": {{ .Site.Params.mapLon }}
+  },
+  "openingHours": "Mo-Fr 09:00-18:00"
+}
+</script>
+{{ end }}
+
+{{/* BreadcrumbList Schema */}}
+{{ if not .IsHome }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "{{ .Site.Title }}",
+      "item": "{{ .Site.BaseURL }}"
+    }
+    {{ if .Parent }}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ .Parent.Title }}",
+      "item": "{{ .Parent.Permalink }}"
+    }
+    ,{
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ .Title }}",
+      "item": "{{ .Permalink }}"
+    }
+    {{ else }}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ .Title }}",
+      "item": "{{ .Permalink }}"
+    }
+    {{ end }}
+  ]
+}
+</script>
+{{ end }}
+
+{{/* Article Schema for blog posts */}}
+{{ if and .IsPage (eq .Section "blog") }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ .Title }}",
+  "description": "{{ .Description }}",
+  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+  "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
+  {{ with .Params.author }}"author": { "@type": "Person", "name": "{{ . }}" },{{ end }}
+  "publisher": {
+    "@type": "Organization",
+    "name": "RailTech",
+    "logo": { "@type": "ImageObject", "url": "{{ .Site.Params.ogImage | absURL }}" }
+  },
+  "mainEntityOfPage": "{{ .Permalink }}"
+}
+</script>
+{{ end }}

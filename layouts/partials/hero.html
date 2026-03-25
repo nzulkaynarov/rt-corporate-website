@@ -1,0 +1,42 @@
+<section class="hero" aria-label="Hero">
+  <div class="hero-bg">
+    <div class="hero-gradient"></div>
+    <div class="hero-decoration">
+      <div class="blob-1"></div>
+      <div class="blob-2"></div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-chips">
+        <span class="chip animate-fade-in" style="--delay: 0.1s">{{ i18n "hero_chip_1" }}</span>
+        <span class="chip animate-fade-in" style="--delay: 0.2s">{{ i18n "hero_chip_2" }}</span>
+        <span class="chip animate-fade-in" style="--delay: 0.3s">{{ i18n "hero_chip_3" }}</span>
+      </div>
+      <h1 class="hero-title animate-slide-up" style="--delay: 0.4s">{{ i18n "hero_title" }}</h1>
+      <p class="hero-desc animate-slide-up" style="--delay: 0.5s">{{ i18n "hero_desc" }}</p>
+      <div class="hero-actions animate-slide-up" style="--delay: 0.6s">
+        <a href="{{ relLangURL "contact" }}/" class="btn btn-primary btn-lg">{{ i18n "btn_contact" }}</a>
+        <a href="{{ .Site.Params.catalogURL }}" class="btn btn-outline btn-lg" target="_blank" rel="noopener">{{ i18n "btn_catalog" }} →</a>
+      </div>
+
+      {{/* Scrolling ticker */}}
+      <div class="hero-ticker" aria-hidden="true" id="hero-ticker">
+        <div class="ticker-track" id="ticker-track">
+          {{ range (seq 2) }}
+          <span>{{ i18n "tw_1" }}</span>
+          <span class="ticker-dot"></span>
+          <span>{{ i18n "tw_2" }}</span>
+          <span class="ticker-dot"></span>
+          <span>{{ i18n "tw_3" }}</span>
+          <span class="ticker-dot"></span>
+          <span>{{ i18n "tw_4" }}</span>
+          <span class="ticker-dot"></span>
+          <span>{{ i18n "tw_5" }}</span>
+          <span class="ticker-dot"></span>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

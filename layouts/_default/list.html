@@ -1,0 +1,13 @@
+{{ define "main" }}
+
+{{ partial "page-hero.html" (dict "page" . "title" .Title "desc" .Description) }}
+
+<section class="section">
+  <div class="container container-narrow">
+    <div class="prose">
+      {{ .Content }}
+    </div>
+  </div>
+</section>
+
+{{ end }}

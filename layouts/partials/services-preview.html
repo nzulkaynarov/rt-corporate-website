@@ -1,0 +1,30 @@
+{{ $servicesPage := .Site.GetPage (printf "/%s/services" .Lang) }}
+{{ if not $servicesPage }}
+  {{ $servicesPage = .Site.GetPage "/services" }}
+{{ end }}
+
+{{ if $servicesPage }}
+<section class="section section-alt" aria-label="Services">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge">{{ i18n "srv_badge" }}</span>
+      <h2 class="section-title">{{ i18n "srv_main_title" }}</h2>
+      <p class="section-desc">{{ i18n "srv_main_desc" }}</p>
+    </div>
+    <div class="services-grid">
+      {{ range $servicesPage.Pages }}
+      <a href="{{ .RelPermalink }}" class="service-card card card-glass card-hover">
+        <span class="service-number">{{ printf "%02d" .Weight }}</span>
+        <h3>{{ .Title }}</h3>
+        <p>{{ .Description }}</p>
+        <span class="card-arrow">→</span>
+      </a>
+      {{ end }}
+    </div>
+    <div class="center mt-3">
+      <a href="{{ $servicesPage.RelPermalink }}" class="btn btn-outline">{{ i18n "btn_all_services" }} →</a>
+      <a href="{{ relLangURL "contact" }}/" class="btn btn-primary ml-2">{{ i18n "btn_contact" }}</a>
+    </div>
+  </div>
+</section>
+{{ end }}

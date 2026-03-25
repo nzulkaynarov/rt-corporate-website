@@ -1,0 +1,50 @@
+<div class="contact-form card card-glass">
+  <h2>{{ i18n "form_title" }}</h2>
+  <p>{{ i18n "form_desc" }}</p>
+
+  <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="{{ .Site.Params.web3forms.accessKey }}">
+    <input type="hidden" name="subject" value="New contact from {{ .Site.Title }}">
+    <input type="hidden" name="from_name" value="{{ .Site.Title }}">
+    <input type="hidden" name="redirect" value="">
+
+    {{/* Honeypot */}}
+    <div style="position: absolute; left: -9999px;" aria-hidden="true">
+      <input type="text" name="botcheck" tabindex="-1" autocomplete="off">
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="name">{{ i18n "form_name" }} <span class="required">*</span></label>
+        <input type="text" id="name" name="name" required autocomplete="name" placeholder="{{ i18n "form_name" }}">
+      </div>
+
+      <div class="form-group">
+        <label for="company">{{ i18n "form_company" }}</label>
+        <input type="text" id="company" name="company" autocomplete="organization" placeholder="{{ i18n "form_company" }}">
+      </div>
+
+      <div class="form-group">
+        <label for="phone">{{ i18n "form_phone" }} <span class="required">*</span></label>
+        <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="+998">
+      </div>
+
+      <div class="form-group">
+        <label for="email">{{ i18n "form_email" }} <span class="required">*</span></label>
+        <input type="email" id="email" name="email" required autocomplete="email" placeholder="email@company.com">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="message">{{ i18n "form_msg" }}</label>
+      <textarea id="message" name="message" rows="4" placeholder="{{ i18n "form_msg" }}"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit-btn">
+      <span class="btn-text">{{ i18n "btn_send" }}</span>
+      <span class="btn-loading" style="display:none;">{{ i18n "form_sending" }}</span>
+    </button>
+
+    <div id="form-status" class="form-status" role="alert" aria-live="polite"></div>
+  </form>
+</div>

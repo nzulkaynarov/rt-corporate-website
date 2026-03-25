@@ -1,0 +1,12 @@
+{
+  "name": "railtech-corporate",
+  "version": "1.0.0",
+  "description": "RailTech Corporate Website — Hugo Static Site",
+  "scripts": {
+    "dev": "hugo server -D --navigateToChanged",
+    "build": "hugo --minify",
+    "build:preview": "hugo --minify --baseURL '/' -D"
+  },
+  "author": "RailTech LLC",
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,14 @@
+{{ define "main" }}
+
+{{ partial "breadcrumbs.html" . }}
+
+<article class="section legal-page">
+  <div class="container container-narrow">
+    <h1>{{ .Title }}</h1>
+    <div class="prose">
+      {{ .Content }}
+    </div>
+  </div>
+</article>
+
+{{ end }}
