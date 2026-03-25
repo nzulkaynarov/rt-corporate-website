@@ -53,7 +53,7 @@
               {{ if $translationPage }}
                 <a href="{{ $translationPage.RelPermalink }}" class="lang-btn" hreflang="{{ .Lang }}">{{ upper .Lang }}</a>
               {{ else }}
-                <a href="/{{ if ne .Lang "ru" }}{{ .Lang }}/{{ end }}" class="lang-btn" hreflang="{{ .Lang }}">{{ upper .Lang }}</a>
+                <a href="{{ (cond (eq .Lang "ru") "/" (printf "/%s/" .Lang)) | relURL }}" class="lang-btn" hreflang="{{ .Lang }}">{{ upper .Lang }}</a>
               {{ end }}
             {{ end }}
           {{ end }}
@@ -103,7 +103,7 @@
           {{ if $translationPage }}
             <a href="{{ $translationPage.RelPermalink }}" class="lang-btn{{ if eq .Lang $currentLang }} active{{ end }}">{{ .LanguageName }}</a>
           {{ else }}
-            <a href="/{{ if ne .Lang "ru" }}{{ .Lang }}/{{ end }}" class="lang-btn{{ if eq .Lang $currentLang }} active{{ end }}">{{ .LanguageName }}</a>
+            <a href="{{ (cond (eq .Lang "ru") "/" (printf "/%s/" .Lang)) | relURL }}" class="lang-btn{{ if eq .Lang $currentLang }} active{{ end }}">{{ .LanguageName }}</a>
           {{ end }}
         {{ end }}
       </div>
