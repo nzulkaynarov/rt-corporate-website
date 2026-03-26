@@ -36,7 +36,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.145.0
+      HUGO_VERSION: 0.148.1
     steps:
       - name: Checkout source (private repo)
         uses: actions/checkout@v4

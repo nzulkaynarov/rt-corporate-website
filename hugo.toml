@@ -36,7 +36,6 @@ defaultContentLanguageInSubdir = false
 
 [imaging]
   quality = 85
-  resampleFilter = "Lanczos"
 
 [minify]
   [minify.tdewolff]
