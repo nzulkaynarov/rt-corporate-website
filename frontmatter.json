@@ -297,17 +297,6 @@
       "contentTypes": [
         "page"
       ]
-    },
-    {
-      "path": "[[workspace]]/rt-corporate-website/content/uz"
-    },
-    {
-      "title": "en",
-      "path": "[[workspace]]/rt-corporate-website/content/en"
-    },
-    {
-      "title": "ru",
-      "path": "[[workspace]]/rt-corporate-website/content/ru"
     }
   ],
   "frontMatter.taxonomy.tags": [],
