@@ -1,5 +1,7 @@
-baseURL = 'https://nzulkaynarov.github.io/rt-website-public/'
-# Overridden in CI/CD via --baseURL flag. Set SITE_URL repo variable to use custom domain.
+baseURL = 'http://localhost:1313/'
+# Overridden in CI/CD via --baseURL flag from SITE_URL GitHub variable.
+# For local dev: hugo server uses its own baseURL automatically.
+# For production: set SITE_URL variable in GitHub repo settings.
 title = 'RailTech'
 enableRobotsTXT = true
 enableGitInfo = false

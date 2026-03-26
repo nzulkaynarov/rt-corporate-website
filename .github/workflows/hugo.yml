@@ -1,8 +1,18 @@
 # Build Hugo in private repo → deploy to public repo for GitHub Pages
 # Source: nzulkaynarov/rt-corporate-website (private)
-# Target: nzulkaynarov/rt-website-public (public, GitHub Pages)
+# Target: configured via DEPLOY_REPO variable (public, GitHub Pages)
 #
-# Setup required on rt-website-public:
+# Required GitHub Variables (Settings → Variables → Actions):
+#   SITE_URL       — Site base URL (e.g. https://locodep.uz/ or https://user.github.io/repo/)
+#   DEPLOY_REPO    — Target repo for deployment (e.g. nzulkaynarov/rt-website-public)
+#
+# Optional GitHub Variables:
+#   CNAME_DOMAIN   — Custom domain for CNAME file (e.g. locodep.uz). Leave empty for *.github.io
+#
+# Required GitHub Secrets:
+#   DEPLOY_KEY     — SSH private key with write access to DEPLOY_REPO
+#
+# Setup required on target repo:
 #   1. Settings → Pages → Source → "Deploy from a branch"
 #   2. Branch: gh-pages / root
 #   3. Deploy key with write access (public part of DEPLOY_KEY)
@@ -50,18 +60,20 @@ jobs:
           HUGO_ENVIRONMENT: production
           TZ: Asia/Tashkent
         run: |
-          SITE_URL="${{ vars.SITE_URL || 'https://nzulkaynarov.github.io/rt-website-public/' }}"
           hugo \
             --gc \
             --minify \
-            --baseURL "$SITE_URL"
-          # Prevent GitHub Pages from processing with Jekyll
+            --baseURL "${{ vars.SITE_URL }}"
           touch public/.nojekyll
+          # Create CNAME file if custom domain is set
+          if [ -n "${{ vars.CNAME_DOMAIN }}" ]; then
+            echo "${{ vars.CNAME_DOMAIN }}" > public/CNAME
+          fi
 
       - name: Deploy to public repo
         uses: peaceiris/actions-gh-pages@v4
         with:
           deploy_key: ${{ secrets.DEPLOY_KEY }}
-          external_repository: nzulkaynarov/rt-website-public
+          external_repository: ${{ vars.DEPLOY_REPO }}
           publish_branch: gh-pages
           publish_dir: ./public

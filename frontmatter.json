@@ -6,7 +6,7 @@
   "frontMatter.preview.host": "http://localhost:1313",
   "frontMatter.preview.trailingSlash": true,
 
-  "frontMatter.website.host": "https://nzulkaynarov.github.io/rt-website-public",
+  "frontMatter.website.host": "http://localhost:1313",
   "frontMatter.content.publicFolder": "static",
   "frontMatter.content.defaultFileType": "md",
   "frontMatter.content.autoUpdateDate": true,
