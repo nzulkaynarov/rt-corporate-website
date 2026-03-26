@@ -1,0 +1,41 @@
+# Russian menu — uses pageRef for automatic multilingual URL resolution
+
+[[main]]
+  name = "О компании"
+  pageRef = "about"
+  weight = 1
+
+[[main]]
+  name = "Услуги"
+  pageRef = "services"
+  weight = 2
+
+[[main]]
+  name = "Проекты"
+  pageRef = "projects"
+  weight = 3
+
+[[main]]
+  name = "Платформа"
+  pageRef = "platform"
+  weight = 4
+
+[[main]]
+  name = "Блог"
+  pageRef = "blog"
+  weight = 5
+
+[[main]]
+  name = "Контакты"
+  pageRef = "contact"
+  weight = 6
+
+[[footer]]
+  name = "Политика конфиденциальности"
+  pageRef = "privacy"
+  weight = 1
+
+[[footer]]
+  name = "Условия использования"
+  pageRef = "terms"
+  weight = 2

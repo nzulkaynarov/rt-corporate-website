@@ -1,214 +1,144 @@
 # RailTech Corporate Website
 
 ## Project Overview
-- Hugo static site generator for RailTech LLC — industrial equipment supplier in Uzbekistan
+- Hugo static site + **Blowfish v2** theme (via Hugo Modules)
 - Trilingual: Russian (default), English, Uzbek
-- Dark premium theme with orange (#f97316) accent
+- Dark theme with orange (#f97316) accent — custom `railtech` color scheme
 - Deployed to GitHub Pages via GitHub Actions
 
 ## Tech Stack
-- **SSG**: Hugo 0.145.0 (Go templating, extended edition)
-- **CSS**: Custom CSS with CSS variables (no Tailwind/framework)
-- **JS**: Vanilla JS, 2 files (main.js + contact-form.js)
-- **Forms**: Web3Forms API (serverless)
+- **SSG**: Hugo 0.148.1+ (extended edition, Go templating)
+- **Theme**: Blowfish v2 (`github.com/nunocoracao/blowfish/v2`) via Hugo Modules
+- **CSS**: Blowfish built-in Tailwind — zero custom CSS (only color scheme override)
+- **JS**: Blowfish built-in JS (search, appearance toggle, code copy, etc.)
+- **Forms**: Web3Forms API (inline script in contact layout)
 - **CMS**: FrontMatter CMS (VS Code extension, config in frontmatter.json)
-- **Fonts**: Inter (self-hosted woff2 in static/fonts/inter/)
-- **Deploy**: GitHub Pages via GitHub Actions (peaceiris/actions-hugo@v3)
+- **Deploy**: GitHub Pages via GitHub Actions (peaceiris/actions-hugo@v3 + actions/setup-go@v5)
 
 ## Architecture
 ```
+config/_default/       — Split TOML configuration (Blowfish pattern)
+  hugo.toml            — Base config + module import
+  params.toml          — Blowfish theme parameters + [extra] for RailTech
+  markup.toml          — Goldmark + highlight settings
+  languages.{ru,en,uz}.toml — Per-language config with author + social links
+  menus.{ru,en,uz}.toml     — Navigation menus (use pageRef, not url)
+go.mod                 — Hugo Module dependency (Blowfish v2)
 content/{ru,en,uz}/    — Markdown content per language
-data/                  — Hugo data files (company.yaml, advantages.yaml)
-layouts/               — Hugo templates
-  _default/            — Base templates (baseof, list, single)
-  partials/            — 19 reusable components
-  {section}/           — Section-specific templates (blog, projects, services, platform, contact)
-assets/css/main.css    — Single CSS file, processed by Hugo Pipes (minify + fingerprint)
-assets/js/             — JavaScript (main.js, contact-form.js), processed by Hugo Pipes
-static/img/            — Images organized by type (brand, blog, projects, partners, hero, icons, platform)
-static/fonts/inter/    — Self-hosted Inter font files (woff2)
-i18n/{ru,en,uz}.yaml   — UI translation strings
-hugo.toml              — Main configuration (languages, menus, params)
-archetypes/            — Content templates (blog.md, projects.md, services.md, platform.md, default.md)
-docs/                  — Documentation (CONTENT-GUIDE.md, GITHUB-PAGES-DEPLOY.md)
-.github/workflows/     — CI/CD (hugo.yml) with caching
-frontmatter.json       — FrontMatter CMS configuration (all content types + all page folders)
+data/                  — Hugo data files (company.yaml, advantages.yaml, social.yaml, stats.yaml)
+layouts/               — Only 4 override files (everything else from Blowfish)
+  partials/home/custom.html  — Corporate homepage (hero, stats, services, CTA)
+  partials/extend-head.html  — Favicon + OG image meta
+  partials/extend-footer.html — Ecosystem links + copyright
+  contact/list.html          — Contact page with Web3Forms
+assets/css/schemes/railtech.css — Custom Blowfish color scheme (orange primary, zinc neutral)
+static/img/            — Images organized by type
+i18n/{ru,en,uz}.yaml   — UI translations (uz includes Blowfish UI keys)
+archetypes/            — Content templates
+.github/workflows/     — CI/CD (hugo.yml) — includes Go setup for Hugo Modules
+frontmatter.json       — FrontMatter CMS config (Blowfish shortcode snippets)
 ```
 
-## Data Files (data/)
-- `company.yaml` — Company info (brand name, legal name, founding year, address, business hours, partners list)
-- `advantages.yaml` — Advantages section data (title/desc keys, SVG icons)
-- Used in templates via `.Site.Data.company` and `.Site.Data.advantages`
-- Editable via FrontMatter CMS data files panel
+## Blowfish Configuration (config/_default/)
 
-## Key Configuration (hugo.toml)
-- `baseURL`: Set by GitHub Actions at build time (`actions/configure-pages` output)
-- `defaultContentLanguage`: "ru" (Russian is default, no /ru/ prefix)
-- English pages: /en/*, Uzbek pages: /uz/*
-- `params.web3forms.accessKey`: Must be set (placeholder by default)
-- Stats: years, partners, skus, countries — used in stats section
-- Social links: telegram, facebook, instagram, linkedin
-- Pagination: 9 items per page
-- Outputs: HTML, RSS, JSON (home); HTML, RSS (sections)
+### params.toml — Key Settings
+- `colorScheme = "railtech"` — Custom color scheme in `assets/css/schemes/`
+- `defaultAppearance = "dark"` — Dark mode by default
+- `homepage.layout = "custom"` — Uses `layouts/partials/home/custom.html`
+- `[extra]` section — RailTech-specific params (phone, email, catalogURL, web3formsKey, stats)
+- `article.sharingLinks` — Telegram, Facebook, LinkedIn
+- `list.cardView = true` — Card layout for blog/projects listings
+
+### Menus (menus.*.toml)
+- Use `pageRef` (not `url`) for automatic multilingual URL resolution
+- Main: About, Services, Projects, Platform, Blog, Contact
+- Footer: Privacy, Terms
+
+## Data Files (data/)
+- `company.yaml` — Brand/legal names, founding year, address, partners list
+- `advantages.yaml` — Advantages section data
+- `social.yaml` — Social media URLs
+- `stats.yaml` — Homepage stats
 
 ## Content Structure
 
-### Current Content Count (per language, identical across ru/en/uz)
-- Blog posts: 3 (b2b-platform-launch, import-customs-guide, railway-safety-uzbekistan)
-- Projects: 3 (b2b-platform, diagnostic-equipment, uty-safety-systems)
-- Services: 4 (equipment-supply, localization, representation, technical-expertise)
-- Platform features: 6 (admin, cabinet, calculator, catalog, deals, smart-import)
-- Static pages: about, contact, privacy, terms (per language)
+### Current Content (per language, identical across ru/en/uz)
+- Blog posts: 3
+- Projects: 3
+- Services: 4
+- Platform features: 6
+- Static pages: about, contact, privacy, terms
 
 ### Content Types & Frontmatter
+Same as before — blog, project, service, platform content types with standard Hugo frontmatter.
+Blowfish renders these automatically with built-in list/single templates.
 
-#### Blog Post (content/{lang}/blog/*.md)
-```yaml
-title: "Post Title"
-description: "SEO description"
-date: 2024-11-20
-author: "RailTech"
-image: /img/blog/image.jpg
-tags: ["Tag1", "Tag2"]
-categories: ["Category"]
-```
+## Homepage (layouts/partials/home/custom.html)
+Sections in order:
+1. Hero — chips, headline, CTA buttons (all from i18n)
+2. Stats — counters from `[extra.stats]` in params.toml
+3. Services preview — auto-generated from `/services/` section pages
+4. CTA — contact + catalog links
 
-#### Project (content/{lang}/projects/*.md)
-```yaml
-title: "Project Name"
-description: "Project description"
-image: /img/projects/image.jpg
-client: "Client Name"
-year: "2024"
-scope: "Scope description"
-status: "completed" | "in_progress"
-category: "Category"
-```
+## Custom Layouts (only 4 files)
+| File | Purpose |
+|------|---------|
+| `partials/home/custom.html` | Corporate homepage |
+| `partials/extend-head.html` | Favicon + OG meta |
+| `partials/extend-footer.html` | Ecosystem links + copyright |
+| `contact/list.html` | Contact form (Web3Forms) + info |
 
-#### Service (content/{lang}/services/*.md)
-```yaml
-title: "Service Name"
-description: "Service description"
-weight: 1
-icon: "svg-icon-name"
-features: ["Feature 1", "Feature 2"]
-```
-
-#### Platform Feature (content/{lang}/platform/*.md)
-```yaml
-title: "Feature Name"
-description: "Feature description"
-weight: 1
-tag: "Tag"
-image: /img/platform/screenshot.jpg
-highlights: ["Highlight 1", "Highlight 2"]
-```
-
-## Homepage Sections (in order)
-Defined in `layouts/index.html`, each is a partial:
-1. `hero.html` — Hero banner with animated chips
-2. `stats.html` — Counter animation (years, partners, SKUs, countries)
-3. `advantages.html` — Company advantages grid
-4. `services-preview.html` — Services overview cards
-5. `platform-preview.html` — B2B platform showcase
-6. `partners.html` — Partner logos ticker
-7. `faq.html` — Accordion FAQ (data from content/{lang}/_index.md frontmatter)
-8. `cta.html` — Call-to-action section
-
-## Partials Reference (layouts/partials/)
-- **Layout**: head.html, header.html, footer.html, scripts.html, breadcrumbs.html
-- **Homepage**: hero.html, stats.html, advantages.html, services-preview.html, platform-preview.html, partners.html, faq.html, cta.html
-- **Utilities**: schema.html (structured data), svg-sprite.html, share-buttons.html, theme-toggle.html
-- **Reusable**: contact-form.html, page-hero.html
+Everything else (header, footer, blog, projects, services, 404, search, etc.) comes from Blowfish.
 
 ## i18n System
-- Translation files: `i18n/{ru,en,uz}.yaml`
-- Usage in templates: `{{ i18n "key_name" }}`
-- Key prefixes: `nav_*` (navigation), `hero_*` (hero section), `tw_*` (ticker widget items), `theme_*` (theme toggle), `footer_*`, `contact_*`, `blog_*`, `services_*`, `projects_*`
-- FAQ content is in frontmatter of `content/{lang}/_index.md`
-- All keys are present and localized for all 3 languages
+- `i18n/{ru,en,uz}.yaml` — All UI strings
+- Blowfish has built-in ru + en translations; uz.yaml includes Blowfish UI keys (article.*, error.*, footer.*, search.*, sharing.*)
+- Custom keys: `hero_*`, `stats_*`, `srv_*`, `cta_*`, `form_*`, `footer_*`, `contact_*`, etc.
 
-## CSS Architecture
-- Single file: `assets/css/main.css` (~1575 lines)
-- CSS custom properties in `:root` (colors, spacing, typography, transitions)
-- BEM-like naming (section-based: `.hero-*`, `.stats-*`, `.blog-*`, etc.)
-- Responsive breakpoints: 1024px, 768px, 480px
-- Print styles included
-- Hugo Pipes: minify + fingerprint for cache busting
-
-## JavaScript Patterns
-- `static/js/main.js` (286 lines): IIFE pattern, 'use strict'
-  - IntersectionObserver for scroll animations and counter animations
-  - Mobile menu: toggle class + aria attributes + Escape key
-  - Theme toggle (light/dark)
-- `static/js/contact-form.js` (61 lines): async fetch to Web3Forms API
-- No dependencies, no build step
+## Blowfish Color Scheme (assets/css/schemes/railtech.css)
+- Primary: Orange (Tailwind orange scale, accent #f97316)
+- Neutral: Zinc (dark corporate background)
+- Secondary: Slate
 
 ## Common Tasks
 
-### Add a new blog post
-1. Create `content/{lang}/blog/post-slug.md` with frontmatter (use `archetypes/blog.md` as template)
-2. Add image to `static/img/blog/`
-3. Create translations in other languages (same filename in each lang directory)
+### Add content
+1. Create `content/{lang}/section/slug.md` (use archetypes)
+2. Add image to `static/img/section/`
+3. Create translations in all 3 languages
 4. Run `npm run dev` to preview
 
-### Add a new project
-1. Create `content/{lang}/projects/project-slug.md` (use `archetypes/projects.md`)
-2. Add image to `static/img/projects/`
-3. Create translations in all 3 languages
-4. Set `status` to "completed" or "in_progress"
+### Modify homepage
+- Edit `layouts/partials/home/custom.html`
+- Stats: `config/_default/params.toml` → `[extra.stats]`
+- i18n strings: `i18n/{lang}.yaml`
 
-### Add a new service
-1. Create `content/{lang}/services/service-slug.md`
-2. Set `weight` for ordering
-3. Add translations in all 3 languages
+### Change colors
+- Edit `assets/css/schemes/railtech.css` (Tailwind RGB color tokens)
 
-### Add a new platform feature
-1. Create `content/{lang}/platform/feature-slug.md`
-2. Add screenshot to `static/img/platform/`
-3. Set `weight` for ordering
-4. Add translations
-
-### Modify homepage sections
-- Edit `layouts/partials/{section}.html`
-- Homepage section order defined in `layouts/index.html`
-- FAQ data in `content/{lang}/_index.md` frontmatter
-- Stats in `hugo.toml` → `[params.stats]`
-- i18n strings in `i18n/{lang}.yaml`
-
-### Change colors/theme
-- Edit CSS custom properties in `:root` of `assets/css/main.css`
-- Primary color: `--color-primary` (#f97316)
-- Background: `--color-bg` (#0a0a0a)
+### Update Blowfish theme
+- `npm run mod:update` or `hugo mod get -u ./...`
+- `npm run mod:tidy` to clean go.sum
 
 ## Build Commands
-- `npm run dev` — Hugo dev server with drafts (`hugo server -D --navigateToChanged`)
-- `npm run build` — Production build with minification (`hugo --minify`)
-- `npm run build:preview` — Preview build with / as baseURL (`hugo --minify --baseURL '/' -D`)
+- `npm run dev` — Dev server with drafts
+- `npm run build` — Production build
+- `npm run build:preview` — Preview build with / baseURL
+- `npm run mod:update` — Update Blowfish to latest
+- `npm run mod:tidy` — Clean up go.sum
 
 ## Deployment
 - **Workflow**: `.github/workflows/hugo.yml`
-- **Trigger**: Push to `main` branch or manual dispatch
-- **Process**: Checkout → Setup Hugo 0.145.0 (extended) → Build with dynamic baseURL → Upload artifact → Deploy to GitHub Pages
-- **Timezone**: Asia/Tashkent
-- **Concurrency**: Single deployment at a time (cancel-in-progress: false)
+- **Steps**: Checkout → Setup Go → Setup Hugo → Cache modules → `hugo mod get` → Build → Deploy
+- **Target**: Private source repo → public deployment repo via SSH deploy key
 
 ## Important Conventions
-- All content must exist in all 3 languages (ru, en, uz) with identical filenames
-- Russian content has no URL prefix; English uses `/en/`, Uzbek uses `/uz/`
-- Images are organized by content type in `static/img/`
-- Menu structure supports nested items (services and platform have dropdowns in Russian nav)
-- Schema.org structured data in `layouts/partials/schema.html` (Organization, WebSite, LocalBusiness, BreadcrumbList, Article)
-
-## CSS Architecture Details
-- CSS custom properties include `--color-success`, `--color-error`, `--color-warning`
-- `@media (prefers-reduced-motion: reduce)` disables all animations
-- `.icon-accent` class sets `color: var(--color-primary)` for SVG icons using `stroke="currentColor"`
-- `.visually-hidden` class for screen-reader-only content
-- Focus-visible styles on all interactive elements
-- Touch targets minimum 44px on mobile
-- Platform layout uses CSS Grid `order` property (not `direction: rtl`)
+- All content in 3 languages with identical filenames
+- Russian = default (no URL prefix); English = `/en/`; Uzbek = `/uz/`
+- Menus use `pageRef` (Blowfish resolves URLs per language automatically)
+- Only override Blowfish layouts via official extension points
+- No custom CSS/JS — use Blowfish's built-in Tailwind classes and features
 
 ## Known Issues
-- Web3Forms API key is a placeholder — needs real key for contact form to work
-- `catalogURL` and `cabinetURL` params point to external B2B platform URLs (b2b.railtech.uz, cabinet.railtech.uz)
+- `web3formsKey` in params.toml is a placeholder — needs real API key
+- `catalogURL` / `cabinetURL` point to external B2B platform URLs

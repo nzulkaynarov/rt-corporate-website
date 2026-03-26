@@ -1,74 +1,168 @@
 {{ define "main" }}
+{{/* RailTech contact page — Web3Forms + contact info
+     Uses Blowfish Tailwind classes only. */}}
 
-{{/* Page Hero */}}
-{{ partial "page-hero.html" (dict "page" . "title" .Title "desc" .Description) }}
+{{ $extra := .Site.Params.extra }}
 
-<section class="section">
-  <div class="container">
-    <div class="contact-grid">
-      {{/* Contact Info */}}
-      <div class="contact-info">
-        <div class="contact-item">
-          <div class="contact-icon icon-accent">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          </div>
-          <div>
-            <h3>{{ i18n "contact_phone" }}</h3>
-            <a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.phone }}</a>
-          </div>
+<header class="py-16 text-center">
+  <h1 class="text-4xl font-extrabold">{{ .Title }}</h1>
+  {{ with .Description }}
+    <p class="mt-4 text-neutral-400 max-w-xl mx-auto">{{ . }}</p>
+  {{ end }}
+</header>
+
+<section class="max-w-6xl mx-auto px-4 pb-20">
+  <div class="grid gap-12 lg:grid-cols-2">
+
+    {{/* ── Contact info ─────────────────────────────────────── */}}
+    <div class="space-y-8">
+
+      {{/* Phone */}}
+      <div class="flex items-start gap-4">
+        <div class="flex-shrink-0 rounded-lg bg-primary-500/10 p-3 text-primary-400">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         </div>
-
-        <div class="contact-item">
-          <div class="contact-icon icon-accent">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <div>
-            <h3>{{ i18n "contact_email" }}</h3>
-            <a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a>
-          </div>
-        </div>
-
-        <div class="contact-item">
-          <div class="contact-icon icon-accent">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </div>
-          <div>
-            <h3>{{ i18n "contact_address" }}</h3>
-            <p>{{ i18n "footer_address" }}</p>
-          </div>
-        </div>
-
-        <div class="contact-item">
-          <div class="contact-icon icon-accent">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div>
-            <h3>{{ i18n "contact_work_hours" }}</h3>
-            <p>{{ i18n "contact_work_schedule" }}</p>
-          </div>
-        </div>
-
-        {{/* Map */}}
-        <div class="contact-map">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.5!2d{{ .Site.Params.mapLon }}!3d{{ .Site.Params.mapLat }}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDE3JzU4LjIiTiA2OcKwMTQnMjQuNCJF!5e0!3m2!1sru!2s"
-            width="100%"
-            height="300"
-            style="border:0; border-radius: 12px;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="{{ i18n "contact_address" }} — {{ .Site.Data.company.brandName }}"
-          ></iframe>
+        <div>
+          <h3 class="font-semibold">{{ i18n "contact_phone" }}</h3>
+          <a href="tel:{{ $extra.phone }}" class="text-neutral-400 hover:text-primary-400 transition-colors">{{ $extra.phone }}</a>
         </div>
       </div>
 
-      {{/* Contact Form */}}
-      <div class="contact-form-wrapper">
-        {{ partial "contact-form.html" . }}
+      {{/* Email */}}
+      <div class="flex items-start gap-4">
+        <div class="flex-shrink-0 rounded-lg bg-primary-500/10 p-3 text-primary-400">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <h3 class="font-semibold">{{ i18n "contact_email" }}</h3>
+          <a href="mailto:{{ $extra.email }}" class="text-neutral-400 hover:text-primary-400 transition-colors">{{ $extra.email }}</a>
+        </div>
       </div>
+
+      {{/* Address */}}
+      <div class="flex items-start gap-4">
+        <div class="flex-shrink-0 rounded-lg bg-primary-500/10 p-3 text-primary-400">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <h3 class="font-semibold">{{ i18n "contact_address" }}</h3>
+          <p class="text-neutral-400">{{ i18n "footer_address" }}</p>
+        </div>
+      </div>
+
+      {{/* Working hours */}}
+      <div class="flex items-start gap-4">
+        <div class="flex-shrink-0 rounded-lg bg-primary-500/10 p-3 text-primary-400">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <h3 class="font-semibold">{{ i18n "contact_work_hours" }}</h3>
+          <p class="text-neutral-400">{{ i18n "contact_work_schedule" }}</p>
+        </div>
+      </div>
+
+      {{/* Map */}}
+      <div class="mt-6 overflow-hidden rounded-xl">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.5!2d{{ $extra.mapLon }}!3d{{ $extra.mapLat }}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDE3JzU4LjIiTiA2OcKwMTQnMjQuNCJF!5e0!3m2!1sru!2s"
+          width="100%"
+          height="250"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="{{ i18n "contact_address" }} — {{ .Site.Data.company.brandName }}"
+        ></iframe>
+      </div>
+    </div>
+
+    {{/* ── Contact form ─────────────────────────────────────── */}}
+    <div class="rounded-2xl border border-neutral-800 p-8">
+      <h2 class="text-xl font-bold mb-2">{{ i18n "form_title" }}</h2>
+      <p class="text-sm text-neutral-400 mb-6">{{ i18n "form_desc" }}</p>
+
+      <form id="contact-form" class="space-y-5">
+        <input type="hidden" name="access_key" value="{{ $extra.web3formsKey }}">
+        <input type="hidden" name="subject" value="New Contact Request — {{ .Site.Data.company.brandName }}">
+        <input type="checkbox" name="botcheck" class="hidden" style="display:none">
+
+        <div>
+          <label for="name" class="block text-sm font-medium mb-1">{{ i18n "form_name" }}</label>
+          <input type="text" id="name" name="name" required
+            class="w-full rounded-lg border border-neutral-700 bg-neutral-800/50 px-4 py-2.5 text-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 transition-colors">
+        </div>
+
+        <div>
+          <label for="company" class="block text-sm font-medium mb-1">{{ i18n "form_company" }}</label>
+          <input type="text" id="company" name="company"
+            class="w-full rounded-lg border border-neutral-700 bg-neutral-800/50 px-4 py-2.5 text-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 transition-colors">
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="phone" class="block text-sm font-medium mb-1">{{ i18n "form_phone" }}</label>
+            <input type="tel" id="phone" name="phone"
+              class="w-full rounded-lg border border-neutral-700 bg-neutral-800/50 px-4 py-2.5 text-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 transition-colors">
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium mb-1">{{ i18n "form_email" }}</label>
+            <input type="email" id="email" name="email" required
+              class="w-full rounded-lg border border-neutral-700 bg-neutral-800/50 px-4 py-2.5 text-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 transition-colors">
+          </div>
+        </div>
+
+        <div>
+          <label for="message" class="block text-sm font-medium mb-1">{{ i18n "form_msg" }}</label>
+          <textarea id="message" name="message" rows="4" required
+            class="w-full rounded-lg border border-neutral-700 bg-neutral-800/50 px-4 py-2.5 text-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 transition-colors resize-y"></textarea>
+        </div>
+
+        <button type="submit" id="submit-btn"
+          class="w-full rounded-lg bg-primary-500 px-6 py-3 text-sm font-semibold text-white hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-neutral-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          {{ i18n "btn_send" }}
+        </button>
+
+        <div id="form-status" class="text-sm text-center hidden"></div>
+      </form>
+
+      <script>
+        (() => {
+          const form = document.getElementById('contact-form');
+          const btn  = document.getElementById('submit-btn');
+          const msg  = document.getElementById('form-status');
+          if (!form) return;
+
+          form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            btn.disabled = true;
+            btn.textContent = '{{ i18n "form_sending" }}';
+            msg.className = 'text-sm text-center hidden';
+
+            try {
+              const res = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify(Object.fromEntries(new FormData(form))),
+              });
+              const data = await res.json();
+              if (data.success) {
+                msg.textContent = '{{ i18n "form_success" }}';
+                msg.className = 'text-sm text-center text-green-400';
+                form.reset();
+              } else {
+                throw new Error(data.message || 'Error');
+              }
+            } catch {
+              msg.textContent = '{{ i18n "form_error" }}';
+              msg.className = 'text-sm text-center text-red-400';
+            } finally {
+              btn.disabled = false;
+              btn.textContent = '{{ i18n "btn_send" }}';
+            }
+          });
+        })();
+      </script>
     </div>
   </div>
 </section>
-
 {{ end }}

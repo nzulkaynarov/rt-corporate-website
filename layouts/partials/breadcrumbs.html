@@ -1,9 +1,0 @@
-<nav class="breadcrumbs" aria-label="Breadcrumb">
-  <ol>
-    <li><a href="{{ .Site.Home.RelPermalink }}">{{ i18n "nav_home" | default "Home" }}</a></li>
-    {{ if and .Parent (ne .Parent .Site.Home) }}
-    <li><a href="{{ .Parent.RelPermalink }}">{{ .Parent.Title }}</a></li>
-    {{ end }}
-    <li aria-current="page">{{ .Title }}</li>
-  </ol>
-</nav>

@@ -153,33 +153,40 @@
   ],
 
   "frontMatter.content.snippets": {
-    "CTA Block": {
-      "description": "Insert a call-to-action button",
+    "Button": {
+      "description": "Blowfish button shortcode",
       "body": [
         "",
-        "<div class=\"cta-inline\">",
-        "  <p>[[text]]</p>",
-        "  <a href=\"[[link]]\" class=\"btn btn-primary\">[[button_text]]</a>",
-        "</div>",
+        "{{< button href=\"[[link]]\" target=\"[[target]]\" >}}",
+        "[[label]]",
+        "{{< /button >}}",
         ""
       ],
       "fields": [
-        { "name": "text", "title": "CTA text", "type": "string", "default": "Ready to get started?" },
-        { "name": "link", "title": "Button URL", "type": "string", "default": "/contact/" },
-        { "name": "button_text", "title": "Button label", "type": "string", "default": "Contact Us" }
+        { "name": "label", "title": "Button label", "type": "string", "default": "Contact Us" },
+        { "name": "link", "title": "URL", "type": "string", "default": "/contact/" },
+        { "name": "target", "title": "Target", "type": "string", "default": "_self" }
       ]
     },
-    "Info Box": {
-      "description": "Insert a highlighted info block",
+    "Alert": {
+      "description": "Blowfish alert shortcode",
       "body": [
         "",
-        "> **[[title]]**",
-        "> [[content]]",
+        "{{< alert \"[[icon]]\" >}}",
+        "[[content]]",
+        "{{< /alert >}}",
         ""
       ],
       "fields": [
-        { "name": "title", "title": "Title", "type": "string" },
-        { "name": "content", "title": "Content", "type": "string" }
+        { "name": "icon", "title": "Icon (empty, comment, check, fire, bomb, etc.)", "type": "string", "default": "" },
+        { "name": "content", "title": "Alert text", "type": "string" }
+      ]
+    },
+    "Badge": {
+      "description": "Blowfish badge shortcode",
+      "body": ["{{< badge >}}[[text]]{{< /badge >}}"],
+      "fields": [
+        { "name": "text", "title": "Badge text", "type": "string" }
       ]
     }
   },

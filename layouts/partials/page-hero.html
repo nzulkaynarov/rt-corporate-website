@@ -1,9 +1,0 @@
-<section class="page-hero" {{ with .image }}style="background-image: linear-gradient(to bottom, rgba(var(--color-bg-rgb, 10,10,10),0.7), rgba(var(--color-bg-rgb, 10,10,10),0.95)), url('{{ . }}')"{{ end }}>
-  <div class="container">
-    {{ partial "breadcrumbs.html" .page }}
-    <h1 class="page-hero-title">{{ .title }}</h1>
-    {{ with .desc }}
-    <p class="page-hero-desc">{{ . }}</p>
-    {{ end }}
-  </div>
-</section>

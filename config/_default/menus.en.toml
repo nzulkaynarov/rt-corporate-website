@@ -1,0 +1,41 @@
+# English menu — uses pageRef for automatic multilingual URL resolution
+
+[[main]]
+  name = "About"
+  pageRef = "about"
+  weight = 1
+
+[[main]]
+  name = "Services"
+  pageRef = "services"
+  weight = 2
+
+[[main]]
+  name = "Projects"
+  pageRef = "projects"
+  weight = 3
+
+[[main]]
+  name = "Platform"
+  pageRef = "platform"
+  weight = 4
+
+[[main]]
+  name = "Blog"
+  pageRef = "blog"
+  weight = 5
+
+[[main]]
+  name = "Contact"
+  pageRef = "contact"
+  weight = 6
+
+[[footer]]
+  name = "Privacy Policy"
+  pageRef = "privacy"
+  weight = 1
+
+[[footer]]
+  name = "Terms of Use"
+  pageRef = "terms"
+  weight = 2

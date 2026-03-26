@@ -1,0 +1,124 @@
+{{/* RailTech corporate homepage — Blowfish custom layout
+     Uses only Blowfish Tailwind classes + i18n strings + site params.
+     Zero custom CSS required. */}}
+
+{{ $extra := .Site.Params.extra }}
+{{ $stats := $extra.stats }}
+
+{{/* ── Hero ────────────────────────────────────────────────── */}}
+<section class="py-24 px-4 text-center">
+  <div class="max-w-4xl mx-auto">
+
+    {{/* Animated chips */}}
+    <div class="flex flex-wrap justify-center gap-2 mb-8">
+      {{ range slice (i18n "hero_chip_1") (i18n "hero_chip_2") (i18n "hero_chip_3") }}
+        <span class="inline-block rounded-full bg-primary-100/10 px-4 py-1.5 text-sm font-medium text-primary-400">
+          {{ . }}
+        </span>
+      {{ end }}
+    </div>
+
+    <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl mb-6">
+      {{ i18n "hero_title" }}
+    </h1>
+
+    <p class="text-lg text-neutral-400 max-w-2xl mx-auto mb-10">
+      {{ i18n "hero_desc" }}
+    </p>
+
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="{{ "contact/" | relLangURL }}"
+         class="inline-flex items-center rounded-lg bg-primary-500 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-600 transition-colors">
+        {{ i18n "btn_contact" }}
+      </a>
+      <a href="{{ $extra.catalogURL }}"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="inline-flex items-center rounded-lg border border-neutral-700 px-6 py-3 text-sm font-semibold text-neutral-200 hover:bg-neutral-800 transition-colors">
+        {{ i18n "btn_catalog" }}
+        <span class="sr-only">{{ i18n "link_new_tab" }}</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+{{/* ── Stats ───────────────────────────────────────────────── */}}
+<section class="py-16 border-t border-neutral-800">
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="grid grid-cols-2 gap-8 sm:grid-cols-4 text-center">
+      {{ $labels := slice (i18n "stats_years") (i18n "stats_partners") (i18n "stats_sku") (i18n "stats_countries") }}
+      {{ $values := slice $stats.years $stats.partners $stats.skus $stats.countries }}
+      {{ range $i, $v := $values }}
+        <div>
+          <div class="text-3xl font-extrabold text-primary-500">{{ $v }}</div>
+          <div class="mt-1 text-sm text-neutral-400">{{ index $labels $i }}</div>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{/* ── Services preview ────────────────────────────────────── */}}
+{{ $services := where (where .Site.RegularPages "Section" "services") ".Draft" false }}
+{{ with $services }}
+<section class="py-20 border-t border-neutral-800">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <span class="inline-block rounded-full bg-primary-100/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary-400 mb-4">
+        {{ i18n "srv_badge" }}
+      </span>
+      <h2 class="text-3xl font-bold">{{ i18n "srv_main_title" }}</h2>
+      <p class="mt-4 text-neutral-400 max-w-2xl mx-auto">{{ i18n "srv_main_desc" }}</p>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2">
+      {{ range sort . "Params.weight" }}
+        <a href="{{ .RelPermalink }}"
+           class="group block rounded-2xl border border-neutral-800 p-6 transition-colors hover:border-primary-500/40 hover:bg-neutral-800/50">
+          <h3 class="text-lg font-semibold group-hover:text-primary-400 transition-colors">
+            {{ .Title }}
+          </h3>
+          <p class="mt-2 text-sm text-neutral-400 line-clamp-3">{{ .Description }}</p>
+          {{ with .Params.features }}
+            <ul class="mt-4 space-y-1">
+              {{ range first 3 . }}
+                <li class="flex items-start gap-2 text-sm text-neutral-300">
+                  <span class="mt-1 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary-500"></span>
+                  {{ . }}
+                </li>
+              {{ end }}
+            </ul>
+          {{ end }}
+        </a>
+      {{ end }}
+    </div>
+
+    <div class="text-center mt-10">
+      <a href="{{ "services/" | relLangURL }}"
+         class="text-sm font-medium text-primary-400 hover:text-primary-300 transition-colors">
+        {{ i18n "btn_all_services" }} &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── CTA ─────────────────────────────────────────────────── */}}
+<section class="py-20 border-t border-neutral-800">
+  <div class="max-w-3xl mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold mb-4">{{ i18n "cta_title" }}</h2>
+    <p class="text-neutral-400 mb-8">{{ i18n "cta_desc" }}</p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="{{ "contact/" | relLangURL }}"
+         class="inline-flex items-center rounded-lg bg-primary-500 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-600 transition-colors">
+        {{ i18n "cta_primary" }}
+      </a>
+      <a href="{{ $extra.catalogURL }}"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="inline-flex items-center rounded-lg border border-neutral-700 px-6 py-3 text-sm font-semibold text-neutral-200 hover:bg-neutral-800 transition-colors">
+        {{ i18n "cta_secondary" }}
+      </a>
+    </div>
+  </div>
+</section>

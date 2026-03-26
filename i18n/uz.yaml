@@ -118,3 +118,51 @@ nav_skip: "Asosiy kontentga o'tish"
 adv_section_title: "Bizning afzalliklarimiz"
 link_new_tab: "(yangi oynada ochiladi)"
 search_placeholder_full: "Nimani qidiryapsiz?"
+
+# ─── Blowfish theme UI keys (uz not built-in) ───────────────
+article.anchor: "Bog'lanish"
+article.date: "Nashr etilgan"
+article.author: "Muallif"
+article.draft: "Qoralama"
+article.edit: "Tahrirlash"
+article.hero: "Rasm"
+article.lastmod: "Yangilangan"
+article.readingTime:
+  one: "1 daqiqa o'qish"
+  other: "{{ .Count }} daqiqa o'qish"
+article.relatedArticles: "O'xshash maqolalar"
+article.tableOfContents: "Mundarija"
+article.word:
+  one: "1 so'z"
+  other: "{{ .Count }} so'z"
+article.views: "ko'rishlar"
+article.likes: "yoqtirishlar"
+
+error.404title: "Sahifa topilmadi"
+error.404description: "Havola eskirgan yoki sahifa ko'chirilgan bo'lishi mumkin."
+error.404action: "Bosh sahifaga"
+
+footer.darkMode: "To'q mavzu"
+footer.lightMode: "Yorug' mavzu"
+footer.switchToDarkMode: "To'q mavzuga o'tish"
+footer.switchToLightMode: "Yorug' mavzuga o'tish"
+
+global.backToTop: "Tepaga qaytish"
+global.goHome: "Bosh sahifaga"
+
+list.noArticles: "Bu yerda hali maqolalar yo'q."
+
+search.search: "Qidirish"
+search.title: "Qidirish"
+search.loading: "Yuklanmoqda..."
+search.noResults: "Hech narsa topilmadi"
+search.suffix: " - {{ .Site.Title }}"
+
+sharing.email: "Email orqali ulashish"
+sharing.facebook: "Facebook'da ulashish"
+sharing.linkedin: "LinkedIn'da ulashish"
+sharing.pinterest: "Pinterest'da ulashish"
+sharing.reddit: "Reddit'da ulashish"
+sharing.telegram: "Telegram'da ulashish"
+sharing.twitter: "Twitter'da ulashish"
+sharing.whatsapp: "WhatsApp'da ulashish"

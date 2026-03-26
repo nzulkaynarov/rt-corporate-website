@@ -1,8 +1,6 @@
 ---
 title: "RailTech — Temir yo'l texnologiyalari hamkoringiz"
 description: "O'zbekiston temir yo'l sanoati uchun asbob-uskunalar yetkazib berish, texnik ekspertiza va raqamli yechimlar. 5+ yillik tajriba, 120+ hamkor, 500+ SKU."
-type: home
-
 hero:
   title: "Temir yo'l texnologiyalarida ishonchli hamkoringiz"
   subtitle: "Asbob-uskunalar yetkazib berish, texnik ekspertiza, ishlab chiqarishni lokalizatsiya qilish va raqamli B2B platforma — barchasi bir joyda."

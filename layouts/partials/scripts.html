@@ -1,9 +1,0 @@
-{{/* Main JS — processed via Hugo Pipes for fingerprinting */}}
-{{ $mainJS := resources.Get "js/main.js" | minify | fingerprint }}
-<script src="{{ $mainJS.RelPermalink }}" integrity="{{ $mainJS.Data.Integrity }}" defer></script>
-
-{{/* Contact form (only on contact page) */}}
-{{ if eq .Type "contact" }}
-{{ $contactJS := resources.Get "js/contact-form.js" | minify | fingerprint }}
-<script src="{{ $contactJS.RelPermalink }}" integrity="{{ $contactJS.Data.Integrity }}" defer></script>
-{{ end }}

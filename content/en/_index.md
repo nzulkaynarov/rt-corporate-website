@@ -1,7 +1,6 @@
 ---
 title: "RailTech — Industrial Equipment Supply Solutions"
 description: "RailTech is a trusted supplier of high-quality industrial equipment and consulting services in Uzbekistan. Official warranty, customs clearance, and delivery included."
-type: home
 faq:
   - question: "How do I request a commercial quote?"
     answer: "Register in the Partner Portal, complete a quick company verification (KYC), browse the catalog to select the items you need, and click 'Request Quote.' A dedicated manager will prepare your proposal and deliver it through the portal."

@@ -1,0 +1,76 @@
+# Blowfish theme parameters
+# Docs: https://blowfish.page/docs/configuration/
+
+# ─── Appearance ─────────────────────────────────────────────────
+colorScheme = "railtech"
+defaultAppearance = "dark"
+autoSwitchAppearance = false
+enableSearch = true
+enableCodeCopy = true
+
+# ─── Images ─────────────────────────────────────────────────────
+logo = "img/brand/railtech-logo.svg"
+favicon = "img/brand/favicon.ico"
+
+[homepage]
+  layout = "custom"
+  showRecent = true
+  showRecentItems = 3
+  showMoreLink = true
+  showMoreLinkDest = "/blog"
+  cardView = true
+  cardViewScreenWidth = false
+
+[article]
+  showHero = true
+  heroStyle = "basic"
+  showDate = true
+  showDateUpdated = false
+  showAuthor = true
+  showBreadcrumbs = true
+  showTableOfContents = true
+  showRelatedContent = true
+  sharingLinks = ["telegram", "facebook", "linkedin"]
+
+[list]
+  showHero = false
+  heroStyle = "background"
+  showBreadcrumbs = true
+  showSummary = true
+  showTableOfContents = false
+  groupByYear = false
+  cardView = true
+  cardViewScreenWidth = false
+
+[taxonomy]
+  showTermCount = true
+  cardView = true
+
+[sitemap]
+  excludedKinds = []
+
+[header]
+  layout = "basic"
+
+[footer]
+  showCopyright = false
+  showThemeAttribution = false
+  showAppearanceSwitcher = true
+  showScrollToTop = true
+
+# ─── RailTech custom params ─────────────────────────────────────
+[extra]
+  phone = "+998 90 118-90-00"
+  email = "info@railtech.uz"
+  catalogURL = "https://b2b.railtech.uz"
+  cabinetURL = "https://cabinet.railtech.uz"
+  mapLat = "41.2995"
+  mapLon = "69.2401"
+  web3formsKey = "WEB3FORMS_ACCESS_KEY"
+  copyright = "© 2021–2026 RailTech LLC"
+
+  [extra.stats]
+    years = "5+"
+    partners = "120+"
+    skus = "500+"
+    countries = "3"

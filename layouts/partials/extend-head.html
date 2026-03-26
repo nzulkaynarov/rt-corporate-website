@@ -1,0 +1,8 @@
+{{/* RailTech — extra <head> tags (favicon + OG image) */}}
+{{ with .Site.Params.favicon }}
+  <link rel="icon" href="{{ . | relURL }}" type="image/x-icon">
+{{ end }}
+{{ with .Site.Params.ogImage }}
+  <meta property="og:image" content="{{ . | absURL }}">
+  <meta name="twitter:image" content="{{ . | absURL }}">
+{{ end }}
