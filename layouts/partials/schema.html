@@ -24,9 +24,9 @@
     "availableLanguage": ["Russian", "English", "Uzbek"]
   },
   "sameAs": [
-    {{ with .Site.Params.social.telegram }}"{{ . }}"{{ end }}
-    {{ with .Site.Params.social.linkedin }},"{{ . }}"{{ end }}
-    {{ with .Site.Params.social.facebook }},"{{ . }}"{{ end }}
+    {{ with .Site.Data.social.telegram }}"{{ . }}"{{ end }}
+    {{ with .Site.Data.social.linkedin }},"{{ . }}"{{ end }}
+    {{ with .Site.Data.social.facebook }},"{{ . }}"{{ end }}
   ]
 }
 </script>
