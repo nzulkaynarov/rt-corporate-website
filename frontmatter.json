@@ -91,7 +91,7 @@
       "fields": [
         { "title": "Title", "name": "title", "type": "string", "required": true },
         { "title": "Description", "name": "description", "type": "string", "description": "SEO description (max 160 chars)" },
-        { "title": "Date", "name": "date", "type": "datetime", "default": "{{now}}", "isPublishDate": true },
+        { "title": "Date", "name": "date", "type": "datetime", "isPublishDate": true },
         { "title": "Last Modified", "name": "lastmod", "type": "datetime", "isModifiedDate": true },
         { "title": "Author", "name": "author", "type": "string", "default": "RailTech" },
         { "title": "Image", "name": "image", "type": "image", "description": "Featured image (16:9 ratio, min 800x450)" },
