@@ -1,0 +1,33 @@
+{{/* robots.txt — dynamically generated from data/seo.yaml
+     Edit rules via Frontmatter CMS → Data Files → Global SEO Settings */}}
+
+{{ $robots := .Site.Data.seo.robots }}
+{{ if $robots.enabled }}
+  {{- range $robots.rules }}
+User-agent: {{ .userAgent }}
+    {{- with .allow }}
+    {{- if reflect.IsSlice . }}
+      {{- range . }}
+Allow: {{ . }}
+      {{- end }}
+    {{- else }}
+Allow: {{ . }}
+    {{- end }}
+    {{- end }}
+    {{- with .disallow }}
+    {{- if reflect.IsSlice . }}
+      {{- range . }}
+Disallow: {{ . }}
+      {{- end }}
+    {{- else }}
+Disallow: {{ . }}
+    {{- end }}
+    {{- end }}
+
+  {{ end }}
+{{ else }}
+User-agent: *
+Allow: /
+
+{{ end }}
+Sitemap: {{ .Site.BaseURL }}sitemap.xml

@@ -30,3 +30,10 @@ A proprietary development by RailTech — a digital B2B platform that automates 
 ### Technology
 
 The platform is built on a modern technology stack, ensuring high performance, security, and scalability.
+
+---
+
+> Want to implement a similar project? Our team is ready to discuss your needs and offer the best solution.
+
+{{</* button href="/contact/" */>}}Discuss a Project{{</* /button */>}}
+{{</* button href="/services/" */>}}Our Services{{</* /button */>}}

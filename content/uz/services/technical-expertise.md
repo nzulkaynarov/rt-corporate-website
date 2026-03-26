@@ -2,7 +2,7 @@
 title: "Texnik ekspertiza"
 description: "Temir yo'l uskunalari va tizimlari bo'yicha professional texnik maslahat, loyiha ekspertizasi va muhandislik xizmatlari."
 weight: 2
-icon: "clipboard-check"
+icon: /img/icons/expertise.svg
 
 features:
   - title: "Texnik maslahat"
@@ -37,3 +37,10 @@ Biz temir yo'l sohasida chuqur bilim va tajribaga ega mutaxassislar jamoasiga eg
 3. **Loyihalash** — texnik hujjatlar va loyiha rejasini ishlab chiqish
 4. **Amalga oshirish** — uskunalarni yetkazib berish, o'rnatish va sozlash
 5. **Qo'llab-quvvatlash** — doimiy texnik xizmat ko'rsatish va maslahat
+
+---
+
+> Loyihangizni muhokama qilishga tayyormisiz? Tijorat taklifini olish uchun biz bilan bog'laning yoki B2B katalogdan uskunalarni tanlang.
+
+{{< button href="/contact/" >}}Biz bilan bog'laning{{< /button >}}
+{{< button href="https://b2b.railtech.uz" target="_blank" >}}Katalogni ochish{{< /button >}}

@@ -30,3 +30,10 @@ Our team of engineers and technical specialists provides a full range of consult
 2. We conduct a technical audit and prepare recommendations
 3. We select the optimal solution factoring in budget and timeline
 4. We support the implementation through to full operational readiness
+
+---
+
+> Ready to discuss your project? Contact us for a commercial proposal or browse the B2B catalog to find the right equipment.
+
+{{</* button href="/contact/" */>}}Contact Us{{</* /button */>}}
+{{</* button href="https://b2b.railtech.uz" target="_blank" */>}}Open Catalog{{</* /button */>}}

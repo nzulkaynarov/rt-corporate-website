@@ -27,3 +27,10 @@ Vagonlarni ta'mirlash va texnik xizmat ko'rsatish sifatini oshirish maqsadida za
 ### Natijalar
 
 Yangi diagnostika uskunalari ta'mirlash sifatini sezilarli oshirdi va nosozliklarni aniqlash vaqtini qisqartirdi. Korxona xodimlari yangi uskunalar bilan ishlash bo'yicha to'liq o'qitildi.
+
+---
+
+> Shunga o'xshash loyihani amalga oshirmoqchimisiz? Bizning jamoamiz sizning ehtiyojlaringizni muhokama qilishga tayyor.
+
+{{< button href="/contact/" >}}Loyihani muhokama qilish{{< /button >}}
+{{< button href="/services/" >}}Bizning xizmatlar{{< /button >}}

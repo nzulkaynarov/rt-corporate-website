@@ -23,3 +23,10 @@ RailTech serves as the official representative and dealer for leading internatio
 - **Marketing** — promoting products and services in the local market
 - **Legal Support** — contract preparation and regulatory coordination
 - **Analytics** — regular reports on market conditions and competitive landscape
+
+---
+
+> Ready to discuss your project? Contact us for a commercial proposal or browse the B2B catalog to find the right equipment.
+
+{{</* button href="/contact/" */>}}Contact Us{{</* /button */>}}
+{{</* button href="https://b2b.railtech.uz" target="_blank" */>}}Open Catalog{{</* /button */>}}

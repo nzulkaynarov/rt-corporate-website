@@ -1,0 +1,87 @@
+{{/* sitemap.xml — dynamically generated using data/seo.yaml config
+     Edit changefreq/priority via Frontmatter CMS → Data Files → Global SEO Settings */}}
+
+{{ $sitemapCfg := .Site.Data.seo.sitemap }}
+{{ $changefreqs := $sitemapCfg.changefreq }}
+{{ $priorities := $sitemapCfg.priority }}
+
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  {{/* Homepage entries (all languages) */}}
+  {{ range .Site.Home.AllTranslations }}
+    <url>
+      <loc>{{ .Permalink }}</loc>
+      {{ with .Lastmod }}<lastmod>{{ .Format "2006-01-02T15:04:05Z07:00" }}</lastmod>{{ end }}
+      <changefreq>{{ $changefreqs.homepage | default "weekly" }}</changefreq>
+      <priority>{{ $priorities.homepage | default 1.0 }}</priority>
+      {{ if gt (len .Site.Home.AllTranslations) 1 }}
+        {{ range .Site.Home.AllTranslations }}
+          <xhtml:link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}"/>
+        {{ end }}
+      {{ end }}
+    </url>
+  {{ end }}
+
+  {{/* Regular pages */}}
+  {{ range .Site.RegularPages }}
+    {{ if .Draft }}{{ continue }}{{ end }}
+
+    {{ $changefreq := $changefreqs.pages | default "monthly" }}
+    {{ $priority := $priorities.pages | default 0.7 }}
+
+    {{ if eq .Section "blog" }}
+      {{ $changefreq = $changefreqs.blogPosts | default "monthly" }}
+      {{ $priority = $priorities.blogPosts | default 0.8 }}
+    {{ else if eq .Section "services" }}
+      {{ $changefreq = $changefreqs.services | default "monthly" }}
+      {{ $priority = $priorities.services | default 0.8 }}
+    {{ else if eq .Section "projects" }}
+      {{ $changefreq = $changefreqs.services | default "monthly" }}
+      {{ $priority = $priorities.services | default 0.8 }}
+    {{ else if eq .Section "platform" }}
+      {{ $changefreq = $changefreqs.services | default "weekly" }}
+      {{ $priority = $priorities.services | default 0.8 }}
+    {{ end }}
+
+    <url>
+      <loc>{{ .Permalink }}</loc>
+      {{ with .Lastmod }}<lastmod>{{ .Format "2006-01-02T15:04:05Z07:00" }}</lastmod>{{ end }}
+      <changefreq>{{ $changefreq }}</changefreq>
+      <priority>{{ $priority }}</priority>
+
+      {{ with .Params.image }}
+        <image:image>
+          <image:loc>{{ . | absURL }}</image:loc>
+          {{ with $.Params.seoTitle }}<image:title>{{ . }}</image:title>{{ end }}
+          {{ with $.Params.description }}<image:caption>{{ . }}</image:caption>{{ end }}
+        </image:image>
+      {{ end }}
+
+      {{ if gt (len .AllTranslations) 1 }}
+        {{ range .AllTranslations }}
+          <xhtml:link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}"/>
+        {{ end }}
+      {{ end }}
+    </url>
+  {{ end }}
+
+  {{/* Section index pages */}}
+  {{ range .Site.Sections }}
+    {{ if .Draft }}{{ continue }}{{ end }}
+    <url>
+      <loc>{{ .Permalink }}</loc>
+      {{ with .Lastmod }}<lastmod>{{ .Format "2006-01-02T15:04:05Z07:00" }}</lastmod>{{ end }}
+      <changefreq>weekly</changefreq>
+      <priority>0.6</priority>
+      {{ if gt (len .AllTranslations) 1 }}
+        {{ range .AllTranslations }}
+          <xhtml:link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}"/>
+        {{ end }}
+      {{ end }}
+    </url>
+  {{ end }}
+
+</urlset>

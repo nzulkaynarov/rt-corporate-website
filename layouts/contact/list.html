@@ -1,8 +1,9 @@
 {{ define "main" }}
 {{/* RailTech contact page — Web3Forms + contact info
-     Premium dark theme. Blowfish Tailwind only. WCAG 2.1 AA. */}}
+     Steel Blue theme. Blowfish Tailwind only. WCAG 2.1 AA. */}}
 
 {{ $extra := .Site.Params.extra }}
+{{ $phoneClean := replace $extra.phone " " "" }}
 
 <header class="py-20 text-center">
   <h1 class="text-4xl font-extrabold text-neutral-50">{{ .Title }}</h1>
@@ -18,7 +19,7 @@
     <div class="space-y-8">
 
       {{ $items := slice
-        (dict "icon" "phone"   "title" (i18n "contact_phone")      "value" $extra.phone      "href" (printf "tel:%s" $extra.phone))
+        (dict "icon" "phone"   "title" (i18n "contact_phone")      "value" $extra.phone      "href" (printf "tel:%s" $phoneClean))
         (dict "icon" "email"   "title" (i18n "contact_email")      "value" $extra.email      "href" (printf "mailto:%s" $extra.email))
         (dict "icon" "pin"     "title" (i18n "contact_address")    "value" (i18n "footer_address") "href" "")
         (dict "icon" "clock"   "title" (i18n "contact_work_hours") "value" (i18n "contact_work_schedule") "href" "")
@@ -26,7 +27,7 @@
 
       {{ range $items }}
         <div class="flex items-start gap-4">
-          <div class="flex-shrink-0 rounded-xl border border-neutral-800 bg-neutral-800/50 p-3.5 text-primary-400">
+          <div class="flex-shrink-0 rounded-xl border border-neutral-700/50 bg-neutral-800/50 p-3.5 text-primary-400">
             {{ if eq .icon "phone" }}
               <svg aria-hidden="true" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             {{ else if eq .icon "email" }}
@@ -38,9 +39,10 @@
             {{ end }}
           </div>
           <div>
-            <h3 class="text-sm font-semibold text-neutral-200">{{ .title }}</h3>
+            {{/* Fixed: was <h3>, now <p> to avoid heading hierarchy skip (H1→H3) */}}
+            <p class="text-sm font-semibold text-neutral-200">{{ .title }}</p>
             {{ if .href }}
-              <a href="{{ .href }}" class="mt-0.5 block text-neutral-400 hover:text-primary-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 transition-colors">{{ .value }}</a>
+              <a href="{{ .href | safeURL }}" class="mt-0.5 block text-neutral-400 hover:text-primary-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 transition-colors">{{ .value }}</a>
             {{ else }}
               <p class="mt-0.5 text-neutral-400">{{ .value }}</p>
             {{ end }}
@@ -49,7 +51,7 @@
       {{ end }}
 
       {{/* Map */}}
-      <div class="mt-8 overflow-hidden rounded-xl border border-neutral-800">
+      <div class="mt-8 overflow-hidden rounded-xl border border-neutral-700/50">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.5!2d{{ $extra.mapLon }}!3d{{ $extra.mapLat }}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDE3JzU4LjIiTiA2OcKwMTQnMjQuNCJF!5e0!3m2!1sru!2s"
           width="100%"
@@ -64,14 +66,17 @@
     </div>
 
     {{/* ── Contact form ─────────────────────────────────────── */}}
-    <div class="rounded-2xl border border-neutral-800 bg-neutral-800/20 p-8 lg:p-10">
+    <div class="rounded-2xl border border-neutral-700/50 bg-neutral-800/20 p-8 lg:p-10">
       <h2 class="text-xl font-bold text-neutral-50 mb-2">{{ i18n "form_title" }}</h2>
       <p class="text-sm text-neutral-400 mb-8">{{ i18n "form_desc" }}</p>
 
       <form id="contact-form" class="space-y-5" novalidate>
         <input type="hidden" name="access_key" value="{{ $extra.web3formsKey }}">
         <input type="hidden" name="subject" value="New Contact Request — {{ .Site.Data.company.brandName }}">
-        <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" aria-hidden="true">
+        {{/* Honeypot — hidden from assistive tech and keyboard */}}
+        <div aria-hidden="true" style="display:none">
+          <input type="checkbox" name="botcheck" tabindex="-1">
+        </div>
 
         <div>
           <label for="name" class="block text-sm font-medium text-neutral-300 mb-1.5">{{ i18n "form_name" }} <span aria-hidden="true" class="text-primary-400">*</span></label>
@@ -108,7 +113,7 @@
         </div>
 
         <button type="submit" id="submit-btn"
-          class="w-full rounded-lg bg-neutral-50 px-6 py-3.5 text-sm font-semibold text-neutral-900 shadow-sm hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          class="w-full rounded-lg bg-primary-500 px-6 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
           {{ i18n "btn_send" }}
         </button>
 

@@ -1,0 +1,10 @@
+/* RailTech — custom.css
+   NOTE: Blowfish places this file inside @layer utilities, so standard
+   utility overrides (grid-cols, gap, etc.) won't work here — they're
+   defined in extend-head.html <style> instead.
+   Keep this file minimal: only styles that work within @layer. */
+
+/* ── Details/summary accordion (fallback — also in extend-head) ──── */
+details summary { list-style: none; }
+details summary::-webkit-details-marker { display: none; }
+details[open] .rt-chevron { transform: rotate(180deg); }

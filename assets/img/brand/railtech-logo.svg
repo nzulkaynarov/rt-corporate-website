@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 36" fill="none">
+  <!-- Orange square icon with rail lines -->
+  <rect width="36" height="36" rx="6" fill="#f97316"/>
+  <path d="M9 13h18M9 18h14M9 23h16" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Wordmark -->
+  <text x="46" y="26" font-family="system-ui, -apple-system, sans-serif" font-weight="700" font-size="20" fill="#f9fafb" letter-spacing="-0.5">RailTech</text>
+</svg>

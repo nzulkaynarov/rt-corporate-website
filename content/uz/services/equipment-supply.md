@@ -2,7 +2,7 @@
 title: "Asbob-uskunalar yetkazib berish"
 description: "Temir yo'l infratuzilmasi uchun sifatli asbob-uskunalar va ehtiyot qismlarni yetkazib berish. 500+ SKU, sertifikatlangan mahsulotlar."
 weight: 1
-icon: "truck"
+icon: /img/icons/supply.svg
 
 features:
   - title: "Keng assortiment"
@@ -34,3 +34,10 @@ features:
 ### Nega bizni tanlashadi?
 
 Biz shunchaki yetkazib beruvchi emasmiz — biz texnik ekspertizani ham taqdim etamiz. Har bir buyurtma uchun mutaxassislarimiz eng mos mahsulotni tanlashda yordam beradi, texnik hujjatlarni tayyorlaydi va o'rnatishda maslahat beradi.
+
+---
+
+> Loyihangizni muhokama qilishga tayyormisiz? Tijorat taklifini olish uchun biz bilan bog'laning yoki B2B katalogdan uskunalarni tanlang.
+
+{{< button href="/contact/" >}}Biz bilan bog'laning{{< /button >}}
+{{< button href="https://b2b.railtech.uz" target="_blank" >}}Katalogni ochish{{< /button >}}

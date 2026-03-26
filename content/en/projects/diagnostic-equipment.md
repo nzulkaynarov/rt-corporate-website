@@ -28,3 +28,10 @@ Supply of a comprehensive diagnostic equipment package for monitoring railway tr
 ### Results
 
 The client received state-of-the-art equipment for conducting scheduled and unscheduled diagnostic inspections, improving both safety and efficiency of infrastructure maintenance.
+
+---
+
+> Want to implement a similar project? Our team is ready to discuss your needs and offer the best solution.
+
+{{</* button href="/contact/" */>}}Discuss a Project{{</* /button */>}}
+{{</* button href="/services/" */>}}Our Services{{</* /button */>}}

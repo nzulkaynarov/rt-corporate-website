@@ -1,39 +1,41 @@
 {{/* RailTech corporate homepage — Blowfish custom layout
-     Premium dark theme. Orange = accent only.
-     All styling via Blowfish built-in Tailwind. WCAG 2.1 AA. */}}
+     Steel Blue + Cyan palette · WCAG 2.1 AA · Inter font
+     Grid/gap/spacing use inline styles because Blowfish's pre-compiled
+     Tailwind (@layer utilities) doesn't include grid-cols-4, gap-*, etc. */}}
 
 {{ $extra := .Site.Params.extra }}
-{{ $stats := $extra.stats }}
+{{ $stats := .Site.Data.stats }}
 
 {{/* ── Hero ────────────────────────────────────────────────── */}}
-<section aria-labelledby="hero-title" class="py-28 sm:py-36 px-4 text-center">
+<section aria-labelledby="hero-title" class="px-4 text-center rt-hero-pad">
   <div class="max-w-4xl mx-auto">
 
-    <div class="flex flex-wrap justify-center gap-2 mb-10">
+    <div class="flex flex-wrap justify-center" style="gap:.5rem;margin-bottom:2.5rem">
       {{ range slice (i18n "hero_chip_1") (i18n "hero_chip_2") (i18n "hero_chip_3") }}
-        <span class="inline-block rounded-full border border-primary-500/30 bg-primary-500/5 px-4 py-1.5 text-xs font-medium tracking-wide text-primary-400">
+        <span class="inline-block rounded-full border border-primary-500/30 bg-primary-500/10 px-4 text-xs font-medium tracking-wide text-primary-300" style="padding-top:.375rem;padding-bottom:.375rem">
           {{ . }}
         </span>
       {{ end }}
     </div>
 
-    <h1 id="hero-title" class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-neutral-50 mb-6">
+    <h1 id="hero-title" class="text-4xl font-extrabold tracking-tight sm:text-5xl text-neutral-50" style="margin-bottom:1.5rem">
       {{ i18n "hero_title" }}
     </h1>
 
-    <p class="text-lg leading-relaxed text-neutral-400 max-w-2xl mx-auto mb-12">
+    <p class="text-lg leading-relaxed text-neutral-400 max-w-2xl mx-auto" style="margin-bottom:3rem">
       {{ i18n "hero_desc" }}
     </p>
 
-    <div class="flex flex-wrap justify-center gap-4">
+    <div class="flex flex-wrap justify-center" style="gap:1rem">
       <a href="{{ "contact/" | relLangURL }}"
-         class="inline-flex items-center rounded-lg bg-neutral-50 px-7 py-3.5 text-sm font-semibold text-neutral-900 shadow-sm hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors">
+         class="inline-flex items-center rounded-lg bg-primary-500 px-7 text-sm font-semibold text-white hover:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors"
+         style="padding-top:.875rem;padding-bottom:.875rem">
         {{ i18n "btn_contact" }}
       </a>
       <a href="{{ $extra.catalogURL }}"
-         target="_blank"
-         rel="noopener noreferrer"
-         class="inline-flex items-center rounded-lg border border-neutral-700 px-7 py-3.5 text-sm font-semibold text-neutral-300 hover:border-neutral-500 hover:text-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors">
+         target="_blank" rel="noopener noreferrer"
+         class="inline-flex items-center rounded-lg border border-neutral-600 px-7 text-sm font-semibold text-neutral-300 hover:border-primary-500/50 hover:text-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors"
+         style="padding-top:.875rem;padding-bottom:.875rem">
         {{ i18n "btn_catalog" }}
         <span class="sr-only">{{ i18n "link_new_tab" }}</span>
       </a>
@@ -42,9 +44,9 @@
 </section>
 
 {{/* ── Stats ───────────────────────────────────────────────── */}}
-<section aria-label="{{ i18n "stats_partners" }}" class="py-16 border-t border-neutral-800">
+<section aria-label="{{ i18n "stats_partners" }}" class="border-t border-neutral-700/50" style="padding:4rem 0">
   <div class="max-w-5xl mx-auto px-4">
-    <dl class="grid grid-cols-2 gap-10 sm:grid-cols-4 text-center">
+    <dl class="rt-stats-grid text-center">
       {{ $labels := slice (i18n "stats_years") (i18n "stats_partners") (i18n "stats_sku") (i18n "stats_countries") }}
       {{ $values := slice $stats.years $stats.partners $stats.skus $stats.countries }}
       {{ range $i, $v := $values }}
@@ -60,29 +62,33 @@
 {{/* ── Services preview ────────────────────────────────────── */}}
 {{ $services := where (where .Site.RegularPages "Section" "services") ".Draft" false }}
 {{ with $services }}
-<section aria-labelledby="services-title" class="py-24 border-t border-neutral-800">
+<section aria-labelledby="services-title" class="border-t border-neutral-700/50 rt-section-pad">
   <div class="max-w-6xl mx-auto px-4">
-    <div class="text-center mb-14">
-      <span class="inline-block rounded-full border border-primary-500/30 bg-primary-500/5 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-primary-400 mb-5">
+    <div class="text-center" style="margin-bottom:3.5rem">
+      <span class="inline-block rounded-full border border-primary-500/30 bg-primary-500/10 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-primary-300" style="margin-bottom:1.25rem">
         {{ i18n "srv_badge" }}
       </span>
       <h2 id="services-title" class="text-3xl font-bold text-neutral-50">{{ i18n "srv_main_title" }}</h2>
       <p class="mt-4 text-neutral-400 max-w-2xl mx-auto leading-relaxed">{{ i18n "srv_main_desc" }}</p>
     </div>
 
-    <div class="grid gap-6 sm:grid-cols-2">
+    <div class="rt-cards-grid">
       {{ range sort . "Params.weight" }}
         <a href="{{ .RelPermalink }}"
-           class="group block rounded-2xl border border-neutral-800 bg-neutral-800/30 p-7 transition-all hover:border-primary-500/30 hover:bg-neutral-800/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400">
+           class="group block rounded-2xl border border-neutral-700/50 bg-neutral-800/30 transition-all hover:border-primary-500/40 hover:bg-neutral-800/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+           style="padding:1.75rem">
+          {{ with .Params.icon }}
+            <img src="{{ . | relURL }}" alt="" aria-hidden="true" class="h-8 w-8 opacity-70 group-hover:opacity-100 transition-opacity nozoom" loading="lazy" style="margin-bottom:1rem">
+          {{ end }}
           <h3 class="text-lg font-semibold text-neutral-100 group-hover:text-primary-400 transition-colors">
             {{ .Title }}
           </h3>
-          <p class="mt-3 text-sm text-neutral-400 leading-relaxed line-clamp-3">{{ .Description }}</p>
+          <p class="mt-3 text-sm text-neutral-400 leading-relaxed" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">{{ .Description }}</p>
           {{ with .Params.features }}
-            <ul class="mt-5 space-y-2">
+            <ul style="margin-top:1.25rem">
               {{ range first 3 . }}
-                <li class="flex items-start gap-2.5 text-sm text-neutral-300">
-                  <span aria-hidden="true" class="mt-1.5 inline-block h-1 w-1 flex-shrink-0 rounded-full bg-primary-500"></span>
+                <li class="flex items-start text-sm text-neutral-300" style="gap:.625rem;margin-top:.5rem">
+                  <span aria-hidden="true" class="inline-block h-1 w-1 flex-shrink-0 rounded-full bg-primary-500" style="margin-top:.5rem"></span>
                   {{ . }}
                 </li>
               {{ end }}
@@ -92,7 +98,7 @@
       {{ end }}
     </div>
 
-    <div class="text-center mt-12">
+    <div class="text-center" style="margin-top:3rem">
       <a href="{{ "services/" | relLangURL }}"
          class="inline-flex items-center text-sm font-medium text-primary-400 hover:text-primary-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors">
         {{ i18n "btn_all_services" }}
@@ -103,20 +109,128 @@
 </section>
 {{ end }}
 
-{{/* ── CTA ─────────────────────────────────────────────────── */}}
-<section aria-labelledby="cta-title" class="py-24 border-t border-neutral-800">
+{{/* ── Advantages ──────────────────────────────────────────── */}}
+{{ with .Site.Data.advantages.items }}
+<section aria-labelledby="adv-title" class="border-t border-neutral-700/50 rt-section-pad">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center" style="margin-bottom:3.5rem">
+      <h2 id="adv-title" class="text-3xl font-bold text-neutral-50">
+        {{ i18n "adv_section_title" }}
+      </h2>
+    </div>
+    <div class="rt-cards-grid">
+      {{ range . }}
+        <div class="rounded-2xl border border-neutral-700/50 bg-neutral-800/30" style="padding:1.75rem">
+          <div class="text-primary-400" style="margin-bottom:1.25rem">
+            {{ .icon | safeHTML }}
+          </div>
+          <h3 class="text-base font-semibold text-neutral-100" style="margin-bottom:.5rem">
+            {{ i18n .titleKey }}
+          </h3>
+          <p class="text-sm text-neutral-400 leading-relaxed">
+            {{ i18n .descKey }}
+          </p>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── Platform CTA ──────────────────────────────────────── */}}
+<section aria-labelledby="platform-title" class="border-t border-neutral-700/50 rt-section-pad">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <span class="inline-block rounded-full border border-secondary-500/30 bg-secondary-500/10 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-secondary-400" style="margin-bottom:1.25rem">
+      {{ i18n "platform_label" }}
+    </span>
+    <h2 id="platform-title" class="text-3xl font-bold text-neutral-50" style="margin-bottom:1.25rem">
+      {{ i18n "platform_title" }}
+    </h2>
+    <p class="text-neutral-400 leading-relaxed max-w-2xl mx-auto" style="margin-bottom:2.5rem">
+      {{ i18n "platform_desc" }}
+    </p>
+    <a href="{{ $extra.catalogURL }}"
+       target="_blank" rel="noopener noreferrer"
+       class="inline-flex items-center rounded-lg bg-primary-500 px-7 text-sm font-semibold text-white hover:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors"
+       style="padding-top:.875rem;padding-bottom:.875rem">
+      {{ i18n "platform_cta" }}
+      <span class="sr-only">{{ i18n "link_new_tab" }}</span>
+      <svg aria-hidden="true" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+{{/* ── Partners ────────────────────────────────────────────── */}}
+{{ with .Site.Data.company.partners }}
+<section aria-labelledby="partners-title" class="border-t border-neutral-700/50 rt-section-pad">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center" style="margin-bottom:3rem">
+      <h2 id="partners-title" class="text-3xl font-bold text-neutral-50">
+        {{ i18n "partners_title" }}
+      </h2>
+      <p class="mt-4 text-neutral-400 max-w-xl mx-auto">
+        {{ i18n "partners_desc" }}
+      </p>
+    </div>
+    <ul class="rt-partners-grid" role="list" aria-label="{{ i18n "partners_title" }}">
+      {{ range . }}
+        <li class="flex items-center justify-center rounded-xl border border-neutral-700/50 bg-neutral-800/30" style="padding:1.25rem 1.5rem;min-height:4rem">
+          {{ if .logo }}
+            <img src="{{ .logo | relURL }}" alt="{{ .name }}" class="max-h-10 max-w-full object-contain filter brightness-75 hover:brightness-100 transition-all nozoom" loading="lazy">
+          {{ else }}
+            <span class="text-sm font-semibold text-neutral-400 text-center leading-tight">{{ .name }}</span>
+          {{ end }}
+        </li>
+      {{ end }}
+    </ul>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── FAQ ────────────────────────────────────────────────── */}}
+{{ with .Params.faq }}
+<section aria-labelledby="faq-title" class="border-t border-neutral-700/50 rt-section-pad">
+  <div class="max-w-3xl mx-auto px-4">
+    <div class="text-center" style="margin-bottom:3rem">
+      <h2 id="faq-title" class="text-3xl font-bold text-neutral-50">
+        {{ i18n "faq_title" }}
+      </h2>
+      <p class="mt-4 text-neutral-400">{{ i18n "faq_desc" }}</p>
+    </div>
+    <dl>
+      {{ range . }}
+        <details class="group rounded-xl border border-neutral-700/50 bg-neutral-800/30" style="margin-top:1rem">
+          <summary class="flex cursor-pointer items-center justify-between text-base font-semibold text-neutral-100" style="padding:1.5rem;list-style:none">
+            {{ .question }}
+            <svg aria-hidden="true" class="ml-4 h-5 w-5 flex-shrink-0 text-neutral-500 transition-transform rt-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="text-sm text-neutral-400 leading-relaxed" style="padding:0 1.5rem 1.5rem">
+            {{ .answer }}
+          </div>
+        </details>
+      {{ end }}
+    </dl>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── Final CTA ─────────────────────────────────────────── */}}
+<section aria-labelledby="cta-title" class="border-t border-neutral-700/50 rt-section-pad">
   <div class="max-w-3xl mx-auto px-4 text-center">
-    <h2 id="cta-title" class="text-3xl font-bold text-neutral-50 mb-5">{{ i18n "cta_title" }}</h2>
-    <p class="text-neutral-400 leading-relaxed mb-10">{{ i18n "cta_desc" }}</p>
-    <div class="flex flex-wrap justify-center gap-4">
+    <h2 id="cta-title" class="text-3xl font-bold text-neutral-50" style="margin-bottom:1.25rem">{{ i18n "cta_title" }}</h2>
+    <p class="text-neutral-400 leading-relaxed" style="margin-bottom:2.5rem">{{ i18n "cta_desc" }}</p>
+    <div class="flex flex-wrap justify-center" style="gap:1rem">
       <a href="{{ "contact/" | relLangURL }}"
-         class="inline-flex items-center rounded-lg bg-neutral-50 px-7 py-3.5 text-sm font-semibold text-neutral-900 shadow-sm hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors">
+         class="inline-flex items-center rounded-lg bg-primary-500 px-7 text-sm font-semibold text-white hover:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors"
+         style="padding-top:.875rem;padding-bottom:.875rem">
         {{ i18n "cta_primary" }}
       </a>
       <a href="{{ $extra.catalogURL }}"
-         target="_blank"
-         rel="noopener noreferrer"
-         class="inline-flex items-center rounded-lg border border-neutral-700 px-7 py-3.5 text-sm font-semibold text-neutral-300 hover:border-neutral-500 hover:text-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors">
+         target="_blank" rel="noopener noreferrer"
+         class="inline-flex items-center rounded-lg border border-neutral-600 px-7 text-sm font-semibold text-neutral-300 hover:border-primary-500/50 hover:text-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors"
+         style="padding-top:.875rem;padding-bottom:.875rem">
         {{ i18n "cta_secondary" }}
         <span class="sr-only">{{ i18n "link_new_tab" }}</span>
       </a>

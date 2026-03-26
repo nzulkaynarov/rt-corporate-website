@@ -27,3 +27,10 @@ O'zbekiston temir yo'l tarmoqining ayrim uchastkalarida mavjud xavfsizlik tiziml
 ### Natijalar
 
 Loyiha muvaffaqiyatli yakunlandi. Yangi tizimlar poyezd harakatining xavfsizligini sezilarli darajada oshirdi va xalqaro standartlarga muvofiqlikni ta'minladi.
+
+---
+
+> Shunga o'xshash loyihani amalga oshirmoqchimisiz? Bizning jamoamiz sizning ehtiyojlaringizni muhokama qilishga tayyor.
+
+{{< button href="/contact/" >}}Loyihani muhokama qilish{{< /button >}}
+{{< button href="/services/" >}}Bizning xizmatlar{{< /button >}}

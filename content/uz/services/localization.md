@@ -2,7 +2,7 @@
 title: "Ishlab chiqarishni lokalizatsiya qilish"
 description: "Temir yo'l uskunalarini O'zbekistonda ishlab chiqarishni yo'lga qo'yish. Texnologiya transferi, qo'shma korxonalar va mahalliy ishlab chiqarishni tashkil etish."
 weight: 3
-icon: "factory"
+icon: /img/icons/localization.svg
 
 features:
   - title: "Texnologiya transferi"
@@ -32,3 +32,10 @@ O'zbekiston hukumati temir yo'l sohasida import o'rnini bosish va mahalliy ishla
 ### Afzalliklari
 
 Lokalizatsiya jarayoni orqali O'zbekiston temir yo'l korxonalari bir qator afzalliklarga erishadi: xarid narxlarining pasayishi, yetkazib berish muddatlarining qisqarishi, xorijiy valyutaga bog'liqlikning kamayishi va mahalliy ish o'rinlarining yaratilishi.
+
+---
+
+> Loyihangizni muhokama qilishga tayyormisiz? Tijorat taklifini olish uchun biz bilan bog'laning yoki B2B katalogdan uskunalarni tanlang.
+
+{{< button href="/contact/" >}}Biz bilan bog'laning{{< /button >}}
+{{< button href="https://b2b.railtech.uz" target="_blank" >}}Katalogni ochish{{< /button >}}

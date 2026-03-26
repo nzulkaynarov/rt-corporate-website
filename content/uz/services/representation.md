@@ -2,7 +2,7 @@
 title: "Vakillik"
 description: "Xorijiy temir yo'l uskunalari ishlab chiqaruvchilarining O'zbekiston va Markaziy Osiyodagi rasmiy vakili sifatida xizmat ko'rsatamiz."
 weight: 4
-icon: "handshake"
+icon: /img/icons/representation.svg
 
 features:
   - title: "Rasmiy vakillik"
@@ -34,3 +34,10 @@ Biz Yevropa, Rossiya va Osiyoning yetakchi temir yo'l uskunalari ishlab chiqaruv
 ### Hamkorlik afzalliklari
 
 Xorijiy ishlab chiqaruvchilar uchun biz bilan hamkorlik — bu mahalliy bozorga tezkor va samarali kirish imkoniyati. Mahalliy kompaniyalar uchun esa — to'g'ridan-to'g'ri ishlab chiqaruvchidan sifatli mahsulotlarni qulay shartlarda olish imkoniyati.
+
+---
+
+> Loyihangizni muhokama qilishga tayyormisiz? Tijorat taklifini olish uchun biz bilan bog'laning yoki B2B katalogdan uskunalarni tanlang.
+
+{{< button href="/contact/" >}}Biz bilan bog'laning{{< /button >}}
+{{< button href="https://b2b.railtech.uz" target="_blank" >}}Katalogni ochish{{< /button >}}

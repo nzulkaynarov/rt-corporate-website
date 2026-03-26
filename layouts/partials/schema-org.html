@@ -1,0 +1,142 @@
+{{/* Schema.org JSON-LD Structured Data
+     Helps Google understand page content and displays rich results
+     Configured via data/seo.yaml and page frontmatter */}}
+
+{{/* Organization Schema (for all pages) */}}
+{{ $org := dict
+  "@context" "https://schema.org"
+  "@type" "Organization"
+  "name" .Site.Title
+  "url" .Site.BaseURL
+  "sameAs" (slice
+    (index .Site.Data.social "linkedin")
+    (index .Site.Data.social "facebook")
+    (index .Site.Data.social "telegram")
+  )
+  "logo" (print .Site.BaseURL .Site.Params.logo)
+  "description" .Site.Params.seo.defaultDescription
+  "contactPoint" (dict
+    "@type" "ContactPoint"
+    "contactType" "Customer Support"
+    "telephone" .Site.Params.extra.phone
+    "email" .Site.Params.extra.email
+  )
+  "address" (dict
+    "@type" "PostalAddress"
+    "streetAddress" (printf "%s, %s" .Site.Data.company.address.city .Site.Data.company.address.street)
+    "addressCountry" .Site.Data.company.address.country
+  )
+}}
+<script type="application/ld+json">
+  {{ $org | jsonify }}
+</script>
+
+{{/* Article/BlogPosting Schema (for blog posts) */}}
+{{ if eq .Kind "page" }}
+  {{ if eq .Section "blog" }}
+    {{ $article := dict
+      "@context" "https://schema.org"
+      "@type" "BlogPosting"
+      "headline" (.Params.seoTitle | default .Title)
+      "description" (.Params.description | default .Summary)
+      "image" ((.Params.image | default .Params.ogImage) | absURL)
+      "datePublished" (.PublishDate.Format "2006-01-02T15:04:05Z07:00")
+      "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")
+      "author" (dict
+        "@type" "Person"
+        "name" (.Params.author | default "RailTech")
+      )
+      "publisher" (dict
+        "@type" "Organization"
+        "name" .Site.Title
+        "logo" (dict
+          "@type" "ImageObject"
+          "url" (print .Site.BaseURL .Site.Params.logo)
+        )
+      )
+      "mainEntityOfPage" (dict
+        "@type" "WebPage"
+        "@id" .Permalink
+      )
+    }}
+    <script type="application/ld+json">
+      {{ $article | jsonify }}
+    </script>
+  {{ end }}
+{{ end }}
+
+{{/* LocalBusiness Schema (for service/contact pages) */}}
+{{ if or (eq .Section "services") (eq .Section "contact") }}
+  {{ $business := dict
+    "@context" "https://schema.org"
+    "@type" "LocalBusiness"
+    "name" .Site.Title
+    "url" .Site.BaseURL
+    "telephone" .Site.Params.extra.phone
+    "email" .Site.Params.extra.email
+    "address" (dict
+      "@type" "PostalAddress"
+      "streetAddress" (printf "%s, %s" .Site.Data.company.address.city .Site.Data.company.address.street)
+      "addressCountry" .Site.Data.company.address.country
+    )
+    "geo" (dict
+      "@type" "GeoCoordinates"
+      "latitude" .Site.Params.extra.mapLat
+      "longitude" .Site.Params.extra.mapLon
+    )
+    "areaServed" (slice "UZ" "RU" "KZ" "TJ" "TM")
+    "openingHoursSpecification" (dict
+      "@type" "OpeningHoursSpecification"
+      "dayOfWeek" (slice "Monday" "Tuesday" "Wednesday" "Thursday" "Friday")
+      "opens" "09:00"
+      "closes" "18:00"
+    )
+  }}
+  <script type="application/ld+json">
+    {{ $business | jsonify }}
+  </script>
+{{ end }}
+
+{{/* Breadcrumb Schema (for navigation SEO — multilingual-aware) */}}
+{{ if and .IsPage (not .IsHome) }}
+  {{ $breadcrumbs := slice }}
+  {{ $homeURL := (.Site.Home.Permalink) }}
+  {{ $breadcrumbs = $breadcrumbs | append (dict
+    "@type" "ListItem"
+    "position" 1
+    "name" "Home"
+    "item" $homeURL
+  ) }}
+
+  {{/* Add section with correct language-prefixed URL */}}
+  {{ if .Section }}
+    {{ $sectionPage := .Site.GetPage .Section }}
+    {{ $sectionURL := $homeURL }}
+    {{ with $sectionPage }}
+      {{ $sectionURL = .Permalink }}
+    {{ end }}
+    {{ $breadcrumbs = $breadcrumbs | append (dict
+      "@type" "ListItem"
+      "position" 2
+      "name" (title .Section)
+      "item" $sectionURL
+    ) }}
+  {{ end }}
+
+  {{/* Add page title */}}
+  {{ $breadcrumbs = $breadcrumbs | append (dict
+    "@type" "ListItem"
+    "position" (add (len $breadcrumbs) 1)
+    "name" .Title
+    "item" .Permalink
+  ) }}
+
+  {{ $breadcrumbSchema := dict
+    "@context" "https://schema.org"
+    "@type" "BreadcrumbList"
+    "itemListElement" $breadcrumbs
+  }}
+  <script type="application/ld+json">
+    {{ $breadcrumbSchema | jsonify }}
+  </script>
+{{ end }}

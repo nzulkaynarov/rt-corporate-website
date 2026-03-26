@@ -1,0 +1,146 @@
+# Global SEO Configuration
+# Manages site-wide SEO defaults, metadata, and structured data
+# Editable via Frontmatter CMS → Data Files
+
+# Site Identity & Branding
+site:
+  name: "RailTech"
+  title: "RailTech — Railroad Equipment & Solutions"
+  description: "Leading supplier of high-quality industrial equipment and consulting services in Uzbekistan"
+  url: "https://railtech.uz"
+  language: "ru"
+  # Fallback Open Graph image (use when page doesn't have custom image)
+  ogImage: "img/og-default.png"
+  ogImageAlt: "RailTech — Railroad Equipment Supplier"
+
+# Search Engine Optimization
+seo:
+  # Meta tags defaults
+  titleTemplate: "%s — RailTech"
+  descriptionLength: 160
+  titleLength: 60
+  keywordsLength: 255
+
+  # Canonical URL strategy
+  # "auto" = use page URL | "custom" = use canonicalUrl field from page
+  canonicalStrategy: "auto"
+
+  # Language alternates (hreflang)
+  # Blowfish handles this automatically, but config available
+  enableLanguageAlternates: true
+
+  # Robots directives (per-page override available)
+  defaultRobots: "index, follow"
+  noindexDrafts: true
+  noindexPrivate: false
+
+# Open Graph (Social Sharing)
+openGraph:
+  enabled: true
+  # Default type for pages
+  defaultType: "website"
+  # Article type for blog/news
+  articleType: "article"
+  # Image dimensions (recommended by Meta)
+  imageWidth: 1200
+  imageHeight: 630
+  imageAlt: "og:image must have alt text"
+
+# Twitter Card Configuration
+twitter:
+  enabled: true
+  # card type: "summary" | "summary_large_image" | "app" | "player"
+  cardType: "summary_large_image"
+  handle: "@railtech"
+  creator: "RailTech LLC"
+  # Twitter will use og:image if not specified separately
+  useOgImage: true
+
+# Structured Data (Schema.org)
+schema:
+  enabled: true
+  # Organization schema (appears in Google Knowledge Graph)
+  organization:
+    type: "Organization"
+    name: "RailTech LLC"
+    url: "https://railtech.uz"
+    logo: "https://railtech.uz/img/brand/railtech-logo.svg"
+    description: "Supplier of railroad equipment and consulting services"
+    # Contact information
+    contactType: "Customer Support"
+    telephone: "+998 90 118-90-00"
+    email: "info@railtech.uz"
+    address:
+      streetAddress: "Tashkent, Index, Office B2-2097"
+      addressCountry: "UZ"
+
+  # Business location (LocalBusiness schema)
+  localBusiness:
+    type: "LocalBusiness"
+    areaServed: ["UZ", "RU", "KZ", "TJ", "TM"]
+    foundingDate: "2021"
+    priceRange: "$$-$$$"
+
+# Analytics & Verification
+verification:
+  # Google Search Console
+  googleSiteVerification: ""  # Add if needed
+  # Microsoft/Bing Webmaster Tools
+  msValidate: ""  # Add if needed
+  # Yandex Webmaster (for RU audience)
+  yandexVerification: ""  # Add if needed
+
+# Sitemap Configuration
+sitemap:
+  enabled: true
+  # Exclude certain content types from sitemap
+  excludeKinds: []
+  excludeTaxonomies: []
+  # Change frequency recommendations
+  changefreq:
+    homepage: "weekly"
+    blogPosts: "monthly"
+    pages: "monthly"
+    services: "monthly"
+  # Priority (0.0 - 1.0)
+  priority:
+    homepage: 1.0
+    blogPosts: 0.8
+    pages: 0.7
+    services: 0.8
+
+# robots.txt Configuration
+robots:
+  enabled: true
+  # User-agent specific rules — editable via Frontmatter CMS
+  rules:
+    - userAgent: "*"
+      allow: "/"
+      disallow: ["/admin", "/private"]
+    # Allow major search engines explicitly
+    - userAgent: "Googlebot"
+      allow: "/"
+    - userAgent: "Bingbot"
+      allow: "/"
+    - userAgent: "Yandex"
+      allow: "/"
+    # Block AI/LLM training crawlers
+    - userAgent: "GPTBot"
+      disallow: "/"
+    - userAgent: "CCBot"
+      disallow: "/"
+    - userAgent: "anthropic-ai"
+      disallow: "/"
+    - userAgent: "Claude-Web"
+      disallow: "/"
+
+# Content Recommendations (SEO best practices)
+recommendations:
+  minDescriptionLength: 120
+  maxDescriptionLength: 160
+  minTitleLength: 30
+  maxTitleLength: 60
+  minContentLength: 300
+  recommendedContentLength: 1500
+  # Flag for CMS to warn if not met
+  enableContentLengthWarnings: true

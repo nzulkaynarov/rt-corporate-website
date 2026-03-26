@@ -33,3 +33,10 @@ As part of the train safety system modernization program for JSC Uzbekistan Rail
 - 2-year warranty support provided
 
 > This project was one of the largest in the company's history, demonstrating our ability to execute large-scale government contracts.
+
+---
+
+> Want to implement a similar project? Our team is ready to discuss your needs and offer the best solution.
+
+{{</* button href="/contact/" */>}}Discuss a Project{{</* /button */>}}
+{{</* button href="/services/" */>}}Our Services{{</* /button */>}}

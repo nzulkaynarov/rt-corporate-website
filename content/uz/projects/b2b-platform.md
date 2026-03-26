@@ -28,3 +28,10 @@ Temir yo'l uskunalarini xarid qilish jarayonini soddalashtiruvchi, shaffof va sa
 ### Natijalar
 
 Platforma muvaffaqiyatli ishga tushirildi va 120 dan ortiq hamkor tomonidan faol foydalanilmoqda. Buyurtma berish vaqti o'rtacha 60% ga qisqardi, hujjat aylanmasi to'liq raqamlashtirildi.
+
+---
+
+> Shunga o'xshash loyihani amalga oshirmoqchimisiz? Bizning jamoamiz sizning ehtiyojlaringizni muhokama qilishga tayyor.
+
+{{< button href="/contact/" >}}Loyihani muhokama qilish{{< /button >}}
+{{< button href="/services/" >}}Bizning xizmatlar{{< /button >}}

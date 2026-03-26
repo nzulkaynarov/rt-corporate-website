@@ -29,8 +29,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  HUGO_VERSION: 0.159.0
-  GO_VERSION: "1.23"
+  HUGO_VERSION: 0.158.0
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 defaults:
@@ -54,11 +53,8 @@ jobs:
 
       - name: Checkout source (private repo)
         uses: actions/checkout@v4
-
-      - name: Setup Go
-        uses: actions/setup-go@v5
         with:
-          go-version: ${{ env.GO_VERSION }}
+          submodules: recursive
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
@@ -66,17 +62,12 @@ jobs:
           hugo-version: ${{ env.HUGO_VERSION }}
           extended: true
 
-      - name: Cache Hugo modules + build
+      - name: Cache Hugo build
         uses: actions/cache@v4
         with:
-          path: |
-            ${{ runner.temp }}/hugo_cache
-            ~/go/pkg/mod
-          key: hugo-${{ runner.os }}-${{ hashFiles('go.sum', 'config/_default/*.toml') }}
+          path: ${{ runner.temp }}/hugo_cache
+          key: hugo-${{ runner.os }}-${{ hashFiles('hugo.toml', '.gitmodules') }}
           restore-keys: hugo-${{ runner.os }}-
-
-      - name: Download Hugo modules
-        run: hugo mod get
 
       - name: Build with Hugo
         env:

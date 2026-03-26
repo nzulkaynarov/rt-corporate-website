@@ -22,3 +22,10 @@ RailTech helps international manufacturers adapt and localize their products for
 - **Certification** — obtaining necessary certificates and permits for operation in the country
 - **Assembly Organization** — establishing local production facilities for component assembly
 - **Technology Transfer** — transferring knowledge and technology for equipment support and maintenance
+
+---
+
+> Ready to discuss your project? Contact us for a commercial proposal or browse the B2B catalog to find the right equipment.
+
+{{</* button href="/contact/" */>}}Contact Us{{</* /button */>}}
+{{</* button href="https://b2b.railtech.uz" target="_blank" */>}}Open Catalog{{</* /button */>}}

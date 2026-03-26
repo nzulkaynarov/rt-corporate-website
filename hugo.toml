@@ -16,6 +16,7 @@ style = "dracula"
 [outputs]
 home = ["HTML", "RSS", "JSON"]
 section = ["HTML", "RSS"]
+# Sitemap and robots.txt are auto-generated (enableRobotsTXT = true above)
 
 [params]
 colorScheme = "railtech"
@@ -26,7 +27,7 @@ enableCodeCopy = true
 
 # Images
 logo = "img/brand/railtech-logo.svg"
-favicon = "img/brand/favicon.ico"
+favicon = "img/brand/favicon.svg"
 
 # Homepage
 [params.homepage]
@@ -38,10 +39,10 @@ showMoreLinkDest = "/blog"
 cardView = true
 cardViewScreenWidth = false
 
-# Article
+# Article (blog posts)
 [params.article]
 showHero = true
-heroStyle = "basic"
+heroStyle = "background"
 showDate = true
 showDateUpdated = false
 showAuthor = true
@@ -51,9 +52,9 @@ showRelatedContent = true
 relatedContentLimit = 3
 sharingLinks = ["telegram", "facebook", "linkedin"]
 
-# List
+# List pages
 [params.list]
-showHero = false
+showHero = true
 heroStyle = "background"
 showBreadcrumbs = true
 showSummary = true
@@ -89,28 +90,35 @@ mapLon = "69.2401"
 web3formsKey = "WEB3FORMS_ACCESS_KEY"
 copyright = "© 2021–2026 RailTech LLC"
 
-[params.extra.stats]
-years = "5+"
-partners = "120+"
-skus = "500+"
-countries = "3"
+# Stats → data/stats.yaml (single source of truth, editable via Frontmatter CMS)
+
+# SEO Configuration
+# Extended SEO settings (verification, robots rules, sitemap) → data/seo.yaml
+# Blowfish-native SEO params below:
+[params.seo]
+defaultOgImage = "img/og-default.png"
+siteAuthor = "RailTech LLC"
+twitterHandle = "@railtech"
 
 # Languages
 [languages.ru]
 languageName = "Русский"
 weight = 1
+contentDir = "content/ru"
 
 [languages.en]
 languageName = "English"
 weight = 2
-baseURL = "https://railtech.uz/en/"
+contentDir = "content/en"
 
 [languages.uz]
 languageName = "Oʻzbekcha"
 weight = 3
-baseURL = "https://railtech.uz/uz/"
+contentDir = "content/uz"
 
+# ═══════════════════════════════════════════════════════
 # Menu - Russian
+# ═══════════════════════════════════════════════════════
 [[languages.ru.menu.main]]
 name = "О компании"
 pageRef = "/about"
@@ -123,22 +131,28 @@ weight = 20
 hasChildren = true
 
 [[languages.ru.menu.main]]
-name = "Инжиниринг"
+name = "Поставка оборудования"
 parent = "Услуги"
-pageRef = "/services/#engineering"
+pageRef = "/services/equipment-supply"
 weight = 21
 
 [[languages.ru.menu.main]]
-name = "Консалтинг"
+name = "Техническая экспертиза"
 parent = "Услуги"
-pageRef = "/services/#consulting"
+pageRef = "/services/technical-expertise"
 weight = 22
 
 [[languages.ru.menu.main]]
-name = "Поставки"
+name = "Локализация"
 parent = "Услуги"
-pageRef = "/services/#supplies"
+pageRef = "/services/localization"
 weight = 23
+
+[[languages.ru.menu.main]]
+name = "Представительство"
+parent = "Услуги"
+pageRef = "/services/representation"
+weight = 24
 
 [[languages.ru.menu.main]]
 name = "Проекты"
@@ -179,7 +193,9 @@ name = "Контакты"
 pageRef = "/contact"
 weight = 60
 
+# ═══════════════════════════════════════════════════════
 # Menu - English
+# ═══════════════════════════════════════════════════════
 [[languages.en.menu.main]]
 name = "About"
 pageRef = "/about"
@@ -189,6 +205,31 @@ weight = 10
 name = "Services"
 pageRef = "/services"
 weight = 20
+hasChildren = true
+
+[[languages.en.menu.main]]
+name = "Equipment Supply"
+parent = "Services"
+pageRef = "/services/equipment-supply"
+weight = 21
+
+[[languages.en.menu.main]]
+name = "Technical Expertise"
+parent = "Services"
+pageRef = "/services/technical-expertise"
+weight = 22
+
+[[languages.en.menu.main]]
+name = "Localization"
+parent = "Services"
+pageRef = "/services/localization"
+weight = 23
+
+[[languages.en.menu.main]]
+name = "Representation"
+parent = "Services"
+pageRef = "/services/representation"
+weight = 24
 
 [[languages.en.menu.main]]
 name = "Projects"
@@ -199,6 +240,25 @@ weight = 30
 name = "Platform"
 pageRef = "/platform"
 weight = 40
+hasChildren = true
+
+[[languages.en.menu.main]]
+name = "Catalog"
+parent = "Platform"
+pageRef = "/platform/catalog"
+weight = 41
+
+[[languages.en.menu.main]]
+name = "Deals"
+parent = "Platform"
+pageRef = "/platform/deals"
+weight = 42
+
+[[languages.en.menu.main]]
+name = "Analytics"
+parent = "Platform"
+pageRef = "/platform/admin"
+weight = 43
 
 [[languages.en.menu.main]]
 name = "Blog"
@@ -210,7 +270,9 @@ name = "Contact"
 pageRef = "/contact"
 weight = 60
 
+# ═══════════════════════════════════════════════════════
 # Menu - Uzbek
+# ═══════════════════════════════════════════════════════
 [[languages.uz.menu.main]]
 name = "Kompaniya haqida"
 pageRef = "/about"
@@ -220,6 +282,31 @@ weight = 10
 name = "Xizmatlar"
 pageRef = "/services"
 weight = 20
+hasChildren = true
+
+[[languages.uz.menu.main]]
+name = "Uskunalar yetkazib berish"
+parent = "Xizmatlar"
+pageRef = "/services/equipment-supply"
+weight = 21
+
+[[languages.uz.menu.main]]
+name = "Texnik ekspertiza"
+parent = "Xizmatlar"
+pageRef = "/services/technical-expertise"
+weight = 22
+
+[[languages.uz.menu.main]]
+name = "Lokalizatsiya"
+parent = "Xizmatlar"
+pageRef = "/services/localization"
+weight = 23
+
+[[languages.uz.menu.main]]
+name = "Vakolatxona"
+parent = "Xizmatlar"
+pageRef = "/services/representation"
+weight = 24
 
 [[languages.uz.menu.main]]
 name = "Loyihalar"
@@ -230,6 +317,25 @@ weight = 30
 name = "Platforma"
 pageRef = "/platform"
 weight = 40
+hasChildren = true
+
+[[languages.uz.menu.main]]
+name = "Katalog"
+parent = "Platforma"
+pageRef = "/platform/catalog"
+weight = 41
+
+[[languages.uz.menu.main]]
+name = "Bitimlar"
+parent = "Platforma"
+pageRef = "/platform/deals"
+weight = 42
+
+[[languages.uz.menu.main]]
+name = "Tahlil"
+parent = "Platforma"
+pageRef = "/platform/admin"
+weight = 43
 
 [[languages.uz.menu.main]]
 name = "Blog"

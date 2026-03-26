@@ -28,3 +28,10 @@ RailTech delivers certified products from leading global manufacturers to Uzbeki
 Every shipment is accompanied by a complete documentation package: conformity certificates, quality passports, manufacturer declarations, and operation manuals. We handle customs clearance and logistics, providing a turnkey delivery experience.
 
 > To request a commercial quote, use our [B2B platform](https://b2b.railtech.uz) or contact a manager directly.
+
+---
+
+> Ready to discuss your project? Contact us for a commercial proposal or browse the B2B catalog to find the right equipment.
+
+{{</* button href="/contact/" */>}}Contact Us{{</* /button */>}}
+{{</* button href="https://b2b.railtech.uz" target="_blank" */>}}Open Catalog{{</* /button */>}}
