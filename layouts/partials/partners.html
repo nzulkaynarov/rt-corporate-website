@@ -10,7 +10,7 @@
         <div class="partner-card">
           <div class="partner-logo-box">
             {{ with .logo }}
-            <img src="{{ . }}" alt="{{ $.name }}" loading="lazy" width="120" height="40">
+            <img src="{{ . }}" alt="{{ $.name | default "Partner" }}" loading="lazy" width="120" height="40">
             {{ else }}
             <span>{{ .name }}</span>
             {{ end }}

@@ -104,61 +104,203 @@
       "name": "project",
       "pageBundle": false,
       "fields": [
-        { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string" },
-        { "title": "Image", "name": "image", "type": "image", "description": "Project photo (16:10 ratio)" },
-        { "title": "Client", "name": "client", "type": "string" },
-        { "title": "Year", "name": "year", "type": "string" },
-        { "title": "Scope", "name": "scope", "type": "string" },
-        { "title": "Status", "name": "status", "type": "choice", "choices": ["completed", "in_progress"] },
-        { "title": "Category", "name": "category", "type": "string" },
-        { "title": "Weight", "name": "weight", "type": "number", "description": "Display order (lower = first)" },
-        { "title": "Tags", "name": "tags", "type": "tags" },
-        { "title": "Draft", "name": "draft", "type": "draft" }
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Image",
+          "name": "image",
+          "type": "image",
+          "description": "Project photo (16:10 ratio)"
+        },
+        {
+          "title": "Client",
+          "name": "client",
+          "type": "string"
+        },
+        {
+          "title": "Year",
+          "name": "year",
+          "type": "string"
+        },
+        {
+          "title": "Scope",
+          "name": "scope",
+          "type": "string"
+        },
+        {
+          "title": "Status",
+          "name": "status",
+          "type": "choice",
+          "choices": [
+            "completed",
+            "in_progress"
+          ]
+        },
+        {
+          "title": "Category",
+          "name": "category",
+          "type": "string"
+        },
+        {
+          "title": "Weight",
+          "name": "weight",
+          "type": "number",
+          "description": "Display order (lower = first)"
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "tags"
+        },
+        {
+          "title": "Draft",
+          "name": "draft",
+          "type": "draft"
+        }
       ]
     },
     {
       "name": "service",
       "pageBundle": false,
       "fields": [
-        { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string" },
-        { "title": "Weight", "name": "weight", "type": "number", "description": "Display order (lower = first)" },
-        { "title": "Icon", "name": "icon", "type": "image", "description": "Service icon (square, 48x48 or 64x64)" },
-        { "title": "Features", "name": "features", "type": "list", "description": "Key features/benefits list" },
-        { "title": "Draft", "name": "draft", "type": "draft" }
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Weight",
+          "name": "weight",
+          "type": "number",
+          "description": "Display order (lower = first)"
+        },
+        {
+          "title": "Icon",
+          "name": "icon",
+          "type": "image",
+          "description": "Service icon (square, 48x48 or 64x64)"
+        },
+        {
+          "title": "Features",
+          "name": "features",
+          "type": "list",
+          "description": "Key features/benefits list"
+        },
+        {
+          "title": "Draft",
+          "name": "draft",
+          "type": "draft"
+        }
       ]
     },
     {
       "name": "platform",
       "pageBundle": false,
       "fields": [
-        { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string" },
-        { "title": "Weight", "name": "weight", "type": "number", "description": "Display order (lower = first)" },
-        { "title": "Tag", "name": "tag", "type": "string", "description": "Badge label above the title" },
-        { "title": "Image", "name": "image", "type": "image", "description": "Platform screenshot (16:10 ratio)" },
-        { "title": "Highlights", "name": "highlights", "type": "list", "description": "Key feature highlights" },
-        { "title": "Draft", "name": "draft", "type": "draft" }
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Weight",
+          "name": "weight",
+          "type": "number",
+          "description": "Display order (lower = first)"
+        },
+        {
+          "title": "Tag",
+          "name": "tag",
+          "type": "string",
+          "description": "Badge label above the title"
+        },
+        {
+          "title": "Image",
+          "name": "image",
+          "type": "image",
+          "description": "Platform screenshot (16:10 ratio)"
+        },
+        {
+          "title": "Highlights",
+          "name": "highlights",
+          "type": "list",
+          "description": "Key feature highlights"
+        },
+        {
+          "title": "Draft",
+          "name": "draft",
+          "type": "draft"
+        }
       ]
     },
     {
       "name": "page",
       "pageBundle": false,
       "fields": [
-        { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string" },
-        { "title": "Image", "name": "image", "type": "image" },
-        { "title": "Draft", "name": "draft", "type": "draft" }
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Image",
+          "name": "image",
+          "type": "image"
+        },
+        {
+          "title": "Draft",
+          "name": "draft",
+          "type": "draft"
+        }
       ]
     },
     {
       "name": "default",
       "pageBundle": false,
       "fields": [
-        { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string" },
-        { "title": "Draft", "name": "draft", "type": "draft" }
+        {
+          "title": "Title",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Description",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Draft",
+          "name": "draft",
+          "type": "draft"
+        }
       ]
     }
   ],
