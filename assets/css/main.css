@@ -550,8 +550,8 @@ h3 { font-size: clamp(1.05rem, 2vw, 1.3rem); font-weight: 600; }
 .mobile-menu {
   position: fixed;
   top: var(--header-height);
-  left: 0;
-  right: 0;
+  left: -100%;
+  width: 100%;
   bottom: 0;
   background: var(--color-bg-alt);
   backdrop-filter: blur(20px);
@@ -560,15 +560,14 @@ h3 { font-size: clamp(1.05rem, 2vw, 1.3rem); font-weight: 600; }
   z-index: 1001;
   overflow-y: auto;
   overscroll-behavior: contain;
-  transform: translateX(-100%);
   opacity: 0;
   visibility: hidden;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+  transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
               opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
               visibility 0.35s;
 }
 .mobile-menu.open {
-  transform: translateX(0);
+  left: 0;
   opacity: 1;
   visibility: visible;
 }
