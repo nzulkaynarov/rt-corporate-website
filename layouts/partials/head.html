@@ -45,25 +45,17 @@
   <meta property="og:locale:alternate" content="{{ .Site.Language.Params.locale }}">
   {{ end }}
 {{ end }}
-{{ with .Params.image }}
-<meta property="og:image" content="{{ . | absURL }}">
+{{ $ogImage := .Site.Params.ogImage }}
+{{ with .Params.image }}{{ $ogImage = (strings.TrimLeft "/" .) }}{{ end }}
+<meta property="og:image" content="{{ $ogImage | absURL }}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-{{ else }}
-<meta property="og:image" content="{{ .Site.Params.ogImage | absURL }}">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-{{ end }}
 
 {{/* Twitter Card */}}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ .Title }}">
 <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
-{{ with .Params.image }}
-<meta name="twitter:image" content="{{ . | absURL }}">
-{{ else }}
-<meta name="twitter:image" content="{{ .Site.Params.ogImage | absURL }}">
-{{ end }}
+<meta name="twitter:image" content="{{ $ogImage | absURL }}">
 
 {{/* Article metadata for blog posts */}}
 {{ if and .IsPage (eq .Section "blog") }}

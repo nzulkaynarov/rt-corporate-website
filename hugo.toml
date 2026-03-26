@@ -216,9 +216,9 @@ defaultContentLanguageInSubdir = false
 [params]
   author = "RailTech LLC"
   copyright = "© 2021–2026 RailTech LLC"
-  logo = "/img/brand/railtech-logo.svg"
-  favicon = "/img/brand/favicon.ico"
-  ogImage = "/img/brand/railtech-og.jpg"
+  logo = "img/brand/railtech-logo.svg"
+  favicon = "img/brand/favicon.ico"
+  ogImage = "img/brand/railtech-og.jpg"
 
   phone = "+998 90 118-90-00"
   email = "info@railtech.uz"

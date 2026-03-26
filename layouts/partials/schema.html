@@ -8,7 +8,7 @@
   "name": "{{ $company.brandName }}",
   "legalName": "{{ $company.legalName }}",
   "url": "{{ .Site.BaseURL }}",
-  "logo": "{{ .Site.Params.ogImage | absURL }}",
+  "logo": "{{ .Site.Params.ogImage | relURL | absURL }}",
   "foundingDate": "{{ $company.foundingYear }}",
   "address": {
     "@type": "PostalAddress",
@@ -45,7 +45,7 @@
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "{{ $company.brandName }}",
-  "image": "{{ .Site.Params.ogImage | absURL }}",
+  "image": "{{ .Site.Params.ogImage | relURL | absURL }}",
   "telephone": "{{ .Site.Params.phone }}",
   "email": "{{ .Site.Params.email }}",
   "address": {
@@ -117,7 +117,7 @@
   "publisher": {
     "@type": "Organization",
     "name": "{{ $company.brandName }}",
-    "logo": { "@type": "ImageObject", "url": "{{ .Site.Params.ogImage | absURL }}" }
+    "logo": { "@type": "ImageObject", "url": "{{ .Site.Params.ogImage | relURL | absURL }}" }
   },
   "mainEntityOfPage": "{{ .Permalink }}"
 }
