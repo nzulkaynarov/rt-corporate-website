@@ -30,6 +30,7 @@ favicon = "img/brand/favicon.ico"
   showBreadcrumbs = true
   showTableOfContents = true
   showRelatedContent = true
+  relatedContentLimit = 3
   sharingLinks = ["telegram", "facebook", "linkedin"]
 
 [list]

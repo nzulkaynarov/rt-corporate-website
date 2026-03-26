@@ -1,21 +1,20 @@
-[en]
-  languageCode = "en"
-  languageName = "English"
-  languageDirection = "ltr"
-  weight = 2
-  contentDir = "content/en"
-  title = "RailTech"
+languageCode = "en"
+languageName = "English"
+languageDirection = "ltr"
+weight = 2
+contentDir = "content/en"
+title = "RailTech"
 
-  [en.params]
-    description = "RailTech — supplier of high-quality industrial equipment and consulting services in Uzbekistan"
-    locale = "en_US"
+[params]
+  description = "RailTech — supplier of high-quality industrial equipment and consulting services in Uzbekistan"
+  locale = "en_US"
 
-    [en.params.author]
-      name = "RailTech"
-      headline = "Industrial Equipment & Engineering"
-      links = [
-        { telegram = "https://t.me/railtech_uz" },
-        { facebook = "https://facebook.com/railtech" },
-        { instagram = "https://instagram.com/railtech_uz" },
-        { linkedin = "https://linkedin.com/company/railtech-uz" },
-      ]
+  [params.author]
+    name = "RailTech"
+    headline = "Industrial Equipment & Engineering"
+    links = [
+      { telegram = "https://t.me/railtech_uz" },
+      { facebook = "https://facebook.com/railtech" },
+      { instagram = "https://instagram.com/railtech_uz" },
+      { linkedin = "https://linkedin.com/company/railtech-uz" },
+    ]

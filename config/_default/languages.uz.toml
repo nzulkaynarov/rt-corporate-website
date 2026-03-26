@@ -1,21 +1,20 @@
-[uz]
-  languageCode = "uz"
-  languageName = "O'zbek"
-  languageDirection = "ltr"
-  weight = 3
-  contentDir = "content/uz"
-  title = "RailTech"
+languageCode = "uz"
+languageName = "O'zbek"
+languageDirection = "ltr"
+weight = 3
+contentDir = "content/uz"
+title = "RailTech"
 
-  [uz.params]
-    description = "RailTech — O'zbekistonda yuqori sifatli sanoat uskunalari va konsalting xizmatlarini yetkazib beruvchi"
-    locale = "uz_UZ"
+[params]
+  description = "RailTech — O'zbekistonda yuqori sifatli sanoat uskunalari va konsalting xizmatlarini yetkazib beruvchi"
+  locale = "uz_UZ"
 
-    [uz.params.author]
-      name = "RailTech"
-      headline = "Sanoat uskunalari va injiniring"
-      links = [
-        { telegram = "https://t.me/railtech_uz" },
-        { facebook = "https://facebook.com/railtech" },
-        { instagram = "https://instagram.com/railtech_uz" },
-        { linkedin = "https://linkedin.com/company/railtech-uz" },
-      ]
+  [params.author]
+    name = "RailTech"
+    headline = "Sanoat uskunalari va injiniring"
+    links = [
+      { telegram = "https://t.me/railtech_uz" },
+      { facebook = "https://facebook.com/railtech" },
+      { instagram = "https://instagram.com/railtech_uz" },
+      { linkedin = "https://linkedin.com/company/railtech-uz" },
+    ]

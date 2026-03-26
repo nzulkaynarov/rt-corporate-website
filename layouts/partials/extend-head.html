@@ -1,8 +1,10 @@
-{{/* RailTech — extra <head> tags (favicon + OG image) */}}
-{{ with .Site.Params.favicon }}
+{{/* RailTech — extra <head> tags (favicon + OG image)
+     NOTE: Blowfish passes .Site as context via partialCached,
+     so use .Params directly (not .Site.Params). */}}
+{{ with .Params.favicon }}
   <link rel="icon" href="{{ . | relURL }}" type="image/x-icon">
 {{ end }}
-{{ with .Site.Params.ogImage }}
+{{ with .Params.ogImage }}
   <meta property="og:image" content="{{ . | absURL }}">
   <meta name="twitter:image" content="{{ . | absURL }}">
 {{ end }}

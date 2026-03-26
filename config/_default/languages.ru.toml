@@ -1,21 +1,20 @@
-[ru]
-  languageCode = "ru"
-  languageName = "Русский"
-  languageDirection = "ltr"
-  weight = 1
-  contentDir = "content/ru"
-  title = "RailTech"
+languageCode = "ru"
+languageName = "Русский"
+languageDirection = "ltr"
+weight = 1
+contentDir = "content/ru"
+title = "RailTech"
 
-  [ru.params]
-    description = "RailTech — поставщик высококачественного промышленного оборудования и консалтинговых услуг в Узбекистане"
-    locale = "ru_RU"
+[params]
+  description = "RailTech — поставщик высококачественного промышленного оборудования и консалтинговых услуг в Узбекистане"
+  locale = "ru_RU"
 
-    [ru.params.author]
-      name = "RailTech"
-      headline = "Промышленное оборудование и инжиниринг"
-      links = [
-        { telegram = "https://t.me/railtech_uz" },
-        { facebook = "https://facebook.com/railtech" },
-        { instagram = "https://instagram.com/railtech_uz" },
-        { linkedin = "https://linkedin.com/company/railtech-uz" },
-      ]
+  [params.author]
+    name = "RailTech"
+    headline = "Промышленное оборудование и инжиниринг"
+    links = [
+      { telegram = "https://t.me/railtech_uz" },
+      { facebook = "https://facebook.com/railtech" },
+      { instagram = "https://instagram.com/railtech_uz" },
+      { linkedin = "https://linkedin.com/company/railtech-uz" },
+    ]

@@ -29,8 +29,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  HUGO_VERSION: 0.148.1
-  GO_VERSION: "1.22"
+  HUGO_VERSION: 0.159.0
+  GO_VERSION: "1.23"
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 defaults:
