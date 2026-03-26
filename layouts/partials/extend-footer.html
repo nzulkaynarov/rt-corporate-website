@@ -1,21 +1,24 @@
-{{/* RailTech — extra footer content (ecosystem links + copyright) */}}
+{{/* RailTech — extra footer content (ecosystem links + copyright)
+     Premium dark theme. Blowfish Tailwind only. WCAG 2.1 AA. */}}
 {{ $extra := .Site.Params.extra }}
 
-<div class="mt-8 border-t border-neutral-800 pt-6 text-center text-sm text-neutral-500">
+<div class="mt-8 border-t border-neutral-800 pt-8 text-center text-sm text-neutral-400">
 
   {{/* Ecosystem links */}}
-  <div class="mb-4">
-    <span class="font-semibold text-neutral-400">{{ i18n "footer_eco" }}:</span>
+  <nav aria-label="{{ i18n "footer_eco" }}" class="mb-4">
+    <span class="font-semibold text-neutral-300">{{ i18n "footer_eco" }}:</span>
     <a href="{{ $extra.catalogURL }}" target="_blank" rel="noopener noreferrer"
-       class="ml-2 text-primary-400 hover:text-primary-300 transition-colors">
+       class="ml-2 text-primary-400 hover:text-primary-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors">
       {{ i18n "footer_cat" }}
+      <span class="sr-only">{{ i18n "link_new_tab" }}</span>
     </a>
-    <span class="mx-1">·</span>
+    <span aria-hidden="true" class="mx-1.5">·</span>
     <a href="{{ $extra.cabinetURL }}" target="_blank" rel="noopener noreferrer"
-       class="text-primary-400 hover:text-primary-300 transition-colors">
+       class="text-primary-400 hover:text-primary-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors">
       {{ i18n "footer_cab" }}
+      <span class="sr-only">{{ i18n "link_new_tab" }}</span>
     </a>
-  </div>
+  </nav>
 
   {{/* Copyright */}}
   <p>{{ i18n "footer_copy" }}</p>

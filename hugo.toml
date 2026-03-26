@@ -1,0 +1,242 @@
+baseURL = "https://railtech.uz/"
+languageCode = "ru"
+title = "RailTech"
+theme = "blowfish"
+
+defaultContentLanguage = "ru"
+enableRobotsTXT = true
+summaryLength = 100
+
+[pagination]
+pagerSize = 9
+
+[markup.highlight]
+style = "dracula"
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+section = ["HTML", "RSS"]
+
+[params]
+colorScheme = "railtech"
+defaultAppearance = "dark"
+autoSwitchAppearance = false
+enableSearch = true
+enableCodeCopy = true
+
+# Images
+logo = "img/brand/railtech-logo.svg"
+favicon = "img/brand/favicon.ico"
+
+# Homepage
+[params.homepage]
+layout = "custom"
+showRecent = true
+showRecentItems = 3
+showMoreLink = true
+showMoreLinkDest = "/blog"
+cardView = true
+cardViewScreenWidth = false
+
+# Article
+[params.article]
+showHero = true
+heroStyle = "basic"
+showDate = true
+showDateUpdated = false
+showAuthor = true
+showBreadcrumbs = true
+showTableOfContents = true
+showRelatedContent = true
+relatedContentLimit = 3
+sharingLinks = ["telegram", "facebook", "linkedin"]
+
+# List
+[params.list]
+showHero = false
+heroStyle = "background"
+showBreadcrumbs = true
+showSummary = true
+showTableOfContents = false
+groupByYear = false
+cardView = true
+cardViewScreenWidth = false
+
+# Taxonomy
+[params.taxonomy]
+showTermCount = true
+cardView = true
+
+# Header
+[params.header]
+layout = "basic"
+
+# Footer
+[params.footer]
+showCopyright = false
+showThemeAttribution = false
+showAppearanceSwitcher = true
+showScrollToTop = true
+
+# RailTech custom params
+[params.extra]
+phone = "+998 90 118-90-00"
+email = "info@railtech.uz"
+catalogURL = "https://b2b.railtech.uz"
+cabinetURL = "https://cabinet.railtech.uz"
+mapLat = "41.2995"
+mapLon = "69.2401"
+web3formsKey = "WEB3FORMS_ACCESS_KEY"
+copyright = "© 2021–2026 RailTech LLC"
+
+[params.extra.stats]
+years = "5+"
+partners = "120+"
+skus = "500+"
+countries = "3"
+
+# Languages
+[languages.ru]
+languageName = "Русский"
+weight = 1
+
+[languages.en]
+languageName = "English"
+weight = 2
+baseURL = "https://railtech.uz/en/"
+
+[languages.uz]
+languageName = "Oʻzbekcha"
+weight = 3
+baseURL = "https://railtech.uz/uz/"
+
+# Menu - Russian
+[[languages.ru.menu.main]]
+name = "О компании"
+pageRef = "/about"
+weight = 10
+
+[[languages.ru.menu.main]]
+name = "Услуги"
+pageRef = "/services"
+weight = 20
+hasChildren = true
+
+[[languages.ru.menu.main]]
+name = "Инжиниринг"
+parent = "Услуги"
+pageRef = "/services/#engineering"
+weight = 21
+
+[[languages.ru.menu.main]]
+name = "Консалтинг"
+parent = "Услуги"
+pageRef = "/services/#consulting"
+weight = 22
+
+[[languages.ru.menu.main]]
+name = "Поставки"
+parent = "Услуги"
+pageRef = "/services/#supplies"
+weight = 23
+
+[[languages.ru.menu.main]]
+name = "Проекты"
+pageRef = "/projects"
+weight = 30
+
+[[languages.ru.menu.main]]
+name = "Платформа"
+pageRef = "/platform"
+weight = 40
+hasChildren = true
+
+[[languages.ru.menu.main]]
+name = "Каталог"
+parent = "Платформа"
+pageRef = "/platform/catalog"
+weight = 41
+
+[[languages.ru.menu.main]]
+name = "Закупки"
+parent = "Платформа"
+pageRef = "/platform/deals"
+weight = 42
+
+[[languages.ru.menu.main]]
+name = "Аналитика"
+parent = "Платформа"
+pageRef = "/platform/admin"
+weight = 43
+
+[[languages.ru.menu.main]]
+name = "Блог"
+pageRef = "/blog"
+weight = 50
+
+[[languages.ru.menu.main]]
+name = "Контакты"
+pageRef = "/contact"
+weight = 60
+
+# Menu - English
+[[languages.en.menu.main]]
+name = "About"
+pageRef = "/about"
+weight = 10
+
+[[languages.en.menu.main]]
+name = "Services"
+pageRef = "/services"
+weight = 20
+
+[[languages.en.menu.main]]
+name = "Projects"
+pageRef = "/projects"
+weight = 30
+
+[[languages.en.menu.main]]
+name = "Platform"
+pageRef = "/platform"
+weight = 40
+
+[[languages.en.menu.main]]
+name = "Blog"
+pageRef = "/blog"
+weight = 50
+
+[[languages.en.menu.main]]
+name = "Contact"
+pageRef = "/contact"
+weight = 60
+
+# Menu - Uzbek
+[[languages.uz.menu.main]]
+name = "Kompaniya haqida"
+pageRef = "/about"
+weight = 10
+
+[[languages.uz.menu.main]]
+name = "Xizmatlar"
+pageRef = "/services"
+weight = 20
+
+[[languages.uz.menu.main]]
+name = "Loyihalar"
+pageRef = "/projects"
+weight = 30
+
+[[languages.uz.menu.main]]
+name = "Platforma"
+pageRef = "/platform"
+weight = 40
+
+[[languages.uz.menu.main]]
+name = "Blog"
+pageRef = "/blog"
+weight = 50
+
+[[languages.uz.menu.main]]
+name = "Aloqa"
+pageRef = "/contact"
+weight = 60
