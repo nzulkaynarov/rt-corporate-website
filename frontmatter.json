@@ -50,32 +50,11 @@
     { "id": "date-desc", "title": "Date (newest)", "name": "date", "order": "desc", "type": "date" },
     { "id": "date-asc", "title": "Date (oldest)", "name": "date", "order": "asc", "type": "date" },
     { "id": "title-asc", "title": "Title (A-Z)", "name": "title", "order": "asc", "type": "string" },
-    { "id": "weight-asc", "title": "Weight (order)", "name": "weight", "order": "asc", "type": "number" },
-    { "id": "modified-desc", "title": "Last modified", "name": "lastmod", "order": "desc", "type": "date" }
+    { "id": "weight-asc", "title": "Weight (order)", "name": "weight", "order": "asc", "type": "number" }
   ],
   "frontMatter.content.defaultSorting": "date-desc",
 
   "frontMatter.content.filters": ["contentFolders", "tags", "categories"],
-
-  "frontMatter.taxonomy.fieldGroups": [
-    {
-      "id": "seo",
-      "labelField": "title",
-      "fields": [
-        { "title": "SEO Title", "name": "seo_title", "type": "string", "description": "Override page title for search engines (max 60 chars)" },
-        { "title": "SEO Description", "name": "seo_description", "type": "string", "description": "Override description for search engines (max 160 chars)" }
-      ]
-    },
-    {
-      "id": "timeline_entry",
-      "labelField": "year",
-      "fields": [
-        { "title": "Year", "name": "year", "type": "string" },
-        { "title": "Title", "name": "title", "type": "string" },
-        { "title": "Description", "name": "description", "type": "string" }
-      ]
-    }
-  ],
 
   "frontMatter.taxonomy.contentTypes": [
     {
@@ -83,11 +62,10 @@
       "pageBundle": false,
       "fields": [
         { "title": "Title", "name": "title", "type": "string", "required": true },
-        { "title": "Description", "name": "description", "type": "string", "description": "SEO description (max 160 chars)" },
-        { "title": "Date", "name": "date", "type": "datetime", "isPublishDate": true },
-        { "title": "Last Modified", "name": "lastmod", "type": "datetime", "isModifiedDate": true },
+        { "title": "Description", "name": "description", "type": "string" },
+        { "title": "Date", "name": "date", "type": "datetime" },
         { "title": "Author", "name": "author", "type": "string", "default": "RailTech" },
-        { "title": "Image", "name": "image", "type": "image", "description": "Featured image (16:9 ratio, min 800x450)" },
+        { "title": "Image", "name": "image", "type": "image" },
         { "title": "Tags", "name": "tags", "type": "tags" },
         { "title": "Categories", "name": "categories", "type": "categories" },
         { "title": "Draft", "name": "draft", "type": "draft" }
@@ -97,203 +75,61 @@
       "name": "project",
       "pageBundle": false,
       "fields": [
-        {
-          "title": "Title",
-          "name": "title",
-          "type": "string",
-          "required": true
-        },
-        {
-          "title": "Description",
-          "name": "description",
-          "type": "string"
-        },
-        {
-          "title": "Image",
-          "name": "image",
-          "type": "image",
-          "description": "Project photo (16:10 ratio)"
-        },
-        {
-          "title": "Client",
-          "name": "client",
-          "type": "string"
-        },
-        {
-          "title": "Year",
-          "name": "year",
-          "type": "string"
-        },
-        {
-          "title": "Scope",
-          "name": "scope",
-          "type": "string"
-        },
-        {
-          "title": "Status",
-          "name": "status",
-          "type": "choice",
-          "choices": [
-            "completed",
-            "in_progress"
-          ]
-        },
-        {
-          "title": "Category",
-          "name": "category",
-          "type": "string"
-        },
-        {
-          "title": "Weight",
-          "name": "weight",
-          "type": "number",
-          "description": "Display order (lower = first)"
-        },
-        {
-          "title": "Tags",
-          "name": "tags",
-          "type": "tags"
-        },
-        {
-          "title": "Draft",
-          "name": "draft",
-          "type": "draft"
-        }
+        { "title": "Title", "name": "title", "type": "string", "required": true },
+        { "title": "Description", "name": "description", "type": "string" },
+        { "title": "Image", "name": "image", "type": "image" },
+        { "title": "Client", "name": "client", "type": "string" },
+        { "title": "Year", "name": "year", "type": "string" },
+        { "title": "Scope", "name": "scope", "type": "string" },
+        { "title": "Status", "name": "status", "type": "choice", "choices": ["completed", "in_progress"] },
+        { "title": "Category", "name": "category", "type": "string" },
+        { "title": "Weight", "name": "weight", "type": "number" },
+        { "title": "Tags", "name": "tags", "type": "tags" },
+        { "title": "Draft", "name": "draft", "type": "draft" }
       ]
     },
     {
       "name": "service",
       "pageBundle": false,
       "fields": [
-        {
-          "title": "Title",
-          "name": "title",
-          "type": "string",
-          "required": true
-        },
-        {
-          "title": "Description",
-          "name": "description",
-          "type": "string"
-        },
-        {
-          "title": "Weight",
-          "name": "weight",
-          "type": "number",
-          "description": "Display order (lower = first)"
-        },
-        {
-          "title": "Icon",
-          "name": "icon",
-          "type": "image",
-          "description": "Service icon (square, 48x48 or 64x64)"
-        },
-        {
-          "title": "Features",
-          "name": "features",
-          "type": "list",
-          "description": "Key features/benefits list"
-        },
-        {
-          "title": "Draft",
-          "name": "draft",
-          "type": "draft"
-        }
+        { "title": "Title", "name": "title", "type": "string", "required": true },
+        { "title": "Description", "name": "description", "type": "string" },
+        { "title": "Weight", "name": "weight", "type": "number" },
+        { "title": "Icon", "name": "icon", "type": "image" },
+        { "title": "Features", "name": "features", "type": "list" },
+        { "title": "Draft", "name": "draft", "type": "draft" }
       ]
     },
     {
       "name": "platform",
       "pageBundle": false,
       "fields": [
-        {
-          "title": "Title",
-          "name": "title",
-          "type": "string",
-          "required": true
-        },
-        {
-          "title": "Description",
-          "name": "description",
-          "type": "string"
-        },
-        {
-          "title": "Weight",
-          "name": "weight",
-          "type": "number",
-          "description": "Display order (lower = first)"
-        },
-        {
-          "title": "Tag",
-          "name": "tag",
-          "type": "string",
-          "description": "Badge label above the title"
-        },
-        {
-          "title": "Image",
-          "name": "image",
-          "type": "image",
-          "description": "Platform screenshot (16:10 ratio)"
-        },
-        {
-          "title": "Highlights",
-          "name": "highlights",
-          "type": "list",
-          "description": "Key feature highlights"
-        },
-        {
-          "title": "Draft",
-          "name": "draft",
-          "type": "draft"
-        }
+        { "title": "Title", "name": "title", "type": "string", "required": true },
+        { "title": "Description", "name": "description", "type": "string" },
+        { "title": "Weight", "name": "weight", "type": "number" },
+        { "title": "Tag", "name": "tag", "type": "string" },
+        { "title": "Image", "name": "image", "type": "image" },
+        { "title": "Highlights", "name": "highlights", "type": "list" },
+        { "title": "Draft", "name": "draft", "type": "draft" }
       ]
     },
     {
       "name": "page",
       "pageBundle": false,
       "fields": [
-        {
-          "title": "Title",
-          "name": "title",
-          "type": "string",
-          "required": true
-        },
-        {
-          "title": "Description",
-          "name": "description",
-          "type": "string"
-        },
-        {
-          "title": "Image",
-          "name": "image",
-          "type": "image"
-        },
-        {
-          "title": "Draft",
-          "name": "draft",
-          "type": "draft"
-        }
+        { "title": "Title", "name": "title", "type": "string", "required": true },
+        { "title": "Description", "name": "description", "type": "string" },
+        { "title": "Image", "name": "image", "type": "image" },
+        { "title": "Draft", "name": "draft", "type": "draft" }
       ]
     },
     {
       "name": "default",
       "pageBundle": false,
       "fields": [
-        {
-          "title": "Title",
-          "name": "title",
-          "type": "string",
-          "required": true
-        },
-        {
-          "title": "Description",
-          "name": "description",
-          "type": "string"
-        },
-        {
-          "title": "Draft",
-          "name": "draft",
-          "type": "draft"
-        }
+        { "title": "Title", "name": "title", "type": "string", "required": true },
+        { "title": "Description", "name": "description", "type": "string" },
+        { "title": "Draft", "name": "draft", "type": "draft" }
       ]
     }
   ],
@@ -317,15 +153,6 @@
   ],
 
   "frontMatter.content.snippets": {
-    "Image with Caption": {
-      "description": "Insert an image with caption text",
-      "body": "{{< figure src=\"[[src]]\" alt=\"[[alt]]\" caption=\"[[caption]]\" >}}",
-      "fields": [
-        { "name": "src", "title": "Image path", "type": "image" },
-        { "name": "alt", "title": "Alt text", "type": "string" },
-        { "name": "caption", "title": "Caption", "type": "string" }
-      ]
-    },
     "CTA Block": {
       "description": "Insert a call-to-action button",
       "body": [
@@ -354,35 +181,8 @@
         { "name": "title", "title": "Title", "type": "string" },
         { "name": "content", "title": "Content", "type": "string" }
       ]
-    },
-    "Feature List": {
-      "description": "Insert a feature checklist",
-      "body": [
-        "",
-        "- ✓ [[feature1]]",
-        "- ✓ [[feature2]]",
-        "- ✓ [[feature3]]",
-        ""
-      ],
-      "fields": [
-        { "name": "feature1", "title": "Feature 1", "type": "string" },
-        { "name": "feature2", "title": "Feature 2", "type": "string" },
-        { "name": "feature3", "title": "Feature 3", "type": "string" }
-      ]
     }
   },
-
-  "frontMatter.media.contentTypes": [
-    {
-      "name": "default",
-      "fileTypes": ["jpg", "jpeg", "png", "gif", "svg", "webp"],
-      "fields": [
-        { "title": "Title", "name": "title", "type": "string" },
-        { "title": "Alt Text", "name": "alt", "type": "string" },
-        { "title": "Caption", "name": "caption", "type": "string" }
-      ]
-    }
-  ],
 
   "frontMatter.data.files": [
     {
@@ -390,38 +190,17 @@
       "title": "Company Info",
       "file": "[[workspace]]/data/company.yaml",
       "fileType": "yaml",
-      "singleEntry": true,
+      "labelField": "brandName",
       "schema": {
-        "title": "Company Information",
+        "title": "Company",
         "type": "object",
-        "required": ["brandName"],
         "properties": {
           "brandName": { "type": "string", "title": "Brand Name" },
           "legalName": { "type": "string", "title": "Legal Name (RU)" },
           "legalNameEn": { "type": "string", "title": "Legal Name (EN)" },
           "legalNameUz": { "type": "string", "title": "Legal Name (UZ)" },
           "foundingYear": { "type": "string", "title": "Founding Year" },
-          "businessHours": { "type": "string", "title": "Business Hours (schema.org format)" },
-          "address": {
-            "type": "object",
-            "title": "Address",
-            "properties": {
-              "city": { "type": "string", "title": "City" },
-              "country": { "type": "string", "title": "Country Code (ISO)" },
-              "street": { "type": "string", "title": "Street Address" }
-            }
-          },
-          "partners": {
-            "type": "array",
-            "title": "Partners",
-            "items": {
-              "type": "object",
-              "properties": {
-                "name": { "type": "string", "title": "Partner Name" },
-                "logo": { "type": "string", "title": "Logo Path (optional)" }
-              }
-            }
-          }
+          "businessHours": { "type": "string", "title": "Business Hours" }
         }
       }
     },
@@ -430,9 +209,9 @@
       "title": "Social Media Links",
       "file": "[[workspace]]/data/social.yaml",
       "fileType": "yaml",
-      "singleEntry": true,
+      "labelField": "telegram",
       "schema": {
-        "title": "Social Media",
+        "title": "Social",
         "type": "object",
         "properties": {
           "telegram": { "type": "string", "title": "Telegram URL" },
@@ -447,9 +226,9 @@
       "title": "Homepage Stats",
       "file": "[[workspace]]/data/stats.yaml",
       "fileType": "yaml",
-      "singleEntry": true,
+      "labelField": "years",
       "schema": {
-        "title": "Stats Counter",
+        "title": "Stats",
         "type": "object",
         "properties": {
           "years": { "type": "string", "title": "Years on Market" },
@@ -458,40 +237,6 @@
           "countries": { "type": "string", "title": "Countries" }
         }
       }
-    },
-    {
-      "id": "advantages",
-      "title": "Advantages Section",
-      "file": "[[workspace]]/data/advantages.yaml",
-      "fileType": "yaml",
-      "labelField": "titleKey",
-      "schema": {
-        "title": "Advantage Item",
-        "type": "object",
-        "properties": {
-          "items": {
-            "type": "array",
-            "title": "Advantages",
-            "items": {
-              "type": "object",
-              "properties": {
-                "titleKey": { "type": "string", "title": "i18n Title Key" },
-                "descKey": { "type": "string", "title": "i18n Description Key" },
-                "icon": { "type": "string", "title": "SVG Icon HTML" }
-              }
-            }
-          }
-        }
-      }
-    }
-  ],
-
-  "frontMatter.custom.scripts": [
-    {
-      "id": "create-translation",
-      "title": "Create missing translations",
-      "script": ".frontmatter/scripts/create-translations.js",
-      "command": "node"
     }
   ]
 }
