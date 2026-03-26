@@ -9,7 +9,7 @@ tags:
   - "Import"
   - "Bojxona"
   - "Logistika"
-image: ""
+image: /img/blog/import-customs.jpg
 ---
 
 ## Temir yo'l uskunalarini import qilish bo'yicha qo'llanma

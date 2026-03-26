@@ -3,7 +3,7 @@ title: "Importing Industrial Equipment to Uzbekistan: A Practical Guide"
 description: "A comprehensive guide to importing industrial equipment into Uzbekistan — customs procedures, certification, logistics, and common pitfalls."
 date: 2025-01-10
 author: "RailTech"
-image: /img/blog/import-guide.jpg
+image: /img/blog/import-customs.jpg
 tags:
   - "Import"
   - "Customs"

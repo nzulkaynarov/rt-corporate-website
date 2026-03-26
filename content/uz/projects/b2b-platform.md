@@ -5,7 +5,9 @@ client: "Ichki loyiha"
 year: 2024
 status: "completed"
 category: "Raqamlashtirish"
-image: ""
+image: /img/projects/b2b-platform.jpg
+scope: "To'liq funksional B2B platforma"
+weight: 2
 ---
 
 ## Loyiha haqida

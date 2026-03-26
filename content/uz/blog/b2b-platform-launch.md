@@ -8,7 +8,7 @@ categories:
 tags:
   - "B2B platforma"
   - "Raqamlashtirish"
-image: ""
+image: /img/blog/b2b-launch.jpg
 ---
 
 ## RailTech B2B platformasi ishga tushirildi

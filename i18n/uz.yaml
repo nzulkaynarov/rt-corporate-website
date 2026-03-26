@@ -1,3 +1,4 @@
+# ─── Navigation ───────────────────────────────────────────
 nav_home: "Bosh sahifa"
 nav_about: "Kompaniya"
 nav_services: "Xizmatlar"
@@ -6,9 +7,9 @@ nav_projects: "Loyihalar"
 nav_blog: "Blog"
 nav_contacts: "Aloqa"
 nav_cabinet: "Kirish"
+nav_skip: "Asosiy kontentga o'tish"
 
-hero_title: "Sanoat uskunalarini kompleks yetkazib berish"
-hero_desc: "O'zbekistonda ishlab chiqarishingizning uzluksiz ishlashini ta'minlaymiz. Rasmiy kafolat, to'liq bojxona rasmiylashtiruvi va omborgacha yetkazib berish."
+# ─── Buttons ─────────────────────────────────────────────
 btn_contact: "Biz bilan bog'lanish"
 btn_catalog: "Katalogga o'tish"
 btn_learn_more: "Batafsil"
@@ -18,35 +19,7 @@ btn_read_more: "Davomini o'qish"
 btn_send: "So'rov yuborish"
 btn_back: "Orqaga"
 
-stats_years: "yil bozorda"
-stats_partners: "hamkorlar"
-stats_sku: "SKU katalogda"
-stats_countries: "davlat"
-
-adv_1_title: "Rasmiy diler"
-adv_1_desc: "Jahonning yetakchi sanoat va temir yo'l uskunalari ishlab chiqaruvchilarining hamkori."
-adv_2_title: "Sertifikatlashtirish"
-adv_2_desc: "Faqatgina to'liq hujjatlar paketi bilan sertifikatlangan mahsulotlarni import qilish va sotish."
-adv_3_title: "Konsalting"
-adv_3_desc: "O'zbekistonda faoliyat yuritayotgan xalqaro kompaniyalar uchun professional xizmatlar."
-adv_4_title: "Yetkazib berish"
-adv_4_desc: "To'liq bojxona rasmiylashtiruvi bilan uskunalarni yetkazib berish."
-
-srv_badge: "Xizmatlar"
-srv_main_title: "Bizning xizmatlarimiz"
-srv_main_desc: "RailTech tajribali mutaxassislar tomonidan muhandislik loyihalarini yetkazib berish va amalga oshirish sohasida professional xizmatlar ko'rsatish uchun tashkil etilgan."
-
-platform_label: "Raqamli platforma"
-platform_title: "Butun ta'minot sikli — bitta oynada"
-platform_desc: "Mijoz bilan ishlashning har bir bosqichini raqamli formatga o'tkazdik."
-platform_cta: "B2B katalogni ochish"
-
-partners_title: "Soha yetakchilari bilan ishlaymiz"
-partners_desc: "Rasmiy dilerlik shartnomalari va uzoq muddatli hamkorliklar."
-
-faq_title: "Ko'p so'raladigan savollar"
-faq_desc: "Javobni topa olmadingizmi — bizga yozing, bir ish kuni ichida javob beramiz."
-
+# ─── Contact form ────────────────────────────────────────
 form_title: "Biz bilan bog'lanish"
 form_desc: "So'rov qoldiring va RailTech mutaxassisi vazifalarni muhokama qilish uchun siz bilan bog'lanadi."
 form_name: "Ismingiz"
@@ -58,11 +31,14 @@ form_success: "So'rov muvaffaqiyatli yuborildi!"
 form_error: "Yuborishda xatolik. Keyinroq urinib ko'ring."
 form_sending: "Yuborilmoqda..."
 
-cta_title: "Xaridlarni optimallashtirmoqchimisiz?"
-cta_desc: "120 dan ortiq hamkorlar allaqachon O'zbekistonda sanoat uskunalarini yetkazib berish uchun RailTech'ga ishonadi."
-cta_primary: "Biz bilan bog'lanish"
-cta_secondary: "Katalogni ochish"
+# ─── Contact info ────────────────────────────────────────
+contact_phone: "Telefon"
+contact_email: "Email"
+contact_address: "Manzil"
+contact_work_hours: "Ish vaqti"
+contact_work_schedule: "Du–Ju: 09:00 – 18:00"
 
+# ─── Footer ──────────────────────────────────────────────
 footer_desc: "O'zbekistonda butlovchi qismlarni yetkazib berish va muhandislik loyihalarini amalga oshirish sohasida xizmat ko'rsatuvchi innovatsion-texnologik kompaniya."
 footer_copy: "© 2021–2026 «RailTech» MChJ. Barcha huquqlar himoyalangan."
 footer_eco: "Ekotizim"
@@ -71,55 +47,14 @@ footer_cab: "Hamkor kabineti"
 footer_privacy: "Maxfiylik siyosati"
 footer_terms: "Foydalanish shartlari"
 footer_address: "Toshkent sh., Index, Ofis B2-2097"
+link_new_tab: "(yangi oynada ochiladi)"
 
-blog_share: "Ulashish"
-blog_tags: "Teglar"
-blog_related: "O'xshash maqolalar"
-blog_published: "Nashr etilgan"
-blog_author: "Muallif"
-blog_reading_time: "daqiqa o'qish"
-
-projects_client: "Buyurtmachi"
-projects_year: "Yil"
-projects_scope: "Hajm"
-projects_status: "Holat"
-projects_completed: "Yakunlangan"
-projects_in_progress: "Jarayonda"
-
-contact_phone: "Telefon"
-contact_email: "Email"
-contact_address: "Manzil"
-contact_work_hours: "Ish vaqti"
-contact_work_schedule: "Du–Ju: 09:00 – 18:00"
-
+# ─── Errors ──────────────────────────────────────────────
 err_title: "Sahifa topilmadi"
 err_desc: "Havola eskirgan yoki sahifa ko'chirilgan bo'lishi mumkin."
 err_home: "Bosh sahifaga"
 
-search_placeholder: "Qidirish..."
-search_no_results: "Hech narsa topilmadi"
-hero_chip_1: "120+ faol hamkorlar"
-hero_chip_2: "500+ SKU katalogda"
-hero_chip_3: "5 yil bozorda"
-tw_1: "Temir yo'l butlovchi qismlari"
-tw_2: "Sanoat uskunalari"
-tw_3: "Texnik konsalting"
-tw_4: "Bojxona rasmiylashtiruvi"
-tw_5: "Rasmiy yetkazib berish"
-theme_light: "Yorug' mavzu"
-theme_dark: "To'q mavzu"
-
-about_mission: "Missiya"
-about_vision: "Vizyon"
-about_timeline: "Kompaniya tarixi"
-
-nav_skip: "Asosiy kontentga o'tish"
-
-adv_section_title: "Bizning afzalliklarimiz"
-link_new_tab: "(yangi oynada ochiladi)"
-search_placeholder_full: "Nimani qidiryapsiz?"
-
-# ─── Blowfish theme UI keys (uz not built-in) ───────────────
+# ─── Blowfish theme UI keys (uz not built-in) ────────────
 article.anchor: "Bog'lanish"
 article.date: "Nashr etilgan"
 article.author: "Muallif"

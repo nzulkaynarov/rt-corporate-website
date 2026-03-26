@@ -5,7 +5,9 @@ client: "Toshkent OTBM"
 year: 2024
 status: "completed"
 category: "Diagnostika"
-image: ""
+image: /img/projects/diagnostic-equipment.jpg
+scope: "18 komplekt diagnostika uskunalari"
+weight: 3
 ---
 
 ## Loyiha haqida

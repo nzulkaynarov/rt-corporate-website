@@ -2,8 +2,8 @@
 title: "About RailTech"
 description: "An innovation-driven technology company providing professional services in equipment supply and engineering project delivery across Uzbekistan."
 type: about
-image: /img/hero/about-hero.jpg
-sidebar_image: /img/hero/rt-office.jpg
+image: ""
+sidebar_image: ""
 mission_title: "Mission"
 mission: "To provide industrial enterprises in Uzbekistan with world-class equipment and engineering solutions, ensuring reliable supply chains and end-to-end support at every stage."
 vision_title: "Vision"

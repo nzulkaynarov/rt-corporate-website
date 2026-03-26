@@ -1,8 +1,5 @@
-{{/* RailTech extend-head — site-level cached additions
-     Blowfish context: partialCached "extend-head.html" .Site
-     Context "." here IS .Site — use .Data, .Params, .BaseURL directly
-     Per-page additions (schema-org): handled by extend-head-uncached.html
-     Favicon: handled by favicons.html override */}}
+{{/* RailTech extend-head — Blowfish official extension point
+     Context: partialCached "extend-head.html" .Site */}}
 
 {{/* Inter font — technical, precise typography for B2B corporate */}}
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,31 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--font-sans:'Inter',ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji"}
-
-/* FAQ accordion chevron rotation — outside @layer so it wins */
-details summary::-webkit-details-marker{display:none}
-details[open] .rt-chevron{transform:rotate(180deg)}
-
-/* ── Responsive grid overrides (outside @layer → wins over Blowfish) ── */
-/* Stats: 4-col → 2-col on mobile */
-.rt-stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
-@media(min-width:640px){.rt-stats-grid{grid-template-columns:repeat(4,1fr);gap:2.5rem}}
-
-/* Partners: 4-col → 2-col on mobile */
-.rt-partners-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem}
-@media(min-width:640px){.rt-partners-grid{grid-template-columns:repeat(4,1fr);gap:1rem}}
-
-/* Services / Advantages: 1-col → 2-col on sm */
-.rt-cards-grid{display:grid;grid-template-columns:1fr;gap:1.5rem}
-@media(min-width:640px){.rt-cards-grid{grid-template-columns:repeat(2,1fr)}}
-
-/* Hero / CTA section padding — less on mobile */
-.rt-hero-pad{padding:4rem 1rem}
-@media(min-width:640px){.rt-hero-pad{padding:7rem 1rem}}
-
-/* Section padding — consistent */
-.rt-section-pad{padding:3.5rem 0}
-@media(min-width:640px){.rt-section-pad{padding:6rem 0}}
 </style>
 
 {{/* Search engine verification meta tags — from data/seo.yaml */}}

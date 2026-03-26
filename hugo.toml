@@ -28,12 +28,23 @@ enableCodeCopy = true
 # Images
 logo = "img/brand/railtech-logo.svg"
 favicon = "img/brand/favicon.svg"
+# Author = Company branding (used by hero layout)
+[params.author]
+name = "RailTech"
+image = "img/brand/railtech-logo.svg"
+headline = "Комплексные поставки промышленного оборудования в Узбекистане"
+  [[params.author.links]]
+    telegram = "https://t.me/railtech_uz"
+  [[params.author.links]]
+    linkedin = "https://linkedin.com/company/railtech-uz"
+  [[params.author.links]]
+    email = "info@railtech.uz"
 
 # Homepage
 [params.homepage]
-layout = "custom"
+layout = "hero"
 showRecent = true
-showRecentItems = 3
+showRecentItems = 6
 showMoreLink = true
 showMoreLinkDest = "/blog"
 cardView = true
@@ -105,16 +116,22 @@ twitterHandle = "@railtech"
 languageName = "Русский"
 weight = 1
 contentDir = "content/ru"
+[languages.ru.params.author]
+headline = "Комплексные поставки промышленного оборудования в Узбекистане"
 
 [languages.en]
 languageName = "English"
 weight = 2
 contentDir = "content/en"
+[languages.en.params.author]
+headline = "Comprehensive Industrial Equipment Supply in Uzbekistan"
 
 [languages.uz]
 languageName = "Oʻzbekcha"
 weight = 3
 contentDir = "content/uz"
+[languages.uz.params.author]
+headline = "O'zbekistonda sanoat uskunalarini yetkazib berish"
 
 # ═══════════════════════════════════════════════════════
 # Menu - Russian

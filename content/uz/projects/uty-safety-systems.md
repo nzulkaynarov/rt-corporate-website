@@ -5,7 +5,9 @@ client: "AJ «O'zbekiston temir yo'llari»"
 year: 2023
 status: "completed"
 category: "Harakat xavfsizligi"
-image: ""
+image: /img/projects/uty-safety-systems.jpg
+scope: "42 komplekt uskunalar"
+weight: 1
 ---
 
 ## Loyiha haqida

@@ -9,7 +9,7 @@ tags:
   - "Xavfsizlik"
   - "Signalizatsiya"
   - "Texnologiyalar"
-image: ""
+image: /img/blog/railway-safety.jpg
 ---
 
 ## O'zbekistonda temir yo'l xavfsizligi
