@@ -41,9 +41,9 @@
   "frontMatter.dashboard.content.pagination": 16,
 
   "frontMatter.content.i18n": [
-    { "title": "Russian", "locale": "ru", "path": "content/ru" },
-    { "title": "English", "locale": "en", "path": "content/en" },
-    { "title": "Uzbek", "locale": "uz", "path": "content/uz" }
+    { "title": "Russian", "locale": "ru", "path": "[[workspace]]/content/ru" },
+    { "title": "English", "locale": "en", "path": "[[workspace]]/content/en" },
+    { "title": "Uzbek", "locale": "uz", "path": "[[workspace]]/content/uz" }
   ],
 
   "frontMatter.content.sorting": [
