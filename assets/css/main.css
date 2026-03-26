@@ -1562,6 +1562,8 @@ h3 { font-size: clamp(1.05rem, 2vw, 1.3rem); font-weight: 600; }
   .main-nav { display: none; }
   .mobile-toggle { display: flex; }
   .header-phone { display: none; }
+  .search-toggle { display: none; }
+  .lang-dropdown { display: none; }
 
   .stats-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
   .stat-item + .stat-item::before { display: none; }
