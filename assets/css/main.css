@@ -553,14 +553,14 @@ h3 { font-size: clamp(1.05rem, 2vw, 1.3rem); font-weight: 600; }
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--mobile-menu-bg, rgba(10,10,10,0.98));
+  background: var(--color-bg-alt);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   padding: 0;
-  z-index: 999;
+  z-index: 1001;
   overflow-y: auto;
   overscroll-behavior: contain;
-  transform: translateX(100%);
+  transform: translateX(-100%);
   opacity: 0;
   visibility: hidden;
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
