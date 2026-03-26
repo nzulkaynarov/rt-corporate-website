@@ -4,7 +4,7 @@
 #
 # Required GitHub Variables (Settings → Variables → Actions):
 #   SITE_URL       — Site base URL (e.g. https://locodep.uz/ or https://user.github.io/repo/)
-#   DEPLOY_REPO    — Target repo for deployment (e.g. nzulkaynarov/rt-website-public)
+#   DEPLOY_REPO    — Target repo (e.g. nzulkaynarov/rt-website-public)
 #
 # Optional GitHub Variables:
 #   CNAME_DOMAIN   — Custom domain for CNAME file (e.g. locodep.uz). Leave empty for *.github.io
@@ -28,6 +28,11 @@ concurrency:
   group: "deploy"
   cancel-in-progress: true
 
+env:
+  HUGO_VERSION: 0.148.1
+  # Force Node.js 24 for all actions
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 defaults:
   run:
     shell: bash
@@ -35,9 +40,18 @@ defaults:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    env:
-      HUGO_VERSION: 0.148.1
     steps:
+      - name: Validate required variables
+        run: |
+          if [ -z "${{ vars.SITE_URL }}" ]; then
+            echo "::error::SITE_URL variable is not set. Go to Settings → Variables → Actions and add it."
+            exit 1
+          fi
+          if [ -z "${{ vars.DEPLOY_REPO }}" ]; then
+            echo "::error::DEPLOY_REPO variable is not set. Go to Settings → Variables → Actions and add it."
+            exit 1
+          fi
+
       - name: Checkout source (private repo)
         uses: actions/checkout@v4
 
@@ -65,7 +79,6 @@ jobs:
             --minify \
             --baseURL "${{ vars.SITE_URL }}"
           touch public/.nojekyll
-          # Create CNAME file if custom domain is set
           if [ -n "${{ vars.CNAME_DOMAIN }}" ]; then
             echo "${{ vars.CNAME_DOMAIN }}" > public/CNAME
           fi
