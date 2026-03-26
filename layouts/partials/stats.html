@@ -1,20 +1,21 @@
 <section class="stats-section" aria-label="Statistics">
   <div class="container">
     <div class="stats-grid">
-      <div class="stat-item" data-count="{{ .Site.Params.stats.years }}">
-        <span class="stat-number">{{ .Site.Params.stats.years }}</span>
+      {{ $stats := .Site.Data.stats }}
+      <div class="stat-item" data-count="{{ $stats.years }}">
+        <span class="stat-number">{{ $stats.years }}</span>
         <span class="stat-label">{{ i18n "stats_years" }}</span>
       </div>
-      <div class="stat-item" data-count="{{ .Site.Params.stats.partners }}">
-        <span class="stat-number">{{ .Site.Params.stats.partners }}</span>
+      <div class="stat-item" data-count="{{ $stats.partners }}">
+        <span class="stat-number">{{ $stats.partners }}</span>
         <span class="stat-label">{{ i18n "stats_partners" }}</span>
       </div>
-      <div class="stat-item" data-count="{{ .Site.Params.stats.skus }}">
-        <span class="stat-number">{{ .Site.Params.stats.skus }}</span>
+      <div class="stat-item" data-count="{{ $stats.skus }}">
+        <span class="stat-number">{{ $stats.skus }}</span>
         <span class="stat-label">{{ i18n "stats_sku" }}</span>
       </div>
-      <div class="stat-item" data-count="{{ .Site.Params.stats.countries }}">
-        <span class="stat-number">{{ .Site.Params.stats.countries }}</span>
+      <div class="stat-item" data-count="{{ $stats.countries }}">
+        <span class="stat-number">{{ $stats.countries }}</span>
         <span class="stat-label">{{ i18n "stats_countries" }}</span>
       </div>
     </div>

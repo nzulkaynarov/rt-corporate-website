@@ -1,5 +1,7 @@
-baseURL = 'https://nzulkaynarov.github.io/rt-website-public/'
-# Overridden in CI/CD via --baseURL flag. Set SITE_URL repo variable to use custom domain.
+baseURL = 'http://localhost:1313/'
+# Overridden in CI/CD via --baseURL flag from SITE_URL GitHub variable.
+# For local dev: hugo server uses its own baseURL automatically.
+# For production: set SITE_URL variable in GitHub repo settings.
 title = 'RailTech'
 enableRobotsTXT = true
 enableGitInfo = false
@@ -34,7 +36,6 @@ defaultContentLanguageInSubdir = false
 
 [imaging]
   quality = 85
-  resampleFilter = "Lanczos"
 
 [minify]
   [minify.tdewolff]
@@ -216,9 +217,9 @@ defaultContentLanguageInSubdir = false
 [params]
   author = "RailTech LLC"
   copyright = "© 2021–2026 RailTech LLC"
-  logo = "/img/brand/railtech-logo.svg"
-  favicon = "/img/brand/favicon.ico"
-  ogImage = "/img/brand/railtech-og.jpg"
+  logo = "img/brand/railtech-logo.svg"
+  favicon = "img/brand/favicon.ico"
+  ogImage = "img/brand/railtech-og.jpg"
 
   phone = "+998 90 118-90-00"
   email = "info@railtech.uz"

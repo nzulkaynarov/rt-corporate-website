@@ -1,6 +1,5 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://web3forms.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.unsplash.com https://www.google.com; font-src 'self'; frame-src https://www.google.com;">
 <meta name="theme-color" content="#f97316">
 
@@ -45,25 +44,17 @@
   <meta property="og:locale:alternate" content="{{ .Site.Language.Params.locale }}">
   {{ end }}
 {{ end }}
-{{ with .Params.image }}
-<meta property="og:image" content="{{ . | absURL }}">
+{{ $ogImage := .Site.Params.ogImage }}
+{{ with .Params.image }}{{ $ogImage = (strings.TrimLeft "/" .) }}{{ end }}
+<meta property="og:image" content="{{ $ogImage | absURL }}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-{{ else }}
-<meta property="og:image" content="{{ .Site.Params.ogImage | absURL }}">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-{{ end }}
 
 {{/* Twitter Card */}}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ .Title }}">
 <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
-{{ with .Params.image }}
-<meta name="twitter:image" content="{{ . | absURL }}">
-{{ else }}
-<meta name="twitter:image" content="{{ .Site.Params.ogImage | absURL }}">
-{{ end }}
+<meta name="twitter:image" content="{{ $ogImage | absURL }}">
 
 {{/* Article metadata for blog posts */}}
 {{ if and .IsPage (eq .Section "blog") }}
