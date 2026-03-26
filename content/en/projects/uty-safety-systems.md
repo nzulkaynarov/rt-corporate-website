@@ -1,7 +1,7 @@
 ---
 title: "Safety Systems for JSC Uzbekistan Railways"
 description: "Supply and commissioning of microprocessor-based automatic braking control systems (SAUT) for the locomotive fleet."
-image: /img/projects/uty-safety.jpg
+image: /img/projects/uty-safety-systems.jpg
 client: "JSC Uzbekistan Railways"
 year: "2023"
 scope: "42 equipment sets"

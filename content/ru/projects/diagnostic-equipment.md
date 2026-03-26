@@ -1,7 +1,7 @@
 ---
 title: "Поставка диагностического оборудования"
 description: "Комплексная поставка оборудования для диагностики и мониторинга состояния железнодорожной инфраструктуры."
-image: /img/projects/diagnostic.jpg
+image: /img/projects/diagnostic-equipment.jpg
 client: "Ташкентское ОЖДП"
 year: "2024"
 scope: "18 единиц оборудования"

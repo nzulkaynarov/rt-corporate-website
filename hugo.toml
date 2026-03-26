@@ -101,8 +101,6 @@ mapLon = "69.2401"
 web3formsKey = "WEB3FORMS_ACCESS_KEY"
 copyright = "© 2021–2026 RailTech LLC"
 
-# Stats → data/stats.yaml (single source of truth, editable via Frontmatter CMS)
-
 # SEO Configuration
 # Extended SEO settings (verification, robots rules, sitemap) → data/seo.yaml
 # Blowfish-native SEO params below:

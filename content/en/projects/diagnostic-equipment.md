@@ -1,7 +1,7 @@
 ---
 title: "Diagnostic Equipment Supply"
 description: "End-to-end supply of equipment for diagnostics and monitoring of railway infrastructure condition."
-image: /img/projects/diagnostic.jpg
+image: /img/projects/diagnostic-equipment.jpg
 client: "Tashkent Railway Division"
 year: "2024"
 scope: "18 equipment units"
