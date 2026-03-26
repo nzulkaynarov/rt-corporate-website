@@ -32,8 +32,6 @@
   ],
 
   "frontMatter.git.enabled": true,
-  "frontMatter.git.commitMessage": "content: {{message}}",
-  "frontMatter.git.requiresCommitMessage": ["content"],
 
   "frontMatter.dashboard.openOnStart": true,
   "frontMatter.dashboard.content.cardTags": "tags",
@@ -58,11 +56,6 @@
   "frontMatter.content.defaultSorting": "date-desc",
 
   "frontMatter.content.filters": ["contentFolders", "tags", "categories"],
-
-  "frontMatter.content.placeholders": [
-    { "id": "year", "value": "{{year}}" },
-    { "id": "month", "value": "{{month}}" }
-  ],
 
   "frontMatter.taxonomy.fieldGroups": [
     {
@@ -382,7 +375,7 @@
   "frontMatter.media.contentTypes": [
     {
       "name": "default",
-      "fileTypes": null,
+      "fileTypes": ["jpg", "jpeg", "png", "gif", "svg", "webp"],
       "fields": [
         { "title": "Title", "name": "title", "type": "string" },
         { "title": "Alt Text", "name": "alt", "type": "string" },
