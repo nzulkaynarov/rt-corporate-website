@@ -111,5 +111,5 @@ featureimage: "img/hero/about-hero.jpg"
 
 ---
 
-{{< button href="/contact/" >}}Связаться с нами{{< /button >}}&nbsp;
-{{< button href="https://b2b.railtech.uz" target="_blank" >}}Открыть каталог{{< /button >}}
+{{< btn href="/contact/" >}}Связаться с нами{{< /btn >}}&nbsp;
+{{< btn href="https://b2b.railtech.uz" target="_blank" >}}Открыть каталог{{< /btn >}}

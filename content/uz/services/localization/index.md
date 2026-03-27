@@ -37,5 +37,5 @@ Lokalizatsiya jarayoni orqali O'zbekiston temir yo'l korxonalari bir qator afzal
 
 > Loyihangizni muhokama qilishga tayyormisiz? Tijorat taklifini olish uchun biz bilan bog'laning yoki B2B katalogdan uskunalarni tanlang.
 
-{{< button href="/contact/" >}}Biz bilan bog'laning{{< /button >}}
-{{< button href="https://b2b.railtech.uz" target="_blank" >}}Katalogni ochish{{< /button >}}
+{{< btn href="/contact/" >}}Biz bilan bog'laning{{< /btn >}}
+{{< btn href="https://b2b.railtech.uz" target="_blank" >}}Katalogni ochish{{< /btn >}}

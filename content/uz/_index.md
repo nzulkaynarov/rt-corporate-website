@@ -7,12 +7,12 @@ description: "O'zbekiston temir yo'l sanoati uchun asbob-uskunalar yetkazib beri
 O'zbekistonda sanoat korxonalarining uzluksiz ishlashini ta'minlaymiz. Rasmiy kafolat, to'liq bojxona rasmiylari va omboringizgacha yetkazib berish.
 {{< /lead >}}
 
-{{< button href="/uz/contact/" >}}
+{{< btn href="/uz/contact/" >}}
 Biz bilan bog'laning
-{{< /button >}}&nbsp;
-{{< button href="https://b2b.railtech.uz" target="_blank" >}}
+{{< /btn >}}&nbsp;
+{{< btn href="https://b2b.railtech.uz" target="_blank" >}}
 Katalogni ochish
-{{< /button >}}
+{{< /btn >}}
 
 ---
 
@@ -46,7 +46,7 @@ Temir yo'l va sanoat sohalari uchun sertifikatlangan mahsulotlarni sotish va tar
 - Bojxona rasmiylashtiruvi va omborga yetkazib berish
 - Kafolatli va kafolatdan keyingi xizmat
 
-{{< button href="/uz/services/equipment-supply/" >}}Batafsil{{< /button >}}
+{{< btn href="/uz/services/equipment-supply/" >}}Batafsil{{< /btn >}}
 
 {{< /tab >}}
 
@@ -61,7 +61,7 @@ Muhandislik maslahat, loyiha oldi qo'llab-quvvatlash va loyihani amalga oshirish
 - Sinov loyihalarini qo'llab-quvvatlash
 - Buyurtmachi xodimlarini o'qitish
 
-{{< button href="/uz/services/technical-expertise/" >}}Batafsil{{< /button >}}
+{{< btn href="/uz/services/technical-expertise/" >}}Batafsil{{< /btn >}}
 
 {{< /tab >}}
 
@@ -76,7 +76,7 @@ Xalqaro texnologiyalarni mahalliy standartlarga moslashtirish va O'zbekiston hud
 - Texnologiya va kompetentsiyalarni transfer qilish
 - Lokalizatsiya qilingan mahsulotlarni sertifikatlash
 
-{{< button href="/uz/services/localization/" >}}Batafsil{{< /button >}}
+{{< btn href="/uz/services/localization/" >}}Batafsil{{< /btn >}}
 
 {{< /tab >}}
 
@@ -91,7 +91,7 @@ Xalqaro kompaniyalarning O'zbekistondagi manfaatlarini himoya qilish, texnologik
 - Tender va tanlov jarayonlarida ishtirok etish
 - Marketing qo'llab-quvvatlash va targ'ibot
 
-{{< button href="/uz/services/representation/" >}}Batafsil{{< /button >}}
+{{< btn href="/uz/services/representation/" >}}Batafsil{{< /btn >}}
 
 {{< /tab >}}
 
@@ -108,7 +108,7 @@ Xalqaro kompaniyalarning O'zbekistondagi manfaatlarini himoya qilish, texnologik
 — O'zbekiston korxonalari uchun 15 dan ortiq loyiha amalga oshirilgan
 {{< /alert >}}
 
-{{< button href="/uz/projects/" >}}Barcha loyihalar{{< /button >}}
+{{< btn href="/uz/projects/" >}}Barcha loyihalar{{< /btn >}}
 
 ---
 
@@ -148,9 +148,9 @@ Katalog 500+ pozitsiyaga yetdi, faol hamkorlar bazasi — 120+ kompaniya. Ishlab
 
 {{< list title="Platforma imkoniyatlari" cardView=true limit=6 where="Section" value="platform" >}}
 
-{{< button href="https://b2b.railtech.uz" target="_blank" >}}
+{{< btn href="https://b2b.railtech.uz" target="_blank" >}}
 B2B katalogni ochish
-{{< /button >}}
+{{< /btn >}}
 
 ---
 
@@ -196,9 +196,9 @@ Saqlash sharoitlari va qadoq buzilmaganligi saqlanganida 14 kun ichida qaytarish
 
 120 dan ortiq hamkor allaqachon O'zbekistonda sanoat va temir yo'l uskunalarini yetkazib berishda RailTech'ga ishonadi.
 
-{{< button href="/uz/contact/" >}}
+{{< btn href="/uz/contact/" >}}
 Biz bilan bog'laning
-{{< /button >}}&nbsp;
-{{< button href="https://b2b.railtech.uz" target="_blank" >}}
+{{< /btn >}}&nbsp;
+{{< btn href="https://b2b.railtech.uz" target="_blank" >}}
 Katalogni ochish
-{{< /button >}}
+{{< /btn >}}

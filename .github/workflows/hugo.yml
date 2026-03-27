@@ -3,10 +3,10 @@
 # Target: configured via DEPLOY_REPO variable (public, GitHub Pages)
 #
 # Required GitHub Variables (Settings → Variables → Actions):
-#   SITE_URL       — Site base URL (e.g. https://railtech.uz/)
 #   DEPLOY_REPO    — Target repo (e.g. nzulkaynarov/rt-website-public)
 #
 # Optional GitHub Variables:
+#   SITE_URL       — Override baseURL from hugo.toml (e.g. https://railtech.uz/)
 #   CNAME_DOMAIN   — Custom domain for CNAME file (e.g. railtech.uz). Leave empty for *.github.io
 #
 # Required GitHub Secrets:
@@ -41,16 +41,8 @@ jobs:
     steps:
       - name: Validate required variables
         run: |
-          errors=0
-          if [ -z "${{ vars.SITE_URL }}" ]; then
-            echo "::error::SITE_URL variable is not set. Go to Settings → Variables → Actions and add it."
-            errors=$((errors + 1))
-          fi
           if [ -z "${{ vars.DEPLOY_REPO }}" ]; then
             echo "::error::DEPLOY_REPO variable is not set. Go to Settings → Variables → Actions and add it."
-            errors=$((errors + 1))
-          fi
-          if [ $errors -gt 0 ]; then
             exit 1
           fi
 
@@ -82,10 +74,19 @@ jobs:
           HUGO_ENVIRONMENT: production
           TZ: Asia/Tashkent
         run: |
+          # Use SITE_URL override if set, otherwise fall back to baseURL in hugo.toml
+          EXTRA_ARGS=""
+          if [ -n "${{ vars.SITE_URL }}" ]; then
+            EXTRA_ARGS="--baseURL ${{ vars.SITE_URL }}"
+            echo "Using baseURL override: ${{ vars.SITE_URL }}"
+          else
+            echo "Using baseURL from hugo.toml"
+          fi
+
           hugo \
             --gc \
             --minify \
-            --baseURL "${{ vars.SITE_URL }}"
+            $EXTRA_ARGS
 
           # Validate build output
           if [ ! -f public/index.html ]; then

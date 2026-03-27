@@ -7,12 +7,12 @@ description: "RailTech — поставщик высококачественно
 Обеспечиваем бесперебойную работу промышленных предприятий Узбекистана. Официальная гарантия, полная таможенная очистка и доставка до склада.
 {{< /lead >}}
 
-{{< button href="/contact/" >}}
+{{< btn href="/contact/" >}}
 Связаться с нами
-{{< /button >}}&nbsp;
-{{< button href="https://b2b.railtech.uz" target="_blank" >}}
+{{< /btn >}}&nbsp;
+{{< btn href="https://b2b.railtech.uz" target="_blank" >}}
 Перейти в каталог
-{{< /button >}}
+{{< /btn >}}
 
 ---
 
@@ -46,7 +46,7 @@ RailTech создана опытными специалистами для ок�
 - Таможенное оформление и доставка до склада
 - Гарантийное и постгарантийное обслуживание
 
-{{< button href="/services/equipment-supply/" >}}Подробнее{{< /button >}}
+{{< btn href="/services/equipment-supply/" >}}Подробнее{{< /btn >}}
 
 {{< /tab >}}
 
@@ -61,7 +61,7 @@ RailTech создана опытными специалистами для ок�
 - Сопровождение пилотных проектов
 - Обучение персонала заказчика
 
-{{< button href="/services/technical-expertise/" >}}Подробнее{{< /button >}}
+{{< btn href="/services/technical-expertise/" >}}Подробнее{{< /btn >}}
 
 {{< /tab >}}
 
@@ -76,7 +76,7 @@ RailTech создана опытными специалистами для ок�
 - Трансфер технологий и компетенций
 - Сертификация локализованной продукции
 
-{{< button href="/services/localization/" >}}Подробнее{{< /button >}}
+{{< btn href="/services/localization/" >}}Подробнее{{< /btn >}}
 
 {{< /tab >}}
 
@@ -91,7 +91,7 @@ RailTech создана опытными специалистами для ок�
 - Участие в тендерах и конкурсных процедурах
 - Маркетинговая поддержка и продвижение
 
-{{< button href="/services/representation/" >}}Подробнее{{< /button >}}
+{{< btn href="/services/representation/" >}}Подробнее{{< /btn >}}
 
 {{< /tab >}}
 
@@ -108,7 +108,7 @@ RailTech создана опытными специалистами для ок�
 — Более 15 проектов реализовано для предприятий Узбекистана
 {{< /alert >}}
 
-{{< button href="/projects/" >}}Все проекты{{< /button >}}
+{{< btn href="/projects/" >}}Все проекты{{< /btn >}}
 
 ---
 
@@ -148,9 +148,9 @@ RailTech создана опытными специалистами для ок�
 
 {{< list title="Возможности платформы" cardView=true limit=6 where="Section" value="platform" >}}
 
-{{< button href="https://b2b.railtech.uz" target="_blank" >}}
+{{< btn href="https://b2b.railtech.uz" target="_blank" >}}
 Открыть B2B каталог
-{{< /button >}}
+{{< /btn >}}
 
 ---
 
@@ -196,9 +196,9 @@ RailTech создана опытными специалистами для ок�
 
 Более 120 партнёров уже доверяют RailTech поставку промышленного и железнодорожного оборудования в Узбекистане.
 
-{{< button href="/contact/" >}}
+{{< btn href="/contact/" >}}
 Связаться с нами
-{{< /button >}}&nbsp;
-{{< button href="https://b2b.railtech.uz" target="_blank" >}}
+{{< /btn >}}&nbsp;
+{{< btn href="https://b2b.railtech.uz" target="_blank" >}}
 Открыть каталог
-{{< /button >}}
+{{< /btn >}}

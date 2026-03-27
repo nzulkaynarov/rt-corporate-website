@@ -35,5 +35,5 @@ Platforma muvaffaqiyatli ishga tushirildi va 120 dan ortiq hamkor tomonidan faol
 
 > Shunga o'xshash loyihani amalga oshirmoqchimisiz? Bizning jamoamiz sizning ehtiyojlaringizni muhokama qilishga tayyor.
 
-{{< button href="/contact/" >}}Loyihani muhokama qilish{{< /button >}}
-{{< button href="/services/" >}}Bizning xizmatlar{{< /button >}}
+{{< btn href="/contact/" >}}Loyihani muhokama qilish{{< /btn >}}
+{{< btn href="/services/" >}}Bizning xizmatlar{{< /btn >}}

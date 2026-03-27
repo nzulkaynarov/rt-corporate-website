@@ -7,12 +7,12 @@ description: "RailTech is a trusted supplier of high-quality industrial and rail
 Ensuring uninterrupted operation of industrial enterprises in Uzbekistan. Official warranty, full customs clearance, and delivery to your warehouse.
 {{< /lead >}}
 
-{{< button href="/en/contact/" >}}
+{{< btn href="/en/contact/" >}}
 Contact Us
-{{< /button >}}&nbsp;
-{{< button href="https://b2b.railtech.uz" target="_blank" >}}
+{{< /btn >}}&nbsp;
+{{< btn href="https://b2b.railtech.uz" target="_blank" >}}
 Open Catalog
-{{< /button >}}
+{{< /btn >}}
 
 ---
 
@@ -46,7 +46,7 @@ Sales and distribution of certified products for the railway and industrial sect
 - Customs clearance and warehouse delivery
 - Warranty and post-warranty service
 
-{{< button href="/en/services/equipment-supply/" >}}Learn More{{< /button >}}
+{{< btn href="/en/services/equipment-supply/" >}}Learn More{{< /btn >}}
 
 {{< /tab >}}
 
@@ -61,7 +61,7 @@ Engineering consulting, pre-project support, and technical guidance at every sta
 - Pilot project support and supervision
 - Customer personnel training
 
-{{< button href="/en/services/technical-expertise/" >}}Learn More{{< /button >}}
+{{< btn href="/en/services/technical-expertise/" >}}Learn More{{< /btn >}}
 
 {{< /tab >}}
 
@@ -76,7 +76,7 @@ Adapting international technologies to local standards and organizing component 
 - Technology and competency transfer
 - Certification of localized products
 
-{{< button href="/en/services/localization/" >}}Learn More{{< /button >}}
+{{< btn href="/en/services/localization/" >}}Learn More{{< /btn >}}
 
 {{< /tab >}}
 
@@ -91,7 +91,7 @@ Representing international companies in Uzbekistan, developing technological coo
 - Tender and competitive procedure participation
 - Marketing support and promotion
 
-{{< button href="/en/services/representation/" >}}Learn More{{< /button >}}
+{{< btn href="/en/services/representation/" >}}Learn More{{< /btn >}}
 
 {{< /tab >}}
 
@@ -108,7 +108,7 @@ Representing international companies in Uzbekistan, developing technological coo
 — Over 15 projects delivered for enterprises in Uzbekistan
 {{< /alert >}}
 
-{{< button href="/en/projects/" >}}All Projects{{< /button >}}
+{{< btn href="/en/projects/" >}}All Projects{{< /btn >}}
 
 ---
 
@@ -148,9 +148,9 @@ Catalog reached 500+ items, active partner base — 120+ companies. Production l
 
 {{< list title="Platform Features" cardView=true limit=6 where="Section" value="platform" >}}
 
-{{< button href="https://b2b.railtech.uz" target="_blank" >}}
+{{< btn href="https://b2b.railtech.uz" target="_blank" >}}
 Open B2B Catalog
-{{< /button >}}
+{{< /btn >}}
 
 ---
 
@@ -196,9 +196,9 @@ Returns are accepted within 14 days, provided proper storage conditions are main
 
 Over 120 partners already trust RailTech for industrial and railway equipment supply in Uzbekistan.
 
-{{< button href="/en/contact/" >}}
+{{< btn href="/en/contact/" >}}
 Contact Us
-{{< /button >}}&nbsp;
-{{< button href="https://b2b.railtech.uz" target="_blank" >}}
+{{< /btn >}}&nbsp;
+{{< btn href="https://b2b.railtech.uz" target="_blank" >}}
 Open Catalog
-{{< /button >}}
+{{< /btn >}}

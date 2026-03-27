@@ -1,4 +1,4 @@
-baseURL = "https://railtech.uz/"
+baseURL = "https://nzulkaynarov.github.io/rt-website-public/"
 # Hugo 0.158+: 'locale' replaces deprecated 'languageCode'
 locale = "ru"
 title = "RailTech"
@@ -56,7 +56,7 @@ homepageImage = "img/hero/railway-main.jpg"
 showRecent = true
 showRecentItems = 6
 showMoreLink = true
-showMoreLinkDest = "/blog"
+showMoreLinkDest = "blog"
 cardView = true
 cardViewScreenWidth = true
 

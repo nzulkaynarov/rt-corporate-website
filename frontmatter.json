@@ -614,9 +614,9 @@
     "Button (CTA)": {
       "description": "Blowfish button — call to action",
       "body": [
-        "{{< button href=\"[[link]]\" [[&target]] >}}",
+        "{{< btn href=\"[[link]]\" [[&target]] >}}",
         "[[label]]",
-        "{{< /button >}}"
+        "{{< /btn >}}"
       ],
       "fields": [
         {

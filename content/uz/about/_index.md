@@ -111,5 +111,5 @@ Yetakchi jahon ishlab chiqaruvchilari bilan rasmiy dilerlik shartnomalar va uzoq
 
 ---
 
-{{< button href="/uz/contact/" >}}Biz bilan bog'laning{{< /button >}}&nbsp;
-{{< button href="https://b2b.railtech.uz" target="_blank" >}}Katalogni ochish{{< /button >}}
+{{< btn href="/uz/contact/" >}}Biz bilan bog'laning{{< /btn >}}&nbsp;
+{{< btn href="https://b2b.railtech.uz" target="_blank" >}}Katalogni ochish{{< /btn >}}

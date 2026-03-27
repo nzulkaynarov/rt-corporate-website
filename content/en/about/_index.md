@@ -111,5 +111,5 @@ Official dealer agreements and long-term partnerships with leading global manufa
 
 ---
 
-{{< button href="/en/contact/" >}}Contact Us{{< /button >}}&nbsp;
-{{< button href="https://b2b.railtech.uz" target="_blank" >}}Open Catalog{{< /button >}}
+{{< btn href="/en/contact/" >}}Contact Us{{< /btn >}}&nbsp;
+{{< btn href="https://b2b.railtech.uz" target="_blank" >}}Open Catalog{{< /btn >}}

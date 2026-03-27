@@ -1,0 +1,15 @@
+{{- $href := .Get "href" -}}
+{{- $target := .Get "target" -}}
+{{- $rel := .Get "rel" -}}
+{{- $url := $href -}}
+{{- if and $href (not (hasPrefix $href "http")) -}}
+  {{- $url = printf "%s%s" site.BaseURL (strings.TrimPrefix "/" $href) -}}
+{{- end -}}
+<a
+  class="!rounded-md bg-primary-600 px-4 py-2 !text-neutral !no-underline hover:!bg-primary-500 dark:bg-primary-800 dark:hover:!bg-primary-700"
+  {{- with $url }} href="{{ . | safeURL }}"{{ end -}}
+  {{- with $target }} target="{{ . }}"{{ end -}}
+  {{- with $rel }} rel="{{ . }}"{{ end }}
+  role="button">
+  {{ .Inner | strings.TrimSpace }}
+</a>
