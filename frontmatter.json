@@ -77,26 +77,21 @@
   "frontMatter.taxonomy.contentTypes": [
     {
       "name": "blog",
-      "pageBundle": false,
+      "pageBundle": true,
       "fields": [
         {
           "title": "Title",
           "name": "title",
           "type": "string",
           "required": true,
-          "description": "Article title (appears in browser tab and search results)"
-        },
-        {
-          "title": "SEO Title",
-          "name": "seoTitle",
-          "type": "string",
-          "description": "Custom title for search results (60 chars max). Leave empty to use title field"
+          "description": "Article title — appears in browser tab and search results (max 60 chars recommended)"
         },
         {
           "title": "Description",
           "name": "description",
           "type": "string",
-          "description": "Meta description for search engines (160 chars). Used in search results snippet"
+          "required": true,
+          "description": "Meta description for search engines — max 160 chars. Shown in Google snippet"
         },
         {
           "title": "Date Published",
@@ -109,7 +104,7 @@
           "title": "Date Updated",
           "name": "lastmod",
           "type": "datetime",
-          "description": "Last modification date (optional)"
+          "description": "Last modification date (auto-updated on save)"
         },
         {
           "title": "Author",
@@ -119,33 +114,27 @@
         },
         {
           "title": "Featured Image",
-          "name": "image",
+          "name": "featureimage",
           "type": "image",
-          "description": "Featured image (appears in article header and preview cards)"
+          "description": "Place featured.jpg in the article folder. Blowfish auto-detects it for hero and cards"
         },
         {
           "title": "OG Image",
           "name": "ogImage",
           "type": "image",
-          "description": "Custom image for social media sharing (1200x630px recommended). Falls back to featured image"
-        },
-        {
-          "title": "Canonical URL",
-          "name": "canonicalUrl",
-          "type": "string",
-          "description": "Full URL if article exists on another site (optional)"
+          "description": "Custom image for social media sharing (1200x630px). Falls back to featured image"
         },
         {
           "title": "Tags",
           "name": "tags",
           "type": "tags",
-          "description": "Content tags for filtering"
+          "description": "Content tags for filtering and related posts"
         },
         {
           "title": "Categories",
           "name": "categories",
           "type": "categories",
-          "description": "Content categories"
+          "description": "Content categories (Analytics, Company News, Guides)"
         },
         {
           "title": "Article Type",
@@ -155,111 +144,90 @@
           "default": "Article"
         },
         {
-          "title": "Difficulty",
-          "name": "difficulty",
-          "type": "choice",
-          "choices": ["Beginner", "Intermediate", "Advanced"],
-          "description": "Reading difficulty level (optional)"
-        },
-        {
           "title": "Show Hero Image",
           "name": "showHero",
           "type": "boolean",
           "default": true,
-          "description": "Blowfish: Display hero section at top of article"
+          "description": "Blowfish: show hero section at top of article"
         },
         {
           "title": "Hero Style",
           "name": "heroStyle",
           "type": "choice",
-          "choices": ["basic", "background", "image"],
-          "default": "basic",
-          "description": "Blowfish: How hero section displays"
+          "choices": ["basic", "big", "background", "thumbAndBackground"],
+          "default": "background",
+          "description": "basic = small bar, big = large centered, background = fullscreen fixed, thumbAndBackground = thumbnail + background"
         },
         {
           "title": "Show Table of Contents",
           "name": "showTableOfContents",
           "type": "boolean",
           "default": true,
-          "description": "Blowfish: Show auto-generated TOC from headings"
+          "description": "Auto-generated TOC from headings"
         },
         {
           "title": "Show Related Posts",
           "name": "showRelatedContent",
           "type": "boolean",
           "default": true,
-          "description": "Blowfish: Show related articles at bottom"
+          "description": "Show related articles at bottom"
         },
         {
           "title": "Show Date",
           "name": "showDate",
           "type": "boolean",
-          "default": true,
-          "description": "Blowfish: Show publication date on article"
+          "default": true
         },
         {
           "title": "Show Author",
           "name": "showAuthor",
           "type": "boolean",
-          "default": true,
-          "description": "Blowfish: Show author name on article"
+          "default": true
         },
         {
           "title": "Show Breadcrumbs",
           "name": "showBreadcrumbs",
           "type": "boolean",
-          "default": true,
-          "description": "Blowfish: Show navigation breadcrumb trail"
+          "default": true
         },
         {
           "title": "Draft",
           "name": "draft",
           "type": "draft",
-          "description": "Mark as draft to hide from production build"
+          "description": "Draft articles are hidden from production build. Visible only with hugo server -D"
         }
       ]
     },
 
     {
       "name": "project",
-      "pageBundle": false,
+      "pageBundle": true,
       "fields": [
         {
           "title": "Project Title",
           "name": "title",
           "type": "string",
           "required": true,
-          "description": "Project name"
-        },
-        {
-          "title": "SEO Title",
-          "name": "seoTitle",
-          "type": "string",
-          "description": "Custom title for search results (60 chars max)"
+          "description": "Project name (max 60 chars for SEO)"
         },
         {
           "title": "Description",
           "name": "description",
           "type": "string",
-          "description": "Project overview (meta description, 160 chars)"
+          "required": true,
+          "description": "Project overview — meta description for search engines (max 160 chars)"
         },
         {
           "title": "Featured Image",
-          "name": "image",
+          "name": "featureimage",
           "type": "image",
-          "description": "Project hero image"
-        },
-        {
-          "title": "OG Image",
-          "name": "ogImage",
-          "type": "image",
-          "description": "Social sharing image"
+          "description": "Place featured.jpg in the project folder for hero and card views"
         },
         {
           "title": "Client",
           "name": "client",
           "type": "string",
-          "description": "Client name (if applicable)"
+          "description": "Client or partner name"
         },
         {
           "title": "Project Year",
@@ -271,7 +239,7 @@
           "title": "Project Scope",
           "name": "scope",
           "type": "string",
-          "description": "Brief scope description (equipment supplied, services provided)"
+          "description": "Brief scope — equipment supplied, services provided"
         },
         {
           "title": "Project Status",
@@ -281,16 +249,10 @@
           "default": "Completed"
         },
         {
-          "title": "Category",
-          "name": "category",
-          "type": "string",
-          "description": "Project category (e.g., Railway Infrastructure, Consulting)"
-        },
-        {
           "title": "Display Order",
           "name": "weight",
           "type": "number",
-          "description": "Lower number = appears first in lists"
+          "description": "Lower number = higher in lists"
         },
         {
           "title": "Tags",
@@ -298,26 +260,23 @@
           "type": "tags"
         },
         {
-          "title": "Show Hero Image",
+          "title": "Show Hero",
           "name": "showHero",
           "type": "boolean",
-          "default": true,
-          "description": "Blowfish: Display hero image at top"
+          "default": true
         },
         {
           "title": "Hero Style",
           "name": "heroStyle",
           "type": "choice",
-          "choices": ["basic", "background", "image"],
-          "default": "basic",
-          "description": "Blowfish: How hero section displays"
+          "choices": ["basic", "big", "background", "thumbAndBackground"],
+          "default": "background"
         },
         {
           "title": "Show Breadcrumbs",
           "name": "showBreadcrumbs",
           "type": "boolean",
-          "default": true,
-          "description": "Blowfish: Show navigation breadcrumb trail"
+          "default": true
         },
         {
           "title": "Draft",
@@ -329,73 +288,68 @@
 
     {
       "name": "service",
-      "pageBundle": false,
+      "pageBundle": true,
       "fields": [
         {
           "title": "Service Name",
           "name": "title",
           "type": "string",
-          "required": true
-        },
-        {
-          "title": "SEO Title",
-          "name": "seoTitle",
-          "type": "string",
-          "description": "Custom title for search results (60 chars max)"
+          "required": true,
+          "description": "Service name (max 60 chars for SEO)"
         },
         {
           "title": "Description",
           "name": "description",
           "type": "string",
-          "description": "Meta description (160 chars)"
+          "required": true,
+          "description": "Meta description — max 160 chars"
         },
         {
-          "title": "Service Icon/Image",
+          "title": "Service Icon",
           "name": "icon",
           "type": "image",
-          "description": "Icon or image for service card"
+          "description": "SVG icon for card view (place in static/img/icons/)"
         },
         {
           "title": "Featured Image",
-          "name": "image",
+          "name": "featureimage",
           "type": "image",
-          "description": "Full-width hero image for service page"
+          "description": "Place featured.jpg in the service folder for hero"
         },
         {
-          "title": "OG Image",
-          "name": "ogImage",
-          "type": "image",
-          "description": "Social sharing image"
-        },
-        {
-          "title": "Key Features (List)",
+          "title": "Key Features",
           "name": "features",
           "type": "list",
-          "description": "Bullet-point features (one per line)"
+          "description": "Bullet-point features displayed on service page"
         },
         {
           "title": "Display Order",
           "name": "weight",
           "type": "number",
-          "description": "Lower number = appears first in lists"
+          "description": "Lower = first in lists"
         },
         {
-          "title": "Show Hero Image",
+          "title": "Show Hero",
           "name": "showHero",
           "type": "boolean",
-          "default": true,
-          "description": "Blowfish: Display hero image at top"
+          "default": true
         },
         {
           "title": "Hero Style",
           "name": "heroStyle",
           "type": "choice",
-          "choices": ["basic", "background", "image"],
-          "default": "basic"
+          "choices": ["basic", "big", "background", "thumbAndBackground"],
+          "default": "background"
         },
         {
           "title": "Show Breadcrumbs",
           "name": "showBreadcrumbs",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "title": "Show Table of Contents",
+          "name": "showTableOfContents",
           "type": "boolean",
           "default": true
         },
@@ -409,45 +363,30 @@
 
     {
       "name": "platform",
-      "pageBundle": false,
+      "pageBundle": true,
       "fields": [
         {
           "title": "Feature Name",
           "name": "title",
           "type": "string",
-          "required": true
-        },
-        {
-          "title": "SEO Title",
-          "name": "seoTitle",
-          "type": "string",
-          "description": "Custom title for search results"
+          "required": true,
+          "description": "Platform feature name (max 60 chars)"
         },
         {
           "title": "Description",
           "name": "description",
           "type": "string",
-          "description": "Feature description (meta description)"
-        },
-        {
-          "title": "Feature Tag",
-          "name": "tag",
-          "type": "string",
-          "description": "Grouping tag (e.g., 'Catalog', 'Analytics')"
+          "required": true,
+          "description": "Feature description — meta description (max 160 chars)"
         },
         {
           "title": "Feature Image",
-          "name": "image",
+          "name": "featureimage",
           "type": "image",
-          "description": "Screenshot or feature image"
+          "description": "Screenshot or feature image — place featured.jpg in feature folder"
         },
         {
-          "title": "OG Image",
-          "name": "ogImage",
-          "type": "image"
-        },
-        {
-          "title": "Key Highlights (List)",
+          "title": "Key Highlights",
           "name": "highlights",
           "type": "list",
           "description": "Main feature highlights"
@@ -458,7 +397,7 @@
           "type": "number"
         },
         {
-          "title": "Show Hero Image",
+          "title": "Show Hero",
           "name": "showHero",
           "type": "boolean",
           "default": true
@@ -467,8 +406,8 @@
           "title": "Hero Style",
           "name": "heroStyle",
           "type": "choice",
-          "choices": ["basic", "background", "image"],
-          "default": "basic"
+          "choices": ["basic", "big", "background", "thumbAndBackground"],
+          "default": "background"
         },
         {
           "title": "Show Breadcrumbs",
@@ -492,43 +431,34 @@
           "title": "Page Title",
           "name": "title",
           "type": "string",
-          "required": true
+          "required": true,
+          "description": "Page title (max 60 chars for SEO)"
         },
         {
-          "title": "SEO Title",
-          "name": "seoTitle",
-          "type": "string",
-          "description": "Custom title for search results (60 chars max)"
-        },
-        {
-          "title": "Page Description",
+          "title": "Description",
           "name": "description",
           "type": "string",
-          "description": "Meta description (160 chars)"
+          "required": true,
+          "description": "Meta description (max 160 chars)"
         },
         {
-          "title": "Hero Image",
-          "name": "image",
+          "title": "Featured Image",
+          "name": "featureimage",
           "type": "image",
           "description": "Page header image"
-        },
-        {
-          "title": "OG Image",
-          "name": "ogImage",
-          "type": "image",
-          "description": "Social sharing image"
-        },
-        {
-          "title": "Canonical URL",
-          "name": "canonicalUrl",
-          "type": "string",
-          "description": "If content published elsewhere, set canonical URL"
         },
         {
           "title": "Show Hero",
           "name": "showHero",
           "type": "boolean",
           "default": true
+        },
+        {
+          "title": "Hero Style",
+          "name": "heroStyle",
+          "type": "choice",
+          "choices": ["basic", "big", "background", "thumbAndBackground"],
+          "default": "background"
         },
         {
           "title": "Show Breadcrumbs",
@@ -553,31 +483,14 @@
           "name": "title",
           "type": "string",
           "required": true,
-          "description": "Homepage title (also used in browser tab and SEO)"
+          "description": "Homepage title — appears in browser tab and SEO (max 60 chars)"
         },
         {
           "title": "Description",
           "name": "description",
           "type": "string",
-          "description": "Meta description for homepage (160 chars)"
-        },
-        {
-          "title": "FAQ Items",
-          "name": "faq",
-          "type": "block",
-          "description": "Frequently Asked Questions displayed on the homepage",
-          "fields": [
-            {
-              "title": "Question",
-              "name": "question",
-              "type": "string"
-            },
-            {
-              "title": "Answer",
-              "name": "answer",
-              "type": "string"
-            }
-          ]
+          "required": true,
+          "description": "Meta description for homepage — max 160 chars"
         }
       ]
     }
@@ -588,22 +501,19 @@
       "title": "Blog (RU)",
       "path": "[[workspace]]/content/ru/blog",
       "contentTypes": ["blog"],
-      "previewPath": "'blog'",
-      "excludeSubdir": true
+      "previewPath": "'blog'"
     },
     {
       "title": "Blog (EN)",
       "path": "[[workspace]]/content/en/blog",
       "contentTypes": ["blog"],
-      "previewPath": "'en/blog'",
-      "excludeSubdir": true
+      "previewPath": "'en/blog'"
     },
     {
       "title": "Blog (UZ)",
       "path": "[[workspace]]/content/uz/blog",
       "contentTypes": ["blog"],
-      "previewPath": "'uz/blog'",
-      "excludeSubdir": true
+      "previewPath": "'uz/blog'"
     },
     {
       "title": "Projects (RU)",
@@ -701,21 +611,19 @@
   ],
 
   "frontMatter.content.snippets": {
-    "Button": {
-      "description": "Blowfish button shortcode (CTA)",
+    "Button (CTA)": {
+      "description": "Blowfish button — call to action",
       "body": [
-        "",
-        "{{< button href=\"[[link]]\" target=\"[[target]]\" >}}",
+        "{{< button href=\"[[link]]\" [[&target]] >}}",
         "[[label]]",
-        "{{< /button >}}",
-        ""
+        "{{< /button >}}"
       ],
       "fields": [
         {
           "name": "label",
-          "title": "Button label",
+          "title": "Button text",
           "type": "string",
-          "default": "Contact Us"
+          "default": "Связаться с нами"
         },
         {
           "name": "link",
@@ -725,17 +633,19 @@
         },
         {
           "name": "target",
-          "title": "Target (_self, _blank, etc)",
-          "type": "string",
-          "default": "_self"
+          "title": "Opens in new tab?",
+          "type": "choice",
+          "choices": ["", "target=\"_blank\""],
+          "default": ""
         }
       ]
     },
-    "Alert": {
-      "description": "Blowfish alert/callout box",
+
+    "Alert Box": {
+      "description": "Blowfish highlighted callout box with icon",
       "body": [
         "",
-        "{{< alert \"[[icon]]\" >}}",
+        "{{< alert icon=\"[[icon]]\" >}}",
         "[[content]]",
         "{{< /alert >}}",
         ""
@@ -743,20 +653,22 @@
       "fields": [
         {
           "name": "icon",
-          "title": "Icon (empty, comment, check, fire, bomb, circle-info, circle-check, etc.)",
-          "type": "string",
-          "default": ""
+          "title": "Icon name",
+          "type": "choice",
+          "choices": ["circle-info", "triangle-exclamation", "fire", "check", "star", "bell", "chart-bar", "briefcase", "eye", "computer-desktop", "truck"],
+          "default": "circle-info"
         },
         {
           "name": "content",
-          "title": "Alert text",
+          "title": "Alert text (markdown supported)",
           "type": "string"
         }
       ]
     },
+
     "Badge": {
-      "description": "Blowfish inline badge",
-      "body": ["{{< badge >}}[[text]]{{< /badge >}}"],
+      "description": "Blowfish inline badge/tag",
+      "body": ["{{< badge >}}[[text]]{{< /badge >}} "],
       "fields": [
         {
           "name": "text",
@@ -765,13 +677,327 @@
         }
       ]
     },
+
+    "Lead Paragraph": {
+      "description": "Large introductory paragraph — use at top of page",
+      "body": [
+        "",
+        "{{< lead >}}",
+        "[[text]]",
+        "{{< /lead >}}",
+        ""
+      ],
+      "fields": [
+        {
+          "name": "text",
+          "title": "Lead text",
+          "type": "string"
+        }
+      ]
+    },
+
+    "Carousel (Image Slider)": {
+      "description": "Auto-scrolling image slider — great for projects and equipment",
+      "body": [
+        "",
+        "{{< carousel images=\"{[[images]]}\" aspectRatio=\"[[ratio]]\" interval=\"[[interval]]\" >}}",
+        ""
+      ],
+      "fields": [
+        {
+          "name": "images",
+          "title": "Image paths (comma-separated, e.g.: /img/photo1.jpg,/img/photo2.jpg)",
+          "type": "string"
+        },
+        {
+          "name": "ratio",
+          "title": "Aspect ratio",
+          "type": "choice",
+          "choices": ["16-9", "21-9", "4-3", "1-1"],
+          "default": "16-9"
+        },
+        {
+          "name": "interval",
+          "title": "Slide interval (ms)",
+          "type": "choice",
+          "choices": ["2000", "3000", "4000", "5000"],
+          "default": "3000"
+        }
+      ]
+    },
+
+    "Timeline": {
+      "description": "Vertical timeline — use for company history or project milestones",
+      "body": [
+        "",
+        "{{< timeline >}}",
+        "",
+        "{{< timelineItem icon=\"[[icon1]]\" header=\"[[year1]]\" badge=\"[[badge1]]\" subheader=\"[[sub1]]\" >}}",
+        "[[desc1]]",
+        "{{< /timelineItem >}}",
+        "",
+        "{{< timelineItem icon=\"[[icon2]]\" header=\"[[year2]]\" badge=\"[[badge2]]\" subheader=\"[[sub2]]\" >}}",
+        "[[desc2]]",
+        "{{< /timelineItem >}}",
+        "",
+        "{{< /timeline >}}",
+        ""
+      ],
+      "fields": [
+        {
+          "name": "year1",
+          "title": "First item — year/header",
+          "type": "string",
+          "default": "2024"
+        },
+        {
+          "name": "badge1",
+          "title": "First item — badge label",
+          "type": "string",
+          "default": "Milestone"
+        },
+        {
+          "name": "sub1",
+          "title": "First item — subtitle",
+          "type": "string"
+        },
+        {
+          "name": "icon1",
+          "title": "First item — icon",
+          "type": "choice",
+          "choices": ["rocket", "check", "star", "globe-alt", "chart-bar", "computer-desktop", "document-text", "users"],
+          "default": "rocket"
+        },
+        {
+          "name": "desc1",
+          "title": "First item — description",
+          "type": "string"
+        },
+        {
+          "name": "year2",
+          "title": "Second item — year/header",
+          "type": "string",
+          "default": "2025"
+        },
+        {
+          "name": "badge2",
+          "title": "Second item — badge label",
+          "type": "string",
+          "default": "Current"
+        },
+        {
+          "name": "sub2",
+          "title": "Second item — subtitle",
+          "type": "string"
+        },
+        {
+          "name": "icon2",
+          "title": "Second item — icon",
+          "type": "choice",
+          "choices": ["rocket", "check", "star", "globe-alt", "chart-bar", "computer-desktop", "document-text", "users"],
+          "default": "chart-bar"
+        },
+        {
+          "name": "desc2",
+          "title": "Second item — description",
+          "type": "string"
+        }
+      ]
+    },
+
+    "Timeline Item (add to existing)": {
+      "description": "Add one more item to an existing timeline block",
+      "body": [
+        "",
+        "{{< timelineItem icon=\"[[icon]]\" header=\"[[year]]\" badge=\"[[badge]]\" subheader=\"[[sub]]\" >}}",
+        "[[desc]]",
+        "{{< /timelineItem >}}",
+        ""
+      ],
+      "fields": [
+        {
+          "name": "year",
+          "title": "Year/header",
+          "type": "string"
+        },
+        {
+          "name": "badge",
+          "title": "Badge label",
+          "type": "string"
+        },
+        {
+          "name": "sub",
+          "title": "Subtitle",
+          "type": "string"
+        },
+        {
+          "name": "icon",
+          "title": "Icon",
+          "type": "choice",
+          "choices": ["rocket", "check", "star", "globe-alt", "chart-bar", "computer-desktop", "document-text", "users"],
+          "default": "check"
+        },
+        {
+          "name": "desc",
+          "title": "Description",
+          "type": "string"
+        }
+      ]
+    },
+
+    "Tabs (Tabbed Content)": {
+      "description": "Tabbed content sections — great for service categories",
+      "body": [
+        "",
+        "{{< tabs >}}",
+        "",
+        "{{< tab label=\"[[label1]]\" icon=\"[[icon1]]\" >}}",
+        "[[content1]]",
+        "{{< /tab >}}",
+        "",
+        "{{< tab label=\"[[label2]]\" icon=\"[[icon2]]\" >}}",
+        "[[content2]]",
+        "{{< /tab >}}",
+        "",
+        "{{< /tabs >}}",
+        ""
+      ],
+      "fields": [
+        {
+          "name": "label1",
+          "title": "First tab label",
+          "type": "string",
+          "default": "Tab 1"
+        },
+        {
+          "name": "icon1",
+          "title": "First tab icon",
+          "type": "choice",
+          "choices": ["truck", "search", "globe", "users", "star", "check", "computer-desktop", "chart-bar"],
+          "default": "star"
+        },
+        {
+          "name": "content1",
+          "title": "First tab content (markdown)",
+          "type": "string"
+        },
+        {
+          "name": "label2",
+          "title": "Second tab label",
+          "type": "string",
+          "default": "Tab 2"
+        },
+        {
+          "name": "icon2",
+          "title": "Second tab icon",
+          "type": "choice",
+          "choices": ["truck", "search", "globe", "users", "star", "check", "computer-desktop", "chart-bar"],
+          "default": "check"
+        },
+        {
+          "name": "content2",
+          "title": "Second tab content (markdown)",
+          "type": "string"
+        }
+      ]
+    },
+
+    "Accordion (FAQ/Details)": {
+      "description": "Collapsible sections — perfect for FAQ, advantages",
+      "body": [
+        "",
+        "{{< accordion [[&separated]] >}}",
+        "",
+        "{{< accordionItem title=\"[[title1]]\" [[&icon1]] >}}",
+        "[[content1]]",
+        "{{< /accordionItem >}}",
+        "",
+        "{{< accordionItem title=\"[[title2]]\" [[&icon2]] >}}",
+        "[[content2]]",
+        "{{< /accordionItem >}}",
+        "",
+        "{{< /accordion >}}",
+        ""
+      ],
+      "fields": [
+        {
+          "name": "separated",
+          "title": "Visual style",
+          "type": "choice",
+          "choices": ["", "separated=true"],
+          "default": ""
+        },
+        {
+          "name": "title1",
+          "title": "First item title",
+          "type": "string"
+        },
+        {
+          "name": "icon1",
+          "title": "First item icon (optional)",
+          "type": "choice",
+          "choices": ["", "icon=\"star\"", "icon=\"shield\"", "icon=\"check\"", "icon=\"globe\"", "icon=\"comment\"", "icon=\"fire\""],
+          "default": ""
+        },
+        {
+          "name": "content1",
+          "title": "First item content",
+          "type": "string"
+        },
+        {
+          "name": "title2",
+          "title": "Second item title",
+          "type": "string"
+        },
+        {
+          "name": "icon2",
+          "title": "Second item icon (optional)",
+          "type": "choice",
+          "choices": ["", "icon=\"star\"", "icon=\"shield\"", "icon=\"check\"", "icon=\"globe\"", "icon=\"comment\"", "icon=\"fire\""],
+          "default": ""
+        },
+        {
+          "name": "content2",
+          "title": "Second item content",
+          "type": "string"
+        }
+      ]
+    },
+
+    "Figure (Image with Caption)": {
+      "description": "Image with optional caption — auto-optimized by Hugo",
+      "body": [
+        "",
+        "{{< figure src=\"[[src]]\" alt=\"[[alt]]\" caption=\"[[caption]]\" >}}",
+        ""
+      ],
+      "fields": [
+        {
+          "name": "src",
+          "title": "Image file (from page bundle or /img/...)",
+          "type": "image"
+        },
+        {
+          "name": "alt",
+          "title": "Alt text (accessibility + SEO)",
+          "type": "string"
+        },
+        {
+          "name": "caption",
+          "title": "Caption (shown below image)",
+          "type": "string"
+        }
+      ]
+    },
+
     "Gallery": {
-      "description": "Blowfish image gallery",
+      "description": "Image grid gallery — place images in page bundle folder",
       "body": [
         "",
         "{{< gallery >}}",
-        "  {{< img src=\"[[image1]]\" alt=\"[[alt1]]\" >}}",
-        "  {{< img src=\"[[image2]]\" alt=\"[[alt2]]\" >}}",
+        "  ![[[alt1]]]([[image1]])",
+        "  ![[[alt2]]]([[image2]])",
+        "  ![[[alt3]]]([[image3]])",
         "{{< /gallery >}}",
         ""
       ],
@@ -783,7 +1009,7 @@
         },
         {
           "name": "alt1",
-          "title": "Alt text for image 1",
+          "title": "Alt text 1",
           "type": "string"
         },
         {
@@ -793,34 +1019,81 @@
         },
         {
           "name": "alt2",
-          "title": "Alt text for image 2",
+          "title": "Alt text 2",
+          "type": "string"
+        },
+        {
+          "name": "image3",
+          "title": "Third image",
+          "type": "image"
+        },
+        {
+          "name": "alt3",
+          "title": "Alt text 3",
           "type": "string"
         }
       ]
     },
-    "Columns": {
-      "description": "Blowfish multi-column layout",
+
+    "TypeIt (Animated Text)": {
+      "description": "Typing animation effect — use for hero headlines",
       "body": [
         "",
-        "{{< columns >}}",
-        "[[col1_content]]",
-        "<---->",
-        "[[col2_content]]",
-        "{{< /columns >}}",
+        "{{< typeit speed=\"[[speed]]\" lifeLike=true startDelay=\"500\" >}}",
+        "[[text]]",
+        "{{< /typeit >}}",
         ""
       ],
       "fields": [
         {
-          "name": "col1_content",
-          "title": "Left column content",
-          "type": "textarea"
+          "name": "text",
+          "title": "Text to animate",
+          "type": "string"
         },
         {
-          "name": "col2_content",
-          "title": "Right column content",
-          "type": "textarea"
+          "name": "speed",
+          "title": "Typing speed (ms per char)",
+          "type": "choice",
+          "choices": ["30", "50", "80", "100"],
+          "default": "50"
         }
       ]
+    },
+
+    "List (Article Cards)": {
+      "description": "Show article cards from a section — auto-populated",
+      "body": [
+        "",
+        "{{< list title=\"[[title]]\" cardView=true limit=[[limit]] where=\"Section\" value=\"[[section]]\" >}}",
+        ""
+      ],
+      "fields": [
+        {
+          "name": "title",
+          "title": "Section heading",
+          "type": "string",
+          "default": "Related"
+        },
+        {
+          "name": "section",
+          "title": "Section to pull from",
+          "type": "choice",
+          "choices": ["blog", "projects", "services", "platform"],
+          "default": "blog"
+        },
+        {
+          "name": "limit",
+          "title": "Max items to show",
+          "type": "choice",
+          "choices": ["3", "4", "6", "9"],
+          "default": "4"
+        }
+      ]
+    },
+
+    "Horizontal Rule": {
+      "description": "Visual divider between sections",
+      "body": ["", "---", ""]
     }
   },
 
@@ -846,37 +1119,12 @@
               "ogImage": { "type": "string", "title": "Fallback OG Image Path" }
             }
           },
-          "seo": {
-            "type": "object",
-            "title": "SEO Settings",
-            "properties": {
-              "defaultRobots": { "type": "string", "title": "Default robots directive" },
-              "canonicalStrategy": { "type": "string", "title": "Canonical URL strategy" }
-            }
-          },
-          "openGraph": {
-            "type": "object",
-            "title": "Open Graph",
-            "properties": {
-              "enabled": { "type": "boolean", "title": "Enable OG" },
-              "cardType": { "type": "string", "title": "Default card type" }
-            }
-          },
-          "twitter": {
-            "type": "object",
-            "title": "Twitter Card",
-            "properties": {
-              "enabled": { "type": "boolean" },
-              "handle": { "type": "string", "title": "Twitter handle" }
-            }
-          },
           "verification": {
             "type": "object",
             "title": "Search Engine Verification",
             "properties": {
-              "googleSiteVerification": { "type": "string", "title": "Google Search Console verification code" },
-              "msValidate": { "type": "string", "title": "Bing Webmaster Tools verification code" },
-              "yandexVerification": { "type": "string", "title": "Yandex Webmaster verification code" }
+              "googleSiteVerification": { "type": "string", "title": "Google Search Console code" },
+              "yandexVerification": { "type": "string", "title": "Yandex Webmaster code" }
             }
           }
         }
@@ -915,48 +1163,6 @@
           "facebook": { "type": "string", "title": "Facebook URL" },
           "instagram": { "type": "string", "title": "Instagram URL" },
           "linkedin": { "type": "string", "title": "LinkedIn URL" }
-        }
-      }
-    },
-    {
-      "id": "stats",
-      "title": "Homepage Statistics",
-      "file": "[[workspace]]/data/stats.yaml",
-      "fileType": "yaml",
-      "labelField": "years",
-      "schema": {
-        "title": "Stats",
-        "type": "object",
-        "properties": {
-          "years": { "type": "string", "title": "Years on Market" },
-          "partners": { "type": "string", "title": "Number of Partners" },
-          "skus": { "type": "string", "title": "SKUs in Catalog" },
-          "countries": { "type": "string", "title": "Countries Served" }
-        }
-      }
-    },
-    {
-      "id": "advantages",
-      "title": "Homepage Advantages Section",
-      "file": "[[workspace]]/data/advantages.yaml",
-      "fileType": "yaml",
-      "labelField": "items",
-      "schema": {
-        "title": "Advantages",
-        "type": "object",
-        "properties": {
-          "items": {
-            "type": "array",
-            "title": "Advantage Items",
-            "items": {
-              "type": "object",
-              "properties": {
-                "titleKey": { "type": "string", "title": "i18n Title Key (e.g. adv_1_title)" },
-                "descKey": { "type": "string", "title": "i18n Description Key (e.g. adv_1_desc)" },
-                "icon": { "type": "string", "title": "SVG Icon Markup" }
-              }
-            }
-          }
         }
       }
     }
