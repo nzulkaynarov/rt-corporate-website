@@ -1,5 +1,6 @@
 baseURL = "https://railtech.uz/"
-languageCode = "ru"
+# Hugo 0.158+: 'locale' replaces deprecated 'languageCode'
+locale = "ru"
 title = "RailTech"
 theme = "blowfish"
 
@@ -123,24 +124,34 @@ siteAuthor = "RailTech LLC"
 twitterHandle = "@railtech"
 
 # Languages
+# Hugo 0.158+: 'label' replaces deprecated 'languageName'
 [languages.ru]
-languageName = "Русский"
+label = "Русский"
 weight = 1
 contentDir = "content/ru"
+[languages.ru.params]
+displayName = "RU"
+isoCode = "ru"
 [languages.ru.params.author]
 headline = "Комплексные поставки промышленного оборудования в Узбекистане"
 
 [languages.en]
-languageName = "English"
+label = "English"
 weight = 2
 contentDir = "content/en"
+[languages.en.params]
+displayName = "EN"
+isoCode = "en"
 [languages.en.params.author]
 headline = "Comprehensive Industrial Equipment Supply in Uzbekistan"
 
 [languages.uz]
-languageName = "Oʻzbekcha"
+label = "Oʻzbekcha"
 weight = 3
 contentDir = "content/uz"
+[languages.uz.params]
+displayName = "UZ"
+isoCode = "uz"
 [languages.uz.params.author]
 headline = "O'zbekistonda sanoat uskunalarini yetkazib berish"
 

@@ -3,11 +3,11 @@
 # Target: configured via DEPLOY_REPO variable (public, GitHub Pages)
 #
 # Required GitHub Variables (Settings → Variables → Actions):
-#   SITE_URL       — Site base URL (e.g. https://locodep.uz/ or https://user.github.io/repo/)
+#   SITE_URL       — Site base URL (e.g. https://railtech.uz/)
 #   DEPLOY_REPO    — Target repo (e.g. nzulkaynarov/rt-website-public)
 #
 # Optional GitHub Variables:
-#   CNAME_DOMAIN   — Custom domain for CNAME file (e.g. locodep.uz). Leave empty for *.github.io
+#   CNAME_DOMAIN   — Custom domain for CNAME file (e.g. railtech.uz). Leave empty for *.github.io
 #
 # Required GitHub Secrets:
 #   DEPLOY_KEY     — SSH private key with write access to DEPLOY_REPO
@@ -29,8 +29,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  HUGO_VERSION: 0.158.0
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  HUGO_VERSION: 0.159.0
 
 defaults:
   run:
@@ -42,12 +41,16 @@ jobs:
     steps:
       - name: Validate required variables
         run: |
+          errors=0
           if [ -z "${{ vars.SITE_URL }}" ]; then
             echo "::error::SITE_URL variable is not set. Go to Settings → Variables → Actions and add it."
-            exit 1
+            errors=$((errors + 1))
           fi
           if [ -z "${{ vars.DEPLOY_REPO }}" ]; then
             echo "::error::DEPLOY_REPO variable is not set. Go to Settings → Variables → Actions and add it."
+            errors=$((errors + 1))
+          fi
+          if [ $errors -gt 0 ]; then
             exit 1
           fi
 
@@ -55,6 +58,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
+          fetch-depth: 0
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
@@ -66,8 +70,10 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ runner.temp }}/hugo_cache
-          key: hugo-${{ runner.os }}-${{ hashFiles('hugo.toml', '.gitmodules') }}
-          restore-keys: hugo-${{ runner.os }}-
+          key: hugo-${{ runner.os }}-${{ env.HUGO_VERSION }}-${{ hashFiles('hugo.toml', '.gitmodules') }}
+          restore-keys: |
+            hugo-${{ runner.os }}-${{ env.HUGO_VERSION }}-
+            hugo-${{ runner.os }}-
 
       - name: Build with Hugo
         env:
@@ -79,6 +85,21 @@ jobs:
             --gc \
             --minify \
             --baseURL "${{ vars.SITE_URL }}"
+
+          # Validate build output
+          if [ ! -f public/index.html ]; then
+            echo "::error::Build failed — public/index.html not found"
+            exit 1
+          fi
+
+          PAGE_COUNT=$(find public -name '*.html' | wc -l)
+          echo "Built $PAGE_COUNT HTML pages"
+
+          if [ "$PAGE_COUNT" -lt 10 ]; then
+            echo "::error::Suspiciously low page count ($PAGE_COUNT). Expected 50+. Aborting deploy."
+            exit 1
+          fi
+
           touch public/.nojekyll
           if [ -n "${{ vars.CNAME_DOMAIN }}" ]; then
             echo "${{ vars.CNAME_DOMAIN }}" > public/CNAME
