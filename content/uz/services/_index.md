@@ -2,6 +2,9 @@
 title: "Xizmatlar"
 description: "RailTech temir yo'l sanoati uchun to'liq xizmatlar majmuasini taqdim etadi: uskunalar yetkazib berish, texnik ekspertiza, lokalizatsiya va vakillik."
 showBreadcrumbs: true
+showHero: true
+heroStyle: "background"
+featureimage: "img/hero/services-hero.jpg"
 cascade:
   showDate: false
   showReadingTime: false

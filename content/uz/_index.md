@@ -4,7 +4,7 @@ description: "O'zbekiston temir yo'l sanoati uchun asbob-uskunalar yetkazib beri
 ---
 
 {{< lead >}}
-O'zbekistonda ishlab chiqarishingizning uzluksiz ishlashini ta'minlaymiz. Rasmiy kafolat, to'liq bojxona rasmiylari va omboringizgacha yetkazib berish.
+O'zbekistonda sanoat korxonalarining uzluksiz ishlashini ta'minlaymiz. Rasmiy kafolat, to'liq bojxona rasmiylari va omboringizgacha yetkazib berish.
 {{< /lead >}}
 
 {{< button href="/uz/contact/" >}}
@@ -18,10 +18,14 @@ Katalogni ochish
 
 ## Kompaniya raqamlarda
 
-|  |  |  |  |
+{{< alert icon="chart-bar" cardColor="transparent" >}}
+
+| | | | |
 |:---:|:---:|:---:|:---:|
 | **5+** | **120+** | **500+** | **3** |
 | yil bozorda | hamkorlar | SKU katalogda | davlatlar |
+
+{{< /alert >}}
 
 ---
 
@@ -29,37 +33,120 @@ Katalogni ochish
 
 RailTech yetkazib berish va muhandislik loyihalarini amalga oshirish sohasida professional xizmatlar ko'rsatish uchun tajribali mutaxassislar tomonidan tashkil etilgan.
 
-{{< list title="Xizmatlar" cardView=true limit=4 where="Section" value="services" >}}
+{{< tabs >}}
+
+{{< tab label="Yetkazib berish" icon="truck" >}}
+
+### Uskunalar yetkazib berish
+
+Temir yo'l va sanoat sohalari uchun sertifikatlangan mahsulotlarni sotish va targ'ib qilish. To'liq tsikl — uskunalarni tanlashdan tortib buyurtmachining omboriga yetkazib berishgacha.
+
+- Ishlab chiqaruvchilar bilan rasmiy dilerlik shartnomalar
+- Sertifikatlar va hujjatlarning to'liq paketi
+- Bojxona rasmiylashtiruvi va omborga yetkazib berish
+- Kafolatli va kafolatdan keyingi xizmat
+
+{{< button href="/uz/services/equipment-supply/" >}}Batafsil{{< /button >}}
+
+{{< /tab >}}
+
+{{< tab label="Ekspertiza" icon="search" >}}
+
+### Texnik ekspertiza
+
+Muhandislik maslahat, loyiha oldi qo'llab-quvvatlash va loyihani amalga oshirishning barcha bosqichlarida texnik hamrohlik.
+
+- Ehtiyojlarni tahlil qilish va optimal yechimlarni tanlash
+- Loyiha oldi baholash va texnik topshiriq
+- Sinov loyihalarini qo'llab-quvvatlash
+- Buyurtmachi xodimlarini o'qitish
+
+{{< button href="/uz/services/technical-expertise/" >}}Batafsil{{< /button >}}
+
+{{< /tab >}}
+
+{{< tab label="Lokalizatsiya" icon="globe" >}}
+
+### Ishlab chiqarishni lokalizatsiya qilish
+
+Xalqaro texnologiyalarni mahalliy standartlarga moslashtirish va O'zbekiston hududida komponentlarni yig'ishni tashkil etish.
+
+- O'zbekiston me'yoriy talablariga moslashtirish
+- Mahalliy yig'ish va sinovlarni tashkil etish
+- Texnologiya va kompetentsiyalarni transfer qilish
+- Lokalizatsiya qilingan mahsulotlarni sertifikatlash
+
+{{< button href="/uz/services/localization/" >}}Batafsil{{< /button >}}
+
+{{< /tab >}}
+
+{{< tab label="Vakolatxona" icon="users" >}}
+
+### Vakolatxona
+
+Xalqaro kompaniyalarning O'zbekistondagi manfaatlarini himoya qilish, texnologik hamkorlik va sheriklik munosabatlarini rivojlantirish.
+
+- Davlat organlarida manfaatlarni ifodalash
+- Muzokaralar va ishbilarmonlik tashriflarini tashkil etish
+- Tender va tanlov jarayonlarida ishtirok etish
+- Marketing qo'llab-quvvatlash va targ'ibot
+
+{{< button href="/uz/services/representation/" >}}Batafsil{{< /button >}}
+
+{{< /tab >}}
+
+{{< /tabs >}}
 
 ---
 
-## Bizning afzalliklarimiz
+## Amalga oshirilgan loyihalar
 
-{{< accordion >}}
+{{< carousel images="{/img/projects/uty-safety-systems.jpg,/img/projects/diagnostic-equipment.jpg,/img/projects/b2b-platform.jpg}" aspectRatio="21-9" interval="4000" >}}
 
-{{< accordionItem title="Rasmiy diler" icon="star" >}}
-Sanoat va temir yo'l uskunalari yetakchi jahon ishlab chiqaruvchilarining hamkori.
-{{< /accordionItem >}}
+{{< alert icon="briefcase" cardColor="transparent" >}}
+**UTY xavfsizlik tizimlari** · **Diagnostika uskunalari** · **B2B platforma**
+— O'zbekiston korxonalari uchun 15 dan ortiq loyiha amalga oshirilgan
+{{< /alert >}}
 
-{{< accordionItem title="Sertifikatsiya" icon="shield" >}}
-Faqat sertifikatlangan mahsulotlarni import qilish va sotish, to'liq hujjatlar paketi bilan.
-{{< /accordionItem >}}
+{{< button href="/uz/projects/" >}}Barcha loyihalar{{< /button >}}
 
-{{< accordionItem title="Konsalting" icon="comment" >}}
-O'zbekistonda faoliyat yurituvchi xalqaro kompaniyalar uchun professional xizmatlar.
-{{< /accordionItem >}}
+---
 
-{{< accordionItem title="Yetkazib berish" icon="globe" >}}
-To'liq bojxona rasmiylari bilan uskunalarni yetkazib berish.
-{{< /accordionItem >}}
+## Asosiy bosqichlar
 
-{{< /accordion >}}
+{{< timeline >}}
+
+{{< timelineItem icon="rocket" header="2021" badge="Boshlanish" subheader="Kompaniya tashkil etildi" >}}
+«RailTech» MChJ Toshkentda temir yo'l va sanoat sohasining tajribali mutaxassislari jamoasi tomonidan tashkil etildi.
+{{< /timelineItem >}}
+
+{{< timelineItem icon="document-text" header="2022" badge="Hamkorlik" subheader="Birinchi dilerlik shartnomalar" >}}
+Poezdlar xavfsizligi tizimlarining yetakchi rossiyalik ishlab chiqaruvchilari bilan rasmiy dilerlik shartnomalar imzolandi.
+{{< /timelineItem >}}
+
+{{< timelineItem icon="globe-alt" header="2023" badge="O'sish" subheader="Katalog kengayishi" >}}
+Katalog 300+ pozitsiyagacha kengaytirildi. Qozog'iston va Yevropa kompaniyalari bilan hamkorlik boshlandi.
+{{< /timelineItem >}}
+
+{{< timelineItem icon="computer-desktop" header="2024" badge="Raqamlashtirish" subheader="B2B platforma ishga tushirildi" >}}
+Yetkazib berishning to'liq tsiklini avtomatlashtirish uchun raqamli B2B platforma ishlab chiqildi va ishga tushirildi.
+{{< /timelineItem >}}
+
+{{< timelineItem icon="chart-bar" header="2025" badge="Miqyos" subheader="500+ SKU va 120+ hamkor" >}}
+Katalog 500+ pozitsiyaga yetdi, faol hamkorlar bazasi — 120+ kompaniya. Ishlab chiqarishni lokalizatsiya qilish bo'yicha ishlar boshlandi.
+{{< /timelineItem >}}
+
+{{< /timeline >}}
 
 ---
 
 ## Raqamli platforma
 
-Yetkazib berishning butun sikli bitta oynada. Biz mijoz bilan ishlashning har bir bosqichini raqamli formatga o'tkazdik — katalogdan pozitsiya tanlashdan to imzolangan shartnoma va yopuvchi hujjatlargacha.
+{{< alert icon="computer-desktop" >}}
+**Yetkazib berishning butun sikli bitta oynada.** Biz mijoz bilan ishlashning har bir bosqichini raqamli formatga o'tkazdik — katalogdan pozitsiya tanlashdan to imzolangan shartnoma va yopuvchi hujjatlargacha.
+{{< /alert >}}
+
+{{< list title="Platforma imkoniyatlari" cardView=true limit=6 where="Section" value="platform" >}}
 
 {{< button href="https://b2b.railtech.uz" target="_blank" >}}
 B2B katalogni ochish
@@ -69,9 +156,9 @@ B2B katalogni ochish
 
 ## Soha yetakchilari bilan ishlaymiz
 
-Rasmiy dilerlik shartnomalar va uzoq muddatli hamkorliklar.
+Yetakchi jahon ishlab chiqaruvchilari bilan rasmiy dilerlik shartnomalar va uzoq muddatli hamkorliklar.
 
-{{< badge >}}САУТ{{< /badge >}} {{< badge >}}НИИАС{{< /badge >}} {{< badge >}}РЖД{{< /badge >}} {{< badge >}}ЭЛТЕЗА{{< /badge >}} {{< badge >}}Siemens{{< /badge >}} {{< badge >}}Knorr-Bremse{{< /badge >}} {{< badge >}}Alstom{{< /badge >}} {{< badge >}}Bombardier{{< /badge >}}
+{{< badge >}}SAUT{{< /badge >}} {{< badge >}}NIIAS{{< /badge >}} {{< badge >}}RZD{{< /badge >}} {{< badge >}}ELTEZA{{< /badge >}} {{< badge >}}Siemens{{< /badge >}} {{< badge >}}Knorr-Bremse{{< /badge >}} {{< badge >}}Alstom{{< /badge >}} {{< badge >}}Bombardier{{< /badge >}}
 
 ---
 
@@ -81,24 +168,24 @@ Javob topa olmadingizmi? Bizga yozing, biz bir ish kuni ichida javob beramiz.
 
 {{< accordion separated=true >}}
 
-{{< accordionItem title="RailTech qanday xizmatlar ko'rsatadi?" >}}
-Biz temir yo'l uskunalarini yetkazib berish, texnik ekspertiza, ishlab chiqarishni lokalizatsiya qilish va xorijiy ishlab chiqaruvchilarning manfaatlarini vakillik qilish xizmatlarini taqdim etamiz.
+{{< accordionItem title="Tijorat taklifi uchun qanday ariza topshirish mumkin?" >}}
+Shaxsiy kabinetda ro'yxatdan o'ting, kompaniyaning tezkor tekshiruvidan (KYC) o'ting, katalogdan kerakli pozitsiyalarni tanlang va «TT so'rash» tugmasini bosing. Menejer taklifni shakllantiradi va kabinetga yuboradi.
 {{< /accordionItem >}}
 
-{{< accordionItem title="Qaysi davlatlarda faoliyat yuritasiz?" >}}
-Asosiy faoliyatimiz O'zbekiston hududida olib boriladi. Bundan tashqari, Qozog'iston va Rossiya Federatsiyasi bilan ham hamkorlik qilamiz.
-{{< /accordionItem >}}
-
-{{< accordionItem title="B2B platformangizdan qanday foydalanish mumkin?" >}}
-Platformamizga ro'yxatdan o'tish orqali kirish mumkin. Ro'yxatdan o'tganingizdan so'ng, katalogni ko'rish, narx kalkulyatori orqali hisob-kitob qilish va buyurtmalarni kuzatish imkoniyatiga ega bo'lasiz.
+{{< accordionItem title="O'zbekiston norezidentlari bilan ishlaysizmi?" >}}
+Ha, biz Qozog'iston, Rossiya va boshqa MDH davlatlaridan kompaniyalar bilan hamkorlik qilamiz. Norezidentlar uchun barcha zarur hujjatlarni rasmiylashtirish bilan DAP va CIF yetkazib berish shartlari mavjud.
 {{< /accordionItem >}}
 
 {{< accordionItem title="Yetkazib berish muddatlari qancha?" >}}
-Yetkazib berish muddatlari mahsulot turiga va mavjudligiga qarab 2 haftadan 12 haftagacha o'zgarishi mumkin. Aniq muddatlar shartnoma tuzish bosqichida kelishiladi.
+Muddatlar ombordagi mavjudlik va kelib chiqish mamlakatiga bog'liq. «Mavjud» pozitsiyalar — 3 dan 10 ish kunigacha. «Buyurtma bo'yicha» pozitsiyalar — TT shakllantirilganda aniqlanadi.
 {{< /accordionItem >}}
 
-{{< accordionItem title="Mahsulotlaringiz sertifikatlanganligi haqida ma'lumot bera olasizmi?" >}}
-Ha, biz yetkazib beradigan barcha asbob-uskunalar tegishli sertifikatlarga ega va O'zbekiston temir yo'l standartlariga muvofiq keladi.
+{{< accordionItem title="Uskunalarda sertifikatlar bormi?" >}}
+Ha, barcha mahsulotlar muvofiqlik sertifikatlari, sifat pasportlari va ishlab chiqaruvchi deklaratsiyalari bilan ta'minlangan. Hujjatlar tekshiruvdan so'ng shaxsiy kabinetda mavjud.
+{{< /accordionItem >}}
+
+{{< accordionItem title="Tovarni qaytarish mumkinmi?" >}}
+Saqlash sharoitlari va qadoq buzilmaganligi saqlanganida 14 kun ichida qaytarish mumkin. Shartlar shaxsiy kabinetda shakllantiriladigan yetkazib berish shartnomada ko'rsatilgan.
 {{< /accordionItem >}}
 
 {{< /accordion >}}

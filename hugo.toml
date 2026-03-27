@@ -13,6 +13,9 @@ pagerSize = 9
 [markup.highlight]
 style = "dracula"
 
+[markup.goldmark.renderer]
+unsafe = true
+
 [outputs]
 home = ["HTML", "RSS", "JSON"]
 section = ["HTML", "RSS"]
@@ -25,9 +28,14 @@ autoSwitchAppearance = false
 enableSearch = true
 enableCodeCopy = true
 
+# Default images (fallbacks for pages without featured images)
+defaultBackgroundImage = "img/hero/default-featured.jpg"
+defaultFeaturedImage = "img/hero/default-featured.jpg"
+
 # Images
 logo = "img/brand/railtech-logo.svg"
 favicon = "img/brand/favicon.svg"
+
 # Author = Company branding (used by hero layout)
 [params.author]
 name = "RailTech"
@@ -43,17 +51,20 @@ headline = "Комплексные поставки промышленного �
 # Homepage
 [params.homepage]
 layout = "hero"
+homepageImage = "img/hero/railway-main.jpg"
 showRecent = true
 showRecentItems = 6
 showMoreLink = true
 showMoreLinkDest = "/blog"
 cardView = true
-cardViewScreenWidth = false
+cardViewScreenWidth = true
 
 # Article (blog posts)
 [params.article]
 showHero = true
 heroStyle = "background"
+layoutBackgroundBlur = true
+layoutBackgroundHeaderSpace = true
 showDate = true
 showDateUpdated = false
 showAuthor = true
@@ -67,6 +78,8 @@ sharingLinks = ["telegram", "facebook", "linkedin"]
 [params.list]
 showHero = true
 heroStyle = "background"
+layoutBackgroundBlur = true
+layoutBackgroundHeaderSpace = true
 showBreadcrumbs = true
 showSummary = true
 showTableOfContents = false
@@ -79,9 +92,9 @@ cardViewScreenWidth = false
 showTermCount = true
 cardView = true
 
-# Header
+# Header — fixed with blur for modern sticky navigation
 [params.header]
-layout = "basic"
+layout = "fixed-fill-blur"
 
 # Footer
 [params.footer]

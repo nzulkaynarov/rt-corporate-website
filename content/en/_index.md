@@ -1,10 +1,10 @@
 ---
 title: "RailTech — Industrial Equipment Supply Solutions"
-description: "RailTech is a trusted supplier of high-quality industrial equipment and consulting services in Uzbekistan. Official warranty, customs clearance, and delivery included."
+description: "RailTech is a trusted supplier of high-quality industrial and railway equipment in Uzbekistan. Official warranty, customs clearance, and delivery included."
 ---
 
 {{< lead >}}
-Ensuring uninterrupted operation of your production in Uzbekistan. Official warranty, full customs clearance, and delivery to your warehouse.
+Ensuring uninterrupted operation of industrial enterprises in Uzbekistan. Official warranty, full customs clearance, and delivery to your warehouse.
 {{< /lead >}}
 
 {{< button href="/en/contact/" >}}
@@ -18,10 +18,14 @@ Open Catalog
 
 ## Company at a Glance
 
-|  |  |  |  |
+{{< alert icon="chart-bar" cardColor="transparent" >}}
+
+| | | | |
 |:---:|:---:|:---:|:---:|
 | **5+** | **120+** | **500+** | **3** |
 | years in market | partners | SKUs in catalog | countries |
+
+{{< /alert >}}
 
 ---
 
@@ -29,37 +33,120 @@ Open Catalog
 
 RailTech was founded by experienced specialists to provide professional supply and engineering project services.
 
-{{< list title="Services" cardView=true limit=4 where="Section" value="services" >}}
+{{< tabs >}}
+
+{{< tab label="Supply" icon="truck" >}}
+
+### Equipment Supply
+
+Sales and distribution of certified products for the railway and industrial sectors. Full cycle — from equipment selection to delivery at customer's warehouse.
+
+- Official dealer agreements with manufacturers
+- Complete certification and documentation package
+- Customs clearance and warehouse delivery
+- Warranty and post-warranty service
+
+{{< button href="/en/services/equipment-supply/" >}}Learn More{{< /button >}}
+
+{{< /tab >}}
+
+{{< tab label="Expertise" icon="search" >}}
+
+### Technical Expertise
+
+Engineering consulting, pre-project support, and technical guidance at every stage of project implementation.
+
+- Needs analysis and optimal solution selection
+- Pre-project assessment and technical specifications
+- Pilot project support and supervision
+- Customer personnel training
+
+{{< button href="/en/services/technical-expertise/" >}}Learn More{{< /button >}}
+
+{{< /tab >}}
+
+{{< tab label="Localization" icon="globe" >}}
+
+### Production Localization
+
+Adapting international technologies to local standards and organizing component assembly in Uzbekistan.
+
+- Adaptation to Uzbekistan regulatory requirements
+- Local assembly and testing organization
+- Technology and competency transfer
+- Certification of localized products
+
+{{< button href="/en/services/localization/" >}}Learn More{{< /button >}}
+
+{{< /tab >}}
+
+{{< tab label="Representation" icon="users" >}}
+
+### Representation
+
+Representing international companies in Uzbekistan, developing technological cooperation and partnership relations.
+
+- Representation before government authorities
+- Negotiation and business visit organization
+- Tender and competitive procedure participation
+- Marketing support and promotion
+
+{{< button href="/en/services/representation/" >}}Learn More{{< /button >}}
+
+{{< /tab >}}
+
+{{< /tabs >}}
 
 ---
 
-## Our Advantages
+## Completed Projects
 
-{{< accordion >}}
+{{< carousel images="{/img/projects/uty-safety-systems.jpg,/img/projects/diagnostic-equipment.jpg,/img/projects/b2b-platform.jpg}" aspectRatio="21-9" interval="4000" >}}
 
-{{< accordionItem title="Official Dealer" icon="star" >}}
-Partner of leading global manufacturers of industrial and railway equipment.
-{{< /accordionItem >}}
+{{< alert icon="briefcase" cardColor="transparent" >}}
+**UTY Safety Systems** · **Diagnostic Equipment** · **B2B Platform**
+— Over 15 projects delivered for enterprises in Uzbekistan
+{{< /alert >}}
 
-{{< accordionItem title="Certification" icon="shield" >}}
-Import and sale of exclusively certified products with complete documentation.
-{{< /accordionItem >}}
+{{< button href="/en/projects/" >}}All Projects{{< /button >}}
 
-{{< accordionItem title="Consulting" icon="comment" >}}
-Professional services for international companies operating in Uzbekistan.
-{{< /accordionItem >}}
+---
 
-{{< accordionItem title="Supply Chain" icon="globe" >}}
-Equipment delivery with full customs clearance.
-{{< /accordionItem >}}
+## Key Milestones
 
-{{< /accordion >}}
+{{< timeline >}}
+
+{{< timelineItem icon="rocket" header="2021" badge="Launch" subheader="Company Founded" >}}
+RailTech LLC was founded in Tashkent by a team of experienced railway and industrial sector specialists.
+{{< /timelineItem >}}
+
+{{< timelineItem icon="document-text" header="2022" badge="Partnerships" subheader="First Dealer Agreements" >}}
+Official dealer agreements signed with leading Russian manufacturers of train safety systems.
+{{< /timelineItem >}}
+
+{{< timelineItem icon="globe-alt" header="2023" badge="Growth" subheader="Catalog Expansion" >}}
+Product catalog expanded to 300+ items. Partnerships established with companies from Kazakhstan and Europe.
+{{< /timelineItem >}}
+
+{{< timelineItem icon="computer-desktop" header="2024" badge="Digital" subheader="B2B Platform Launch" >}}
+Digital B2B platform developed and launched to automate the full supply cycle.
+{{< /timelineItem >}}
+
+{{< timelineItem icon="chart-bar" header="2025" badge="Scale" subheader="500+ SKUs & 120+ Partners" >}}
+Catalog reached 500+ items, active partner base — 120+ companies. Production localization work initiated.
+{{< /timelineItem >}}
+
+{{< /timeline >}}
 
 ---
 
 ## Digital Platform
 
-The entire supply cycle in one window. We digitized every stage of client interaction — from selecting a catalog item to signing contracts and closing documents.
+{{< alert icon="computer-desktop" >}}
+**The entire supply cycle in one window.** We digitized every stage of client interaction — from selecting a catalog item to signing contracts and closing documents.
+{{< /alert >}}
+
+{{< list title="Platform Features" cardView=true limit=6 where="Section" value="platform" >}}
 
 {{< button href="https://b2b.railtech.uz" target="_blank" >}}
 Open B2B Catalog
@@ -69,7 +156,7 @@ Open B2B Catalog
 
 ## Working with Industry Leaders
 
-Official dealer agreements and long-term partnerships.
+Official dealer agreements and long-term partnerships with leading global manufacturers.
 
 {{< badge >}}SAUT{{< /badge >}} {{< badge >}}NIIAS{{< /badge >}} {{< badge >}}RZD{{< /badge >}} {{< badge >}}ELTEZA{{< /badge >}} {{< badge >}}Siemens{{< /badge >}} {{< badge >}}Knorr-Bremse{{< /badge >}} {{< badge >}}Alstom{{< /badge >}} {{< badge >}}Bombardier{{< /badge >}}
 

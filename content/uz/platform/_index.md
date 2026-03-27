@@ -2,6 +2,9 @@
 title: "B2B Platforma"
 description: "RailTech B2B raqamli platformasi — temir yo'l uskunalarini xarid qilish, buyurtmalarni boshqarish va hamkorlik uchun yagona raqamli muhit."
 showBreadcrumbs: true
+showHero: true
+heroStyle: "background"
+featureimage: "img/hero/platform-hero.jpg"
 cascade:
   showDate: false
   showReadingTime: false

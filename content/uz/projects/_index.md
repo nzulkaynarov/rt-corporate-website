@@ -2,6 +2,9 @@
 title: "Loyihalar"
 description: "RailTech tomonidan amalga oshirilgan loyihalar: xavfsizlik tizimlari, diagnostika uskunalari, raqamli yechimlar va boshqalar."
 showBreadcrumbs: true
+showHero: true
+heroStyle: "background"
+featureimage: "img/hero/projects-hero.jpg"
 cascade:
   showDate: false
   showReadingTime: false
