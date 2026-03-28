@@ -1,52 +1,77 @@
 ---
 title: "Aloqa"
-description: "RailTech bilan bog'laning. Temir yo'l uskunalari, texnik maslahat yoki B2B platforma haqida savollaringiz bormi? Biz bilan bog'laning."
-type: contact
-
-contact_info:
-  company: "«RailTech» MChJ"
-  address: "Toshkent shahri, O'zbekiston"
-  phone: "+998 90 118-90-00"
-  email: "info@railtech.uz"
-  working_hours: "Dushanba — Juma: 09:00 — 18:00"
-
-form:
-  title: "Bizga xabar yuboring"
-  fields:
-    - label: "Ismingiz"
-      type: "text"
-      required: true
-    - label: "Kompaniya nomi"
-      type: "text"
-      required: false
-    - label: "Telefon raqamingiz"
-      type: "tel"
-      required: true
-    - label: "Elektron pochta"
-      type: "email"
-      required: true
-    - label: "Xabaringiz"
-      type: "textarea"
-      required: true
-  submit_label: "Yuborish"
+description: "RailTech bilan bog'laning. Temir yo'l uskunalari, texnik maslahat yoki B2B platforma haqida savollaringiz bormi?"
+showBreadcrumbs: true
+showTableOfContents: false
 ---
 
-## Biz bilan bog'laning
+{{< lead >}}
+So'rov qoldiring — RailTech mutaxassisi sizning vazifalaringizni muhokama qilish uchun siz bilan bog'lanadi.
+{{< /lead >}}
 
-Temir yo'l uskunalari, texnik maslahat, B2B platforma yoki boshqa masalalar bo'yicha savollaringiz bormi? Biz sizga yordam berishdan mamnunmiz.
+---
 
-### Bog'lanish ma'lumotlari
+## Biz bilan qanday bog'lanish mumkin
 
-- **Kompaniya:** «RailTech» MChJ
-- **Manzil:** Toshkent shahri, O'zbekiston
-- **Telefon:** +998 90 118-90-00
-- **Elektron pochta:** info@railtech.uz
-- **Ish vaqti:** Dushanba — Juma, 09:00 — 18:00
+{{< tabs >}}
 
-### Qanday yordam bera olamiz?
+{{< tab label="Telefon" icon="phone" >}}
+**+998 90 118-90-00**
 
-- Temir yo'l uskunalari va ehtiyot qismlar bo'yicha maslahat
-- Tijorat taklifi va narxlar haqida ma'lumot
-- B2B platformaga kirish va ro'yxatdan o'tish
-- Texnik ekspertiza va loyiha maslahatnomalari
-- Hamkorlik takliflari
+Dush–Juma: 09:00 — 18:00 (Toshkent vaqti)
+{{< /tab >}}
+
+{{< tab label="Email" icon="email" >}}
+**info@railtech.uz**
+
+Bir ish kuni ichida javob beramiz.
+{{< /tab >}}
+
+{{< tab label="Manzil" icon="map-pin" >}}
+**Toshkent, O'zbekiston**
+
+Tashkent, Index, Office B2-2097
+{{< /tab >}}
+
+{{< tab label="Telegram" icon="comment" >}}
+**@railtech_uz**
+
+Messenjer orqali tezkor javoblar.
+{{< /tab >}}
+
+{{< /tabs >}}
+
+---
+
+## Qanday yordam bera olamiz
+
+{{< accordion >}}
+
+{{< accordionItem title="Uskunalar yetkazib berish" icon="truck" >}}
+Temir yo'l va sanoat uskunalarini tanlash, narxlash va to'liq bojxona rasmiylashtiruvi bilan yetkazib berish.
+{{< /accordionItem >}}
+
+{{< accordionItem title="Tijorat taklifi" icon="document-text" >}}
+B2B platforma orqali TT so'rang yoki bizga yozing — menejer individual taklif tayyorlaydi.
+{{< /accordionItem >}}
+
+{{< accordionItem title="Texnik maslahat" icon="search" >}}
+Muhandislik ekspertizasi, loyiha oldi qo'llab-quvvatlash va sinov loyihalarida ishtirok etish.
+{{< /accordionItem >}}
+
+{{< accordionItem title="Hamkorlik" icon="users" >}}
+Xalqaro kompaniyalarning O'zbekistondagi vakolatxonasi va uzoq muddatli dilerlik shartnomalar.
+{{< /accordionItem >}}
+
+{{< /accordion >}}
+
+---
+
+## Tezkor havolalar
+
+{{< btn href="https://b2b.railtech.uz" target="_blank" >}}
+B2B katalogni ochish
+{{< /btn >}}&nbsp;
+{{< btn href="https://t.me/railtech_uz" target="_blank" >}}
+Telegramda yozish
+{{< /btn >}}
