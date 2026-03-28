@@ -101,3 +101,7 @@ sharing.reddit: "Reddit'da ulashish"
 sharing.telegram: "Telegram'da ulashish"
 sharing.twitter: "Twitter'da ulashish"
 sharing.whatsapp: "WhatsApp'da ulashish"
+
+# Schema.org
+schema_home: "Bosh sahifa"
+schema_contact_type: "Mijozlarni qo'llab-quvvatlash"

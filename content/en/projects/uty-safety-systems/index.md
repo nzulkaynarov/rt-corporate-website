@@ -38,5 +38,5 @@ As part of the train safety system modernization program for JSC Uzbekistan Rail
 
 > Want to implement a similar project? Our team is ready to discuss your needs and offer the best solution.
 
-{{</* button href="/contact/" */>}}Discuss a Project{{</* /button */>}}
-{{</* button href="/services/" */>}}Our Services{{</* /button */>}}
+{{< btn href="/en/contact/" >}}Discuss a Project{{< /btn >}}
+{{< btn href="/en/services/" >}}Our Services{{< /btn >}}

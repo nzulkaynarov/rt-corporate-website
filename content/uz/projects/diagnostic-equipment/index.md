@@ -34,5 +34,5 @@ Yangi diagnostika uskunalari ta'mirlash sifatini sezilarli oshirdi va nosozlikla
 
 > Shunga o'xshash loyihani amalga oshirmoqchimisiz? Bizning jamoamiz sizning ehtiyojlaringizni muhokama qilishga tayyor.
 
-{{< btn href="/contact/" >}}Loyihani muhokama qilish{{< /btn >}}
-{{< btn href="/services/" >}}Bizning xizmatlar{{< /btn >}}
+{{< btn href="/uz/contact/" >}}Loyihani muhokama qilish{{< /btn >}}
+{{< btn href="/uz/services/" >}}Bizning xizmatlar{{< /btn >}}

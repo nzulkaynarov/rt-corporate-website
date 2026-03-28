@@ -30,7 +30,7 @@ showTableOfContents: false
 {{< tab label="Адрес" icon="map-pin" >}}
 **Ташкент, Узбекистан**
 
-Tashkent, Index, Office B2-2097
+г. Ташкент, Индекс, Офис B2-2097
 {{< /tab >}}
 
 {{< tab label="Telegram" icon="comment" >}}

@@ -33,5 +33,5 @@ Every shipment is accompanied by a complete documentation package: conformity ce
 
 > Ready to discuss your project? Contact us for a commercial proposal or browse the B2B catalog to find the right equipment.
 
-{{</* button href="/contact/" */>}}Contact Us{{</* /button */>}}
-{{</* button href="https://b2b.railtech.uz" target="_blank" */>}}Open Catalog{{</* /button */>}}
+{{< btn href="/en/contact/" >}}Contact Us{{< /btn >}}
+{{< btn href="https://b2b.railtech.uz" target="_blank" >}}Open Catalog{{< /btn >}}

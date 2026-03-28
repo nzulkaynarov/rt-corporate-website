@@ -53,3 +53,7 @@ link_new_tab: "(opens in new tab)"
 err_title: "Page Not Found"
 err_desc: "The link may be outdated or the page has been moved."
 err_home: "Back to Home"
+
+# Schema.org
+schema_home: "Home"
+schema_contact_type: "Customer Support"

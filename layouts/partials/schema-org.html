@@ -17,7 +17,7 @@
   "description" .Site.Params.seo.defaultDescription
   "contactPoint" (dict
     "@type" "ContactPoint"
-    "contactType" "Customer Support"
+    "contactType" (i18n "schema_contact_type" | default "Customer Support")
     "telephone" .Site.Params.extra.phone
     "email" .Site.Params.extra.email
   )
@@ -104,7 +104,7 @@
   {{ $breadcrumbs = $breadcrumbs | append (dict
     "@type" "ListItem"
     "position" 1
-    "name" "Home"
+    "name" (i18n "schema_home" | default "Home")
     "item" $homeURL
   ) }}
 

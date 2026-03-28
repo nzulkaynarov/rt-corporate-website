@@ -30,7 +30,7 @@ Bir ish kuni ichida javob beramiz.
 {{< tab label="Manzil" icon="map-pin" >}}
 **Toshkent, O'zbekiston**
 
-Tashkent, Index, Office B2-2097
+Toshkent shahri, Indeks, Ofis B2-2097
 {{< /tab >}}
 
 {{< tab label="Telegram" icon="comment" >}}
