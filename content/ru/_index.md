@@ -18,14 +18,7 @@ description: "RailTech — поставщик высококачественно
 
 ## Компания в цифрах
 
-{{< alert icon="chart-bar" cardColor="transparent" >}}
-
-| | | | |
-|:---:|:---:|:---:|:---:|
-| **5+** | **120+** | **500+** | **3** |
-| лет на рынке | партнёров | SKU в каталоге | страны поставок |
-
-{{< /alert >}}
+**5+** лет на рынке · **120+** партнёров · **500+** SKU в каталоге · **3** страны поставок
 
 ---
 
@@ -101,12 +94,7 @@ RailTech создана опытными специалистами для ок�
 
 ## Реализованные проекты
 
-{{< carousel images="{/img/projects/uty-safety-systems.jpg,/img/projects/diagnostic-equipment.jpg,/img/projects/b2b-platform.jpg}" aspectRatio="21-9" interval="4000" >}}
-
-{{< alert icon="briefcase" cardColor="transparent" >}}
-**Системы безопасности UTY** · **Диагностическое оборудование** · **B2B платформа**
-— Более 15 проектов реализовано для предприятий Узбекистана
-{{< /alert >}}
+{{< list title="Проекты" cardView=true limit=3 where="Section" value="projects" >}}
 
 {{< btn href="/projects/" >}}Все проекты{{< /btn >}}
 

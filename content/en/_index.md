@@ -18,14 +18,7 @@ Open Catalog
 
 ## Company at a Glance
 
-{{< alert icon="chart-bar" cardColor="transparent" >}}
-
-| | | | |
-|:---:|:---:|:---:|:---:|
-| **5+** | **120+** | **500+** | **3** |
-| years in market | partners | SKUs in catalog | countries |
-
-{{< /alert >}}
+**5+** years in market · **120+** partners · **500+** SKUs in catalog · **3** countries
 
 ---
 
@@ -101,12 +94,7 @@ Representing international companies in Uzbekistan, developing technological coo
 
 ## Completed Projects
 
-{{< carousel images="{/img/projects/uty-safety-systems.jpg,/img/projects/diagnostic-equipment.jpg,/img/projects/b2b-platform.jpg}" aspectRatio="21-9" interval="4000" >}}
-
-{{< alert icon="briefcase" cardColor="transparent" >}}
-**UTY Safety Systems** · **Diagnostic Equipment** · **B2B Platform**
-— Over 15 projects delivered for enterprises in Uzbekistan
-{{< /alert >}}
+{{< list title="Projects" cardView=true limit=3 where="Section" value="projects" >}}
 
 {{< btn href="/en/projects/" >}}All Projects{{< /btn >}}
 

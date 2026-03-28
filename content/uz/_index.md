@@ -18,14 +18,7 @@ Katalogni ochish
 
 ## Kompaniya raqamlarda
 
-{{< alert icon="chart-bar" cardColor="transparent" >}}
-
-| | | | |
-|:---:|:---:|:---:|:---:|
-| **5+** | **120+** | **500+** | **3** |
-| yil bozorda | hamkorlar | SKU katalogda | davlatlar |
-
-{{< /alert >}}
+**5+** yil bozorda · **120+** hamkorlar · **500+** SKU katalogda · **3** davlatlar
 
 ---
 
@@ -101,12 +94,7 @@ Xalqaro kompaniyalarning O'zbekistondagi manfaatlarini himoya qilish, texnologik
 
 ## Amalga oshirilgan loyihalar
 
-{{< carousel images="{/img/projects/uty-safety-systems.jpg,/img/projects/diagnostic-equipment.jpg,/img/projects/b2b-platform.jpg}" aspectRatio="21-9" interval="4000" >}}
-
-{{< alert icon="briefcase" cardColor="transparent" >}}
-**UTY xavfsizlik tizimlari** · **Diagnostika uskunalari** · **B2B platforma**
-— O'zbekiston korxonalari uchun 15 dan ortiq loyiha amalga oshirilgan
-{{< /alert >}}
+{{< list title="Loyihalar" cardView=true limit=3 where="Section" value="projects" >}}
 
 {{< btn href="/uz/projects/" >}}Barcha loyihalar{{< /btn >}}
 
