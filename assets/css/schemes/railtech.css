@@ -1,18 +1,24 @@
-/* RailTech custom Blowfish color scheme — v2 «Steel & Cyber»
-   Primary: Steel Blue (#3b82f6) — industrial reliability, railway steel
-   Neutral: Slate — cold steel tones, dark corporate
-   Secondary: Electric Cyan (#22d3ee) — high-tech, digitalization accent
+/* RailTech Corporate Color Scheme — v3
+   Designed for excellent contrast in BOTH dark and light modes.
 
-   Contrast ratios (dark mode, on neutral-900 #0f172a):
-     primary-400 #60a5fa → 8.26:1 (AAA)
-     primary-500 #3b82f6 → 5.78:1 (AA)
-     neutral-300 #cbd5e1 → 10.22:1 (AAA)
-     neutral-400 #94a3b8 → 5.56:1 (AA)
-     secondary-400 #22d3ee → 10.87:1 (AAA)
+   Primary: Deep Blue (#1e40af → #2563eb) — reliability, industrial steel
+   Neutral: Slate — cold corporate tones
+   Secondary: Amber/Orange (#f59e0b) — warmth, energy, CTA accent
+
+   Light mode contrast (on neutral-50 #f8fafc):
+     primary-600 #2563eb → 4.7:1 (AA)
+     primary-700 #1d4ed8 → 6.1:1 (AA+)
+     primary-800 #1e40af → 8.1:1 (AAA)
+     neutral-700 #334155 → 8.5:1 (AAA)
+
+   Dark mode contrast (on neutral-900 #0f172a):
+     primary-400 #60a5fa → 8.3:1 (AAA)
+     primary-300 #93c5fd → 11.2:1 (AAA)
+     neutral-300 #cbd5e1 → 10.2:1 (AAA)
 */
 
 :root {
-  /* Neutral: Slate (cold, steel-like) */
+  /* Neutral: Slate */
   --color-neutral-50: 248, 250, 252;
   --color-neutral-100: 241, 245, 249;
   --color-neutral-200: 226, 232, 240;
@@ -24,7 +30,7 @@
   --color-neutral-800: 30, 41, 59;
   --color-neutral-900: 15, 23, 42;
 
-  /* Primary: Steel Blue — main accent */
+  /* Primary: Deep Blue — stronger contrast in both modes */
   --color-primary-50: 239, 246, 255;
   --color-primary-100: 219, 234, 254;
   --color-primary-200: 191, 219, 254;
@@ -36,15 +42,15 @@
   --color-primary-800: 30, 64, 175;
   --color-primary-900: 30, 58, 138;
 
-  /* Secondary: Electric Cyan — tech accent */
-  --color-secondary-50: 236, 254, 255;
-  --color-secondary-100: 207, 250, 254;
-  --color-secondary-200: 165, 243, 252;
-  --color-secondary-300: 103, 232, 249;
-  --color-secondary-400: 34, 211, 238;
-  --color-secondary-500: 6, 182, 212;
-  --color-secondary-600: 8, 145, 178;
-  --color-secondary-700: 14, 116, 144;
-  --color-secondary-800: 21, 94, 117;
-  --color-secondary-900: 22, 78, 99;
+  /* Secondary: Amber — visible in both modes, warm industrial accent */
+  --color-secondary-50: 255, 251, 235;
+  --color-secondary-100: 254, 243, 199;
+  --color-secondary-200: 253, 230, 138;
+  --color-secondary-300: 252, 211, 77;
+  --color-secondary-400: 251, 191, 36;
+  --color-secondary-500: 245, 158, 11;
+  --color-secondary-600: 217, 119, 6;
+  --color-secondary-700: 180, 83, 9;
+  --color-secondary-800: 146, 64, 14;
+  --color-secondary-900: 120, 53, 15;
 }
