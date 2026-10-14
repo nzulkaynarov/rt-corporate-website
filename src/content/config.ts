@@ -17,6 +17,7 @@ const catalogCollection = defineCollection({
     material: z.string().optional(),
     warranty: z.string().optional().default('12 месяцев с момента ввода в эксплуатацию'),
     priceNote: z.string().optional().default('Цена по запросу (с НДС 12%)'),
+    image: z.string().optional(),
     modelType: z.enum(['bogie', 'container', 'network', 'hypercube']).optional().default('bogie'),
     order: z.number().default(1),
   }),

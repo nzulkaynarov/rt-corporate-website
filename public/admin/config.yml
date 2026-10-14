@@ -5,6 +5,10 @@ backend:
 
 local_backend: true
 
+auth_methods:
+  - token
+  - oauth
+
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
@@ -23,7 +27,12 @@ collections:
       - { label: "Базис склада", name: "warehouse", widget: "string", default: "Ташкент, Index B2-2097" }
       - { label: "Статус наличия", name: "status", widget: "select", options: ["В наличии", "Резерв", "Под заказ"] }
       - { label: "Ключ статуса", name: "statusKey", widget: "select", options: ["in_stock", "reserved", "on_order"] }
+      - { label: "Фото изделия", name: "image", widget: "image", required: false }
       - { label: "Технические параметры", name: "specs", widget: "string" }
+      - { label: "Габаритные размеры (мм)", name: "dimensions", widget: "string", required: false }
+      - { label: "Масса / вес (кг/т)", name: "weight", widget: "string", required: false }
+      - { label: "Материал / марка стали", name: "material", widget: "string", required: false }
+      - { label: "Гарантийный срок", name: "warranty", widget: "string", default: "12 месяцев с момента ввода в эксплуатацию", required: false }
       - { label: "Порядковый номер", name: "order", widget: "number", default: 1 }
       - { label: "Подробное техническое описание (Markdown)", name: "body", widget: "markdown" }
 

@@ -9,6 +9,7 @@ interface Props {
   specs: string;
   drawingNumber?: string;
   modelType?: 'bogie' | 'container' | 'network' | 'hypercube';
+  image?: string;
 }
 
 export const ProductMediaGallery: React.FC<Props> = ({
@@ -19,6 +20,7 @@ export const ProductMediaGallery: React.FC<Props> = ({
   specs,
   drawingNumber,
   modelType = 'bogie',
+  image,
 }) => {
   const [activeTab, setActiveTab] = useState<'PHOTO' | 'BLUEPRINT' | '3D_CAD'>('PHOTO');
 
@@ -90,8 +92,14 @@ export const ProductMediaGallery: React.FC<Props> = ({
           <div className="w-full h-full flex flex-col items-center justify-between">
             {/* Visual Technical Canvas */}
             <div className="relative w-full max-w-lg aspect-video bg-[#D0D6DC] border border-[#0A0A0A] p-6 flex flex-col items-center justify-center shadow-inner">
-              {/* Technical Drawing Canvas / Vector Graphic */}
-              <svg className="w-full h-48 text-[#0A0A0A]" viewBox="0 0 400 220" fill="none" stroke="currentColor">
+              {image ? (
+                <img
+                  src={image}
+                  alt={title}
+                  className="max-h-48 max-w-full object-contain mx-auto"
+                />
+              ) : (
+                <svg className="w-full h-48 text-[#0A0A0A]" viewBox="0 0 400 220" fill="none" stroke="currentColor">
                 {/* Background coordinate grid */}
                 <defs>
                   <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -163,8 +171,9 @@ export const ProductMediaGallery: React.FC<Props> = ({
                   </g>
                 )}
               </svg>
+            )}
 
-              {/* OTK Quality Acceptance Stamp */}
+            {/* OTK Quality Acceptance Stamp */}
               <div className="absolute top-3 right-3 border-2 border-emerald-800 bg-emerald-50 text-emerald-950 px-2 py-1 text-[9px] font-bold uppercase tracking-widest transform rotate-2">
                 [ ОТК: ПРИЕМКА ПРОЙДЕНА ]
               </div>
