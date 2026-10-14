@@ -11,6 +11,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <link href={`${base}/admin/config.yml`} type="text/yaml" rel="cms-config-url" />
   </head>
   <body>
-    <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+    <script is:inline src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
   </body>
 </html>
