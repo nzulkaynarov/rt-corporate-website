@@ -1,0 +1,222 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { CadInspector } from '../../components/islands/CadInspector';
+
+export async function getStaticPaths() {
+  const catalogEntries = await getCollection('catalog');
+  return catalogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const productJsonLd = {
+  '@context': 'https://schema.org/',
+  '@type': 'Product',
+  name: entry.data.title,
+  image: `https://railtech.uz/images/catalog/${entry.data.sku.toLowerCase()}.jpg`,
+  description: entry.data.specs,
+  sku: entry.data.sku,
+  mpn: entry.data.sku,
+  brand: {
+    '@type': 'Brand',
+    name: 'RailTech',
+  },
+  offers: {
+    '@type': 'Offer',
+    url: `https://railtech.uz/catalog/${entry.slug}`,
+    priceCurrency: 'UZS',
+    price: '0',
+    priceValidUntil: '2026-12-31',
+    itemCondition: 'https://schema.org/NewCondition',
+    availability:
+      entry.data.statusKey === 'in_stock'
+        ? 'https://schema.org/InStock'
+        : entry.data.statusKey === 'reserved'
+        ? 'https://schema.org/LimitedAvailability'
+        : 'https://schema.org/PreOrder',
+    seller: {
+      '@type': 'Organization',
+      name: 'ООО «RailTech»',
+    },
+  },
+};
+---
+
+<BaseLayout
+  title={`${entry.data.title} (${entry.data.sku}) — Паспорт изделия | ООО «RailTech» Ташкент`}
+  description={`Технический паспорт и заказ ${entry.data.title} (${entry.data.sku}). Стандарт ${entry.data.gost}, ТН ВЭД ${entry.data.tnved}. Склад в Ташкенте (ТПК Index B2-2097). Поставка с НДС 12%.`}
+  keywords={`${entry.data.title}, ${entry.data.sku}, ${entry.data.gost}, ${entry.data.tnved}, купить в ташкенте, жд запчасти узбекистан`}
+>
+  <!-- Product Schema.org -->
+  <script type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />
+
+  <div class="max-w-7xl mx-auto px-4 py-10 font-sans">
+    <!-- Breadcrumbs -->
+    <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-6">
+      <a href="/" class="hover:underline">ГЛАВНАЯ</a>
+      <span>/</span>
+      <a href="/catalog/" class="hover:underline">КАТАЛОГ ЖД ОБОРУДОВАНИЯ</a>
+      <span>/</span>
+      <span class="text-[#0A0A0A] font-bold">{entry.data.sku}</span>
+    </div>
+
+    <!-- Product Header Box -->
+    <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8">
+      <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-3">
+        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
+          АРТИКУЛ: {entry.data.sku}
+        </span>
+        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
+          СИСТЕМА: {entry.data.subsystem}
+        </span>
+        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold">
+          СТАТУС: {entry.data.status}
+        </span>
+        <span class="border border-[#0A0A0A] px-2 py-0.5 font-bold text-[#0A0A0A]">
+          НДС 12%
+        </span>
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-2">
+        {entry.data.title}
+      </h1>
+
+      <p class="text-base text-[#4A5056] font-mono">
+        {entry.data.specs}
+      </p>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <!-- Left Column: Specs Table & Details -->
+      <div class="lg:col-span-7 flex flex-col space-y-8">
+        <!-- Technical Passport Table -->
+        <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC]">
+          <div class="border-b border-[#0A0A0A] bg-[#0A0A0A] text-white px-4 py-2 font-mono text-xs font-bold tracking-wider flex justify-between items-center">
+            <span>ТЕХНИЧЕСКИЙ ПАСПОРТ ИЗДЕЛИЯ</span>
+            <span class="text-zinc-400">PASSPORT-DOC // UZ-GOST</span>
+          </div>
+
+          <table class="w-full font-mono text-xs border-collapse">
+            <tbody class="divide-y divide-[#0A0A0A]/20">
+              <tr class="hover:bg-[#C8CDD2]/50">
+                <td class="p-3 text-[#4A5056] w-1/3">Номенклатурный код (SKU):</td>
+                <td class="p-3 font-bold text-[#0A0A0A]">{entry.data.sku}</td>
+              </tr>
+              <tr class="hover:bg-[#C8CDD2]/50">
+                <td class="p-3 text-[#4A5056]">Государственный стандарт:</td>
+                <td class="p-3 font-bold text-[#0A0A0A]">{entry.data.gost}</td>
+              </tr>
+              <tr class="hover:bg-[#C8CDD2]/50">
+                <td class="p-3 text-[#4A5056]">Код ТН ВЭД Республики Узбекистан:</td>
+                <td class="p-3 font-bold text-[#0A0A0A]">{entry.data.tnved}</td>
+              </tr>
+              <tr class="hover:bg-[#C8CDD2]/50">
+                <td class="p-3 text-[#4A5056]">Назначение и классификация:</td>
+                <td class="p-3 text-[#0A0A0A]">{entry.data.subsystem}</td>
+              </tr>
+              <tr class="hover:bg-[#C8CDD2]/50">
+                <td class="p-3 text-[#4A5056]">Склад отгрузки:</td>
+                <td class="p-3 font-bold text-[#0A0A0A]">{entry.data.warehouse}</td>
+              </tr>
+              <tr class="hover:bg-[#C8CDD2]/50">
+                <td class="p-3 text-[#4A5056]">Заводская гарантия:</td>
+                <td class="p-3 text-[#0A0A0A]">{entry.data.warranty || '12 месяцев с момента ввода в эксплуатацию'}</td>
+              </tr>
+              <tr class="hover:bg-[#C8CDD2]/50">
+                <td class="p-3 text-[#4A5056]">Условия ценообразования:</td>
+                <td class="p-3 font-bold text-[#0A0A0A]">{entry.data.priceNote || 'Цена по запросу (с НДС 12%)'}</td>
+              </tr>
+              <tr class="hover:bg-[#C8CDD2]/50">
+                <td class="p-3 text-[#4A5056]">Входной контроль:</td>
+                <td class="p-3 text-emerald-800 font-bold">УЗК-дефектоскопия пройдена, бирка завода сохранена</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Detailed Description Content -->
+        <div class="border border-[#0A0A0A] bg-[#C8CDD2] p-6 font-sans">
+          <h2 class="font-mono text-xs font-bold text-[#0A0A0A] uppercase tracking-wider border-b border-[#0A0A0A] pb-2 mb-4">
+            ОПИСАНИЕ И ЭКСПЛУАТАЦИОННЫЕ ОСОБЕННОСТИ
+          </h2>
+          <div class="prose prose-sm text-[#0A0A0A] leading-relaxed">
+            <Content />
+          </div>
+        </div>
+
+        <!-- Compliance & Regulatory Box -->
+        <div class="border border-[#0A0A0A]/40 bg-[#D4D8DC] p-4 font-mono text-xs space-y-2">
+          <div class="font-bold text-[#0A0A0A]">КОМПЛЕКТНОСТЬ ПОСТАВКИ И ДОКУМЕНТЫ:</div>
+          <div class="text-[#4A5056] space-y-1 text-[11px]">
+            <div>• Оригинальный паспорт завода-изготовителя с отметкой ОТК и сертификатом плавки.</div>
+            <div>• Сертификат соответствия требованиям ТР ТС 001/2011 «О безопасности железнодорожного подвижного состава».</div>
+            <div>• Товарно-транспортная накладная, акт приема-передачи и электронный счет-фактура (ЭСФ Didox) с НДС 12%.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: 3D CAD Inspection & RFQ Action Card -->
+      <div class="lg:col-span-5 flex flex-col space-y-6">
+        <!-- 3D CAD Inspector -->
+        <CadInspector
+          client:load
+          modelType={entry.data.modelType || 'bogie'}
+          title={`${entry.data.sku} // 3D CAD`}
+          subtitle="ИНТЕРАКТИВНАЯ ТЕХНИЧЕСКАЯ МОДЕЛЬ"
+        />
+
+        <!-- Commercial Action Box -->
+        <div class="border-2 border-[#0A0A0A] bg-[#C8CDD2] p-6 font-mono">
+          <div class="border-b border-[#0A0A0A] pb-2 mb-4">
+            <span class="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider block">
+              КОММЕРЧЕСКИЙ ОТДЕЛ // ТАШКЕНТ
+            </span>
+            <span class="text-[11px] text-[#4A5056]">
+              Отгрузка со склада Index B2-2097 за 24 часа
+            </span>
+          </div>
+
+          <div class="space-y-3 mb-6">
+            <div class="text-xs text-[#4A5056]">
+              Текущий статус: <span class="font-bold text-[#0A0A0A]">{entry.data.status}</span>
+            </div>
+            <div class="text-xs text-[#4A5056]">
+              Налогообложение: <span class="font-bold text-[#0A0A0A]">НДС 12% включен в стоимость</span>
+            </div>
+            <div class="text-xs text-[#4A5056]">
+              Прямой телефон снабжения:
+              <a href="tel:+998901189000" class="block font-bold text-sm text-[#0A0A0A] hover:underline mt-0.5">
+                +998 90 118-90-00
+              </a>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <button
+              type="button"
+              data-lead-modal
+              data-lead-subject={`Запрос официального счета-фактуры на ${entry.data.title} (${entry.data.sku})`}
+              class="w-full border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white py-3 text-xs font-bold tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
+            >
+              [ ЗАПРОСИТЬ ОФИЦИАЛЬНЫЙ СЧЕТ-ФАКТУРУ ]
+            </button>
+            <button
+              type="button"
+              data-lead-modal
+              data-lead-subject={`Запрос чертежей и паспорта завода на ${entry.data.title} (${entry.data.sku})`}
+              class="w-full border border-[#0A0A0A] bg-white text-[#0A0A0A] py-2.5 text-xs font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer"
+            >
+              СКАЧАТЬ ЧЕРТЕЖ И ПАСПОРТ (PDF) ↗
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

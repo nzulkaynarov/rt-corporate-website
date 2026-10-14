@@ -1,0 +1,125 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { GlobalLeadManager } from '../components/islands/GlobalLeadManager';
+
+interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string;
+}
+
+const {
+  title = 'ООО «RailTech» — Промышленные и ЖД поставки, ВЭД и IT-решения в Узбекистане',
+  description = 'Официальный B2B/B2G портал ООО «RailTech» (Ташкент, комплекс Index B2-2097). Складская программа ЖД оборудования (1200+ SKU), контрактный импорт под ключ DDP Ташкент с НДС 12%, B2B платформа b2b.railtech.uz и заказная IT-разработка.',
+  keywords = 'RailTech, ООО RailTech, Ташкент, Узбекистан, железнодорожные запчасти, тележка 18-100, колесная пара РУ1Ш-957-Г, автосцепка СА-3, привод СП-6М, колодка 25610-Н, склад Index B2-2097, Landed Cost DDP Ташкент, НДС 12%, b2b.railtech.uz, разработка ERP WMS, дилерство в Узбекистане',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content="ООО «RailTech»" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://railtech.uz/" />
+
+    <!-- Hreflang alternates -->
+    <link rel="alternate" hreflang="ru" href="https://railtech.uz/" />
+    <link rel="alternate" hreflang="uz" href="https://railtech.uz/" />
+    <link rel="alternate" hreflang="en" href="https://railtech.uz/" />
+    <link rel="alternate" hreflang="x-default" href="https://railtech.uz/" />
+
+    <!-- Geo tags for Tashkent, Uzbekistan -->
+    <meta name="geo.region" content="UZ-TO" />
+    <meta name="geo.placename" content="Tashkent, Index Complex" />
+    <meta name="geo.position" content="41.2214;69.1852" />
+    <meta name="ICBM" content="41.2214, 69.1852" />
+
+    <!-- Open Graph & Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content="https://railtech.uz/" />
+    <meta property="og:site_name" content="RailTech Узбекистан" />
+    <meta property="og:locale" content="ru_UZ" />
+    <meta property="og:locale:alternate" content="uz_UZ" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Schema.org JSON-LD (Rich Graph) -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'Organization',
+            '@id': 'https://railtech.uz/#organization',
+            name: 'RailTech',
+            legalName: 'ООО «RailTech»',
+            url: 'https://railtech.uz',
+            telephone: '+998-90-118-90-00',
+            email: 'info@railtech.uz',
+            taxID: '308912445',
+            vatID: 'UZ308912445',
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: 'Торгово-производственный комплекс Index, Офис B2-2097',
+              addressLocality: 'Ташкент',
+              addressRegion: 'Ташкент',
+              postalCode: '100140',
+              addressCountry: 'UZ',
+            },
+            sameAs: [
+              'https://b2b.railtech.uz',
+            ],
+            knowsAbout: [
+              'Железнодорожное оборудование',
+              'Тележки грузовых вагонов 18-100',
+              'Колесные пары РУ1Ш-957-Г',
+              'Стрелочные электроприводы СП-6М',
+              'Поставки ВЭД DDP Ташкент',
+              'Разработка B2B порталов и ERP систем',
+            ],
+          },
+          {
+            '@type': 'WebSite',
+            '@id': 'https://railtech.uz/#website',
+            url: 'https://railtech.uz',
+            name: 'RailTech — Официальный портал',
+            publisher: {
+              '@id': 'https://railtech.uz/#organization',
+            },
+            inLanguage: ['ru-UZ', 'uz-UZ', 'en-US'],
+          },
+        ],
+      })}
+    />
+  </head>
+  <body class="bg-[#D4D8DC] text-[#0A0A0A] font-sans antialiased min-h-screen flex flex-col selection:bg-[#0A0A0A] selection:text-white">
+    <Header />
+    <main class="flex-grow">
+      <slot />
+    </main>
+    <Footer />
+    <GlobalLeadManager client:load />
+  </body>
+</html>

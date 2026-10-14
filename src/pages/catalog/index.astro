@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { CatalogFilterTable } from '../../components/islands/CatalogFilterTable';
+
+const catalogEntries = await getCollection('catalog');
+catalogEntries.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
+
+const items = catalogEntries.map((entry) => ({
+  slug: entry.slug,
+  sku: entry.data.sku,
+  title: entry.data.title,
+  subsystem: entry.data.subsystem,
+  gost: entry.data.gost,
+  tnved: entry.data.tnved,
+  warehouse: entry.data.warehouse,
+  status: entry.data.status,
+  statusKey: entry.data.statusKey,
+  specs: entry.data.specs,
+}));
+---
+
+<BaseLayout
+  title="Каталог ЖД оборудования со склада в Ташкенте — ООО «RailTech»"
+  description="Складская программа железнодорожного оборудования и запчастей в Ташкенте: колесные пары РУ1Ш-957, тележки 18-100, автосцепки СА-3, приводы СП-6М, тормозные колодки 25610-Н. ГОСТ, ТН ВЭД, НДС 12%."
+  keywords="каталог жд запчастей ташкент, тележка 18-100 купить узбекистан, колесные пары ру1ш, автосцепка са-3, электропривод сп-6м, колодка 25610-н, склад index b2-2097"
+>
+  <div class="max-w-7xl mx-auto px-4 py-10 font-sans">
+    <!-- Breadcrumbs & Status -->
+    <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-4">
+      <a href="/" class="hover:underline">ГЛАВНАЯ</a>
+      <span>/</span>
+      <span class="text-[#0A0A0A] font-bold">КАТАЛОГ ОБОРУДОВАНИЯ (.SUPPLY)</span>
+    </div>
+
+    <!-- Page Header -->
+    <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8">
+      <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-3">
+        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
+          НОМЕНКЛАТУРНЫЙ КАТАЛОГ
+        </span>
+        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
+          ТАШКЕНТ / ТПК INDEX B2-2097
+        </span>
+        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold">
+          НДС 12% ВКЛЮЧЕН В СЧЕТ
+        </span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3">
+        СКЛАДСКАЯ НОМЕНКЛАТУРА Ж/Д ОБОРУДОВАНИЯ
+      </h1>
+
+      <p class="text-base text-[#4A5056] max-w-3xl leading-relaxed">
+        Официальная складская программа ООО «RailTech». Все позиции прошли входной инструментальный контроль ОТК, имеют оригинальные заводские бирки, паспорта плавок и сертификаты соответствия техническим регламентам ТР ТС 001/2011 и ТР ТС 002/2011.
+      </p>
+
+      <!-- Warehouse specs banner -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-4 border-t border-[#0A0A0A]/20 font-mono text-xs">
+        <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]">
+          <div class="text-[#4A5056] text-[10px]">ЛОКАЦИЯ СКЛАДА:</div>
+          <div class="font-bold text-[#0A0A0A]">Ташкент, ТПК Index B2-2097</div>
+        </div>
+        <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]">
+          <div class="text-[#4A5056] text-[10px]">ПОДЪЕЗДНЫЕ ПУТИ:</div>
+          <div class="font-bold text-[#0A0A0A]">1520 мм (маневровый ЖД)</div>
+        </div>
+        <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]">
+          <div class="text-[#4A5056] text-[10px]">СКОРОСТЬ ОТГРУЗКИ:</div>
+          <div class="font-bold text-[#0A0A0A]">В день оплаты (самовывоз/ЖД)</div>
+        </div>
+        <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]">
+          <div class="text-[#4A5056] text-[10px]">ДОКУМЕНТООБОРОТ:</div>
+          <div class="font-bold text-[#0A0A0A]">ЭСФ Didox / Soliq (12% НДС)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Filter Table Island -->
+    <CatalogFilterTable client:load items={items} />
+
+    <!-- Sourcing Banner -->
+    <div class="mt-12 border-2 border-[#0A0A0A] bg-[#C8CDD2] p-6 lg:p-8 flex flex-col md:flex-row items-center justify-between gap-6 font-mono">
+      <div class="space-y-2">
+        <div class="text-xs font-bold text-[#0A0A0A] flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 bg-[#0A0A0A] inline-block"></span>
+          <span>ТРЕБУЕТСЯ СПЕЦИФИЧЕСКАЯ ПОЗИЦИЯ ИЛИ КРУПНАЯ ПАРТИЯ?</span>
+        </div>
+        <p class="text-xs text-[#4A5056] max-w-2xl font-sans leading-relaxed">
+          Если нужного типоразмера нет в наличии на складе в Ташкенте, наш отдел ВЭД организует прямую поставку с 86+ заводов-производителей на условиях DDP Ташкент с фиксацией цены в сумах.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        data-lead-modal
+        data-lead-subject="Запрос контрактного поиска и поставки спецификации"
+        class="border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white px-6 py-3 text-xs font-bold whitespace-nowrap hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
+      >
+        [ ЗАГРУЗИТЬ ВЕДОМОСТЬ ПОТРЕБНОСТИ ]
+      </button>
+    </div>
+  </div>
+</BaseLayout>

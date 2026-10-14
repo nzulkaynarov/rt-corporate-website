@@ -1,0 +1,31 @@
+{
+  "name": "railtech-v2-cad-portal",
+  "type": "module",
+  "version": "2.0.0",
+  "description": "Official B2B/B2G Portal of OOO RailTech (railtech.uz) — Brutalist CAD Wireframe Edition",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^3.6.2",
+    "@astrojs/sitemap": "3.2.1",
+    "@astrojs/tailwind": "^5.1.2",
+    "astro": "^4.16.10",
+    "lucide-react": "^0.460.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.15",
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/three": "^0.170.0",
+    "typescript": "^5.6.3"
+  }
+}

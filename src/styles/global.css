@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --cad-canvas: #D4D8DC;
+    --cad-ink: #0A0A0A;
+    --cad-muted: #4A5056;
+  }
+
+  html {
+    background-color: #D4D8DC;
+    color: #0A0A0A;
+    scroll-behavior: smooth;
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+  }
+
+  body {
+    background: radial-gradient(circle at 50% 35%, #E0E4E8 0%, #D0D4D8 65%, #C4C9CE 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+/* CAD Isometric and Orthogonal Engineering Grid */
+.cad-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(10, 10, 10, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10, 10, 10, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Custom Minimalist CAD Range Sliders (matching END IS UI reference) */
+input[type="range"].cad-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 1px;
+  background: #0A0A0A;
+  outline: none;
+  margin: 10px 0;
+}
+
+input[type="range"].cad-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 5px;
+  background: #0A0A0A;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.1s ease;
+}
+
+input[type="range"].cad-slider::-webkit-slider-thumb:hover {
+  transform: scaleY(1.5);
+}
+
+input[type="range"].cad-slider::-moz-range-thumb {
+  width: 18px;
+  height: 5px;
+  background: #0A0A0A;
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+}

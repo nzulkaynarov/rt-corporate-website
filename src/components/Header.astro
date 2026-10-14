@@ -1,0 +1,146 @@
+---
+const pathname = Astro.url.pathname;
+
+const navItems = [
+  { href: '/', label: 'ГЛАВНАЯ', id: 'home', match: (p: string) => p === '/' },
+  { href: '/catalog/', label: 'КАТАЛОГ ЖД ОБОРУДОВАНИЯ', id: 'catalog', match: (p: string) => p.startsWith('/catalog') },
+  { href: '/contract', label: 'КОНТРАКТНЫЙ ВЭД DDP', id: 'contract', match: (p: string) => p.startsWith('/contract') },
+  { href: '/digital', label: 'DIGITAL & ПО', id: 'digital', match: (p: string) => p.startsWith('/digital') },
+  { href: '/projects', label: 'СПЕЦПРОЕКТЫ & АРТ', id: 'projects', match: (p: string) => p.startsWith('/projects') },
+  { href: '/about', label: 'О КОМПАНИИ', id: 'about', match: (p: string) => p.startsWith('/about') },
+  { href: '/contacts', label: 'КОНТАКТЫ & РЕКВИЗИТЫ', id: 'contacts', match: (p: string) => p.startsWith('/contacts') },
+];
+---
+
+<header class="border-b border-[#0A0A0A] bg-[#D4D8DC] sticky top-0 z-50 select-none">
+  <!-- Top Operational Telemetry Bar -->
+  <div class="hidden lg:flex items-center justify-between px-4 py-1.5 border-b border-[#0A0A0A]/20 font-mono text-[11px] tracking-wider text-[#4A5056] bg-[#C8CDD2]/60">
+    <div class="flex items-center space-x-4">
+      <div class="flex items-center space-x-1.5 text-[#0A0A0A]">
+        <span class="w-2 h-2 bg-[#0A0A0A] inline-block animate-pulse"></span>
+        <span class="font-bold">РЕСПУБЛИКА УЗБЕКИСТАН</span>
+      </div>
+      <span class="text-[#0A0A0A]/30">|</span>
+      <span>ООО «RAILTECH» // ИНН: 308912445</span>
+      <span class="text-[#0A0A0A]/30">|</span>
+      <span>СКЛАД: ТАШКЕНТ, INDEX B2-2097</span>
+      <span class="text-[#0A0A0A]/30">|</span>
+      <span class="border border-[#0A0A0A] px-1 bg-[#D4D8DC] text-[#0A0A0A] font-semibold">НДС 12% ВКЛЮЧЕН</span>
+    </div>
+
+    <div class="flex items-center space-x-4">
+      <a
+        href="tel:+998901189000"
+        class="hover:text-[#0A0A0A] transition-colors font-bold text-[#0A0A0A] flex items-center space-x-1"
+      >
+        <span>ТЕЛ:</span>
+        <span>+998 90 118-90-00</span>
+      </a>
+      <span class="text-[#0A0A0A]/30">|</span>
+      <a
+        href="https://b2b.railtech.uz"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="border border-[#0A0A0A] px-2 py-0.5 bg-[#0A0A0A] text-white hover:bg-transparent hover:text-[#0A0A0A] transition-colors"
+      >
+        B2B.RAILTECH.UZ ↗
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Navigation Row -->
+  <div class="flex items-center justify-between px-4 py-2">
+    <!-- Brand / Logo -->
+    <a href="/" class="flex items-center space-x-3 group">
+      <div class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2.5 py-1.5 font-mono font-bold tracking-widest text-sm group-hover:bg-transparent group-hover:text-[#0A0A0A] transition-colors">
+        RAILTECH
+      </div>
+      <div class="flex flex-col">
+        <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-[#4A5056] leading-none">
+          ENGINEERING & LOGISTICS
+        </span>
+        <span class="text-xs font-bold text-[#0A0A0A] leading-tight">
+          УЗБЕКИСТАН • B2B / B2G
+        </span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <nav class="hidden xl:flex items-center space-x-1 font-mono text-[11px] font-semibold tracking-wider">
+      {navItems.map((item) => {
+        const isActive = item.match(pathname);
+        return (
+          <a
+            href={item.href}
+            class={`px-2.5 py-1.5 border transition-colors ${
+              isActive
+                ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
+                : 'border-transparent text-[#0A0A0A] hover:border-[#0A0A0A] hover:bg-[#0A0A0A]/5'
+            }`}
+          >
+            {item.label}
+          </a>
+        );
+      })}
+    </nav>
+
+    <!-- Right Action Button -->
+    <div class="flex items-center space-x-2">
+      <button
+        type="button"
+        data-lead-modal
+        data-lead-subject="Запрос коммерческого предложения / спецификации с сайта"
+        class="border border-[#0A0A0A] bg-[#0A0A0A] text-white font-mono text-[11px] font-bold px-3 py-1.5 tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
+      >
+        [ ЗАПРОС КП / СЧЕТА ]
+      </button>
+
+      <!-- Mobile Menu Trigger -->
+      <button
+        id="mobile-nav-toggle"
+        type="button"
+        aria-label="Меню навигации"
+        class="xl:hidden border border-[#0A0A0A] p-1.5 hover:bg-[#0A0A0A] hover:text-white transition-colors"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div id="mobile-nav-menu" class="hidden xl:hidden border-t border-[#0A0A0A] bg-[#D4D8DC] px-4 py-3 font-mono text-xs">
+    <div class="flex flex-col space-y-2">
+      {navItems.map((item) => {
+        const isActive = item.match(pathname);
+        return (
+          <a
+            href={item.href}
+            class={`p-2 border border-[#0A0A0A] ${
+              isActive ? 'bg-[#0A0A0A] text-white' : 'bg-[#C8CDD2] hover:bg-[#0A0A0A] hover:text-white'
+            }`}
+          >
+            {item.label}
+          </a>
+        );
+      })}
+      <div class="pt-2 border-t border-[#0A0A0A]/20 flex flex-col space-y-1.5 text-[11px] text-[#4A5056]">
+        <div>ИНН: 308912445 | НДС 12%</div>
+        <div>Склад: Ташкент, ТПК Index B2-2097</div>
+        <a href="tel:+998901189000" class="text-[#0A0A0A] font-bold underline">+998 90 118-90-00</a>
+        <a href="https://b2b.railtech.uz" target="_blank" class="text-[#0A0A0A] font-bold underline">B2B.RAILTECH.UZ ↗</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('mobile-nav-toggle');
+  const menu = document.getElementById('mobile-nav-menu');
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  }
+</script>

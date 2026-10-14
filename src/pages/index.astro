@@ -1,0 +1,370 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { CadInspector } from '../components/islands/CadInspector';
+
+const allSkus = await getCollection('catalog');
+// Pick 6 prominent items for the home showcase
+const showcaseSkus = allSkus.slice(0, 6);
+---
+
+<BaseLayout
+  title="ООО «RailTech» — ЖД поставки, контрактный ВЭД DDP Ташкент и IT-решения"
+  description="Официальный B2B/B2G портал ООО «RailTech» (Ташкент, склад Index B2-2097, ИНН 308912445). Складская программа комплектующих вагонов (18-100, СА-3, РУ1Ш-957), ВЭД под ключ с НДС 12%, B2B платформа b2b.railtech.uz."
+>
+  <!-- Hero Section -->
+  <section class="border-b border-[#0A0A0A] bg-[#D4D8DC] relative overflow-hidden">
+    <!-- CAD Grid background -->
+    <div class="absolute inset-0 bg-[radial-gradient(#0A0A0A_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 py-12 lg:py-16 relative">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- Hero Text -->
+        <div class="lg:col-span-7 flex flex-col space-y-6">
+          <div class="flex flex-wrap items-center gap-2 font-mono text-[11px]">
+            <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold tracking-wider">
+              B2B / B2G ОПЕРАТОР
+            </span>
+            <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
+              УЗБЕКИСТАН // ТАШКЕНТ
+            </span>
+            <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold">
+              НДС 12% ВКЛЮЧЕН
+            </span>
+          </div>
+
+          <h1 class="font-sans text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#0A0A0A] leading-[1.1]">
+            ПРОМЫШЛЕННЫЕ И ЖД ПОСТАВКИ, КОНТРАКТНЫЙ ВЭД И IT-РЕШЕНИЯ
+          </h1>
+
+          <p class="font-sans text-base lg:text-lg text-[#4A5056] leading-relaxed max-w-2xl">
+            ООО «RailTech» — аккредитованный поставщик комплектующих подвижного состава, систем СЦБ и промышленного оборудования. Собственный складской терминал в Ташкенте (ТПК Index B2-2097), поставки DDP с фиксированной ценой в сумах и разработка специализированного ПО.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap gap-3 font-mono text-xs pt-2">
+            <a
+              href="/catalog/"
+              class="border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white px-5 py-3 font-bold hover:bg-transparent hover:text-[#0A0A0A] transition-colors"
+            >
+              КАТАЛОГ СО СКЛАДА (10+ ГРУПП) →
+            </a>
+            <a
+              href="/contract"
+              class="border-2 border-[#0A0A0A] bg-[#C8CDD2] text-[#0A0A0A] px-5 py-3 font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors"
+            >
+              РАСЧЕТ ВЭД DDP ТАШКЕНТ ↗
+            </a>
+            <button
+              type="button"
+              data-lead-modal
+              data-lead-subject="Запрос общего КП и прайс-листа"
+              class="border-2 border-[#0A0A0A] bg-transparent text-[#0A0A0A] px-5 py-3 font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer"
+            >
+              [ ЗАПРОСИТЬ КП / СЧЕТ ]
+            </button>
+          </div>
+
+          <!-- Quick Metrics Bar -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-4 border-t border-[#0A0A0A]/20 font-mono text-xs">
+            <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]/60">
+              <div class="text-[#4A5056] text-[10px]">НА СКЛАДЕ:</div>
+              <div class="font-bold text-sm text-[#0A0A0A]">1 200+ SKU</div>
+            </div>
+            <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]/60">
+              <div class="text-[#4A5056] text-[10px]">ПАРТНЕРЫ:</div>
+              <div class="font-bold text-sm text-[#0A0A0A]">86+ ЗАВОДОВ</div>
+            </div>
+            <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]/60">
+              <div class="text-[#4A5056] text-[10px]">КОЛЕЯ ЖД:</div>
+              <div class="font-bold text-sm text-[#0A0A0A]">1520 ММ</div>
+            </div>
+            <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]/60">
+              <div class="text-[#4A5056] text-[10px]">ОТГРУЗКА:</div>
+              <div class="font-bold text-sm text-[#0A0A0A]">ОТ 24 ЧАСОВ</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero CAD Viewport -->
+        <div class="lg:col-span-5">
+          <CadInspector
+            client:load
+            modelType="bogie"
+            title="ТЕЛЕЖКА 18-100 // CAD-СБОРКА"
+            subtitle="БАЗОВАЯ ЕДИНИЦА СКЛАДСКОЙ ПРОГРАММЫ"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: The 4 Core Pillars (Multi-page Gateway) -->
+  <section class="border-b border-[#0A0A0A] bg-[#C8CDD2] py-14">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="border-b border-[#0A0A0A] pb-3 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-2 font-mono">
+        <div>
+          <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2">
+            НАПРАВЛЕНИЯ
+          </span>
+          <span class="font-bold text-lg text-[#0A0A0A]">
+            ЧЕТЫРЕ ОПЕРАЦИОННЫХ СЕКТОРА ООО «RAILTECH»
+          </span>
+        </div>
+        <div class="text-xs text-[#4A5056]">
+          СТРУКТУРИРОВАННАЯ МНОГОСТРАНИЧНАЯ АРХИТЕКТУРА ПОРТАЛА
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Pillar 1: Supply -->
+        <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 flex flex-col justify-between hover:border-black transition-all group">
+          <div>
+            <div class="flex items-center justify-between font-mono text-xs text-[#4A5056] border-b border-[#0A0A0A]/30 pb-2 mb-4">
+              <span class="font-bold text-[#0A0A0A]">.SUPPLY // 01</span>
+              <span>СКЛАД В ТАШКЕНТЕ</span>
+            </div>
+            <h2 class="font-sans text-xl font-bold text-[#0A0A0A] mb-2 group-hover:underline">
+              Складская программа ЖД оборудования
+            </h2>
+            <p class="text-sm text-[#4A5056] leading-relaxed mb-4">
+              Постоянное наличие сертифицированных узлов и агрегатов в Ташкенте: тележки 18-100, колесные пары РУ1Ш-957, автосцепки СА-3, приводы СП-6М, тормозные колодки 25610-Н. Отгрузка со склада Index B2-2097 с полным комплектом паспортов заводов.
+            </p>
+            <div class="grid grid-cols-2 gap-2 font-mono text-xs mb-6">
+              <div class="border border-[#0A0A0A]/20 p-2 bg-[#C8CDD2]/50">
+                <span class="text-[#4A5056] block text-[10px]">НОМЕНКЛАТУРА:</span>
+                <span class="font-bold text-[#0A0A0A]">1 200+ позиций</span>
+              </div>
+              <div class="border border-[#0A0A0A]/20 p-2 bg-[#C8CDD2]/50">
+                <span class="text-[#4A5056] block text-[10px]">ГАРАНТИЯ:</span>
+                <span class="font-bold text-[#0A0A0A]">Заводская / ОТК</span>
+              </div>
+            </div>
+          </div>
+          <a
+            href="/catalog/"
+            class="border border-[#0A0A0A] bg-[#0A0A0A] text-white py-2.5 px-4 font-mono text-xs font-bold text-center group-hover:bg-transparent group-hover:text-[#0A0A0A] transition-colors"
+          >
+            ОТКРЫТЬ КАТАЛОГ СКЛАДА →
+          </a>
+        </div>
+
+        <!-- Pillar 2: Contract -->
+        <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 flex flex-col justify-between hover:border-black transition-all group">
+          <div>
+            <div class="flex items-center justify-between font-mono text-xs text-[#4A5056] border-b border-[#0A0A0A]/30 pb-2 mb-4">
+              <span class="font-bold text-[#0A0A0A]">.CONTRACT // 02</span>
+              <span>ПРОЕКТНЫЙ ВЭД DDP</span>
+            </div>
+            <h2 class="font-sans text-xl font-bold text-[#0A0A0A] mb-2 group-hover:underline">
+              Контрактные поставки ВЭД под ключ
+            </h2>
+            <p class="text-sm text-[#4A5056] leading-relaxed mb-4">
+              Комплексное снабжение промышленных предприятий, карьеров и девелоперов. Фиксация конечной стоимости Landed Cost DDP Ташкент в сумах с НДС 12%. Прямые контракты с 86+ заводами РФ, Китая, Беларуси и стран ЕС без посредников.
+            </p>
+            <div class="grid grid-cols-2 gap-2 font-mono text-xs mb-6">
+              <div class="border border-[#0A0A0A]/20 p-2 bg-[#C8CDD2]/50">
+                <span class="text-[#4A5056] block text-[10px]">УСЛОВИЯ:</span>
+                <span class="font-bold text-[#0A0A0A]">DDP Ташкент (НДС 12%)</span>
+              </div>
+              <div class="border border-[#0A0A0A]/20 p-2 bg-[#C8CDD2]/50">
+                <span class="text-[#4A5056] block text-[10px]">ВАЛЮТА:</span>
+                <span class="font-bold text-[#0A0A0A]">Фиксация в UZS</span>
+              </div>
+            </div>
+          </div>
+          <a
+            href="/contract"
+            class="border border-[#0A0A0A] bg-[#0A0A0A] text-white py-2.5 px-4 font-mono text-xs font-bold text-center group-hover:bg-transparent group-hover:text-[#0A0A0A] transition-colors"
+          >
+            УСЛОВИЯ И КАЛЬКУЛЯТОР ВЭД →
+          </a>
+        </div>
+
+        <!-- Pillar 3: Digital -->
+        <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 flex flex-col justify-between hover:border-black transition-all group">
+          <div>
+            <div class="flex items-center justify-between font-mono text-xs text-[#4A5056] border-b border-[#0A0A0A]/30 pb-2 mb-4">
+              <span class="font-bold text-[#0A0A0A]">.DIGITAL // 03</span>
+              <span>IT & AI РЕШЕНИЯ</span>
+            </div>
+            <h2 class="font-sans text-xl font-bold text-[#0A0A0A] mb-2 group-hover:underline">
+              Платформа b2b.railtech.uz и заказная разработка ПО
+            </h2>
+            <p class="text-sm text-[#4A5056] leading-relaxed mb-4">
+              Собственная IT-экосистема: B2B-портал для регулярных закупок, NLP-парсер спецификаций Smart Match AI (точность 98.4%) и разработка заказных ERP/WMS систем для транспортных и складских комплексов.
+            </p>
+            <div class="grid grid-cols-2 gap-2 font-mono text-xs mb-6">
+              <div class="border border-[#0A0A0A]/20 p-2 bg-[#C8CDD2]/50">
+                <span class="text-[#4A5056] block text-[10px]">ПРОДУКТЫ:</span>
+                <span class="font-bold text-[#0A0A0A]">b2b.railtech.uz / Smart Match</span>
+              </div>
+              <div class="border border-[#0A0A0A]/20 p-2 bg-[#C8CDD2]/50">
+                <span class="text-[#4A5056] block text-[10px]">СТЕК:</span>
+                <span class="font-bold text-[#0A0A0A]">Astro / React / Python / 1C</span>
+              </div>
+            </div>
+          </div>
+          <a
+            href="/digital"
+            class="border border-[#0A0A0A] bg-[#0A0A0A] text-white py-2.5 px-4 font-mono text-xs font-bold text-center group-hover:bg-transparent group-hover:text-[#0A0A0A] transition-colors"
+          >
+            ДЕМО SMART MATCH И IT-УСЛУГИ →
+          </a>
+        </div>
+
+        <!-- Pillar 4: Projects -->
+        <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 flex flex-col justify-between hover:border-black transition-all group">
+          <div>
+            <div class="flex items-center justify-between font-mono text-xs text-[#4A5056] border-b border-[#0A0A0A]/30 pb-2 mb-4">
+              <span class="font-bold text-[#0A0A0A]">.PROJECTS // 04</span>
+              <span>ЛОКАЛИЗАЦИЯ & АРТ</span>
+            </div>
+            <h2 class="font-sans text-xl font-bold text-[#0A0A0A] mb-2 group-hover:underline">
+              Спецпроекты, трансфер технологий и Арт-лаборатория
+            </h2>
+            <p class="text-sm text-[#4A5056] leading-relaxed mb-4">
+              Трансфер европейских и азиатских ЖД технологий на производственные базы Узбекистана, опытные полигонные испытания + кураторская поддержка современной индустриальной живописи и архитектурной графики.
+            </p>
+            <div class="grid grid-cols-2 gap-2 font-mono text-xs mb-6">
+              <div class="border border-[#0A0A0A]/20 p-2 bg-[#C8CDD2]/50">
+                <span class="text-[#4A5056] block text-[10px]">ИНЖИНИРИНГ:</span>
+                <span class="font-bold text-[#0A0A0A]">Трансфер и испытания</span>
+              </div>
+              <div class="border border-[#0A0A0A]/20 p-2 bg-[#C8CDD2]/50">
+                <span class="text-[#4A5056] block text-[10px]">КУЛЬТУРА:</span>
+                <span class="font-bold text-[#0A0A0A]">RailTech Art Lab</span>
+              </div>
+            </div>
+          </div>
+          <a
+            href="/projects"
+            class="border border-[#0A0A0A] bg-[#0A0A0A] text-white py-2.5 px-4 font-mono text-xs font-bold text-center group-hover:bg-transparent group-hover:text-[#0A0A0A] transition-colors"
+          >
+            СПЕЦПРОЕКТЫ И АРТ-ЛАБОРАТОРИЯ →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Warehouse Top SKUs Showcase -->
+  <section class="border-b border-[#0A0A0A] bg-[#D4D8DC] py-14">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="border-b border-[#0A0A0A] pb-3 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-2 font-mono">
+        <div>
+          <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2">
+            ВИТРИНА СКЛАДА
+          </span>
+          <span class="font-bold text-lg text-[#0A0A0A]">
+            КРИТИЧЕСКИЕ ПОЗИЦИИ В ТАШКЕНТЕ (INDEX B2-2097)
+          </span>
+        </div>
+        <a
+          href="/catalog/"
+          class="text-xs font-bold text-[#0A0A0A] hover:underline flex items-center space-x-1"
+        >
+          <span>СМОТРЕТЬ ВСЕ 10+ КАТЕГОРИЙ</span>
+          <span>→</span>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {showcaseSkus.map((item) => (
+          <div class="border-2 border-[#0A0A0A] bg-[#C8CDD2] p-5 flex flex-col justify-between hover:bg-white transition-colors group">
+            <div>
+              <div class="flex items-center justify-between font-mono text-xs border-b border-[#0A0A0A]/20 pb-2 mb-3">
+                <span class="font-bold text-[#0A0A0A]">{item.data.sku}</span>
+                <span class="px-2 py-0.5 text-[10px] font-bold border border-[#0A0A0A] bg-[#D4D8DC]">
+                  {item.data.status}
+                </span>
+              </div>
+
+              <h3 class="font-sans font-bold text-base text-[#0A0A0A] mb-2 leading-snug group-hover:underline">
+                <a href={`/catalog/${item.slug}`}>
+                  {item.data.title}
+                </a>
+              </h3>
+
+              <div class="space-y-1.5 font-mono text-xs text-[#4A5056] my-4">
+                <div class="flex justify-between">
+                  <span>Стандарт:</span>
+                  <span class="font-bold text-[#0A0A0A]">{item.data.gost}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>ТН ВЭД:</span>
+                  <span class="font-bold text-[#0A0A0A]">{item.data.tnved}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Спецификация:</span>
+                  <span class="text-[#0A0A0A] text-right truncate max-w-[180px]">{item.data.specs}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-[#0A0A0A]/20 flex items-center gap-2 font-mono text-xs">
+              <a
+                href={`/catalog/${item.slug}`}
+                class="flex-1 border border-[#0A0A0A] py-1.5 text-center hover:bg-[#0A0A0A] hover:text-white transition-colors"
+              >
+                ПАСПОРТ ↗
+              </a>
+              <button
+                type="button"
+                data-lead-modal
+                data-lead-subject={`Запрос счета на позицию ${item.data.title} (${item.data.sku})`}
+                class="flex-1 border border-[#0A0A0A] bg-[#0A0A0A] text-white py-1.5 text-center font-bold hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
+              >
+                ЗАПРОС КП
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Institutional Guarantees (Trust Matrix) -->
+  <section class="bg-[#C8CDD2] py-14">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="border-b border-[#0A0A0A] pb-3 mb-8 font-mono">
+        <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2">
+          РЕГЛАМЕНТ
+        </span>
+        <span class="font-bold text-lg text-[#0A0A0A]">
+          ЮРИДИЧЕСКИЕ И ОПЕРАЦИОННЫЕ ГАРАНТИИ ДЛЯ ЗАКАЗЧИКОВ
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 font-mono text-xs">
+        <div class="border border-[#0A0A0A] p-4 bg-[#D4D8DC]">
+          <div class="font-bold text-sm text-[#0A0A0A] mb-2">[01] НАЛОГОВЫЙ ЗАЧЕТ</div>
+          <p class="text-[#4A5056] leading-relaxed">
+            ООО «RailTech» является официальным плательщиком НДС 12%. Все поставки сопровождаются электронными счетами-фактурами (ЭСФ) через Soliq/Didox.
+          </p>
+        </div>
+
+        <div class="border border-[#0A0A0A] p-4 bg-[#D4D8DC]">
+          <div class="font-bold text-sm text-[#0A0A0A] mb-2">[02] ВХОДНОЙ КОНТРОЛЬ ОТК</div>
+          <p class="text-[#4A5056] leading-relaxed">
+            Каждая единица проходит проверку геометрии и неразрушающий ультразвуковой контроль. Прилагаются паспорта плавок и сертификаты ТР ТС.
+          </p>
+        </div>
+
+        <div class="border border-[#0A0A0A] p-4 bg-[#D4D8DC]">
+          <div class="font-bold text-sm text-[#0A0A0A] mb-2">[03] ЗАЩИТА ОТ ВАЛЮТНЫХ РИСКОВ</div>
+          <p class="text-[#4A5056] leading-relaxed">
+            При контрактных поставках DDP стоимость в сумах фиксируется на дату подписания договора. Никаких доплат из-за скачков курсов валют.
+          </p>
+        </div>
+
+        <div class="border border-[#0A0A0A] p-4 bg-[#D4D8DC]">
+          <div class="font-bold text-sm text-[#0A0A0A] mb-2">[04] СКЛАД В ТАШКЕНТЕ</div>
+          <p class="text-[#4A5056] leading-relaxed">
+            Собственный склад в комплексе Index (B2-2097) с прямым железнодорожным подъездным путем. Возможность инспекции перед оплатой.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,69 @@
+backend:
+  name: github
+  repo: railtech-uz/railtech-v2
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "catalog"
+    label: "1. Номенклатура склада (.SUPPLY)"
+    folder: "src/content/catalog"
+    create: true
+    slug: "{{sku}}"
+    fields:
+      - { label: "Код SKU", name: "sku", widget: "string" }
+      - { label: "Наименование узла / детали", name: "title", widget: "string" }
+      - { label: "Подсистема (Категория)", name: "subsystem", widget: "select", options: ["Подвижной состав", "СЦБ и автоматика", "Путевое хозяйство", "КИП и диагностика", "Энергетика"] }
+      - { label: "ГОСТ / Стандарт", name: "gost", widget: "string" }
+      - { label: "Код ТН ВЭД", name: "tnved", widget: "string" }
+      - { label: "Базис склада", name: "warehouse", widget: "string", default: "Ташкент, Index B2-2097" }
+      - { label: "Статус наличия", name: "status", widget: "select", options: ["В наличии", "Резерв", "Под заказ"] }
+      - { label: "Ключ статуса", name: "statusKey", widget: "select", options: ["in_stock", "reserved", "on_order"] }
+      - { label: "Технические параметры", name: "specs", widget: "string" }
+      - { label: "Порядковый номер", name: "order", widget: "number", default: 1 }
+      - { label: "Подробное техническое описание (Markdown)", name: "body", widget: "markdown" }
+
+  - name: "contract"
+    label: "2. Этапы поставок ВЭД (.CONTRACT)"
+    folder: "src/content/contract"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Код шага (напр. STEP 01)", name: "code", widget: "string" }
+      - { label: "Тег этапа (напр. SOURCING)", name: "tag", widget: "string" }
+      - { label: "Заголовок этапа", name: "title", widget: "string" }
+      - { label: "Подзаголовок", name: "subtitle", widget: "string" }
+      - { label: "Ключевые метрики", name: "metrics", widget: "list" }
+      - { label: "Порядок", name: "order", widget: "number", default: 1 }
+      - { label: "Описание этапа", name: "body", widget: "markdown" }
+
+  - name: "digital"
+    label: "3. Цифровые IT-продукты (.DIGITAL)"
+    folder: "src/content/digital"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Код продукта (напр. PROD 01)", name: "code", widget: "string" }
+      - { label: "Тег (напр. PRODUCTION SAAS)", name: "tag", widget: "string" }
+      - { label: "Название IT-продукта / Услуги", name: "title", widget: "string" }
+      - { label: "Подзаголовок", name: "subtitle", widget: "string" }
+      - { label: "Метрики продукта", name: "metrics", widget: "list" }
+      - { label: "Ссылка на сервис (если есть)", name: "link", widget: "string", required: false }
+      - { label: "Порядок", name: "order", widget: "number", default: 1 }
+      - { label: "Описание IT-решения", name: "body", widget: "markdown" }
+
+  - name: "projects"
+    label: "4. Спецпроекты и Арт-лаборатория (.PROJECTS)"
+    folder: "src/content/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Код проекта (напр. LAB 01)", name: "code", widget: "string" }
+      - { label: "Тег (напр. TECH TRANSFER)", name: "tag", widget: "string" }
+      - { label: "Название проекта", name: "title", widget: "string" }
+      - { label: "Подзаголовок", name: "subtitle", widget: "string" }
+      - { label: "Метрики проекта", name: "metrics", widget: "list" }
+      - { label: "Порядок", name: "order", widget: "number", default: 1 }
+      - { label: "Описание проекта", name: "body", widget: "markdown" }

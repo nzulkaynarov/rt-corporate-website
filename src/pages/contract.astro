@@ -1,0 +1,170 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { LandedCostCalculator } from '../components/islands/LandedCostCalculator';
+import { CadInspector } from '../components/islands/CadInspector';
+
+const contractSteps = await getCollection('contract');
+contractSteps.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
+---
+
+<BaseLayout
+  title="Контрактные поставки ВЭД под ключ DDP Ташкент — ООО «RailTech»"
+  description="Проектный импорт железнодорожного и промышленного оборудования в Узбекистан. Фиксация цены Landed Cost DDP Ташкент в сумах с НДС 12%, пул 86+ заводов-производителей, таможенная очистка без задержек."
+  keywords="контрактные поставки вэд узбекистан, импорт ddp ташкент, таможенная очистка жд грузов, поставки запчастей вагонов, сорсинг китай рф, ндс 12% узбекистан"
+>
+  <div class="max-w-7xl mx-auto px-4 py-10 font-sans">
+    <!-- Breadcrumbs -->
+    <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-4">
+      <a href="/" class="hover:underline">ГЛАВНАЯ</a>
+      <span>/</span>
+      <span class="text-[#0A0A0A] font-bold">КОНТРАКТНЫЙ ВЭД ПОД КЛЮЧ (.CONTRACT)</span>
+    </div>
+
+    <!-- Header Section -->
+    <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8">
+      <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-3">
+        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
+          ВЭД ОПЕРАТОР DDP
+        </span>
+        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
+          86+ ЗАВОДОВ-ИЗГОТОВИТЕЛЕЙ
+        </span>
+        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold">
+          ФИКСАЦИЯ ЦЕНЫ В СУМАХ (UZS)
+        </span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3">
+        КОНТРАКТНЫЕ ПОСТАВКИ ВЭД ПОД КЛЮЧ
+      </h1>
+
+      <p class="text-base text-[#4A5056] max-w-3xl leading-relaxed">
+        Берем на себя полный цикл внешнеэкономической деятельности для промышленных предприятий, горно-металлургических комбинатов (НГМК, АГМК), цементных заводов и девелоперов Узбекистана. Поставка на условиях DDP Ташкент: вам не нужно открывать валютные паспорта сделок, искать брокеров или нести курсовые риски.
+      </p>
+    </div>
+
+    <!-- Top Two-Column Grid: CAD + Value Proposition -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 items-start">
+      <div class="lg:col-span-7 flex flex-col space-y-6">
+        <div class="border-2 border-[#0A0A0A] bg-[#C8CDD2] p-6 font-mono">
+          <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A] pb-2 mb-4">
+            ПОЧЕМУ ПРОМЫШЛЕННЫЕ ГИГАНТЫ ВЫБИРАЮТ RAILTECH ДЛЯ ИМПОРТА:
+          </div>
+          <div class="space-y-4 text-xs">
+            <div class="flex items-start space-x-3">
+              <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-1.5 py-0.5 font-bold">01</span>
+              <div>
+                <span class="font-bold text-[#0A0A0A] block">ПРЯМЫЕ ЗАВОДСКИЕ ЦЕНЫ БЕЗ ПОСРЕДНИКОВ</span>
+                <span class="text-[#4A5056]">Пул из 86+ аттестованных заводов тяжелого машиностроения Китая, РФ, Беларуси и стран ЕС.</span>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-1.5 py-0.5 font-bold">02</span>
+              <div>
+                <span class="font-bold text-[#0A0A0A] block">ПОЛНАЯ ФИКСАЦИЯ СТОИМОСТИ В СУМАХ (UZS)</span>
+                <span class="text-[#4A5056]">Фиксируем Landed Cost DDP на момент подписания договора. Валютные и логистические скачки берем на себя.</span>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-1.5 py-0.5 font-bold">03</span>
+              <div>
+                <span class="font-bold text-[#0A0A0A] block">ВЫДЕЛЕННЫЙ НДС 12% В ЭСФ DIDOX</span>
+                <span class="text-[#4A5056]">100% легальный зачет налога на добавленную стоимость бухгалтерией вашего предприятия.</span>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-1.5 py-0.5 font-bold">04</span>
+              <div>
+                <span class="font-bold text-[#0A0A0A] block">ТАМОЖНЯ И ДЕФЕКТОСКОПИЯ В ТАШКЕНТЕ</span>
+                <span class="text-[#4A5056]">Собственные таможенные декларанты и складской терминал Index B2-2097 с ЖД путями.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5">
+        <CadInspector
+          client:load
+          modelType="container"
+          title="ИНТЕРМОДАЛЬНЫЙ КОНТЕЙНЕР 40FT"
+          subtitle="СЕТКА МУЛЬТИМОДАЛЬНЫХ Ж/Д ПЕРЕВОЗОК"
+        />
+      </div>
+    </div>
+
+    <!-- Section: 4 Stages of VED Import -->
+    <div class="border-b-2 border-[#0A0A0A] pb-4 mb-8">
+      <div class="font-mono text-xs font-bold text-[#0A0A0A] uppercase tracking-wider">
+        ТЕХНОЛОГИЧЕСКИЙ РЕГЛАМЕНТ ПОСТАВКИ
+      </div>
+      <h2 class="text-2xl font-bold text-[#0A0A0A] mt-1">
+        4 ЭТАПА ПРОЕКТНОГО ИМПОРТА DDP ТАШКЕНТ
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+      {contractSteps.map((step) => (
+        <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between font-mono text-xs border-b border-[#0A0A0A]/30 pb-2 mb-3">
+              <span class="font-bold text-[#0A0A0A] bg-[#0A0A0A] text-white px-1.5 py-0.5">{step.data.code}</span>
+              <span class="text-[#4A5056] text-[10px]">{step.data.tag}</span>
+            </div>
+
+            <h3 class="font-sans font-bold text-base text-[#0A0A0A] mb-2 leading-snug">
+              {step.data.title}
+            </h3>
+
+            <p class="text-xs text-[#4A5056] leading-relaxed mb-4">
+              {step.data.subtitle}
+            </p>
+          </div>
+
+          <div class="pt-3 border-t border-[#0A0A0A]/20 font-mono text-[11px] text-[#0A0A0A] space-y-1 bg-[#C8CDD2]/50 p-2.5">
+            {step.data.metrics.map((metric) => (
+              <div>• {metric}</div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Section: Interactive Landed Cost Calculator -->
+    <div class="mb-16">
+      <div class="border-b-2 border-[#0A0A0A] pb-3 mb-6 font-mono">
+        <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2">
+          ФИНАНСОВЫЙ МОДУЛЬ
+        </span>
+        <span class="font-bold text-base text-[#0A0A0A]">
+          ИНТЕРАКТИВНЫЙ РАСЧЕТ LANDED COST DDP ТАШКЕНТ
+        </span>
+      </div>
+
+      <LandedCostCalculator client:load />
+    </div>
+
+    <!-- Section: Upload Specification Form Banner -->
+    <div class="border-2 border-[#0A0A0A] bg-[#C8CDD2] p-8 font-mono flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 max-w-2xl">
+        <div class="text-sm font-bold text-[#0A0A0A] flex items-center space-x-2">
+          <span class="w-3 h-3 bg-[#0A0A0A] inline-block"></span>
+          <span>ОТПРАВЬТЕ СПЕЦИФИКАЦИЮ ИЛИ ВЕДОМОСТЬ ПОТРЕБНОСТИ</span>
+        </div>
+        <p class="text-xs text-[#4A5056] font-sans leading-relaxed">
+          Загрузите перечень позиций в формате Excel (.xlsx) или PDF. Инженеры ООО «RailTech» подготовят расчет Landed Cost DDP Ташкент с указанием сроков поставки и паспортов заводов в течение 24 часов.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        data-lead-modal
+        data-lead-subject="Запрос расчета спецификации ВЭД DDP Ташкент"
+        class="border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white px-8 py-3.5 text-xs font-bold whitespace-nowrap hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
+      >
+        [ ЗАГРУЗИТЬ СПЕЦИФИКАЦИЮ (EXCEL / PDF) ]
+      </button>
+    </div>
+  </div>
+</BaseLayout>
