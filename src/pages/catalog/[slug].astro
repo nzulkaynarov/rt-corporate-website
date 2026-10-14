@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { CadInspector } from '../../components/islands/CadInspector';
+import { ProductMediaGallery } from '../../components/islands/ProductMediaGallery';
 
 export async function getStaticPaths() {
   const catalogEntries = await getCollection('catalog');
@@ -161,14 +161,17 @@ const productJsonLd = {
         </div>
       </div>
 
-      <!-- Right Column: 3D CAD Inspection & RFQ Action Card -->
+      <!-- Right Column: Product Media Gallery & Commercial Card -->
       <div class="lg:col-span-5 flex flex-col space-y-6">
-        <!-- 3D CAD Inspector -->
-        <CadInspector
+        <!-- Product Media Gallery (Photo, Blueprint, 3D CAD) -->
+        <ProductMediaGallery
           client:load
+          sku={entry.data.sku}
+          title={entry.data.title}
+          gost={entry.data.gost}
+          subsystem={entry.data.subsystem}
+          specs={entry.data.specs}
           modelType={entry.data.modelType || 'bogie'}
-          title={`${entry.data.sku} // 3D CAD`}
-          subtitle="ИНТЕРАКТИВНАЯ ТЕХНИЧЕСКАЯ МОДЕЛЬ"
         />
 
         <!-- Commercial Action Box -->
