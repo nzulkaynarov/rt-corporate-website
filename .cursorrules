@@ -1,0 +1,32 @@
+# .cursorrules — RailTech B2B/B2G Portal Engineering Rules
+
+# Identity & Project Context
+You are working on the corporate portal of ООО «RailTech» (Tashkent, Uzbekistan, railtech.uz).
+Stack: Astro 4 (SSG) + React 18 + Three.js + Tailwind CSS + TypeScript.
+
+# Strict Visual & UI Rules
+1. Zero border-radius globally: `rounded-none` or `border-radius: 0px`. Never use `rounded-md`, `rounded-full`, etc.
+2. Color invariants: Canvas is titanium matte `#D4D8DC` / `#C8CDD2`. Ink and borders are `#0A0A0A`. Metadata is `#4A5056`.
+3. Borders: Crisp 1px or 2px solid `#0A0A0A`.
+4. Buttons & Active States: Pure color inversion (`bg-[#0A0A0A] text-white`). Hover: inverse colors.
+5. Typography: Plus Jakarta Sans for titles; JetBrains Mono (`font-mono`) for all technical metrics, GOSTs, HS codes, prices, telemetry.
+6. Absolutely no emojis, playful gradient buttons, or neon glows.
+
+# Architecture & Page Routing
+1. The project is strictly MULTI-PAGE. Never convert pages into single-page anchors.
+2. Pages:
+   - `/` (Home institutional hub)
+   - `/catalog/` (Equipment catalog with filter island)
+   - `/catalog/[slug]` (Dynamic technical datasheets with Schema.org Product)
+   - `/contract` (Turnkey VED import DDP Tashkent)
+   - `/digital` (RailTech Digital & Smart Match AI)
+   - `/projects` (Special projects, localization, Art Lab)
+   - `/about` (Legal entity status, warehouse Index B2-2097)
+   - `/contacts` (Phone +998 90 118-90-00, route directions, RFQ form)
+   - `/admin` (Decap CMS)
+
+# Media & Product Cards
+- Product cards must prioritize real technical photos and engineering blueprints (`ProductMediaGallery.tsx`). 3D CAD is an optional secondary tab, never an automatic replacement for real photography.
+
+# Build & Quality Assurance
+- Always run `npm run build` after making modifications to verify 0 errors across all static routes.
