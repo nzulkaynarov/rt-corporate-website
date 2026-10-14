@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout
@@ -10,7 +11,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <div class="max-w-7xl mx-auto px-4 py-10 font-sans">
     <!-- Breadcrumbs -->
     <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-4">
-      <a href="/" class="hover:underline">ГЛАВНАЯ</a>
+      <a href={`${base}/`} class="hover:underline">ГЛАВНАЯ</a>
       <span>/</span>
       <span class="text-[#0A0A0A] font-bold">О КОМПАНИИ // ЮРИДИЧЕСКИЙ СТАТУС</span>
     </div>

@@ -1,14 +1,15 @@
 ---
 const pathname = Astro.url.pathname;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const navItems = [
-  { href: '/', label: 'ГЛАВНАЯ', id: 'home', match: (p: string) => p === '/' },
-  { href: '/catalog/', label: 'КАТАЛОГ ЖД ОБОРУДОВАНИЯ', id: 'catalog', match: (p: string) => p.startsWith('/catalog') },
-  { href: '/contract', label: 'КОНТРАКТНЫЙ ВЭД DDP', id: 'contract', match: (p: string) => p.startsWith('/contract') },
-  { href: '/digital', label: 'DIGITAL & ПО', id: 'digital', match: (p: string) => p.startsWith('/digital') },
-  { href: '/projects', label: 'СПЕЦПРОЕКТЫ & АРТ', id: 'projects', match: (p: string) => p.startsWith('/projects') },
-  { href: '/about', label: 'О КОМПАНИИ', id: 'about', match: (p: string) => p.startsWith('/about') },
-  { href: '/contacts', label: 'КОНТАКТЫ & РЕКВИЗИТЫ', id: 'contacts', match: (p: string) => p.startsWith('/contacts') },
+  { href: `${base}/`, label: 'ГЛАВНАЯ', id: 'home', match: (p: string) => p === `${base}/` || p === `${base}` },
+  { href: `${base}/catalog/`, label: 'КАТАЛОГ ЖД ОБОРУДОВАНИЯ', id: 'catalog', match: (p: string) => p.startsWith(`${base}/catalog`) },
+  { href: `${base}/contract`, label: 'КОНТРАКТНЫЙ ВЭД DDP', id: 'contract', match: (p: string) => p.startsWith(`${base}/contract`) },
+  { href: `${base}/digital`, label: 'DIGITAL & ПО', id: 'digital', match: (p: string) => p.startsWith(`${base}/digital`) },
+  { href: `${base}/projects`, label: 'СПЕЦПРОЕКТЫ & АРТ', id: 'projects', match: (p: string) => p.startsWith(`${base}/projects`) },
+  { href: `${base}/about`, label: 'О КОМПАНИИ', id: 'about', match: (p: string) => p.startsWith(`${base}/about`) },
+  { href: `${base}/contacts`, label: 'КОНТАКТЫ & РЕКВИЗИТЫ', id: 'contacts', match: (p: string) => p.startsWith(`${base}/contacts`) },
 ];
 ---
 
@@ -51,7 +52,7 @@ const navItems = [
   <!-- Main Navigation Row -->
   <div class="flex items-center justify-between px-4 py-2">
     <!-- Brand / Logo -->
-    <a href="/" class="flex items-center space-x-3 group">
+    <a href={`${base}/`} class="flex items-center space-x-3 group">
       <div class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2.5 py-1.5 font-mono font-bold tracking-widest text-sm group-hover:bg-transparent group-hover:text-[#0A0A0A] transition-colors">
         RAILTECH
       </div>

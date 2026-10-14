@@ -138,7 +138,10 @@ export const WireframeViewport: React.FC<WireframeViewportProps> = ({
     };
 
     // Check if real custom .glb model exists in public/models/
-    const glbPath = `/models/${modelType}.glb`;
+    const base = (typeof window !== 'undefined' && window.location.pathname.startsWith('/rt-corporate-website'))
+      ? '/rt-corporate-website'
+      : (import.meta.env.BASE_URL?.replace(/\/$/, '') || '');
+    const glbPath = `${base}/models/${modelType}.glb`;
 
     fetch(glbPath, { method: 'HEAD' })
       .then((res) => {

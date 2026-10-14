@@ -21,6 +21,10 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
   const [selectedSubsystem, setSelectedSubsystem] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
+  const base = (typeof window !== 'undefined' && window.location.pathname.startsWith('/rt-corporate-website'))
+    ? '/rt-corporate-website'
+    : (import.meta.env.BASE_URL?.replace(/\/$/, '') || '');
+
   const subsystems = useMemo(() => {
     const set = new Set<string>();
     items.forEach((item) => {
@@ -153,7 +157,7 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                 >
                   <td className="p-3 font-bold text-[#0A0A0A] whitespace-nowrap">
                     <a
-                      href={`/catalog/${item.slug}`}
+                      href={`${base}/catalog/${item.slug}`}
                       className="underline group-hover:no-underline"
                     >
                       {item.sku}
@@ -161,7 +165,7 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                   </td>
                   <td className="p-3 max-w-md">
                     <a
-                      href={`/catalog/${item.slug}`}
+                      href={`${base}/catalog/${item.slug}`}
                       className="font-sans font-bold text-sm text-[#0A0A0A] block group-hover:underline"
                     >
                       {item.title}
@@ -187,7 +191,7 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                   <td className="p-3 text-right whitespace-nowrap">
                     <div className="flex items-center justify-end space-x-2">
                       <a
-                        href={`/catalog/${item.slug}`}
+                        href={`${base}/catalog/${item.slug}`}
                         className="border border-[#0A0A0A] px-2.5 py-1 text-[11px] hover:bg-[#0A0A0A] hover:text-white transition-colors"
                       >
                         ПАСПОРТ ↗
