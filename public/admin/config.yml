@@ -1,7 +1,9 @@
 backend:
   name: github
-  repo: railtech-uz/railtech-v2
+  repo: nzulkaynarov/rt-corporate-website
   branch: main
+
+local_backend: true
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
