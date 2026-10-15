@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
+import I18nText from '../components/I18nText.astro';
 import aboutData from '../data/cms/about.json';
 import globalData from '../data/cms/global.json';
 
@@ -31,41 +32,53 @@ const faqJsonLd = {
   <div class="max-w-7xl mx-auto px-4 py-10 font-sans">
     <!-- Breadcrumbs -->
     <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-4">
-      <a href={`${base}/`} class="hover:underline">ГЛАВНАЯ</a>
+      <a href={`${base}/`} class="hover:underline">
+        <I18nText ru="ГЛАВНАЯ" uz="BOSH SAHIFA" en="HOME" />
+      </a>
       <span>/</span>
-      <span class="text-[#0A0A0A] font-bold">О КОМПАНИИ // ЮРИДИЧЕСКИЙ СТАТУС</span>
+      <span class="text-[#0A0A0A] font-bold">
+        <I18nText ru="О КОМПАНИИ // ЮРИДИЧЕСКИЙ СТАТУС" uz="KOMPANIYA HAQIDA // YURIDIK MAQOM" en="ABOUT COMPANY // LEGAL STATUS" />
+      </span>
     </div>
 
     <!-- Header Section -->
     <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8 font-mono">
       <div class="flex flex-wrap items-center gap-2 text-xs mb-3">
-        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
-          {aboutData.badge}
+        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold inline-block">
+          <I18nText ru={aboutData.badge} uz={aboutData.badge_uz} en={aboutData.badge_en} />
         </span>
-        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
-          ИНН: {globalData.inn}
+        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A] inline-block">
+          <I18nText ru={`ИНН: ${globalData.inn}`} uz={`STIR: ${globalData.inn_uz || globalData.inn}`} en={`TIN: ${globalData.inn_en || globalData.inn}`} />
         </span>
-        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold">
-          ПЛАТЕЛЬЩИК НДС 12%
+        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold inline-block">
+          <I18nText ru="ПЛАТЕЛЬЩИК НДС 12%" uz="12% QQS TO'LOVCHISI" en="12% VAT ACCREDITED" />
         </span>
       </div>
 
-      <h1 class="font-sans text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3">
-        {aboutData.pageTitle}
-      </h1>
+      <I18nText
+        as="h1"
+        class="font-sans text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3"
+        ru={aboutData.pageTitle}
+        uz={aboutData.pageTitle_uz}
+        en={aboutData.pageTitle_en}
+      />
 
-      <p class="font-sans text-base text-[#4A5056] max-w-3xl leading-relaxed">
-        {aboutData.pageSubtitle}
-      </p>
+      <I18nText
+        as="p"
+        class="font-sans text-base text-[#4A5056] max-w-3xl leading-relaxed"
+        ru={aboutData.pageSubtitle}
+        uz={aboutData.pageSubtitle_uz}
+        en={aboutData.pageSubtitle_en}
+      />
     </div>
 
     <!-- Mission Banner -->
     <div class="border-2 border-[#0A0A0A] bg-[#C8CDD2] p-6 lg:p-8 font-mono mb-10">
       <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A] pb-2 mb-3">
-        {aboutData.mission.title}
+        <I18nText ru={aboutData.mission.title} uz={aboutData.mission.title_uz} en={aboutData.mission.title_en} />
       </div>
       <p class="font-sans text-sm text-[#0A0A0A] leading-relaxed">
-        {aboutData.mission.text}
+        <I18nText ru={aboutData.mission.text} uz={aboutData.mission.text_uz} en={aboutData.mission.text_en} />
       </p>
     </div>
 
@@ -75,18 +88,22 @@ const faqJsonLd = {
         <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 flex flex-col justify-between font-mono">
           <div>
             <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A] pb-2 mb-3">
-              {adv.code}
+              <I18nText ru={adv.code} uz={adv.code_uz} en={adv.code_en} />
             </div>
             <h3 class="font-sans text-base font-bold text-[#0A0A0A] mb-2">
-              {adv.title}
+              <I18nText ru={adv.title} uz={adv.title_uz} en={adv.title_en} />
             </h3>
             <p class="text-xs text-[#4A5056] font-sans leading-relaxed mb-4">
-              {adv.description}
+              <I18nText ru={adv.description} uz={adv.description_uz} en={adv.description_en} />
             </p>
             <div class="space-y-1.5 text-[11px] text-[#0A0A0A] bg-[#C8CDD2]/60 p-3 border border-[#0A0A0A]/20">
-              {adv.items.map((it) => (
-                <div>• {it}</div>
-              ))}
+              {adv.items.map((it, idx) => {
+                const itUz = adv.items_uz && adv.items_uz[idx];
+                const itEn = adv.items_en && adv.items_en[idx];
+                return (
+                  <div>• <I18nText ru={it} uz={itUz} en={itEn} /></div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -96,11 +113,11 @@ const faqJsonLd = {
     <!-- Directions of Activity -->
     <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 lg:p-8 font-mono mb-14">
       <div class="border-b border-[#0A0A0A] pb-3 mb-6">
-        <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2">
-          ПРОФИЛЬ
+        <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2 inline-block">
+          <I18nText ru="ПРОФИЛЬ" uz="PROFIL" en="PROFILE" />
         </span>
         <span class="font-bold text-base text-[#0A0A0A]">
-          КЛЮЧЕВЫЕ НАПРАВЛЕНИЯ ОПЕРАЦИОННОЙ ДЕЯТЕЛЬНОСТИ
+          <I18nText ru="КЛЮЧЕВЫЕ НАПРАВЛЕНИЯ ОПЕРАЦИОННОЙ ДЕЯТЕЛЬНОСТИ" uz="ASOSIY OPERATSION YO'NALISHLAR" en="KEY OPERATIONAL SECTORS" />
         </span>
       </div>
 
@@ -108,9 +125,15 @@ const faqJsonLd = {
         {aboutData.directions.map((dir, idx) => (
           <div class="border border-[#0A0A0A] bg-[#C8CDD2]/60 p-4 flex flex-col justify-between">
             <div>
-              <div class="font-mono text-[10px] text-[#4A5056] mb-1">НАПРАВЛЕНИЕ 0{idx + 1}</div>
-              <div class="font-bold text-[#0A0A0A] mb-2">{dir.title}</div>
-              <p class="text-[#4A5056] leading-relaxed">{dir.desc}</p>
+              <div class="font-mono text-[10px] text-[#4A5056] mb-1">
+                <I18nText ru={`НАПРАВЛЕНИЕ 0${idx + 1}`} uz={`YO'NALISH 0${idx + 1}`} en={`DIRECTION 0${idx + 1}`} />
+              </div>
+              <div class="font-bold text-[#0A0A0A] mb-2">
+                <I18nText ru={dir.title} uz={dir.title_uz} en={dir.title_en} />
+              </div>
+              <p class="text-[#4A5056] leading-relaxed">
+                <I18nText ru={dir.desc} uz={dir.desc_uz} en={dir.desc_en} />
+              </p>
             </div>
           </div>
         ))}
@@ -123,7 +146,11 @@ const faqJsonLd = {
         <div class="flex items-center space-x-2">
           <span class="w-3 h-3 bg-[#0A0A0A] inline-block"></span>
           <span class="font-bold text-sm text-[#0A0A0A] uppercase tracking-wider">
-            ОФИЦИАЛЬНОЕ ЮРИДИЧЕСКОЕ ДОСЬЕ И РЕКВИЗИТЫ ПРЕДПРИЯТИЯ
+            <I18nText
+              ru="ОФИЦИАЛЬНОЕ ЮРИДИЧЕСКОЕ ДОСЬЕ И РЕКВИЗИТЫ ПРЕДПРИЯТИЯ"
+              uz="RASMIY YURIDIK DOSYE VA KORXONA REKVIZITLARI"
+              en="OFFICIAL LEGAL DOSSIER & CORPORATE REQUISITES"
+            />
           </span>
         </div>
         <button
@@ -132,41 +159,85 @@ const faqJsonLd = {
           data-lead-subject="Запрос карточки предприятия и учредительных документов ООО «RailTech»"
           class="border border-[#0A0A0A] bg-white px-3 py-1 text-xs font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer"
         >
-          [ СКАЧАТЬ КАРТОЧКУ ПРЕДПРИЯТИЯ ↗ ]
+          <I18nText
+            ru="[ СКАЧАТЬ КАРТОЧКУ ПРЕДПРИЯТИЯ ↗ ]"
+            uz="[ KORXONA KARTASINI YUKLASH ↗ ]"
+            en="[ DOWNLOAD COMPANY PROFILE ↗ ]"
+          />
         </button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-xs">
         <div class="border-b border-[#0A0A0A]/20 pb-2">
-          <span class="text-[#4A5056] block text-[11px]">ПОЛНОЕ ФИРМЕННОЕ НАИМЕНОВАНИЕ:</span>
-          <span class="font-bold text-[#0A0A0A]">Общество с ограниченной ответственностью «RailTech»</span>
+          <span class="text-[#4A5056] block text-[11px]">
+            <I18nText ru="ПОЛНОЕ ФИРМЕННОЕ НАИМЕНОВАНИЕ:" uz="TO'LIQ FIRMA NOMI:" en="FULL LEGAL CORPORATE NAME:" />
+          </span>
+          <span class="font-bold text-[#0A0A0A]">
+            <I18nText
+              ru="Общество с ограниченной ответственностью «RailTech»"
+              uz="«RailTech» mas'uliyati cheklangan jamiyati"
+              en="RailTech Limited Liability Company"
+            />
+          </span>
         </div>
         <div class="border-b border-[#0A0A0A]/20 pb-2">
-          <span class="text-[#4A5056] block text-[11px]">КРАТКОЕ НАИМЕНОВАНИЕ:</span>
+          <span class="text-[#4A5056] block text-[11px]">
+            <I18nText ru="КРАТКОЕ НАИМЕНОВАНИЕ:" uz="QISQA NOMI:" en="SHORT NAME:" />
+          </span>
           <span class="font-bold text-[#0A0A0A]">{globalData.companyName} // RailTech LLC</span>
         </div>
         <div class="border-b border-[#0A0A0A]/20 pb-2">
-          <span class="text-[#4A5056] block text-[11px]">ИДЕНТИФИКАЦИОННЫЙ НОМЕР НАЛОГОПЛАТЕЛЬЩИКА (ИНН):</span>
+          <span class="text-[#4A5056] block text-[11px]">
+            <I18nText ru="ИДЕНТИФИКАЦИОННЫЙ НОМЕР НАЛОГОПЛАТЕЛЬЩИКА (ИНН):" uz="SOLIQ TO'LOVCHINING IDENTIFIKATSIYA RAQAMI (STIR):" en="TAX IDENTIFICATION NUMBER (TIN):" />
+          </span>
           <span class="font-bold text-[#0A0A0A]">{globalData.inn}</span>
         </div>
         <div class="border-b border-[#0A0A0A]/20 pb-2">
-          <span class="text-[#4A5056] block text-[11px]">СТАТУС ПЛАТЕЛЬЩИКА НАЛОГА НА ДОБАВЛЕННУЮ СТОИМОСТЬ:</span>
-          <span class="font-bold text-emerald-800">Плательщик НДС 12% ({globalData.legalStatus})</span>
+          <span class="text-[#4A5056] block text-[11px]">
+            <I18nText ru="СТАТУС ПЛАТЕЛЬЩИКА НАЛОГА НА ДОБАВЛЕННУЮ СТОИМОСТЬ:" uz="QO'SHILGAN QIYMAT SOLIG'I TO'LOVCHISI MAQOMI:" en="VALUE ADDED TAX (VAT) STATUS:" />
+          </span>
+          <span class="font-bold text-emerald-800">
+            <I18nText
+              ru={`Плательщик НДС 12% (${globalData.legalStatus})`}
+              uz={`12% QQS to'lovchisi (${globalData.legalStatus_uz || globalData.legalStatus})`}
+              en={`12% VAT Accredited (${globalData.legalStatus_en || globalData.legalStatus})`}
+            />
+          </span>
         </div>
         <div class="border-b border-[#0A0A0A]/20 pb-2">
-          <span class="text-[#4A5056] block text-[11px]">ОСНОВНОЙ ВИД ДЕЯТЕЛЬНОСТИ (ОКЭД):</span>
-          <span class="font-bold text-[#0A0A0A]">46.69.0 — Оптовая торговля прочими машинами и оборудованием</span>
+          <span class="text-[#4A5056] block text-[11px]">
+            <I18nText ru="ОСНОВНОЙ ВИД ДЕЯТЕЛЬНОСТИ (ОКЭД):" uz="ASOSIY FAOLIYAT TURI (IFUT):" en="PRIMARY ACTIVITY CLASSIFICATION (NACE):" />
+          </span>
+          <span class="font-bold text-[#0A0A0A]">
+            <I18nText
+              ru="46.69.0 — Оптовая торговля прочими машинами и оборудованием"
+              uz="46.69.0 — Boshqa mashina va uskunalarning ulgurji savdosi"
+              en="46.69.0 — Wholesale of other machinery and equipment"
+            />
+          </span>
         </div>
         <div class="border-b border-[#0A0A0A]/20 pb-2">
-          <span class="text-[#4A5056] block text-[11px]">ЮРИДИЧЕСКИЙ И ФАКТИЧЕСКИЙ АДРЕС:</span>
-          <span class="font-bold text-[#0A0A0A]">100140, Республика Узбекистан, {globalData.address}</span>
+          <span class="text-[#4A5056] block text-[11px]">
+            <I18nText ru="ЮРИДИЧЕСКИЙ И ФАКТИЧЕСКИЙ АДРЕС:" uz="YURIDIK VA HAQIQIY MANZIL:" en="LEGAL & OPERATIONAL ADDRESS:" />
+          </span>
+          <span class="font-bold text-[#0A0A0A]">
+            <I18nText
+              ru={`100140, Республика Узбекистан, ${globalData.address}`}
+              uz={`100140, O'zbekiston Respublikasi, ${globalData.address_uz || globalData.address}`}
+              en={`100140, Republic of Uzbekistan, ${globalData.address_en || globalData.address}`}
+            />
+          </span>
         </div>
         <div class="border-b border-[#0A0A0A]/20 pb-2">
-          <span class="text-[#4A5056] block text-[11px]">ЭЛЕКТРОННЫЙ ДОКУМЕНТООБОРОТ (ЭСФ):</span>
+          <span class="text-[#4A5056] block text-[11px]">
+            <I18nText ru="ЭЛЕКТРОННЫЙ ДОКУМЕНТООБОРОТ (ЭСФ):" uz="ELEKTRON HUJJAT AYLANISHI (EHF):" en="ELECTRONIC TAX INVOICING (ESF):" />
+          </span>
           <span class="font-bold text-[#0A0A0A]">Didox / Soliq / Factura.uz</span>
         </div>
         <div class="border-b border-[#0A0A0A]/20 pb-2">
-          <span class="text-[#4A5056] block text-[11px]">ОФИЦИАЛЬНЫЕ ДОМЕНЫ:</span>
+          <span class="text-[#4A5056] block text-[11px]">
+            <I18nText ru="ОФИЦИАЛЬНЫЕ ДОМЕНЫ:" uz="RASMIY DOMENLAR:" en="OFFICIAL DOMAINS:" />
+          </span>
           <span class="font-bold text-[#0A0A0A]">railtech.uz // b2b.railtech.uz</span>
         </div>
       </div>
@@ -175,9 +246,15 @@ const faqJsonLd = {
     <!-- FAQ Accordion Module -->
     <div class="mb-14">
       <FaqAccordion
-        title="ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ О КОМПАНИИ"
-        subtitle="Регламент поставок, сертификация ТР ТС, входной контроль и условия гарантии"
-        badge="ИНСТИТУЦИОНАЛЬНЫЙ FAQ"
+        titleRu="ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ О КОМПАНИИ"
+        titleUz="KOMPANIYA HAQIDA KO'P SO'RALADIGAN SAVOLLAR"
+        titleEn="FREQUENTLY ASKED QUESTIONS ABOUT RAILTECH"
+        subtitleRu="Регламент поставок, сертификация ТР ТС, входной контроль и условия гарантии"
+        subtitleUz="Yetkazib berish tartibi, TR TS sertifikatsiyasi, kirish nazorati va kafolat shartlari"
+        subtitleEn="Supply protocol, TR CU certification, quality inspection, and warranty terms"
+        badgeRu="ИНСТИТУЦИОНАЛЬНЫЙ FAQ"
+        badgeUz="INSTITUTSIONAL FAQ"
+        badgeEn="INSTITUTIONAL FAQ"
       />
     </div>
   </div>

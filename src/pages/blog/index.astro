@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { withBase } from '../../utils/url';
+import I18nText from '../../components/I18nText.astro';
 
 const allPosts = await getCollection('blog');
 allPosts.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
@@ -9,12 +10,12 @@ allPosts.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const categories = [
-  'Все публикации',
-  'Поставки и Склад',
-  'ВЭД и Таможня',
-  'Digital & ПО',
-  'Спецпроекты и Арт',
-  'Новости компании',
+  { ru: 'Все публикации', uz: 'Barcha maqolalar', en: 'All publications' },
+  { ru: 'Поставки и Склад', uz: "Ta'minot va Ombor", en: 'Supply & Warehouse' },
+  { ru: 'ВЭД и Таможня', uz: 'TQI va Bojxona', en: 'Foreign Trade & Customs' },
+  { ru: 'Digital & ПО', uz: "Digital va Dasturiy ta'minot", en: 'Digital & Software' },
+  { ru: 'Спецпроекты и Арт', uz: "Maxsus loyihalar va San'at", en: 'Special Projects & Art' },
+  { ru: 'Новости компании', uz: 'Kompaniya yangiliklari', en: 'Company News' },
 ];
 
 const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
@@ -28,32 +29,44 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
   <div class="max-w-7xl mx-auto px-4 py-10 font-sans">
     <!-- Breadcrumbs -->
     <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-4">
-      <a href={`${base}/`} class="hover:underline">ГЛАВНАЯ</a>
+      <a href={`${base}/`} class="hover:underline">
+        <I18nText ru="ГЛАВНАЯ" uz="BOSH SAHIFA" en="HOME" />
+      </a>
       <span>/</span>
-      <span class="text-[#0A0A0A] font-bold">БЛОГ & НОВОСТИ КОМПАНИИ (.BLOG)</span>
+      <span class="text-[#0A0A0A] font-bold">
+        <I18nText ru="БЛОГ & НОВОСТИ КОМПАНИИ (.BLOG)" uz="BLOG VA KOMPANIYA YANGILIKLARI (.BLOG)" en="BLOG & CORPORATE NEWS (.BLOG)" />
+      </span>
     </div>
 
     <!-- Header Section -->
     <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8">
       <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-3">
-        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
-          ИНЖЕНЕРНЫЙ ВЕСТНИК
+        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold inline-block">
+          <I18nText ru="ИНЖЕНЕРНЫЙ ВЕСТНИК" uz="MUHANDISLIK XABARNOMASI" en="ENGINEERING BULLETIN" />
         </span>
-        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
-          АРХИВ ТЕХНИЧЕСКОЙ АНАЛИТИКИ
+        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A] inline-block">
+          <I18nText ru="АРХИВ ТЕХНИЧЕСКОЙ АНАЛИТИКИ" uz="TEXNIK TAHLIL ARXIVI" en="TECHNICAL ANALYSIS ARCHIVE" />
         </span>
-        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold">
-          АКТУАЛЬНОСТЬ: 2026
+        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold inline-block">
+          <I18nText ru="АКТУАЛЬНОСТЬ: 2026" uz="DOLZARBLIK: 2026" en="STATUS: 2026 ACTIVE" />
         </span>
       </div>
 
-      <h1 class="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3">
-        БЛОГ И ЭКСПЕРТНЫЕ МАТЕРИАЛЫ RAILTECH
-      </h1>
+      <I18nText
+        as="h1"
+        class="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3"
+        ru="БЛОГ И ЭКСПЕРТНЫЕ МАТЕРИАЛЫ RAILTECH"
+        uz="RAILTECH BLOGI VA EKSPERT MAQOLALARI"
+        en="RAILTECH BLOG & TECHNICAL PAPERS"
+      />
 
-      <p class="text-base text-[#4A5056] max-w-3xl leading-relaxed">
-        Практическая аналитика от инженеров поставок, специалистов по внешнеэкономической деятельности и разработчиков IT-решений. Разборы регламентов ГОСТ, таможенного оформления DDP и цифровизации снабжения в Узбекистане.
-      </p>
+      <I18nText
+        as="p"
+        class="text-base text-[#4A5056] max-w-3xl leading-relaxed"
+        ru="Практическая аналитика от инженеров поставок, специалистов по внешнеэкономической деятельности и разработчиков IT-решений. Разборы регламентов ГОСТ, таможенного оформления DDP и цифровизации снабжения в Узбекистане."
+        uz="Ta'minot muhandislari, tashqi iqtisodiy faoliyat mutaxassislari va IT-yechimlar dasturchilarining amaliy tahlillari. O'zbekistonda GOST qoidalari, DDP bojxona rasmiylashtiruvi va ta'minotni raqamlashtirish tahlillari."
+        en="In-depth insights from procurement engineers, foreign trade compliance specialists, and software developers. Practical walkthroughs of GOST standards, DDP customs clearance, and supply chain digitalization in Uzbekistan."
+      />
     </div>
 
     <!-- Featured Post Hero (if exists) -->
@@ -61,8 +74,12 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
       <div class="border-2 border-[#0A0A0A] bg-[#C8CDD2] p-6 lg:p-8 mb-10 font-mono">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[#0A0A0A] pb-3 mb-4 text-xs">
           <div class="flex items-center space-x-2">
-            <span class="bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">ГЛАВНЫЙ МАТЕРИАЛ</span>
-            <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#D4D8DC] text-[#0A0A0A]">{featuredPost.data.category}</span>
+            <span class="bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
+              <I18nText ru="ГЛАВНЫЙ МАТЕРИАЛ" uz="ASOSIY MAQOLA" en="FEATURED ARTICLE" />
+            </span>
+            <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#D4D8DC] text-[#0A0A0A]">
+              <I18nText ru={featuredPost.data.category} uz={featuredPost.data.category_uz} en={featuredPost.data.category_en} />
+            </span>
           </div>
           <div class="text-[#4A5056]">
             {featuredPost.data.publishDate} // {featuredPost.data.readTime}
@@ -82,11 +99,11 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
             )}
             <h2 class="text-2xl sm:text-3xl font-bold text-[#0A0A0A] leading-tight hover:underline">
               <a href={`${base}/blog/${featuredPost.slug}`}>
-                {featuredPost.data.title}
+                <I18nText ru={featuredPost.data.title} uz={featuredPost.data.title_uz} en={featuredPost.data.title_en} />
               </a>
             </h2>
             <p class="text-sm text-[#4A5056] leading-relaxed">
-              {featuredPost.data.summary}
+              <I18nText ru={featuredPost.data.summary} uz={featuredPost.data.summary_uz} en={featuredPost.data.summary_en} />
             </p>
             <div class="flex flex-wrap gap-1.5 pt-2 font-mono text-[11px]">
               {featuredPost.data.tags.map((tag) => (
@@ -99,14 +116,18 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
 
           <div class="lg:col-span-4 flex flex-col justify-end space-y-3">
             <div class="border border-[#0A0A0A]/30 p-3 bg-[#D4D8DC] text-[11px] text-[#4A5056] font-mono">
-              <div>АВТОР: <span class="font-bold text-[#0A0A0A]">{featuredPost.data.author}</span></div>
-              <div>РЕЦЕНЗИЯ: <span class="text-emerald-800 font-bold">ОТК & Инженерный отдел</span></div>
+              <div>
+                <I18nText ru="АВТОР:" uz="MUALLIF:" en="AUTHOR:" /> <span class="font-bold text-[#0A0A0A]">{featuredPost.data.author}</span>
+              </div>
+              <div>
+                <I18nText ru="РЕЦЕНЗИЯ:" uz="TAQRIZ:" en="REVIEW:" /> <span class="text-emerald-800 font-bold">ОТК & Инженерный отдел</span>
+              </div>
             </div>
             <a
               href={`${base}/blog/${featuredPost.slug}`}
               class="w-full border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white py-3 text-center text-xs font-bold font-mono tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors"
             >
-              [ ЧИТАТЬ ПУБЛИКАЦИЮ → ]
+              <I18nText ru="[ ЧИТАТЬ ПУБЛИКАЦИЮ → ]" uz="[ MAQOLANI O'QISH → ]" en="[ READ PUBLICATION → ]" />
             </a>
           </div>
         </div>
@@ -121,21 +142,23 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
           {categories.map((cat, idx) => (
             <button
               type="button"
-              data-cat-filter={cat}
+              data-cat-filter={cat.ru}
               class={`px-3 py-1.5 border border-[#0A0A0A] transition-colors cursor-pointer ${
                 idx === 0
                   ? 'bg-[#0A0A0A] text-white active-cat-btn'
                   : 'bg-[#C8CDD2] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white'
               }`}
             >
-              {cat}
+              <I18nText ru={cat.ru} uz={cat.uz} en={cat.en} />
             </button>
           ))}
         </div>
 
         <!-- Search Input -->
         <div class="flex items-center space-x-2 text-xs">
-          <span class="text-[#4A5056] text-[11px] uppercase">ПОИСК:</span>
+          <span class="text-[#4A5056] text-[11px] uppercase">
+            <I18nText ru="ПОИСК:" uz="QIDIRUV:" en="SEARCH:" />
+          </span>
           <input
             id="blog-search-input"
             type="text"
@@ -151,14 +174,14 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
       {allPosts.map((post) => (
         <article
           data-category={post.data.category}
-          data-search={`${post.data.title} ${post.data.summary} ${post.data.tags.join(' ')} ${post.data.category}`.toLowerCase()}
+          data-search={`${post.data.title} ${post.data.title_uz || ''} ${post.data.title_en || ''} ${post.data.summary} ${post.data.tags.join(' ')} ${post.data.category}`.toLowerCase()}
           class="blog-card border-2 border-[#0A0A0A] bg-[#D4D8DC] p-5 flex flex-col justify-between hover:bg-white transition-colors group font-mono"
         >
           <div>
             <!-- Card Header -->
             <div class="flex items-center justify-between border-b border-[#0A0A0A]/20 pb-2 mb-3 text-xs">
               <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#C8CDD2] text-[#0A0A0A] font-bold text-[10px]">
-                {post.data.category}
+                <I18nText ru={post.data.category} uz={post.data.category_uz} en={post.data.category_en} />
               </span>
               <span class="text-[#4A5056] text-[11px]">
                 {post.data.publishDate}
@@ -178,13 +201,13 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
             <!-- Title -->
             <h3 class="font-sans font-bold text-lg text-[#0A0A0A] mb-2.5 leading-snug group-hover:underline">
               <a href={`${base}/blog/${post.slug}`}>
-                {post.data.title}
+                <I18nText ru={post.data.title} uz={post.data.title_uz} en={post.data.title_en} />
               </a>
             </h3>
 
             <!-- Summary -->
             <p class="font-sans text-xs text-[#4A5056] leading-relaxed mb-4 line-clamp-3">
-              {post.data.summary}
+              <I18nText ru={post.data.summary} uz={post.data.summary_uz} en={post.data.summary_en} />
             </p>
 
             <!-- Tags -->
@@ -206,7 +229,7 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
               href={`${base}/blog/${post.slug}`}
               class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-3 py-1 text-center font-bold group-hover:bg-transparent group-hover:text-[#0A0A0A] transition-colors"
             >
-              ЧИТАТЬ →
+              <I18nText ru="ЧИТАТЬ →" uz="O'QISH →" en="READ →" />
             </a>
           </div>
         </article>
@@ -215,8 +238,16 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
 
     <!-- Empty State -->
     <div id="blog-empty-state" class="hidden border-2 border-dashed border-[#0A0A0A] p-12 text-center font-mono my-8">
-      <div class="text-sm font-bold text-[#0A0A0A] mb-1">МАТЕРИАЛЫ НЕ НАЙДЕНЫ</div>
-      <div class="text-xs text-[#4A5056]">Попробуйте изменить поисковый запрос или сбросить фильтр рубрик.</div>
+      <div class="text-sm font-bold text-[#0A0A0A] mb-1">
+        <I18nText ru="МАТЕРИАЛЫ НЕ НАЙДЕНЫ" uz="MAQOLALAR TOPILMADI" en="NO PUBLICATIONS FOUND" />
+      </div>
+      <div class="text-xs text-[#4A5056]">
+        <I18nText
+          ru="Попробуйте изменить поисковый запрос или сбросить фильтр рубрик."
+          uz="Qidiruv so'rovini o'zgartiring yoki ruknlar filtrini bekor qiling."
+          en="Try adjusting your search query or reset the category filter."
+        />
+      </div>
     </div>
 
     <!-- CTA Section -->
@@ -224,10 +255,20 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
       <div class="space-y-2 max-w-2xl">
         <div class="text-sm font-bold text-[#0A0A0A] flex items-center space-x-2">
           <span class="w-3 h-3 bg-[#0A0A0A] inline-block"></span>
-          <span>НУЖНА ИНЖЕНЕРНАЯ КОНСУЛЬТАЦИЯ ПО ВАШЕМУ ПРОЕКТУ?</span>
+          <span>
+            <I18nText
+              ru="НУЖНА ИНЖЕНЕРНАЯ КОНСУЛЬТАЦИЯ ПО ВАШЕМУ ПРОЕКТУ?"
+              uz="LOYIHANGIZ BO'YICHA MUHANDISLIK KONSALTINGI KERAKMI?"
+              en="NEED ENGINEERING CONSULTING FOR YOUR PROJECT?"
+            />
+          </span>
         </div>
         <p class="text-xs text-[#4A5056] font-sans leading-relaxed">
-          Инженеры ООО «RailTech» помогут подобрать номенклатуру по чертежам, согласовать технические требования с ГАЖК «УТЙ» и рассчитать Landed Cost DDP Ташкент.
+          <I18nText
+            ru="Инженеры ООО «RailTech» помогут подобрать номенклатуру по чертежам, согласовать технические требования с ГАЖК «УТЙ» и рассчитать Landed Cost DDP Ташкент."
+            uz="«RailTech» MChJ muhandislari chizmalar bo'yicha nomenklaturani tanlash, «O'TY» AJ bilan texnik talablarni muvofiqlashtirish va Landed Cost DDP Toshkentni hisoblashda yordam beradilar."
+            en="RailTech LLC engineers will assist in cross-referencing drawings, harmonizing technical specifications with UTY rail authorities, and modeling Landed Cost DDP Tashkent."
+          />
         </p>
       </div>
 
@@ -237,7 +278,11 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
         data-lead-subject="Запрос инженерной консультации со страницы Блога"
         class="border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white px-8 py-3.5 text-xs font-bold whitespace-nowrap hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
       >
-        [ ЗАДАТЬ ВОПРОС ИНЖЕНЕРУ ]
+        <I18nText
+          ru="[ ЗАДАТЬ ВОПРОС ИНЖЕНЕРУ ]"
+          uz="[ MUHANDISGA SAVOL BERISH ]"
+          en="[ ASK AN ENGINEER ]"
+        />
       </button>
     </div>
   </div>

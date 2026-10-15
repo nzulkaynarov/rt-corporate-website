@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { CadInspector } from '../components/islands/CadInspector';
+import I18nText from '../components/I18nText.astro';
 import homeData from '../data/cms/home.json';
 import globalData from '../data/cms/global.json';
 
@@ -31,46 +32,54 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <!-- Hero Text -->
         <div class="lg:col-span-7 flex flex-col space-y-6">
           <div class="flex flex-wrap items-center gap-2 font-mono text-[11px]">
-            <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold tracking-wider">
-              {homeData.heroBadge}
+            <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold tracking-wider inline-block">
+              <I18nText ru={homeData.heroBadge} uz={homeData.heroBadge_uz} en={homeData.heroBadge_en} />
             </span>
-            <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
-              {homeData.heroBadgeSub}
+            <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A] inline-block">
+              <I18nText ru={homeData.heroBadgeSub} uz={homeData.heroBadgeSub_uz} en={homeData.heroBadgeSub_en} />
             </span>
-            <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold">
-              {homeData.heroBadgeVat}
+            <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold inline-block">
+              <I18nText ru={homeData.heroBadgeVat} uz={homeData.heroBadgeVat_uz} en={homeData.heroBadgeVat_en} />
             </span>
           </div>
 
-          <h1 class="font-sans text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#0A0A0A] leading-[1.1]">
-            {homeData.heroTitle}
-          </h1>
+          <I18nText
+            as="h1"
+            class="font-sans text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#0A0A0A] leading-[1.1]"
+            ru={homeData.heroTitle}
+            uz={homeData.heroTitle_uz}
+            en={homeData.heroTitle_en}
+          />
 
-          <p class="font-sans text-base lg:text-lg text-[#4A5056] leading-relaxed max-w-2xl">
-            {homeData.heroSubtitle}
-          </p>
+          <I18nText
+            as="p"
+            class="font-sans text-base lg:text-lg text-[#4A5056] leading-relaxed max-w-2xl"
+            ru={homeData.heroSubtitle}
+            uz={homeData.heroSubtitle_uz}
+            en={homeData.heroSubtitle_en}
+          />
 
           <!-- Action Buttons -->
           <div class="flex flex-wrap gap-3 font-mono text-xs pt-2">
             <a
               href={`${base}/catalog/`}
-              class="border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white px-5 py-3 font-bold hover:bg-transparent hover:text-[#0A0A0A] transition-colors"
+              class="border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white px-5 py-3 font-bold hover:bg-transparent hover:text-[#0A0A0A] transition-colors inline-block"
             >
-              {homeData.ctaCatalog}
+              <I18nText ru={homeData.ctaCatalog} uz={homeData.ctaCatalog_uz} en={homeData.ctaCatalog_en} />
             </a>
             <a
               href={`${base}/contract`}
-              class="border-2 border-[#0A0A0A] bg-[#C8CDD2] text-[#0A0A0A] px-5 py-3 font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors"
+              class="border-2 border-[#0A0A0A] bg-[#C8CDD2] text-[#0A0A0A] px-5 py-3 font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors inline-block"
             >
-              {homeData.ctaContract}
+              <I18nText ru={homeData.ctaContract} uz={homeData.ctaContract_uz} en={homeData.ctaContract_en} />
             </a>
             <button
               type="button"
               data-lead-modal
               data-lead-subject="Запрос общего КП и прайс-листа с главной страницы"
-              class="border-2 border-[#0A0A0A] bg-transparent text-[#0A0A0A] px-5 py-3 font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer"
+              class="border-2 border-[#0A0A0A] bg-transparent text-[#0A0A0A] px-5 py-3 font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer inline-block"
             >
-              {homeData.ctaRfq}
+              <I18nText ru={homeData.ctaRfq} uz={homeData.ctaRfq_uz} en={homeData.ctaRfq_en} />
             </button>
           </div>
 
@@ -78,8 +87,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-4 border-t border-[#0A0A0A]/20 font-mono text-xs">
             {homeData.quickMetrics.map((qm) => (
               <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]/60">
-                <div class="text-[#4A5056] text-[10px]">{qm.label}</div>
-                <div class="font-bold text-sm text-[#0A0A0A]">{qm.value}</div>
+                <div class="text-[#4A5056] text-[10px]">
+                  <I18nText ru={qm.label} uz={qm.label_uz} en={qm.label_en} />
+                </div>
+                <div class="font-bold text-sm text-[#0A0A0A]">
+                  <I18nText ru={qm.value} uz={qm.value_uz} en={qm.value_en} />
+                </div>
               </div>
             ))}
           </div>
@@ -91,7 +104,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             client:load
             modelType="bogie"
             title="ТЕЛЕЖКА 18-100 // CAD-СБОРКА"
+            titleUz="18-100 ARAVACHASI // CAD-YIG'ILMA"
+            titleEn="18-100 BOGIE // CAD ASSEMBLY"
             subtitle="БАЗОВАЯ ЕДИНИЦА СКЛАДСКОЙ ПРОГРАММЫ"
+            subtitleUz="OMBOR DASTURINING ASOSIY BIRLIGI"
+            subtitleEn="CORE INVENTORY PROGRAM UNIT"
           />
         </div>
       </div>
@@ -103,15 +120,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <div class="max-w-7xl mx-auto px-4">
       <div class="border-b border-[#0A0A0A] pb-3 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-2 font-mono">
         <div>
-          <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2">
-            {homeData.pillarsSectionBadge}
+          <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2 inline-block">
+            <I18nText ru={homeData.pillarsSectionBadge} uz={homeData.pillarsSectionBadge_uz} en={homeData.pillarsSectionBadge_en} />
           </span>
           <span class="font-bold text-lg text-[#0A0A0A]">
-            {homeData.pillarsSectionTitle}
+            <I18nText ru={homeData.pillarsSectionTitle} uz={homeData.pillarsSectionTitle_uz} en={homeData.pillarsSectionTitle_en} />
           </span>
         </div>
         <div class="text-xs text-[#4A5056]">
-          {homeData.pillarsSectionSubtitle}
+          <I18nText ru={homeData.pillarsSectionSubtitle} uz={homeData.pillarsSectionSubtitle_uz} en={homeData.pillarsSectionSubtitle_en} />
         </div>
       </div>
 
@@ -121,19 +138,33 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <div>
               <div class="flex items-center justify-between font-mono text-xs text-[#4A5056] border-b border-[#0A0A0A]/30 pb-2 mb-4">
                 <span class="font-bold text-[#0A0A0A]">{pillar.code}</span>
-                <span>{pillar.tag}</span>
+                <span>
+                  <I18nText ru={pillar.tag} uz={pillar.tag_uz} en={pillar.tag_en} />
+                </span>
               </div>
-              <h2 class="font-sans text-xl font-bold text-[#0A0A0A] mb-2 group-hover:underline">
-                {pillar.title}
-              </h2>
-              <p class="text-sm text-[#4A5056] leading-relaxed mb-4">
-                {pillar.description}
-              </p>
+              <I18nText
+                as="h2"
+                class="font-sans text-xl font-bold text-[#0A0A0A] mb-2 group-hover:underline"
+                ru={pillar.title}
+                uz={pillar.title_uz}
+                en={pillar.title_en}
+              />
+              <I18nText
+                as="p"
+                class="text-sm text-[#4A5056] leading-relaxed mb-4"
+                ru={pillar.description}
+                uz={pillar.description_uz}
+                en={pillar.description_en}
+              />
               <div class="grid grid-cols-2 gap-2 font-mono text-xs mb-6">
                 {pillar.metrics.map((m) => (
                   <div class="border border-[#0A0A0A]/20 p-2 bg-[#C8CDD2]/50">
-                    <span class="text-[#4A5056] block text-[10px]">{m.label}</span>
-                    <span class="font-bold text-[#0A0A0A]">{m.value}</span>
+                    <span class="text-[#4A5056] block text-[10px]">
+                      <I18nText ru={m.label} uz={m.label_uz} en={m.label_en} />
+                    </span>
+                    <span class="font-bold text-[#0A0A0A]">
+                      <I18nText ru={m.value} uz={m.value_uz} en={m.value_en} />
+                    </span>
                   </div>
                 ))}
               </div>
@@ -142,7 +173,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
               href={`${base}${pillar.linkHref}`}
               class="border border-[#0A0A0A] bg-[#0A0A0A] text-white py-2.5 px-4 font-mono text-xs font-bold text-center group-hover:bg-transparent group-hover:text-[#0A0A0A] transition-colors"
             >
-              {pillar.linkText}
+              <I18nText ru={pillar.linkText} uz={pillar.linkText_uz} en={pillar.linkText_en} />
             </a>
           </div>
         ))}
@@ -155,18 +186,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <div class="max-w-7xl mx-auto px-4">
       <div class="border-b border-[#0A0A0A] pb-3 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-2 font-mono">
         <div>
-          <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2">
-            {homeData.showcaseSectionBadge}
+          <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2 inline-block">
+            <I18nText ru={homeData.showcaseSectionBadge} uz={homeData.showcaseSectionBadge_uz} en={homeData.showcaseSectionBadge_en} />
           </span>
           <span class="font-bold text-lg text-[#0A0A0A]">
-            {homeData.showcaseSectionTitle}
+            <I18nText ru={homeData.showcaseSectionTitle} uz={homeData.showcaseSectionTitle_uz} en={homeData.showcaseSectionTitle_en} />
           </span>
         </div>
         <a
           href={`${base}/catalog/`}
           class="text-xs font-bold text-[#0A0A0A] hover:underline flex items-center space-x-1"
         >
-          <span>СМОТРЕТЬ ВСЕ 10+ КАТЕГОРИЙ</span>
+          <span>
+            <I18nText ru="СМОТРЕТЬ ВСЕ 10+ КАТЕГОРИЙ" uz="BARCHA 10+ GURUHNI KO'RISH" en="VIEW ALL 10+ CATEGORIES" />
+          </span>
           <span>→</span>
         </a>
       </div>
@@ -178,28 +211,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
               <div class="flex items-center justify-between font-mono text-xs border-b border-[#0A0A0A]/20 pb-2 mb-3">
                 <span class="font-bold text-[#0A0A0A]">{item.data.sku}</span>
                 <span class="px-2 py-0.5 text-[10px] font-bold border border-[#0A0A0A] bg-[#D4D8DC]">
-                  {item.data.status}
+                  <I18nText ru={item.data.status} uz={item.data.status_uz} en={item.data.status_en} />
                 </span>
               </div>
 
               <h3 class="font-sans font-bold text-base text-[#0A0A0A] mb-2 leading-snug group-hover:underline">
                 <a href={`${base}/catalog/${item.slug}`}>
-                  {item.data.title}
+                  <I18nText ru={item.data.title} uz={item.data.title_uz} en={item.data.title_en} />
                 </a>
               </h3>
 
               <div class="space-y-1.5 font-mono text-xs text-[#4A5056] my-4">
                 <div class="flex justify-between">
-                  <span>Стандарт:</span>
+                  <span><I18nText ru="Стандарт:" uz="Standart:" en="Standard:" /></span>
                   <span class="font-bold text-[#0A0A0A]">{item.data.gost}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span>ТН ВЭД:</span>
+                  <span><I18nText ru="ТН ВЭД:" uz="TQI TH:" en="HS Code:" /></span>
                   <span class="font-bold text-[#0A0A0A]">{item.data.tnved}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span>Спецификация:</span>
-                  <span class="text-[#0A0A0A] text-right truncate max-w-[180px]">{item.data.specs}</span>
+                  <span><I18nText ru="Спецификация:" uz="Spetsifikatsiya:" en="Specification:" /></span>
+                  <span class="text-[#0A0A0A] text-right truncate max-w-[180px]">
+                    <I18nText ru={item.data.specs} uz={item.data.specs_uz} en={item.data.specs_en} />
+                  </span>
                 </div>
               </div>
             </div>
@@ -209,7 +244,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                 href={`${base}/catalog/${item.slug}`}
                 class="flex-1 border border-[#0A0A0A] py-1.5 text-center hover:bg-[#0A0A0A] hover:text-white transition-colors"
               >
-                ПАСПОРТ ↗
+                <I18nText ru="ПАСПОРТ ↗" uz="PASPORT ↗" en="PASSPORT ↗" />
               </a>
               <button
                 type="button"
@@ -217,7 +252,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                 data-lead-subject={`Запрос счета на позицию ${item.data.title} (${item.data.sku})`}
                 class="flex-1 border border-[#0A0A0A] bg-[#0A0A0A] text-white py-1.5 text-center font-bold hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
               >
-                ЗАПРОС КП
+                <I18nText ru="ЗАПРОС КП" uz="SO'ROV" en="RFQ" />
               </button>
             </div>
           </div>
@@ -231,21 +266,21 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <div class="max-w-7xl mx-auto px-4">
       <div class="border-b border-[#0A0A0A] pb-3 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4 font-mono">
         <div>
-          <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2">
-            {homeData.blogBadge}
+          <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2 inline-block">
+            <I18nText ru={homeData.blogBadge} uz={homeData.blogBadge_uz} en={homeData.blogBadge_en} />
           </span>
           <span class="font-bold text-lg text-[#0A0A0A]">
-            {homeData.blogTitle}
+            <I18nText ru={homeData.blogTitle} uz={homeData.blogTitle_uz} en={homeData.blogTitle_en} />
           </span>
           <div class="text-xs text-[#4A5056] mt-1 font-mono">
-            {homeData.blogSubtitle}
+            <I18nText ru={homeData.blogSubtitle} uz={homeData.blogSubtitle_uz} en={homeData.blogSubtitle_en} />
           </div>
         </div>
         <a
           href={`${base}/blog/`}
           class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-4 py-2 text-xs font-bold whitespace-nowrap hover:bg-transparent hover:text-[#0A0A0A] transition-colors"
         >
-          [ ВСЕ ПУБЛИКАЦИИ (БЛОГ) → ]
+          <I18nText ru="[ ВСЕ ПУБЛИКАЦИИ (БЛОГ) → ]" uz="[ BARCHA MAQOLALAR (BLOG) → ]" en="[ ALL PUBLICATIONS (BLOG) → ]" />
         </a>
       </div>
 
@@ -255,7 +290,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <div>
               <div class="flex items-center justify-between font-mono text-xs border-b border-[#0A0A0A]/20 pb-2 mb-3">
                 <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#C8CDD2] text-[#0A0A0A] font-bold text-[10px]">
-                  {post.data.category}
+                  <I18nText ru={post.data.category} uz={post.data.category_uz} en={post.data.category_en} />
                 </span>
                 <span class="text-[#4A5056] text-[11px]">
                   {post.data.publishDate}
@@ -264,13 +299,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
               <h3 class="font-sans font-bold text-lg text-[#0A0A0A] mb-2 leading-snug group-hover:underline">
                 <a href={`${base}/blog/${post.slug}`}>
-                  {post.data.title}
+                  <I18nText ru={post.data.title} uz={post.data.title_uz} en={post.data.title_en} />
                 </a>
               </h3>
 
-              <p class="font-sans text-xs text-[#4A5056] leading-relaxed mb-4 line-clamp-3">
-                {post.data.summary}
-              </p>
+              <I18nText
+                as="p"
+                class="font-sans text-xs text-[#4A5056] leading-relaxed mb-4 line-clamp-3"
+                ru={post.data.summary}
+                uz={post.data.summary_uz}
+                en={post.data.summary_en}
+              />
             </div>
 
             <div class="pt-3 border-t border-[#0A0A0A]/20 flex items-center justify-between font-mono text-xs">
@@ -281,7 +320,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                 href={`${base}/blog/${post.slug}`}
                 class="font-bold text-[#0A0A0A] group-hover:underline flex items-center space-x-1"
               >
-                <span>Читать материал</span>
+                <span>
+                  <I18nText ru="Читать материал" uz="Maqolani o'qish" en="Read article" />
+                </span>
                 <span>→</span>
               </a>
             </div>
@@ -295,20 +336,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <section class="bg-[#D4D8DC] py-14">
     <div class="max-w-7xl mx-auto px-4">
       <div class="border-b border-[#0A0A0A] pb-3 mb-8 font-mono">
-        <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2">
-          {homeData.trustSectionBadge}
+        <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2 inline-block">
+          <I18nText ru={homeData.trustSectionBadge} uz={homeData.trustSectionBadge_uz} en={homeData.trustSectionBadge_en} />
         </span>
         <span class="font-bold text-lg text-[#0A0A0A]">
-          {homeData.trustSectionTitle}
+          <I18nText ru={homeData.trustSectionTitle} uz={homeData.trustSectionTitle_uz} en={homeData.trustSectionTitle_en} />
         </span>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 font-mono text-xs">
         {homeData.trustItems.map((item) => (
           <div class="border border-[#0A0A0A] p-4 bg-[#C8CDD2]">
-            <div class="font-bold text-sm text-[#0A0A0A] mb-2">{item.code}</div>
+            <div class="font-bold text-sm text-[#0A0A0A] mb-2">
+              <I18nText ru={item.code} uz={item.code_uz} en={item.code_en} />
+            </div>
             <p class="text-[#4A5056] leading-relaxed">
-              {item.text}
+              <I18nText ru={item.text} uz={item.text_uz} en={item.text_en} />
             </p>
           </div>
         ))}

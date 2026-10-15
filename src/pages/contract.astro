@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import { LandedCostCalculator } from '../components/islands/LandedCostCalculator';
 import { CadInspector } from '../components/islands/CadInspector';
 import FaqAccordion from '../components/FaqAccordion.astro';
+import I18nText from '../components/I18nText.astro';
 
 const contractSteps = await getCollection('contract');
 contractSteps.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
@@ -18,32 +19,44 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <div class="max-w-7xl mx-auto px-4 py-10 font-sans">
     <!-- Breadcrumbs -->
     <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-4">
-      <a href={`${base}/`} class="hover:underline">ГЛАВНАЯ</a>
+      <a href={`${base}/`} class="hover:underline">
+        <I18nText ru="ГЛАВНАЯ" uz="BOSH SAHIFA" en="HOME" />
+      </a>
       <span>/</span>
-      <span class="text-[#0A0A0A] font-bold">КОНТРАКТНЫЙ ВЭД ПОД КЛЮЧ (.CONTRACT)</span>
+      <span class="text-[#0A0A0A] font-bold">
+        <I18nText ru="КОНТРАКТНЫЙ ВЭД ПОД КЛЮЧ (.CONTRACT)" uz="KALIT TOPSHIRISH SHARTNOMAVIY TQI (.CONTRACT)" en="TURNKEY DDP IMPORT (.CONTRACT)" />
+      </span>
     </div>
 
     <!-- Header Section -->
     <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8">
       <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-3">
-        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
-          ВЭД ОПЕРАТОР DDP
+        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold inline-block">
+          <I18nText ru="ВЭД ОПЕРАТОР DDP" uz="DDP TQI OPERATORI" en="DDP TRADE OPERATOR" />
         </span>
-        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
-          86+ ЗАВОДОВ-ИЗГОТОВИТЕЛЕЙ
+        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A] inline-block">
+          <I18nText ru="86+ ЗАВОДОВ-ИЗГОТОВИТЕЛЕЙ" uz="86+ ISHLAB CHIQARUVCHI ZAVOD" en="86+ DIRECT MANUFACTURERS" />
         </span>
-        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold">
-          ФИКСАЦИЯ ЦЕНЫ В СУМАХ (UZS)
+        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold inline-block">
+          <I18nText ru="ФИКСАЦИЯ ЦЕНЫ В СУМАХ (UZS)" uz="SO'MDA NARXNI QAT'IY BELGILASH (UZS)" en="PRICE LOCKED IN UZS" />
         </span>
       </div>
 
-      <h1 class="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3">
-        КОНТРАКТНЫЕ ПОСТАВКИ ВЭД ПОД КЛЮЧ
-      </h1>
+      <I18nText
+        as="h1"
+        class="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3"
+        ru="КОНТРАКТНЫЕ ПОСТАВКИ ВЭД ПОД КЛЮЧ"
+        uz="KALIT TOPSHIRISH SHARTNOMAVIY TQI TA'MINOTI"
+        en="TURNKEY CONTRACTUAL DDP SUPPLIES"
+      />
 
-      <p class="text-base text-[#4A5056] max-w-3xl leading-relaxed">
-        Берем на себя полный цикл внешнеэкономической деятельности для промышленных предприятий, горно-металлургических комбинатов (НГМК, АГМК), цементных заводов и девелоперов Узбекистана. Поставка на условиях DDP Ташкент: вам не нужно открывать валютные паспорта сделок, искать брокеров или нести курсовые риски.
-      </p>
+      <I18nText
+        as="p"
+        class="text-base text-[#4A5056] max-w-3xl leading-relaxed"
+        ru="Берем на себя полный цикл внешнеэкономической деятельности для промышленных предприятий, горно-металлургических комбинатов (НГМК, АГМК), цементных заводов и девелоперов Узбекистана. Поставка на условиях DDP Ташкент: вам не нужно открывать валютные паспорта сделок, искать брокеров или нести курсовые риски."
+        uz="O'zbekiston sanoat korxonalari, tog'-kon metallurgiya kombinatlari (NKMK, OKMK), sement zavodlari va quruvchilari uchun tashqi iqtisodiy faoliyatning to'liq siklini o'z zimmamizga olamiz. DDP Toshkent shartida yetkazib berish: siz valyuta operatsiyalari pasportini ochishingiz, broker qidirishingiz yoki valyuta xatarlarini zimmangizga olishingiz shart emas."
+        en="We manage the entire international trade cycle for heavy industry, mining combines (NMMC, AMMC), cement plants, and infrastructure developers across Uzbekistan. Under DDP Tashkent terms, you don't need currency transaction passports, freight brokers, or foreign exchange exposure."
+      />
     </div>
 
     <!-- Top Two-Column Grid: CAD + Value Proposition -->
@@ -51,35 +64,55 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <div class="lg:col-span-7 flex flex-col space-y-6">
         <div class="border-2 border-[#0A0A0A] bg-[#C8CDD2] p-6 font-mono">
           <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A] pb-2 mb-4">
-            ПОЧЕМУ ПРОМЫШЛЕННЫЕ ГИГАНТЫ ВЫБИРАЮТ RAILTECH ДЛЯ ИМПОРТА:
+            <I18nText
+              ru="ПОЧЕМУ ПРОМЫШЛЕННЫЕ ГИГАНТЫ ВЫБИРАЮТ RAILTECH ДЛЯ ИМПОРТА:"
+              uz="NEGA SANOAT GIGANTLARI IMPORT UCHUN RAILTECH NI TANLAYDILAR:"
+              en="WHY INDUSTRIAL GIANTS CHOOSE RAILTECH FOR DDP IMPORT:"
+            />
           </div>
           <div class="space-y-4 text-xs">
             <div class="flex items-start space-x-3">
               <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-1.5 py-0.5 font-bold">01</span>
               <div>
-                <span class="font-bold text-[#0A0A0A] block">ПРЯМЫЕ ЗАВОДСКИЕ ЦЕНЫ БЕЗ ПОСРЕДНИКОВ</span>
-                <span class="text-[#4A5056]">Пул из 86+ аттестованных заводов тяжелого машиностроения Китая, РФ, Беларуси и стран ЕС.</span>
+                <span class="font-bold text-[#0A0A0A] block">
+                  <I18nText ru="ПРЯМЫЕ ЗАВОДСКИЕ ЦЕНЫ БЕЗ ПОСРЕДНИКОВ" uz="VOSITACHILARSIZ TO'G'RIDAN-TO'G'RI ZAVOD NARXLARI" en="DIRECT FACTORY PRICING WITHOUT INTERMEDIARIES" />
+                </span>
+                <span class="text-[#4A5056]">
+                  <I18nText ru="Пул из 86+ аттестованных заводов тяжелого машиностроения Китая, РФ, Беларуси и стран ЕС." uz="Xitoy, Rossiya, Belarus va YI ning 86+ attestatsiyadan o'tgan og'ir mashinasozlik zavodlari tarmog'i." en="Network of 86+ certified heavy machinery manufacturers across CIS, China, and the EU." />
+                </span>
               </div>
             </div>
             <div class="flex items-start space-x-3">
               <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-1.5 py-0.5 font-bold">02</span>
               <div>
-                <span class="font-bold text-[#0A0A0A] block">ПОЛНАЯ ФИКСАЦИЯ СТОИМОСТИ В СУМАХ (UZS)</span>
-                <span class="text-[#4A5056]">Фиксируем Landed Cost DDP на момент подписания договора. Валютные и логистические скачки берем на себя.</span>
+                <span class="font-bold text-[#0A0A0A] block">
+                  <I18nText ru="ПОЛНАЯ ФИКСАЦИЯ СТОИМОСТИ В СУМАХ (UZS)" uz="SO'MDA TO'LIQ QAT'IY NARX (UZS)" en="FULL PRICE LOCK IN UZBEK SUMS (UZS)" />
+                </span>
+                <span class="text-[#4A5056]">
+                  <I18nText ru="Фиксируем Landed Cost DDP на момент подписания договора. Валютные и логистические скачки берем на себя." uz="Shartnoma imzolangan paytda DDP Landed Cost ni qat'iy belgilaymiz. Valyuta va logistika tebranishlarini o'z zimmamizga olamiz." en="We lock Landed Cost DDP upon contract signing. We absorb all currency and freight rate volatility." />
+                </span>
               </div>
             </div>
             <div class="flex items-start space-x-3">
               <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-1.5 py-0.5 font-bold">03</span>
               <div>
-                <span class="font-bold text-[#0A0A0A] block">ВЫДЕЛЕННЫЙ НДС 12% В ЭСФ DIDOX</span>
-                <span class="text-[#4A5056]">100% легальный зачет налога на добавленную стоимость бухгалтерией вашего предприятия.</span>
+                <span class="font-bold text-[#0A0A0A] block">
+                  <I18nText ru="ВЫДЕЛЕННЫЙ НДС 12% В ЭСФ DIDOX" uz="DIDOX EHF DA 12% AJRATILGAN QQS" en="EXPLICIT 12% VAT IN DIDOX TAX INVOICE" />
+                </span>
+                <span class="text-[#4A5056]">
+                  <I18nText ru="100% легальный зачет налога на добавленную стоимость бухгалтерией вашего предприятия." uz="Korxonangiz buxgalteriyasi tomonidan qo'shilgan qiymat solig'ining 100% qonuniy hisobi." en="100% compliant input VAT deduction for your company's accounting." />
+                </span>
               </div>
             </div>
             <div class="flex items-start space-x-3">
               <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-1.5 py-0.5 font-bold">04</span>
               <div>
-                <span class="font-bold text-[#0A0A0A] block">ТАМОЖНЯ И ДЕФЕКТОСКОПИЯ В ТАШКЕНТЕ</span>
-                <span class="text-[#4A5056]">Собственные таможенные декларанты и складской терминал Index B2-2097 с ЖД путями.</span>
+                <span class="font-bold text-[#0A0A0A] block">
+                  <I18nText ru="ТАМОЖНЯ И ДЕФЕКТОСКОПИЯ В ТАШКЕНТЕ" uz="TOSHKENTDA BOJXONA VA DEFEKTOSKOPIYA" en="CUSTOMS CLEARANCE & DEFECTOSCOPY IN TASHKENT" />
+                </span>
+                <span class="text-[#4A5056]">
+                  <I18nText ru="Собственные таможенные декларанты и складской терминал Index B2-2097 с ЖД путями." uz="Shaxsiy bojxona deklarantlari va temir yo'l iziga ega Index B2-2097 ombor terminali." en="In-house customs brokers and Index B2-2097 terminal with direct heavy rail spur." />
+                </span>
               </div>
             </div>
           </div>
@@ -91,7 +124,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           client:load
           modelType="container"
           title="ИНТЕРМОДАЛЬНЫЙ КОНТЕЙНЕР 40FT"
+          titleUz="40FT INTERMODAL KONTEYNER"
+          titleEn="40FT INTERMODAL CONTAINER"
           subtitle="СЕТКА МУЛЬТИМОДАЛЬНЫХ Ж/Д ПЕРЕВОЗОК"
+          subtitleUz="MULTIMODAL TEMIR YO'L TASHISH TARMOG'I"
+          subtitleEn="MULTIMODAL RAIL FREIGHT NETWORK"
         />
       </div>
     </div>
@@ -99,11 +136,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <!-- Section: 4 Stages of VED Import -->
     <div class="border-b-2 border-[#0A0A0A] pb-4 mb-8">
       <div class="font-mono text-xs font-bold text-[#0A0A0A] uppercase tracking-wider">
-        ТЕХНОЛОГИЧЕСКИЙ РЕГЛАМЕНТ ПОСТАВКИ
+        <I18nText ru="ТЕХНОЛОГИЧЕСКИЙ РЕГЛАМЕНТ ПОСТАВКИ" uz="YETKAZIB BERISH TEXNOLOGIK REGLAMENTI" en="SUPPLY EXECUTION REGULATIONS" />
       </div>
-      <h2 class="text-2xl font-bold text-[#0A0A0A] mt-1">
-        4 ЭТАПА ПРОЕКТНОГО ИМПОРТА DDP ТАШКЕНТ
-      </h2>
+      <I18nText
+        as="h2"
+        class="text-2xl font-bold text-[#0A0A0A] mt-1"
+        ru="4 ЭТАПА ПРОЕКТНОГО ИМПОРТА DDP ТАШКЕНТ"
+        uz="DDP TOSHKENT LOYIHA IMPORTINING 4 BOSQICHI"
+        en="4 STAGES OF TURNKEY DDP TASHKENT IMPORT"
+      />
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
@@ -112,22 +153,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <div>
             <div class="flex items-center justify-between font-mono text-xs border-b border-[#0A0A0A]/30 pb-2 mb-3">
               <span class="font-bold text-[#0A0A0A] bg-[#0A0A0A] text-white px-1.5 py-0.5">{step.data.code}</span>
-              <span class="text-[#4A5056] text-[10px]">{step.data.tag}</span>
+              <span class="text-[#4A5056] text-[10px]">
+                <I18nText ru={step.data.tag} uz={step.data.tag_uz} en={step.data.tag_en} />
+              </span>
             </div>
 
             <h3 class="font-sans font-bold text-base text-[#0A0A0A] mb-2 leading-snug">
-              {step.data.title}
+              <I18nText ru={step.data.title} uz={step.data.title_uz} en={step.data.title_en} />
             </h3>
 
             <p class="text-xs text-[#4A5056] leading-relaxed mb-4">
-              {step.data.subtitle}
+              <I18nText ru={step.data.subtitle} uz={step.data.subtitle_uz} en={step.data.subtitle_en} />
             </p>
           </div>
 
           <div class="pt-3 border-t border-[#0A0A0A]/20 font-mono text-[11px] text-[#0A0A0A] space-y-1 bg-[#C8CDD2]/50 p-2.5">
-            {step.data.metrics.map((metric) => (
-              <div>• {metric}</div>
-            ))}
+            {step.data.metrics.map((metric, idx) => {
+              const metricUz = step.data.metrics_uz && step.data.metrics_uz[idx];
+              const metricEn = step.data.metrics_en && step.data.metrics_en[idx];
+              return (
+                <div>• <I18nText ru={metric} uz={metricUz} en={metricEn} /></div>
+              );
+            })}
           </div>
         </div>
       ))}
@@ -136,11 +183,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <!-- Section: Interactive Landed Cost Calculator -->
     <div class="mb-16">
       <div class="border-b-2 border-[#0A0A0A] pb-3 mb-6 font-mono">
-        <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2">
-          ФИНАНСОВЫЙ МОДУЛЬ
+        <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2 inline-block">
+          <I18nText ru="ФИНАНСОВЫЙ МОДУЛЬ" uz="MOLIYA MODULI" en="FINANCIAL MODULE" />
         </span>
         <span class="font-bold text-base text-[#0A0A0A]">
-          ИНТЕРАКТИВНЫЙ РАСЧЕТ LANDED COST DDP ТАШКЕНТ
+          <I18nText ru="ИНТЕРАКТИВНЫЙ РАСЧЕТ LANDED COST DDP ТАШКЕНТ" uz="LANDED COST DDP TOSHKENT INTERAKTIV HISOBI" en="INTERACTIVE LANDED COST DDP TASHKENT ESTIMATOR" />
         </span>
       </div>
 
@@ -150,9 +197,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <!-- Section: FAQ Accordion -->
     <div class="mb-16">
       <FaqAccordion
-        title="ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ ПО ВЭД И ПОСТАВКАМ DDP"
-        subtitle="Сроки калькуляции Landed Cost, работа с нерезидентами, таможенная очистка и гарантийные обязательства"
-        badge="РЕГЛАМЕНТ ИМПОРТА"
+        titleRu="ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ ПО ВЭД И ПОСТАВКАМ DDP"
+        titleUz="TQI VA DDP YETKAZIB BERISH BO'YICHA KO'P SO'RALADIGAN SAVOLLAR"
+        titleEn="FREQUENTLY ASKED QUESTIONS ON DDP TRADE & IMPORTS"
+        subtitleRu="Сроки калькуляции Landed Cost, работа с нерезидентами, таможенная очистка и гарантийные обязательства"
+        subtitleUz="Landed Cost hisoblash muddatlari, norezidentlar bilan ishlash, bojxona rasmiylashtiruvi va kafolat majburiyatlari"
+        subtitleEn="Landed Cost calculation timing, cross-border settlements, customs clearance, and warranty provisions"
+        badgeRu="РЕГЛАМЕНТ ИМПОРТА"
+        badgeUz="IMPORT REGLAMENTI"
+        badgeEn="IMPORT REGULATIONS"
       />
     </div>
 
@@ -161,10 +214,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <div class="space-y-2 max-w-2xl">
         <div class="text-sm font-bold text-[#0A0A0A] flex items-center space-x-2">
           <span class="w-3 h-3 bg-[#0A0A0A] inline-block"></span>
-          <span>ОТПРАВЬТЕ СПЕЦИФИКАЦИЮ ИЛИ ВЕДОМОСТЬ ПОТРЕБНОСТИ</span>
+          <span>
+            <I18nText
+              ru="ОТПРАВЬТЕ СПЕЦИФИКАЦИЮ ИЛИ ВЕДОМОСТЬ ПОТРЕБНОСТИ"
+              uz="SPETSIFIKATSIYA YOKI EHTIYOJ RO'YXATINI YUBORING"
+              en="SUBMIT YOUR SPECIFICATION OR BILL OF MATERIALS"
+            />
+          </span>
         </div>
         <p class="text-xs text-[#4A5056] font-sans leading-relaxed">
-          Загрузите перечень позиций в формате Excel (.xlsx) или PDF. Инженеры ООО «RailTech» подготовят расчет Landed Cost DDP Ташкент с указанием сроков поставки и паспортов заводов в течение 24 часов.
+          <I18nText
+            ru="Загрузите перечень позиций в формате Excel (.xlsx) или PDF. Инженеры ООО «RailTech» подготовят расчет Landed Cost DDP Ташкент с указанием сроков поставки и паспортов заводов в течение 24 часов."
+            uz="Pozitsiyalar ro'yxatini Excel (.xlsx) yoki PDF formatida yuklang. «RailTech» MChJ muhandislari yetkazib berish muddatlari va zavod pasportlari bilan 24 soat ichida Landed Cost DDP Toshkent hisobini tayyorlaydilar."
+            en="Upload your requirements list in Excel (.xlsx) or PDF format. RailTech engineers will deliver a comprehensive Landed Cost DDP Tashkent estimate with delivery timelines within 24 hours."
+          />
         </p>
       </div>
 
@@ -174,7 +237,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         data-lead-subject="Запрос расчета спецификации ВЭД DDP Ташкент"
         class="border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white px-8 py-3.5 text-xs font-bold whitespace-nowrap hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
       >
-        [ ЗАГРУЗИТЬ СПЕЦИФИКАЦИЮ (EXCEL / PDF) ]
+        <I18nText
+          ru="[ ЗАГРУЗИТЬ СПЕЦИФИКАЦИЮ (EXCEL / PDF) ]"
+          uz="[ SPETSIFIKATSIYANI YUKLASH (EXCEL / PDF) ]"
+          en="[ UPLOAD SPECIFICATION (EXCEL / PDF) ]"
+        />
       </button>
     </div>
   </div>

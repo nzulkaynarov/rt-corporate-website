@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import I18nText from '../components/I18nText.astro';
 import globalData from '../data/cms/global.json';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -13,109 +14,286 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <div class="max-w-4xl mx-auto px-4 py-10 font-sans">
     <!-- Breadcrumbs -->
     <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-4">
-      <a href={`${base}/`} class="hover:underline">ГЛАВНАЯ</a>
+      <a href={`${base}/`} class="hover:underline">
+        <I18nText ru="ГЛАВНАЯ" uz="BOSH SAHIFA" en="HOME" />
+      </a>
       <span>/</span>
-      <span class="text-[#0A0A0A] font-bold">ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ (.LEGAL)</span>
+      <span class="text-[#0A0A0A] font-bold">
+        <I18nText
+          ru="ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ (.LEGAL)"
+          uz="MAXFIYLIK SIYOSATI (.LEGAL)"
+          en="PRIVACY POLICY (.LEGAL)"
+        />
+      </span>
     </div>
 
     <!-- Header Section -->
     <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8 font-mono">
       <div class="flex flex-wrap items-center gap-2 text-xs mb-3">
-        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
-          ЗРУ-547 ОТ 02.07.2019
+        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold inline-block">
+          <I18nText ru="ЗРУ-547 ОТ 02.07.2019" uz="O'RQ-547 (02.07.2019)" en="LAW NO. ZRU-547 (02.07.2019)" />
         </span>
-        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
-          РЕСПУБЛИКА УЗБЕКИСТАН
+        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A] inline-block">
+          <I18nText ru="РЕСПУБЛИКА УЗБЕКИСТАН" uz="O'ZBEKISTON RESPUBLIKASI" en="REPUBLIC OF UZBEKISTAN" />
         </span>
-        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold">
-          ВЕРСИЯ: 2026.1
+        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold inline-block">
+          <I18nText ru="ВЕРСИЯ: 2026.1" uz="TAHRIR: 2026.1" en="EDITION: 2026.1" />
         </span>
       </div>
 
-      <h1 class="font-sans text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-2">
-        ПОЛИТИКА ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ
-      </h1>
+      <I18nText
+        as="h1"
+        class="font-sans text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-2"
+        ru="ПОЛИТИКА ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ"
+        uz="SHAXSIY MA'LUMOTLARNI QAYTA ISHLASH SIYOSATI"
+        en="PERSONAL DATA PROCESSING & PRIVACY POLICY"
+      />
 
       <p class="text-sm text-[#4A5056]">
-        Регулирует сбор, систематизацию, хранение и защиту информации пользователей порталов <span class="font-bold text-[#0A0A0A]">railtech.uz</span> и <span class="font-bold text-[#0A0A0A]">b2b.railtech.uz</span>.
+        <I18nText
+          ru="Регулирует сбор, систематизацию, хранение и защиту информации пользователей порталов railtech.uz и b2b.railtech.uz."
+          uz="railtech.uz va b2b.railtech.uz portallari foydalanuvchilari ma'lumotlarini to'plash, tizimlashtirish, saqlash va himoya qilishni tartibga soladi."
+          en="Governs collection, systematization, storage, and protection of user data across railtech.uz and b2b.railtech.uz portals."
+        />
       </p>
     </div>
 
     <!-- Document Content -->
     <div class="border border-[#0A0A0A] bg-[#D4D8DC] p-6 lg:p-8 font-mono text-xs space-y-6 leading-relaxed">
-      <div>
-        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
-          1. ОБЩИЕ ПОЛОЖЕНИЯ И ПРАВОВЫЕ ОСНОВАНИЯ
+      <!-- RU VERSION -->
+      <div class="rt-lang rt-lang-ru space-y-6">
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            1. ОБЩИЕ ПОЛОЖЕНИЯ И ПРАВОВЫЕ ОСНОВАНИЯ
+          </div>
+          <p class="text-[#4A5056] font-sans">
+            Настоящая Политика разработана в строгом соответствии с Законом Республики Узбекистан от 2 июля 2019 года № ЗРУ-547 «О персональных данных». Оператором базы персональных данных выступает {globalData.companyName} (юридический адрес: {globalData.address}, ИНН: {globalData.inn}). Политика определяет порядок взаимодействия с субъектами персональных данных при использовании публичного веб-сайта railtech.uz и закрытого оптового B2B-портала b2b.railtech.uz.
+          </p>
         </div>
-        <p class="text-[#4A5056] font-sans">
-          Настоящая Политика разработана в строгом соответствии с Законом Республики Узбекистан от 2 июля 2019 года № ЗРУ-547 «О персональных данных». Оператором базы персональных данных выступает {globalData.companyName} (юридический адрес: {globalData.address}, ИНН: {globalData.inn}). Политика определяет порядок взаимодействия с субъектами персональных данных при использовании публичного веб-сайта railtech.uz и закрытого оптового B2B-портала b2b.railtech.uz.
-        </p>
+
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            2. КАТЕГОРИИ СОБИРАЕМЫХ ДАННЫХ
+          </div>
+          <p class="text-[#4A5056] font-sans mb-3">
+            Оператор обрабатывает следующие категории данных, предоставляемых субъектами добровольно либо собираемых автоматически:
+          </p>
+          <ul class="list-disc pl-5 space-y-1 text-[#0A0A0A] font-sans">
+            <li><strong>Идентификационные данные представителей:</strong> фамилия, имя, отчество уполномоченного лица или контактного менеджера предприятия-заказчика.</li>
+            <li><strong>Реквизиты организации:</strong> наименование юридического лица, ИНН предприятия, ОКЭД, юридический и фактический адрес, банковские реквизиты.</li>
+            <li><strong>Связующие контакты:</strong> номер мобильного или рабочего телефона, корпоративный адрес электронной почты.</li>
+            <li><strong>Файлы спецификаций и ведомостей:</strong> загружаемые чертежи, заявки в форматах .xlsx, .pdf, .doc, содержащие номенклатурные списки и реквизиты заявителя.</li>
+            <li><strong>Служебные телеметрические данные:</strong> сетевой IP-адрес, тип браузера, файлы cookie для сессионной авторизации в личном кабинете b2b.railtech.uz.</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            3. ЦЕЛИ ОБРАБОТКИ И ПРОЦЕДУРА KYC (ЗНАЙ СВОЕГО КЛИЕНТА)
+          </div>
+          <p class="text-[#4A5056] font-sans mb-2">
+            Сбор данных осуществляется исключительно в целях обеспечения законной предпринимательской деятельности в сфере оптовых ЖД поставок:
+          </p>
+          <ul class="list-disc pl-5 space-y-1 text-[#0A0A0A] font-sans">
+            <li>Проведение обязательной юридической верификации контрагента (KYC) перед предоставлением оптовых прейскурантов и заключением договоров.</li>
+            <li>Формирование и выставление официальных коммерческих предложений, калькуляций Landed Cost DDP Ташкент и счетов-фактур.</li>
+            <li>Исполнение договоров поставки, организация транспортной логистики и отгрузок со склада Index B2-2097.</li>
+            <li>Регистрация электронных счетов-фактур (ЭСФ) в государственных информационных системах (Didox, Soliq).</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            4. СРОКИ И ПОРЯДОК ХРАНЕНИЯ ДАННЫХ
+          </div>
+          <p class="text-[#4A5056] font-sans">
+            Хранение персональных данных осуществляется на серверах, расположенных в защищенном контуре в соответствии со статьей 27-1 Закона № ЗРУ-547:
+          </p>
+          <ul class="list-disc pl-5 space-y-1 text-[#0A0A0A] font-sans mt-2">
+            <li><strong>Данные заключенных договоров, спецификаций и ЭСФ:</strong> хранятся в течение <strong>5 (пяти) лет</strong> с момента завершения сделки согласно налоговому и архивному законодательству РУз.</li>
+            <li><strong>Данные форм обратной связи и предварительных запросов КП:</strong> хранятся в течение <strong>3 (трех) лет</strong> с момента первичного обращения либо до момента отзыва согласия субъектом.</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            5. БЕЗОПАСНОСТЬ И НЕДОПУЩЕНИЕ ПЕРЕДАЧИ ТРЕТЬИМ ЛИЦАМ
+          </div>
+          <p class="text-[#4A5056] font-sans">
+            ООО «RailTech» гарантирует конфиденциальность коммерческой информации и персональных данных. Передача сведений третьим лицам категорически исключена, за исключением случаев, прямо предусмотренных законодательством Республики Узбекистан (запросы налоговых, судебных или следственных органов в рамках их законных полномочий). Все сетевые соединения защищены протоколами TLS 1.3 с криптографическим шифрованием.
+          </p>
+        </div>
+
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            6. КОНТАКТНЫЙ ОФИС ПО ВОПРОСАМ ПЕРСОНАЛЬНЫХ ДАННЫХ
+          </div>
+          <p class="text-[#4A5056] font-sans">
+            По любым вопросам актуализации, уточнения, блокировки или отзыва согласия на обработку персональных данных направляйте официальный запрос уполномоченному лицу по адресу:
+          </p>
+          <div class="border border-[#0A0A0A]/40 bg-[#C8CDD2] p-3 mt-2 text-[#0A0A0A]">
+            <div>E-MAIL: <a href={`mailto:${globalData.emailPrivacy}`} class="font-bold underline">{globalData.emailPrivacy}</a></div>
+            <div>ПОЧТОВЫЙ АДРЕС: 100140, г. Ташкент, ТПК Index, Блок B2, Офис 2097</div>
+            <div>ОТВЕТСТВЕННЫЙ: Служба информационной безопасности и комплаенс ООО «RailTech»</div>
+          </div>
+        </div>
       </div>
 
-      <div>
-        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
-          2. КАТЕГОРИИ СОБИРАЕМЫХ ДАННЫХ
+      <!-- UZ VERSION -->
+      <div class="rt-lang rt-lang-uz space-y-6">
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            1. UMUMIY QOIDALAR VA HUQUQIY ASOSLAR
+          </div>
+          <p class="text-[#4A5056] font-sans">
+            Mazkur Siyosat O'zbekiston Respublikasining 2019-yil 2-iyuldagi «Shaxsiy ma'lumotlar to'g'risida»gi O'RQ-547-son Qonuniga muvofiq ishlab chiqilgan. Shaxsiy ma'lumotlar bazasi operatori sifatida «RailTech» MChJ (yuridik manzili: {globalData.address_uz || globalData.address}, STIR: {globalData.inn}) faoliyat yuritadi. Ushbu hujjat railtech.uz ommaviy veb-sayti va b2b.railtech.uz yopiq ulgurji B2B-portali orqali foydalanuvchilarning ma'lumotlarini himoya qilish tartibini belgilaydi.
+          </p>
         </div>
-        <p class="text-[#4A5056] font-sans mb-3">
-          Оператор обрабатывает следующие категории данных, предоставляемых субъектами добровольно либо собираемых автоматически:
-        </p>
-        <ul class="list-disc pl-5 space-y-1 text-[#0A0A0A] font-sans">
-          <li><strong>Идентификационные данные представителей:</strong> фамилия, имя, отчество уполномоченного лица или контактного менеджера предприятия-заказчика.</li>
-          <li><strong>Реквизиты организации:</strong> наименование юридического лица, ИНН предприятия, ОКЭД, юридический и фактический адрес, банковские реквизиты.</li>
-          <li><strong>Связующие контакты:</strong> номер мобильного или рабочего телефона, корпоративный адрес электронной почты.</li>
-          <li><strong>Файлы спецификаций и ведомостей:</strong> загружаемые чертежи, заявки в форматах .xlsx, .pdf, .doc, содержащие номенклатурные списки и реквизиты заявителя.</li>
-          <li><strong>Служебные телеметрические данные:</strong> сетевой IP-адрес, тип браузера, файлы cookie для сессионной авторизации в личном кабинете b2b.railtech.uz.</li>
-        </ul>
+
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            2. QAYTA ISHLANADIGAN MA'LUMOTLAR TOIFALARI
+          </div>
+          <p class="text-[#4A5056] font-sans mb-3">
+            Operator foydalanuvchilar tomonidan ixtiyoriy ravishda taqdim etiladigan yoki avtomatik tarzda yig'iladigan quyidagi ma'lumotlarni qayta ishlaydi:
+          </p>
+          <ul class="list-disc pl-5 space-y-1 text-[#0A0A0A] font-sans">
+            <li><strong>Vakillarning shaxsini tasdiqlovchi ma'lumotlar:</strong> korxona vakili yoki aloqa menejerining familiyasi, ismi va sharifi.</li>
+            <li><strong>Tashkilot rekvizitlari:</strong> yuridik shaxsning to'liq nomi, korxona STIRi, IFUT kodi, yuridik va amaldagi manzili, bank rekvizitlari.</li>
+            <li><strong>Bog'lanish kontaktlari:</strong> mobil yoki xizmat telefon raqami, korporativ elektron pochta manzili.</li>
+            <li><strong>Spetsifikatsiyalar va talabnomalar:</strong> yuklanayotgan chizmalar, tovarlar ro'yxatini o'z ichiga olgan .xlsx, .pdf, .doc formatidagi arizalar.</li>
+            <li><strong>Xizmat telemetriyasi:</strong> tarmoq IP-manzili, brauzer turi, b2b.railtech.uz shaxsiy kabinetida sessiya uchun cookie fayllari.</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            3. QAYTA ISHLASH MAQSADLARI VA KYC PROCEDURASI
+          </div>
+          <p class="text-[#4A5056] font-sans mb-2">
+            Ma'lumotlar faqat temir yo'l ta'minoti va shartnomaviy import sohasidagi qonuniy tadbirkorlik faoliyatini ta'minlash maqsadida yig'iladi:
+          </p>
+          <ul class="list-disc pl-5 space-y-1 text-[#0A0A0A] font-sans">
+            <li>Ulgurji narxlarni taqdim etish va shartnomalar tuzishdan oldin kontragentni majburiy yuridik tekshiruvdan (KYC) o'tkazish.</li>
+            <li>Rasmiy tijorat takliflari, Landed Cost DDP Toshkent hisob-kitoblari va hisob-fakturalarni shakllantirish.</li>
+            <li>Yetkazib berish shartnomalarini ijro etish, Index B2-2097 omboridan transport logistikasi va yuklashni tashkil qilish.</li>
+            <li>Elektron hisob-fakturalarni (EHF) davlat axborot tizimlarida (Didox, Soliq) ro'yxatdan o'tkazish.</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            4. MA'LUMOTLARNI SAQLASH MUDDATLARI VA TARTIBI
+          </div>
+          <p class="text-[#4A5056] font-sans">
+            Shaxsiy ma'lumotlar O'RQ-547 Qonunining 27-1-moddasiga muvofiq O'zbekiston hududidagi himoyalangan serverlarda saqlanadi:
+          </p>
+          <ul class="list-disc pl-5 space-y-1 text-[#0A0A0A] font-sans mt-2">
+            <li><strong>Tuzilgan shartnomalar, spetsifikatsiyalar va EHF ma'lumotlari:</strong> soliq va arxiv qonunchiligiga muvofiq bitim yakunlangan kundan boshlab <strong>5 (besh) yil</strong> davomida saqlanadi.</li>
+            <li><strong>Qayta aloqa shakllari va dastlabki so'rovlar ma'lumotlari:</strong> birlamchi murojaatdan boshlab <strong>3 (uch) yil</strong> davomida saqlanadi.</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            5. XAVFSIZLIK VA UCHINCHI SHAXSLARGA BERMASLIK KAFOLATI
+          </div>
+          <p class="text-[#4A5056] font-sans">
+            «RailTech» MChJ tijorat ma'lumotlari va shaxsiy ma'lumotlarning to'liq maxfiyligini kafolatlaydi. O'zbekiston Respublikasi qonunchiligida to'g'ridan-to'g'ri ko'zda tutilgan holatlardan tashqari (vakolatli davlat organlarining qonuniy so'rovlari), ma'lumotlarni uchinchi shaxslarga berish qat'iyan taqiqlanadi. Barcha tarmoq ulanishlari TLS 1.3 protokoli bilan kriptografik himoyalangan.
+          </p>
+        </div>
+
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            6. SHAXSIY MA'LUMOTLAR BO'YICHA BOG'LANISH OFISI
+          </div>
+          <p class="text-[#4A5056] font-sans">
+            Shaxsiy ma'lumotlarni yangilash, aniqlashtirish yoki qayta ishlashga berilgan rozilikni qaytarib olish masalalari bo'yicha quyidagi manzilga rasmiy so'rov yuborishingiz mumkin:
+          </p>
+          <div class="border border-[#0A0A0A]/40 bg-[#C8CDD2] p-3 mt-2 text-[#0A0A0A]">
+            <div>E-MAIL: <a href={`mailto:${globalData.emailPrivacy}`} class="font-bold underline">{globalData.emailPrivacy}</a></div>
+            <div>POCHTA MANZILI: 100140, Toshkent sh., Index SICHM, B2 bloki, 2097-ofis</div>
+            <div>MAS'UL: «RailTech» MChJ axborot xavfsizligi va komplayens xizmati</div>
+          </div>
+        </div>
       </div>
 
-      <div>
-        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
-          3. ЦЕЛИ ОБРАБОТКИ И ПРОЦЕДУРА KYC (ЗНАЙ СВОЕГО КЛИЕНТА)
+      <!-- EN VERSION -->
+      <div class="rt-lang rt-lang-en space-y-6">
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            1. GENERAL PROVISIONS & STATUTORY BASIS
+          </div>
+          <p class="text-[#4A5056] font-sans">
+            This Policy is executed in strict adherence to Law of the Republic of Uzbekistan No. ZRU-547 «On Personal Data» dated July 2, 2019. The personal data controller is {globalData.companyName} (registered office: {globalData.address_en || globalData.address}, TIN: {globalData.inn}). This document defines the policies regarding the processing of data collected through railtech.uz and the wholesale portal b2b.railtech.uz.
+          </p>
         </div>
-        <p class="text-[#4A5056] font-sans mb-2">
-          Сбор данных осуществляется исключительно в целях обеспечения законной предпринимательской деятельности в сфере оптовых ЖД поставок:
-        </p>
-        <ul class="list-disc pl-5 space-y-1 text-[#0A0A0A] font-sans">
-          <li>Проведение обязательной юридической верификации контрагента (KYC) перед предоставлением оптовых прейскурантов и заключением договоров.</li>
-          <li>Формирование и выставление официальных коммерческих предложений, калькуляций Landed Cost DDP Ташкент и счетов-фактур.</li>
-          <li>Исполнение договоров поставки, организация транспортной логистики и отгрузок со склада Index B2-2097.</li>
-          <li>Регистрация электронных счетов-фактур (ЭСФ) в государственных информационных системах (Didox, Soliq).</li>
-        </ul>
-      </div>
 
-      <div>
-        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
-          4. СРОКИ И ПОРЯДОК ХРАНЕНИЯ ДАННЫХ
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            2. CATEGORIES OF PROCESSED DATA
+          </div>
+          <p class="text-[#4A5056] font-sans mb-3">
+            The Operator processes the following data categories provided voluntarily by counterparties or collected via platform telemetry:
+          </p>
+          <ul class="list-disc pl-5 space-y-1 text-[#0A0A0A] font-sans">
+            <li><strong>Representative Identity Data:</strong> full legal name of authorized representatives or procurement managers.</li>
+            <li><strong>Corporate Requisites:</strong> legal entity name, Taxpayer Identification Number (TIN/INN), primary industry code (OKED/NACE), registered and operating addresses, banking coordinates.</li>
+            <li><strong>Direct Contact Details:</strong> corporate phone numbers and authorized corporate email addresses.</li>
+            <li><strong>Bills of Materials & Inquiries:</strong> technical drawings and specifications submitted in .xlsx, .pdf, or .doc formats.</li>
+            <li><strong>Service Telemetry:</strong> client IP address, user-agent string, and authentication cookies for session security on b2b.railtech.uz.</li>
+          </ul>
         </div>
-        <p class="text-[#4A5056] font-sans">
-          Хранение персональных данных осуществляется на серверах, расположенных в защищенном контуре в соответствии со статьей 27-1 Закона № ЗРУ-547:
-        </p>
-        <ul class="list-disc pl-5 space-y-1 text-[#0A0A0A] font-sans mt-2">
-          <li><strong>Данные заключенных договоров, спецификаций и ЭСФ:</strong> хранятся в течение <strong>5 (пяти) лет</strong> с момента завершения сделки согласно налоговому и архивному законодательству РУз.</li>
-          <li><strong>Данные форм обратной связи и предварительных запросов КП:</strong> хранятся в течение <strong>3 (трех) лет</strong> с момента первичного обращения либо до момента отзыва согласия субъектом.</li>
-        </ul>
-      </div>
 
-      <div>
-        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
-          5. БЕЗОПАСНОСТЬ И НЕДОПУЩЕНИЕ ПЕРЕДАЧИ ТРЕТЬИМ ЛИЦАМ
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            3. PURPOSES OF PROCESSING & KYC VERIFICATION
+          </div>
+          <p class="text-[#4A5056] font-sans mb-2">
+            Data processing is strictly conducted for legitimate commercial operations in heavy railway supply and industrial imports:
+          </p>
+          <ul class="list-disc pl-5 space-y-1 text-[#0A0A0A] font-sans">
+            <li>Performing mandatory Know-Your-Customer (KYC) corporate vetting prior to disclosing wholesale price schedules.</li>
+            <li>Formulating commercial proposals, Landed Cost DDP Tashkent calculations, and pro-forma invoices.</li>
+            <li>Fulfilling supply agreements, arranging customs transit, and dispatching cargo from Index B2-2097 terminal.</li>
+            <li>Registering statutory Electronic Invoices (ESF) within state tax platforms (Didox, Soliq).</li>
+          </ul>
         </div>
-        <p class="text-[#4A5056] font-sans">
-          ООО «RailTech» гарантирует конфиденциальность коммерческой информации и персональных данных. Передача сведений третьим лицам категорически исключена, за исключением случаев, прямо предусмотренных законодательством Республики Узбекистан (запросы налоговых, судебных или следственных органов в рамках их законных полномочий). Все сетевые соединения защищены протоколами TLS 1.3 с криптографическим шифрованием.
-        </p>
-      </div>
 
-      <div>
-        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
-          6. КОНТАКТНЫЙ ОФИС ПО ВОПРОСАМ ПЕРСОНАЛЬНЫХ ДАННЫХ
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            4. RETENTION TIMEFRAMES AND DATA ARCHIVAL
+          </div>
+          <p class="text-[#4A5056] font-sans">
+            Personal data is maintained on secured servers within Uzbekistan pursuant to Article 27-1 of Law No. ZRU-547:
+          </p>
+          <ul class="list-disc pl-5 space-y-1 text-[#0A0A0A] font-sans mt-2">
+            <li><strong>Executed contracts, specifications, and invoices:</strong> retained for <strong>5 (five) years</strong> following transaction completion pursuant to Uzbek tax and accounting statutes.</li>
+            <li><strong>General inquiries and quotation requests:</strong> retained for <strong>3 (three) years</strong> from date of initial contact or until consent is revoked.</li>
+          </ul>
         </div>
-        <p class="text-[#4A5056] font-sans">
-          По любым вопросам актуализации, уточнения, блокировки или отзыва согласия на обработку персональных данных направляйте официальный запрос уполномоченному лицу по адресу:
-        </p>
-        <div class="border border-[#0A0A0A]/40 bg-[#C8CDD2] p-3 mt-2 text-[#0A0A0A]">
-          <div>E-MAIL: <a href={`mailto:${globalData.emailPrivacy}`} class="font-bold underline">{globalData.emailPrivacy}</a></div>
-          <div>ПОЧТОВЫЙ АДРЕС: 100140, г. Ташкент, ТПК Index, Блок B2, Офис 2097</div>
-          <div>ОТВЕТСТВЕННЫЙ: Служба информационной безопасности и комплаенс ООО «RailTech»</div>
+
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            5. DATA SECURITY & THIRD-PARTY SHARING RESTRICTIONS
+          </div>
+          <p class="text-[#4A5056] font-sans">
+            RailTech LLC guarantees strict confidentiality of all commercial and personal data. Third-party disclosure is prohibited, except when explicitly required by law (formal statutory requests from tax authorities or courts within their jurisdiction). All web connections are secured with TLS 1.3 cryptographic protocols.
+          </p>
+        </div>
+
+        <div>
+          <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+            6. PRIVACY & COMPLIANCE OFFICE
+          </div>
+          <p class="text-[#4A5056] font-sans">
+            For all queries regarding updating, rectifying, or withdrawing consent for personal data processing, please contact:
+          </p>
+          <div class="border border-[#0A0A0A]/40 bg-[#C8CDD2] p-3 mt-2 text-[#0A0A0A]">
+            <div>E-MAIL: <a href={`mailto:${globalData.emailPrivacy}`} class="font-bold underline">{globalData.emailPrivacy}</a></div>
+            <div>POSTAL ADDRESS: 100140, Tashkent, Index Complex, Block B2, Office 2097</div>
+            <div>RESPONSIBLE DESK: Compliance & Information Security Service, RailTech LLC</div>
+          </div>
         </div>
       </div>
     </div>

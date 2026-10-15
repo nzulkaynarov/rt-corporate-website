@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import type { Lang } from '../../i18n/ui';
 
 export const ContactsLeadForm: React.FC = () => {
+  const [lang, setLang] = useState<Lang>('ru');
   const [name, setName] = useState('');
   const [company, setCompany] = useState('');
   const [inn, setInn] = useState('');
@@ -13,11 +15,43 @@ export const ContactsLeadForm: React.FC = () => {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
+  useEffect(() => {
+    const cur = (document.documentElement.lang as Lang) || 
+      ((typeof localStorage !== 'undefined' ? localStorage.getItem('rt_lang') : null) as Lang) || 
+      'ru';
+    if (cur === 'ru' || cur === 'uz' || cur === 'en') {
+      setLang(cur);
+      if (cur === 'uz') {
+        setSubject('Aloqa sahifasidan hisob va konsultatsiya so\'rovi');
+      } else if (cur === 'en') {
+        setSubject('Inquiry for Invoice and Consultation from Contacts Page');
+      }
+    }
+
+    const handleLang = (e: Event) => {
+      const customEvent = e as CustomEvent<Lang>;
+      if (customEvent.detail && (customEvent.detail === 'ru' || customEvent.detail === 'uz' || customEvent.detail === 'en')) {
+        const l = customEvent.detail;
+        setLang(l);
+        if (l === 'uz') {
+          setSubject('Aloqa sahifasidan hisob va konsultatsiya so\'rovi');
+        } else if (l === 'en') {
+          setSubject('Inquiry for Invoice and Consultation from Contacts Page');
+        } else {
+          setSubject('Запрос счета и консультации со страницы Контакты');
+        }
+      }
+    };
+
+    window.addEventListener('rt-lang-change', handleLang);
+    return () => window.removeEventListener('rt-lang-change', handleLang);
+  }, []);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
     if (selected) {
       if (selected.size > 25 * 1024 * 1024) {
-        alert('Размер файла не должен превышать 25 МБ');
+        alert(lang === 'uz' ? 'Fayl hajmi 25 MB dan oshmasligi kerak' : lang === 'en' ? 'File size must not exceed 25 MB' : 'Размер файла не должен превышать 25 МБ');
         return;
       }
       setFile(selected);
@@ -39,14 +73,14 @@ export const ContactsLeadForm: React.FC = () => {
   };
 
   const formattedMsg = [
-    '🛠 ЗАЯВКА С САЙТА RAILTECH.UZ (СТРАНИЦА КОНТАКТОВ)',
-    `Тема: ${subject}`,
-    `Контакт: ${name || '-'}`,
-    `Организация: ${company || '-'}`,
-    `ИНН: ${inn || '-'}`,
-    `Телефон: ${phone || '-'}`,
-    `Сообщение: ${message || '-'}`,
-    fileName ? `Файл: ${fileName}` : null,
+    '🛠 ZAIAVKA S SAYTA RAILTECH.UZ (CONTACTS)',
+    `Mavzu / Тема: ${subject}`,
+    `Aloqa / Контакт: ${name || '-'}`,
+    `Tashkilot / Организация: ${company || '-'}`,
+    `STIR / ИНН: ${inn || '-'}`,
+    `Telefon / Телефон: ${phone || '-'}`,
+    `Xabar / Сообщение: ${message || '-'}`,
+    fileName ? `Fayl: ${fileName}` : null,
   ].filter(Boolean).join('\n');
 
   const tgShareUrl = `https://t.me/railtech_uz?text=${encodeURIComponent(formattedMsg)}`;
@@ -73,50 +107,43 @@ export const ContactsLeadForm: React.FC = () => {
         subject,
         message,
         comment: message,
-        fileName: file ? file.name : '',
-        fileSize: fileSizeStr,
-        fileBase64,
+        fileName: fileName || undefined,
+        fileBase64: fileBase64 || undefined,
+        fileSize: fileSizeStr || undefined,
+        source: 'railtech-contacts-page',
         timestamp: new Date().toISOString(),
+        locale: lang,
       };
 
-      const webhookUrl = import.meta.env.PUBLIC_LEAD_WEBHOOK_URL || import.meta.env.PUBLIC_WEBHOOK_URL;
-      const tgBotToken = import.meta.env.PUBLIC_TG_BOT_TOKEN;
-      const tgChatId = import.meta.env.PUBLIC_TG_CHAT_ID;
-
+      const workerEndpoint = import.meta.env.PUBLIC_LEAD_WORKER_URL;
       let sent = false;
 
-      if (webhookUrl && webhookUrl.trim() !== '') {
+      if (workerEndpoint && workerEndpoint.startsWith('http')) {
         try {
-          const res = await fetch(webhookUrl, {
+          const res = await fetch(workerEndpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
           });
           if (res.ok) sent = true;
-        } catch (webhookErr) {
-          console.warn('[ContactsForm] Webhook failed, attempting fallback:', webhookErr);
+        } catch (netErr) {
+          console.warn('[ContactsForm] Worker fetch failed:', netErr);
         }
       }
 
-      if (!sent && tgBotToken && tgChatId) {
-        try {
-          const tgText = [
-            '🛠 *НОВАЯ ЗАЯВКА С САЙТА RAILTECH.UZ*',
-            `📌 *Тема:* ${subject}`,
-            `👤 *Контакт:* ${name}`,
-            `🏢 *Организация:* ${company} (ИНН: ${inn || 'не указан'})`,
-            `📞 *Телефон:* ${phone}`,
-            `📋 *Задача:* ${message || 'Запрос со страницы Контакты'}`,
-            fileName ? `📎 *Прикреплен файл:* ${fileName} (${fileSizeStr})` : null,
-          ].filter(Boolean).join('\n');
+      const botToken = import.meta.env.PUBLIC_TELEGRAM_BOT_TOKEN;
+      const chatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID;
 
-          const tgRes = await fetch(`https://api.telegram.org/bot${tgBotToken}/sendMessage`, {
+      if (!sent && botToken && chatId) {
+        try {
+          const tgUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+          const tgRes = await fetch(tgUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              chat_id: tgChatId,
-              text: tgText,
-              parse_mode: 'Markdown',
+              chat_id: chatId,
+              text: formattedMsg,
+              parse_mode: 'HTML',
             }),
           });
           if (tgRes.ok) sent = true;
@@ -143,7 +170,13 @@ export const ContactsLeadForm: React.FC = () => {
       }, 4000);
     } catch (err: any) {
       console.error('[ContactsForm] Error:', err);
-      setErrorMsg('Произошла ошибка при отправке. Пожалуйста, используйте кнопку отправки в Telegram или позвоните нам.');
+      setErrorMsg(
+        lang === 'uz'
+          ? 'Yuborishda xatolik yuz berdi. Iltimos, Telegram orqali yuboring yoki bizga qo\'ng\'iroq qiling.'
+          : lang === 'en'
+          ? 'Error occurred while sending. Please use Telegram button or contact us by phone.'
+          : 'Произошла ошибка при отправке. Пожалуйста, используйте кнопку отправки в Telegram или позвоните нам.'
+      );
     } finally {
       setIsSending(false);
     }
@@ -153,10 +186,14 @@ export const ContactsLeadForm: React.FC = () => {
     return (
       <div className="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 font-mono text-center space-y-3">
         <div className="inline-block bg-[#0A0A0A] text-white px-4 py-1.5 font-bold uppercase text-xs">
-          ✓ ЗАЯВКА УСПЕШНО ОТПРАВЛЕНА
+          {lang === 'uz' ? '✓ SO\'ROV MUVAFFAQIYATLI YUBORILDI' : lang === 'en' ? '✓ INQUIRY SUCCESSFULLY TRANSMITTED' : '✓ ЗАЯВКА УСПЕШНО ОТПРАВЛЕНА'}
         </div>
         <p className="text-xs text-[#4A5056] font-sans">
-          Инженер отдела снабжения обработает вашу спецификацию и свяжется с вами в течение 60 минут.
+          {lang === 'uz'
+            ? 'Ta\'minot bo\'limi muhandisi spetsifikatsiyangizni o\'rganib, 60 daqiqa ichida siz bilan bog\'lanadi.'
+            : lang === 'en'
+            ? 'A procurement engineer will review your specification and get back to you within 60 minutes.'
+            : 'Инженер отдела снабжения обработает вашу спецификацию и свяжется с вами в течение 60 минут.'}
         </p>
       </div>
     );
@@ -166,10 +203,10 @@ export const ContactsLeadForm: React.FC = () => {
     <div className="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 font-mono">
       <div className="border-b border-[#0A0A0A] pb-2 mb-4">
         <span className="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider block">
-          ФОРМА ОПЕРАТИВНОГО ЗАПРОСА
+          {lang === 'uz' ? 'TEZKOR SO\'ROV FORMASI' : lang === 'en' ? 'DIRECT PROCUREMENT INQUIRY FORM' : 'ФОРМА ОПЕРАТИВНОГО ЗАПРОСА'}
         </span>
         <span className="text-[11px] text-[#4A5056]">
-          Прямая отправка дежурному инженеру поставок
+          {lang === 'uz' ? 'Navbatchi ta\'minot muhandisiga to\'g\'ridan-to\'g\'ri yuborish' : lang === 'en' ? 'Direct dispatch to on-duty supply engineer' : 'Прямая отправка дежурному инженеру поставок'}
         </span>
       </div>
 
@@ -182,7 +219,7 @@ export const ContactsLeadForm: React.FC = () => {
       <form onSubmit={handleSubmit} className="space-y-3">
         <div>
           <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-            ТЕМА ОБРАЩЕНИЯ
+            {lang === 'uz' ? 'MUROJAAT MAVZUSI' : lang === 'en' ? 'INQUIRY SUBJECT' : 'ТЕМА ОБРАЩЕНИЯ'}
           </label>
           <input
             type="text"
@@ -196,20 +233,20 @@ export const ContactsLeadForm: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div>
             <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-              КОНТАКТНОЕ ЛИЦО
+              {lang === 'uz' ? 'MAS\'UL SHAXS (F.I.SH.)' : lang === 'en' ? 'CONTACT PERSON' : 'КОНТАКТНОЕ ЛИЦО'}
             </label>
             <input
               type="text"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="ФИО / Должность"
+              placeholder={lang === 'uz' ? 'F.I.Sh. / Lavozim' : lang === 'en' ? 'Full Name / Title' : 'ФИО / Должность'}
               className="w-full bg-[#DCE0E4] border border-[#0A0A0A] px-3 py-1.5 text-xs focus:outline-none focus:bg-white"
             />
           </div>
           <div>
             <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-              ТЕЛЕФОН
+              {lang === 'uz' ? 'TELEFON RAQAMI' : lang === 'en' ? 'PHONE NUMBER' : 'ТЕЛЕФОН'}
             </label>
             <input
               type="tel"
@@ -224,26 +261,26 @@ export const ContactsLeadForm: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div>
             <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-              ПРЕДПРИЯТИЕ
+              {lang === 'uz' ? 'TASHKILOT NOMI' : lang === 'en' ? 'COMPANY NAME' : 'ОРГАНИЗАЦИЯ'}
             </label>
             <input
               type="text"
               required
               value={company}
               onChange={(e) => setCompany(e.target.value)}
-              placeholder="Наименование юрлица"
+              placeholder={lang === 'uz' ? 'Kompaniya yoki zavod' : lang === 'en' ? 'Enterprise / Plant' : 'Завод / Депо / Предприятие'}
               className="w-full bg-[#DCE0E4] border border-[#0A0A0A] px-3 py-1.5 text-xs focus:outline-none focus:bg-white"
             />
           </div>
           <div>
             <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-              ИНН (ДЛЯ НДС 12%)
+              {lang === 'uz' ? 'STIR (INN, EHF UCHUN)' : lang === 'en' ? 'TAX ID / INN' : 'ИНН (ДЛЯ ЭСФ С НДС)'}
             </label>
             <input
               type="text"
               value={inn}
               onChange={(e) => setInn(e.target.value)}
-              placeholder="9 цифр"
+              placeholder="308912445"
               className="w-full bg-[#DCE0E4] border border-[#0A0A0A] px-3 py-1.5 text-xs focus:outline-none focus:bg-white font-mono"
             />
           </div>
@@ -251,58 +288,63 @@ export const ContactsLeadForm: React.FC = () => {
 
         <div>
           <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-            ОПИСАНИЕ ПОТРЕБНОСТИ / НОМЕНКЛАТУРА
+            {lang === 'uz' ? 'TALAB QILINGAN DETALLAR / IZOH' : lang === 'en' ? 'REQUIRED SPARES / SPECIFICATIONS' : 'НЕОБХОДИМАЯ НОМЕНКЛАТУРА / КОММЕНТАРИЙ'}
           </label>
           <textarea
             rows={3}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Перечень позиций, чертежи, требуемые сроки поставки..."
-            className="w-full bg-[#DCE0E4] border border-[#0A0A0A] px-3 py-1.5 text-xs focus:outline-none focus:bg-white font-sans"
+            placeholder={lang === 'uz' ? 'Artikullar, miqdori va yetkazib berish shartlari...' : lang === 'en' ? 'Enter part numbers, quantities and delivery terms...' : 'Укажите артикулы, требуемое количество и базис поставки...'}
+            className="w-full bg-[#DCE0E4] border border-[#0A0A0A] px-3 py-1.5 text-xs focus:outline-none focus:bg-white"
           />
         </div>
 
         <div>
           <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-            ПРИКРЕПИТЬ СПЕЦИФИКАЦИЮ (EXCEL / PDF ДО 25 МБ)
+            {lang === 'uz' ? 'FAYL / SPETSIFIKATSIYA BIRIKTIRISH (25 MB GACHA)' : lang === 'en' ? 'ATTACH SPECIFICATION FILE (UP TO 25 MB)' : 'ПРИКРЕПИТЬ СПЕЦИФИКАЦИЮ (ДО 25 МБ)'}
           </label>
-          <label className="flex items-center justify-between border border-dashed border-[#0A0A0A] bg-[#DCE0E4]/60 px-3 py-2 cursor-pointer hover:bg-white transition-colors">
-            <span className="truncate text-xs">{fileName || 'Выберите файл ведомости...'}</span>
-            <span className="bg-[#0A0A0A] text-white px-2 py-0.5 text-[10px] uppercase shrink-0 ml-2 font-bold">
-              ОБЗОР
+          <div className="flex items-center space-x-2">
+            <label className="border border-[#0A0A0A] bg-white hover:bg-[#0A0A0A] hover:text-white px-3 py-1 text-xs cursor-pointer transition-colors">
+              <span>{lang === 'uz' ? 'Faylni tanlash' : lang === 'en' ? 'Choose File' : 'Обзор...'}</span>
+              <input
+                type="file"
+                onChange={handleFileChange}
+                accept=".pdf,.doc,.docx,.xls,.xlsx,.dwg,.zip,.rar,.jpg,.png"
+                className="hidden"
+              />
+            </label>
+            <span className="text-[11px] text-[#4A5056] truncate max-w-[200px]">
+              {fileName || (lang === 'uz' ? 'Fayl tanlanmagan' : lang === 'en' ? 'No file chosen' : 'Файл не выбран')}
             </span>
-            <input
-              type="file"
-              accept=".xlsx,.xls,.pdf,.doc,.docx,.csv"
-              className="hidden"
-              onChange={handleFileChange}
-            />
-          </label>
+          </div>
         </div>
 
-        <button
-          type="submit"
-          disabled={isSending}
-          className="w-full border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white py-3 text-xs font-bold tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer disabled:opacity-50"
-        >
-          {isSending ? 'ОТПРАВКА ДАННЫХ...' : '[ ОТПРАВИТЬ ЗАЯВКУ НА РАСЧЕТ КП ]'}
-        </button>
+        <div className="pt-2">
+          <button
+            type="submit"
+            disabled={isSending}
+            className="w-full border border-[#0A0A0A] bg-[#0A0A0A] text-white py-2 text-xs font-bold uppercase tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors disabled:opacity-50 cursor-pointer"
+          >
+            {isSending
+              ? (lang === 'uz' ? 'Yuborilmoqda...' : lang === 'en' ? 'Transmitting...' : 'ОТПРАВКА...')
+              : (lang === 'uz' ? '[ SO\'ROVNI YUBORISH ]' : lang === 'en' ? '[ SUBMIT INQUIRY ]' : '[ ОТПРАВИТЬ ЗАЯВКУ ]')}
+          </button>
+        </div>
 
-        {/* Fast fallbacks */}
-        <div className="grid grid-cols-2 gap-2 pt-2">
+        <div className="pt-2 border-t border-[#0A0A0A]/20 flex flex-wrap gap-2 text-[10px]">
           <a
             href={tgShareUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="border border-[#0A0A0A] bg-white text-[#0A0A0A] py-2 text-center text-[11px] font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors"
+            className="flex-1 text-center border border-[#0A0A0A]/40 bg-[#C8CDD2] py-1.5 hover:bg-[#0A0A0A] hover:text-white transition-colors"
           >
-            В TELEGRAM (@RAILTECH_UZ) ↗
+            ↗ Telegram Bot
           </a>
           <a
             href={mailShareUrl}
-            className="border border-[#0A0A0A] bg-white text-[#0A0A0A] py-2 text-center text-[11px] font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors"
+            className="flex-1 text-center border border-[#0A0A0A]/40 bg-[#C8CDD2] py-1.5 hover:bg-[#0A0A0A] hover:text-white transition-colors"
           >
-            НА EMAIL СНАБЖЕНИЯ ↗
+            ✉ Email Direct
           </a>
         </div>
       </form>

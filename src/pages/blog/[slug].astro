@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { withBase } from '../../utils/url';
+import I18nText from '../../components/I18nText.astro';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
@@ -89,39 +90,53 @@ const breadcrumbJsonLd = {
   <article class="max-w-5xl mx-auto px-4 py-10 font-sans">
     <!-- Breadcrumbs -->
     <nav aria-label="Breadcrumb" class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-6">
-      <a href={`${base}/`} class="hover:underline">ГЛАВНАЯ</a>
+      <a href={`${base}/`} class="hover:underline">
+        <I18nText ru="ГЛАВНАЯ" uz="BOSH SAHIFA" en="HOME" />
+      </a>
       <span>/</span>
-      <a href={`${base}/blog/`} class="hover:underline">БЛОГ & НОВОСТИ</a>
+      <a href={`${base}/blog/`} class="hover:underline">
+        <I18nText ru="БЛОГ & НОВОСТИ" uz="BLOG VA YANGILIKLAR" en="BLOG & NEWS" />
+      </a>
       <span>/</span>
-      <span class="text-[#0A0A0A] font-bold truncate max-w-xs sm:max-w-md">{entry.data.title}</span>
+      <span class="text-[#0A0A0A] font-bold truncate max-w-xs sm:max-w-md">
+        <I18nText ru={entry.data.title} uz={entry.data.title_uz} en={entry.data.title_en} />
+      </span>
     </nav>
 
     <!-- Article Header Box -->
     <header class="border-b-2 border-[#0A0A0A] pb-6 mb-8 font-mono">
       <div class="flex flex-wrap items-center gap-2 text-xs mb-3">
         <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
-          {entry.data.category}
+          <I18nText ru={entry.data.category} uz={entry.data.category_uz} en={entry.data.category_en} />
         </span>
         <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
-          ДАТА: {entry.data.publishDate}
+          <I18nText ru="ДАТА:" uz="SANA:" en="DATE:" /> {entry.data.publishDate}
         </span>
         <span class="border border-[#0A0A0A]/40 bg-[#D4D8DC] px-2 py-0.5 text-[#4A5056]">
-          ВРЕМЯ ЧТЕНИЯ: {entry.data.readTime}
+          <I18nText ru="ВРЕМЯ ЧТЕНИЯ:" uz="O'QISH VAQTI:" en="READ TIME:" /> <I18nText ru={entry.data.readTime} uz={entry.data.readTime_uz} en={entry.data.readTime_en} />
         </span>
       </div>
 
-      <h1 class="font-sans text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-4 leading-tight">
-        {entry.data.title}
-      </h1>
+      <I18nText
+        as="h1"
+        class="font-sans text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-4 leading-tight"
+        ru={entry.data.title}
+        uz={entry.data.title_uz}
+        en={entry.data.title_en}
+      />
 
-      <p class="font-sans text-base text-[#4A5056] leading-relaxed mb-4">
-        {entry.data.summary}
-      </p>
+      <I18nText
+        as="p"
+        class="font-sans text-base text-[#4A5056] leading-relaxed mb-4"
+        ru={entry.data.summary}
+        uz={entry.data.summary_uz}
+        en={entry.data.summary_en}
+      />
 
       <!-- Metadata Telemetry Bar -->
       <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#0A0A0A]/20 text-xs text-[#4A5056]">
         <div>
-          АВТОР: <span class="font-bold text-[#0A0A0A]">{entry.data.author}</span>
+          <I18nText ru="АВТОР:" uz="MUALLIF:" en="AUTHOR:" /> <span class="font-bold text-[#0A0A0A]">{entry.data.author}</span>
         </div>
         <div class="flex flex-wrap gap-1.5 text-[11px]">
           {entry.data.tags.map((tag) => (
@@ -149,7 +164,23 @@ const breadcrumbJsonLd = {
 
         <div class="border border-[#0A0A0A] bg-[#C8CDD2] p-6 lg:p-8 font-sans">
           <div class="prose prose-sm sm:prose max-w-none text-[#0A0A0A] leading-relaxed prose-headings:font-bold prose-headings:text-[#0A0A0A] prose-headings:border-b prose-headings:border-[#0A0A0A]/30 prose-headings:pb-2 prose-pre:bg-[#0A0A0A] prose-pre:text-[#D4D8DC] prose-pre:border prose-pre:border-[#0A0A0A] prose-code:font-mono prose-code:text-[#0A0A0A] prose-code:bg-[#D4D8DC] prose-code:px-1 prose-strong:text-[#0A0A0A] prose-blockquote:border-l-4 prose-blockquote:border-[#0A0A0A] prose-blockquote:bg-[#D4D8DC] prose-blockquote:p-3 prose-li:text-[#0A0A0A]">
-            <Content />
+            <div class="rt-lang rt-lang-ru">
+              <Content />
+            </div>
+            <div class="rt-lang rt-lang-uz">
+              {entry.data.body_uz ? (
+                <div class="space-y-4 whitespace-pre-line">{entry.data.body_uz}</div>
+              ) : (
+                <Content />
+              )}
+            </div>
+            <div class="rt-lang rt-lang-en">
+              {entry.data.body_en ? (
+                <div class="space-y-4 whitespace-pre-line">{entry.data.body_en}</div>
+              ) : (
+                <Content />
+              )}
+            </div>
           </div>
         </div>
 
@@ -159,7 +190,7 @@ const breadcrumbJsonLd = {
             href={`${base}/blog/`}
             class="inline-block border border-[#0A0A0A] bg-[#D4D8DC] px-4 py-2 text-[#0A0A0A] font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors"
           >
-            ← ВЕРНУТЬСЯ В РАЗДЕЛ БЛОГА
+            <I18nText ru="← ВЕРНУТЬСЯ В РАЗДЕЛ БЛОГА" uz="← BLOG BO'LIMIGA QAYTISH" en="← BACK TO BLOG ARCHIVE" />
           </a>
         </div>
       </div>
@@ -170,15 +201,19 @@ const breadcrumbJsonLd = {
         <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 font-mono sticky top-20">
           <div class="border-b border-[#0A0A0A] pb-2 mb-4">
             <span class="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider block">
-              КОММЕРЧЕСКИЙ ОТДЕЛ // ВЭД
+              <I18nText ru="КОММЕРЧЕСКИЙ ОТДЕЛ // ВЭД" uz="TIJORAT BO'LIMI // TQI" en="COMMERCIAL DESK // TRADE" />
             </span>
             <span class="text-[11px] text-[#4A5056]">
-              Расчет спецификации по теме публикации
+              <I18nText ru="Расчет спецификации по теме публикации" uz="Maqola mavzusi bo'yicha hisob-kitob" en="RFQ calculation for article subject" />
             </span>
           </div>
 
           <p class="text-xs text-[#4A5056] font-sans leading-relaxed mb-6">
-            Отправьте потребность вашего предприятия в ЖД узлах или системах СЦБ. Мы выставим счет с НДС 12% или подготовим расчет Landed Cost DDP в сумах за 60 минут.
+            <I18nText
+              ru="Отправьте потребность вашего предприятия в ЖД узлах или системах СЦБ. Мы выставим счет с НДС 12% или подготовим расчет Landed Cost DDP в сумах за 60 минут."
+              uz="Korxonangizning temir yo'l uzellari yoki STSB tizimlariga bo'lgan ehtiyojini yuboring. Biz 12% QQS bilan hisob taqdim etamiz yoki 60 daqiqada so'mda Landed Cost DDP hisobini tayyorlaymiz."
+              en="Submit your company's bill of materials for rolling stock components or signaling units. We will issue an invoice with 12% VAT or a Landed Cost DDP quote in 60 minutes."
+            />
           </p>
 
           <div class="space-y-3">
@@ -188,7 +223,7 @@ const breadcrumbJsonLd = {
               data-lead-subject={`Запрос расчета по материалу: ${entry.data.title}`}
               class="w-full border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white py-3 text-xs font-bold tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
             >
-              [ ЗАПРОСИТЬ РАСЧЕТ КП ]
+              <I18nText ru="[ ЗАПРОСИТЬ РАСЧЕТ КП ]" uz="[ TIJORAT TAKLIFINI SO'RASH ]" en="[ REQUEST RFQ ESTIMATE ]" />
             </button>
 
             <a
@@ -200,9 +235,15 @@ const breadcrumbJsonLd = {
           </div>
 
           <div class="mt-6 pt-4 border-t border-[#0A0A0A]/20 text-[11px] text-[#4A5056] space-y-1">
-            <div>• Склад в Ташкенте: ТПК Index B2-2097</div>
-            <div>• Плательщик НДС: 12% (ЭСФ Didox)</div>
-            <div>• Поставка: DDP Ташкент под ключ</div>
+            <div>
+              <I18nText ru="• Склад в Ташкенте: ТПК Index B2-2097" uz="• Toshkentdagi ombor: Index SICHM B2-2097" en="• Tashkent Hub: Index Complex B2-2097" />
+            </div>
+            <div>
+              <I18nText ru="• Плательщик НДС: 12% (ЭСФ Didox)" uz="• QQS to'lovchisi: 12% (Didox EHF)" en="• VAT Payer: 12% (Didox ESF)" />
+            </div>
+            <div>
+              <I18nText ru="• Поставка: DDP Ташкент под ключ" uz="• Yetkazib berish: DDP Toshkent kalit topshirish" en="• Delivery: DDP Tashkent Turnkey" />
+            </div>
           </div>
         </div>
       </aside>

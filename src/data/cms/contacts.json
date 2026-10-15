@@ -1,31 +1,57 @@
 {
   "badge": "ШТАБ-КВАРТИРА И СКЛАДСКОЙ ХАБ",
+  "badge_uz": "BOSH OFIS VA OMBOR XABI",
+  "badge_en": "HEADQUARTERS & WAREHOUSE HUB",
   "location": "ТАШКЕНТ // ИНДЕКС 100140",
+  "location_uz": "TOSHKENT // INDEKS 100140",
+  "location_en": "TASHKENT // INDEX 100140",
   "statusBadge": "ОТГРУЗКА 24/7",
+  "statusBadge_uz": "YUKLASH 24/7",
+  "statusBadge_en": "DISPATCH 24/7",
   "pageTitle": "КОНТАКТЫ И СХЕМА ПРОЕЗДА К СКЛАДУ",
+  "pageTitle_uz": "KONTAKTLAR VA OMBORGA BORISH CHIZMASI",
+  "pageTitle_en": "CONTACTS & WAREHOUSE ACCESS MAP",
   "pageSubtitle": "Складской комплекс и центральный офис ООО «RailTech» расположены на территории современного Торгово-производственного комплекса Index в Ташкенте с прямым железнодорожным подъездным путем.",
+  "pageSubtitle_uz": "«RailTech» MChJ ombor majmuasi va markaziy ofisi Toshkentdagi zamonaviy Index savdo-ishlab chiqarish majmuasi hududida, to'g'ridan-to'g'ri temir yo'l shoxobchasiga ega maydonda joylashgan.",
+  "pageSubtitle_en": "The central office and warehouse terminal of RailTech LLC are located within the modern Index Trade and Industrial Complex in Tashkent, complete with a direct heavy rail siding.",
   "departments": [
     {
       "name": "ОТДЕЛ СНАБЖЕНИЯ И СКЛАДСКИХ ОТГРУЗОК",
+      "name_uz": "TA'MINOT VA OMBOR YUKLASH BO'LIMI",
+      "name_en": "SUPPLY & WAREHOUSE DISPATCH DIVISION",
       "desc": "Запрос наличия, бронирование партий, выписка счетов",
+      "desc_uz": "Mavjudlikni tekshirish, partiyalarni bron qilish, hisob-fakturalar",
+      "desc_en": "Stock availability queries, batch reservations, invoicing",
       "phone": "+998 90 118-90-00",
       "email": "supply@railtech.uz"
     },
     {
       "name": "ОТДЕЛ КОНТРАКТНОГО ВЭД И ИМПОРТА",
+      "name_uz": "SHARTNOMAVIY TQI VA IMPORT BO'LIMI",
+      "name_en": "TURNKEY DDP IMPORT & TRADE DIVISION",
       "desc": "Расчет Landed Cost DDP, работа с иностранными заводами",
+      "desc_uz": "Landed Cost DDP hisoblash, xorijiy zavodlar bilan ishlash",
+      "desc_en": "Landed Cost DDP modeling, foreign manufacturer coordination",
       "phone": "+998 90 118-90-00",
       "email": "ved@railtech.uz"
     },
     {
       "name": "ПОДРАЗДЕЛЕНИЕ RAILTECH DIGITAL",
+      "name_uz": "RAILTECH DIGITAL BO'LINMASI",
+      "name_en": "RAILTECH DIGITAL DIVISION",
       "desc": "Платформа b2b.railtech.uz, интеграция Smart Match AI и 1С",
+      "desc_uz": "b2b.railtech.uz platformasi, Smart Match AI va 1C integratsiyasi",
+      "desc_en": "b2b.railtech.uz platform, Smart Match AI and 1C integrations",
       "phone": "+998 90 118-90-00",
       "email": "tech@railtech.uz"
     },
     {
       "name": "БУХГАЛТЕРИЯ И ДОГОВОРНОЙ ОТДЕЛ",
+      "name_uz": "BUXGALTERIYA VA SHARTNOMA BO'LIMI",
+      "name_en": "ACCOUNTING & CONTRACT COMPLIANCE",
       "desc": "Счета-фактуры ЭСФ (Didox / Soliq), акты сверки, НДС 12%",
+      "desc_uz": "EHF hisob-fakturalari (Didox / Soliq), solishtirma dalolatnomalar, 12% QQS",
+      "desc_en": "Electronic tax invoices (Didox / Soliq), reconciliations, 12% VAT",
       "phone": "+998 90 118-90-00",
       "email": "accounting@railtech.uz"
     }
@@ -35,19 +61,43 @@
     "2. КПП №3: Для длинномерных фур, тралов и грузовиков с полуприцепами въезд осуществляется через КПП №3 (грузовой терминал).",
     "3. Подача под кран-балку: Следуйте по схеме движения к павильону B2, секция 2097. Место погрузки оборудовано стационарными пандусами и мостовыми кранами."
   ],
+  "logisticsInstructions_uz": [
+    "1. THAY dan kirish: Toshkent halqa avtomobil yo'li bo'ylab Sergeli / Yangihayot tumani tomon harakatlanib, «Index SICHM» belgisi bo'yicha buriling.",
+    "2. KPP №3: Uzun o'lchamli yuk mashinalari, trallar va yarim tirkamalar uchun kirish 3-sonli KPP (yuk terminali) orqali amalga oshiriladi.",
+    "3. Kran ostiga yetkazish: B2 paviloni, 2097-seksiyaga olib boruvchi harakat chizmasiga rioya qiling. Yuklash joyi statsionar estakadalar va ko'prikli kranlar bilan jihozlangan."
+  ],
+  "logisticsInstructions_en": [
+    "1. Approach via Ring Road: Driving along the Tashkent Ring Road towards Yangihayot / Sergeli district, turn at the 'Index Complex' signage.",
+    "2. Security Gate #3: Heavy transport, lowbed trailers, and articulated lorries enter exclusively via Gate #3 (Cargo Terminal).",
+    "3. Overhead Crane Bay: Follow internal directional signage to Pavilion B2, Unit 2097. Bay equipped with hydraulic loading docks and overhead cranes."
+  ],
   "gps": "41.2214° N, 69.1852° E",
   "yandexMapUrl": "https://yandex.uz/maps/-/CDT4A-0v",
   "schedule": {
     "warehouse": "Пн-Пт: 09:00 - 18:00 (Аварийные отгрузки 24/7)",
+    "warehouse_uz": "Dush-Jum: 09:00 - 18:00 (Favqulodda yuklash 24/7)",
+    "warehouse_en": "Mon-Fri: 09:00 - 18:00 (Emergency dispatch 24/7)",
     "office": "Пн-Пт: 09:00 - 18:00",
-    "weekend": "Суббота: по предварительной заявке, Воскресенье: выходной"
+    "office_uz": "Dush-Jum: 09:00 - 18:00",
+    "office_en": "Mon-Fri: 09:00 - 18:00",
+    "weekend": "Суббота: по предварительной заявке, Воскресенье: выходной",
+    "weekend_uz": "Shanba: oldindan so'rov bo'yicha, Yakshanba: dam olish kuni",
+    "weekend_en": "Saturday: by prior notice, Sunday: closed"
   },
   "bankDetails": {
     "recipient": "ООО «RailTech»",
+    "recipient_uz": "«RailTech» MChJ",
+    "recipient_en": "RailTech LLC",
     "inn": "Резидент РУз (НДС 12%)",
+    "inn_uz": "O'zR rezidenti (QQS 12%)",
+    "inn_en": "Resident of Uzbekistan (12% VAT)",
     "vatCode": "Плательщик НДС 12%",
+    "vatCode_uz": "12% QQS to'lovchisi",
+    "vatCode_en": "12% VAT accredited",
     "account": "20208000605481234001",
     "bank": "АКБ «Капиталбанк», г. Ташкент",
+    "bank_uz": "«Kapitalbank» ATB, Toshkent sh.",
+    "bank_en": "JSCB 'Kapitalbank', Tashkent",
     "mfo": "01036"
   }
 }

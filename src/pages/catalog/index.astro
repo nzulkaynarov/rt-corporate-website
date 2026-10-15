@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { CatalogFilterTable } from '../../components/islands/CatalogFilterTable';
+import I18nText from '../../components/I18nText.astro';
 import { withBase } from '../../utils/url';
 
 const catalogEntries = await getCollection('catalog');
@@ -11,13 +12,21 @@ const items = catalogEntries.map((entry) => ({
   slug: entry.slug,
   sku: entry.data.sku,
   title: entry.data.title,
+  title_uz: entry.data.title_uz,
+  title_en: entry.data.title_en,
   subsystem: entry.data.subsystem,
+  subsystem_uz: entry.data.subsystem_uz,
+  subsystem_en: entry.data.subsystem_en,
   gost: entry.data.gost,
   tnved: entry.data.tnved,
   warehouse: entry.data.warehouse,
   status: entry.data.status,
+  status_uz: entry.data.status_uz,
+  status_en: entry.data.status_en,
   statusKey: entry.data.statusKey,
   specs: entry.data.specs,
+  specs_uz: entry.data.specs_uz,
+  specs_en: entry.data.specs_en,
   image: withBase(entry.data.image),
 }));
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -31,49 +40,71 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <div class="max-w-7xl mx-auto px-4 py-10 font-sans">
     <!-- Breadcrumbs & Status -->
     <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-4">
-      <a href={`${base}/`} class="hover:underline">ГЛАВНАЯ</a>
+      <a href={`${base}/`} class="hover:underline">
+        <I18nText ru="ГЛАВНАЯ" uz="BOSH SAHIFA" en="HOME" />
+      </a>
       <span>/</span>
-      <span class="text-[#0A0A0A] font-bold">КАТАЛОГ ОБОРУДОВАНИЯ (.SUPPLY)</span>
+      <span class="text-[#0A0A0A] font-bold">
+        <I18nText ru="КАТАЛОГ ОБОРУДОВАНИЯ (.SUPPLY)" uz="USKUNALAR KATALOGI (.SUPPLY)" en="EQUIPMENT CATALOG (.SUPPLY)" />
+      </span>
     </div>
 
     <!-- Page Header -->
     <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8">
       <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-3">
         <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
-          НОМЕНКЛАТУРНЫЙ КАТАЛОГ
+          <I18nText ru="НОМЕНКЛАТУРНЫЙ КАТАЛОГ" uz="NOMENKLATURA KATALOGI" en="PRODUCT NOMENCLATURE" />
         </span>
         <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
           ТАШКЕНТ / ТПК INDEX B2-2097
         </span>
         <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold">
-          НДС 12% ВКЛЮЧЕН В СЧЕТ
+          <I18nText ru="НДС 12% ВКЛЮЧЕН В СЧЕТ" uz="12% QQS HISOBGA KIRITILGAN" en="12% VAT INCLUDED" />
         </span>
       </div>
 
-      <h1 class="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3">
-        СКЛАДСКАЯ НОМЕНКЛАТУРА Ж/Д ОБОРУДОВАНИЯ
-      </h1>
+      <I18nText
+        ru="СКЛАДСКАЯ НОМЕНКЛАТУРА Ж/Д ОБОРУДОВАНИЯ"
+        uz="TEMIR YO'L USKUNALARINING OMBOR NOMENKLATURASI"
+        en="WAREHOUSE INVENTORY OF RAILWAY EQUIPMENT"
+        as="h1"
+        class="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3"
+      />
 
-      <p class="text-base text-[#4A5056] max-w-3xl leading-relaxed">
-        Официальная складская программа ООО «RailTech». Все позиции прошли входной инструментальный контроль ОТК, имеют оригинальные заводские бирки, паспорта плавок и сертификаты соответствия техническим регламентам ТР ТС 001/2011 и ТР ТС 002/2011.
-      </p>
+      <I18nText
+        ru="Официальная складская программа ООО «RailTech». Все позиции прошли входной инструментальный контроль ОТК, имеют оригинальные заводские бирки, паспорта плавок и сертификаты соответствия техническим регламентам ТР ТС 001/2011 и ТР ТС 002/2011."
+        uz="«RailTech» MCHJ rasmiy ombor dasturi. Barcha mahsulotlar OTK kirish instrumental nazoratidan o'tgan, original zavod yorliqlariga, quyma pasportlariga va TR TS 001/2011 texnik reglamentlari muvofiqlik sertifikatlariga ega."
+        en="Official inventory program of RailTech LLC. All parts have undergone stringent incoming QC inspection, bearing original factory tags, mill test certificates, and TR CU 001/2011 conformity declarations."
+        as="p"
+        class="text-base text-[#4A5056] max-w-3xl leading-relaxed"
+      />
 
       <!-- Warehouse specs banner -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-4 border-t border-[#0A0A0A]/20 font-mono text-xs">
         <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]">
-          <div class="text-[#4A5056] text-[10px]">ЛОКАЦИЯ СКЛАДА:</div>
+          <div class="text-[#4A5056] text-[10px]">
+            <I18nText ru="ЛОКАЦИЯ СКЛАДА:" uz="OMBOR JOYI:" en="FACILITY LOCATION:" />
+          </div>
           <div class="font-bold text-[#0A0A0A]">Ташкент, ТПК Index B2-2097</div>
         </div>
         <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]">
-          <div class="text-[#4A5056] text-[10px]">ПОДЪЕЗДНЫЕ ПУТИ:</div>
+          <div class="text-[#4A5056] text-[10px]">
+            <I18nText ru="ПОДЪЕЗДНЫЕ ПУТИ:" uz="KIRISH YO'LLARI:" en="RAIL CONNECTION:" />
+          </div>
           <div class="font-bold text-[#0A0A0A]">1520 мм (маневровый ЖД)</div>
         </div>
         <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]">
-          <div class="text-[#4A5056] text-[10px]">СКОРОСТЬ ОТГРУЗКИ:</div>
-          <div class="font-bold text-[#0A0A0A]">В день оплаты (самовывоз/ЖД)</div>
+          <div class="text-[#4A5056] text-[10px]">
+            <I18nText ru="СКОРОСТЬ ОТГРУЗКИ:" uz="YUKLASH TEZLIGI:" en="DISPATCH LEAD TIME:" />
+          </div>
+          <div class="font-bold text-[#0A0A0A]">
+            <I18nText ru="В день оплаты (ЖД/авто)" uz="To'lov kuni (T/y/avto)" en="Same-day dispatch" />
+          </div>
         </div>
         <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]">
-          <div class="text-[#4A5056] text-[10px]">ДОКУМЕНТООБОРОТ:</div>
+          <div class="text-[#4A5056] text-[10px]">
+            <I18nText ru="ДОКУМЕНТООБОРОТ:" uz="HUJJAT AYLANISHI:" en="FISCAL E-INVOICING:" />
+          </div>
           <div class="font-bold text-[#0A0A0A]">ЭСФ Didox / Soliq (12% НДС)</div>
         </div>
       </div>
@@ -87,11 +118,21 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <div class="space-y-2">
         <div class="text-xs font-bold text-[#0A0A0A] flex items-center space-x-2">
           <span class="w-2.5 h-2.5 bg-[#0A0A0A] inline-block"></span>
-          <span>ТРЕБУЕТСЯ СПЕЦИФИЧЕСКАЯ ПОЗИЦИЯ ИЛИ КРУПНАЯ ПАРТИЯ?</span>
+          <span>
+            <I18nText
+              ru="ТРЕБУЕТСЯ СПЕЦИФИЧЕСКАЯ ПОЗИЦИЯ ИЛИ КРУПНАЯ ПАРТИЯ?"
+              uz="MAXSUS POZITSIYA YOKI YIRIK PARTIYA KERAKMI?"
+              en="NEED CUSTOM SPECIFICATION OR BULK PROCUREMENT?"
+            />
+          </span>
         </div>
-        <p class="text-xs text-[#4A5056] max-w-2xl font-sans leading-relaxed">
-          Если нужного типоразмера нет в наличии на складе в Ташкенте, наш отдел ВЭД организует прямую поставку с 86+ заводов-производителей на условиях DDP Ташкент с фиксацией цены в сумах.
-        </p>
+        <I18nText
+          ru="Если нужного типоразмера нет в наличии на складе в Ташкенте, наш отдел ВЭД организует прямую поставку с 86+ заводов-производителей на условиях DDP Ташкент с фиксацией цены в сумах."
+          uz="Agar kerakli o'lcham Toshkentdagi omborda mavjud bo'lmasa, TIF bo'limimiz 86+ ishlab chiqaruvchi zavoddan so'mda narxni qat'iy belgilagan holda DDP Toshkent shartlarida to'g'ridan-to'g'ri yetkazib berishni tashkil etadi."
+          en="If a specific size or component is not currently in Tashkent stock, our foreign trade desk will organize direct delivery from 86+ global manufacturers under DDP Tashkent terms with pricing fixed in UZS."
+          as="p"
+          class="text-xs text-[#4A5056] max-w-2xl font-sans leading-relaxed"
+        />
       </div>
 
       <button
@@ -100,7 +141,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         data-lead-subject="Запрос контрактного поиска и поставки спецификации"
         class="border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white px-6 py-3 text-xs font-bold whitespace-nowrap hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
       >
-        [ ЗАГРУЗИТЬ ВЕДОМОСТЬ ПОТРЕБНОСТИ ]
+        <I18nText
+          ru="[ ЗАГРУЗИТЬ ВЕДОМОСТЬ ПОТРЕБНОСТИ ]"
+          uz="[ TALAB VEDOMOSTINI YUKLASH ]"
+          en="[ UPLOAD BILL OF MATERIALS ]"
+        />
       </button>
     </div>
   </div>

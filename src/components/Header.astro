@@ -5,14 +5,70 @@ const pathname = Astro.url.pathname;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const navItems = [
-  { href: `${base}/`, label: 'ГЛАВНАЯ', id: 'home', match: (p: string) => p === `${base}/` || p === `${base}` },
-  { href: `${base}/catalog/`, label: 'КАТАЛОГ ЖД ОБОРУДОВАНИЯ', id: 'catalog', match: (p: string) => p.startsWith(`${base}/catalog`) },
-  { href: `${base}/contract`, label: 'КОНТРАКТНЫЙ ВЭД DDP', id: 'contract', match: (p: string) => p.startsWith(`${base}/contract`) },
-  { href: `${base}/digital`, label: 'DIGITAL & ПО', id: 'digital', match: (p: string) => p.startsWith(`${base}/digital`) },
-  { href: `${base}/projects`, label: 'СПЕЦПРОЕКТЫ & АРТ', id: 'projects', match: (p: string) => p.startsWith(`${base}/projects`) },
-  { href: `${base}/blog/`, label: 'БЛОГ / НОВОСТИ', id: 'blog', match: (p: string) => p.startsWith(`${base}/blog`) },
-  { href: `${base}/about`, label: 'О КОМПАНИИ', id: 'about', match: (p: string) => p.startsWith(`${base}/about`) },
-  { href: `${base}/contacts`, label: 'КОНТАКТЫ & РЕКВИЗИТЫ', id: 'contacts', match: (p: string) => p.startsWith(`${base}/contacts`) },
+  {
+    href: `${base}/`,
+    label_ru: 'ГЛАВНАЯ',
+    label_uz: 'BOSH SAHIFA',
+    label_en: 'HOME',
+    id: 'home',
+    match: (p: string) => p === `${base}/` || p === `${base}`
+  },
+  {
+    href: `${base}/catalog/`,
+    label_ru: 'КАТАЛОГ ЖД ОБОРУДОВАНИЯ',
+    label_uz: 'TEMIR YO\'L KATALOGI',
+    label_en: 'RAILWAY CATALOG',
+    id: 'catalog',
+    match: (p: string) => p.startsWith(`${base}/catalog`)
+  },
+  {
+    href: `${base}/contract`,
+    label_ru: 'КОНТРАКТНЫЙ ВЭД DDP',
+    label_uz: 'DDP SHARTNOMA TIF',
+    label_en: 'CONTRACT DDP',
+    id: 'contract',
+    match: (p: string) => p.startsWith(`${base}/contract`)
+  },
+  {
+    href: `${base}/digital`,
+    label_ru: 'DIGITAL & ПО',
+    label_uz: 'DIGITAL & DASTURIY',
+    label_en: 'DIGITAL & SOFTWARE',
+    id: 'digital',
+    match: (p: string) => p.startsWith(`${base}/digital`)
+  },
+  {
+    href: `${base}/projects`,
+    label_ru: 'СПЕЦПРОЕКТЫ & АРТ',
+    label_uz: 'MAXSUS LOYIHALAR',
+    label_en: 'SPECIAL PROJECTS',
+    id: 'projects',
+    match: (p: string) => p.startsWith(`${base}/projects`)
+  },
+  {
+    href: `${base}/blog/`,
+    label_ru: 'БЛОГ / НОВОСТИ',
+    label_uz: 'BLOG / YANGILIKLAR',
+    label_en: 'BLOG / NEWS',
+    id: 'blog',
+    match: (p: string) => p.startsWith(`${base}/blog`)
+  },
+  {
+    href: `${base}/about`,
+    label_ru: 'О КОМПАНИИ',
+    label_uz: 'KOMPANIYA HAQIDA',
+    label_en: 'ABOUT US',
+    id: 'about',
+    match: (p: string) => p.startsWith(`${base}/about`)
+  },
+  {
+    href: `${base}/contacts`,
+    label_ru: 'КОНТАКТЫ & РЕКВИЗИТЫ',
+    label_uz: 'ALOQA & REKVIZITLAR',
+    label_en: 'CONTACTS & INFO',
+    id: 'contacts',
+    match: (p: string) => p.startsWith(`${base}/contacts`)
+  },
 ];
 ---
 
@@ -22,14 +78,26 @@ const navItems = [
     <div class="flex items-center space-x-4">
       <div class="flex items-center space-x-1.5 text-[#0A0A0A]">
         <span class="w-2 h-2 bg-[#0A0A0A] inline-block animate-pulse"></span>
-        <span class="font-bold">РЕСПУБЛИКА УЗБЕКИСТАН</span>
+        <span class="font-bold">
+          <span class="rt-lang rt-lang-ru">РЕСПУБЛИКА УЗБЕКИСТАН</span>
+          <span class="rt-lang rt-lang-uz">O'ZBEKISTON RESPUBLIKASI</span>
+          <span class="rt-lang rt-lang-en">REPUBLIC OF UZBEKISTAN</span>
+        </span>
       </div>
       <span class="text-[#0A0A0A]/30">|</span>
       <span>{globalData.companyName} // ИНН: {globalData.inn}</span>
       <span class="text-[#0A0A0A]/30">|</span>
-      <span>СКЛАД: {globalData.address.toUpperCase()}</span>
+      <span>
+        <span class="rt-lang rt-lang-ru">СКЛАД: {globalData.address.toUpperCase()}</span>
+        <span class="rt-lang rt-lang-uz">OMBOR: {globalData.address.toUpperCase()}</span>
+        <span class="rt-lang rt-lang-en">WAREHOUSE: {globalData.address.toUpperCase()}</span>
+      </span>
       <span class="text-[#0A0A0A]/30">|</span>
-      <span class="border border-[#0A0A0A] px-1 bg-[#D4D8DC] text-[#0A0A0A] font-semibold">НДС 12% ВКЛЮЧЕН</span>
+      <span class="border border-[#0A0A0A] px-1 bg-[#D4D8DC] text-[#0A0A0A] font-semibold">
+        <span class="rt-lang rt-lang-ru">НДС 12% ВКЛЮЧЕН</span>
+        <span class="rt-lang rt-lang-uz">QQS 12% KIRITILGAN</span>
+        <span class="rt-lang rt-lang-en">VAT 12% INCLUDED</span>
+      </span>
     </div>
 
     <div class="flex items-center space-x-4">
@@ -37,7 +105,11 @@ const navItems = [
         href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`}
         class="hover:text-[#0A0A0A] transition-colors font-bold text-[#0A0A0A] flex items-center space-x-1"
       >
-        <span>ТЕЛ:</span>
+        <span>
+          <span class="rt-lang rt-lang-ru">ТЕЛ:</span>
+          <span class="rt-lang rt-lang-uz">TEL:</span>
+          <span class="rt-lang rt-lang-en">TEL:</span>
+        </span>
         <span>{globalData.phone}</span>
       </a>
       <span class="text-[#0A0A0A]/30">|</span>
@@ -64,7 +136,9 @@ const navItems = [
           ENGINEERING & LOGISTICS
         </span>
         <span class="text-xs font-bold text-[#0A0A0A] leading-tight">
-          УЗБЕКИСТАН • B2B / B2G
+          <span class="rt-lang rt-lang-ru">УЗБЕКИСТАН • B2B / B2G</span>
+          <span class="rt-lang rt-lang-uz">O'ZBEKISTON • B2B / B2G</span>
+          <span class="rt-lang rt-lang-en">UZBEKISTAN • B2B / B2G</span>
         </span>
       </div>
     </a>
@@ -76,27 +150,62 @@ const navItems = [
         return (
           <a
             href={item.href}
-            class={`px-2.5 py-1.5 border transition-colors ${
+            class={`px-2 py-1.5 border transition-colors ${
               isActive
                 ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
                 : 'border-transparent text-[#0A0A0A] hover:border-[#0A0A0A] hover:bg-[#0A0A0A]/5'
             }`}
           >
-            {item.label}
+            <span class="rt-lang rt-lang-ru">{item.label_ru}</span>
+            <span class="rt-lang rt-lang-uz">{item.label_uz}</span>
+            <span class="rt-lang rt-lang-en">{item.label_en}</span>
           </a>
         );
       })}
     </nav>
 
-    <!-- Right Action Button -->
+    <!-- Right Controls: CAD Language Switcher + Lead Button -->
     <div class="flex items-center space-x-2">
+      <!-- Brutalist CAD Language Switcher [ RU | UZ | EN ] -->
+      <div class="rt-lang-switcher border border-[#0A0A0A] bg-[#C8CDD2] p-0.5 inline-flex items-center font-mono text-[11px] font-bold" role="group" aria-label="Language selector">
+        <button
+          type="button"
+          data-lang-btn="ru"
+          class="px-2 py-0.5 transition-colors cursor-pointer text-[#0A0A0A] hover:bg-[#0A0A0A]/10"
+          aria-label="Русский язык"
+        >
+          RU
+        </button>
+        <span class="text-[#0A0A0A]/30">|</span>
+        <button
+          type="button"
+          data-lang-btn="uz"
+          class="px-2 py-0.5 transition-colors cursor-pointer text-[#0A0A0A] hover:bg-[#0A0A0A]/10"
+          aria-label="O'zbek tili"
+        >
+          UZ
+        </button>
+        <span class="text-[#0A0A0A]/30">|</span>
+        <button
+          type="button"
+          data-lang-btn="en"
+          class="px-2 py-0.5 transition-colors cursor-pointer text-[#0A0A0A] hover:bg-[#0A0A0A]/10"
+          aria-label="English language"
+        >
+          EN
+        </button>
+      </div>
+
+      <!-- Lead Request Button -->
       <button
         type="button"
         data-lead-modal
         data-lead-subject="Запрос коммерческого предложения / спецификации с сайта"
-        class="border border-[#0A0A0A] bg-[#0A0A0A] text-white font-mono text-[11px] font-bold px-3 py-1.5 tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
+        class="border border-[#0A0A0A] bg-[#0A0A0A] text-white font-mono text-[11px] font-bold px-3 py-1.5 tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer whitespace-nowrap"
       >
-        [ ЗАПРОС КП / СЧЕТА ]
+        <span class="rt-lang rt-lang-ru">[ ЗАПРОС КП / СЧЕТА ]</span>
+        <span class="rt-lang rt-lang-uz">[ TIJORAT TAKLIFI / HISOB ]</span>
+        <span class="rt-lang rt-lang-en">[ RFQ / INVOICE REQUEST ]</span>
       </button>
 
       <!-- Mobile Menu Trigger -->
@@ -104,7 +213,7 @@ const navItems = [
         id="mobile-nav-toggle"
         type="button"
         aria-label="Меню навигации"
-        class="xl:hidden border border-[#0A0A0A] p-1.5 hover:bg-[#0A0A0A] hover:text-white transition-colors"
+        class="xl:hidden border border-[#0A0A0A] p-1.5 hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -116,6 +225,18 @@ const navItems = [
   <!-- Mobile Drawer -->
   <div id="mobile-nav-menu" class="hidden xl:hidden border-t border-[#0A0A0A] bg-[#D4D8DC] px-4 py-3 font-mono text-xs">
     <div class="flex flex-col space-y-2">
+      <!-- Mobile Language Switcher -->
+      <div class="pb-2 border-b border-[#0A0A0A]/20 flex items-center justify-between">
+        <span class="text-[#4A5056] font-bold">ЯЗЫК / TIL / LANGUAGE:</span>
+        <div class="rt-lang-switcher border border-[#0A0A0A] bg-[#C8CDD2] p-0.5 inline-flex items-center font-mono text-xs font-bold">
+          <button type="button" data-lang-btn="ru" class="px-2 py-0.5 transition-colors cursor-pointer">RU</button>
+          <span class="text-[#0A0A0A]/30">|</span>
+          <button type="button" data-lang-btn="uz" class="px-2 py-0.5 transition-colors cursor-pointer">UZ</button>
+          <span class="text-[#0A0A0A]/30">|</span>
+          <button type="button" data-lang-btn="en" class="px-2 py-0.5 transition-colors cursor-pointer">EN</button>
+        </div>
+      </div>
+
       {navItems.map((item) => {
         const isActive = item.match(pathname);
         return (
@@ -125,7 +246,9 @@ const navItems = [
               isActive ? 'bg-[#0A0A0A] text-white' : 'bg-[#C8CDD2] hover:bg-[#0A0A0A] hover:text-white'
             }`}
           >
-            {item.label}
+            <span class="rt-lang rt-lang-ru">{item.label_ru}</span>
+            <span class="rt-lang rt-lang-uz">{item.label_uz}</span>
+            <span class="rt-lang rt-lang-en">{item.label_en}</span>
           </a>
         );
       })}
@@ -139,12 +262,75 @@ const navItems = [
   </div>
 </header>
 
-<script>
-  const toggle = document.getElementById('mobile-nav-toggle');
-  const menu = document.getElementById('mobile-nav-menu');
-  if (toggle && menu) {
-    toggle.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
+<script is:inline>
+  (function() {
+    function getStoredLang() {
+      try {
+        var param = new URLSearchParams(window.location.search).get('lang');
+        if (param === 'ru' || param === 'uz' || param === 'en') return param;
+        var stored = localStorage.getItem('rt_lang');
+        if (stored === 'ru' || stored === 'uz' || stored === 'en') return stored;
+      } catch (e) {}
+      return 'ru';
+    }
+
+    function syncSwitcherButtons(activeLang) {
+      document.querySelectorAll('[data-lang-btn]').forEach(function(btn) {
+        var lang = btn.getAttribute('data-lang-btn');
+        if (lang === activeLang) {
+          btn.className = 'px-2 py-0.5 transition-colors cursor-pointer bg-[#0A0A0A] text-white font-bold';
+          btn.setAttribute('aria-current', 'true');
+        } else {
+          btn.className = 'px-2 py-0.5 transition-colors cursor-pointer text-[#0A0A0A] hover:bg-[#0A0A0A]/10 font-bold';
+          btn.removeAttribute('aria-current');
+        }
+      });
+    }
+
+    function updateDataLangElements(lang) {
+      document.querySelectorAll('[data-lang-ru]').forEach(function(el) {
+        var val = el.getAttribute('data-lang-' + lang) || el.getAttribute('data-lang-ru');
+        if (val) el.textContent = val;
+      });
+
+      document.querySelectorAll('[data-i18n-placeholder-ru]').forEach(function(el) {
+        var val = el.getAttribute('data-i18n-placeholder-' + lang) || el.getAttribute('data-i18n-placeholder-ru');
+        if (val) el.setAttribute('placeholder', val);
+      });
+    }
+
+    function applyLanguage(lang) {
+      document.documentElement.lang = lang;
+      try {
+        localStorage.setItem('rt_lang', lang);
+      } catch (e) {}
+      syncSwitcherButtons(lang);
+      updateDataLangElements(lang);
+      window.dispatchEvent(new CustomEvent('rt-lang-change', { detail: lang }));
+    }
+
+    // Initialize
+    var currentLang = getStoredLang();
+    applyLanguage(currentLang);
+
+    // Event listeners for language buttons
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-lang-btn]');
+      if (!btn) return;
+      e.preventDefault();
+      var targetLang = btn.getAttribute('data-lang-btn');
+      if (targetLang && (targetLang === 'ru' || targetLang === 'uz' || targetLang === 'en')) {
+        applyLanguage(targetLang);
+      }
     });
-  }
+
+    // Mobile menu toggle
+    var toggle = document.getElementById('mobile-nav-toggle');
+    var menu = document.getElementById('mobile-nav-menu');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        menu.classList.toggle('hidden');
+      });
+    }
+  })();
 </script>

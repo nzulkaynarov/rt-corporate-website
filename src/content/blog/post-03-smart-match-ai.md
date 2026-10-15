@@ -1,10 +1,18 @@
 ---
 title: "Smart Match AI: как машинное обучение распознает неструктурированные ЖД спецификации с точностью 92%+"
+title_uz: "Smart Match AI: mashinaviy o'rganish nostrukturaviy temir yo'l spetsifikatsiyalarini 92%+ aniqlikda qanday taniydi"
+title_en: "Smart Match AI: How Machine Learning Parses Unstructured Rail Inquiries with 92%+ Accuracy"
 publishDate: "2026-02-24"
 category: "Digital & ПО"
+category_uz: "Digital & DT"
+category_en: "Digital & Software"
 summary: "Разбор архитектуры proprietary NLP-модели RailTech: алгоритмы векторизации номенклатурных наименований, сопоставление синонимов, извлечение ГОСТов и чертежных индексов из таблиц Excel."
+summary_uz: "RailTech shaxsiy NLP modelining me'moriy tahlili: nomenklatura nomlarini vektorlashtirish algoritmlari, sinonimlarni solishtirish, Excel jadvallaridan GOST va chizma indekslarini ajratib olish."
+summary_en: "An architectural breakdown of RailTech's proprietary NLP engine: vector embedding pipelines, synonym reconciliation, and automated extraction of GOSTs and drawing numbers from messy spreadsheets."
 author: "Инженерный отдел ООО «RailTech»"
 readTime: "7 мин"
+readTime_uz: "7 daq"
+readTime_en: "7 min"
 image: "/images/catalog/rt-scb-001.jpg"
 featured: false
 tags:
@@ -13,6 +21,20 @@ tags:
   - "NLP"
   - "Excel Parser"
   - "b2b.railtech.uz"
+tags_uz:
+  - "Smart Match AI"
+  - "Mashinali o'rganish"
+  - "NLP"
+  - "Excel Parser"
+  - "b2b.railtech.uz"
+tags_en:
+  - "Smart Match AI"
+  - "Machine Learning"
+  - "NLP"
+  - "Excel Parser"
+  - "b2b.railtech.uz"
+body_uz: "## Sanoat xaridlarida inson omili muammosi\n\nTog'-kon korxonasi yoki lokomotiv deposi ta'minot xizmatidan keladigan odatiy spetsifikatsiya — bu yuzlab turli xil nomlanishdagi satrlardan iborat Excel fayli yoki PDF skaneridir. Masalan: «Balka nadres. 18-100», «Nadressor simli to'sin GOST 9246-2013», «Beam bolster 100.00.010-4sb».\n\nSmart Match AI tizimi ushbu so'rovlarni semantik jihatdan tahlil qilib, «RailTech» MCHJ bazasidagi yagona SKU ga bog'laydi va hisob-fakturani 3 soniyada tayyorlaydi."
+body_en: "## Tackling the Human Bottleneck in Industrial Procurement\n\nA typical bill of materials submitted by heavy industrial contractors or locomotive maintenance depots arrives as an unstructured spreadsheet or scanned document riddled with colloquial abbreviations, typos, and fragmented part numbers.\n\nRailTech Smart Match AI applies specialized domain transformer embeddings to parse these messy inputs, automatically mapping synonyms and drawing indices to canonical SKU records with certified stock availability."
 ---
 
 ## Проблема человеческого фактора в промышленных закупках
@@ -23,37 +45,4 @@ tags:
 * `Надрессорная балка ГОСТ 9246-2013 литая (ст. 20ГЛ)`
 * `Beam bolster 100.00.010-4sb`
 
-Традиционный поиск в каталогах ERP по точным совпадениям терпит неудачу. Инженеры-снабженцы тратят до 72 рабочих часов на ручной поиск эквивалентов, проверку взаимозаменяемости и выписку котировок.
-
-## Архитектура алгоритма Smart Match AI
-
-Инженерная команда **RailTech Digital** разработала многоуровневый пайплайн обработки естественного языка (NLP) и табличных данных, оптимизированный под отраслевой словарь тяжелого машиностроения:
-
-```
-[ Excel / CSV / PDF ] 
-         │
-         ▼
-[ Токенизация и очистка опечаток ]
-         │
-         ▼
-[ Извлечение сущностей (ГОСТ, ТН ВЭД, Чертёжный индекс) ]
-         │
-         ▼
-[ Векторный эмбеддинг номенклатур (Domain Fine-Tuning) ]
-         │
-         ▼
-[ Cosine Similarity Match c базой 12 000+ SKU ] ──> Результат: 92.4% точность
-```
-
-### Ключевые технологические блоки:
-
-1. **Нормализатор чертежных шифров:** регулярные выражения и грамматические анализаторы выделяют структурированные номера сборок (ГОСТ, ТУ, заводские децимальные номера вроде `СП-6М-01` или `106.00.001-2`), игнорируя лишние разделители, пробелы и кирилло-латинскую транслитерацию.
-2. **Семантический векторный эмбеддер:** модель обучена на корпусе технических регламентов ТР ТС, справочниках ОАО «РЖД» и нормативной документации ГАЖК «O'zbekiston temir yo'llari». Векторы слов учитывают отраслевые синонимы («автосцепка» = «СА-3» = «тягово-сцепное устройство»).
-3. **Ранжирование по матрице складского остатка:** после идентификации номенклатуры алгоритм сопоставляет позицию с живыми остатками склада в Ташкенте (ТПК Index B2-2097) и формирует готовую коммерческую смету с разбивкой:
-   * *В наличии (отгрузка 24ч)*
-   * *Резерв на складе*
-   * *Под заказ с завода с расчетным сроком поставки*
-
-## Интеграция в платформу b2b.railtech.uz
-
-Технология Smart Match AI интегрирована в закрытый B2B-портал компании `b2b.railtech.uz`. Заказчики могут загрузить ведомость годовой потребности одним кликом и мгновенно получить коммерческое предложение с фиксированными ценами в сумах и выделенным НДС 12%.
+Smart Match AI семантически нормализует эти записи и моментально сопоставляет их с реестром склада ООО «RailTech» в Ташкенте.

@@ -1,11 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import type { Lang } from '../../i18n/ui';
+import { UI_DICTIONARY } from '../../i18n/ui';
 
 export const LandedCostCalculator: React.FC = () => {
+  const [lang, setLang] = useState<Lang>('ru');
   const [invoiceUsd, setInvoiceUsd] = useState<number>(45000);
   const [freightPercent, setFreightPercent] = useState<number>(8.5);
   const [dutyRate, setDutyRate] = useState<number>(5);
   const [vatEnabled, setVatEnabled] = useState<boolean>(true);
   const exchangeRate = 12850; // UZS / USD
+
+  useEffect(() => {
+    const cur = (document.documentElement.lang as Lang) || 
+      ((typeof localStorage !== 'undefined' ? localStorage.getItem('rt_lang') : null) as Lang) || 
+      'ru';
+    if (cur === 'ru' || cur === 'uz' || cur === 'en') {
+      setLang(cur);
+    }
+
+    const handleLang = (e: Event) => {
+      const customEvent = e as CustomEvent<Lang>;
+      if (customEvent.detail && (customEvent.detail === 'ru' || customEvent.detail === 'uz' || customEvent.detail === 'en')) {
+        setLang(customEvent.detail);
+      }
+    };
+
+    window.addEventListener('rt-lang-change', handleLang);
+    return () => window.removeEventListener('rt-lang-change', handleLang);
+  }, []);
+
+  const t = UI_DICTIONARY[lang]?.calculator || UI_DICTIONARY.ru.calculator;
 
   const freightAmount = Math.round(invoiceUsd * (freightPercent / 100));
   const customsBase = invoiceUsd + freightAmount;
@@ -16,7 +40,11 @@ export const LandedCostCalculator: React.FC = () => {
   const totalDdpUzs = totalDdpUsd * exchangeRate;
 
   const handleApplyCalculation = () => {
-    const subject = `Запрос контракта ВЭД DDP Ташкент (Инвойс: $${invoiceUsd.toLocaleString()}, Пошлина: ${dutyRate}%, Расчет DDP: $${totalDdpUsd.toLocaleString()} / ${(totalDdpUzs / 1e6).toFixed(1)} млн UZS)`;
+    const subject = lang === 'uz'
+      ? `DDP Toshkent TIF shartnomasi so'rovi (Invoys: $${invoiceUsd.toLocaleString()}, Boj: ${dutyRate}%, DDP: $${totalDdpUsd.toLocaleString()} / ${(totalDdpUzs / 1e6).toFixed(1)} mln UZS)`
+      : lang === 'en'
+      ? `Contract Import DDP Tashkent Inquiry (Invoice: $${invoiceUsd.toLocaleString()}, Duty: ${dutyRate}%, DDP Total: $${totalDdpUsd.toLocaleString()} / ${(totalDdpUzs / 1e6).toFixed(1)}M UZS)`
+      : `Запрос контракта ВЭД DDP Ташкент (Инвойс: $${invoiceUsd.toLocaleString()}, Пошлина: ${dutyRate}%, Расчет DDP: $${totalDdpUsd.toLocaleString()} / ${(totalDdpUzs / 1e6).toFixed(1)} млн UZS)`;
     window.dispatchEvent(
       new CustomEvent('open-lead-modal', {
         detail: { subject },
@@ -29,14 +57,14 @@ export const LandedCostCalculator: React.FC = () => {
       <div className="flex items-center justify-between border-b border-[#0A0A0A] pb-3 mb-6">
         <div>
           <span className="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2">
-            CALC.DDP-UZ
+            {t.badge}
           </span>
           <span className="font-bold text-sm text-[#0A0A0A]">
-            КАЛЬКУЛЯТОР LANDED COST DDP ТАШКЕНТ
+            {t.title}
           </span>
         </div>
         <div className="text-xs text-[#4A5056]">
-          КУРС ЦБ РУЗ: <span className="text-[#0A0A0A] font-bold">1 USD = 12 850 UZS</span>
+          {t.cbRate}
         </div>
       </div>
 
@@ -45,7 +73,7 @@ export const LandedCostCalculator: React.FC = () => {
         <div className="space-y-4">
           <div>
             <label className="block text-xs font-bold text-[#0A0A0A] mb-1">
-              [1] СТОИМОСТЬ ОБОРУДОВАНИЯ ПО ИНВОЙСУ ЗАВОДА (USD, FOB/FCA)
+              {t.invoiceLabel}
             </label>
             <div className="relative">
               <input
@@ -65,17 +93,18 @@ export const LandedCostCalculator: React.FC = () => {
                   key={preset}
                   type="button"
                   onClick={() => setInvoiceUsd(preset)}
-                  className="border border-[#0A0A0A]/40 px-1.5 py-0.5 bg-[#C8CDD2] hover:bg-[#0A0A0A] hover:text-white transition-colors"
+                  className="border border-[#0A0A0A]/40 px-1.5 py-0.5 bg-[#C8CDD2] hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer"
                 >
                   ${preset.toLocaleString()}
                 </button>
               ))}
             </div>
+            <p className="text-[10px] text-[#4A5056] mt-1">{t.invoiceHint}</p>
           </div>
 
           <div>
             <label className="block text-xs font-bold text-[#0A0A0A] mb-1">
-              [2] Ж/Д ЛОГИСТИКА, СТРАХОВАНИЕ И ПЕРЕВАЛКА ({freightPercent}%)
+              {t.freightLabel} {freightPercent}%
             </label>
             <input
               type="range"
@@ -87,15 +116,15 @@ export const LandedCostCalculator: React.FC = () => {
               className="w-full accent-[#0A0A0A]"
             />
             <div className="flex justify-between text-[11px] text-[#4A5056] mt-0.5">
-              <span>Ближний импорт (3%)</span>
+              <span>{lang === 'uz' ? 'Yaqin import (3%)' : lang === 'en' ? 'Near-transit (3%)' : 'Ближний импорт (3%)'}</span>
               <span className="font-bold text-[#0A0A0A]">${freightAmount.toLocaleString()}</span>
-              <span>Мультимодальный (18%)</span>
+              <span>{lang === 'uz' ? 'Multimodal (18%)' : lang === 'en' ? 'Multimodal (18%)' : 'Мультимодальный (18%)'}</span>
             </div>
           </div>
 
           <div>
             <label className="block text-xs font-bold text-[#0A0A0A] mb-1">
-              [3] СТАВКА ИМПОРТНОЙ ПОШЛИНЫ РУЗ ПО ТН ВЭД
+              {t.dutyLabel}
             </label>
             <div className="grid grid-cols-4 gap-2">
               {[0, 2, 5, 10].map((rate) => (
@@ -103,16 +132,17 @@ export const LandedCostCalculator: React.FC = () => {
                   key={rate}
                   type="button"
                   onClick={() => setDutyRate(rate)}
-                  className={`border border-[#0A0A0A] py-1.5 text-xs font-bold transition-colors ${
+                  className={`border border-[#0A0A0A] py-1.5 text-xs font-bold transition-colors cursor-pointer ${
                     dutyRate === rate
                       ? 'bg-[#0A0A0A] text-white'
                       : 'bg-white text-[#0A0A0A] hover:bg-[#0A0A0A]/10'
                   }`}
                 >
-                  {rate}% {rate === 0 ? '(Льгота)' : ''}
+                  {rate}% {rate === 0 ? (lang === 'uz' ? '(Imtiyoz)' : lang === 'en' ? '(Zero-duty)' : '(Льгота)') : ''}
                 </button>
               ))}
             </div>
+            <p className="text-[10px] text-[#4A5056] mt-1">{t.dutyHint}</p>
           </div>
 
           <div className="pt-2">
@@ -124,11 +154,11 @@ export const LandedCostCalculator: React.FC = () => {
                 className="w-4 h-4 accent-[#0A0A0A]"
               />
               <span className="text-xs font-bold text-[#0A0A0A]">
-                ВКЛЮЧИТЬ НДС РЕСПУБЛИКИ УЗБЕКИСТАН (12%)
+                {t.vatLabel}
               </span>
             </label>
             <p className="text-[11px] text-[#4A5056] mt-1 ml-6">
-              ООО «RailTech» выставляет электронный счет-фактуру (ЭСФ) с выделенным НДС 12%, подлежащим 100% зачету заказчиком.
+              {t.vatHint}
             </p>
           </div>
         </div>
@@ -137,29 +167,29 @@ export const LandedCostCalculator: React.FC = () => {
         <div className="border border-[#0A0A0A] bg-[#C8CDD2] p-5 flex flex-col justify-between">
           <div>
             <div className="text-xs font-bold border-b border-[#0A0A0A] pb-2 mb-3 text-[#0A0A0A]">
-              КАЛЬКУЛЯЦИЯ LANDED COST DDP ТАШКЕНТ
+              {t.breakdownTitle}
             </div>
 
             <div className="space-y-2 text-xs">
               <div className="flex justify-between">
-                <span className="text-[#4A5056]">Базовый инвойс (FOB/FCA):</span>
+                <span className="text-[#4A5056]">{t.baseInvoice}</span>
                 <span className="font-bold text-[#0A0A0A]">${invoiceUsd.toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#4A5056]">Ж/Д фрахт и страхование:</span>
+                <span className="text-[#4A5056]">{t.freightCost}</span>
                 <span className="font-bold text-[#0A0A0A]">${freightAmount.toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#4A5056]">Таможенная пошлина ({dutyRate}%):</span>
+                <span className="text-[#4A5056]">{t.importDuty} ({dutyRate}%):</span>
                 <span className="font-bold text-[#0A0A0A]">${dutyAmount.toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#4A5056]">НДС РУз (12%, к зачету):</span>
+                <span className="text-[#4A5056]">{t.vatAmount}</span>
                 <span className="font-bold text-[#0A0A0A]">${vatAmount.toLocaleString()}</span>
               </div>
               <div className="border-t-2 border-[#0A0A0A] pt-3 mt-3">
                 <div className="text-[11px] text-[#4A5056] font-sans uppercase">
-                  ИТОГОВАЯ СТОИМОСТЬ DDP ТАШКЕНТ С НДС 12%:
+                  {t.totalDdpUsd}
                 </div>
                 <div className="text-2xl font-bold text-[#0A0A0A] tracking-tight">
                   ${totalDdpUsd.toLocaleString()} USD
@@ -177,10 +207,10 @@ export const LandedCostCalculator: React.FC = () => {
               onClick={handleApplyCalculation}
               className="w-full border border-[#0A0A0A] bg-[#0A0A0A] text-white py-3 text-xs font-bold tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
             >
-              [ ЗАФИКСИРОВАТЬ ЦЕНУ И ПОЛУЧИТЬ ДОГОВОР DDP ]
+              {t.actionBtn}
             </button>
             <p className="text-[10px] text-center text-[#4A5056] mt-2">
-              Фиксация цены в сумах защищает от курсовых колебаний валют и задержек на таможне.
+              {t.fixedPriceNote}
             </p>
           </div>
         </div>

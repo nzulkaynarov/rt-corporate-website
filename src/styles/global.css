@@ -23,6 +23,12 @@
   }
 }
 
+/* Multilingual instant switching based on html[lang] */
+html[lang="ru"] .rt-lang:not(.rt-lang-ru) { display: none !important; }
+html[lang="uz"] .rt-lang:not(.rt-lang-uz) { display: none !important; }
+html[lang="en"] .rt-lang:not(.rt-lang-en) { display: none !important; }
+html:not([lang="uz"]):not([lang="en"]) .rt-lang:not(.rt-lang-ru) { display: none !important; }
+
 /* CAD Isometric and Orthogonal Engineering Grid */
 .cad-grid-bg {
   background-image:

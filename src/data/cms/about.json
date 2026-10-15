@@ -1,81 +1,175 @@
 {
   "badge": "РЕГИСТРАЦИЯ: РЕСПУБЛИКА УЗБЕКИСТАН",
+  "badge_uz": "RO'YXATDAN O'TGAN: O'ZBEKISTON RESPUBLIKASI",
+  "badge_en": "INCORPORATION: REPUBLIC OF UZBEKISTAN",
   "pageTitle": "ИНСТИТУЦИОНАЛЬНЫЙ ПРОФИЛЬ ООО «RAILTECH»",
+  "pageTitle_uz": "«RAILTECH» MCHJ INSTITUTSIONAL PROFILI",
+  "pageTitle_en": "INSTITUTIONAL PROFILE OF RAILTECH LLC",
   "pageSubtitle": "ООО «RailTech» — специализированный оператор железнодорожного снабжения, контрактного ВЭД и цифровых технологий. Мы обеспечиваем бесперебойные поставки комплектующих подвижного состава и систем СЦБ для предприятий горно-металлургического сектора, железнодорожных операторов и промышленных гигантов Центральной Азии.",
+  "pageSubtitle_uz": "«RailTech» MChJ — temir yo'l ta'minoti, shartnomaviy TQI va raqamli texnologiyalarning ixtisoslashtirilgan operatori. Biz Markaziy Osiyoning tog'-kon metallurgiya sektori, temir yo'l operatorlari va yirik sanoat korxonalari uchun harakatlanuvchi tarkib butlovchilari va STSB tizimlarining uzluksiz yetkazib berilishini kafolatlaymiz.",
+  "pageSubtitle_en": "RailTech LLC is a specialized operator of railway procurement, turnkey import management, and digital B2B technologies. We ensure seamless deliveries of rolling stock assemblies and signaling systems for mining, metallurgical operations, rail operators, and heavy industry across Central Asia.",
   "mission": {
     "title": "МИССИЯ И СТРАТЕГИЧЕСКИЙ ВЕКТОР",
-    "text": "Создание надежного, технологичного и прозрачного моста между заводами тяжелого машиностроения и промышленными потребителями Узбекистана. Мы снимаем с заказчиков валютные, таможенные и логистические барьеры, гарантируя 100% входной контроль качества и налоговую чистоту."
+    "title_uz": "MISSIYA VA STRATEGIK YO'NALISH",
+    "title_en": "MISSION & STRATEGIC TRAJECTORY",
+    "text": "Создание надежного, технологичного и прозрачного моста между заводами тяжелого машиностроения и промышленными потребителями Узбекистана. Мы снимаем с заказчиков валютные, таможенные и логистические барьеры, гарантируя 100% входной контроль качества и налоговую чистоту.",
+    "text_uz": "Og'ir mashinasozlik zavodlari va O'zbekiston sanoat iste'molchilari o'rtasida ishonchli, yuqori texnologiyali va shaffof ko'prik yaratish. Biz 100% kirish nazorati va soliq tozaligini kafolatlagan holda, buyurtmachilarimizdan valyuta, bojxona va logistika to'siqlarini olib tashlaymiz.",
+    "text_en": "Building a reliable, technologically advanced, and transparent bridge between heavy machinery manufacturers and industrial enterprises in Uzbekistan. We eliminate currency, customs, and logistical bottlenecks while guaranteeing 100% incoming quality assurance and strict tax compliance."
   },
   "advantages": [
     {
       "code": "[01] ОФИЦИАЛЬНЫЙ ДИЛЕР И ПРЯМЫЕ КОНТРАКТЫ",
+      "code_uz": "[01] RASMIY DILER VA TO'G'RIDAN-TO'G'RI SHARTNOMALAR",
+      "code_en": "[01] AUTHORIZED DISTRIBUTOR & DIRECT CONTRACTS",
       "title": "Прямые контракты с 86+ заводами",
+      "title_uz": "86+ zavod bilan to'g'ridan-to'g'ri shartnomalar",
+      "title_en": "Direct Master Agreements with 86+ Plants",
       "description": "Официальные партнерские соглашения с ведущими производителями литья, колесных пар и систем СЦБ. Отсутствие лишних цепочек посредников обеспечивает прозрачную заводскую цену.",
+      "description_uz": "Quyuv mahsulotlari, g'ildirak juftliklari va STSB tizimlari ishlab chiqaruvchi yetakchi korxonalar bilan rasmiy hamkorlik bitimlari. Oraliq vositachilar zanjirining yo'qligi shaffof zavod narxlarini ta'minlaydi.",
+      "description_en": "Official distributorship agreements with tier-1 foundries, wheelset plants, and signaling equipment manufacturers. Elimination of intermediary margins guarantees transparent factory pricing.",
       "items": [
         "Прямые дилерские цены",
         "Гарантия подлинности паспортов",
         "Квотированные объемы поставок"
+      ],
+      "items_uz": [
+        "To'g'ridan-to'g'ri dilerlik narxlari",
+        "Zavod pasportlari haqiqiyligi kafolati",
+        "Kvotali yetkazib berish hajmlari"
+      ],
+      "items_en": [
+        "Direct manufacturer prices",
+        "Guaranteed genuine factory passports",
+        "Dedicated factory production quotas"
       ]
     },
     {
       "code": "[02] СЕРТИФИКАЦИЯ И КОНТРОЛЬ КАЧЕСТВА",
+      "code_uz": "[02] SERTIFIKATSIYA VA SIFAT NAZORATI",
+      "code_en": "[02] CERTIFICATION & QUALITY CONTROL",
       "title": "Аттестованный входной контроль ОТК",
+      "title_uz": "Attestatsiyalangan TNZ kirish nazorati",
+      "title_en": "Certified QC Incoming Inspection",
       "description": "Собственный участок дефектоскопии на складе Index B2-2097. Проверка геометрии калибрами, УЗК-контроль на скрытые раковины и трещины перед выдачей клиенту.",
+      "description_uz": "Index B2-2097 omboridagi shaxsiy defektoskopiya uchastkasi. Geometriyani shablonlar bilan o'lchash, mijozga yuklashdan oldin yashirin bo'shliqlar va yoriqlarni UZN tekshiruvi.",
+      "description_en": "In-house ultrasonic testing facility at the Index B2-2097 terminal. Precise caliper geometry checks and non-destructive testing for hidden cavities and cracks prior to customer handover.",
       "items": [
         "Сертификаты ТР ТС 001/2011",
         "Ультразвуковой контроль плавок",
         "Заводские паспорта качества"
+      ],
+      "items_uz": [
+        "TR TS 001/2011 sertifikatlari",
+        "Eritmalarni ultratovushli nazorat qilish",
+        "Zavod sifat pasportlari"
+      ],
+      "items_en": [
+        "TR CU 001/2011 technical certificates",
+        "Ultrasonic testing for melt integrity",
+        "Factory quality passports and test sheets"
       ]
     },
     {
       "code": "[03] ИНЖЕНЕРНЫЙ КОНСАЛТИНГ И ВЭД ПОД КЛЮЧ",
+      "code_uz": "[03] MUHANDISLIK KONSALTINGI VA KALIT TOPSHIRISH TQI",
+      "code_en": "[03] ENGINEERING CONSULTING & TURNKEY IMPORT",
       "title": "Комплексный консалтинг и логистика DDP",
+      "title_uz": "Kompleks konsalting va DDP logistikasi",
+      "title_en": "Comprehensive Consulting & DDP Logistics",
       "description": "Помощь в подборе взаимозаменяемых аналогов по ГОСТ и чертежам, расчет оптимальных таможенных кодов ТН ВЭД, фиксация цен в сумах с НДС 12%.",
+      "description_uz": "GOST va chizmalar bo'yicha muqobil detallarni tanlashda muhandislik yordami, TQI TH kodlarini to'g'ri tanlash, 12% QQS bilan so'mda qat'iy narxlar.",
+      "description_en": "Engineering assistance in cross-matching GOST-compliant analogs, classification of HS codes (TN VED), and complete price locking in Uzbek Sums inclusive of 12% VAT.",
       "items": [
         "Поставка на базисе DDP Ташкент",
         "ЭСФ Didox с НДС 12%",
         "Таможенное оформление без задержек"
+      ],
+      "items_uz": [
+        "DDP Toshkent bazisida yetkazib berish",
+        "12% QQS bilan Didox EHF",
+        "Kechikishlarsiz bojxona rasmiylashtiruvi"
+      ],
+      "items_en": [
+        "DDP Tashkent delivery basis",
+        "Electronic invoices (Didox) with 12% VAT",
+        "Streamlined customs clearance"
       ]
     }
   ],
   "directions": [
     {
       "title": "Складская программа ЖД запчастей",
-      "desc": "Более 1 247 позиций в наличии в Ташкенте: колесные пары, тележки 18-100, автосцепки СА-3, тормозные колодки, реле и приводы СП-6М."
+      "title_uz": "Temir yo'l ehtiyot qismlari ombor dasturi",
+      "title_en": "Railway Spare Parts Inventory Program",
+      "desc": "Более 1 247 позиций в наличии в Ташкенте: колесные пары, тележки 18-100, автосцепки СА-3, тормозные колодки, реле и приводы СП-6М.",
+      "desc_uz": "Toshkentda mavjud 1 247 dan ortiq nom: g'ildirak juftliklari, 18-100 aravachalari, SA-3 avtobirikmalari, tormoz kolodkalari, relelar va SP-6M yuritmalar.",
+      "desc_en": "Over 1,247 SKUs stocked in Tashkent: wheelsets, 18-100 bogies, SA-3 couplers, composite brake shoes, signaling relays, and SP-6M point machines."
     },
     {
       "title": "Контрактный импорт под ключ",
-      "desc": "Поставки нестандартного и тяжелого оборудования из РФ, КНР и ЕС с доставкой непосредственно на подъездной путь заказчика."
+      "title_uz": "Kalit topshirish shartnomaviy importi",
+      "title_en": "Turnkey Contractual Import Management",
+      "desc": "Поставки нестандартного и тяжелого оборудования из РФ, КНР и ЕС с доставкой непосредственно на подъездной путь заказчика.",
+      "desc_uz": "Rossiya, Xitoy va YI mamlakatlaridan nostandart va og'ir uskunalarni to'g'ridan-to'g'ri buyurtmachining temir yo'l iziga yetkazib berish.",
+      "desc_en": "Procurement and door-to-door delivery of heavy and non-standard industrial equipment from CIS, China, and Europe directly to the customer's siding."
     },
     {
       "title": "Цифровые B2B сервисы",
-      "desc": "Платформа b2b.railtech.uz для мониторинга остатков в реальном времени и парсинг спецификаций Smart Match AI."
+      "title_uz": "Raqamli B2B xizmatlari",
+      "title_en": "Digital B2B Platform & Tooling",
+      "desc": "Платформа b2b.railtech.uz для мониторинга остатков в реальном времени и парсинг спецификаций Smart Match AI.",
+      "desc_uz": "Ombor qoldiqlarini real vaqtda kuzatish uchun b2b.railtech.uz platformasi va Smart Match AI spetsifikatsiya tahlili.",
+      "desc_en": "Real-time inventory visibility on the b2b.railtech.uz portal and automated bill of materials parsing via Smart Match AI."
     },
     {
       "title": "Локализация и трансфер технологий",
-      "desc": "Внедрение передовых систем интервального регулирования и безопасности движения САУТ на тяговом подвижном составе РУз."
+      "title_uz": "Lokalizatsiya va texnologiyalar transferi",
+      "title_en": "Technology Transfer & System Localization",
+      "desc": "Внедрение передовых систем интервального регулирования и безопасности движения САУТ на тяговом подвижном составе РУз.",
+      "desc_uz": "O'zbekiston tortuvchi harakat tarkibida SAUT xavfsizlik va interval nazorati tizimlarini joriy qilish.",
+      "desc_en": "Integration of advanced locomotive speed control and train protection automation (SAUT) into Uzbekistan's traction fleet."
     }
   ],
   "faq": [
     {
       "q": "В какие сроки рассчитывается коммерческое предложение и Landed Cost DDP?",
-      "a": "Стандартный расчет КП по позициям складской программы Ташкента занимает от 15 до 60 минут. Полный расчет комплексной ведомости на условиях контрактного ВЭД DDP Ташкент (с учетом международной логистики, таможенных пошлин и НДС 12%) предоставляется в течение 24 часов."
+      "q_uz": "Tijorat taklifi va Landed Cost DDP qancha vaqt ichida hisoblab beriladi?",
+      "q_en": "What is the turnaround time for RFQ quotations and Landed Cost DDP calculation?",
+      "a": "Стандартный расчет КП по позициям складской программы Ташкента занимает от 15 до 60 минут. Полный расчет комплексной ведомости на условиях контрактного ВЭД DDP Ташкент (с учетом международной логистики, таможенных пошлин и НДС 12%) предоставляется в течение 24 часов.",
+      "a_uz": "Toshkent ombor dasturidagi tovarlar bo'yicha tijorat taklifi 15 dan 60 daqiqagacha vaqt ichida beriladi. Xalqaro logistika, bojxona to'lovlari va 12% QQS ni hisobga olgan holda DDP Toshkent shartidagi to'liq hisob-kitob 24 soat ichida taqdim etiladi.",
+      "a_en": "Standard quotations for Tashkent warehouse stock are processed within 15 to 60 minutes. A comprehensive Landed Cost DDP Tashkent estimate (including international freight, duties, customs clearance, and 12% VAT) is provided within 24 hours."
     },
     {
       "q": "Работает ли ООО «RailTech» с нерезидентами Республики Узбекистан?",
-      "a": "Да. Мы заключаем прямые экспортно-импортные контракты с предприятиями Казахстана, Кыргызстана, Таджикистана и других стран Центральной Азии на условиях FCA/CPT/DAP в соответствии с Incoterms 2020 с расчетами в долларах США (USD), евро (EUR) или рублях (RUB)."
+      "q_uz": "«RailTech» MChJ O'zbekiston Respublikasi norezidentlari bilan ishlaydimi?",
+      "q_en": "Does RailTech LLC work with international non-residents of Uzbekistan?",
+      "a": "Да. Мы заключаем прямые экспортно-импортные контракты с предприятиями Казахстана, Кыргызстана, Таджикистана и других стран Центральной Азии на условиях FCA/CPT/DAP в соответствии с Incoterms 2020 с расчетами в долларах США (USD), евро (EUR) или рублях (RUB).",
+      "a_uz": "Ha. Biz Qozog'iston, Qirg'iziston, Tojikiston va boshqa Markaziy Osiyo mamlakatlari korxonalari bilan Incoterms 2020 bo'yicha FCA/CPT/DAP shartlarida to'g'ridan-to'g'ri eksport-import shartnomalarini tuzamiz (to'lovlar AQSH dollari, yevro yoki rublda).",
+      "a_en": "Yes. We execute direct export/import contracts with enterprises across Kazakhstan, Kyrgyzstan, Tajikistan, and Central Asia under Incoterms 2020 (FCA, CPT, DAP) with settlements accepted in USD, EUR, or RUB."
     },
     {
       "q": "Какими документами подтверждается качество и происхождение продукции?",
-      "a": "К каждой партии прилагаются: оригинальный паспорт завода-изготовителя с отметкой ОТК и сертификатом плавки, сертификат соответствия ТР ТС 001/2011 «О безопасности железнодорожного подвижного состава», сертификат происхождения формы СТ-1, акт входного контроля УЗК-дефектоскопии и электронная счет-фактура (ЭСФ) через систему Didox/Soliq."
+      "q_uz": "Mahsulotning sifati va kelib chiqishi qaysi hujjatlar bilan tasdiqlanadi?",
+      "q_en": "What documentation verifies product quality and origin?",
+      "a": "К каждой партии прилагаются: оригинальный паспорт завода-изготовителя с отметкой ОТК и сертификатом плавки, сертификат соответствия ТР ТС 001/2011 «О безопасности железнодорожного подвижного состава», сертификат происхождения формы СТ-1, акт входного контроля УЗК-дефектоскопии и электронная счет-фактура (ЭСФ) через систему Didox/Soliq.",
+      "a_uz": "Har bir partiyaga quyidagilar ilova qilinadi: TNZ muhri va eritma sertifikati bilan ishlab chiqaruvchi zavod asl pasporti, TR TS 001/2011 muvofiqlik sertifikati, ST-1 shaklidagi kelib chiqish sertifikati, UZN defektoskopiya kirish nazorati dalolatnomasi va Didox/Soliq orqali elektron hisob-faktura (EHF).",
+      "a_en": "Every consignment is accompanied by: authentic manufacturer passport with QC stamp and melt certificate, TR CU 001/2011 rolling stock safety certificate, CT-1 Certificate of Origin, ultrasonic defectoscopy incoming inspection report, and Electronic Tax Invoice via Didox/Soliq."
     },
     {
       "q": "Каковы условия гарантии и порядок возврата/замены в случае брака?",
-      "a": "Стандартная заводская гарантия составляет от 12 до 36 месяцев с момента ввода узла в эксплуатацию (или до достижения нормативного пробега). В случае выявления скрытого производственного дефекта составляется рекламационный акт формы ВУ-41 / ВУ-25, после чего деталь заменяется со склада в Ташкенте за 24-48 часов за счет RailTech."
+      "q_uz": "Kafolat shartlari qanday va nosozlik aniqlanganda almashtirish tartibi qanday?",
+      "q_en": "What are the warranty terms and defective unit replacement procedures?",
+      "a": "Стандартная заводская гарантия составляет от 12 до 36 месяцев с момента ввода узла в эксплуатацию (или до достижения нормативного пробега). В случае выявления скрытого производственного дефекта составляется рекламационный акт формы ВУ-41 / ВУ-25, после чего деталь заменяется со склада в Ташкенте за 24-48 часов за счет RailTech.",
+      "a_uz": "Standart zavod kafolati uzel foydalanishga topshirilgan kundan boshlab 12 oydan 36 oygacha (yoki me'yoriy masofani bosib o'tgunga qadar) davom etadi. Yashirin ishlab chiqarish nuqsoni aniqlanganda VU-41 / VU-25 shaklidagi dalolatnoma tuziladi va detal RailTech hisobidan 24-48 soat ichida Toshkent omboridan almashtirib beriladi.",
+      "a_en": "Standard manufacturer warranty spans 12 to 36 months from commissioning (or up to standard mileage thresholds). Should a latent factory defect occur, a formal VU-41 / VU-25 claim report is drawn up, and replacement parts are supplied from the Tashkent warehouse within 24-48 hours at RailTech's expense."
     },
     {
       "q": "Как получить доступ к закрытому каталогу и оптовым ценам на b2b.railtech.uz?",
-      "a": "Доступ к платформе b2b.railtech.uz предоставляется юридическим лицам после прохождения базовой верификации KYC (проверка ИНН, реквизитов и полномочий представителя). После активации учетной записи клиент получает персональные оптовые скидки, доступ к бронированию складских остатков и автоматической выписке счетов."
+      "q_uz": "b2b.railtech.uz saytidagi yopiq katalog va ulgurji narxlarga qanday kirish mumkin?",
+      "q_en": "How can corporate clients access wholesale prices on b2b.railtech.uz?",
+      "a": "Доступ к платформе b2b.railtech.uz предоставляется юридическим лицам после прохождения базовой верификации KYC (проверка ИНН, реквизитов и полномочий представителя). После активации учетной записи клиент получает персональные оптовые скидки, доступ к бронированию складских остатков и автоматической выписке счетов.",
+      "a_uz": "b2b.railtech.uz platformasiga kirish yuridik shaxslarga KYC tekshiruvidan (STIR, rekvizitlar va vakil vakolatlarini tekshirish) so'ng taqdim etiladi. Hisob faollashtirilgach, mijoz shaxsiy ulgurji chegirmalar, ombor qoldiqlarini bron qilish va hisob-fakturalarni avtomatik shakllantirish imkoniyatiga ega bo'ladi.",
+      "a_en": "Access to the b2b.railtech.uz portal is granted to registered corporate entities upon standard KYC verification (TIN, company registration, and signatory authority). Once verified, clients unlock personalized wholesale discounts, real-time inventory reservation, and automated invoice generation."
     }
   ]
 }

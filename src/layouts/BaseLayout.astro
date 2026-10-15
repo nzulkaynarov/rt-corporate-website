@@ -32,6 +32,16 @@ const ogImageUrl = image
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script is:inline>
+      (function() {
+        try {
+          var param = new URLSearchParams(window.location.search).get('lang');
+          var stored = localStorage.getItem('rt_lang');
+          var lang = (param === 'ru' || param === 'uz' || param === 'en') ? param : (stored === 'uz' || stored === 'en') ? stored : 'ru';
+          document.documentElement.lang = lang;
+        } catch (e) {}
+      })();
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
