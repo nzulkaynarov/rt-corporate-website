@@ -1,0 +1,60 @@
+---
+import aboutData from '../data/cms/about.json';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  badge?: string;
+}
+
+const {
+  title = 'ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ (FAQ)',
+  subtitle = 'Регламент поставок, юридические гарантии, сертификация и доступ к платформе b2b.railtech.uz',
+  badge = 'РЕГЛАМЕНТ & ОТВЕТЫ',
+} = Astro.props;
+
+const faqList = aboutData.faq || [];
+---
+
+<div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 lg:p-8 font-mono">
+  <div class="border-b border-[#0A0A0A] pb-3 mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+    <div>
+      <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2">
+        {badge}
+      </span>
+      <h2 class="text-xl sm:text-2xl font-bold text-[#0A0A0A] inline-block align-middle font-sans">
+        {title}
+      </h2>
+    </div>
+    <div class="text-xs text-[#4A5056]">
+      ОФИЦИАЛЬНЫЙ РЕГЛАМЕНТ ООО «RAILTECH»
+    </div>
+  </div>
+
+  <p class="text-xs text-[#4A5056] font-sans leading-relaxed mb-6 max-w-3xl">
+    {subtitle}
+  </p>
+
+  <div class="divide-y divide-[#0A0A0A]/30 border border-[#0A0A0A]">
+    {faqList.map((item, idx) => (
+      <details class="group bg-[#C8CDD2]/60 open:bg-white transition-colors">
+        <summary class="p-4 cursor-pointer list-none flex items-center justify-between gap-4 font-sans text-sm font-bold text-[#0A0A0A] hover:bg-[#C8CDD2] select-none">
+          <div class="flex items-center space-x-3">
+            <span class="font-mono text-xs border border-[#0A0A0A] bg-[#0A0A0A] text-white px-1.5 py-0.5 shrink-0">
+              Q{idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
+            </span>
+            <span>{item.q}</span>
+          </div>
+          <span class="font-mono text-base font-bold text-[#0A0A0A] transition-transform duration-200 group-open:rotate-45 shrink-0">
+            +
+          </span>
+        </summary>
+        <div class="px-4 pb-4 pt-1 font-sans text-xs text-[#4A5056] leading-relaxed border-t border-[#0A0A0A]/10 bg-white">
+          <div class="pl-8 border-l-2 border-[#0A0A0A]">
+            {item.a}
+          </div>
+        </div>
+      </details>
+    ))}
+  </div>
+</div>

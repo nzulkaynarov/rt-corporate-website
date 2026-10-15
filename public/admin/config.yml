@@ -78,3 +78,147 @@ collections:
       - { label: "Метрики проекта", name: "metrics", widget: "list" }
       - { label: "Порядок", name: "order", widget: "number", default: 1 }
       - { label: "Описание проекта", name: "body", widget: "markdown" }
+
+  - name: "blog"
+    label: "5. Блог и Новости компании (.BLOG)"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Заголовок статьи", name: "title", widget: "string" }
+      - { label: "Дата публикации (ГГГГ-ММ-ДД)", name: "publishDate", widget: "string" }
+      - { label: "Категория", name: "category", widget: "select", options: ["Поставки и Склад", "ВЭД и Таможня", "Digital & ПО", "Спецпроекты и Арт", "Новости компании"] }
+      - { label: "Краткий анонс / лид", name: "summary", widget: "text" }
+      - { label: "Автор", name: "author", widget: "string", default: "Инженерный отдел ООО «RailTech»" }
+      - { label: "Время чтения", name: "readTime", widget: "string", default: "4 мин" }
+      - { label: "Изображение обложки", name: "image", widget: "image", required: false }
+      - { label: "Выделенная статья (Featured)", name: "featured", widget: "boolean", default: false }
+      - { label: "Теги", name: "tags", widget: "list", default: [] }
+      - { label: "Текст статьи (Markdown)", name: "body", widget: "markdown" }
+
+  - name: "site_settings"
+    label: "6. Настройки сайта и Статические страницы"
+    files:
+      - name: "global"
+        label: "Глобальные реквизиты и контакты"
+        file: "src/data/cms/global.json"
+        fields:
+          - { label: "Наименование компании", name: "companyName", widget: "string" }
+          - { label: "Юридический статус", name: "legalStatus", widget: "string" }
+          - { label: "ИНН / Налоговый статус", name: "inn", widget: "string" }
+          - { label: "Основной телефон", name: "phone", widget: "string" }
+          - { label: "Общий Email", name: "emailGeneral", widget: "string" }
+          - { label: "Email юротдела", name: "emailLegal", widget: "string" }
+          - { label: "Email по персональным данным", name: "emailPrivacy", widget: "string" }
+          - { label: "Адрес склада и офиса", name: "address", widget: "string" }
+          - { label: "Ссылка на B2B портал", name: "b2bPortalUrl", widget: "string" }
+          - label: "Ключевые метрики"
+            name: "metrics"
+            widget: "object"
+            fields:
+              - { label: "Лет на рынке", name: "years", widget: "string" }
+              - { label: "Партнеры", name: "partners", widget: "string" }
+              - { label: "Количество SKU", name: "skuCount", widget: "string" }
+              - { label: "Заводы-изготовители", name: "manufacturers", widget: "string" }
+              - { label: "Точность Smart Match", name: "smartMatch", widget: "string" }
+
+      - name: "home"
+        label: "Главная страница (/)"
+        file: "src/data/cms/home.json"
+        fields:
+          - { label: "Бейдж Hero", name: "heroBadge", widget: "string" }
+          - { label: "Подбейдж Hero", name: "heroBadgeSub", widget: "string" }
+          - { label: "Бейдж НДС", name: "heroBadgeVat", widget: "string" }
+          - { label: "Главный заголовок H1", name: "heroTitle", widget: "string" }
+          - { label: "Подзаголовок Hero", name: "heroSubtitle", widget: "text" }
+          - { label: "Текст кнопки Каталог", name: "ctaCatalog", widget: "string" }
+          - { label: "Текст кнопки ВЭД", name: "ctaContract", widget: "string" }
+          - { label: "Текст кнопки КП", name: "ctaRfq", widget: "string" }
+          - { label: "Бейдж секции направлений", name: "pillarsSectionBadge", widget: "string" }
+          - { label: "Заголовок секции направлений", name: "pillarsSectionTitle", widget: "string" }
+          - { label: "Подзаголовок секции направлений", name: "pillarsSectionSubtitle", widget: "string" }
+          - label: "Карточки 4 направлений"
+            name: "pillars"
+            widget: "list"
+            fields:
+              - { label: "Код", name: "code", widget: "string" }
+              - { label: "Тег", name: "tag", widget: "string" }
+              - { label: "Заголовок", name: "title", widget: "string" }
+              - { label: "Описание", name: "description", widget: "text" }
+              - { label: "Текст кнопки", name: "linkText", widget: "string" }
+              - { label: "Ссылка", name: "linkHref", widget: "string" }
+          - { label: "Бейдж секции витрины", name: "showcaseSectionBadge", widget: "string" }
+          - { label: "Заголовок секции витрины", name: "showcaseSectionTitle", widget: "string" }
+          - { label: "Бейдж секции гарантий", name: "trustSectionBadge", widget: "string" }
+          - { label: "Заголовок секции гарантий", name: "trustSectionTitle", widget: "string" }
+          - label: "Пункты гарантий"
+            name: "trustItems"
+            widget: "list"
+            fields:
+              - { label: "Код пункта", name: "code", widget: "string" }
+              - { label: "Описание", name: "text", widget: "text" }
+
+      - name: "about"
+        label: "О компании (/about)"
+        file: "src/data/cms/about.json"
+        fields:
+          - { label: "Бейдж страницы", name: "badge", widget: "string" }
+          - { label: "Заголовок H1", name: "pageTitle", widget: "string" }
+          - { label: "Подзаголовок", name: "pageSubtitle", widget: "text" }
+          - label: "Миссия"
+            name: "mission"
+            widget: "object"
+            fields:
+              - { label: "Заголовок", name: "title", widget: "string" }
+              - { label: "Текст", name: "text", widget: "text" }
+          - label: "Преимущества"
+            name: "advantages"
+            widget: "list"
+            fields:
+              - { label: "Код", name: "code", widget: "string" }
+              - { label: "Заголовок", name: "title", widget: "string" }
+              - { label: "Описание", name: "description", widget: "text" }
+              - { label: "Ключевые пункты", name: "items", widget: "list" }
+          - label: "Направления деятельности"
+            name: "directions"
+            widget: "list"
+            fields:
+              - { label: "Название", name: "title", widget: "string" }
+              - { label: "Описание", name: "desc", widget: "text" }
+          - label: "Вопросы и ответы (FAQ)"
+            name: "faq"
+            widget: "list"
+            fields:
+              - { label: "Вопрос", name: "q", widget: "string" }
+              - { label: "Ответ", name: "a", widget: "text" }
+
+      - name: "contacts"
+        label: "Контакты и реквизиты (/contacts)"
+        file: "src/data/cms/contacts.json"
+        fields:
+          - { label: "Бейдж", name: "badge", widget: "string" }
+          - { label: "Локация", name: "location", widget: "string" }
+          - { label: "Статус бейдж", name: "statusBadge", widget: "string" }
+          - { label: "Заголовок H1", name: "pageTitle", widget: "string" }
+          - { label: "Подзаголовок", name: "pageSubtitle", widget: "text" }
+          - label: "Контакты отделов"
+            name: "departments"
+            widget: "list"
+            fields:
+              - { label: "Название отдела", name: "name", widget: "string" }
+              - { label: "Описание задач", name: "desc", widget: "string" }
+              - { label: "Телефон", name: "phone", widget: "string" }
+              - { label: "Email", name: "email", widget: "string" }
+          - { label: "Инструкция проезда для грузового транспорта", name: "logisticsInstructions", widget: "list" }
+          - { label: "Координаты GPS", name: "gps", widget: "string" }
+          - { label: "Ссылка на Яндекс.Карты", name: "yandexMapUrl", widget: "string" }
+          - label: "Банковские реквизиты"
+            name: "bankDetails"
+            widget: "object"
+            fields:
+              - { label: "Получатель", name: "recipient", widget: "string" }
+              - { label: "ИНН", name: "inn", widget: "string" }
+              - { label: "Код плательщика НДС", name: "vatCode", widget: "string" }
+              - { label: "Расчетный счет", name: "account", widget: "string" }
+              - { label: "Банк", name: "bank", widget: "string" }
+              - { label: "МФО", name: "mfo", widget: "string" }

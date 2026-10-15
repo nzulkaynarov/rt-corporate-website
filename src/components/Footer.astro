@@ -1,4 +1,6 @@
 ---
+import globalData from '../data/cms/global.json';
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
@@ -8,17 +10,26 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <!-- Col 1: Legal Dossier -->
     <div class="flex flex-col space-y-3">
       <div class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-1 inline-block w-max font-bold tracking-widest text-xs">
-        ООО «RAILTECH»
+        {globalData.companyName.toUpperCase()}
       </div>
       <p class="text-[11px] text-[#4A5056] leading-relaxed">
-        Инженерный поставщик комплектующих подвижного состава, систем СЦБ и инфраструктурных решений для железных дорог Центральной Азии.
+        {globalData.legalStatus}. Инженерный поставщик комплектующих подвижного состава, систем СЦБ и инфраструктурных решений для железных дорог Центральной Азии.
       </p>
       <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#D4D8DC] text-[11px] space-y-1">
         <div class="font-bold text-[#0A0A0A]">РЕКВИЗИТЫ ПРЕДПРИЯТИЯ:</div>
-        <div>ИНН: <span class="font-bold">308912445</span></div>
+        <div>ИНН: <span class="font-bold">{globalData.inn}</span></div>
         <div>НДС: <span class="font-bold">12% (ПЛАТЕЛЬЩИК)</span></div>
         <div>ОКЭД: 46.69.0</div>
         <div>ЭСФ: Didox / Soliq / Factura.uz</div>
+      </div>
+      <div class="pt-1 flex flex-wrap gap-2 text-[10px]">
+        <a href={`${base}/privacy`} class="text-[#4A5056] hover:text-[#0A0A0A] underline">
+          Политика конфиденциальности
+        </a>
+        <span class="text-[#0A0A0A]/30">·</span>
+        <a href={`${base}/terms`} class="text-[#4A5056] hover:text-[#0A0A0A] underline">
+          Условия использования
+        </a>
       </div>
     </div>
 
@@ -53,21 +64,27 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           </a>
         </li>
         <li>
+          <a href={`${base}/blog/`} class="hover:underline flex items-center justify-between">
+            <span>[05] Блог и Новости</span>
+            <span class="text-[#4A5056]">Аналитика</span>
+          </a>
+        </li>
+        <li>
           <a href={`${base}/about`} class="hover:underline flex items-center justify-between">
-            <span>[05] О компании</span>
+            <span>[06] О компании</span>
             <span class="text-[#4A5056]">Статус юрлица</span>
           </a>
         </li>
         <li>
           <a href={`${base}/contacts`} class="hover:underline flex items-center justify-between">
-            <span>[06] Контакты и реквизиты</span>
+            <span>[07] Контакты и реквизиты</span>
             <span class="text-[#4A5056]">Схема проезда</span>
           </a>
         </li>
         <li class="pt-1 border-t border-[#0A0A0A]/20">
           <a href={`${base}/admin/`} class="text-[#4A5056] hover:text-[#0A0A0A] hover:underline flex items-center justify-between">
             <span>[CMS] Панель управления</span>
-            <span>Decap CMS ↗</span>
+            <span>Sveltia CMS ↗</span>
           </a>
         </li>
       </ul>
@@ -79,7 +96,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         СКЛАДСКОЙ ХАБ В ТАШКЕНТЕ
       </div>
       <p class="text-[11px] text-[#4A5056] leading-relaxed">
-        Собственный складской комплекс в ТПК Index (павильон B2, секция 2097). Постоянный неснижаемый запас критических позиций (СА-3, СП-6М, колесные пары, колодки 25610-Н).
+        Собственный складской комплекс в {globalData.address}. Постоянный неснижаемый запас критических позиций (СА-3, СП-6М, колесные пары, колодки 25610-Н).
       </p>
       <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#D4D8DC] text-[11px] space-y-1">
         <div>GPS: 41.2214° N, 69.1852° E</div>
@@ -96,17 +113,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </div>
       <div class="space-y-1 text-[11px]">
         <div class="text-[#4A5056]">Прямая линия снабжения:</div>
-        <a href="tel:+998901189000" class="block font-bold text-sm text-[#0A0A0A] hover:underline">
-          +998 90 118-90-00
+        <a href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`} class="block font-bold text-sm text-[#0A0A0A] hover:underline">
+          {globalData.phone}
         </a>
       </div>
       <div class="space-y-1 text-[11px]">
         <div class="text-[#4A5056]">Электронная почта:</div>
-        <a href="mailto:info@railtech.uz" class="block text-[#0A0A0A] underline hover:no-underline">
-          info@railtech.uz
+        <a href={`mailto:${globalData.emailGeneral}`} class="block text-[#0A0A0A] underline hover:no-underline">
+          {globalData.emailGeneral}
         </a>
-        <a href="mailto:supply@railtech.uz" class="block text-[#0A0A0A] underline hover:no-underline">
+        <a href={`mailto:supply@railtech.uz`} class="block text-[#0A0A0A] underline hover:no-underline">
           supply@railtech.uz (Заявки)
+        </a>
+        <a href={`mailto:${globalData.emailLegal}`} class="block text-[#4A5056] hover:text-[#0A0A0A] text-[10px]">
+          Юротдел: {globalData.emailLegal}
         </a>
       </div>
       <div class="pt-2">
@@ -130,8 +150,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <span class="text-white/40">|</span>
       <span>SECURITY: TLS 1.3 / E-SIGN VERIFIED</span>
     </div>
-    <div>
-      © 2026 ООО «RAILTECH». РЕСПУБЛИКА УЗБЕКИСТАН. ВСЕ ПРАВА ЗАЩИЩЕНЫ.
+    <div class="flex items-center space-x-4">
+      <a href={`${base}/privacy`} class="text-[#D4D8DC] hover:text-white underline">
+        Конфиденциальность
+      </a>
+      <a href={`${base}/terms`} class="text-[#D4D8DC] hover:text-white underline">
+        Условия сервиса
+      </a>
+      <span>
+        © 2026 {globalData.companyName}. РЕСПУБЛИКА УЗБЕКИСТАН.
+      </span>
     </div>
   </div>
 </footer>

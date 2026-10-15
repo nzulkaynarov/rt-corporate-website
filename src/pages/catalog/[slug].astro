@@ -15,6 +15,9 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
+const productUrl = `https://railtech.uz/catalog/${entry.slug}`;
+const siteUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : productUrl;
+
 const productJsonLd = {
   '@context': 'https://schema.org/',
   '@type': 'Product',
@@ -22,29 +25,49 @@ const productJsonLd = {
   image: `https://railtech.uz/images/catalog/${entry.data.sku.toLowerCase()}.jpg`,
   description: entry.data.specs,
   sku: entry.data.sku,
-  mpn: entry.data.sku,
+  mpn: entry.data.gost,
   brand: {
     '@type': 'Brand',
     name: 'RailTech',
   },
   offers: {
     '@type': 'Offer',
-    url: `https://railtech.uz/catalog/${entry.slug}`,
+    url: siteUrl,
     priceCurrency: 'UZS',
     price: '0',
     priceValidUntil: '2026-12-31',
     itemCondition: 'https://schema.org/NewCondition',
-    availability:
-      entry.data.statusKey === 'in_stock'
-        ? 'https://schema.org/InStock'
-        : entry.data.statusKey === 'reserved'
-        ? 'https://schema.org/LimitedAvailability'
-        : 'https://schema.org/PreOrder',
+    availability: 'https://schema.org/InStock',
     seller: {
       '@type': 'Organization',
       name: 'ООО «RailTech»',
     },
   },
+};
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Главная',
+      item: 'https://railtech.uz/',
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Каталог ЖД оборудования',
+      item: 'https://railtech.uz/catalog/',
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: entry.data.title,
+      item: siteUrl,
+    },
+  ],
 };
 ---
 
@@ -53,8 +76,9 @@ const productJsonLd = {
   description={`Технический паспорт и заказ ${entry.data.title} (${entry.data.sku}). Стандарт ${entry.data.gost}, ТН ВЭД ${entry.data.tnved}. Склад в Ташкенте (ТПК Index B2-2097). Поставка с НДС 12%.`}
   keywords={`${entry.data.title}, ${entry.data.sku}, ${entry.data.gost}, ${entry.data.tnved}, купить в ташкенте, жд запчасти узбекистан`}
 >
-  <!-- Product Schema.org -->
+  <!-- Product & Breadcrumb Schema.org -->
   <script type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
 
   <div class="max-w-7xl mx-auto px-4 py-10 font-sans">
     <!-- Breadcrumbs -->

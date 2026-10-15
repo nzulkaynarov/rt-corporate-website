@@ -1,0 +1,283 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+allPosts.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const categories = [
+  'Все публикации',
+  'Поставки и Склад',
+  'ВЭД и Таможня',
+  'Digital & ПО',
+  'Спецпроекты и Арт',
+  'Новости компании',
+];
+
+const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
+---
+
+<BaseLayout
+  title="Блог и Новости компании — Инженерная аналитика и регламенты ЖД поставок | ООО «RailTech»"
+  description="Экспертные статьи инженеров ООО «RailTech»: организация складского резерва в Ташкенте, расчет Landed Cost DDP, алгоритмы Smart Match AI и технологический трансфер."
+  keywords="блог railtech, новости жд снабжения ташкент, landed cost ddp узбекистан, склад index b2-2097, smart match ai, жд запчасти узбекистан"
+>
+  <div class="max-w-7xl mx-auto px-4 py-10 font-sans">
+    <!-- Breadcrumbs -->
+    <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-4">
+      <a href={`${base}/`} class="hover:underline">ГЛАВНАЯ</a>
+      <span>/</span>
+      <span class="text-[#0A0A0A] font-bold">БЛОГ & НОВОСТИ КОМПАНИИ (.BLOG)</span>
+    </div>
+
+    <!-- Header Section -->
+    <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8">
+      <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-3">
+        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
+          ИНЖЕНЕРНЫЙ ВЕСТНИК
+        </span>
+        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
+          АРХИВ ТЕХНИЧЕСКОЙ АНАЛИТИКИ
+        </span>
+        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold">
+          АКТУАЛЬНОСТЬ: 2026
+        </span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3">
+        БЛОГ И ЭКСПЕРТНЫЕ МАТЕРИАЛЫ RAILTECH
+      </h1>
+
+      <p class="text-base text-[#4A5056] max-w-3xl leading-relaxed">
+        Практическая аналитика от инженеров поставок, специалистов по внешнеэкономической деятельности и разработчиков IT-решений. Разборы регламентов ГОСТ, таможенного оформления DDP и цифровизации снабжения в Узбекистане.
+      </p>
+    </div>
+
+    <!-- Featured Post Hero (if exists) -->
+    {featuredPost && (
+      <div class="border-2 border-[#0A0A0A] bg-[#C8CDD2] p-6 lg:p-8 mb-10 font-mono">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[#0A0A0A] pb-3 mb-4 text-xs">
+          <div class="flex items-center space-x-2">
+            <span class="bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">ГЛАВНЫЙ МАТЕРИАЛ</span>
+            <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#D4D8DC] text-[#0A0A0A]">{featuredPost.data.category}</span>
+          </div>
+          <div class="text-[#4A5056]">
+            {featuredPost.data.publishDate} // {featuredPost.data.readTime}
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-8 space-y-3 font-sans">
+            <h2 class="text-2xl sm:text-3xl font-bold text-[#0A0A0A] leading-tight hover:underline">
+              <a href={`${base}/blog/${featuredPost.slug}`}>
+                {featuredPost.data.title}
+              </a>
+            </h2>
+            <p class="text-sm text-[#4A5056] leading-relaxed">
+              {featuredPost.data.summary}
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-2 font-mono text-[11px]">
+              {featuredPost.data.tags.map((tag) => (
+                <span class="border border-[#0A0A0A]/40 bg-[#D4D8DC] px-2 py-0.5 text-[#0A0A0A]">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 flex flex-col justify-end space-y-3">
+            <div class="border border-[#0A0A0A]/30 p-3 bg-[#D4D8DC] text-[11px] text-[#4A5056] font-mono">
+              <div>АВТОР: <span class="font-bold text-[#0A0A0A]">{featuredPost.data.author}</span></div>
+              <div>РЕЦЕНЗИЯ: <span class="text-emerald-800 font-bold">ОТК & Инженерный отдел</span></div>
+            </div>
+            <a
+              href={`${base}/blog/${featuredPost.slug}`}
+              class="w-full border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white py-3 text-center text-xs font-bold font-mono tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors"
+            >
+              [ ЧИТАТЬ ПУБЛИКАЦИЮ → ]
+            </a>
+          </div>
+        </div>
+      </div>
+    )}
+
+    <!-- Filter & Search Toolbar (Vanilla CAD UI) -->
+    <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-4 mb-8 font-mono">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <!-- Category Buttons -->
+        <div class="flex flex-wrap gap-1.5 text-xs" id="category-filters">
+          {categories.map((cat, idx) => (
+            <button
+              type="button"
+              data-cat-filter={cat}
+              class={`px-3 py-1.5 border border-[#0A0A0A] transition-colors cursor-pointer ${
+                idx === 0
+                  ? 'bg-[#0A0A0A] text-white active-cat-btn'
+                  : 'bg-[#C8CDD2] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <!-- Search Input -->
+        <div class="flex items-center space-x-2 text-xs">
+          <span class="text-[#4A5056] text-[11px] uppercase">ПОИСК:</span>
+          <input
+            id="blog-search-input"
+            type="text"
+            placeholder="Поиск по темам, ГОСТ, тегам..."
+            class="bg-[#C8CDD2] border border-[#0A0A0A] px-3 py-1.5 text-xs focus:outline-none focus:bg-white w-64"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Articles Grid -->
+    <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+      {allPosts.map((post) => (
+        <article
+          data-category={post.data.category}
+          data-search={`${post.data.title} ${post.data.summary} ${post.data.tags.join(' ')} ${post.data.category}`.toLowerCase()}
+          class="blog-card border-2 border-[#0A0A0A] bg-[#D4D8DC] p-5 flex flex-col justify-between hover:bg-white transition-colors group font-mono"
+        >
+          <div>
+            <!-- Card Header -->
+            <div class="flex items-center justify-between border-b border-[#0A0A0A]/20 pb-2 mb-3 text-xs">
+              <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#C8CDD2] text-[#0A0A0A] font-bold text-[10px]">
+                {post.data.category}
+              </span>
+              <span class="text-[#4A5056] text-[11px]">
+                {post.data.publishDate}
+              </span>
+            </div>
+
+            <!-- Title -->
+            <h3 class="font-sans font-bold text-lg text-[#0A0A0A] mb-2.5 leading-snug group-hover:underline">
+              <a href={`${base}/blog/${post.slug}`}>
+                {post.data.title}
+              </a>
+            </h3>
+
+            <!-- Summary -->
+            <p class="font-sans text-xs text-[#4A5056] leading-relaxed mb-4 line-clamp-3">
+              {post.data.summary}
+            </p>
+
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-1 mb-4 text-[10px]">
+              {post.data.tags.map((tag) => (
+                <span class="border border-[#0A0A0A]/30 bg-[#C8CDD2]/60 px-1.5 py-0.5 text-[#0A0A0A]">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Card Footer -->
+          <div class="pt-3 border-t border-[#0A0A0A]/20 flex items-center justify-between text-xs">
+            <span class="text-[#4A5056] text-[11px]">
+              ⏱ {post.data.readTime}
+            </span>
+            <a
+              href={`${base}/blog/${post.slug}`}
+              class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-3 py-1 text-center font-bold group-hover:bg-transparent group-hover:text-[#0A0A0A] transition-colors"
+            >
+              ЧИТАТЬ →
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Empty State -->
+    <div id="blog-empty-state" class="hidden border-2 border-dashed border-[#0A0A0A] p-12 text-center font-mono my-8">
+      <div class="text-sm font-bold text-[#0A0A0A] mb-1">МАТЕРИАЛЫ НЕ НАЙДЕНЫ</div>
+      <div class="text-xs text-[#4A5056]">Попробуйте изменить поисковый запрос или сбросить фильтр рубрик.</div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="border-2 border-[#0A0A0A] bg-[#C8CDD2] p-8 font-mono flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 max-w-2xl">
+        <div class="text-sm font-bold text-[#0A0A0A] flex items-center space-x-2">
+          <span class="w-3 h-3 bg-[#0A0A0A] inline-block"></span>
+          <span>НУЖНА ИНЖЕНЕРНАЯ КОНСУЛЬТАЦИЯ ПО ВАШЕМУ ПРОЕКТУ?</span>
+        </div>
+        <p class="text-xs text-[#4A5056] font-sans leading-relaxed">
+          Инженеры ООО «RailTech» помогут подобрать номенклатуру по чертежам, согласовать технические требования с ГАЖК «УТЙ» и рассчитать Landed Cost DDP Ташкент.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        data-lead-modal
+        data-lead-subject="Запрос инженерной консультации со страницы Блога"
+        class="border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white px-8 py-3.5 text-xs font-bold whitespace-nowrap hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
+      >
+        [ ЗАДАТЬ ВОПРОС ИНЖЕНЕРУ ]
+      </button>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('[data-cat-filter]');
+  const searchInput = document.getElementById('blog-search-input') as HTMLInputElement | null;
+  const cards = document.querySelectorAll<HTMLElement>('.blog-card');
+  const emptyState = document.getElementById('blog-empty-state');
+
+  let activeCategory = 'Все публикации';
+  let searchQuery = '';
+
+  function applyFilters() {
+    let visibleCount = 0;
+    const q = searchQuery.toLowerCase().trim();
+
+    cards.forEach((card) => {
+      const cat = card.getAttribute('data-category') || '';
+      const text = card.getAttribute('data-search') || '';
+
+      const matchCat = activeCategory === 'Все публикации' || cat === activeCategory;
+      const matchQuery = !q || text.includes(q);
+
+      if (matchCat && matchQuery) {
+        card.style.display = '';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (emptyState) {
+      if (visibleCount === 0) {
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+      }
+    }
+  }
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach((b) => {
+        b.classList.remove('bg-[#0A0A0A]', 'text-white', 'active-cat-btn');
+        b.classList.add('bg-[#C8CDD2]', 'text-[#0A0A0A]');
+      });
+      btn.classList.add('bg-[#0A0A0A]', 'text-white', 'active-cat-btn');
+      btn.classList.remove('bg-[#C8CDD2]', 'text-[#0A0A0A]');
+
+      activeCategory = btn.getAttribute('data-cat-filter') || 'Все публикации';
+      applyFilters();
+    });
+  });
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = (e.target as HTMLInputElement).value;
+      applyFilters();
+    });
+  }
+</script>

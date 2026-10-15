@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <!-- 24px Engineering Grid Pattern -->
+    <pattern id="cadGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#0A0A0A" stroke-width="0.75" stroke-opacity="0.08"/>
+    </pattern>
+    <!-- Major 96px Grid Pattern -->
+    <pattern id="majorGrid" width="96" height="96" patternUnits="userSpaceOnUse">
+      <path d="M 96 0 L 0 0 0 96" fill="none" stroke="#0A0A0A" stroke-width="1.2" stroke-opacity="0.15"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1200" height="630" fill="#D4D8DC"/>
+  <rect width="1200" height="630" fill="url(#cadGrid)"/>
+  <rect width="1200" height="630" fill="url(#majorGrid)"/>
+
+  <!-- Outer Blueprint CAD Border Frame -->
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#0A0A0A" stroke-width="2"/>
+  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="#0A0A0A" stroke-width="1" stroke-dasharray="6 4" stroke-opacity="0.4"/>
+
+  <!-- Corner Datum Marks (+) -->
+  <g stroke="#0A0A0A" stroke-width="2">
+    <!-- Top-Left -->
+    <line x1="16" y1="24" x2="32" y2="24"/>
+    <line x1="24" y1="16" x2="24" y2="32"/>
+    <!-- Top-Right -->
+    <line x1="1168" y1="24" x2="1184" y2="24"/>
+    <line x1="1176" y1="16" x2="1176" y2="32"/>
+    <!-- Bottom-Left -->
+    <line x1="16" y1="606" x2="32" y2="606"/>
+    <line x1="24" y1="598" x2="24" y2="614"/>
+    <!-- Bottom-Right -->
+    <line x1="1168" y1="606" x2="1184" y2="606"/>
+    <line x1="1176" y1="598" x2="1176" y2="614"/>
+  </g>
+
+  <!-- Top Technical Header Strip -->
+  <rect x="48" y="48" width="1104" height="36" fill="#C8CDD2" stroke="#0A0A0A" stroke-width="1"/>
+  <text x="64" y="71" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#0A0A0A" letter-spacing="2">
+    REF: UZ-RAILTECH-DOC-2026 // NODE: TASHKENT (INDEX B2-2097) // VAT 12% CERTIFIED
+  </text>
+  <text x="1136" y="71" text-anchor="end" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#0A0A0A" letter-spacing="1">
+    B2B.RAILTECH.UZ
+  </text>
+
+  <!-- Left Main Information Block -->
+  <g transform="translate(64, 130)">
+    <!-- Brand Box -->
+    <rect x="0" y="0" width="260" height="54" fill="#0A0A0A"/>
+    <text x="20" y="38" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="34" font-weight="900" fill="#FFFFFF" letter-spacing="6">
+      RAILTECH
+    </text>
+
+    <!-- Subtitle Meta -->
+    <text x="275" y="24" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#4A5056" letter-spacing="2">
+      ENGINEERING &amp; RAILWAY LOGISTICS
+    </text>
+    <text x="275" y="44" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="700" fill="#0A0A0A" letter-spacing="1">
+      РЕСПУБЛИКА УЗБЕКИСТАН // B2B &amp; B2G
+    </text>
+
+    <!-- Main Title -->
+    <text x="0" y="125" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="44" font-weight="800" fill="#0A0A0A" letter-spacing="-0.5">
+      ПРОМЫШЛЕННЫЕ И ЖД ПОСТАВКИ
+    </text>
+    <text x="0" y="175" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="44" font-weight="800" fill="#0A0A0A" letter-spacing="-0.5">
+      В УЗБЕКИСТАН · DDP ТАШКЕНТ
+    </text>
+
+    <!-- Subtext -->
+    <text x="0" y="225" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="18" fill="#4A5056">
+      Складской комплекс Index B2-2097 · Снабжение подвижного состава (18-100, СА-3)
+    </text>
+    <text x="0" y="252" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="18" fill="#4A5056">
+      Контрактный ВЭД под ключ с НДС 12% · Платформа b2b.railtech.uz
+    </text>
+
+    <!-- Metric Badges Grid -->
+    <g transform="translate(0, 285)">
+      <!-- Badge 1 -->
+      <rect x="0" y="0" width="140" height="52" fill="#D4D8DC" stroke="#0A0A0A" stroke-width="1.5"/>
+      <text x="12" y="20" font-family="'JetBrains Mono', monospace" font-size="10" fill="#4A5056">СКЛАД ТАШКЕНТ</text>
+      <text x="12" y="42" font-family="'JetBrains Mono', monospace" font-size="18" font-weight="700" fill="#0A0A0A">1 247+ SKU</text>
+
+      <!-- Badge 2 -->
+      <rect x="152" y="0" width="140" height="52" fill="#D4D8DC" stroke="#0A0A0A" stroke-width="1.5"/>
+      <text x="164" y="20" font-family="'JetBrains Mono', monospace" font-size="10" fill="#4A5056">ЗАВОДЫ-ИЗГОТ.</text>
+      <text x="164" y="42" font-family="'JetBrains Mono', monospace" font-size="18" font-weight="700" fill="#0A0A0A">86+ ПАРТН.</text>
+
+      <!-- Badge 3 -->
+      <rect x="304" y="0" width="140" height="52" fill="#D4D8DC" stroke="#0A0A0A" stroke-width="1.5"/>
+      <text x="316" y="20" font-family="'JetBrains Mono', monospace" font-size="10" fill="#4A5056">КОЛЕЯ Ж/Д</text>
+      <text x="316" y="42" font-family="'JetBrains Mono', monospace" font-size="18" font-weight="700" fill="#0A0A0A">1520 ММ</text>
+
+      <!-- Badge 4 -->
+      <rect x="456" y="0" width="140" height="52" fill="#0A0A0A" stroke="#0A0A0A" stroke-width="1.5"/>
+      <text x="468" y="20" font-family="'JetBrains Mono', monospace" font-size="10" fill="#D4D8DC">НАЛОГОВЫЙ ЗАЧЕТ</text>
+      <text x="468" y="42" font-family="'JetBrains Mono', monospace" font-size="18" font-weight="700" fill="#FFFFFF">НДС 12%</text>
+    </g>
+  </g>
+
+  <!-- Right CAD Engineering Wireframe Graphic -->
+  <g transform="translate(760, 150)">
+    <!-- CAD Wireframe Frame Box -->
+    <rect x="0" y="0" width="380" height="380" fill="#C8CDD2" fill-opacity="0.5" stroke="#0A0A0A" stroke-width="2"/>
+    <line x1="0" y1="0" x2="380" y2="380" stroke="#0A0A0A" stroke-width="0.5" stroke-dasharray="4 4" stroke-opacity="0.3"/>
+    <line x1="380" y1="0" x2="0" y2="380" stroke="#0A0A0A" stroke-width="0.5" stroke-dasharray="4 4" stroke-opacity="0.3"/>
+
+    <!-- Concentric Technical Gauge Circles -->
+    <circle cx="190" cy="190" r="160" fill="none" stroke="#0A0A0A" stroke-width="1" stroke-opacity="0.3"/>
+    <circle cx="190" cy="190" r="120" fill="none" stroke="#0A0A0A" stroke-width="1.5"/>
+    <circle cx="190" cy="190" r="60" fill="none" stroke="#0A0A0A" stroke-width="2"/>
+    <circle cx="190" cy="190" r="20" fill="#0A0A0A"/>
+
+    <!-- Isometric Bogie & Wheelset Wireframe -->
+    <g stroke="#0A0A0A" stroke-width="2" fill="none">
+      <!-- Rail tracks -->
+      <line x1="30" y1="290" x2="350" y2="290" stroke-width="4"/>
+      <line x1="30" y1="310" x2="350" y2="310" stroke-width="3"/>
+      <!-- Wheelset Left -->
+      <ellipse cx="90" cy="230" rx="36" ry="60" stroke-width="2.5"/>
+      <ellipse cx="90" cy="230" rx="14" ry="24" stroke-width="1.5"/>
+      <!-- Wheelset Right -->
+      <ellipse cx="290" cy="230" rx="36" ry="60" stroke-width="2.5"/>
+      <ellipse cx="290" cy="230" rx="14" ry="24" stroke-width="1.5"/>
+      <!-- Axle connection -->
+      <line x1="90" y1="230" x2="290" y2="230" stroke-width="5"/>
+      <!-- Side frame 18-100 -->
+      <polygon points="60,190 320,190 300,160 80,160" stroke-width="2.5" fill="#D4D8DC" fill-opacity="0.8"/>
+      <!-- Bolster Center -->
+      <rect x="150" y="130" width="80" height="40" stroke-width="2.5" fill="#0A0A0A"/>
+      <!-- Spring group -->
+      <line x1="165" y1="170" x2="165" y2="190" stroke-width="3"/>
+      <line x1="180" y1="170" x2="180" y2="190" stroke-width="3"/>
+      <line x1="200" y1="170" x2="200" y2="190" stroke-width="3"/>
+      <line x1="215" y1="170" x2="215" y2="190" stroke-width="3"/>
+    </g>
+
+    <text x="190" y="355" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#0A0A0A" letter-spacing="1">
+      BOGIE 18-100 // CAD SCHEMATIC
+    </text>
+  </g>
+
+  <!-- Bottom Technical Telemetry Footer Strip -->
+  <rect x="48" y="546" width="1104" height="36" fill="#0A0A0A"/>
+  <text x="64" y="569" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#D4D8DC" letter-spacing="2">
+    © 2026 ООО «RAILTECH» // ТАШКЕНТ // ТЕЛ: +998 90 118-90-00 // INFO@RAILTECH.UZ
+  </text>
+  <text x="1136" y="569" text-anchor="end" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#FFFFFF" letter-spacing="2">
+    B2B.RAILTECH.UZ ↗
+  </text>
+</svg>

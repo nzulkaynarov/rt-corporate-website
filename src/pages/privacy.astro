@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import globalData from '../data/cms/global.json';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="Политика конфиденциальности — ООО «RailTech» (Закон РУз № ЗРУ-547)"
+  description="Регламент обработки и защиты персональных данных пользователей сервисов railtech.uz и b2b.railtech.uz в соответствии с Законом Республики Узбекистан «О персональных данных» № ЗРУ-547."
+  keywords="политика конфиденциальности railtech, зру-547 узбекистан, защита персональных данных, privacy railtech uz"
+>
+  <div class="max-w-4xl mx-auto px-4 py-10 font-sans">
+    <!-- Breadcrumbs -->
+    <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-4">
+      <a href={`${base}/`} class="hover:underline">ГЛАВНАЯ</a>
+      <span>/</span>
+      <span class="text-[#0A0A0A] font-bold">ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ (.LEGAL)</span>
+    </div>
+
+    <!-- Header Section -->
+    <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8 font-mono">
+      <div class="flex flex-wrap items-center gap-2 text-xs mb-3">
+        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
+          ЗРУ-547 ОТ 02.07.2019
+        </span>
+        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
+          РЕСПУБЛИКА УЗБЕКИСТАН
+        </span>
+        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold">
+          ВЕРСИЯ: 2026.1
+        </span>
+      </div>
+
+      <h1 class="font-sans text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-2">
+        ПОЛИТИКА ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ
+      </h1>
+
+      <p class="text-sm text-[#4A5056]">
+        Регулирует сбор, систематизацию, хранение и защиту информации пользователей порталов <span class="font-bold text-[#0A0A0A]">railtech.uz</span> и <span class="font-bold text-[#0A0A0A]">b2b.railtech.uz</span>.
+      </p>
+    </div>
+
+    <!-- Document Content -->
+    <div class="border border-[#0A0A0A] bg-[#D4D8DC] p-6 lg:p-8 font-mono text-xs space-y-6 leading-relaxed">
+      <div>
+        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+          1. ОБЩИЕ ПОЛОЖЕНИЯ И ПРАВОВЫЕ ОСНОВАНИЯ
+        </div>
+        <p class="text-[#4A5056] font-sans">
+          Настоящая Политика разработана в строгом соответствии с Законом Республики Узбекистан от 2 июля 2019 года № ЗРУ-547 «О персональных данных». Оператором базы персональных данных выступает {globalData.companyName} (юридический адрес: {globalData.address}, ИНН: {globalData.inn}). Политика определяет порядок взаимодействия с субъектами персональных данных при использовании публичного веб-сайта railtech.uz и закрытого оптового B2B-портала b2b.railtech.uz.
+        </p>
+      </div>
+
+      <div>
+        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+          2. КАТЕГОРИИ СОБИРАЕМЫХ ДАННЫХ
+        </div>
+        <p class="text-[#4A5056] font-sans mb-3">
+          Оператор обрабатывает следующие категории данных, предоставляемых субъектами добровольно либо собираемых автоматически:
+        </p>
+        <ul class="list-disc pl-5 space-y-1 text-[#0A0A0A] font-sans">
+          <li><strong>Идентификационные данные представителей:</strong> фамилия, имя, отчество уполномоченного лица или контактного менеджера предприятия-заказчика.</li>
+          <li><strong>Реквизиты организации:</strong> наименование юридического лица, ИНН предприятия, ОКЭД, юридический и фактический адрес, банковские реквизиты.</li>
+          <li><strong>Связующие контакты:</strong> номер мобильного или рабочего телефона, корпоративный адрес электронной почты.</li>
+          <li><strong>Файлы спецификаций и ведомостей:</strong> загружаемые чертежи, заявки в форматах .xlsx, .pdf, .doc, содержащие номенклатурные списки и реквизиты заявителя.</li>
+          <li><strong>Служебные телеметрические данные:</strong> сетевой IP-адрес, тип браузера, файлы cookie для сессионной авторизации в личном кабинете b2b.railtech.uz.</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+          3. ЦЕЛИ ОБРАБОТКИ И ПРОЦЕДУРА KYC (ЗНАЙ СВОЕГО КЛИЕНТА)
+        </div>
+        <p class="text-[#4A5056] font-sans mb-2">
+          Сбор данных осуществляется исключительно в целях обеспечения законной предпринимательской деятельности в сфере оптовых ЖД поставок:
+        </p>
+        <ul class="list-disc pl-5 space-y-1 text-[#0A0A0A] font-sans">
+          <li>Проведение обязательной юридической верификации контрагента (KYC) перед предоставлением оптовых прейскурантов и заключением договоров.</li>
+          <li>Формирование и выставление официальных коммерческих предложений, калькуляций Landed Cost DDP Ташкент и счетов-фактур.</li>
+          <li>Исполнение договоров поставки, организация транспортной логистики и отгрузок со склада Index B2-2097.</li>
+          <li>Регистрация электронных счетов-фактур (ЭСФ) в государственных информационных системах (Didox, Soliq).</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+          4. СРОКИ И ПОРЯДОК ХРАНЕНИЯ ДАННЫХ
+        </div>
+        <p class="text-[#4A5056] font-sans">
+          Хранение персональных данных осуществляется на серверах, расположенных в защищенном контуре в соответствии со статьей 27-1 Закона № ЗРУ-547:
+        </p>
+        <ul class="list-disc pl-5 space-y-1 text-[#0A0A0A] font-sans mt-2">
+          <li><strong>Данные заключенных договоров, спецификаций и ЭСФ:</strong> хранятся в течение <strong>5 (пяти) лет</strong> с момента завершения сделки согласно налоговому и архивному законодательству РУз.</li>
+          <li><strong>Данные форм обратной связи и предварительных запросов КП:</strong> хранятся в течение <strong>3 (трех) лет</strong> с момента первичного обращения либо до момента отзыва согласия субъектом.</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+          5. БЕЗОПАСНОСТЬ И НЕДОПУЩЕНИЕ ПЕРЕДАЧИ ТРЕТЬИМ ЛИЦАМ
+        </div>
+        <p class="text-[#4A5056] font-sans">
+          ООО «RailTech» гарантирует конфиденциальность коммерческой информации и персональных данных. Передача сведений третьим лицам категорически исключена, за исключением случаев, прямо предусмотренных законодательством Республики Узбекистан (запросы налоговых, судебных или следственных органов в рамках их законных полномочий). Все сетевые соединения защищены протоколами TLS 1.3 с криптографическим шифрованием.
+        </p>
+      </div>
+
+      <div>
+        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+          6. КОНТАКТНЫЙ ОФИС ПО ВОПРОСАМ ПЕРСОНАЛЬНЫХ ДАННЫХ
+        </div>
+        <p class="text-[#4A5056] font-sans">
+          По любым вопросам актуализации, уточнения, блокировки или отзыва согласия на обработку персональных данных направляйте официальный запрос уполномоченному лицу по адресу:
+        </p>
+        <div class="border border-[#0A0A0A]/40 bg-[#C8CDD2] p-3 mt-2 text-[#0A0A0A]">
+          <div>E-MAIL: <a href={`mailto:${globalData.emailPrivacy}`} class="font-bold underline">{globalData.emailPrivacy}</a></div>
+          <div>ПОЧТОВЫЙ АДРЕС: 100140, г. Ташкент, ТПК Index, Блок B2, Офис 2097</div>
+          <div>ОТВЕТСТВЕННЫЙ: Служба информационной безопасности и комплаенс ООО «RailTech»</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

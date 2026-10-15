@@ -1,4 +1,6 @@
 ---
+import globalData from '../data/cms/global.json';
+
 const pathname = Astro.url.pathname;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -8,6 +10,7 @@ const navItems = [
   { href: `${base}/contract`, label: 'КОНТРАКТНЫЙ ВЭД DDP', id: 'contract', match: (p: string) => p.startsWith(`${base}/contract`) },
   { href: `${base}/digital`, label: 'DIGITAL & ПО', id: 'digital', match: (p: string) => p.startsWith(`${base}/digital`) },
   { href: `${base}/projects`, label: 'СПЕЦПРОЕКТЫ & АРТ', id: 'projects', match: (p: string) => p.startsWith(`${base}/projects`) },
+  { href: `${base}/blog/`, label: 'БЛОГ / НОВОСТИ', id: 'blog', match: (p: string) => p.startsWith(`${base}/blog`) },
   { href: `${base}/about`, label: 'О КОМПАНИИ', id: 'about', match: (p: string) => p.startsWith(`${base}/about`) },
   { href: `${base}/contacts`, label: 'КОНТАКТЫ & РЕКВИЗИТЫ', id: 'contacts', match: (p: string) => p.startsWith(`${base}/contacts`) },
 ];
@@ -22,24 +25,24 @@ const navItems = [
         <span class="font-bold">РЕСПУБЛИКА УЗБЕКИСТАН</span>
       </div>
       <span class="text-[#0A0A0A]/30">|</span>
-      <span>ООО «RAILTECH» // ИНН: 308912445</span>
+      <span>{globalData.companyName} // ИНН: {globalData.inn}</span>
       <span class="text-[#0A0A0A]/30">|</span>
-      <span>СКЛАД: ТАШКЕНТ, INDEX B2-2097</span>
+      <span>СКЛАД: {globalData.address.toUpperCase()}</span>
       <span class="text-[#0A0A0A]/30">|</span>
       <span class="border border-[#0A0A0A] px-1 bg-[#D4D8DC] text-[#0A0A0A] font-semibold">НДС 12% ВКЛЮЧЕН</span>
     </div>
 
     <div class="flex items-center space-x-4">
       <a
-        href="tel:+998901189000"
+        href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`}
         class="hover:text-[#0A0A0A] transition-colors font-bold text-[#0A0A0A] flex items-center space-x-1"
       >
         <span>ТЕЛ:</span>
-        <span>+998 90 118-90-00</span>
+        <span>{globalData.phone}</span>
       </a>
       <span class="text-[#0A0A0A]/30">|</span>
       <a
-        href="https://b2b.railtech.uz"
+        href={globalData.b2bPortalUrl}
         target="_blank"
         rel="noopener noreferrer"
         class="border border-[#0A0A0A] px-2 py-0.5 bg-[#0A0A0A] text-white hover:bg-transparent hover:text-[#0A0A0A] transition-colors"
@@ -127,10 +130,10 @@ const navItems = [
         );
       })}
       <div class="pt-2 border-t border-[#0A0A0A]/20 flex flex-col space-y-1.5 text-[11px] text-[#4A5056]">
-        <div>ИНН: 308912445 | НДС 12%</div>
-        <div>Склад: Ташкент, ТПК Index B2-2097</div>
-        <a href="tel:+998901189000" class="text-[#0A0A0A] font-bold underline">+998 90 118-90-00</a>
-        <a href="https://b2b.railtech.uz" target="_blank" class="text-[#0A0A0A] font-bold underline">B2B.RAILTECH.UZ ↗</a>
+        <div>ИНН: {globalData.inn} | НДС 12%</div>
+        <div>Склад: {globalData.address}</div>
+        <a href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`} class="text-[#0A0A0A] font-bold underline">{globalData.phone}</a>
+        <a href={globalData.b2bPortalUrl} target="_blank" class="text-[#0A0A0A] font-bold underline">B2B.RAILTECH.UZ ↗</a>
       </div>
     </div>
   </div>

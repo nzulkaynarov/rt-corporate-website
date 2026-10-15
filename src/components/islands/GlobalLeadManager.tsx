@@ -8,26 +8,26 @@ export const GlobalLeadManager: React.FC = () => {
   useEffect(() => {
     const handleOpen = (e: Event) => {
       const customEvent = e as CustomEvent<{ subject?: string }>;
-      setSubject(customEvent.detail?.subject || '');
+      setSubject(customEvent.detail?.subject || 'Запрос КП / Счета с сайта');
       setIsOpen(true);
     };
 
-    const handleClick = (e: MouseEvent) => {
-      const target = (e.target as HTMLElement).closest('[data-lead-modal]');
-      if (target) {
+    const handleDocClick = (e: MouseEvent) => {
+      const trigger = (e.target as HTMLElement | null)?.closest('[data-lead-modal]');
+      if (trigger) {
         e.preventDefault();
-        const customSubject = target.getAttribute('data-lead-subject') || '';
-        setSubject(customSubject);
+        const subj = trigger.getAttribute('data-lead-subject') || 'Запрос КП / Счета с сайта';
+        setSubject(subj);
         setIsOpen(true);
       }
     };
 
     window.addEventListener('open-lead-modal', handleOpen);
-    document.addEventListener('click', handleClick);
+    document.addEventListener('click', handleDocClick);
 
     return () => {
       window.removeEventListener('open-lead-modal', handleOpen);
-      document.removeEventListener('click', handleClick);
+      document.removeEventListener('click', handleDocClick);
     };
   }, []);
 

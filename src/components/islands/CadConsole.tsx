@@ -152,7 +152,7 @@ export const CadConsole: React.FC = () => {
           <span className="hidden md:inline text-[#4A5056]">·</span>
           <span className="hidden md:inline font-mono text-[11px] text-[#4A5056]">Комплекс Index, Блок B2-2097</span>
           <span className="border border-[#0A0A0A] px-1.5 py-0.5 text-[10px] bg-white font-bold tracking-wider">
-            ИНН 308912445 · НДС 12% РУз
+            Резидент РУз · НДС 12%
           </span>
         </div>
 
@@ -328,7 +328,7 @@ export const CadConsole: React.FC = () => {
 
                 {/* Trust Information */}
                 <div className="font-mono text-[10px] text-[#4A5056] space-y-1">
-                  <div>✓ Официальный плательщик НДС 12% в РУз (ИНН 308912445)</div>
+                  <div>✓ Официальный плательщик НДС 12% в РУз (Резидент РУз)</div>
                   <div>✓ Прямой договор поставки в сумах (UZS) со склада в Ташкенте</div>
                   <div>✓ Паспорта заводов-изготовителей и сертификаты соответствия «Узстандарт»</div>
                 </div>
@@ -844,7 +844,7 @@ export const CadConsole: React.FC = () => {
               {t.footer.companyDesc}
             </p>
             <div className="mt-2 text-[10px] text-[#0A0A0A] font-bold">
-              ИНН: 308912445 · Плательщик НДС 12%
+              Резидент РУз · Плательщик НДС 12%
             </div>
           </div>
           <div>

@@ -60,9 +60,32 @@ const projectsCollection = defineCollection({
   }),
 });
 
+const blogCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    publishDate: z.string(),
+    category: z.enum([
+      'Поставки и Склад',
+      'ВЭД и Таможня',
+      'Digital & ПО',
+      'Спецпроекты и Арт',
+      'Новости компании',
+    ]),
+    summary: z.string(),
+    author: z.string().default('Инженерный отдел ООО «RailTech»'),
+    readTime: z.string().default('4 мин'),
+    image: z.string().optional(),
+    featured: z.boolean().default(false),
+    tags: z.array(z.string()).default([]),
+  }),
+});
+
 export const collections = {
   catalog: catalogCollection,
   contract: contractCollection,
   digital: digitalCollection,
   projects: projectsCollection,
+  blog: blogCollection,
 };
+

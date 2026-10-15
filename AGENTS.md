@@ -27,12 +27,16 @@ Every business unit of ООО «RailTech» has its own distinct physical URL wit
 1. `/` (`src/pages/index.astro`) — Institutional Swiss CAD Hub.
 2. `/catalog/` (`src/pages/catalog/index.astro`) — Warehouse equipment catalog with `CatalogFilterTable.tsx` live filter island.
 3. `/catalog/[slug]` (`src/pages/catalog/[slug].astro`) — Dynamic technical datasheet / passport pages with Schema.org `Product` JSON-LD and `ProductMediaGallery.tsx`.
-4. `/contract` (`src/pages/contract.astro`) — Turnkey foreign trade (ВЭД) import under DDP Tashkent with `LandedCostCalculator.tsx`.
+4. `/contract` (`src/pages/contract.astro`) — Turnkey foreign trade (ВЭД) import under DDP Tashkent with `LandedCostCalculator.tsx` and `FaqAccordion.astro`.
 5. `/digital` (`src/pages/digital.astro`) — RailTech Digital, platform `b2b.railtech.uz`, and interactive sandbox `SmartMatchAiTester.tsx`.
 6. `/projects` (`src/pages/projects.astro`) — Technology transfer, UTY testing, and RailTech Art Lab.
-7. `/about` (`src/pages/about.astro`) — Official legal entity status, warehouse complex Index B2-2097, 12% VAT accreditation.
-8. `/contacts` (`src/pages/contacts.astro`) — Direct phone lines (`+998 90 118-90-00`), logistics directions with КПП №3, and RFQ form.
-9. `/admin` (`src/pages/admin.astro`) — Decap CMS content management panel.
+7. `/blog` (`src/pages/blog/index.astro`) — Technical engineering blog and news archive with category filtering.
+8. `/blog/[slug]` (`src/pages/blog/[slug].astro`) — Article reader with Schema.org `TechArticle` JSON-LD and direct RFQ form.
+9. `/about` (`src/pages/about.astro`) — Official legal entity status, warehouse complex Index B2-2097, 12% VAT accreditation, and `FAQPage` JSON-LD.
+10. `/contacts` (`src/pages/contacts.astro`) — Direct phone lines (`+998 90 118-90-00`), logistics directions with КПП №3, and `ContactsLeadForm.tsx`.
+11. `/privacy` (`src/pages/privacy.astro`) — Privacy policy compliant with Republic of Uzbekistan Law № ЗРУ-547.
+12. `/terms` (`src/pages/terms.astro`) — Terms of service, KYC verification levels («Гость» / «Клиент»), Landed Cost DDP formula.
+13. `/admin` (`src/pages/admin.astro`) — Sveltia/Decap CMS content management panel (6 collections).
 
 ---
 

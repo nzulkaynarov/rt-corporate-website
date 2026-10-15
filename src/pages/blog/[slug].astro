@@ -1,0 +1,196 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const articleUrl = `https://railtech.uz/blog/${entry.slug}`;
+const siteUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : articleUrl;
+
+const techArticleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: entry.data.title,
+  description: entry.data.summary,
+  datePublished: entry.data.publishDate,
+  dateModified: entry.data.publishDate,
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': siteUrl,
+  },
+  author: {
+    '@type': 'Organization',
+    name: entry.data.author || 'Инженерный отдел ООО «RailTech»',
+    url: 'https://railtech.uz',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'ООО «RailTech»',
+    url: 'https://railtech.uz',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://railtech.uz/og-cover.svg',
+    },
+  },
+  keywords: entry.data.tags.join(', '),
+  articleSection: entry.data.category,
+};
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Главная',
+      item: 'https://railtech.uz/',
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Блог и Новости',
+      item: 'https://railtech.uz/blog/',
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: entry.data.title,
+      item: siteUrl,
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={`${entry.data.title} — Блог инженеров ООО «RailTech»`}
+  description={entry.data.summary}
+  keywords={entry.data.tags.join(', ')}
+>
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(techArticleJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+
+  <article class="max-w-5xl mx-auto px-4 py-10 font-sans">
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-6">
+      <a href={`${base}/`} class="hover:underline">ГЛАВНАЯ</a>
+      <span>/</span>
+      <a href={`${base}/blog/`} class="hover:underline">БЛОГ & НОВОСТИ</a>
+      <span>/</span>
+      <span class="text-[#0A0A0A] font-bold truncate max-w-xs sm:max-w-md">{entry.data.title}</span>
+    </nav>
+
+    <!-- Article Header Box -->
+    <header class="border-b-2 border-[#0A0A0A] pb-6 mb-8 font-mono">
+      <div class="flex flex-wrap items-center gap-2 text-xs mb-3">
+        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
+          {entry.data.category}
+        </span>
+        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
+          ДАТА: {entry.data.publishDate}
+        </span>
+        <span class="border border-[#0A0A0A]/40 bg-[#D4D8DC] px-2 py-0.5 text-[#4A5056]">
+          ВРЕМЯ ЧТЕНИЯ: {entry.data.readTime}
+        </span>
+      </div>
+
+      <h1 class="font-sans text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-4 leading-tight">
+        {entry.data.title}
+      </h1>
+
+      <p class="font-sans text-base text-[#4A5056] leading-relaxed mb-4">
+        {entry.data.summary}
+      </p>
+
+      <!-- Metadata Telemetry Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#0A0A0A]/20 text-xs text-[#4A5056]">
+        <div>
+          АВТОР: <span class="font-bold text-[#0A0A0A]">{entry.data.author}</span>
+        </div>
+        <div class="flex flex-wrap gap-1.5 text-[11px]">
+          {entry.data.tags.map((tag) => (
+            <span class="border border-[#0A0A0A]/30 bg-[#C8CDD2]/60 px-2 py-0.5 text-[#0A0A0A]">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <!-- Article Body -->
+      <div class="lg:col-span-8">
+        <div class="border border-[#0A0A0A] bg-[#C8CDD2] p-6 lg:p-8 font-sans">
+          <div class="prose prose-sm sm:prose max-w-none text-[#0A0A0A] leading-relaxed prose-headings:font-bold prose-headings:text-[#0A0A0A] prose-headings:border-b prose-headings:border-[#0A0A0A]/30 prose-headings:pb-2 prose-pre:bg-[#0A0A0A] prose-pre:text-[#D4D8DC] prose-pre:border prose-pre:border-[#0A0A0A] prose-code:font-mono prose-code:text-[#0A0A0A] prose-code:bg-[#D4D8DC] prose-code:px-1 prose-strong:text-[#0A0A0A] prose-blockquote:border-l-4 prose-blockquote:border-[#0A0A0A] prose-blockquote:bg-[#D4D8DC] prose-blockquote:p-3 prose-li:text-[#0A0A0A]">
+            <Content />
+          </div>
+        </div>
+
+        <!-- Back to blog link -->
+        <div class="mt-6 font-mono text-xs">
+          <a
+            href={`${base}/blog/`}
+            class="inline-block border border-[#0A0A0A] bg-[#D4D8DC] px-4 py-2 text-[#0A0A0A] font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors"
+          >
+            ← ВЕРНУТЬСЯ В РАЗДЕЛ БЛОГА
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: Commercial & RFQ Sidebar -->
+      <aside class="lg:col-span-4 flex flex-col space-y-6">
+        <!-- Lead Trigger Card -->
+        <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 font-mono sticky top-20">
+          <div class="border-b border-[#0A0A0A] pb-2 mb-4">
+            <span class="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider block">
+              КОММЕРЧЕСКИЙ ОТДЕЛ // ВЭД
+            </span>
+            <span class="text-[11px] text-[#4A5056]">
+              Расчет спецификации по теме публикации
+            </span>
+          </div>
+
+          <p class="text-xs text-[#4A5056] font-sans leading-relaxed mb-6">
+            Отправьте потребность вашего предприятия в ЖД узлах или системах СЦБ. Мы выставим счет с НДС 12% или подготовим расчет Landed Cost DDP в сумах за 60 минут.
+          </p>
+
+          <div class="space-y-3">
+            <button
+              type="button"
+              data-lead-modal
+              data-lead-subject={`Запрос расчета по материалу: ${entry.data.title}`}
+              class="w-full border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white py-3 text-xs font-bold tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
+            >
+              [ ЗАПРОСИТЬ РАСЧЕТ КП ]
+            </button>
+
+            <a
+              href={`tel:+998901189000`}
+              class="w-full border border-[#0A0A0A] bg-white text-[#0A0A0A] py-2.5 text-xs font-bold text-center block hover:bg-[#0A0A0A] hover:text-white transition-colors"
+            >
+              +998 90 118-90-00 ↗
+            </a>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-[#0A0A0A]/20 text-[11px] text-[#4A5056] space-y-1">
+            <div>• Склад в Ташкенте: ТПК Index B2-2097</div>
+            <div>• Плательщик НДС: 12% (ЭСФ Didox)</div>
+            <div>• Поставка: DDP Ташкент под ключ</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </article>
+</BaseLayout>

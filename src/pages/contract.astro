@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { LandedCostCalculator } from '../components/islands/LandedCostCalculator';
 import { CadInspector } from '../components/islands/CadInspector';
+import FaqAccordion from '../components/FaqAccordion.astro';
 
 const contractSteps = await getCollection('contract');
 contractSteps.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
@@ -144,6 +145,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </div>
 
       <LandedCostCalculator client:load />
+    </div>
+
+    <!-- Section: FAQ Accordion -->
+    <div class="mb-16">
+      <FaqAccordion
+        title="ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ ПО ВЭД И ПОСТАВКАМ DDP"
+        subtitle="Сроки калькуляции Landed Cost, работа с нерезидентами, таможенная очистка и гарантийные обязательства"
+        badge="РЕГЛАМЕНТ ИМПОРТА"
+      />
     </div>
 
     <!-- Section: Upload Specification Form Banner -->

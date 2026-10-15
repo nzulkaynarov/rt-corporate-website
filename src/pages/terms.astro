@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import globalData from '../data/cms/global.json';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="Условия использования сервисов — ООО «RailTech» (railtech.uz & b2b.railtech.uz)"
+  description="Пользовательское соглашение и правила доступа к сервисам railtech.uz и b2b.railtech.uz: регламент KYC-верификации, статусы «Гость» и «Клиент», методология Landed Cost DDP и интеллектуальные права."
+  keywords="условия использования railtech, правила b2b портала, регламент kyc узбекистан, landed cost ddp ташкент, ооо railtech legal"
+>
+  <div class="max-w-4xl mx-auto px-4 py-10 font-sans">
+    <!-- Breadcrumbs -->
+    <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-4">
+      <a href={`${base}/`} class="hover:underline">ГЛАВНАЯ</a>
+      <span>/</span>
+      <span class="text-[#0A0A0A] font-bold">УСЛОВИЯ ИСПОЛЬЗОВАНИЯ (.TERMS)</span>
+    </div>
+
+    <!-- Header Section -->
+    <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8 font-mono">
+      <div class="flex flex-wrap items-center gap-2 text-xs mb-3">
+        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
+          РЕГЛАМЕНТ СЕРВИСА B2B
+        </span>
+        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
+          ЮРИДИЧЕСКИЙ ДОГОВОР-ОФЕРТА
+        </span>
+        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold">
+          РЕДАКЦИЯ: 2026.1
+        </span>
+      </div>
+
+      <h1 class="font-sans text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-2">
+        УСЛОВИЯ ИСПОЛЬЗОВАНИЯ ПОРТАЛА RAILTECH
+      </h1>
+
+      <p class="text-sm text-[#4A5056]">
+        Правила доступа юридических лиц к информационным ресурсам и коммерческим сервисам <span class="font-bold text-[#0A0A0A]">railtech.uz</span> и <span class="font-bold text-[#0A0A0A]">b2b.railtech.uz</span>.
+      </p>
+    </div>
+
+    <!-- Document Content -->
+    <div class="border border-[#0A0A0A] bg-[#D4D8DC] p-6 lg:p-8 font-mono text-xs space-y-6 leading-relaxed">
+      <div>
+        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+          1. ТЕРМИНЫ И ОПРЕДЕЛЕНИЯ
+        </div>
+        <div class="space-y-2 text-[#4A5056] font-sans">
+          <p>
+            <strong>«Оператор»</strong> — {globalData.companyName}, юридическое лицо, зарегистрированное в Республике Узбекистан (ИНН: {globalData.inn}), являющееся плательщиком НДС 12%.
+          </p>
+          <p>
+            <strong>«Публичный портал» (railtech.uz)</strong> — открытый институциональный веб-ресурс, содержащий общую информацию о номенклатуре склада, стандартах ГОСТ, технических паспортах и этапах ВЭД-импорта.
+          </p>
+          <p>
+            <strong>«Закрытая B2B-платформа» (b2b.railtech.uz)</strong> — защищенная цифровая среда для автоматизированного взаимодействия с верифицированными оптовыми заказчиками, обеспечивающая доступ к оптовым ценам, остаткам склада в Ташкенте и выписке счетов.
+          </p>
+          <p>
+            <strong>«Landed Cost DDP»</strong> — конечная цена единицы продукции с доставкой на склад/подъездной путь заказчика в Ташкенте, включающая заводскую стоимость, перевозку, страховку, сертификацию, таможенное оформление и НДС 12% в национальной валюте (UZS).
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+          2. СТАТУСЫ ПОЛЬЗОВАТЕЛЕЙ И РЕГЛАМЕНТ KYC-ВЕРИФИКАЦИИ
+        </div>
+        <p class="text-[#4A5056] font-sans mb-3">
+          Для предотвращения недобросовестной конкуренции и защиты коммерческих условий заводов-изготовителей доступ к сервисам разграничен на два уровня:
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="border border-[#0A0A0A] bg-[#C8CDD2] p-4">
+            <div class="font-bold text-sm text-[#0A0A0A] mb-1">СТАТУС «ГОСТЬ» (ДО KYC)</div>
+            <ul class="list-disc pl-4 space-y-1 text-[#4A5056] font-sans text-[11px]">
+              <li>Просмотр каталога номенклатуры и технических стандартов.</li>
+              <li>Ознакомление с 3D-моделями и чертежами.</li>
+              <li>Подача запроса на расчет КП через форму обратной связи.</li>
+              <li><span class="text-red-700 font-bold">Ограничение:</span> точные оптовые цены и балансы остатков в штуках скрыты.</li>
+            </ul>
+          </div>
+
+          <div class="border border-[#0A0A0A] bg-[#C8CDD2] p-4">
+            <div class="font-bold text-sm text-[#0A0A0A] mb-1">СТАТУС «КЛИЕНТ» (ПОСЛЕ KYC)</div>
+            <ul class="list-disc pl-4 space-y-1 text-[#4A5056] font-sans text-[11px]">
+              <li>Вход в закрытый личный кабинет платформы b2b.railtech.uz.</li>
+              <li>Отображение персональных контрактных цен с НДС 12%.</li>
+              <li>Просмотр точных складских остатков Index B2-2097 в реальном времени.</li>
+              <li>Бронирование партий и мгновенная выгрузка спецификаций.</li>
+              <li>Использование парсера спецификаций Smart Match AI.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="text-[#4A5056] font-sans mt-3">
+          Для прохождения KYC заявитель обязан предоставить реквизиты юридического лица (карточку предприятия с ИНН и ОКЭД) и документ, подтверждающий полномочия представителя. Верификация проводится комплаенс-отделом в течение 4 рабочих часов.
+        </p>
+      </div>
+
+      <div>
+        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+          3. ПОРЯДОК ЦЕНООБРАЗОВАНИЯ И УСЛОВИЯ DDP ТАШКЕНТ
+        </div>
+        <p class="text-[#4A5056] font-sans mb-2">
+          Все расчеты, производимые на платформе railtech.uz (включая онлайн-калькулятор Landed Cost), являются предварительными инженерными сметами и не признаются безотзывной публичной офертой до момента подписания спецификации обеими сторонами.
+        </p>
+        <p class="text-[#4A5056] font-sans">
+          После подписания спецификации к договору поставки стоимость в сумах (UZS) с учетом 12% НДС фиксируется в полном объеме. Все риски валютных колебаний, удорожания ЖД тарифов или сверхнормативного хранения на таможенных терминалах несет ООО «RailTech».
+        </p>
+      </div>
+
+      <div>
+        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+          4. ИНТЕЛЛЕКТУАЛЬНАЯ СОБСТВЕННОСТЬ
+        </div>
+        <p class="text-[#4A5056] font-sans">
+          Все графические материалы, технические интерактивные 3D-модели (GLTF), векторные чертежи, архитектурный CAD-дизайн сайта, алгоритмы машинного обучения Smart Match AI и программный код являются объектами исключительных прав ООО «RailTech». Любое копирование, декомпиляция или несанкционированное использование без письменного разрешения правообладателя преследуется в соответствии с законодательством Республики Узбекистан.
+        </p>
+      </div>
+
+      <div>
+        <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A] pb-1 mb-2">
+          5. КОНТАКТЫ ЮРИДИЧЕСКОГО ДЕПАРТАМЕНТА
+        </div>
+        <div class="border border-[#0A0A0A]/40 bg-[#C8CDD2] p-3 text-[#0A0A0A]">
+          <div>E-MAIL: <a href={`mailto:${globalData.emailLegal}`} class="font-bold underline">{globalData.emailLegal}</a></div>
+          <div>ТЕЛЕФОН: <a href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`} class="font-bold underline">{globalData.phone}</a></div>
+          <div>АДРЕС: {globalData.address}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

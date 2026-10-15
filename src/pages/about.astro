@@ -1,13 +1,33 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import aboutData from '../data/cms/about.json';
+import globalData from '../data/cms/global.json';
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: (aboutData.faq || []).map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.a,
+    },
+  })),
+};
 ---
 
 <BaseLayout
-  title="О компании ООО «RailTech» — Официальный статус, склад в Ташкенте, реквизиты"
-  description="Официальная информация об ООО «RailTech» (Ташкент, Узбекистан). ИНН 308912445, плательщик НДС 12%, собственный складской комплекс в ТПК Index B2-2097, стандарты входного контроля ОТК."
-  keywords="ооо railtech, инн 308912445, склад index b2-2097, поставщик жд запчастей узбекистан, реквизиты railtech, ндс 12% ташкент"
+  title={`О компании ${globalData.companyName} — Официальный статус, склад в Ташкенте, реквизиты`}
+  description={`Официальная информация об ${globalData.companyName} (Ташкент, Узбекистан). ИНН ${globalData.inn}, плательщик НДС 12%, собственный складской комплекс в ТПК Index B2-2097, стандарты входного контроля ОТК.`}
+  keywords="ооо railtech, поставщик жд запчастей узбекистан, реквизиты railtech, ндс 12% ташкент, склад index b2-2097"
 >
+  <!-- FAQPage Schema.org JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
   <div class="max-w-7xl mx-auto px-4 py-10 font-sans">
     <!-- Breadcrumbs -->
     <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-4">
@@ -17,79 +37,83 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
 
     <!-- Header Section -->
-    <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8">
-      <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-3">
+    <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8 font-mono">
+      <div class="flex flex-wrap items-center gap-2 text-xs mb-3">
         <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
-          РЕГИСТРАЦИЯ: РЕСПУБЛИКА УЗБЕКИСТАН
+          {aboutData.badge}
         </span>
         <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
-          ИНН: 308912445
+          ИНН: {globalData.inn}
         </span>
         <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold">
           ПЛАТЕЛЬЩИК НДС 12%
         </span>
       </div>
 
-      <h1 class="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3">
-        ИНСТИТУЦИОНАЛЬНЫЙ ПРОФИЛЬ ООО «RAILTECH»
+      <h1 class="font-sans text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3">
+        {aboutData.pageTitle}
       </h1>
 
-      <p class="text-base text-[#4A5056] max-w-3xl leading-relaxed">
-        ООО «RailTech» — специализированный оператор железнодорожного снабжения, контрактного ВЭД и цифровых технологий. Мы обеспечиваем бесперебойные поставки комплектующих подвижного состава и систем СЦБ для предприятий горно-металлургического сектора, железнодорожных операторов и промышленных гигантов Центральной Азии.
+      <p class="font-sans text-base text-[#4A5056] max-w-3xl leading-relaxed">
+        {aboutData.pageSubtitle}
       </p>
     </div>
 
-    <!-- Infrastructure Grid -->
+    <!-- Mission Banner -->
+    <div class="border-2 border-[#0A0A0A] bg-[#C8CDD2] p-6 lg:p-8 font-mono mb-10">
+      <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A] pb-2 mb-3">
+        {aboutData.mission.title}
+      </div>
+      <p class="font-sans text-sm text-[#0A0A0A] leading-relaxed">
+        {aboutData.mission.text}
+      </p>
+    </div>
+
+    <!-- Advantages Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-14">
-      <!-- Card 1 -->
-      <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 flex flex-col justify-between font-mono">
-        <div>
-          <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A] pb-2 mb-3">
-            [01] СКЛАДСКОЙ ХАБ INDEX B2-2097
-          </div>
-          <p class="text-xs text-[#4A5056] font-sans leading-relaxed mb-4">
-            Собственный складской терминал в Торгово-производственном комплексе Index (г. Ташкент). Площадь закрытого и открытого хранения превышает 1500 кв.м с возможностью единовременного складирования до 120 вагонокомплектов.
-          </p>
-          <div class="space-y-1.5 text-[11px] text-[#0A0A0A] bg-[#C8CDD2]/60 p-3 border border-[#0A0A0A]/20">
-            <div>• Подъездной Ж/Д путь колеи 1520 мм</div>
-            <div>• Кран-балки грузоподъемностью до 20 т</div>
-            <div>• Круглосуточная вооруженная охрана</div>
+      {aboutData.advantages.map((adv) => (
+        <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 flex flex-col justify-between font-mono">
+          <div>
+            <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A] pb-2 mb-3">
+              {adv.code}
+            </div>
+            <h3 class="font-sans text-base font-bold text-[#0A0A0A] mb-2">
+              {adv.title}
+            </h3>
+            <p class="text-xs text-[#4A5056] font-sans leading-relaxed mb-4">
+              {adv.description}
+            </p>
+            <div class="space-y-1.5 text-[11px] text-[#0A0A0A] bg-[#C8CDD2]/60 p-3 border border-[#0A0A0A]/20">
+              {adv.items.map((it) => (
+                <div>• {it}</div>
+              ))}
+            </div>
           </div>
         </div>
+      ))}
+    </div>
+
+    <!-- Directions of Activity -->
+    <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 lg:p-8 font-mono mb-14">
+      <div class="border-b border-[#0A0A0A] pb-3 mb-6">
+        <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2">
+          ПРОФИЛЬ
+        </span>
+        <span class="font-bold text-base text-[#0A0A0A]">
+          КЛЮЧЕВЫЕ НАПРАВЛЕНИЯ ОПЕРАЦИОННОЙ ДЕЯТЕЛЬНОСТИ
+        </span>
       </div>
 
-      <!-- Card 2 -->
-      <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 flex flex-col justify-between font-mono">
-        <div>
-          <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A] pb-2 mb-3">
-            [02] ВХОДНОЙ ИНСТРУМЕНТАЛЬНЫЙ КОНТРОЛЬ
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-sans text-xs">
+        {aboutData.directions.map((dir, idx) => (
+          <div class="border border-[#0A0A0A] bg-[#C8CDD2]/60 p-4 flex flex-col justify-between">
+            <div>
+              <div class="font-mono text-[10px] text-[#4A5056] mb-1">НАПРАВЛЕНИЕ 0{idx + 1}</div>
+              <div class="font-bold text-[#0A0A0A] mb-2">{dir.title}</div>
+              <p class="text-[#4A5056] leading-relaxed">{dir.desc}</p>
+            </div>
           </div>
-          <p class="text-xs text-[#4A5056] font-sans leading-relaxed mb-4">
-            Каждая единица литья, колесная пара или элемент СЦБ проходит обязательный контроль ОТК перед постановкой на складской учет. Никакой контрафактной продукции или деталей без сертификата плавки.
-          </p>
-          <div class="space-y-1.5 text-[11px] text-[#0A0A0A] bg-[#C8CDD2]/60 p-3 border border-[#0A0A0A]/20">
-            <div>• Ультразвуковой контроль (УЗД) трещин</div>
-            <div>• Проверка геометрических допусков колеи</div>
-            <div>• Паспорта заводов с оригинальными бирками</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 flex flex-col justify-between font-mono">
-        <div>
-          <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A] pb-2 mb-3">
-            [03] НАЛОГОВАЯ ЧИСТОТА И НДС 12%
-          </div>
-          <p class="text-xs text-[#4A5056] font-sans leading-relaxed mb-4">
-            ООО «RailTech» является добросовестным налогоплательщиком с высоким рейтингом благонадежности. Мы работаем исключительно в «белом» правовом поле Республики Узбекистан.
-          </p>
-          <div class="space-y-1.5 text-[11px] text-[#0A0A0A] bg-[#C8CDD2]/60 p-3 border border-[#0A0A0A]/20">
-            <div>• Плательщик НДС 12% (полный зачет)</div>
-            <div>• Электронные счета-фактуры через Didox/Soliq</div>
-            <div>• Прямые контракты в национальной валюте UZS</div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
 
@@ -119,15 +143,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </div>
         <div class="border-b border-[#0A0A0A]/20 pb-2">
           <span class="text-[#4A5056] block text-[11px]">КРАТКОЕ НАИМЕНОВАНИЕ:</span>
-          <span class="font-bold text-[#0A0A0A]">ООО «RailTech» // RailTech LLC</span>
+          <span class="font-bold text-[#0A0A0A]">{globalData.companyName} // RailTech LLC</span>
         </div>
         <div class="border-b border-[#0A0A0A]/20 pb-2">
           <span class="text-[#4A5056] block text-[11px]">ИДЕНТИФИКАЦИОННЫЙ НОМЕР НАЛОГОПЛАТЕЛЬЩИКА (ИНН):</span>
-          <span class="font-bold text-[#0A0A0A]">308912445</span>
+          <span class="font-bold text-[#0A0A0A]">{globalData.inn}</span>
         </div>
         <div class="border-b border-[#0A0A0A]/20 pb-2">
           <span class="text-[#4A5056] block text-[11px]">СТАТУС ПЛАТЕЛЬЩИКА НАЛОГА НА ДОБАВЛЕННУЮ СТОИМОСТЬ:</span>
-          <span class="font-bold text-emerald-800">Плательщик НДС 12% (Код: 308912445)</span>
+          <span class="font-bold text-emerald-800">Плательщик НДС 12% ({globalData.legalStatus})</span>
         </div>
         <div class="border-b border-[#0A0A0A]/20 pb-2">
           <span class="text-[#4A5056] block text-[11px]">ОСНОВНОЙ ВИД ДЕЯТЕЛЬНОСТИ (ОКЭД):</span>
@@ -135,7 +159,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </div>
         <div class="border-b border-[#0A0A0A]/20 pb-2">
           <span class="text-[#4A5056] block text-[11px]">ЮРИДИЧЕСКИЙ И ФАКТИЧЕСКИЙ АДРЕС:</span>
-          <span class="font-bold text-[#0A0A0A]">100140, Республика Узбекистан, г. Ташкент, Янгихаётский район, ТПК Index, Блок B2, Офис 2097</span>
+          <span class="font-bold text-[#0A0A0A]">100140, Республика Узбекистан, {globalData.address}</span>
         </div>
         <div class="border-b border-[#0A0A0A]/20 pb-2">
           <span class="text-[#4A5056] block text-[11px]">ЭЛЕКТРОННЫЙ ДОКУМЕНТООБОРОТ (ЭСФ):</span>
@@ -146,6 +170,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <span class="font-bold text-[#0A0A0A]">railtech.uz // b2b.railtech.uz</span>
         </div>
       </div>
+    </div>
+
+    <!-- FAQ Accordion Module -->
+    <div class="mb-14">
+      <FaqAccordion
+        title="ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ О КОМПАНИИ"
+        subtitle="Регламент поставок, сертификация ТР ТС, входной контроль и условия гарантии"
+        badge="ИНСТИТУЦИОНАЛЬНЫЙ FAQ"
+      />
     </div>
   </div>
 </BaseLayout>
