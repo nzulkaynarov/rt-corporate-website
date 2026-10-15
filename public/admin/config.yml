@@ -76,6 +76,7 @@ collections:
       - { label: "Название проекта", name: "title", widget: "string" }
       - { label: "Подзаголовок", name: "subtitle", widget: "string" }
       - { label: "Метрики проекта", name: "metrics", widget: "list" }
+      - { label: "Изображение проекта", name: "image", widget: "image", required: false }
       - { label: "Порядок", name: "order", widget: "number", default: 1 }
       - { label: "Описание проекта", name: "body", widget: "markdown" }
 
@@ -149,6 +150,9 @@ collections:
               - { label: "Ссылка", name: "linkHref", widget: "string" }
           - { label: "Бейдж секции витрины", name: "showcaseSectionBadge", widget: "string" }
           - { label: "Заголовок секции витрины", name: "showcaseSectionTitle", widget: "string" }
+          - { label: "Бейдж секции блога", name: "blogBadge", widget: "string" }
+          - { label: "Заголовок секции блога", name: "blogTitle", widget: "string" }
+          - { label: "Подзаголовок секции блога", name: "blogSubtitle", widget: "string" }
           - { label: "Бейдж секции гарантий", name: "trustSectionBadge", widget: "string" }
           - { label: "Заголовок секции гарантий", name: "trustSectionTitle", widget: "string" }
           - label: "Пункты гарантий"

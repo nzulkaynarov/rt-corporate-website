@@ -11,6 +11,7 @@ export interface CatalogItemProps {
   status: 'В наличии' | 'Резерв' | 'Под заказ';
   statusKey: 'in_stock' | 'reserved' | 'on_order';
   specs: string;
+  image?: string;
 }
 
 interface Props {

@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { CatalogFilterTable } from '../../components/islands/CatalogFilterTable';
+import { withBase } from '../../utils/url';
 
 const catalogEntries = await getCollection('catalog');
 catalogEntries.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
@@ -17,6 +18,7 @@ const items = catalogEntries.map((entry) => ({
   status: entry.data.status,
   statusKey: entry.data.statusKey,
   specs: entry.data.specs,
+  image: withBase(entry.data.image),
 }));
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---

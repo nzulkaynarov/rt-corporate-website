@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { ProductMediaGallery } from '../../components/islands/ProductMediaGallery';
+import { withBase } from '../../utils/url';
 
 export async function getStaticPaths() {
   const catalogEntries = await getCollection('catalog');
@@ -22,7 +23,9 @@ const productJsonLd = {
   '@context': 'https://schema.org/',
   '@type': 'Product',
   name: entry.data.title,
-  image: `https://railtech.uz/images/catalog/${entry.data.sku.toLowerCase()}.jpg`,
+  image: entry.data.image
+    ? (entry.data.image.startsWith('http') ? entry.data.image : new URL(withBase(entry.data.image), siteUrl).href)
+    : `https://railtech.uz/images/catalog/${entry.data.sku.toLowerCase()}.jpg`,
   description: entry.data.specs,
   sku: entry.data.sku,
   mpn: entry.data.gost,
@@ -75,6 +78,7 @@ const breadcrumbJsonLd = {
   title={`${entry.data.title} (${entry.data.sku}) — Паспорт изделия | ООО «RailTech» Ташкент`}
   description={`Технический паспорт и заказ ${entry.data.title} (${entry.data.sku}). Стандарт ${entry.data.gost}, ТН ВЭД ${entry.data.tnved}. Склад в Ташкенте (ТПК Index B2-2097). Поставка с НДС 12%.`}
   keywords={`${entry.data.title}, ${entry.data.sku}, ${entry.data.gost}, ${entry.data.tnved}, купить в ташкенте, жд запчасти узбекистан`}
+  image={withBase(entry.data.image)}
 >
   <!-- Product & Breadcrumb Schema.org -->
   <script type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />
@@ -197,7 +201,7 @@ const breadcrumbJsonLd = {
           subsystem={entry.data.subsystem}
           specs={entry.data.specs}
           modelType={entry.data.modelType || 'bogie'}
-          image={entry.data.image}
+          image={withBase(entry.data.image)}
         />
 
         <!-- Commercial Action Box -->

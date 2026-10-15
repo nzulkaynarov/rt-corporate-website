@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CadInspector } from './CadInspector';
+import { withBase } from '../../utils/url';
 
 interface Props {
   sku: string;
@@ -94,7 +95,7 @@ export const ProductMediaGallery: React.FC<Props> = ({
             <div className="relative w-full max-w-lg aspect-video bg-[#D0D6DC] border border-[#0A0A0A] p-6 flex flex-col items-center justify-center shadow-inner">
               {image ? (
                 <img
-                  src={image}
+                  src={withBase(image)}
                   alt={title}
                   className="max-h-48 max-w-full object-contain mx-auto"
                 />

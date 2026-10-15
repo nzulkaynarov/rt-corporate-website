@@ -8,6 +8,12 @@ import globalData from '../data/cms/global.json';
 const allSkus = await getCollection('catalog');
 // Pick 6 prominent items for the home showcase
 const showcaseSkus = allSkus.slice(0, 6);
+
+const allPosts = await getCollection('blog');
+const latestPosts = allPosts
+  .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime())
+  .slice(0, 3);
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
@@ -220,8 +226,73 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
   </section>
 
+  <!-- Section: Engineering Blog & News (Knowledge Base) -->
+  <section class="border-b border-[#0A0A0A] bg-[#C8CDD2] py-14">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="border-b border-[#0A0A0A] pb-3 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4 font-mono">
+        <div>
+          <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2">
+            {homeData.blogBadge}
+          </span>
+          <span class="font-bold text-lg text-[#0A0A0A]">
+            {homeData.blogTitle}
+          </span>
+          <div class="text-xs text-[#4A5056] mt-1 font-mono">
+            {homeData.blogSubtitle}
+          </div>
+        </div>
+        <a
+          href={`${base}/blog/`}
+          class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-4 py-2 text-xs font-bold whitespace-nowrap hover:bg-transparent hover:text-[#0A0A0A] transition-colors"
+        >
+          [ ВСЕ ПУБЛИКАЦИИ (БЛОГ) → ]
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {latestPosts.map((post) => (
+          <article class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 flex flex-col justify-between hover:bg-white transition-colors group">
+            <div>
+              <div class="flex items-center justify-between font-mono text-xs border-b border-[#0A0A0A]/20 pb-2 mb-3">
+                <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#C8CDD2] text-[#0A0A0A] font-bold text-[10px]">
+                  {post.data.category}
+                </span>
+                <span class="text-[#4A5056] text-[11px]">
+                  {post.data.publishDate}
+                </span>
+              </div>
+
+              <h3 class="font-sans font-bold text-lg text-[#0A0A0A] mb-2 leading-snug group-hover:underline">
+                <a href={`${base}/blog/${post.slug}`}>
+                  {post.data.title}
+                </a>
+              </h3>
+
+              <p class="font-sans text-xs text-[#4A5056] leading-relaxed mb-4 line-clamp-3">
+                {post.data.summary}
+              </p>
+            </div>
+
+            <div class="pt-3 border-t border-[#0A0A0A]/20 flex items-center justify-between font-mono text-xs">
+              <span class="text-[#4A5056] text-[11px]">
+                ⏱ {post.data.readTime}
+              </span>
+              <a
+                href={`${base}/blog/${post.slug}`}
+                class="font-bold text-[#0A0A0A] group-hover:underline flex items-center space-x-1"
+              >
+                <span>Читать материал</span>
+                <span>→</span>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- Section: Institutional Guarantees (Trust Matrix) -->
-  <section class="bg-[#C8CDD2] py-14">
+  <section class="bg-[#D4D8DC] py-14">
     <div class="max-w-7xl mx-auto px-4">
       <div class="border-b border-[#0A0A0A] pb-3 mb-8 font-mono">
         <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2">
@@ -234,7 +305,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 font-mono text-xs">
         {homeData.trustItems.map((item) => (
-          <div class="border border-[#0A0A0A] p-4 bg-[#D4D8DC]">
+          <div class="border border-[#0A0A0A] p-4 bg-[#C8CDD2]">
             <div class="font-bold text-sm text-[#0A0A0A] mb-2">{item.code}</div>
             <p class="text-[#4A5056] leading-relaxed">
               {item.text}

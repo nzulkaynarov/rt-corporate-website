@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { withBase } from '../../utils/url';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
@@ -22,6 +23,9 @@ const techArticleJsonLd = {
   '@type': 'TechArticle',
   headline: entry.data.title,
   description: entry.data.summary,
+  image: entry.data.image
+    ? (entry.data.image.startsWith('http') ? entry.data.image : new URL(withBase(entry.data.image), siteUrl).href)
+    : new URL(withBase('/og-cover.png'), siteUrl).href,
   datePublished: entry.data.publishDate,
   dateModified: entry.data.publishDate,
   mainEntityOfPage: {
@@ -39,7 +43,7 @@ const techArticleJsonLd = {
     url: 'https://railtech.uz',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://railtech.uz/og-cover.svg',
+      url: new URL(withBase('/og-cover.png'), siteUrl).href,
     },
   },
   keywords: entry.data.tags.join(', '),
@@ -76,6 +80,7 @@ const breadcrumbJsonLd = {
   title={`${entry.data.title} — Блог инженеров ООО «RailTech»`}
   description={entry.data.summary}
   keywords={entry.data.tags.join(', ')}
+  image={withBase(entry.data.image)}
 >
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json" set:html={JSON.stringify(techArticleJsonLd)} />
@@ -132,6 +137,16 @@ const breadcrumbJsonLd = {
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
       <!-- Article Body -->
       <div class="lg:col-span-8">
+        {entry.data.image && (
+          <div class="mb-6 border-2 border-[#0A0A0A] bg-[#0A0A0A] overflow-hidden">
+            <img
+              src={withBase(entry.data.image)}
+              alt={entry.data.title}
+              class="w-full h-auto max-h-[460px] object-cover"
+            />
+          </div>
+        )}
+
         <div class="border border-[#0A0A0A] bg-[#C8CDD2] p-6 lg:p-8 font-sans">
           <div class="prose prose-sm sm:prose max-w-none text-[#0A0A0A] leading-relaxed prose-headings:font-bold prose-headings:text-[#0A0A0A] prose-headings:border-b prose-headings:border-[#0A0A0A]/30 prose-headings:pb-2 prose-pre:bg-[#0A0A0A] prose-pre:text-[#D4D8DC] prose-pre:border prose-pre:border-[#0A0A0A] prose-code:font-mono prose-code:text-[#0A0A0A] prose-code:bg-[#D4D8DC] prose-code:px-1 prose-strong:text-[#0A0A0A] prose-blockquote:border-l-4 prose-blockquote:border-[#0A0A0A] prose-blockquote:bg-[#D4D8DC] prose-blockquote:p-3 prose-li:text-[#0A0A0A]">
             <Content />

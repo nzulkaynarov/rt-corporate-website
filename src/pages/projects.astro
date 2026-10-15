@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { CadInspector } from '../components/islands/CadInspector';
+import { withBase } from '../utils/url';
 
 const projectItems = await getCollection('projects');
 projectItems.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
@@ -105,6 +106,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
               <span class="font-bold text-[#0A0A0A] bg-[#0A0A0A] text-white px-1.5 py-0.5">{prj.data.code}</span>
               <span class="text-[#4A5056] text-[10px]">{prj.data.tag}</span>
             </div>
+
+            {prj.data.image && (
+              <div class="mb-3 border border-[#0A0A0A] overflow-hidden bg-[#C8CDD2]">
+                <img
+                  src={withBase(prj.data.image)}
+                  alt={prj.data.title}
+                  class="w-full h-40 object-cover"
+                />
+              </div>
+            )}
 
             <h3 class="font-sans font-bold text-lg text-[#0A0A0A] mb-2 leading-snug">
               {prj.data.title}

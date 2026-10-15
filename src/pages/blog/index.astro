@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { withBase } from '../../utils/url';
 
 const allPosts = await getCollection('blog');
 allPosts.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
@@ -70,6 +71,15 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
           <div class="lg:col-span-8 space-y-3 font-sans">
+            {featuredPost.data.image && (
+              <div class="mb-4 border border-[#0A0A0A] overflow-hidden bg-[#D4D8DC]">
+                <img
+                  src={withBase(featuredPost.data.image)}
+                  alt={featuredPost.data.title}
+                  class="w-full h-48 sm:h-64 object-cover"
+                />
+              </div>
+            )}
             <h2 class="text-2xl sm:text-3xl font-bold text-[#0A0A0A] leading-tight hover:underline">
               <a href={`${base}/blog/${featuredPost.slug}`}>
                 {featuredPost.data.title}
@@ -154,6 +164,16 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
                 {post.data.publishDate}
               </span>
             </div>
+
+            {post.data.image && (
+              <div class="mb-3 border border-[#0A0A0A] overflow-hidden bg-[#C8CDD2]">
+                <img
+                  src={withBase(post.data.image)}
+                  alt={post.data.title}
+                  class="w-full h-36 object-cover"
+                />
+              </div>
+            )}
 
             <!-- Title -->
             <h3 class="font-sans font-bold text-lg text-[#0A0A0A] mb-2.5 leading-snug group-hover:underline">
