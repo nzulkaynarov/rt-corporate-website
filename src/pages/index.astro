@@ -1,13 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { CadInspector } from '../components/islands/CadInspector';
+import { HudMediaSlider } from '../components/islands/HudMediaSlider';
 import I18nText from '../components/I18nText.astro';
+import HudCard from '../components/hud/HudCard.astro';
+import HudStepDivider from '../components/hud/HudStepDivider.astro';
 import homeData from '../data/cms/home.json';
 import globalData from '../data/cms/global.json';
+import { withBase } from '../utils/url';
 
 const allSkus = await getCollection('catalog');
-// Pick 6 prominent items for the home showcase
+allSkus.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
 const showcaseSkus = allSkus.slice(0, 6);
 
 const allPosts = await getCollection('blog');
@@ -16,230 +19,250 @@ const latestPosts = allPosts
   .slice(0, 3);
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Format hero slides with proper base URL for images
+const heroSlides = homeData.heroSlides.map((slide) => ({
+  ...slide,
+  image: withBase(slide.image) || slide.image,
+  link: slide.link ? (slide.link.startsWith('http') ? slide.link : `${base}${slide.link.startsWith('/') ? '' : '/'}${slide.link}`) : undefined,
+}));
+
+const modes = [
+  { n: '01', label: { ru: 'КАТАЛОГ', uz: 'KATALOG', en: 'CATALOG' }, href: '/catalog/' },
+  { n: '02', label: { ru: 'УСЛУГИ', uz: 'XIZMATLAR', en: 'SERVICES' }, href: '/services/' },
+  { n: '03', label: { ru: 'ПРОЕКТЫ', uz: 'LOYIHALAR', en: 'PROJECTS' }, href: '/projects/' },
+  { n: '04', label: { ru: 'БЛОГ', uz: 'BLOG', en: 'BLOG' }, href: '/blog/' },
+];
 ---
 
 <BaseLayout
-  title={`${globalData.companyName} — ЖД поставки, контрактный ВЭД DDP Ташкент и IT-решения`}
-  description={`Официальный B2B/B2G портал ${globalData.companyName} (Ташкент, склад Index B2-2097, ИНН ${globalData.inn}). Складская программа комплектующих вагонов (18-100, СА-3, РУ1Ш-957), ВЭД под ключ с НДС 12%, B2B платформа b2b.railtech.uz.`}
+  title={`${globalData.companyName} — Многопрофильный B2B / B2G Оператор в Узбекистане`}
+  description={`Официальный портал ${globalData.companyName} (Ташкент, склад Index B2-2097, ИНН ${globalData.inn}). Каталог оборудования и товаров со склада, контрактные поставки DDP с НДС 12%, IT-разработка и платформа b2b.railtech.uz.`}
 >
-  <!-- Hero Section -->
-  <section class="border-b border-[#0A0A0A] bg-[#D4D8DC] relative overflow-hidden">
-    <!-- CAD Grid background -->
-    <div class="absolute inset-0 bg-[radial-gradient(#0A0A0A_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none"></div>
+  <!-- Screen 1: CAD 3-Column Console Hero -->
+  <section class="border-b border-[#0A0A0A] bg-[#D4D8DC] relative overflow-hidden pt-8 pb-12">
+    <!-- Isometric CAD background grid -->
+    <div class="absolute inset-0 cad-grid-bg opacity-35 pointer-events-none" aria-hidden="true"></div>
 
-    <div class="max-w-7xl mx-auto px-4 py-12 lg:py-16 relative">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        <!-- Hero Text -->
-        <div class="lg:col-span-7 flex flex-col space-y-6">
-          <div class="flex flex-wrap items-center gap-2 font-mono text-[11px]">
-            <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold tracking-wider inline-block">
-              <I18nText ru={homeData.heroBadge} uz={homeData.heroBadge_uz} en={homeData.heroBadge_en} />
-            </span>
-            <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A] inline-block">
-              <I18nText ru={homeData.heroBadgeSub} uz={homeData.heroBadgeSub_uz} en={homeData.heroBadgeSub_en} />
-            </span>
-            <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold inline-block">
-              <I18nText ru={homeData.heroBadgeVat} uz={homeData.heroBadgeVat_uz} en={homeData.heroBadgeVat_en} />
-            </span>
+    <div class="max-w-7xl mx-auto px-4 relative">
+      <!-- Top Telemetry Callout Row -->
+      <div class="flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] text-[#4A5056] pb-4 mb-6 border-b border-[#0A0A0A]/20">
+        <div class="flex items-center gap-3">
+          <span class="hud-callout"><i></i>RT_CONSOLE // SYS.ACTIVE</span>
+          <span class="hidden sm:inline text-[#0A0A0A]/30">|</span>
+          <span class="hidden sm:inline font-bold text-[#0A0A0A]">
+            <I18nText ru="АККРЕДИТОВАННЫЙ ОПЕРАТОР РУз" uz="O'zR AKKREDITATSIYALANGAN OPERATORI" en="UZBEKISTAN ACCREDITED OPERATOR" />
+          </span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#C8CDD2] text-[#0A0A0A] font-bold">
+            <I18nText ru="НДС 12% ВКЛЮЧЕН" uz="12% QQS BILAN" en="12% VAT INCLUDED" />
+          </span>
+          <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#0A0A0A] text-white font-bold">
+            INDEX B2-2097
+          </span>
+        </div>
+      </div>
+
+      <!-- 3-Column Console Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <!-- 1. LEFT COLUMN: Universal Navigation by Directions -->
+        <div class="lg:col-span-3 flex flex-col justify-between hud-glass-card p-5 gap-5">
+          <div>
+            <!-- Brand & Subtitle -->
+            <div class="border-b border-[#0A0A0A]/20 pb-3 mb-4">
+              <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-[#4A5056] block mb-1">
+                SYSTEM CONSOLE
+              </span>
+              <h1 class="font-sans text-2xl font-black tracking-tight text-[#0A0A0A] leading-none mb-1">
+                {homeData.consoleTitle || 'RailTech'}
+              </h1>
+              <p class="font-mono text-[11px] text-[#4A5056] leading-tight">
+                <I18nText
+                  ru={homeData.consoleSubtitle || 'Многопрофильный B2B / B2G Оператор'}
+                  uz={homeData.consoleSubtitle_uz || "Ko'p tarmoqli B2B / B2G operatori"}
+                  en={homeData.consoleSubtitle_en || 'Multi-sector B2B / B2G Operator'}
+                />
+              </p>
+            </div>
+
+            <!-- Block Modes (2x2 Grid) -->
+            <div class="mb-5">
+              <span class="font-mono text-[10px] tracking-wider text-[#4A5056] block uppercase mb-2">
+                // MODES
+              </span>
+              <div class="grid grid-cols-2 gap-1.5 font-mono text-xs" id="hud-modes-grid">
+                {modes.map((m, idx) => (
+                  <button
+                    type="button"
+                    data-mode-idx={idx}
+                    data-mode-href={`${base}${m.href}`}
+                    class={`mode-btn p-2 border border-[#0A0A0A] text-left transition-colors cursor-pointer flex items-center justify-between group ${
+                      idx === 0 ? 'bg-[#0A0A0A] text-white font-bold' : 'bg-white/40 text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white'
+                    }`}
+                  >
+                    <span>{m.n}. <I18nText ru={m.label.ru} uz={m.label.uz} en={m.label.en} /></span>
+                    <span class="text-[10px] opacity-60 group-hover:opacity-100">↗</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <!-- Block Directions (CMS Editable List) -->
+            <div>
+              <span class="font-mono text-[10px] tracking-wider text-[#4A5056] block uppercase mb-2">
+                // НАПРАВЛЕНИЯ
+              </span>
+              <div class="flex flex-col space-y-1 font-mono text-xs">
+                {homeData.directions.map((dir, idx) => (
+                  <a
+                    href={`${base}${dir.href}`}
+                    class="p-2 border border-[#0A0A0A]/20 bg-white/30 hover:bg-[#0A0A0A] hover:text-white hover:border-[#0A0A0A] transition-colors flex items-center justify-between group"
+                  >
+                    <span class="truncate">
+                      <span class="font-bold text-[#4A5056] group-hover:text-white mr-1.5">0{idx + 1} /</span>
+                      <I18nText ru={dir.label} uz={dir.label_uz} en={dir.label_en} />
+                    </span>
+                    <span class="text-[11px] font-bold group-hover:translate-x-0.5 transition-transform">→</span>
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
 
-          <I18nText
-            as="h1"
-            class="font-sans text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#0A0A0A] leading-[1.1]"
-            ru={homeData.heroTitle}
-            uz={homeData.heroTitle_uz}
-            en={homeData.heroTitle_en}
-          />
-
-          <I18nText
-            as="p"
-            class="font-sans text-base lg:text-lg text-[#4A5056] leading-relaxed max-w-2xl"
-            ru={homeData.heroSubtitle}
-            uz={homeData.heroSubtitle_uz}
-            en={homeData.heroSubtitle_en}
-          />
-
-          <!-- Action Buttons -->
-          <div class="flex flex-wrap gap-3 font-mono text-xs pt-2">
-            <a
-              href={`${base}/catalog/`}
-              class="border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white px-5 py-3 font-bold hover:bg-transparent hover:text-[#0A0A0A] transition-colors inline-block"
-            >
-              <I18nText ru={homeData.ctaCatalog} uz={homeData.ctaCatalog_uz} en={homeData.ctaCatalog_en} />
-            </a>
-            <a
-              href={`${base}/contract`}
-              class="border-2 border-[#0A0A0A] bg-[#C8CDD2] text-[#0A0A0A] px-5 py-3 font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors inline-block"
-            >
-              <I18nText ru={homeData.ctaContract} uz={homeData.ctaContract_uz} en={homeData.ctaContract_en} />
-            </a>
-            <button
-              type="button"
-              data-lead-modal
-              data-lead-subject="Запрос общего КП и прайс-листа с главной страницы"
-              class="border-2 border-[#0A0A0A] bg-transparent text-[#0A0A0A] px-5 py-3 font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer inline-block"
-            >
-              <I18nText ru={homeData.ctaRfq} uz={homeData.ctaRfq_uz} en={homeData.ctaRfq_en} />
-            </button>
+          <!-- Bottom CAD UI Stamp -->
+          <div class="pt-3 border-t border-[#0A0A0A]/20 flex items-center justify-between font-mono text-[10px] text-[#4A5056]">
+            <span>RT // CAD.UI 026</span>
+            <span class="inline-block w-2 h-2 bg-emerald-600"></span>
           </div>
+        </div>
 
-          <!-- Quick Metrics Bar -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-4 border-t border-[#0A0A0A]/20 font-mono text-xs">
-            {homeData.quickMetrics.map((qm) => (
-              <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]/60">
-                <div class="text-[#4A5056] text-[10px]">
-                  <I18nText ru={qm.label} uz={qm.label_uz} en={qm.label_en} />
+        <!-- 2. CENTER COLUMN: Interactive HUD Photo Multi-Slider -->
+        <div class="lg:col-span-6 flex flex-col">
+          <HudMediaSlider client:load slides={heroSlides} intervalMs={6500} />
+        </div>
+
+        <!-- 3. RIGHT COLUMN: Corporate Passport & CTA -->
+        <div class="lg:col-span-3 flex flex-col justify-between gap-3">
+          <div class="flex flex-col gap-3">
+            <span class="font-mono text-[10px] tracking-wider text-[#4A5056] uppercase mb-0.5">
+              // ПАСПОРТ ОПЕРАТОРА
+            </span>
+
+            {homeData.passport.map((p, idx) => (
+              <div class="hud-glass-card p-4">
+                <div class="hud-card-index mb-1">
+                  <b>0{idx + 1}</b> // <I18nText ru={p.label} uz={p.label_uz} en={p.label_en} />
                 </div>
-                <div class="font-bold text-sm text-[#0A0A0A]">
-                  <I18nText ru={qm.value} uz={qm.value_uz} en={qm.value_en} />
+                <div class="font-sans font-bold text-sm text-[#0A0A0A] leading-snug">
+                  <I18nText ru={p.value} uz={p.value_uz} en={p.value_en} />
                 </div>
               </div>
             ))}
           </div>
-        </div>
 
-        <!-- Hero CAD Viewport -->
-        <div class="lg:col-span-5">
-          <CadInspector
-            client:load
-            modelType="bogie"
-            title="ТЕЛЕЖКА 18-100 // CAD-СБОРКА"
-            titleUz="18-100 ARAVACHASI // CAD-YIG'ILMA"
-            titleEn="18-100 BOGIE // CAD ASSEMBLY"
-            subtitle="БАЗОВАЯ ЕДИНИЦА СКЛАДСКОЙ ПРОГРАММЫ"
-            subtitleUz="OMBOR DASTURINING ASOSIY BIRLIGI"
-            subtitleEn="CORE INVENTORY PROGRAM UNIT"
-          />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section: The 4 Core Pillars (Multi-page Gateway) -->
-  <section class="border-b border-[#0A0A0A] bg-[#C8CDD2] py-14">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="border-b border-[#0A0A0A] pb-3 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-2 font-mono">
-        <div>
-          <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2 inline-block">
-            <I18nText ru={homeData.pillarsSectionBadge} uz={homeData.pillarsSectionBadge_uz} en={homeData.pillarsSectionBadge_en} />
-          </span>
-          <span class="font-bold text-lg text-[#0A0A0A]">
-            <I18nText ru={homeData.pillarsSectionTitle} uz={homeData.pillarsSectionTitle_uz} en={homeData.pillarsSectionTitle_en} />
-          </span>
-        </div>
-        <div class="text-xs text-[#4A5056]">
-          <I18nText ru={homeData.pillarsSectionSubtitle} uz={homeData.pillarsSectionSubtitle_uz} en={homeData.pillarsSectionSubtitle_en} />
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {homeData.pillars.map((pillar) => (
-          <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 flex flex-col justify-between hover:border-black transition-all group">
-            <div>
-              <div class="flex items-center justify-between font-mono text-xs text-[#4A5056] border-b border-[#0A0A0A]/30 pb-2 mb-4">
-                <span class="font-bold text-[#0A0A0A]">{pillar.code}</span>
-                <span>
-                  <I18nText ru={pillar.tag} uz={pillar.tag_uz} en={pillar.tag_en} />
-                </span>
-              </div>
-              <I18nText
-                as="h2"
-                class="font-sans text-xl font-bold text-[#0A0A0A] mb-2 group-hover:underline"
-                ru={pillar.title}
-                uz={pillar.title_uz}
-                en={pillar.title_en}
-              />
-              <I18nText
-                as="p"
-                class="text-sm text-[#4A5056] leading-relaxed mb-4"
-                ru={pillar.description}
-                uz={pillar.description_uz}
-                en={pillar.description_en}
-              />
-              <div class="grid grid-cols-2 gap-2 font-mono text-xs mb-6">
-                {pillar.metrics.map((m) => (
-                  <div class="border border-[#0A0A0A]/20 p-2 bg-[#C8CDD2]/50">
-                    <span class="text-[#4A5056] block text-[10px]">
-                      <I18nText ru={m.label} uz={m.label_uz} en={m.label_en} />
-                    </span>
-                    <span class="font-bold text-[#0A0A0A]">
-                      <I18nText ru={m.value} uz={m.value_uz} en={m.value_en} />
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <a
-              href={`${base}${pillar.linkHref}`}
-              class="border border-[#0A0A0A] bg-[#0A0A0A] text-white py-2.5 px-4 font-mono text-xs font-bold text-center group-hover:bg-transparent group-hover:text-[#0A0A0A] transition-colors"
+          <!-- Direct RFQ Action Button -->
+          <div class="pt-2">
+            <button
+              type="button"
+              data-lead-modal
+              data-lead-subject="Запрос общего КП и прайс-листа с главной консоли"
+              class="hud-btn w-full py-4 text-xs font-bold cursor-pointer"
             >
-              <I18nText ru={pillar.linkText} uz={pillar.linkText_uz} en={pillar.linkText_en} />
-            </a>
+              <span><I18nText ru={homeData.ctaLead || 'Оставить заявку'} uz={homeData.ctaLead_uz || 'Ariza qoldirish'} en={homeData.ctaLead_en || 'Submit a request'} /></span>
+              <span>↗</span>
+            </button>
+            <div class="mt-2 text-center font-mono text-[10px] text-[#4A5056]">
+              <I18nText ru="Ответ отдела снабжения: от 15 минут" uz="Ta'minot javobi: 15 daqiqadan" en="Procurement response: from 15 min" />
+            </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Step Divider -->
+      <HudStepDivider label="CHANNELS // 04 GATEWAYS" class="mt-12 mb-8" />
+
+      <!-- 4. BOTTOM ROW: 4 Gateway Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {homeData.gatewayCards.map((g, idx) => (
+          <HudCard
+            index={`00${idx + 1}`}
+            title={{ ru: g.title, uz: g.title_uz, en: g.title_en }}
+            text={{ ru: g.text, uz: g.text_uz, en: g.text_en }}
+            image={g.image}
+            href={g.href}
+            aspect="aspect-[16/10]"
+            cta={{ ru: 'Перейти в раздел', uz: "Bo'limga o'tish", en: 'Open section' }}
+            headingLevel="h2"
+          />
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Section: Warehouse Top SKUs Showcase -->
-  <section class="border-b border-[#0A0A0A] bg-[#D4D8DC] py-14">
+  <!-- Showcase Section: Top Warehouse SKUs -->
+  <section class="border-b border-[#0A0A0A] bg-[#C8CDD2] py-16 relative">
     <div class="max-w-7xl mx-auto px-4">
-      <div class="border-b border-[#0A0A0A] pb-3 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-2 font-mono">
+      <div class="hud-section-head">
         <div>
-          <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2 inline-block">
-            <I18nText ru={homeData.showcaseSectionBadge} uz={homeData.showcaseSectionBadge_uz} en={homeData.showcaseSectionBadge_en} />
-          </span>
-          <span class="font-bold text-lg text-[#0A0A0A]">
-            <I18nText ru={homeData.showcaseSectionTitle} uz={homeData.showcaseSectionTitle_uz} en={homeData.showcaseSectionTitle_en} />
-          </span>
+          <span class="hud-callout mb-1"><i></i><I18nText ru={homeData.showcaseSectionBadge} uz={homeData.showcaseSectionBadge_uz} en={homeData.showcaseSectionBadge_en} /></span>
+          <I18nText as="h2" class="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-[#0A0A0A]" ru={homeData.showcaseSectionTitle} uz={homeData.showcaseSectionTitle_uz} en={homeData.showcaseSectionTitle_en} />
         </div>
         <a
           href={`${base}/catalog/`}
-          class="text-xs font-bold text-[#0A0A0A] hover:underline flex items-center space-x-1"
+          class="font-mono text-xs font-bold text-[#0A0A0A] hover:underline flex items-center gap-1.5"
         >
-          <span>
-            <I18nText ru="СМОТРЕТЬ ВСЕ 10+ КАТЕГОРИЙ" uz="BARCHA 10+ GURUHNI KO'RISH" en="VIEW ALL 10+ CATEGORIES" />
-          </span>
+          <span><I18nText ru="СМОТРЕТЬ ВЕСЬ КАТАЛОГ (1 200+ SKU)" uz="BARCHA KATALOGNI KO'RISH (1 200+ SKU)" en="VIEW FULL CATALOG (1,200+ SKUs)" /></span>
           <span>→</span>
         </a>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {showcaseSkus.map((item) => (
-          <div class="border-2 border-[#0A0A0A] bg-[#C8CDD2] p-5 flex flex-col justify-between hover:bg-white transition-colors group">
-            <div>
-              <div class="flex items-center justify-between font-mono text-xs border-b border-[#0A0A0A]/20 pb-2 mb-3">
-                <span class="font-bold text-[#0A0A0A]">{item.data.sku}</span>
-                <span class="px-2 py-0.5 text-[10px] font-bold border border-[#0A0A0A] bg-[#D4D8DC]">
-                  <I18nText ru={item.data.status} uz={item.data.status_uz} en={item.data.status_en} />
-                </span>
+          <div class="hud-glass-card p-5 gap-3">
+            <div class="flex items-center justify-between border-b border-[#0A0A0A]/15 pb-2 font-mono text-xs">
+              <span class="font-bold text-[#0A0A0A]">{item.data.sku}</span>
+              <span class="px-2 py-0.5 text-[10px] font-bold border border-[#0A0A0A] bg-white/60">
+                <I18nText ru={item.data.status} uz={item.data.status_uz} en={item.data.status_en} />
+              </span>
+            </div>
+
+            {item.data.image && (
+              <div class="hud-card-media aspect-[16/10]">
+                <img src={withBase(item.data.image)} alt={item.data.title} loading="lazy" decoding="async" />
               </div>
+            )}
 
-              <h3 class="font-sans font-bold text-base text-[#0A0A0A] mb-2 leading-snug group-hover:underline">
-                <a href={`${base}/catalog/${item.slug}`}>
-                  <I18nText ru={item.data.title} uz={item.data.title_uz} en={item.data.title_en} />
-                </a>
-              </h3>
+            <h3 class="font-sans font-bold text-base text-[#0A0A0A] leading-snug">
+              <a href={`${base}/catalog/${item.slug}`} class="hover:underline">
+                <I18nText ru={item.data.title} uz={item.data.title_uz} en={item.data.title_en} />
+              </a>
+            </h3>
 
-              <div class="space-y-1.5 font-mono text-xs text-[#4A5056] my-4">
+            <div class="space-y-1.5 font-mono text-xs text-[#4A5056] my-2">
+              {item.data.gost && (
                 <div class="flex justify-between">
                   <span><I18nText ru="Стандарт:" uz="Standart:" en="Standard:" /></span>
                   <span class="font-bold text-[#0A0A0A]">{item.data.gost}</span>
                 </div>
+              )}
+              {item.data.tnved && (
                 <div class="flex justify-between">
                   <span><I18nText ru="ТН ВЭД:" uz="TQI TH:" en="HS Code:" /></span>
                   <span class="font-bold text-[#0A0A0A]">{item.data.tnved}</span>
                 </div>
+              )}
+              {item.data.specs && (
                 <div class="flex justify-between">
-                  <span><I18nText ru="Спецификация:" uz="Spetsifikatsiya:" en="Specification:" /></span>
+                  <span><I18nText ru="Параметры:" uz="Parametrlar:" en="Specs:" /></span>
                   <span class="text-[#0A0A0A] text-right truncate max-w-[180px]">
                     <I18nText ru={item.data.specs} uz={item.data.specs_uz} en={item.data.specs_en} />
                   </span>
                 </div>
-              </div>
+              )}
             </div>
 
-            <div class="pt-3 border-t border-[#0A0A0A]/20 flex items-center gap-2 font-mono text-xs">
+            <div class="pt-3 border-t border-[#0A0A0A]/15 mt-auto flex items-center gap-2 font-mono text-xs">
               <a
                 href={`${base}/catalog/${item.slug}`}
                 class="flex-1 border border-[#0A0A0A] py-1.5 text-center hover:bg-[#0A0A0A] hover:text-white transition-colors"
@@ -262,95 +285,55 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   </section>
 
   <!-- Section: Engineering Blog & News (Knowledge Base) -->
-  <section class="border-b border-[#0A0A0A] bg-[#C8CDD2] py-14">
+  <section class="border-b border-[#0A0A0A] bg-[#D4D8DC] py-16">
     <div class="max-w-7xl mx-auto px-4">
-      <div class="border-b border-[#0A0A0A] pb-3 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4 font-mono">
+      <div class="hud-section-head">
         <div>
-          <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2 inline-block">
-            <I18nText ru={homeData.blogBadge} uz={homeData.blogBadge_uz} en={homeData.blogBadge_en} />
-          </span>
-          <span class="font-bold text-lg text-[#0A0A0A]">
-            <I18nText ru={homeData.blogTitle} uz={homeData.blogTitle_uz} en={homeData.blogTitle_en} />
-          </span>
-          <div class="text-xs text-[#4A5056] mt-1 font-mono">
-            <I18nText ru={homeData.blogSubtitle} uz={homeData.blogSubtitle_uz} en={homeData.blogSubtitle_en} />
-          </div>
+          <span class="hud-callout mb-1"><i></i><I18nText ru={homeData.blogBadge} uz={homeData.blogBadge_uz} en={homeData.blogBadge_en} /></span>
+          <I18nText as="h2" class="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-[#0A0A0A]" ru={homeData.blogTitle} uz={homeData.blogTitle_uz} en={homeData.blogTitle_en} />
         </div>
         <a
           href={`${base}/blog/`}
-          class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-4 py-2 text-xs font-bold whitespace-nowrap hover:bg-transparent hover:text-[#0A0A0A] transition-colors"
+          class="font-mono text-xs font-bold text-[#0A0A0A] hover:underline"
         >
-          <I18nText ru="[ ВСЕ ПУБЛИКАЦИИ (БЛОГ) → ]" uz="[ BARCHA MAQOLALAR (BLOG) → ]" en="[ ALL PUBLICATIONS (BLOG) → ]" />
+          <I18nText ru="[ ВСЕ ПУБЛИКАЦИИ → ]" uz="[ BARCHA MAQOLALAR → ]" en="[ ALL PUBLICATIONS → ]" />
         </a>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         {latestPosts.map((post) => (
-          <article class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 flex flex-col justify-between hover:bg-white transition-colors group">
-            <div>
-              <div class="flex items-center justify-between font-mono text-xs border-b border-[#0A0A0A]/20 pb-2 mb-3">
-                <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#C8CDD2] text-[#0A0A0A] font-bold text-[10px]">
-                  <I18nText ru={post.data.category} uz={post.data.category_uz} en={post.data.category_en} />
-                </span>
-                <span class="text-[#4A5056] text-[11px]">
-                  {post.data.publishDate}
-                </span>
-              </div>
-
-              <h3 class="font-sans font-bold text-lg text-[#0A0A0A] mb-2 leading-snug group-hover:underline">
-                <a href={`${base}/blog/${post.slug}`}>
-                  <I18nText ru={post.data.title} uz={post.data.title_uz} en={post.data.title_en} />
-                </a>
-              </h3>
-
-              <I18nText
-                as="p"
-                class="font-sans text-xs text-[#4A5056] leading-relaxed mb-4 line-clamp-3"
-                ru={post.data.summary}
-                uz={post.data.summary_uz}
-                en={post.data.summary_en}
-              />
-            </div>
-
-            <div class="pt-3 border-t border-[#0A0A0A]/20 flex items-center justify-between font-mono text-xs">
-              <span class="text-[#4A5056] text-[11px]">
-                ⏱ {post.data.readTime}
-              </span>
-              <a
-                href={`${base}/blog/${post.slug}`}
-                class="font-bold text-[#0A0A0A] group-hover:underline flex items-center space-x-1"
-              >
-                <span>
-                  <I18nText ru="Читать материал" uz="Maqolani o'qish" en="Read article" />
-                </span>
-                <span>→</span>
-              </a>
-            </div>
-          </article>
+          <HudCard
+            index={post.data.publishDate}
+            tag={{ ru: post.data.category, uz: post.data.category_uz, en: post.data.category_en }}
+            title={{ ru: post.data.title, uz: post.data.title_uz, en: post.data.title_en }}
+            text={{ ru: post.data.summary, uz: post.data.summary_uz, en: post.data.summary_en }}
+            image={post.data.image}
+            href={`/blog/${post.slug}`}
+            cta={{ ru: 'Читать материал', uz: "Maqolani o'qish", en: 'Read article' }}
+            headingLevel="h3"
+          />
         ))}
       </div>
     </div>
   </section>
 
   <!-- Section: Institutional Guarantees (Trust Matrix) -->
-  <section class="bg-[#D4D8DC] py-14">
+  <section class="bg-[#C8CDD2] py-16">
     <div class="max-w-7xl mx-auto px-4">
-      <div class="border-b border-[#0A0A0A] pb-3 mb-8 font-mono">
-        <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2 inline-block">
-          <I18nText ru={homeData.trustSectionBadge} uz={homeData.trustSectionBadge_uz} en={homeData.trustSectionBadge_en} />
-        </span>
-        <span class="font-bold text-lg text-[#0A0A0A]">
-          <I18nText ru={homeData.trustSectionTitle} uz={homeData.trustSectionTitle_uz} en={homeData.trustSectionTitle_en} />
-        </span>
+      <div class="hud-section-head">
+        <div>
+          <span class="hud-callout mb-1"><i></i><I18nText ru={homeData.trustSectionBadge} uz={homeData.trustSectionBadge_uz} en={homeData.trustSectionBadge_en} /></span>
+          <I18nText as="h2" class="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-[#0A0A0A]" ru={homeData.trustSectionTitle} uz={homeData.trustSectionTitle_uz} en={homeData.trustSectionTitle_en} />
+        </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 font-mono text-xs">
         {homeData.trustItems.map((item) => (
-          <div class="border border-[#0A0A0A] p-4 bg-[#C8CDD2]">
-            <div class="font-bold text-sm text-[#0A0A0A] mb-2">
+          <div class="hud-glass-card p-5 gap-2">
+            <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A]/15 pb-2">
               <I18nText ru={item.code} uz={item.code_uz} en={item.code_en} />
             </div>
-            <p class="text-[#4A5056] leading-relaxed">
+            <p class="text-[#4A5056] leading-relaxed mt-1 font-sans text-xs">
               <I18nText ru={item.text} uz={item.text_uz} en={item.text_en} />
             </p>
           </div>
@@ -358,4 +341,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </div>
     </div>
   </section>
+
+  <script is:inline>
+    // Console left column <-> HudMediaSlider bi-directional interaction
+    (function() {
+      var modeButtons = document.querySelectorAll('#hud-modes-grid .mode-btn');
+      if (!modeButtons.length) return;
+
+      modeButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var idx = parseInt(btn.getAttribute('data-mode-idx') || '0', 10);
+          window.dispatchEvent(new CustomEvent('hud-slide-go', { detail: idx }));
+        });
+      });
+
+      window.addEventListener('hud-slide-changed', function(e) {
+        var activeIdx = e.detail;
+        modeButtons.forEach(function(btn, i) {
+          if (i === activeIdx) {
+            btn.className = 'mode-btn p-2 border border-[#0A0A0A] text-left transition-colors cursor-pointer flex items-center justify-between group bg-[#0A0A0A] text-white font-bold';
+          } else {
+            btn.className = 'mode-btn p-2 border border-[#0A0A0A] text-left transition-colors cursor-pointer flex items-center justify-between group bg-white/40 text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white';
+          }
+        });
+      });
+    })();
+  </script>
 </BaseLayout>

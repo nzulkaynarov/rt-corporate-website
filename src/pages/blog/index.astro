@@ -71,7 +71,7 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
 
     <!-- Featured Post Hero (if exists) -->
     {featuredPost && (
-      <div class="border-2 border-[#0A0A0A] bg-[#C8CDD2] p-6 lg:p-8 mb-10 font-mono">
+      <div class="hud-glass-card p-6 lg:p-8 mb-10 font-mono">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[#0A0A0A] pb-3 mb-4 text-xs">
           <div class="flex items-center space-x-2">
             <span class="bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
@@ -175,7 +175,7 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
         <article
           data-category={post.data.category}
           data-search={`${post.data.title} ${post.data.title_uz || ''} ${post.data.title_en || ''} ${post.data.summary} ${post.data.tags.join(' ')} ${post.data.category}`.toLowerCase()}
-          class="blog-card border-2 border-[#0A0A0A] bg-[#D4D8DC] p-5 flex flex-col justify-between hover:bg-white transition-colors group font-mono"
+          class="blog-card hud-glass-card p-5 flex flex-col justify-between group font-mono"
         >
           <div>
             <!-- Card Header -->

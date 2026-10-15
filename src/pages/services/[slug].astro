@@ -1,0 +1,279 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import I18nText from '../../components/I18nText.astro';
+import HudPageHeader from '../../components/hud/HudPageHeader.astro';
+import HudViewportFrame from '../../components/hud/HudViewportFrame.astro';
+import { LandedCostCalculator } from '../../components/islands/LandedCostCalculator';
+import { SmartMatchAiTester } from '../../components/islands/SmartMatchAiTester';
+import { withBase } from '../../utils/url';
+
+export async function getStaticPaths() {
+  const serviceEntries = await getCollection('services');
+  return serviceEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const serviceUrl = `https://railtech.uz/services/${entry.slug}`;
+const siteUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : serviceUrl;
+
+const serviceJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: entry.data.title,
+  serviceType: entry.data.category,
+  description: entry.data.summary,
+  provider: {
+    '@type': 'Organization',
+    name: 'ООО «RailTech»',
+    url: 'https://railtech.uz',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Ташкент',
+      streetAddress: 'ТПК Index B2-2097',
+      addressCountry: 'UZ',
+    },
+  },
+  areaServed: {
+    '@type': 'Country',
+    name: 'Uzbekistan',
+  },
+  url: siteUrl,
+};
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Главная',
+      item: 'https://railtech.uz/',
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Услуги',
+      item: 'https://railtech.uz/services/',
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: entry.data.title,
+      item: siteUrl,
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={`${entry.data.title} — Услуги ООО «RailTech» Ташкент`}
+  description={entry.data.summary}
+  keywords={`${entry.data.title}, ${entry.data.category}, вэд узбекистан, ddp ташкент, railtech`}
+  image={withBase(entry.data.image)}
+>
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(serviceJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+
+  <div class="max-w-7xl mx-auto px-4 pb-16 font-sans">
+    <HudPageHeader
+      code={`SRV // ${entry.data.code}`}
+      parent={{ href: '/services/', label: { ru: 'УСЛУГИ', uz: 'XIZMATLAR', en: 'SERVICES' } }}
+      crumb={{ ru: entry.data.code, uz: entry.data.code, en: entry.data.code }}
+      title={{ ru: entry.data.title, uz: entry.data.title_uz, en: entry.data.title_en }}
+      lead={{ ru: entry.data.summary, uz: entry.data.summary_uz, en: entry.data.summary_en }}
+    />
+
+    <!-- Status Badges Bar -->
+    <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-8">
+      <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A] font-bold border border-[#0A0A0A]">
+        {entry.data.code}
+      </span>
+      <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
+        <I18nText ru={entry.data.category} uz={entry.data.category_uz} en={entry.data.category_en} />
+      </span>
+      <span class="hud-glass-card px-2.5 py-1 text-emerald-900 font-bold bg-emerald-100/50">
+        <I18nText ru="АКТИВНЫЙ РЕГЛАМЕНТ 2026" uz="FAOLLIK REGLAMENTI 2026" en="ACTIVE SERVICE 2026" />
+      </span>
+      <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
+        <I18nText ru="НДС 12% ВКЛЮЧЕН" uz="12% QQS BILAN" en="12% VAT INCLUDED" />
+      </span>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Left Column: Steps & Content -->
+      <div class="lg:col-span-7 flex flex-col space-y-8">
+        <!-- 4 Steps of Service Execution -->
+        <div class="hud-glass-card p-6">
+          <div class="border-b border-[#0A0A0A]/20 pb-2 mb-5 flex justify-between items-center font-mono text-xs">
+            <span class="font-bold text-[#0A0A0A] tracking-wider uppercase">
+              <I18nText ru="ЭТАПЫ ВЫПОЛНЕНИЯ РАБОТ" uz="ISHLARNI BAJARISH BOSQICHLARI" en="EXECUTION MILESTONES" />
+            </span>
+            <span class="text-[#4A5056]">{entry.data.steps.length} STAGES</span>
+          </div>
+
+          <div class="space-y-4">
+            {entry.data.steps.map((st, idx) => (
+              <div class="flex items-start gap-3.5 p-3.5 bg-white/40 border border-[#0A0A0A]/15">
+                <span class="font-mono bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold flex-none mt-0.5">
+                  0{idx + 1}
+                </span>
+                <div>
+                  <h3 class="font-sans font-bold text-sm text-[#0A0A0A] mb-1">
+                    <I18nText ru={st.title} uz={st.title_uz} en={st.title_en} />
+                  </h3>
+                  <p class="text-xs text-[#4A5056] leading-relaxed">
+                    <I18nText ru={st.text} uz={st.text_uz} en={st.text_en} />
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Markdown Body -->
+        <div class="hud-glass-card p-6">
+          <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 font-mono text-xs font-bold text-[#0A0A0A] uppercase tracking-wider">
+            <I18nText ru="РЕГЛАМЕНТ И СПЕЦИФИКА УСЛУГИ" uz="XIZMAT REGLAMENTI VA XUSUSIYATLARI" en="REGULATIONS & SERVICE SPECIFICATIONS" />
+          </div>
+          <div class="prose prose-sm text-[#0A0A0A] max-w-none leading-relaxed">
+            <div class="rt-lang rt-lang-ru">
+              <Content />
+            </div>
+            <div class="rt-lang rt-lang-uz">
+              {entry.data.body_uz ? <p>{entry.data.body_uz}</p> : <Content />}
+            </div>
+            <div class="rt-lang rt-lang-en">
+              {entry.data.body_en ? <p>{entry.data.body_en}</p> : <Content />}
+            </div>
+          </div>
+        </div>
+
+        <!-- Embedded Interactive Tool (if applicable) -->
+        {entry.data.tool === 'landed-cost' && (
+          <div class="hud-glass-card p-6">
+            <div class="border-b border-[#0A0A0A]/20 pb-3 mb-4 font-mono text-xs flex justify-between items-center">
+              <span class="font-bold text-[#0A0A0A]">ИНЖЕНЕРНЫЙ КАЛЬКУЛЯТОР LANDED COST DDP ТАШКЕНТ</span>
+              <span class="text-[#4A5056]">UZS / НДС 12%</span>
+            </div>
+            <LandedCostCalculator client:load />
+          </div>
+        )}
+
+        {entry.data.tool === 'smart-match' && (
+          <div class="hud-glass-card p-6">
+            <div class="border-b border-[#0A0A0A]/20 pb-3 mb-4 font-mono text-xs flex justify-between items-center">
+              <span class="font-bold text-[#0A0A0A]">ИНТЕРАКТИВНЫЙ ДЕМОНСТРАТОР SMART MATCH AI</span>
+              <span class="text-[#4A5056]">NLP PARSER DEMO</span>
+            </div>
+            <SmartMatchAiTester client:load />
+          </div>
+        )}
+      </div>
+
+      <!-- Right Column: Media Frame, Benefits & Order Box -->
+      <div class="lg:col-span-5 flex flex-col space-y-6">
+        {entry.data.image && (
+          <HudViewportFrame
+            topLabel={`MEDIA // ${entry.data.code}`}
+            bottomLabel="RAILTECH SERVICE DESK"
+          >
+            <div class="aspect-[16/10] overflow-hidden">
+              <img
+                src={withBase(entry.data.image)}
+                alt={entry.data.title}
+                class="w-full h-full object-cover"
+                style={{ filter: 'grayscale(0.2) contrast(1.05)' }}
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+          </HudViewportFrame>
+        )}
+
+        <!-- Key Benefits & Facts -->
+        <div class="hud-glass-card p-6 font-mono text-xs">
+          <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 font-bold text-[#0A0A0A] uppercase tracking-wider">
+            <I18nText ru="ПАРАМЕТРЫ И ГАРАНТИИ" uz="PARAMETRLAR VA KAFOLATLAR" en="PARAMETERS & ASSURANCES" />
+          </div>
+
+          <table class="w-full border-collapse">
+            <tbody class="divide-y divide-[#0A0A0A]/15">
+              {entry.data.benefits.map((b) => (
+                <tr class="hover:bg-white/30 transition-colors">
+                  <td class="py-2.5 pr-2 text-[#4A5056] w-2/5">
+                    <I18nText ru={b.label} uz={b.label_uz} en={b.label_en} />
+                  </td>
+                  <td class="py-2.5 font-bold text-[#0A0A0A]">
+                    <I18nText ru={b.value} uz={b.value_uz} en={b.value_en} />
+                  </td>
+                </tr>
+              ))}
+              <tr class="hover:bg-white/30 transition-colors">
+                <td class="py-2.5 pr-2 text-[#4A5056]">
+                  <I18nText ru="Договор / ЭСФ:" uz="Shartnoma / EHF:" en="Contract / Invoice:" />
+                </td>
+                <td class="py-2.5 font-bold text-[#0A0A0A]">
+                  ЭСФ Didox / Soliq (12% НДС)
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Commercial Action Card -->
+        <div class="hud-glass-card p-6 font-mono gap-4">
+          <div class="border-b border-[#0A0A0A]/20 pb-2">
+            <span class="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider block">
+              <I18nText ru="ЗАКАЗ И СОГЛАСОВАНИЕ СМЕТЫ" uz="BUYURTMA VA SMETANI TASDIQLASH" en="SERVICE INQUIRY & ESTIMATE" />
+            </span>
+            <span class="text-[11px] text-[#4A5056]">
+              <I18nText ru="Подготовка ТКП: в течение 24 часов" uz="TKP tayyorlash: 24 soat ichida" en="Formal proposal: within 24 hours" />
+            </span>
+          </div>
+
+          <div class="space-y-2 text-xs">
+            <div class="flex justify-between text-[#4A5056]">
+              <span><I18nText ru="Базис расчетов:" uz="Hisob-kitob asosi:" en="Settlement currency:" /></span>
+              <span class="font-bold text-[#0A0A0A]">UZS (Узбекские сумы)</span>
+            </div>
+            <div class="flex justify-between text-[#4A5056]">
+              <span><I18nText ru="Налогообложение:" uz="Soliqqa tortish:" en="Taxation:" /></span>
+              <span class="font-bold text-[#0A0A0A]">НДС 12% включен</span>
+            </div>
+            <div class="flex justify-between text-[#4A5056]">
+              <span><I18nText ru="Прямая линия:" uz="To'g'ridan-to'g'ri aloqa:" en="Direct line:" /></span>
+              <a href="tel:+998901189000" class="font-bold text-[#0A0A0A] hover:underline">+998 90 118-90-00</a>
+            </div>
+          </div>
+
+          <div class="pt-2 flex flex-col gap-2">
+            <button
+              type="button"
+              data-lead-modal
+              data-lead-subject={`Заявка на услугу: ${entry.data.title} (${entry.data.code})`}
+              class="hud-btn w-full cursor-pointer"
+            >
+              <I18nText ru={entry.data.ctaLabel || 'ОСТАВИТЬ ЗАЯВКУ ↗'} uz={entry.data.ctaLabel_uz || 'ARIZA QOLDIRISH ↗'} en={entry.data.ctaLabel_en || 'SUBMIT INQUIRY ↗'} />
+            </button>
+            <a
+              href={`${base}/services/`}
+              class="hud-btn hud-btn--ghost w-full text-center"
+            >
+              <I18nText ru="← ВСЕ УСЛУГИ КОМПАНИИ" uz="← BARCHA XIZMATLAR" en="← ALL SERVICES" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

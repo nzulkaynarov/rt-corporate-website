@@ -73,8 +73,8 @@ const faqJsonLd = {
     </div>
 
     <!-- Mission Banner -->
-    <div class="border-2 border-[#0A0A0A] bg-[#C8CDD2] p-6 lg:p-8 font-mono mb-10">
-      <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A] pb-2 mb-3">
+    <div class="hud-glass-card p-6 lg:p-8 font-mono mb-10">
+      <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A]/20 pb-2 mb-3">
         <I18nText ru={aboutData.mission.title} uz={aboutData.mission.title_uz} en={aboutData.mission.title_en} />
       </div>
       <p class="font-sans text-sm text-[#0A0A0A] leading-relaxed">
@@ -85,9 +85,9 @@ const faqJsonLd = {
     <!-- Advantages Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-14">
       {aboutData.advantages.map((adv) => (
-        <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 flex flex-col justify-between font-mono">
+        <div class="hud-glass-card p-6 flex flex-col justify-between font-mono">
           <div>
-            <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A] pb-2 mb-3">
+            <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A]/20 pb-2 mb-3">
               <I18nText ru={adv.code} uz={adv.code_uz} en={adv.code_en} />
             </div>
             <h3 class="font-sans text-base font-bold text-[#0A0A0A] mb-2">
@@ -96,7 +96,7 @@ const faqJsonLd = {
             <p class="text-xs text-[#4A5056] font-sans leading-relaxed mb-4">
               <I18nText ru={adv.description} uz={adv.description_uz} en={adv.description_en} />
             </p>
-            <div class="space-y-1.5 text-[11px] text-[#0A0A0A] bg-[#C8CDD2]/60 p-3 border border-[#0A0A0A]/20">
+            <div class="space-y-1.5 text-[11px] text-[#0A0A0A] bg-white/40 p-3 border border-[#0A0A0A]/20">
               {adv.items.map((it, idx) => {
                 const itUz = adv.items_uz && adv.items_uz[idx];
                 const itEn = adv.items_en && adv.items_en[idx];
@@ -111,7 +111,7 @@ const faqJsonLd = {
     </div>
 
     <!-- Directions of Activity -->
-    <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 lg:p-8 font-mono mb-14">
+    <div class="hud-glass-card p-6 lg:p-8 font-mono mb-14">
       <div class="border-b border-[#0A0A0A] pb-3 mb-6">
         <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2 inline-block">
           <I18nText ru="ПРОФИЛЬ" uz="PROFIL" en="PROFILE" />

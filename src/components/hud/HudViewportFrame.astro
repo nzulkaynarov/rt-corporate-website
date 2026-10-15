@@ -1,0 +1,21 @@
+---
+/**
+ * .hud-viewport-frame — 1px drawing frame with 45° cut top-left / bottom-right
+ * corners and leader-line callouts (•─── LABEL).
+ */
+interface Props {
+  topLabel?: string;
+  bottomLabel?: string;
+  class?: string;
+}
+const { topLabel, bottomLabel, class: className = '' } = Astro.props;
+---
+
+<div class={`hud-viewport-frame ${className}`}>
+  <span class="hud-vf-outline" aria-hidden="true"></span>
+  {topLabel && <span class="hud-callout absolute -top-5 right-2"><i></i>{topLabel}</span>}
+  <div class="hud-viewport-inner">
+    <slot />
+  </div>
+  {bottomLabel && <span class="hud-callout absolute -bottom-5 left-2"><i></i>{bottomLabel}</span>}
+</div>

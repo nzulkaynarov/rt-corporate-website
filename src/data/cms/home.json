@@ -1,4 +1,151 @@
 {
+  "consoleTitle": "RailTech",
+  "consoleSubtitle": "Многопрофильный B2B / B2G Оператор",
+  "consoleSubtitle_uz": "Ko'p tarmoqli B2B / B2G operatori",
+  "consoleSubtitle_en": "Multi-sector B2B / B2G Operator",
+  "heroSlides": [
+    {
+      "image": "/images/hero/warehouse.jpg",
+      "tag": "CATALOG // SUPPLY",
+      "link": "/catalog/",
+      "title": "Оборудование и товары со склада в Ташкенте",
+      "title_uz": "Toshkentdagi ombordan uskunalar va tovarlar",
+      "title_en": "Equipment & goods from our Tashkent warehouse",
+      "description": "1 200+ позиций промышленного оборудования, комплектующих и товаров с отгрузкой от 24 часов и НДС 12%.",
+      "description_uz": "1 200+ sanoat uskunalari, butlovchi qismlar va tovarlar, 24 soatdan yuklash, 12% QQS bilan.",
+      "description_en": "1,200+ items of industrial equipment, components and goods dispatched from 24 hours, 12% VAT included."
+    },
+    {
+      "image": "/images/hero/logistics.jpg",
+      "tag": "SERVICES // DDP",
+      "link": "/services/",
+      "title": "Поставки под ключ на условиях DDP Ташкент",
+      "title_uz": "DDP Toshkent shartlarida kalit topshirish ta'minoti",
+      "title_en": "Turnkey supply under DDP Tashkent terms",
+      "description": "Поиск, закупка, логистика и растаможка любых товаров с фиксацией цены в сумах.",
+      "description_uz": "Har qanday tovarlarni qidirish, xarid qilish, logistika va bojxona rasmiylashtiruvi, narx so'mda qat'iy.",
+      "description_en": "Sourcing, procurement, logistics and customs clearance of any goods with prices fixed in UZS."
+    },
+    {
+      "image": "/images/hero/software.jpg",
+      "tag": "DIGITAL // SOFTWARE",
+      "link": "/services/custom-software/",
+      "title": "IT-разработка и цифровые платформы",
+      "title_uz": "IT-ishlanmalar va raqamli platformalar",
+      "title_en": "IT development & digital platforms",
+      "description": "Заказное ПО, B2B-порталы, интеграции с 1С и AI-инструменты для бизнеса.",
+      "description_uz": "Buyurtma dasturlar, B2B-portallar, 1C integratsiyasi va biznes uchun AI-vositalar.",
+      "description_en": "Custom software, B2B portals, 1C integrations and AI tools for business."
+    },
+    {
+      "image": "/images/hero/engineering-art.jpg",
+      "tag": "PROJECTS // ART LAB",
+      "link": "/projects/",
+      "title": "Инжиниринг, спецпроекты и RailTech Art Lab",
+      "title_uz": "Injiniring, maxsus loyihalar va RailTech Art Lab",
+      "title_en": "Engineering, special projects & RailTech Art Lab",
+      "description": "Трансфер технологий, испытания и кураторские выставки индустриального искусства.",
+      "description_uz": "Texnologiyalar transferi, sinovlar va sanoat san'ati ko'rgazmalari.",
+      "description_en": "Technology transfer, testing and curated industrial art exhibitions."
+    }
+  ],
+  "directions": [
+    {
+      "label": "Оборудование и товары",
+      "label_uz": "Uskunalar va tovarlar",
+      "label_en": "Equipment & goods",
+      "href": "/catalog/"
+    },
+    {
+      "label": "Поставки под ключ",
+      "label_uz": "Kalit topshirish ta'minoti",
+      "label_en": "Turnkey supply",
+      "href": "/services/turnkey-import-ddp/"
+    },
+    {
+      "label": "IT-разработка и ПО",
+      "label_uz": "IT-ishlanma va dasturlar",
+      "label_en": "IT & software",
+      "href": "/services/custom-software/"
+    },
+    {
+      "label": "Инжиниринг и Арт",
+      "label_uz": "Injiniring va san'at",
+      "label_en": "Engineering & Art",
+      "href": "/projects/"
+    }
+  ],
+  "passport": [
+    {
+      "label": "Статус",
+      "label_uz": "Maqom",
+      "label_en": "Status",
+      "value": "Резидент РУз · НДС 12%",
+      "value_uz": "O'zR rezidenti · QQS 12%",
+      "value_en": "Uzbekistan resident · VAT 12%"
+    },
+    {
+      "label": "Локация",
+      "label_uz": "Joylashuv",
+      "label_en": "Location",
+      "value": "Ташкент, Index B2-2097",
+      "value_uz": "Toshkent, Index B2-2097",
+      "value_en": "Tashkent, Index B2-2097"
+    },
+    {
+      "label": "Масштаб",
+      "label_uz": "Ko'lam",
+      "label_en": "Scale",
+      "value": "1 200+ SKU · 86+ партнеров",
+      "value_uz": "1 200+ SKU · 86+ hamkor",
+      "value_en": "1,200+ SKU · 86+ partners"
+    }
+  ],
+  "ctaLead": "Оставить заявку",
+  "ctaLead_uz": "Ariza qoldirish",
+  "ctaLead_en": "Submit a request",
+  "gatewayCards": [
+    {
+      "title": "Каталог товаров",
+      "title_uz": "Tovarlar katalogi",
+      "title_en": "Product catalog",
+      "image": "/images/hero/warehouse.jpg",
+      "href": "/catalog/",
+      "text": "Оборудование, комплектующие и товары с фото, характеристиками и ценой.",
+      "text_uz": "Rasm, xususiyatlar va narx bilan uskunalar va tovarlar.",
+      "text_en": "Equipment, components and goods with photos, specs and pricing."
+    },
+    {
+      "title": "Услуги B2B/B2G",
+      "title_uz": "B2B/B2G xizmatlari",
+      "title_en": "B2B/B2G services",
+      "image": "/images/hero/logistics.jpg",
+      "href": "/services/",
+      "text": "ВЭД под ключ, поиск товаров под заказ, IT-консалтинг и разработка.",
+      "text_uz": "Kalit topshirish TIF, buyurtma bo'yicha tovar qidirish, IT-konsalting.",
+      "text_en": "Turnkey import, sourcing on demand, IT consulting and development."
+    },
+    {
+      "title": "Проекты и кейсы",
+      "title_uz": "Loyihalar va keyslar",
+      "title_en": "Projects & cases",
+      "image": "/images/hero/engineering-art.jpg",
+      "href": "/projects/",
+      "text": "Промышленные поставки, IT-продукты, выставки и арт-проекты.",
+      "text_uz": "Sanoat ta'minoti, IT-mahsulotlar, ko'rgazmalar va san'at loyihalari.",
+      "text_en": "Industrial supply, IT products, exhibitions and art projects."
+    },
+    {
+      "title": "Блог и новости",
+      "title_uz": "Blog va yangiliklar",
+      "title_en": "Blog & news",
+      "image": "/images/hero/software.jpg",
+      "href": "/blog/",
+      "text": "Инженерные обзоры, аналитика рынка и хроника компании.",
+      "text_uz": "Muhandislik sharhlari, bozor tahlili va kompaniya xronikasi.",
+      "text_en": "Engineering reviews, market insights and company chronicle."
+    }
+  ],
   "heroBadge": "B2B / B2G ОПЕРАТОР",
   "heroBadge_uz": "B2B / B2G OPERATORI",
   "heroBadge_en": "B2B / B2G OPERATOR",

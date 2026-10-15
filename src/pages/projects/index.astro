@@ -1,0 +1,216 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { CadInspector } from '../../components/islands/CadInspector';
+import I18nText from '../../components/I18nText.astro';
+import HudCard from '../../components/hud/HudCard.astro';
+import HudPageHeader from '../../components/hud/HudPageHeader.astro';
+import HudStepDivider from '../../components/hud/HudStepDivider.astro';
+
+const projectItems = await getCollection('projects');
+projectItems.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
+
+// Unique categories derived from CMS content (RU value is the filter key).
+const categoryMap = new Map<string, { ru: string; uz?: string; en?: string }>();
+for (const p of projectItems) {
+  const ru = p.data.category || 'Спецпроекты';
+  if (!categoryMap.has(ru)) categoryMap.set(ru, { ru, uz: p.data.category_uz, en: p.data.category_en });
+}
+const categories = [...categoryMap.values()];
+
+const directions = [
+  {
+    n: '01',
+    title: { ru: 'ТРАНСФЕР ТЕХНОЛОГИЙ И ЛОКАЛИЗАЦИЯ', uz: 'TEXNOLOGIYALAR TRANSFERI VA LOKALIZATSIYA', en: 'TECHNOLOGY TRANSFER & LOCALIZATION' },
+    text: {
+      ru: 'Адаптация конструкторской документации европейских и азиатских машиностроительных заводов под стандарты колеи 1520 мм и ГОСТ Узбекистана.',
+      uz: "Yevropa va Osiyo mashinasozlik korxonalari konstruktorlik hujjatlarini 1520 mm temir yo'l izi va O'zbekiston GOST standartlariga moslashtirish.",
+      en: 'Adapting engineering documentation from European and Asian machinery builders to the 1520 mm track gauge and Uzbekistan GOST standards.',
+    },
+  },
+  {
+    n: '02',
+    title: { ru: 'ПОЛИГОННЫЕ ИСПЫТАНИЯ И СЕРТИФИКАЦИЯ', uz: 'POLIGON SINOVLARI VA SERTIFIKATSIYA', en: 'TRACK TESTING & CERTIFICATION' },
+    text: {
+      ru: 'Организация опытной эксплуатации новых типов оборудования на полигонах ГАЖК «Узбекистон темир йуллари» с инструментальной фиксацией износа.',
+      uz: "«O'zbekiston temir yo'llari» AJ sinov poligonlarida yangi uskuna turlarini tajriba sinovlaridan o'tkazish va yeyilishni asbobiy qayd etish.",
+      en: 'Coordinating in-service operational trials of advanced rolling stock assemblies on Uzbekistan Railways (UTY) testbeds with wear instrumentation.',
+    },
+  },
+  {
+    n: '03',
+    title: { ru: 'RAILTECH ART LAB (КУРАТОРСКАЯ ПРОГРАММА)', uz: 'RAILTECH ART LAB (KURATORLIK DASTURI)', en: 'RAILTECH ART LAB (CURATORIAL PROGRAM)' },
+    text: {
+      ru: 'Исследование индустриальной эстетики, коллекционирование современной живописи, архитектурной графики и проведение тематических экспозиций в Ташкенте.',
+      uz: "Sanoat estetikasini o'rganish, zamonaviy rangtasvir va me'moriy grafikani to'plash hamda Toshkentda ko'rgazmalar o'tkazish.",
+      en: 'Exploring industrial aesthetics, curating contemporary painting and architectural graphics, and organizing public exhibitions in Tashkent.',
+    },
+  },
+];
+---
+
+<BaseLayout
+  title="Проекты: промышленные поставки, IT-продукты и Арт-лаборатория — ООО «RailTech»"
+  description="Портфель проектов ООО «RailTech»: промышленные поставки DDP Ташкент, трансфер технологий и испытания на путях ГАЖК «УТЙ», IT-продукты b2b.railtech.uz, выставки и живопись RailTech Art Lab."
+  keywords="проекты railtech, локализация жд производства узбекистан, испытания утй, b2b.railtech.uz, railtech art lab, индустриальное искусство ташкент"
+>
+  <div class="max-w-7xl mx-auto px-4 pb-16 font-sans">
+    <HudPageHeader
+      code="SEC.05 // PROJECTS"
+      crumb={{ ru: 'ПРОЕКТЫ', uz: 'LOYIHALAR', en: 'PROJECTS' }}
+      title={{
+        ru: 'Проекты: поставки, IT-продукты и Арт-лаборатория',
+        uz: "Loyihalar: ta'minot, IT-mahsulotlar va Art-laboratoriya",
+        en: 'Projects: supply, IT products & Art Lab',
+      }}
+      lead={{
+        ru: 'Деятельность RailTech выходит за рамки классической дистрибуции. Мы внедряем инженерные решения в транспортную инфраструктуру Республики Узбекистан, развиваем цифровые продукты и поддерживаем индустриальное искусство через собственную Арт-лабораторию.',
+        uz: "«RailTech» faoliyati an'anaviy distribyutsiya doirasidan kengroq. Biz O'zbekiston transport infratuzilmasiga muhandislik yechimlarini joriy etamiz, raqamli mahsulotlarni rivojlantiramiz va Art-laboratoriyamiz orqali sanoat san'atini qo'llab-quvvatlaymiz.",
+        en: "RailTech's scope extends beyond classic distribution. We deploy engineering solutions across Uzbekistan's transport grid, build digital products and patronize industrial art through the RailTech Art Lab.",
+      }}
+    />
+
+    <!-- Filter toolbar -->
+    <div class="hud-glass-card p-3 mb-6 flex-row flex-wrap items-center gap-2 font-mono text-[11px]" role="group" aria-label="Filter">
+      <span class="text-[#4A5056] uppercase tracking-widest mr-2"><I18nText ru="ФИЛЬТР:" uz="FILTR:" en="FILTER:" /></span>
+      <button type="button" id="prj-filter-all" data-filter="all" class="prj-filter px-3 py-1.5 border border-[#0A0A0A] bg-[#0A0A0A] text-white cursor-pointer">
+        <I18nText ru="Все проекты" uz="Barcha loyihalar" en="All projects" />
+      </button>
+      {categories.map((c, i) => (
+        <button type="button" id={`prj-filter-${i + 1}`} data-filter={c.ru} class="prj-filter px-3 py-1.5 border border-[#0A0A0A] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer">
+          <I18nText ru={c.ru} uz={c.uz} en={c.en} />
+        </button>
+      ))}
+    </div>
+
+    <div id="prj-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {projectItems.map((prj) => (
+        <div class="prj-item flex" data-category={prj.data.category || 'Спецпроекты'}>
+          <HudCard
+            class="w-full"
+            index={prj.data.code}
+            tag={{ ru: prj.data.category || prj.data.tag, uz: prj.data.category_uz || prj.data.tag_uz, en: prj.data.category_en || prj.data.tag_en }}
+            title={{ ru: prj.data.title, uz: prj.data.title_uz, en: prj.data.title_en }}
+            text={{ ru: prj.data.subtitle, uz: prj.data.subtitle_uz, en: prj.data.subtitle_en }}
+            image={prj.data.image}
+            href={`/projects/${prj.slug}/`}
+            cta={{ ru: 'Открыть проект', uz: 'Loyihani ochish', en: 'Open project' }}
+            headingLevel="h2"
+          >
+            <div class="flex flex-wrap gap-1.5 font-mono text-[10px]">
+              {prj.data.metrics.map((m, idx) => (
+                <span class="border border-[#0A0A0A]/40 px-1.5 py-0.5 text-[#0A0A0A]">
+                  <I18nText ru={m} uz={prj.data.metrics_uz?.[idx]} en={prj.data.metrics_en?.[idx]} />
+                </span>
+              ))}
+            </div>
+          </HudCard>
+        </div>
+      ))}
+    </div>
+
+    <HudStepDivider label="DIRECTIONS" class="my-12" />
+
+    <!-- Strategic directions + CAD -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div class="lg:col-span-7 hud-glass-card p-6 gap-4">
+        <div class="hud-section-head font-mono text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A]/15 pb-2">
+          <I18nText as="h2" ru="НАПРАВЛЕНИЯ СПЕЦИАЛЬНЫХ ПРОЕКТОВ RAILTECH" uz="RAILTECH MAXSUS LOYIHALARINING ASOSIY YO'NALISHLARI" en="RAILTECH SPECIAL PROJECTS STRATEGIC DIRECTIONS" />
+        </div>
+        <div class="space-y-4 text-xs">
+          {directions.map((d) => (
+            <div class="flex items-start gap-3">
+              <span class="font-mono bg-[#0A0A0A] text-white px-1.5 py-0.5 font-bold">{d.n}</span>
+              <div>
+                <span class="font-mono font-bold text-[#0A0A0A] block"><I18nText ru={d.title.ru} uz={d.title.uz} en={d.title.en} /></span>
+                <span class="text-[#4A5056] leading-relaxed"><I18nText ru={d.text.ru} uz={d.text.uz} en={d.text.en} /></span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="lg:col-span-5">
+        <CadInspector
+          client:visible
+          modelType="hypercube"
+          title="ПОВОРОТНЫЙ ЛИМБ ГИПЕРКУБА"
+          titleUz="GIPERKUB BURILMA LIMBI"
+          titleEn="HYPERCUBE ROTARY LIMB"
+          subtitle="МАТРИЦА СИНЕРГИИ ТЕХНОЛОГИЙ И АРТ-ПРОСТРАНСТВА"
+          subtitleUz="TEXNOLOGIYALAR VA SAN'AT MAYDONI SINERGIYASI MATRITSASI"
+          subtitleEn="SYNERGY MATRIX OF TECHNOLOGY & ART LAB"
+        />
+      </div>
+    </section>
+
+    <HudStepDivider label="ART LAB" class="my-12" />
+
+    <!-- Art Lab manifesto -->
+    <section class="hud-glass-card p-6 lg:p-8 gap-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#0A0A0A]/15 pb-3">
+        <span class="hud-callout"><i></i><I18nText ru="МАНИФЕСТ RAILTECH ART LAB" uz="RAILTECH ART LAB MANIFESTI" en="RAILTECH ART LAB MANIFESTO" /></span>
+        <span class="font-mono text-[11px] text-[#4A5056]">
+          <I18nText ru="КУРАТОРСКАЯ РЕЗИДЕНЦИЯ В КОМПЛЕКСЕ INDEX" uz="INDEX MAJMUASIDAGI KURATORLIK REZIDENSIYASI" en="CURATORIAL RESIDENCY AT INDEX COMPLEX" />
+        </span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-[#0A0A0A] leading-relaxed">
+        <div class="space-y-3">
+          <I18nText
+            as="p"
+            ru="Железная дорога — это не просто логистическая артерия, но и величайшая визуальная метафора индустриального века. Геометрия параллельных рельсов, строгие контуры стрелочных переводов, массивная текстура литой стали и мерный ритм колесных пар сформировали визуальный язык конструктивизма и модернизма XX века."
+            uz="Temir yo'l shunchaki logistika arteriyasi emas, balki sanoat asrining eng buyuk vizual metaforasidir. Parallel relslar geometriyasi, strelka o'tkazgichlarining qat'iy konturlari, quyma po'latning ulkan teksturasi va g'ildirak juftlarining bir maromdagi ritmi XX asr konstruktivizmi va modernizmining vizual tilini shakllantirdi."
+            en="The railway is more than a logistical artery; it is the definitive visual metaphor of the industrial era. The geometry of parallel tracks, the severe contours of turnout switches, the massive textures of cast steel, and the cadence of rolling wheelsets established the visual vocabulary of 20th-century constructivism and modernism."
+          />
+          <I18nText
+            as="p"
+            ru="RailTech Art Lab объединяет художников, архитекторов и инженеров Центральной Азии. Мы предоставляем выставочные площади в пространстве нашего складского хаба, организуем пленэры на действующих депо и формируем постоянную коллекцию монументальной живописи."
+            uz="RailTech Art Lab Markaziy Osiyo rassomlari, me'morlari va muhandislarini birlashtiradi. Biz ombor xabimiz maydonida ko'rgazma maydonlarini taqdim etamiz, faoliyatdagi depolarda plenerlar tashkil qilamiz va monumental rangtasvirning doimiy kolleksiyasini shakllantiramiz."
+            en="RailTech Art Lab unites artists, architects, and engineers across Central Asia. We provide exhibition space within our Tashkent terminal, arrange on-site plein-airs at active locomotive depots, and assemble a permanent collection of monumental industrial art."
+          />
+        </div>
+        <div class="border border-[#0A0A0A] p-5 font-mono text-xs flex flex-col justify-between gap-4">
+          <div class="space-y-2">
+            <div class="font-bold text-[#0A0A0A]">
+              <I18nText ru="ДЛЯ ВЕНДОРОВ И ХУДОЖНИКОВ:" uz="ISHLAB CHIQARUVCHILAR VA RASSOMLAR UCHUN:" en="FOR VENDORS & ARTISTS:" />
+            </div>
+            <I18nText
+              as="p"
+              class="text-[11px] text-[#4A5056] leading-relaxed"
+              ru="Если вы представляете зарубежный завод и заинтересованы в испытаниях на полигонах Узбекистана, либо являетесь автором индустриального искусства — свяжитесь с кураторской группой RailTech."
+              uz="Agar siz xorijiy zavod vakili bo'lsangiz va O'zbekiston poligonlaridagi sinovlarga qiziqsangiz, yoki sanoat san'ati muallifi bo'lsangiz — RailTech kuratorlik guruhi bilan bog'laning."
+              en="If you represent an international manufacturer interested in testbed operations in Uzbekistan, or are an artist working with industrial themes, get in touch with the RailTech curatorial team."
+            />
+          </div>
+          <button
+            type="button"
+            id="prj-proposal-btn"
+            data-lead-modal
+            data-lead-subject="Запрос сотрудничества по спецпроектам / Art Lab"
+            class="hud-btn w-full justify-center"
+          >
+            <I18nText ru="Предложить проект" uz="Loyiha taklif qilish" en="Submit a proposal" />
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const btns = document.querySelectorAll<HTMLButtonElement>('.prj-filter');
+  const items = document.querySelectorAll<HTMLElement>('.prj-item');
+  btns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter || 'all';
+      btns.forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle('bg-[#0A0A0A]', on);
+        b.classList.toggle('text-white', on);
+        b.classList.toggle('text-[#0A0A0A]', !on);
+      });
+      items.forEach((it) => {
+        it.style.display = f === 'all' || it.dataset.category === f ? '' : 'none';
+      });
+    });
+  });
+</script>

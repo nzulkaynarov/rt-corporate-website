@@ -13,7 +13,7 @@ author: "Инженерный отдел ООО «RailTech»"
 readTime: "6 мин"
 readTime_uz: "6 daq"
 readTime_en: "6 min"
-image: "/images/catalog/rt-rs-208.jpg"
+image: "/images/hero/logistics.jpg"
 featured: true
 tags:
   - "ВЭД"

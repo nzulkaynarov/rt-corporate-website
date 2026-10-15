@@ -8,17 +8,20 @@ export interface CatalogItemProps {
   title: string;
   title_uz?: string;
   title_en?: string;
-  subsystem: string;
+  category?: string;
+  category_uz?: string;
+  category_en?: string;
+  subsystem?: string;
   subsystem_uz?: string;
   subsystem_en?: string;
-  gost: string;
-  tnved: string;
-  warehouse: string;
-  status: 'В наличии' | 'Резерв' | 'Под заказ' | string;
+  gost?: string;
+  tnved?: string;
+  warehouse?: string;
+  status?: 'В наличии' | 'Резерв' | 'Под заказ' | string;
   status_uz?: string;
   status_en?: string;
-  statusKey: 'in_stock' | 'reserved' | 'on_order';
-  specs: string;
+  statusKey?: 'in_stock' | 'reserved' | 'on_order';
+  specs?: string;
   specs_uz?: string;
   specs_en?: string;
   image?: string;
@@ -62,16 +65,17 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
   const subsystems = useMemo(() => {
     const set = new Set<string>();
     items.forEach((item) => {
-      if (item.subsystem) set.add(item.subsystem);
+      const cat = item.category || item.subsystem;
+      if (cat) set.add(cat);
     });
     return Array.from(set);
   }, [items]);
 
   const getSubsystemLabel = (subRu: string, currentLang: Lang) => {
-    const sample = items.find((it) => it.subsystem === subRu);
+    const sample = items.find((it) => (it.category || it.subsystem) === subRu);
     if (!sample) return subRu;
-    if (currentLang === 'uz' && sample.subsystem_uz) return sample.subsystem_uz;
-    if (currentLang === 'en' && sample.subsystem_en) return sample.subsystem_en;
+    if (currentLang === 'uz' && (sample.category_uz || sample.subsystem_uz)) return sample.category_uz || sample.subsystem_uz || subRu;
+    if (currentLang === 'en' && (sample.category_en || sample.subsystem_en)) return sample.category_en || sample.subsystem_en || subRu;
     return subRu;
   };
 
@@ -82,15 +86,15 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
   };
 
   const getItemSubsystem = (item: CatalogItemProps) => {
-    if (lang === 'uz' && item.subsystem_uz) return item.subsystem_uz;
-    if (lang === 'en' && item.subsystem_en) return item.subsystem_en;
-    return item.subsystem;
+    if (lang === 'uz' && (item.category_uz || item.subsystem_uz)) return item.category_uz || item.subsystem_uz || '';
+    if (lang === 'en' && (item.category_en || item.subsystem_en)) return item.category_en || item.subsystem_en || '';
+    return item.category || item.subsystem || '—';
   };
 
   const getItemSpecs = (item: CatalogItemProps) => {
     if (lang === 'uz' && item.specs_uz) return item.specs_uz;
     if (lang === 'en' && item.specs_en) return item.specs_en;
-    return item.specs;
+    return item.specs || '';
   };
 
   const getItemStatus = (item: CatalogItemProps) => {
@@ -102,13 +106,14 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
       if (item.status_en) return item.status_en;
       return item.statusKey === 'in_stock' ? t.statusInStock : item.statusKey === 'reserved' ? t.statusReserved : t.statusOnOrder;
     }
-    return item.status;
+    return item.status || 'В наличии';
   };
 
   const filteredItems = useMemo(() => {
     return items.filter((item) => {
+      const itemCat = item.category || item.subsystem || '';
       const matchCat =
-        selectedSubsystem === 'ALL' || item.subsystem === selectedSubsystem;
+        selectedSubsystem === 'ALL' || itemCat === selectedSubsystem;
       const query = searchQuery.trim().toLowerCase();
       const matchQuery =
         !query ||
@@ -116,9 +121,9 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
         (item.title_uz && item.title_uz.toLowerCase().includes(query)) ||
         (item.title_en && item.title_en.toLowerCase().includes(query)) ||
         item.sku.toLowerCase().includes(query) ||
-        item.gost.toLowerCase().includes(query) ||
-        item.tnved.toLowerCase().includes(query) ||
-        item.specs.toLowerCase().includes(query) ||
+        (item.gost && item.gost.toLowerCase().includes(query)) ||
+        (item.tnved && item.tnved.toLowerCase().includes(query)) ||
+        (item.specs && item.specs.toLowerCase().includes(query)) ||
         (item.specs_uz && item.specs_uz.toLowerCase().includes(query)) ||
         (item.specs_en && item.specs_en.toLowerCase().includes(query));
       return matchCat && matchQuery;
@@ -265,10 +270,10 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                     {subsystem}
                   </td>
                   <td className="p-3 font-bold text-[#0A0A0A] whitespace-nowrap">
-                    {item.gost}
+                    {item.gost || '—'}
                   </td>
                   <td className="p-3 text-[#4A5056] whitespace-nowrap">
-                    {item.tnved}
+                    {item.tnved || '—'}
                   </td>
                   <td className="p-3 whitespace-nowrap">
                     <span className={`px-2 py-0.5 text-[10px] font-bold ${statusBadgeClass}`}>

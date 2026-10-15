@@ -23,24 +23,38 @@ collections:
     slug: "{{sku}}"
     fields:
       # --- ОБЩИЕ ТЕХНИЧЕСКИЕ ДАННЫЕ (ЗАПОЛНЯЮТСЯ 1 РАЗ) ---
-      - { label: "⚙️ Код SKU (Артикул)", name: "sku", widget: "string", hint: "Уникальный идентификатор позиции, заполняется 1 раз (напр. RT-RS-118)" }
-      - { label: "⚙️ ГОСТ / Стандарт", name: "gost", widget: "string", hint: "ГОСТ или ТУ (напр. ГОСТ 9246-2013)" }
-      - { label: "⚙️ Код ТН ВЭД (HS Code)", name: "tnved", widget: "string", hint: "Таможенный код ТН ВЭД РУз (напр. 8607 12 000 0)" }
+      - { label: "⚙️ Код SKU (Артикул)", name: "sku", widget: "string", hint: "Уникальный идентификатор позиции (напр. RT-RS-118)" }
+      - { label: "⚙️ Категория изделия", name: "category", widget: "string", required: false, hint: "Любая категория (напр. Подвижной состав, Спецтехника, Инструмент)" }
+      - { label: "⚙️ ГОСТ / Стандарт", name: "gost", widget: "string", required: false, hint: "ГОСТ или ТУ (напр. ГОСТ 9246-2013)" }
+      - { label: "⚙️ Код ТН ВЭД (HS Code)", name: "tnved", widget: "string", required: false, hint: "Таможенный код ТН ВЭД РУз (напр. 8607 12 000 0)" }
+      - { label: "⚙️ Цена (UZS)", name: "price", widget: "string", required: false, hint: "Фиксированная цена в сумах или оставьте пустым" }
       - { label: "⚙️ Базис склада", name: "warehouse", widget: "string", default: "Ташкент, Index B2-2097" }
       - { label: "⚙️ Базис склада (UZ)", name: "warehouse_uz", widget: "string", default: "Toshkent, Index B2-2097", required: false }
       - { label: "⚙️ Базис склада (EN)", name: "warehouse_en", widget: "string", default: "Tashkent, Index B2-2097", required: false }
       - { label: "⚙️ Статус наличия (RU)", name: "status", widget: "select", options: ["В наличии", "Резерв", "Под заказ"], default: "В наличии" }
       - { label: "⚙️ Ключ статуса для фильтра", name: "statusKey", widget: "select", options: ["in_stock", "reserved", "on_order"], default: "in_stock" }
       - { label: "⚙️ Фотография изделия", name: "image", widget: "image", required: false, hint: "Реальное фото узла на складе Index" }
-      - { label: "⚙️ 3D CAD Модель", name: "modelType", widget: "select", options: ["bogie", "container", "network", "hypercube"], default: "bogie" }
       - { label: "⚙️ Габаритные размеры (мм)", name: "dimensions", widget: "string", required: false }
       - { label: "⚙️ Масса / вес", name: "weight", widget: "string", required: false }
       - { label: "⚙️ Материал / марка стали", name: "material", widget: "string", required: false }
       - { label: "⚙️ Порядковый номер сортировки", name: "order", widget: "number", default: 1 }
 
+      # --- ХАРАКТЕРИСТИКИ ТОВАРА (АТРИБУТЫ) ---
+      - label: "⚙️ Характеристики товара (Атрибуты: Параметр -> Значение)"
+        name: "attributes"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Параметр [RU]", name: "label", widget: "string" }
+          - { label: "Parametr [UZ]", name: "label_uz", widget: "string", required: false }
+          - { label: "Parameter [EN]", name: "label_en", widget: "string", required: false }
+          - { label: "Значение [RU]", name: "value", widget: "string" }
+          - { label: "Qiymat [UZ]", name: "value_uz", widget: "string", required: false }
+          - { label: "Value [EN]", name: "value_en", widget: "string", required: false }
+
       # --- 🇷🇺 ОСНОВНОЙ ТЕКСТ (RU — ОБЯЗАТЕЛЬНЫЙ) ---
       - { label: "🇷🇺 [RU] Наименование изделия", name: "title", widget: "string", hint: "Официальное наименование по паспорту завода" }
-      - { label: "🇷🇺 [RU] Подсистема (Категория)", name: "subsystem", widget: "select", options: ["Подвижной состав", "СЦБ и автоматика", "Путевое хозяйство", "КИП и диагностика", "Энергетика"] }
+      - { label: "🇷🇺 [RU] Подсистема (Категория)", name: "subsystem", widget: "string", required: false }
       - { label: "🇷🇺 [RU] Статус наличия (текст)", name: "status_ru", widget: "string", required: false }
       - { label: "🇷🇺 [RU] Технические параметры (specs)", name: "specs", widget: "string", hint: "Краткая инженерная характеристика для таблицы" }
       - { label: "🇷🇺 [RU] Гарантийный срок", name: "warranty", widget: "string", default: "12 месяцев с момента ввода в эксплуатацию", required: false }
@@ -66,7 +80,68 @@ collections:
       - { label: "🇬🇧 [EN] Full Description (body_en - Markdown)", name: "body_en", widget: "markdown", required: false, hint: "If left blank, Russian body will be displayed automatically" }
 
   # --------------------------------------------------------------------------
-  # 2. CONTRACT COLLECTION
+  # 2. SERVICES COLLECTION
+  # --------------------------------------------------------------------------
+  - name: "services"
+    label: "2. Услуги компании (.SERVICES)"
+    folder: "src/content/services"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "⚙️ Код услуги (напр. SRV.01)", name: "code", widget: "string" }
+      - { label: "⚙️ Категория услуги", name: "category", widget: "string" }
+      - { label: "⚙️ Категория (UZ)", name: "category_uz", widget: "string", required: false }
+      - { label: "⚙️ Категория (EN)", name: "category_en", widget: "string", required: false }
+      - { label: "⚙️ Изображение услуги", name: "image", widget: "image", required: false }
+      - { label: "⚙️ Интерактивный инструмент", name: "tool", widget: "select", options: ["none", "landed-cost", "smart-match"], default: "none" }
+      - { label: "⚙️ Порядок отображения", name: "order", widget: "number", default: 1 }
+
+      # --- 🇷🇺 ОСНОВНОЙ ТЕКСТ (RU) ---
+      - { label: "🇷🇺 [RU] Название услуги", name: "title", widget: "string" }
+      - { label: "🇷🇺 [RU] Краткий анонс / лид", name: "summary", widget: "text" }
+      - { label: "🇷🇺 [RU] Текст кнопки действия (CTA)", name: "ctaLabel", widget: "string", required: false }
+
+      # --- 🇺🇿 ПЕРЕВОД (UZ) ---
+      - { label: "🇺🇿 [UZ] Xizmat nomi (title_uz)", name: "title_uz", widget: "string", required: false }
+      - { label: "🇺🇿 [UZ] Qisqa tavsif (summary_uz)", name: "summary_uz", widget: "text", required: false }
+      - { label: "🇺🇿 [UZ] Tugma matni (ctaLabel_uz)", name: "ctaLabel_uz", widget: "string", required: false }
+
+      # --- 🇬🇧 ПЕРЕВОД (EN) ---
+      - { label: "🇬🇧 [EN] Service Title (title_en)", name: "title_en", widget: "string", required: false }
+      - { label: "🇬🇧 [EN] Summary (summary_en)", name: "summary_en", widget: "text", required: false }
+      - { label: "🇬🇧 [EN] CTA Label (ctaLabel_en)", name: "ctaLabel_en", widget: "string", required: false }
+
+      # --- ЭТАПЫ РАБОТ ---
+      - label: "⚙️ Этапы выполнения работ (Шаги 1..4)"
+        name: "steps"
+        widget: "list"
+        fields:
+          - { label: "🇷🇺 Название шага", name: "title", widget: "string" }
+          - { label: "🇺🇿 Qadam nomi (title_uz)", name: "title_uz", widget: "string", required: false }
+          - { label: "🇬🇧 Step title (title_en)", name: "title_en", widget: "string", required: false }
+          - { label: "🇷🇺 Описание шага", name: "text", widget: "text" }
+          - { label: "🇺🇿 Qadam tavsifi (text_uz)", name: "text_uz", widget: "text", required: false }
+          - { label: "🇬🇧 Step text (text_en)", name: "text_en", widget: "text", required: false }
+
+      # --- ПРЕИМУЩЕСТВА И ХАРАКТЕРИСТИКИ ---
+      - label: "⚙️ Преимущества и параметры услуги"
+        name: "benefits"
+        widget: "list"
+        fields:
+          - { label: "Параметр [RU]", name: "label", widget: "string" }
+          - { label: "Parametr [UZ]", name: "label_uz", widget: "string", required: false }
+          - { label: "Parameter [EN]", name: "label_en", widget: "string", required: false }
+          - { label: "Значение [RU]", name: "value", widget: "string" }
+          - { label: "Qiymat [UZ]", name: "value_uz", widget: "string", required: false }
+          - { label: "Value [EN]", name: "value_en", widget: "string", required: false }
+
+      # --- ПОДРОБНЫЙ МАТЕРИАЛ (MARKDOWN) ---
+      - { label: "🇷🇺 [RU] Подробный регламент (Markdown)", name: "body", widget: "markdown" }
+      - { label: "🇺🇿 [UZ] To'liq reglament (body_uz)", name: "body_uz", widget: "markdown", required: false }
+      - { label: "🇬🇧 [EN] Full documentation (body_en)", name: "body_en", widget: "markdown", required: false }
+
+  # --------------------------------------------------------------------------
+  # 3. CONTRACT COLLECTION
   # --------------------------------------------------------------------------
   - name: "contract"
     label: "2. Этапы поставок ВЭД (.CONTRACT)"
@@ -271,6 +346,63 @@ collections:
           - { label: "🇷🇺 [RU] Текст кнопки КП", name: "ctaRfq", widget: "string" }
           - { label: "🇺🇿 [UZ] Tijorat taklifi tugmasi", name: "ctaRfq_uz", widget: "string", required: false }
           - { label: "🇬🇧 [EN] RFQ button text", name: "ctaRfq_en", widget: "string", required: false }
+
+          # --- HUD CONSOLE НАСТРОЙКИ ---
+          - { label: "⚙️ Заголовок консоли (напр. RailTech)", name: "consoleTitle", widget: "string", default: "RailTech" }
+          - { label: "🇷🇺 [RU] Подзаголовок консоли", name: "consoleSubtitle", widget: "string" }
+          - { label: "🇺🇿 [UZ] Konsol ost-sarlavhasi", name: "consoleSubtitle_uz", widget: "string", required: false }
+          - { label: "🇬🇧 [EN] Console Subtitle", name: "consoleSubtitle_en", widget: "string", required: false }
+
+          # --- HUD MEDIA СЛАЙДЫ (СЛАЙДЕР НА ГЛАВНОЙ) ---
+          - label: "⚙️ Слайды главного HUD-слайдера (heroSlides)"
+            name: "heroSlides"
+            widget: "list"
+            fields:
+              - { label: "Изображение слайда", name: "image", widget: "image" }
+              - { label: "Технический тег (напр. CATALOG // SUPPLY)", name: "tag", widget: "string" }
+              - { label: "Ссылка при клике (напр. /catalog/)", name: "link", widget: "string" }
+              - { label: "🇷🇺 Заголовок слайда", name: "title", widget: "string" }
+              - { label: "🇺🇿 Slayd sarlavhasi (UZ)", name: "title_uz", widget: "string", required: false }
+              - { label: "🇬🇧 Slide Title (EN)", name: "title_en", widget: "string", required: false }
+              - { label: "🇷🇺 Описание слайда", name: "description", widget: "text" }
+              - { label: "🇺🇿 Slayd tavsifi (UZ)", name: "description_uz", widget: "text", required: false }
+              - { label: "🇬🇧 Slide Description (EN)", name: "description_en", widget: "text", required: false }
+
+          # --- НАПРАВЛЕНИЯ ДЕЯТЕЛЬНОСТИ ---
+          - label: "⚙️ Направления деятельности (Левая колонка)"
+            name: "directions"
+            widget: "list"
+            fields:
+              - { label: "🇷🇺 Название", name: "label", widget: "string" }
+              - { label: "🇺🇿 Nomi", name: "label_uz", widget: "string", required: false }
+              - { label: "🇬🇧 Label", name: "label_en", widget: "string", required: false }
+              - { label: "Ссылка", name: "href", widget: "string" }
+
+          # --- КОРПОРАТИВНЫЙ ПАСПОРТ ---
+          - label: "⚙️ Карточки паспорта (Правая колонка)"
+            name: "passport"
+            widget: "list"
+            fields:
+              - { label: "🇷🇺 Параметр", name: "label", widget: "string" }
+              - { label: "🇺🇿 Parametr", name: "label_uz", widget: "string", required: false }
+              - { label: "🇬🇧 Label", name: "label_en", widget: "string", required: false }
+              - { label: "🇷🇺 Значение", name: "value", widget: "string" }
+              - { label: "🇺🇿 Qiymat", name: "value_uz", widget: "string", required: false }
+              - { label: "🇬🇧 Value", name: "value_en", widget: "string", required: false }
+
+          # --- КАРТОЧКИ РАЗДЕЛОВ (НИЖНИЙ РЯД) ---
+          - label: "⚙️ Карточки разделов сайта (Нижний ряд)"
+            name: "gatewayCards"
+            widget: "list"
+            fields:
+              - { label: "🇷🇺 Заголовок", name: "title", widget: "string" }
+              - { label: "🇺🇿 Sarlavha", name: "title_uz", widget: "string", required: false }
+              - { label: "🇬🇧 Title", name: "title_en", widget: "string", required: false }
+              - { label: "🇷🇺 Краткий текст", name: "text", widget: "text" }
+              - { label: "🇺🇿 Qisqa matn", name: "text_uz", widget: "text", required: false }
+              - { label: "🇬🇧 Short text", name: "text_en", widget: "text", required: false }
+              - { label: "Изображение", name: "image", widget: "image" }
+              - { label: "Ссылка", name: "href", widget: "string" }
 
       # --- ABOUT PAGE ---
       - name: "about"

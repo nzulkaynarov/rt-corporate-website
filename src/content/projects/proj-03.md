@@ -1,5 +1,10 @@
 ---
 code: "LAB 03"
+category: "Арт и выставки"
+category_uz: "San'at va ko'rgazmalar"
+category_en: "Art & exhibitions"
+image: "/images/hero/engineering-art.jpg"
+year: "2025"
 tag: "INDUSTRIAL DESIGN // SPACE"
 tag_uz: "SANOAT DIZAYNI // MAKON"
 tag_en: "INDUSTRIAL DESIGN // SPACE"

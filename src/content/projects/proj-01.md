@@ -1,5 +1,10 @@
 ---
 code: "LAB 01"
+category: "Промышленные поставки"
+category_uz: "Sanoat ta'minoti"
+category_en: "Industrial supply"
+image: "/images/hero/warehouse.jpg"
+year: "2025"
 tag: "TECH TRANSFER // R&D"
 tag_uz: "TEXNOLOGIYA TRANSFERI // R&D"
 tag_en: "TECH TRANSFER // R&D"

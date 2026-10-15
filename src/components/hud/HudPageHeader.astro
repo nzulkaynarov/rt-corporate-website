@@ -1,0 +1,36 @@
+---
+/**
+ * Unified page header: breadcrumb, mono badge, H1, lead paragraph.
+ */
+import I18nText from '../I18nText.astro';
+
+interface I18n { ru: string; uz?: string; en?: string }
+interface Props {
+  code: string;            // e.g. "SEC.02 // SERVICES"
+  crumb: I18n;
+  title: I18n;
+  lead?: I18n;
+  parent?: { href: string; label: I18n };
+}
+const { code, crumb, title, lead, parent } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<header class="pt-8 pb-6">
+  <nav class="flex flex-wrap items-center gap-2 font-mono text-[11px] text-[#4A5056] mb-5" aria-label="Breadcrumb">
+    <a href={`${base}/`} class="hover:text-[#0A0A0A] hover:underline"><I18nText ru="ГЛАВНАЯ" uz="BOSH SAHIFA" en="HOME" /></a>
+    <span>/</span>
+    {parent && (
+      <>
+        <a href={`${base}${parent.href}`} class="hover:text-[#0A0A0A] hover:underline">
+          <I18nText ru={parent.label.ru} uz={parent.label.uz} en={parent.label.en} />
+        </a>
+        <span>/</span>
+      </>
+    )}
+    <span class="text-[#0A0A0A] font-bold"><I18nText ru={crumb.ru} uz={crumb.uz} en={crumb.en} /></span>
+  </nav>
+  <span class="hud-callout mb-3"><i></i>{code}</span>
+  <I18nText as="h1" class="font-sans text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#0A0A0A] leading-[1.05] mt-2 max-w-4xl" ru={title.ru} uz={title.uz} en={title.en} />
+  {lead && <I18nText as="p" class="mt-4 text-base text-[#4A5056] leading-relaxed max-w-3xl" ru={lead.ru} uz={lead.uz} en={lead.en} />}
+</header>

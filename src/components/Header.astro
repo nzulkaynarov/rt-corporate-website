@@ -15,41 +15,33 @@ const navItems = [
   },
   {
     href: `${base}/catalog/`,
-    label_ru: 'КАТАЛОГ ЖД ОБОРУДОВАНИЯ',
-    label_uz: 'TEMIR YO\'L KATALOGI',
-    label_en: 'RAILWAY CATALOG',
+    label_ru: 'КАТАЛОГ',
+    label_uz: 'KATALOG',
+    label_en: 'CATALOG',
     id: 'catalog',
     match: (p: string) => p.startsWith(`${base}/catalog`)
   },
   {
-    href: `${base}/contract`,
-    label_ru: 'КОНТРАКТНЫЙ ВЭД DDP',
-    label_uz: 'DDP SHARTNOMA TIF',
-    label_en: 'CONTRACT DDP',
-    id: 'contract',
-    match: (p: string) => p.startsWith(`${base}/contract`)
+    href: `${base}/services/`,
+    label_ru: 'УСЛУГИ',
+    label_uz: 'XIZMATLAR',
+    label_en: 'SERVICES',
+    id: 'services',
+    match: (p: string) => p.startsWith(`${base}/services`) || p.startsWith(`${base}/contract`) || p.startsWith(`${base}/digital`)
   },
   {
-    href: `${base}/digital`,
-    label_ru: 'DIGITAL & ПО',
-    label_uz: 'DIGITAL & DASTURIY',
-    label_en: 'DIGITAL & SOFTWARE',
-    id: 'digital',
-    match: (p: string) => p.startsWith(`${base}/digital`)
-  },
-  {
-    href: `${base}/projects`,
-    label_ru: 'СПЕЦПРОЕКТЫ & АРТ',
-    label_uz: 'MAXSUS LOYIHALAR',
-    label_en: 'SPECIAL PROJECTS',
+    href: `${base}/projects/`,
+    label_ru: 'ПРОЕКТЫ',
+    label_uz: 'LOYIHALAR',
+    label_en: 'PROJECTS',
     id: 'projects',
     match: (p: string) => p.startsWith(`${base}/projects`)
   },
   {
     href: `${base}/blog/`,
-    label_ru: 'БЛОГ / НОВОСТИ',
-    label_uz: 'BLOG / YANGILIKLAR',
-    label_en: 'BLOG / NEWS',
+    label_ru: 'БЛОГ',
+    label_uz: 'BLOG',
+    label_en: 'BLOG',
     id: 'blog',
     match: (p: string) => p.startsWith(`${base}/blog`)
   },
@@ -63,9 +55,9 @@ const navItems = [
   },
   {
     href: `${base}/contacts`,
-    label_ru: 'КОНТАКТЫ & РЕКВИЗИТЫ',
-    label_uz: 'ALOQA & REKVIZITLAR',
-    label_en: 'CONTACTS & INFO',
+    label_ru: 'КОНТАКТЫ',
+    label_uz: 'ALOQA',
+    label_en: 'CONTACTS',
     id: 'contacts',
     match: (p: string) => p.startsWith(`${base}/contacts`)
   },

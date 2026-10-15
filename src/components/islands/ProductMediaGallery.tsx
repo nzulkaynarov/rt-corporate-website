@@ -8,11 +8,12 @@ interface Props {
   title: string;
   title_uz?: string;
   title_en?: string;
-  gost: string;
-  subsystem: string;
+  gost?: string;
+  subsystem?: string;
   subsystem_uz?: string;
   subsystem_en?: string;
-  specs: string;
+  category?: string;
+  specs?: string;
   specs_uz?: string;
   specs_en?: string;
   drawingNumber?: string;
@@ -29,6 +30,7 @@ export const ProductMediaGallery: React.FC<Props> = ({
   subsystem,
   subsystem_uz,
   subsystem_en,
+  category,
   specs,
   specs_uz,
   specs_en,
@@ -59,8 +61,9 @@ export const ProductMediaGallery: React.FC<Props> = ({
   }, []);
 
   const curTitle = lang === 'uz' ? (title_uz || title) : lang === 'en' ? (title_en || title) : title;
-  const curSubsystem = lang === 'uz' ? (subsystem_uz || subsystem) : lang === 'en' ? (subsystem_en || subsystem) : subsystem;
-  const curSpecs = lang === 'uz' ? (specs_uz || specs) : lang === 'en' ? (specs_en || specs) : specs;
+  const rawSub = subsystem || category || 'Оборудование';
+  const curSubsystem = (lang === 'uz' ? (subsystem_uz || rawSub) : lang === 'en' ? (subsystem_en || rawSub) : rawSub) || 'Оборудование';
+  const curSpecs = lang === 'uz' ? (specs_uz || specs || '') : lang === 'en' ? (specs_en || specs || '') : (specs || '');
 
   // Realistic drawing number fallback based on SKU
   const resolvedDrawing = drawingNumber || (

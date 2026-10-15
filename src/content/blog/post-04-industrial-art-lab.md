@@ -13,7 +13,7 @@ author: "Инженерный отдел ООО «RailTech»"
 readTime: "4 мин"
 readTime_uz: "4 daq"
 readTime_en: "4 min"
-image: "/images/catalog/rt-trk-401.jpg"
+image: "/images/hero/engineering-art.jpg"
 featured: false
 tags:
   - "RailTech Art Lab"

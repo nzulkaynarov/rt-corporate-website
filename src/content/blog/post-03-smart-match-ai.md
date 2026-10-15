@@ -13,7 +13,7 @@ author: "Инженерный отдел ООО «RailTech»"
 readTime: "7 мин"
 readTime_uz: "7 daq"
 readTime_en: "7 min"
-image: "/images/catalog/rt-scb-001.jpg"
+image: "/images/hero/software.jpg"
 featured: false
 tags:
   - "Smart Match AI"

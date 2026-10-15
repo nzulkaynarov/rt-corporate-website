@@ -1,5 +1,10 @@
 ---
 code: "LAB 02"
+category: "Арт и выставки"
+category_uz: "San'at va ko'rgazmalar"
+category_en: "Art & exhibitions"
+image: "/images/hero/engineering-art.jpg"
+year: "2026"
 tag: "ART & CULTURE // CURATION"
 tag_uz: "SAN'AT & MADANIYAT // KURATORLIK"
 tag_en: "ART & CULTURE // CURATION"

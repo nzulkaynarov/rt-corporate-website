@@ -29,6 +29,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
 
     <!-- Header Section -->
+    <div class="hud-glass-card p-3 mb-6 flex items-center justify-between font-mono text-xs">
+      <span class="hud-callout"><i></i><I18nText ru="УСЛУГА ВЭД ОБЪЕДИНЕНА В ЕДИНЫЙ РАЗДЕЛ УСЛУГ" uz="TQI XIZMATI YAGONA XIZMATLAR BO'LIMIGA BIRLASHTIRILDI" en="DDP IMPORT SERVICE MERGED INTO SERVICES HUB" /></span>
+      <a href={`${base}/services/turnkey-import-ddp/`} class="font-bold underline hover:no-underline">
+        <I18nText ru="ПАСПОРТ УСЛУГИ ВЭД ↗" uz="TQI XIZMATI PASPORTI ↗" en="VIEW SERVICE PASSPORT ↗" />
+      </a>
+    </div>
+
     <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8">
       <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-3">
         <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold inline-block">

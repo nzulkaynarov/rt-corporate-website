@@ -13,7 +13,7 @@ author: "Инженерный отдел ООО «RailTech»"
 readTime: "5 мин"
 readTime_uz: "5 daq"
 readTime_en: "5 min"
-image: "/images/catalog/rt-rs-102.jpg"
+image: "/images/hero/warehouse.jpg"
 featured: true
 tags:
   - "Склад Ташкент"

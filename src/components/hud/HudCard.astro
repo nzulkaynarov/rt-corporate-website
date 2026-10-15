@@ -1,0 +1,79 @@
+---
+/**
+ * HudCard — the single card standard of the portal (.hud-glass-card).
+ * Index header in JetBrains Mono, optional 1px-framed photo preview,
+ * trilingual title / text with automatic RU fallback, optional link.
+ */
+import I18nText from '../I18nText.astro';
+import { withBase } from '../../utils/url';
+
+interface I18n { ru: string; uz?: string; en?: string }
+interface Props {
+  index: string;               // "001"
+  tag?: I18n;                  // right side of header
+  title: I18n;
+  text?: I18n;
+  image?: string;
+  imageAlt?: string;
+  href?: string;               // already base-prefixed or relative to site root
+  cta?: I18n;
+  aspect?: string;             // tailwind aspect class
+  chamferTopLeft?: boolean;
+  headingLevel?: 'h2' | 'h3';
+  class?: string;
+}
+
+const {
+  index, tag, title, text, image, imageAlt, href, cta,
+  aspect = 'aspect-[16/10]', chamferTopLeft = false, headingLevel = 'h3', class: className = '',
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const link = href ? (href.startsWith('http') || href.startsWith(base + '/') ? href : `${base}${href.startsWith('/') ? '' : '/'}${href}`) : undefined;
+const Wrapper = link ? 'a' : 'div';
+const img = withBase(image);
+---
+
+<Wrapper
+  href={link}
+  class={`hud-glass-card ${chamferTopLeft ? 'hud-glass-card--tl' : ''} group p-4 gap-3 ${className}`}
+>
+  <div class="flex items-center justify-between gap-2 border-b border-[#0A0A0A]/15 pb-2">
+    <span class="hud-card-index"><b>{index}</b> //</span>
+    {tag && (
+      <span class="hud-card-index truncate">
+        <I18nText ru={tag.ru} uz={tag.uz} en={tag.en} />
+      </span>
+    )}
+  </div>
+
+  {img && (
+    <div class={`hud-card-media ${aspect}`}>
+      <img src={img} alt={imageAlt || title.ru} loading="lazy" decoding="async" />
+      <span class="absolute top-1.5 left-1.5 font-mono text-[9px] tracking-widest text-white/90 mix-blend-difference">+ IMG_{index}</span>
+    </div>
+  )}
+
+  <I18nText
+    as={headingLevel}
+    class="font-sans font-bold text-[15px] leading-snug tracking-tight text-[#0A0A0A]"
+    ru={title.ru}
+    uz={title.uz}
+    en={title.en}
+  />
+
+  {text && (
+    <I18nText as="p" class="text-[13px] leading-relaxed text-[#4A5056] line-clamp-3" ru={text.ru} uz={text.uz} en={text.en} />
+  )}
+
+  <slot />
+
+  {link && (
+    <div class="mt-auto pt-2 flex items-center justify-between font-mono text-[11px] font-bold text-[#0A0A0A]">
+      <span class="group-hover:underline underline-offset-4">
+        <I18nText ru={cta?.ru || 'Открыть'} uz={cta?.uz || 'Ochish'} en={cta?.en || 'Open'} />
+      </span>
+      <span class="transition-transform group-hover:translate-x-1">↗</span>
+    </div>
+  )}
+</Wrapper>

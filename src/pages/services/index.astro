@@ -1,0 +1,185 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import I18nText from '../../components/I18nText.astro';
+import HudCard from '../../components/hud/HudCard.astro';
+import HudPageHeader from '../../components/hud/HudPageHeader.astro';
+import HudStepDivider from '../../components/hud/HudStepDivider.astro';
+import { LandedCostCalculator } from '../../components/islands/LandedCostCalculator';
+import { SmartMatchAiTester } from '../../components/islands/SmartMatchAiTester';
+
+const allServices = await getCollection('services');
+allServices.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
+
+// Unique categories for filtering
+const categoryMap = new Map<string, { ru: string; uz?: string; en?: string }>();
+for (const s of allServices) {
+  const ru = s.data.category;
+  if (!categoryMap.has(ru)) {
+    categoryMap.set(ru, { ru, uz: s.data.category_uz, en: s.data.category_en });
+  }
+}
+const categories = [...categoryMap.values()];
+---
+
+<BaseLayout
+  title="Услуги B2B / B2G: ВЭД под ключ, IT-разработка, сорсинг и дистрибуция — ООО «RailTech»"
+  description="Комплексные услуги ООО «RailTech»: контрактные поставки DDP Ташкент с НДС 12%, разработка заказного ПО и платформы b2b.railtech.uz, поиск редкого оборудования и представительство брендов."
+  keywords="услуги railtech, контрактный вэд ddp ташкент, сорсинг оборудования узбекистан, разработка b2b порталов, b2b railtech uz, дистрибуция брендов узбекистан"
+>
+  <div class="max-w-7xl mx-auto px-4 pb-16 font-sans">
+    <HudPageHeader
+      code="SEC.02 // SERVICES"
+      crumb={{ ru: 'УСЛУГИ', uz: 'XIZMATLAR', en: 'SERVICES' }}
+      title={{
+        ru: 'Услуги компании: ВЭД, сорсинг, IT и дистрибуция',
+        uz: 'Kompaniya xizmatlari: TQI, sorsing, IT va distribyutsiya',
+        en: 'Corporate Services: Turnkey Import, Sourcing, IT & Distribution',
+      }}
+      lead={{
+        ru: 'ООО «RailTech» выступает универсальным оператором для промышленных предприятий, девелоперов и транспортных операторов Республики Узбекистан. Мы закрываем задачи снабжения под ключ, снижаем валютные риски и разрабатываем современный цифровой софт.',
+        uz: "«RailTech» MChJ O'zbekiston sanoat korxonalari, quruvchilari va transport operatorlari uchun universal operator hisoblanadi. Biz ta'minot vazifalarini to'liq bajaramiz, valyuta xatarlarini kamaytiramiz va zamonaviy dasturiy ta'minot ishlab chiqamiz.",
+        en: 'RailTech LLC serves as a multi-sector partner for heavy industry, mining combines, developers, and transport operators across Uzbekistan. We deliver turnkey procurement, eliminate currency exposure, and engineer modern industrial software.',
+      }}
+    />
+
+    <!-- Filter toolbar -->
+    <div class="hud-glass-card p-3 mb-8 flex-row flex-wrap items-center gap-2 font-mono text-[11px]" role="group" aria-label="Services Category Filter">
+      <span class="text-[#4A5056] uppercase tracking-widest mr-2"><I18nText ru="НАПРАВЛЕНИЕ:" uz="YO'NALISH:" en="CATEGORY:" /></span>
+      <button type="button" id="srv-filter-all" data-filter="all" class="srv-filter px-3 py-1.5 border border-[#0A0A0A] bg-[#0A0A0A] text-white cursor-pointer font-bold">
+        <I18nText ru="Все услуги" uz="Barcha xizmatlar" en="All services" />
+      </button>
+      {categories.map((c, i) => (
+        <button type="button" id={`srv-filter-${i + 1}`} data-filter={c.ru} class="srv-filter px-3 py-1.5 border border-[#0A0A0A] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer font-bold">
+          <I18nText ru={c.ru} uz={c.uz} en={c.en} />
+        </button>
+      ))}
+    </div>
+
+    <!-- Services Grid -->
+    <div id="srv-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+      {allServices.map((srv) => (
+        <div class="srv-item flex flex-col" data-category={srv.data.category}>
+          <HudCard
+            class="h-full"
+            index={srv.data.code}
+            tag={{ ru: srv.data.category, uz: srv.data.category_uz, en: srv.data.category_en }}
+            title={{ ru: srv.data.title, uz: srv.data.title_uz, en: srv.data.title_en }}
+            text={{ ru: srv.data.summary, uz: srv.data.summary_uz, en: srv.data.summary_en }}
+            image={srv.data.image}
+            href={`/services/${srv.slug}/`}
+            cta={{ ru: srv.data.ctaLabel || 'Подробнее об услуге', uz: srv.data.ctaLabel_uz || "Xizmat haqida batafsil", en: srv.data.ctaLabel_en || 'Learn more' }}
+            headingLevel="h2"
+          >
+            <!-- Key Benefits Badges -->
+            <div class="pt-2 border-t border-[#0A0A0A]/15 grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono text-[11px]">
+              {srv.data.benefits.slice(0, 4).map((b) => (
+                <div class="p-2 bg-white/40 border border-[#0A0A0A]/15">
+                  <div class="text-[9px] text-[#4A5056] uppercase tracking-wider">
+                    <I18nText ru={b.label} uz={b.label_uz} en={b.label_en} />
+                  </div>
+                  <div class="font-bold text-[#0A0A0A] truncate">
+                    <I18nText ru={b.value} uz={b.value_uz} en={b.value_en} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </HudCard>
+        </div>
+      ))}
+    </div>
+
+    <HudStepDivider label="TOOLS // INTERACTIVE SANDBOX" class="my-12" />
+
+    <!-- Interactive Tools Section (Landed Cost + Smart Match AI) -->
+    <section class="space-y-12">
+      <div class="hud-section-head">
+        <div>
+          <span class="hud-callout mb-1"><i></i>ONLINE CALCULATORS & AI DEMO</span>
+          <h2 class="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-[#0A0A0A]">
+            Интерактивные инструменты для расчетов и тестирования
+          </h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        <!-- Tool 1: Landed Cost Calculator -->
+        <div class="hud-glass-card p-6 gap-4">
+          <div class="flex items-center justify-between border-b border-[#0A0A0A]/20 pb-3 font-mono text-xs">
+            <span class="font-bold text-[#0A0A0A]">TOOL 01 // LANDED COST DDP CALCULATOR</span>
+            <span class="text-[#4A5056]">UZS / 12% НДС</span>
+          </div>
+          <p class="text-xs text-[#4A5056] leading-relaxed font-sans">
+            Инженерная модель расчета конечной себестоимости импорта под ключ с учетом таможенной пошлины, сборов и зачета НДС 12%.
+          </p>
+          <div class="mt-2">
+            <LandedCostCalculator client:visible />
+          </div>
+        </div>
+
+        <!-- Tool 2: Smart Match AI NLP Sandbox -->
+        <div class="hud-glass-card p-6 gap-4">
+          <div class="flex items-center justify-between border-b border-[#0A0A0A]/20 pb-3 font-mono text-xs">
+            <span class="font-bold text-[#0A0A0A]">TOOL 02 // SMART MATCH AI DEMO</span>
+            <span class="text-[#4A5056]">NLP ACCURACY: 98.4%</span>
+          </div>
+          <p class="text-xs text-[#4A5056] leading-relaxed font-sans">
+            Протестируйте алгоритм автоматического распознавания инженерных сокращений и сопоставления номенклатуры с официальными ГОСТами.
+          </p>
+          <div class="mt-2">
+            <SmartMatchAiTester client:visible />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Consultation / RFQ Banner -->
+    <div class="mt-16 hud-glass-card p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 max-w-2xl">
+        <span class="hud-callout"><i></i>CUSTOM CONSULTATION</span>
+        <h3 class="font-sans text-xl font-bold text-[#0A0A0A]">
+          Требуется нестандартное решение или комплексное проектное снабжение?
+        </h3>
+        <p class="text-xs text-[#4A5056] leading-relaxed font-sans">
+          Наши ведущие специалисты по ВЭД и инженеры подготовят развернутое технико-коммерческое предложение с фиксацией цены в сумах в течение 24 часов.
+        </p>
+      </div>
+      <button
+        type="button"
+        data-lead-modal
+        data-lead-subject="Запрос консультации по услугам компании"
+        class="hud-btn whitespace-nowrap cursor-pointer"
+      >
+        <span>[ ЗАПРОСИТЬ КОНСУЛЬТАЦИЮ ↗ ]</span>
+      </button>
+    </div>
+  </div>
+
+  <script is:inline>
+    // Services category filtering
+    (function() {
+      var buttons = document.querySelectorAll('.srv-filter');
+      var items = document.querySelectorAll('.srv-item');
+      if (!buttons.length || !items.length) return;
+
+      buttons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var target = btn.getAttribute('data-filter');
+          buttons.forEach(function(b) {
+            b.className = 'srv-filter px-3 py-1.5 border border-[#0A0A0A] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer font-bold';
+          });
+          btn.className = 'srv-filter px-3 py-1.5 border border-[#0A0A0A] bg-[#0A0A0A] text-white cursor-pointer font-bold';
+
+          items.forEach(function(item) {
+            var cat = item.getAttribute('data-category');
+            if (target === 'all' || cat === target) {
+              item.style.display = 'flex';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+    })();
+  </script>
+</BaseLayout>

@@ -1,0 +1,32 @@
+---
+/**
+ * .hud-step-divider — stepped 1px drawing-bus line  •───╲____╱───
+ * Optional label is rendered as a leader callout over the left segment.
+ */
+interface Props {
+  label?: string;
+  class?: string;
+}
+const { label, class: className = '' } = Astro.props;
+---
+
+<div class={`relative ${className}`} aria-hidden="true">
+  <div class="hud-step-divider">
+    <svg viewBox="0 0 1000 18" preserveAspectRatio="none">
+      <circle cx="3" cy="4" r="2.5" fill="currentColor" />
+      <path
+        d="M3 4 H560 L572 14 H700 L712 4 H997"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1"
+        vector-effect="non-scaling-stroke"
+      />
+      <circle cx="997" cy="4" r="2.5" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke" />
+    </svg>
+  </div>
+  {label && (
+    <span class="absolute -top-3 left-6 font-mono text-[10px] tracking-[0.16em] uppercase text-[#4A5056] bg-[#D4D8DC]/80 px-1.5">
+      {label}
+    </span>
+  )}
+</div>

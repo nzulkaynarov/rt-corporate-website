@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { withBase } from '../../utils/url';
 import I18nText from '../../components/I18nText.astro';
+import HudViewportFrame from '../../components/hud/HudViewportFrame.astro';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
@@ -153,16 +154,26 @@ const breadcrumbJsonLd = {
       <!-- Article Body -->
       <div class="lg:col-span-8">
         {entry.data.image && (
-          <div class="mb-6 border-2 border-[#0A0A0A] bg-[#0A0A0A] overflow-hidden">
-            <img
-              src={withBase(entry.data.image)}
-              alt={entry.data.title}
-              class="w-full h-auto max-h-[460px] object-cover"
-            />
+          <div class="mb-8">
+            <HudViewportFrame
+              topLabel={`ARTICLE // ${entry.data.category}`}
+              bottomLabel="RAILTECH ENGINEERING DISPATCH"
+            >
+              <div class="aspect-[16/9] overflow-hidden">
+                <img
+                  src={withBase(entry.data.image)}
+                  alt={entry.data.title}
+                  class="w-full h-full object-cover"
+                  style={{ filter: 'grayscale(0.15) contrast(1.05)' }}
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+            </HudViewportFrame>
           </div>
         )}
 
-        <div class="border border-[#0A0A0A] bg-[#C8CDD2] p-6 lg:p-8 font-sans">
+        <div class="hud-glass-card p-6 lg:p-8 font-sans">
           <div class="prose prose-sm sm:prose max-w-none text-[#0A0A0A] leading-relaxed prose-headings:font-bold prose-headings:text-[#0A0A0A] prose-headings:border-b prose-headings:border-[#0A0A0A]/30 prose-headings:pb-2 prose-pre:bg-[#0A0A0A] prose-pre:text-[#D4D8DC] prose-pre:border prose-pre:border-[#0A0A0A] prose-code:font-mono prose-code:text-[#0A0A0A] prose-code:bg-[#D4D8DC] prose-code:px-1 prose-strong:text-[#0A0A0A] prose-blockquote:border-l-4 prose-blockquote:border-[#0A0A0A] prose-blockquote:bg-[#D4D8DC] prose-blockquote:p-3 prose-li:text-[#0A0A0A]">
             <div class="rt-lang rt-lang-ru">
               <Content />
@@ -188,7 +199,7 @@ const breadcrumbJsonLd = {
         <div class="mt-6 font-mono text-xs">
           <a
             href={`${base}/blog/`}
-            class="inline-block border border-[#0A0A0A] bg-[#D4D8DC] px-4 py-2 text-[#0A0A0A] font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors"
+            class="hud-btn hud-btn--ghost"
           >
             <I18nText ru="← ВЕРНУТЬСЯ В РАЗДЕЛ БЛОГА" uz="← BLOG BO'LIMIGA QAYTISH" en="← BACK TO BLOG ARCHIVE" />
           </a>
@@ -198,8 +209,8 @@ const breadcrumbJsonLd = {
       <!-- Right Column: Commercial & RFQ Sidebar -->
       <aside class="lg:col-span-4 flex flex-col space-y-6">
         <!-- Lead Trigger Card -->
-        <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 font-mono sticky top-20">
-          <div class="border-b border-[#0A0A0A] pb-2 mb-4">
+        <div class="hud-glass-card p-6 font-mono sticky top-20 gap-4">
+          <div class="border-b border-[#0A0A0A]/20 pb-2">
             <span class="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider block">
               <I18nText ru="КОММЕРЧЕСКИЙ ОТДЕЛ // ВЭД" uz="TIJORAT BO'LIMI // TQI" en="COMMERCIAL DESK // TRADE" />
             </span>
