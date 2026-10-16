@@ -224,7 +224,62 @@ const modes = [
         </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Mobile High-Density Engineering List (< 768px) -->
+      <div class="md:hidden space-y-2">
+        {showcaseSkus.map((item) => (
+          <div class="hud-glass-card !flex-row items-center justify-between p-3 gap-3 font-mono text-xs">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-14 h-11 flex-none border border-[#0A0A0A]/40 overflow-hidden bg-[#D4D8DC] relative">
+                <img
+                  src={withBase(item.data.image || '/images/hero/warehouse.jpg')}
+                  alt={item.data.title}
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5 text-[10px] text-[#4A5056] leading-none mb-1">
+                  <span class="font-bold text-[#0A0A0A]">{item.data.sku}</span>
+                  <span>•</span>
+                  <span class="text-emerald-800 font-semibold truncate">
+                    <I18nText ru={item.data.status} uz={item.data.status_uz} en={item.data.status_en} />
+                  </span>
+                </div>
+                <a href={`${base}/catalog/${item.slug}`} class="font-sans font-bold text-xs text-[#0A0A0A] hover:underline line-clamp-1 block leading-tight">
+                  <I18nText ru={item.data.title} uz={item.data.title_uz} en={item.data.title_en} />
+                </a>
+                {item.data.specs && (
+                  <div class="text-[10px] text-[#4A5056] truncate mt-0.5 font-mono">
+                    <I18nText ru={item.data.specs} uz={item.data.specs_uz} en={item.data.specs_en} />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div class="flex items-center gap-1.5 flex-none">
+              <a
+                href={`${base}/catalog/${item.slug}`}
+                class="px-2 py-1.5 border border-[#0A0A0A] bg-white text-[11px] font-bold text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors flex items-center justify-center min-h-[34px]"
+                aria-label={`Паспорт ${item.data.sku}`}
+              >
+                →
+              </a>
+              <button
+                type="button"
+                data-lead-modal
+                data-lead-subject={`Запрос счета на позицию ${item.data.title} (${item.data.sku})`}
+                class="px-2 py-1.5 border border-[#0A0A0A] bg-[#0A0A0A] text-white text-[10px] font-bold hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer min-h-[34px] whitespace-nowrap"
+              >
+                <I18nText ru="КП ↗" uz="SO'ROV" en="RFQ" />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Desktop/Tablet Grid View (>= 768px) -->
+      <div class="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {showcaseSkus.map((item) => (
           <div class="hud-glass-card p-5 gap-3">
             <div class="flex items-center justify-between border-b border-[#0A0A0A]/15 pb-2 font-mono text-xs">
@@ -349,7 +404,34 @@ const modes = [
         </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Mobile Editorial Feed (< 768px) -->
+      <div class="md:hidden space-y-2.5">
+        {latestPosts.map((post) => (
+          <a
+            href={`${base}/blog/${post.slug}`}
+            class="hud-glass-card p-4 block hover:bg-white/50 transition-colors font-mono"
+          >
+            <div class="flex items-center justify-between text-[10px] text-[#4A5056] mb-1.5">
+              <div class="flex items-center gap-2">
+                <span class="bg-[#0A0A0A] text-white px-1.5 py-0.5 font-bold">
+                  <I18nText ru={post.data.category} uz={post.data.category_uz} en={post.data.category_en} />
+                </span>
+                <span>{post.data.publishDate}</span>
+              </div>
+              <span class="text-xs text-[#0A0A0A] font-bold">→</span>
+            </div>
+            <h3 class="font-sans font-bold text-sm text-[#0A0A0A] leading-snug line-clamp-2 mb-1">
+              <I18nText ru={post.data.title} uz={post.data.title_uz} en={post.data.title_en} />
+            </h3>
+            <p class="font-sans text-xs text-[#4A5056] line-clamp-2 leading-relaxed">
+              <I18nText ru={post.data.summary} uz={post.data.summary_uz} en={post.data.summary_en} />
+            </p>
+          </a>
+        ))}
+      </div>
+
+      <!-- Desktop/Tablet Grid View (>= 768px) -->
+      <div class="hidden md:grid md:grid-cols-3 gap-6">
         {latestPosts.map((post) => (
           <HudCard
             index={post.data.publishDate}
