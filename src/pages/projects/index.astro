@@ -72,18 +72,19 @@ const directions = [
       }}
     />
 
-    <!-- Filter toolbar -->
-    <div class="hud-glass-card p-3 mb-6 flex-row flex-wrap items-center gap-2 font-mono text-[11px]" role="group" aria-label="Filter">
-      <span class="text-[#4A5056] uppercase tracking-widest mr-2"><I18nText ru="ФИЛЬТР:" uz="FILTR:" en="FILTER:" /></span>
-      <button type="button" id="prj-filter-all" data-filter="all" class="prj-filter px-3 py-1.5 border border-[#0A0A0A] bg-[#0A0A0A] text-white cursor-pointer">
-        <I18nText ru="Все проекты" uz="Barcha loyihalar" en="All projects" />
-      </button>
-      {categories.map((c, i) => (
-        <button type="button" id={`prj-filter-${i + 1}`} data-filter={c.ru} class="prj-filter px-3 py-1.5 border border-[#0A0A0A] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer">
-          <I18nText ru={c.ru} uz={c.uz} en={c.en} />
+    {projectItems.length > 6 && (
+      <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-3 mb-8 flex flex-row flex-wrap items-center gap-2 font-mono text-[11px]" role="group" aria-label="Projects Filter Toolbar">
+        <span class="text-[#4A5056] uppercase tracking-widest mr-2"><I18nText ru="ФИЛЬТР:" uz="FILTR:" en="FILTER:" /></span>
+        <button type="button" id="prj-filter-all" data-filter="all" class="prj-filter px-3 py-1.5 border border-[#0A0A0A] bg-[#0A0A0A] text-white cursor-pointer font-bold">
+          <I18nText ru="Все проекты" uz="Barcha loyihalar" en="All projects" />
         </button>
-      ))}
-    </div>
+        {categories.map((c, i) => (
+          <button type="button" id={`prj-filter-${i + 1}`} data-filter={c.ru} class="prj-filter px-3 py-1.5 border border-[#0A0A0A] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer font-bold">
+            <I18nText ru={c.ru} uz={c.uz} en={c.en} />
+          </button>
+        ))}
+      </div>
+    )}
 
     <div id="prj-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {projectItems.map((prj) => (
