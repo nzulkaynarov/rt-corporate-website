@@ -263,36 +263,6 @@ const navItems = [
             );
           })}
         </nav>
-
-        <!-- Language Switcher in Drawer -->
-        <div class="mt-6 pt-4 border-t border-[#0A0A0A]/20">
-          <div class="font-mono text-[10px] text-[#4A5056] uppercase tracking-wider mb-2">
-            ВЫБОР ЯЗЫКА / TIL / LANGUAGE:
-          </div>
-          <div class="grid grid-cols-3 gap-1 font-mono text-xs font-bold">
-            <button
-              type="button"
-              data-lang-btn="ru"
-              class="min-h-[44px] border border-[#0A0A0A] py-2 transition-colors cursor-pointer text-center"
-            >
-              RU
-            </button>
-            <button
-              type="button"
-              data-lang-btn="uz"
-              class="min-h-[44px] border border-[#0A0A0A] py-2 transition-colors cursor-pointer text-center"
-            >
-              UZ
-            </button>
-            <button
-              type="button"
-              data-lang-btn="en"
-              class="min-h-[44px] border border-[#0A0A0A] py-2 transition-colors cursor-pointer text-center"
-            >
-              EN
-            </button>
-          </div>
-        </div>
       </div>
 
       <!-- Drawer Bottom: 1-Tap Quick Action Contacts & Lead Modal -->
@@ -349,11 +319,11 @@ const navItems = [
       document.querySelectorAll('[data-lang-btn]').forEach(function(btn) {
         var lang = btn.getAttribute('data-lang-btn');
         if (lang === activeLang) {
-          btn.className = btn.className.replace(/bg-[\w/]+|text-[\w/]+/g, '');
+          btn.classList.remove('text-[#0A0A0A]');
           btn.classList.add('bg-[#0A0A0A]', 'text-white', 'font-bold');
           btn.setAttribute('aria-current', 'true');
         } else {
-          btn.className = btn.className.replace(/bg-[\w/]+|text-[\w/]+/g, '');
+          btn.classList.remove('bg-[#0A0A0A]', 'text-white', 'font-bold');
           btn.classList.add('text-[#0A0A0A]');
           btn.removeAttribute('aria-current');
         }
