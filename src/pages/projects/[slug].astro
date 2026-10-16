@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import I18nText from '../../components/I18nText.astro';
 import HudPageHeader from '../../components/hud/HudPageHeader.astro';
+import { ProductMediaGallery } from '../../components/islands/ProductMediaGallery';
 import { withBase } from '../../utils/url';
 
 export async function getStaticPaths() {
@@ -25,6 +26,34 @@ const categoryNameUz = entry.data.category_uz || entry.data.tag_uz || categoryNa
 const categoryNameEn = entry.data.category_en || entry.data.tag_en || categoryName;
 
 const photoUrl = withBase(entry.data.image || '/images/hero/warehouse.jpg');
+const fullPhotoUrl = photoUrl.startsWith('http') ? photoUrl : `https://railtech.uz${photoUrl}`;
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: entry.data.title,
+  description: entry.data.subtitle || entry.data.title,
+  image: fullPhotoUrl,
+  url: siteUrl,
+  author: {
+    '@type': 'Organization',
+    name: 'ООО «RailTech»',
+    url: 'https://railtech.uz',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'ООО «RailTech»',
+    url: 'https://railtech.uz',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://railtech.uz/favicon.svg',
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': siteUrl,
+  },
+};
 
 const breadcrumbJsonLd = {
   '@context': 'https://schema.org',
@@ -58,6 +87,7 @@ const breadcrumbJsonLd = {
   keywords={`${entry.data.title}, ${categoryName}, проекты railtech, узбекистан, ddp ташкент`}
   image={photoUrl}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
 
   <div class="max-w-7xl mx-auto px-4 pb-16 font-sans">
@@ -91,36 +121,20 @@ const breadcrumbJsonLd = {
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       <!-- Left Column: Photo & Key Metrics -->
       <div class="lg:col-span-7 flex flex-col space-y-6">
-        <!-- Project Photo in HUD Viewport Frame -->
-        <div class="hud-viewport-frame relative overflow-hidden">
-          <span class="hud-vf-outline" aria-hidden="true"></span>
-          <div class="hud-viewport-inner relative min-h-[300px] sm:min-h-[420px] bg-[#D4D8DC] flex items-center justify-center">
-            <img
-              src={photoUrl}
-              alt={entry.data.title}
-              class="w-full h-full object-cover"
-              loading="eager"
-              decoding="async"
-            />
-            {/* Grid overlay */}
-            <div class="absolute inset-0 cad-grid-bg opacity-25 pointer-events-none" aria-hidden="true" />
-
-            {/* Top telemetry */}
-            <div class="absolute top-2.5 right-3 font-mono text-[9px] tracking-wider text-white bg-black/60 px-2 py-0.5 pointer-events-none">
-              CLIENT // UZB INDUSTRIAL · YEAR // {entry.data.year || '2025'}
-            </div>
-
-            {/* Bottom stamp */}
-            <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between pointer-events-none font-mono text-[10px]">
-              <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#D4D8DC]/90 font-bold text-[#0A0A0A]">
-                CAT // {categoryName}
-              </span>
-              <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#0A0A0A] text-white font-bold">
-                VERIFIED CASE
-              </span>
-            </div>
-          </div>
-        </div>
+        <ProductMediaGallery
+          client:load
+          sku={entry.data.code}
+          title={entry.data.title}
+          title_uz={entry.data.title_uz}
+          title_en={entry.data.title_en}
+          category={categoryName}
+          category_uz={categoryNameUz}
+          category_en={categoryNameEn}
+          status="COMPLETED"
+          image={entry.data.image || '/images/hero/warehouse.jpg'}
+          images={entry.data.images}
+          gallery={entry.data.gallery}
+        />
 
         <!-- Metrics Cards Grid -->
         {entry.data.metrics && entry.data.metrics.length > 0 && (
@@ -142,20 +156,24 @@ const breadcrumbJsonLd = {
         {entry.data.documents && entry.data.documents.length > 0 && (
           <div class="hud-glass-card p-6 font-mono text-xs">
             <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 font-bold text-[#0A0A0A] flex items-center justify-between">
-              <span>ПРИКРЕПЛЕННЫЕ МАТЕРИАЛЫ КЕЙСА</span>
+              <span>
+                <I18nText ru="ПРИКРЕПЛЕННЫЕ МАТЕРИАЛЫ КЕЙСА" uz="LOYIHAGA BIRIKTIRILGAN MATERIALLAR" en="ATTACHED CASE MATERIALS" />
+              </span>
               <span class="text-[#4A5056]">FILES // 0{entry.data.documents.length}</span>
             </div>
             <div class="space-y-2">
               {entry.data.documents.map((doc) => (
                 <div class="flex items-center justify-between p-2.5 border border-[#0A0A0A]/20 bg-white/40">
-                  <span class="font-bold text-[#0A0A0A]">{doc.title}</span>
+                  <span class="font-bold text-[#0A0A0A]">
+                    <I18nText ru={doc.title} uz={doc.title_uz} en={doc.title_en} />
+                  </span>
                   <a
                     href={doc.file.startsWith('http') ? doc.file : withBase(doc.file)}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="hud-btn hud-btn--ghost text-[10px] py-1 px-2.5"
                   >
-                    СКАЧАТЬ ↓
+                    <I18nText ru="СКАЧАТЬ ↓" uz="YUKLAB OLISH ↓" en="DOWNLOAD ↓" />
                   </a>
                 </div>
               ))}
@@ -176,10 +194,10 @@ const breadcrumbJsonLd = {
               <Content />
             </div>
             <div class="rt-lang rt-lang-uz">
-              {entry.data.body_uz ? <p>{entry.data.body_uz}</p> : <Content />}
+              {entry.data.body_uz ? <div class="space-y-4 whitespace-pre-line">{entry.data.body_uz}</div> : <Content />}
             </div>
             <div class="rt-lang rt-lang-en">
-              {entry.data.body_en ? <p>{entry.data.body_en}</p> : <Content />}
+              {entry.data.body_en ? <div class="space-y-4 whitespace-pre-line">{entry.data.body_en}</div> : <Content />}
             </div>
           </div>
         </div>
@@ -191,21 +209,25 @@ const breadcrumbJsonLd = {
               <I18nText ru="ЗАКАЗАТЬ АНАЛОГИЧНЫЙ ПРОЕКТ" uz="O'XSHASH LOYIHANI BUYURTMA QILISH" en="ORDER A SIMILAR PROJECT" />
             </span>
             <span class="text-[11px] text-[#4A5056] leading-tight block mt-1">
-              Реализация под ключ: ВЭД, инженерная адаптация, поставка со склада в Ташкенте и техническое сопровождение.
+              <I18nText
+                ru="Реализация под ключ: ВЭД, инженерная адаптация, поставка со склада в Ташкенте и техническое сопровождение."
+                uz="Kalit ostida amalga oshirish: TQI, muhandislik adaptatsiyasi, Toshkent omboridan yetkazib berish va texnik ko'mak."
+                en="Turnkey implementation: foreign trade, engineering adaptation, Tashkent warehouse delivery, and ongoing technical support."
+              />
             </span>
           </div>
 
           <div class="space-y-2 text-[#4A5056]">
             <div class="flex justify-between">
-              <span>Базис расчетов:</span>
-              <span class="font-bold text-[#0A0A0A]">DDP Ташкент (12% НДС)</span>
+              <span><I18nText ru="Базис расчетов:" uz="Hisob-kitob asosi:" en="Settlement basis:" /></span>
+              <span class="font-bold text-[#0A0A0A]"><I18nText ru="DDP Ташкент (12% НДС)" uz="DDP Toshkent (12% QQS)" en="DDP Tashkent (12% VAT)" /></span>
             </div>
             <div class="flex justify-between">
-              <span>Сроки подготовки сметы:</span>
-              <span class="font-bold text-[#0A0A0A]">24-48 часов</span>
+              <span><I18nText ru="Сроки подготовки сметы:" uz="Smeta tayyorlash muddati:" en="Proposal preparation time:" /></span>
+              <span class="font-bold text-[#0A0A0A]"><I18nText ru="24-48 часов" uz="24-48 soat" en="24-48 hours" /></span>
             </div>
             <div class="flex justify-between">
-              <span>Прямой телефон:</span>
+              <span><I18nText ru="Прямой телефон:" uz="To'g'ridan-to'g'ri aloqa:" en="Direct line:" /></span>
               <a href="tel:+998901189000" class="font-bold text-[#0A0A0A] hover:underline">+998 90 118-90-00</a>
             </div>
           </div>

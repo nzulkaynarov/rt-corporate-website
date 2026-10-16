@@ -73,11 +73,15 @@ const navItems = [
         <!-- Extra telemetry visible only on desktop -->
         <span class="hidden md:inline text-[#0A0A0A]/30">|</span>
         <span class="hidden md:inline">
-          ИНН: {globalData.inn}
+          <span class="rt-lang rt-lang-ru">ИНН:</span>
+          <span class="rt-lang rt-lang-uz">STIR:</span>
+          <span class="rt-lang rt-lang-en">TIN:</span> {globalData.inn}
         </span>
         <span class="hidden lg:inline text-[#0A0A0A]/30">|</span>
         <span class="hidden lg:inline border border-[#0A0A0A] px-1.5 bg-[#D4D8DC] text-[#0A0A0A] font-semibold text-[10px]">
-          НДС 12% ВКЛЮЧЕН
+          <span class="rt-lang rt-lang-ru">НДС 12% ВКЛЮЧЕН</span>
+          <span class="rt-lang rt-lang-uz">QQS 12% KIRITILGAN</span>
+          <span class="rt-lang rt-lang-en">12% VAT INCLUDED</span>
         </span>
       </div>
 
@@ -87,7 +91,11 @@ const navItems = [
           href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`}
           class="hover:text-[#0A0A0A] transition-colors font-bold text-[#0A0A0A] flex items-center space-x-1"
         >
-          <span>ТЕЛ:</span>
+          <span>
+            <span class="rt-lang rt-lang-ru">ТЕЛ:</span>
+            <span class="rt-lang rt-lang-uz">TEL:</span>
+            <span class="rt-lang rt-lang-en">TEL:</span>
+          </span>
           <span>{globalData.phone}</span>
         </a>
         {globalData.b2bPortalUrl && (
@@ -207,7 +215,11 @@ const navItems = [
           <line x1="3" y1="12" x2="21" y2="12"></line>
           <line x1="3" y1="18" x2="21" y2="18"></line>
         </svg>
-        <span class="text-[11px] tracking-wider font-mono">МЕНЮ</span>
+        <span class="text-[11px] tracking-wider font-mono">
+          <span class="rt-lang rt-lang-ru">МЕНЮ</span>
+          <span class="rt-lang rt-lang-uz">MENYU</span>
+          <span class="rt-lang rt-lang-en">MENU</span>
+        </span>
       </button>
     </div>
   </div>
@@ -227,7 +239,11 @@ const navItems = [
         <div class="flex items-center justify-between pb-4 border-b border-[#0A0A0A]/20 mb-6">
           <div class="flex items-center space-x-2 font-mono text-xs font-bold text-[#0A0A0A]">
             <span class="w-2.5 h-2.5 bg-[#0A0A0A] inline-block"></span>
-            <span>СИСТЕМНОЕ МЕНЮ // HUD</span>
+            <span>
+              <span class="rt-lang rt-lang-ru">СИСТЕМНОЕ МЕНЮ // HUD</span>
+              <span class="rt-lang rt-lang-uz">TIZIM MENYUSI // HUD</span>
+              <span class="rt-lang rt-lang-en">SYSTEM MENU // HUD</span>
+            </span>
           </div>
           <button
             id="mobile-nav-close"
@@ -235,7 +251,9 @@ const navItems = [
             aria-label="Закрыть меню"
             class="min-w-[44px] min-h-[44px] border border-[#0A0A0A] bg-white/40 hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer flex items-center justify-center font-mono text-xs font-bold px-3"
           >
-            ✕ ЗАКРЫТЬ
+            <span class="rt-lang rt-lang-ru">✕ ЗАКРЫТЬ</span>
+            <span class="rt-lang rt-lang-uz">✕ YOPISH</span>
+            <span class="rt-lang rt-lang-en">✕ CLOSE</span>
           </button>
         </div>
 
@@ -273,7 +291,11 @@ const navItems = [
           data-lead-subject="Запрос консультации из мобильного меню"
           class="hud-btn w-full min-h-[48px] text-xs font-bold cursor-pointer"
         >
-          <span>[ ОСТАВИТЬ ЗАЯВКУ ↗ ]</span>
+          <span>
+            <span class="rt-lang rt-lang-ru">[ ОСТАВИТЬ ЗАЯВКУ ↗ ]</span>
+            <span class="rt-lang rt-lang-uz">[ SO'ROV YUBORISH ↗ ]</span>
+            <span class="rt-lang rt-lang-en">[ SUBMIT REQUEST ↗ ]</span>
+          </span>
         </button>
 
         <div class="grid grid-cols-2 gap-2">
@@ -281,8 +303,10 @@ const navItems = [
             href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`}
             class="min-h-[44px] border border-[#0A0A0A] bg-white/40 flex items-center justify-center gap-1.5 font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors"
           >
-            <span>📞</span>
-            <span>ПОЗВОНИТЬ</span>
+            <span>[ TEL ]</span>
+            <span class="rt-lang rt-lang-ru">ПОЗВОНИТЬ</span>
+            <span class="rt-lang rt-lang-uz">QO'NG'IROQ</span>
+            <span class="rt-lang rt-lang-en">CALL</span>
           </a>
           <a
             href="https://t.me/railtech_uz"
@@ -290,7 +314,7 @@ const navItems = [
             rel="noopener noreferrer"
             class="min-h-[44px] border border-[#0A0A0A] bg-white/40 flex items-center justify-center gap-1.5 font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors"
           >
-            <span>💬</span>
+            <span>[ TG ↗ ]</span>
             <span>TELEGRAM</span>
           </a>
         </div>

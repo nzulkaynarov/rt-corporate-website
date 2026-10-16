@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { withBase } from '../../utils/url';
 import I18nText from '../../components/I18nText.astro';
+import HudPageHeader from '../../components/hud/HudPageHeader.astro';
 import pagesData from '../../data/cms/pages.json';
 
 const allPosts = await getCollection('blog');
@@ -28,48 +29,13 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
   description="Экспертные статьи инженеров ООО «RailTech»: организация складского резерва в Ташкенте, расчет Landed Cost DDP, алгоритмы цифровой обработки и технологический трансфер."
   keywords="блог railtech, новости снабжения ташкент, landed cost ddp узбекистан, склад index b2-2097, промышленное оборудование узбекистан"
 >
-  <div class="max-w-7xl mx-auto px-4 py-10 font-sans">
-    <!-- Breadcrumbs -->
-    <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-4">
-      <a href={`${base}/`} class="hover:underline">
-        <I18nText ru="ГЛАВНАЯ" uz="BOSH SAHIFA" en="HOME" />
-      </a>
-      <span>/</span>
-      <span class="text-[#0A0A0A] font-bold">
-        <I18nText ru="БЛОГ & НОВОСТИ КОМПАНИИ (.BLOG)" uz="BLOG VA KOMPANIYA YANGILIKLARI (.BLOG)" en="BLOG & CORPORATE NEWS (.BLOG)" />
-      </span>
-    </div>
-
-    <!-- Header Section -->
-    <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8">
-      <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-3">
-        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold inline-block">
-          {bPage.code || 'PORTAL // SECTION 05'}
-        </span>
-        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A] inline-block">
-          <I18nText ru="АРХИВ ТЕХНИЧЕСКОЙ АНАЛИТИКИ" uz="TEXNIK TAHLIL ARXIVI" en="TECHNICAL ANALYSIS ARCHIVE" />
-        </span>
-        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold inline-block">
-          <I18nText ru="АКТУАЛЬНОСТЬ: 2026" uz="DOLZARBLIK: 2026" en="STATUS: 2026 ACTIVE" />
-        </span>
-      </div>
-
-      <I18nText
-        as="h1"
-        class="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3"
-        ru={bPage.title}
-        uz={bPage.title_uz}
-        en={bPage.title_en}
-      />
-
-      <I18nText
-        as="p"
-        class="text-base text-[#4A5056] max-w-3xl leading-relaxed"
-        ru={bPage.subtitle}
-        uz={bPage.subtitle_uz}
-        en={bPage.subtitle_en}
-      />
-    </div>
+  <div class="max-w-7xl mx-auto px-4 py-6 font-sans">
+    <HudPageHeader
+      code={bPage.code || 'SEC.04 // BLOG'}
+      crumb={{ ru: 'БЛОГ', uz: 'BLOG', en: 'BLOG' }}
+      title={{ ru: bPage.title, uz: bPage.title_uz, en: bPage.title_en }}
+      lead={{ ru: bPage.subtitle, uz: bPage.subtitle_uz, en: bPage.subtitle_en }}
+    />
 
     <!-- Featured Post Hero (if exists) -->
     {featuredPost && (
@@ -84,7 +50,7 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
             </span>
           </div>
           <div class="text-[#4A5056]">
-            {featuredPost.data.publishDate} // {featuredPost.data.readTime}
+            {featuredPost.data.publishDate} // <I18nText ru={featuredPost.data.readTime} uz={featuredPost.data.readTime_uz} en={featuredPost.data.readTime_en} />
           </div>
         </div>
 
@@ -127,7 +93,7 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
             </div>
             <a
               href={`${base}/blog/${featuredPost.slug}`}
-              class="w-full border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white py-3 text-center text-xs font-bold font-mono tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors"
+              class="w-full hud-btn py-3 text-center text-xs font-bold font-mono tracking-wider cursor-pointer"
             >
               <I18nText ru="[ ЧИТАТЬ ПУБЛИКАЦИЮ → ]" uz="[ MAQOLANI O'QISH → ]" en="[ READ PUBLICATION → ]" />
             </a>
@@ -137,7 +103,7 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
     )}
 
     <!-- Filter & Search Toolbar (Vanilla CAD UI) -->
-    <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-4 mb-8 font-mono">
+    <div class="hud-glass-card p-4 mb-8 font-mono">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <!-- Category Buttons -->
         <div class="flex flex-wrap gap-1.5 text-xs" id="category-filters">
@@ -165,6 +131,9 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
             id="blog-search-input"
             type="text"
             placeholder="Поиск по темам, ГОСТ, тегам..."
+            data-i18n-placeholder-ru="Поиск по темам, ГОСТ, тегам..."
+            data-i18n-placeholder-uz="Mavzular, GOST, teglar bo'yicha qidiruv..."
+            data-i18n-placeholder-en="Search by topic, GOST, tags..."
             class="bg-[#C8CDD2] border border-[#0A0A0A] px-3 py-1.5 text-xs focus:outline-none focus:bg-white w-64"
           />
         </div>
@@ -173,7 +142,7 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
 
     <!-- Articles Grid -->
     <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-      {allPosts.map((post) => (
+      {allPosts.map((post, idx) => (
         <article
           data-category={post.data.category}
           data-search={`${post.data.title} ${post.data.title_uz || ''} ${post.data.title_en || ''} ${post.data.summary} ${post.data.tags.join(' ')} ${post.data.category}`.toLowerCase()}
@@ -182,11 +151,9 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
           <div>
             <!-- Card Header -->
             <div class="flex items-center justify-between border-b border-[#0A0A0A]/20 pb-2 mb-3 text-xs">
+              <span class="hud-card-index"><b>0{idx + 1}</b> // {post.data.publishDate}</span>
               <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#C8CDD2] text-[#0A0A0A] font-bold text-[10px]">
                 <I18nText ru={post.data.category} uz={post.data.category_uz} en={post.data.category_en} />
-              </span>
-              <span class="text-[#4A5056] text-[11px]">
-                {post.data.publishDate}
               </span>
             </div>
 
@@ -227,7 +194,7 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
           <!-- Card Footer -->
           <div class="pt-3 border-t border-[#0A0A0A]/20 flex items-center justify-between text-xs">
             <span class="text-[#4A5056] text-[11px]">
-              ⏱ {post.data.readTime}
+              <I18nText ru={post.data.readTime} uz={post.data.readTime_uz} en={post.data.readTime_en} />
             </span>
             <a
               href={`${base}/blog/${post.slug}`}
@@ -255,7 +222,7 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
     </div>
 
     <!-- CTA Section -->
-    <div class="border-2 border-[#0A0A0A] bg-[#C8CDD2] p-8 font-mono flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="hud-glass-card p-8 font-mono flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="space-y-2 max-w-2xl">
         <div class="text-sm font-bold text-[#0A0A0A] flex items-center space-x-2">
           <span class="w-3 h-3 bg-[#0A0A0A] inline-block"></span>
@@ -280,7 +247,7 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
         type="button"
         data-lead-modal
         data-lead-subject="Запрос инженерной консультации со страницы Блога"
-        class="border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white px-8 py-3.5 text-xs font-bold whitespace-nowrap hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
+        class="hud-btn px-8 py-3.5 text-xs font-bold whitespace-nowrap cursor-pointer"
       >
         <I18nText
           ru="[ ЗАДАТЬ ВОПРОС ИНЖЕНЕРУ ]"

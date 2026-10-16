@@ -25,6 +25,8 @@ collections:
       # --- ОБЩИЕ ТЕХНИЧЕСКИЕ ДАННЫЕ (ЗАПОЛНЯЮТСЯ 1 РАЗ) ---
       - { label: "⚙️ Код SKU (Артикул)", name: "sku", widget: "string", hint: "Уникальный идентификатор позиции (напр. RT-RS-118)" }
       - { label: "⚙️ Категория изделия", name: "category", widget: "string", required: false, hint: "Любая категория (напр. Подвижной состав, Спецтехника, Инструмент)" }
+      - { label: "⚙️ Категория (UZ)", name: "category_uz", widget: "string", required: false }
+      - { label: "⚙️ Категория (EN)", name: "category_en", widget: "string", required: false }
       - { label: "⚙️ ГОСТ / Стандарт", name: "gost", widget: "string", required: false, hint: "ГОСТ или ТУ (напр. ГОСТ 9246-2013)" }
       - { label: "⚙️ Код ТН ВЭД (HS Code)", name: "tnved", widget: "string", required: false, hint: "Таможенный код ТН ВЭД РУз (напр. 8607 12 000 0)" }
       - { label: "⚙️ Цена (UZS)", name: "price", widget: "string", required: false, hint: "Фиксированная цена в сумах или оставьте пустым" }
@@ -70,7 +72,6 @@ collections:
       # --- 🇷🇺 ОСНОВНОЙ ТЕКСТ (RU — ОБЯЗАТЕЛЬНЫЙ) ---
       - { label: "🇷🇺 [RU] Наименование изделия", name: "title", widget: "string", hint: "Официальное наименование по паспорту завода" }
       - { label: "🇷🇺 [RU] Подсистема (Категория)", name: "subsystem", widget: "string", required: false }
-      - { label: "🇷🇺 [RU] Статус наличия (текст)", name: "status_ru", widget: "string", required: false }
       - { label: "🇷🇺 [RU] Технические параметры (specs)", name: "specs", widget: "string", hint: "Краткая инженерная характеристика для таблицы" }
       - { label: "🇷🇺 [RU] Гарантийный срок", name: "warranty", widget: "string", default: "12 месяцев с момента ввода в эксплуатацию", required: false }
       - { label: "🇷🇺 [RU] Условия ценообразования", name: "priceNote", widget: "string", default: "Цена по запросу (с НДС 12%)", required: false }
@@ -108,6 +109,21 @@ collections:
       - { label: "⚙️ Категория (UZ)", name: "category_uz", widget: "string", required: false }
       - { label: "⚙️ Категория (EN)", name: "category_en", widget: "string", required: false }
       - { label: "⚙️ Изображение услуги", name: "image", widget: "image", required: false }
+      - label: "⚙️ Дополнительные фото услуги"
+        name: "images"
+        widget: "list"
+        required: false
+        field: { label: "Фотография", name: "image", widget: "image" }
+      - label: "⚙️ Документы и файлы регламентов"
+        name: "documents"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "🇷🇺 Название документа", name: "title", widget: "string" }
+          - { label: "🇺🇿 Hujjat nomi (UZ)", name: "title_uz", widget: "string", required: false }
+          - { label: "🇬🇧 Document title (EN)", name: "title_en", widget: "string", required: false }
+          - { label: "Файл или ссылка (URL)", name: "file", widget: "file", hint: "Загрузите файл (PDF, DOCX) или вставьте внешнюю ссылку" }
+          - { label: "Тип и размер (напр. PDF • 1.4 MB)", name: "type", widget: "string", required: false }
       - { label: "⚙️ Порядок отображения", name: "order", widget: "number", default: 1 }
 
       # --- 🇷🇺 ОСНОВНОЙ ТЕКСТ (RU) ---
@@ -165,7 +181,26 @@ collections:
     fields:
       # --- ОБЩИЕ ТЕХНИЧЕСКИЕ ДАННЫЕ ---
       - { label: "⚙️ Код проекта (напр. LAB 01)", name: "code", widget: "string" }
-      - { label: "⚙️ Изображение проекта", name: "image", widget: "image", required: false }
+      - { label: "⚙️ Категория проекта (RU)", name: "category", widget: "string", required: false }
+      - { label: "⚙️ Loyiha kategoriyasi (UZ)", name: "category_uz", widget: "string", required: false }
+      - { label: "⚙️ Project Category (EN)", name: "category_en", widget: "string", required: false }
+      - { label: "⚙️ Год реализации", name: "year", widget: "string", required: false, default: "2025" }
+      - { label: "⚙️ Изображение проекта (главное)", name: "image", widget: "image", required: false }
+      - label: "⚙️ Галерея фотографий проекта"
+        name: "images"
+        widget: "list"
+        required: false
+        field: { label: "Фотография", name: "image", widget: "image" }
+      - label: "⚙️ Документы и материалы кейса"
+        name: "documents"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "🇷🇺 Название документа", name: "title", widget: "string" }
+          - { label: "🇺🇿 Hujjat nomi (UZ)", name: "title_uz", widget: "string", required: false }
+          - { label: "🇬🇧 Document title (EN)", name: "title_en", widget: "string", required: false }
+          - { label: "Файл или ссылка (URL)", name: "file", widget: "file", hint: "Загрузите файл (PDF, DOCX) или вставьте внешнюю ссылку" }
+          - { label: "Тип и размер (напр. PDF • 1.4 MB)", name: "type", widget: "string", required: false }
       - { label: "⚙️ Порядок отображения", name: "order", widget: "number", default: 1 }
 
       # --- 🇷🇺 ОСНОВНОЙ ТЕКСТ (RU — ОБЯЗАТЕЛЬНЫЙ) ---

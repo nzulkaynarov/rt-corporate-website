@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import I18nText from '../../components/I18nText.astro';
 import HudPageHeader from '../../components/hud/HudPageHeader.astro';
-import HudViewportFrame from '../../components/hud/HudViewportFrame.astro';
+import { ProductMediaGallery } from '../../components/islands/ProductMediaGallery';
 import { withBase } from '../../utils/url';
 
 export async function getStaticPaths() {
@@ -148,37 +148,70 @@ const breadcrumbJsonLd = {
               <Content />
             </div>
             <div class="rt-lang rt-lang-uz">
-              {entry.data.body_uz ? <p>{entry.data.body_uz}</p> : <Content />}
+              {entry.data.body_uz ? <div class="space-y-4 whitespace-pre-line">{entry.data.body_uz}</div> : <Content />}
             </div>
             <div class="rt-lang rt-lang-en">
-              {entry.data.body_en ? <p>{entry.data.body_en}</p> : <Content />}
+              {entry.data.body_en ? <div class="space-y-4 whitespace-pre-line">{entry.data.body_en}</div> : <Content />}
             </div>
           </div>
         </div>
 
-
+        <!-- Downloadable Documentation & Service Agreements -->
+        {entry.data.documents && entry.data.documents.length > 0 && (
+          <div class="hud-glass-card p-6">
+            <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 flex justify-between items-center font-mono text-xs">
+              <span class="font-bold text-[#0A0A0A] tracking-wider uppercase flex items-center gap-2">
+                <span class="w-2 h-2 bg-[#0A0A0A] inline-block"></span>
+                <I18nText ru="ДОКУМЕНТАЦИЯ И РЕГЛАМЕНТЫ" uz="HUJJATLAR VA REGLAMENTLAR" en="DOCUMENTATION & REGULATIONS" />
+              </span>
+              <span class="text-[#4A5056]">FILES // 0{entry.data.documents.length}</span>
+            </div>
+            <div class="space-y-2.5 font-mono text-xs">
+              {entry.data.documents.map((doc) => {
+                const fileUrl = doc.file.startsWith('http') ? doc.file : withBase(doc.file);
+                return (
+                  <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 border border-[#0A0A0A]/20 bg-white/40 hover:bg-white/80 transition-colors gap-2">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                      <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-1.5 py-0.5 text-[10px] font-bold">DOC</span>
+                      <div class="min-w-0">
+                        <div class="font-bold text-[#0A0A0A] truncate">
+                          <I18nText ru={doc.title} uz={doc.title_uz} en={doc.title_en} />
+                        </div>
+                        <div class="text-[10px] text-[#4A5056] uppercase tracking-wider">
+                          {doc.type || 'PDF DOCUMENT'}
+                        </div>
+                      </div>
+                    </div>
+                    <a
+                      href={fileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="hud-btn hud-btn--ghost text-[11px] py-1.5 px-3 self-start sm:self-auto text-center shrink-0"
+                    >
+                      <I18nText ru="СКАЧАТЬ / ОТКРЫТЬ ↓" uz="YUKLAB OLISH / OCHISH ↓" en="DOWNLOAD / OPEN ↓" />
+                    </a>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
       <!-- Right Column: Media Frame, Benefits & Order Box -->
       <div class="lg:col-span-5 flex flex-col space-y-6">
-        {entry.data.image && (
-          <HudViewportFrame
-            topLabel={`MEDIA // ${entry.data.code}`}
-            bottomLabel="RAILTECH SERVICE DESK"
-          >
-            <div class="aspect-[16/10] overflow-hidden">
-              <img
-                src={withBase(entry.data.image)}
-                alt={entry.data.title}
-                class="w-full h-full object-cover"
-                style={{ filter: 'grayscale(0.2) contrast(1.05)' }}
-                loading="eager"
-                decoding="async"
-                onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full bg-[#C4C9CE] flex flex-col items-center justify-center p-4 font-mono text-[11px] text-[#4A5056] text-center border border-[#0A0A0A]/20\'><span class=\'font-bold text-[#0A0A0A]\'>OPTICAL_FEED // READY</span><span>SERVICE_MEDIA // CALIBRATED</span></div>';"
-              />
-            </div>
-          </HudViewportFrame>
-        )}
+        <ProductMediaGallery
+          client:load
+          sku={entry.data.code}
+          title={entry.data.title}
+          title_uz={entry.data.title_uz}
+          title_en={entry.data.title_en}
+          category={entry.data.category}
+          category_uz={entry.data.category_uz}
+          category_en={entry.data.category_en}
+          image={entry.data.image}
+          images={entry.data.images}
+        />
 
         <!-- Key Benefits & Facts -->
         <div class="hud-glass-card p-6 font-mono text-xs">

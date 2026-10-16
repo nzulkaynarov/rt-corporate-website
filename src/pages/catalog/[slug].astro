@@ -166,6 +166,46 @@ const breadcrumbJsonLd = {
                   <I18nText ru={categoryName} uz={categoryNameUz} en={categoryNameEn} />
                 </td>
               </tr>
+              {entry.data.gost && (
+                <tr class="hover:bg-white/30 transition-colors">
+                  <td class="py-2.5 pr-3 text-[#4A5056]">
+                    <I18nText ru="ГОСТ / ТУ:" uz="GOST / TU:" en="Standard / GOST:" />
+                  </td>
+                  <td class="py-2.5 font-bold text-[#0A0A0A]">{entry.data.gost}</td>
+                </tr>
+              )}
+              {entry.data.tnved && (
+                <tr class="hover:bg-white/30 transition-colors">
+                  <td class="py-2.5 pr-3 text-[#4A5056]">
+                    <I18nText ru="Код ТН ВЭД:" uz="TIF TN kodi:" en="HS Code (TN VED):" />
+                  </td>
+                  <td class="py-2.5 font-bold text-[#0A0A0A]">{entry.data.tnved}</td>
+                </tr>
+              )}
+              {entry.data.dimensions && (
+                <tr class="hover:bg-white/30 transition-colors">
+                  <td class="py-2.5 pr-3 text-[#4A5056]">
+                    <I18nText ru="Габариты:" uz="O'lchamlari:" en="Dimensions:" />
+                  </td>
+                  <td class="py-2.5 text-[#0A0A0A]">{entry.data.dimensions}</td>
+                </tr>
+              )}
+              {entry.data.weight && (
+                <tr class="hover:bg-white/30 transition-colors">
+                  <td class="py-2.5 pr-3 text-[#4A5056]">
+                    <I18nText ru="Масса / Вес:" uz="Og'irligi:" en="Weight:" />
+                  </td>
+                  <td class="py-2.5 text-[#0A0A0A]">{entry.data.weight}</td>
+                </tr>
+              )}
+              {entry.data.material && (
+                <tr class="hover:bg-white/30 transition-colors">
+                  <td class="py-2.5 pr-3 text-[#4A5056]">
+                    <I18nText ru="Материал:" uz="Material:" en="Material:" />
+                  </td>
+                  <td class="py-2.5 text-[#0A0A0A]">{entry.data.material}</td>
+                </tr>
+              )}
               {/* Dynamic CMS attributes */}
               {entry.data.attributes && entry.data.attributes.map((attr) => (
                 <tr class="hover:bg-white/30 transition-colors">
@@ -223,10 +263,10 @@ const breadcrumbJsonLd = {
               <Content />
             </div>
             <div class="rt-lang rt-lang-uz">
-              {entry.data.body_uz ? <p>{entry.data.body_uz}</p> : <Content />}
+              {entry.data.body_uz ? <div class="space-y-4 whitespace-pre-line">{entry.data.body_uz}</div> : <Content />}
             </div>
             <div class="rt-lang rt-lang-en">
-              {entry.data.body_en ? <p>{entry.data.body_en}</p> : <Content />}
+              {entry.data.body_en ? <div class="space-y-4 whitespace-pre-line">{entry.data.body_en}</div> : <Content />}
             </div>
           </div>
         </div>
@@ -247,7 +287,7 @@ const breadcrumbJsonLd = {
                 return (
                   <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 border border-[#0A0A0A]/20 bg-white/40 hover:bg-white/80 transition-colors gap-2">
                     <div class="flex items-center gap-2.5 min-w-0">
-                      <span class="text-base select-none">📄</span>
+                      <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-1.5 py-0.5 text-[10px] font-bold">DOC</span>
                       <div class="min-w-0">
                         <div class="font-bold text-[#0A0A0A] truncate">
                           <I18nText ru={doc.title} uz={doc.title_uz} en={doc.title_en} />
@@ -398,7 +438,7 @@ const breadcrumbJsonLd = {
               class="hud-glass-card p-4 group flex flex-col justify-between hover:border-[#0A0A0A] transition-all"
             >
               <div>
-                <div class="hud-viewport-frame mb-3 overflow-hidden aspect-[16/10]">
+                <div class="hud-card-media aspect-[16/10] mb-3">
                   <img
                     src={withBase(item.data.image || `/images/catalog/${item.data.sku.toLowerCase()}.jpg`)}
                     alt={item.data.title}
@@ -409,18 +449,32 @@ const breadcrumbJsonLd = {
                 </div>
                 <div class="flex items-center justify-between text-[11px] text-[#4A5056] mb-1">
                   <span class="font-bold text-[#0A0A0A]">{item.data.sku}</span>
-                  <span class="uppercase truncate max-w-[50%]">{item.data.category || item.data.subsystem}</span>
+                  <span class="uppercase truncate max-w-[50%]">
+                    <I18nText
+                      ru={item.data.category || item.data.subsystem || ''}
+                      uz={item.data.category_uz || item.data.subsystem_uz}
+                      en={item.data.category_en || item.data.subsystem_en}
+                    />
+                  </span>
                 </div>
                 <h3 class="text-xs sm:text-sm font-bold text-[#0A0A0A] line-clamp-2 mb-2 group-hover:underline">
-                  {item.data.title}
+                  <I18nText
+                    ru={item.data.title}
+                    uz={item.data.title_uz}
+                    en={item.data.title_en}
+                  />
                 </h3>
               </div>
               <div class="pt-3 border-t border-[#0A0A0A]/15 flex items-center justify-between text-xs mt-2">
                 <span class="text-emerald-900 font-bold text-[11px] bg-emerald-100/60 px-1.5 py-0.5">
-                  {item.data.status}
+                  <I18nText
+                    ru={item.data.status}
+                    uz={item.data.status_uz}
+                    en={item.data.status_en}
+                  />
                 </span>
                 <span class="font-bold text-[#0A0A0A]">
-                  Подробнее →
+                  <I18nText ru="Подробнее →" uz="Batafsil →" en="Details →" />
                 </span>
               </div>
             </a>

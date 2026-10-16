@@ -2,10 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { ContactsLeadForm } from '../components/islands/ContactsLeadForm';
 import I18nText from '../components/I18nText.astro';
+import HudPageHeader from '../components/hud/HudPageHeader.astro';
 import contactsData from '../data/cms/contacts.json';
 import globalData from '../data/cms/global.json';
-
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout
@@ -13,55 +12,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   description={`Контакты отделов снабжения, ВЭД и бухгалтерии ${globalData.companyName}. Адрес склада: ${globalData.address}. Телефон ${globalData.phone}, электронная почта ${contactsData.departments[0].email}, схема проезда.`}
   keywords="контакты railtech, склад index b2-2097 ташкент, телефон отдела снабжения railtech uz, схема проезда к комплексу index, реквизиты ооо railtech"
 >
-  <div class="max-w-7xl mx-auto px-4 py-10 font-sans">
-    <!-- Breadcrumbs -->
-    <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-4">
-      <a href={`${base}/`} class="hover:underline">
-        <I18nText ru="ГЛАВНАЯ" uz="BOSH SAHIFA" en="HOME" />
-      </a>
-      <span>/</span>
-      <span class="text-[#0A0A0A] font-bold">
-        <I18nText ru="КОНТАКТЫ & РЕКВИЗИТЫ" uz="KONTAKTLAR VA REKVIZITLAR" en="CONTACTS & REQUISITES" />
-      </span>
-    </div>
-
-    <!-- Header Section -->
-    <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8 font-mono">
-      <div class="flex flex-wrap items-center gap-2 text-xs mb-3">
-        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold inline-block">
-          <I18nText ru={contactsData.badge} uz={contactsData.badge_uz} en={contactsData.badge_en} />
-        </span>
-        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A] inline-block">
-          <I18nText ru={contactsData.location} uz={contactsData.location_uz} en={contactsData.location_en} />
-        </span>
-        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold inline-block">
-          <I18nText ru={contactsData.statusBadge} uz={contactsData.statusBadge_uz} en={contactsData.statusBadge_en} />
-        </span>
-      </div>
-
-      <I18nText
-        as="h1"
-        class="font-sans text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3"
-        ru={contactsData.pageTitle}
-        uz={contactsData.pageTitle_uz}
-        en={contactsData.pageTitle_en}
-      />
-
-      <I18nText
-        as="p"
-        class="font-sans text-base text-[#4A5056] max-w-3xl leading-relaxed"
-        ru={contactsData.pageSubtitle}
-        uz={contactsData.pageSubtitle_uz}
-        en={contactsData.pageSubtitle_en}
-      />
-    </div>
+  <div class="max-w-7xl mx-auto px-4 py-6 font-sans">
+    <HudPageHeader
+      code={contactsData.badge || 'SEC.06 // CONTACTS'}
+      crumb={{ ru: 'КОНТАКТЫ & РЕКВИЗИТЫ', uz: 'KONTAKTLAR VA REKVIZITLAR', en: 'CONTACTS & REQUISITES' }}
+      title={{ ru: contactsData.pageTitle, uz: contactsData.pageTitle_uz, en: contactsData.pageTitle_en }}
+      lead={{ ru: contactsData.pageSubtitle, uz: contactsData.pageSubtitle_uz, en: contactsData.pageSubtitle_en }}
+    />
 
     <!-- Main Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-14">
       <!-- Left Column: Department Directory & Logistics -->
       <div class="lg:col-span-7 flex flex-col space-y-6">
         <!-- Direct Lines Table -->
-        <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] font-mono">
+        <div class="hud-glass-card p-0 font-mono overflow-hidden">
           <div class="border-b border-[#0A0A0A] bg-[#0A0A0A] text-white px-4 py-2 text-xs font-bold tracking-wider">
             <I18nText ru="ПРЯМЫЕ КОНТАКТЫ ПОДРАЗДЕЛЕНИЙ" uz="BO'LIMLARNING TO'G'RIDAN-TO'G'RI KONTAKTLARI" en="DIRECT DEPARTMENTAL CONTACTS" />
           </div>
@@ -90,7 +54,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </div>
 
         <!-- Logistics & Access Guidelines -->
-        <div class="border-2 border-[#0A0A0A] bg-[#C8CDD2] p-6 font-mono text-xs">
+        <div class="hud-glass-card p-6 font-mono text-xs">
           <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A] pb-2 mb-3">
             <I18nText
               ru="ИНСТРУКЦИЯ ПО ПРОЕЗДУ ДЛЯ ГРУЗОВОГО ТРАНСПОРТА:"
@@ -116,7 +80,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
               href={contactsData.yandexMapUrl}
               target="_blank"
               rel="noopener noreferrer"
-              class="border border-[#0A0A0A] bg-white px-2.5 py-1 text-[#0A0A0A] font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors"
+              class="hud-btn px-2.5 py-1 text-xs font-bold"
             >
               <I18nText ru="ОТКРЫТЬ НА ЯНДЕКС.КАРТАХ ↗" uz="YANDEX.XARITALARDA OCHISH ↗" en="OPEN IN YANDEX MAPS ↗" />
             </a>
@@ -129,7 +93,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <ContactsLeadForm client:load />
 
         <!-- Official Bank Details Box -->
-        <div class="border border-[#0A0A0A] bg-[#C8CDD2] p-5 font-mono text-xs space-y-2">
+        <div class="hud-glass-card p-5 font-mono text-xs space-y-2">
           <div class="font-bold text-[#0A0A0A]">
             <I18nText ru="БАНКОВСКИЕ РЕКВИЗИТЫ ДЛЯ ДОГОВОРОВ:" uz="SHARTNOMALAR UCHUN BANK REKVIZITLARI:" en="BANKING DETAILS FOR AGREEMENTS:" />
           </div>
@@ -180,13 +144,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <button
             type="button"
             id="copy-requisites-btn"
-            class="w-full mt-3 border border-[#0A0A0A] bg-white py-2 px-3 text-xs font-mono font-bold text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+            class="hud-btn w-full mt-3 py-2 px-3 text-xs font-mono font-bold cursor-pointer flex items-center justify-center gap-1.5"
           >
             <span id="copy-btn-text">
               <I18nText
-                ru="[ Скопировать реквизиты компании 📋 ]"
-                uz="[ Korxona rekvizitlarini nusxalash 📋 ]"
-                en="[ Copy Company Requisites 📋 ]"
+                ru="[ Скопировать реквизиты компании ]"
+                uz="[ Korxona rekvizitlarini nusxalash ]"
+                en="[ Copy Company Requisites ]"
               />
             </span>
           </button>
@@ -214,7 +178,8 @@ Email: ${globalData.emailGeneral}`
       btn.addEventListener('click', async () => {
         try {
           await navigator.clipboard.writeText(requisitesPayload);
-          label.textContent = '✓ Реквизиты скопированы';
+          const lang = document.documentElement.lang || 'ru';
+          label.textContent = lang === 'uz' ? '[ ✓ Rekvizitlar nusxalandi ]' : lang === 'en' ? '[ ✓ Requisites copied ]' : '[ ✓ Реквизиты скопированы ]';
           btn.classList.add('bg-[#0A0A0A]', 'text-white');
           setTimeout(() => {
             label.innerHTML = originalHTML;

@@ -2,10 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import I18nText from '../components/I18nText.astro';
+import HudPageHeader from '../components/hud/HudPageHeader.astro';
 import aboutData from '../data/cms/about.json';
 import globalData from '../data/cms/global.json';
-
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const faqJsonLd = {
   '@context': 'https://schema.org',
@@ -29,48 +28,13 @@ const faqJsonLd = {
   <!-- FAQPage Schema.org JSON-LD -->
   <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
 
-  <div class="max-w-7xl mx-auto px-4 py-10 font-sans">
-    <!-- Breadcrumbs -->
-    <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-4">
-      <a href={`${base}/`} class="hover:underline">
-        <I18nText ru="ГЛАВНАЯ" uz="BOSH SAHIFA" en="HOME" />
-      </a>
-      <span>/</span>
-      <span class="text-[#0A0A0A] font-bold">
-        <I18nText ru="О КОМПАНИИ // ЮРИДИЧЕСКИЙ СТАТУС" uz="KOMPANIYA HAQIDA // YURIDIK MAQOM" en="ABOUT COMPANY // LEGAL STATUS" />
-      </span>
-    </div>
-
-    <!-- Header Section -->
-    <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8 font-mono">
-      <div class="flex flex-wrap items-center gap-2 text-xs mb-3">
-        <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold inline-block">
-          <I18nText ru={aboutData.badge} uz={aboutData.badge_uz} en={aboutData.badge_en} />
-        </span>
-        <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A] inline-block">
-          <I18nText ru={`ИНН: ${globalData.inn}`} uz={`STIR: ${globalData.inn_uz || globalData.inn}`} en={`TIN: ${globalData.inn_en || globalData.inn}`} />
-        </span>
-        <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold inline-block">
-          <I18nText ru="ПЛАТЕЛЬЩИК НДС 12%" uz="12% QQS TO'LOVCHISI" en="12% VAT ACCREDITED" />
-        </span>
-      </div>
-
-      <I18nText
-        as="h1"
-        class="font-sans text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3"
-        ru={aboutData.pageTitle}
-        uz={aboutData.pageTitle_uz}
-        en={aboutData.pageTitle_en}
-      />
-
-      <I18nText
-        as="p"
-        class="font-sans text-base text-[#4A5056] max-w-3xl leading-relaxed"
-        ru={aboutData.pageSubtitle}
-        uz={aboutData.pageSubtitle_uz}
-        en={aboutData.pageSubtitle_en}
-      />
-    </div>
+  <div class="max-w-7xl mx-auto px-4 py-6 font-sans">
+    <HudPageHeader
+      code={aboutData.badge || 'SEC.05 // ABOUT'}
+      crumb={{ ru: 'О КОМПАНИИ', uz: 'KOMPANIYA HAQIDA', en: 'ABOUT US' }}
+      title={{ ru: aboutData.pageTitle, uz: aboutData.pageTitle_uz, en: aboutData.pageTitle_en }}
+      lead={{ ru: aboutData.pageSubtitle, uz: aboutData.pageSubtitle_uz, en: aboutData.pageSubtitle_en }}
+    />
 
     <!-- Mission Banner -->
     <div class="hud-glass-card p-6 lg:p-8 font-mono mb-10">
@@ -141,7 +105,7 @@ const faqJsonLd = {
     </div>
 
     <!-- Official Dossier & Legal Requisites Table -->
-    <div class="border-2 border-[#0A0A0A] bg-[#C8CDD2] p-8 font-mono mb-14">
+    <div class="hud-glass-card p-8 font-mono mb-14">
       <div class="border-b border-[#0A0A0A] pb-3 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div class="flex items-center space-x-2">
           <span class="w-3 h-3 bg-[#0A0A0A] inline-block"></span>
@@ -157,7 +121,7 @@ const faqJsonLd = {
           type="button"
           data-lead-modal
           data-lead-subject="Запрос карточки предприятия и учредительных документов ООО «RailTech»"
-          class="border border-[#0A0A0A] bg-white px-3 py-1 text-xs font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer"
+          class="hud-btn px-3 py-1.5 text-xs font-bold cursor-pointer"
         >
           <I18nText
             ru="[ СКАЧАТЬ КАРТОЧКУ ПРЕДПРИЯТИЯ ↗ ]"

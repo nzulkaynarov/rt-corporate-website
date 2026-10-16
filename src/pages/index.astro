@@ -116,7 +116,7 @@ const modes = [
             <!-- Block Directions (CMS Editable List) -->
             <div>
               <span class="font-mono text-[10px] tracking-wider text-[#4A5056] block uppercase mb-2">
-                // НАПРАВЛЕНИЯ
+                <I18nText ru="// НАПРАВЛЕНИЯ" uz="// YO'NALISHLAR" en="// SECTORS" />
               </span>
               <div class="flex flex-col space-y-1 font-mono text-xs">
                 {homeData.directions.map((dir, idx) => (
@@ -151,7 +151,7 @@ const modes = [
         <div class="lg:col-span-3 flex flex-col justify-between gap-3">
           <div>
             <span class="font-mono text-[10px] tracking-wider text-[#4A5056] uppercase block mb-2">
-              // ПАСПОРТ ОПЕРАТОРА
+              <I18nText ru="// ПАСПОРТ ОПЕРАТОРА" uz="// OPERATOR PASPORTI" en="// OPERATOR PASSPORT" />
             </span>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3">
@@ -371,7 +371,38 @@ const modes = [
         </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Mobile Projects Feed (< 768px) -->
+      <div class="md:hidden space-y-2.5">
+        {featuredProjects.map((prj) => (
+          <a
+            href={`${base}/projects/${prj.slug}/`}
+            class="hud-glass-card p-4 block hover:bg-white/50 transition-colors font-mono"
+          >
+            <div class="flex items-center justify-between text-[10px] text-[#4A5056] mb-1.5">
+              <div class="flex items-center gap-2">
+                <span class="bg-[#0A0A0A] text-white px-1.5 py-0.5 font-bold">
+                  {prj.data.code}
+                </span>
+                <span class="text-[#0A0A0A] font-bold">
+                  <I18nText ru={prj.data.category || prj.data.tag} uz={prj.data.category_uz || prj.data.tag_uz} en={prj.data.category_en || prj.data.tag_en} />
+                </span>
+              </div>
+              <span class="text-xs text-[#0A0A0A] font-bold">→</span>
+            </div>
+            <h3 class="font-sans font-bold text-sm text-[#0A0A0A] leading-snug line-clamp-2 mb-1">
+              <I18nText ru={prj.data.title} uz={prj.data.title_uz} en={prj.data.title_en} />
+            </h3>
+            {prj.data.subtitle && (
+              <p class="font-sans text-xs text-[#4A5056] line-clamp-2 leading-relaxed">
+                <I18nText ru={prj.data.subtitle} uz={prj.data.subtitle_uz} en={prj.data.subtitle_en} />
+              </p>
+            )}
+          </a>
+        ))}
+      </div>
+
+      <!-- Desktop/Tablet Grid View (>= 768px) -->
+      <div class="hidden md:grid md:grid-cols-3 gap-6">
         {featuredProjects.map((prj) => (
           <HudCard
             index={prj.data.code}
@@ -481,6 +512,12 @@ const modes = [
 
       modeButtons.forEach(function(btn) {
         btn.addEventListener('click', function() {
+          var isCurrentActive = btn.classList.contains('bg-[#0A0A0A]');
+          var href = btn.getAttribute('data-mode-href');
+          if (isCurrentActive && href) {
+            window.location.href = href;
+            return;
+          }
           var idx = parseInt(btn.getAttribute('data-mode-idx') || '0', 10);
           window.dispatchEvent(new CustomEvent('hud-slide-go', { detail: idx }));
         });

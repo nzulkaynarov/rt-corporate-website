@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import type { Locale } from '../../store/modeStore';
 import { UI_STRINGS } from '../../store/modeStore';
 import { useLang } from '../../utils/useLang';
+import { withBase } from '../../utils/url';
 
 interface LeadModalProps {
   isOpen: boolean;
@@ -117,9 +118,16 @@ export const LeadModal: React.FC<LeadModalProps> = ({
         timestamp: new Date().toISOString(),
       };
 
-      const webhookUrl = import.meta.env.PUBLIC_LEAD_WEBHOOK_URL || import.meta.env.PUBLIC_WEBHOOK_URL;
-      const tgBotToken = import.meta.env.PUBLIC_TG_BOT_TOKEN;
-      const tgChatId = import.meta.env.PUBLIC_TG_CHAT_ID;
+      const webhookUrl =
+        import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ||
+        import.meta.env.PUBLIC_LEAD_WORKER_URL ||
+        import.meta.env.PUBLIC_WEBHOOK_URL;
+      const tgBotToken =
+        import.meta.env.PUBLIC_TG_BOT_TOKEN ||
+        import.meta.env.PUBLIC_TELEGRAM_BOT_TOKEN;
+      const tgChatId =
+        import.meta.env.PUBLIC_TG_CHAT_ID ||
+        import.meta.env.PUBLIC_TELEGRAM_CHAT_ID;
 
       let sent = false;
 
@@ -408,14 +416,41 @@ export const LeadModal: React.FC<LeadModalProps> = ({
 
             {/* Privacy & Legal disclaimer */}
             <p className="text-[10px] text-[#4A5056] leading-tight">
-              Отправляя заявку, вы подтверждаете согласие с условиями{' '}
-              <a href="/privacy" target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
-                Политики конфиденциальности
-              </a>{' '}
-              и{' '}
-              <a href="/terms" target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
-                Условий использования
-              </a>.
+              {activeLang === 'uz' ? (
+                <>
+                  So'rov yuborish orqali siz{' '}
+                  <a href={withBase('/privacy')} target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
+                    Maxfiylik siyosati
+                  </a>{' '}
+                  va{' '}
+                  <a href={withBase('/terms')} target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
+                    Foydalanish shartlari
+                  </a>
+                  ga rozilik bildirasiz.
+                </>
+              ) : activeLang === 'en' ? (
+                <>
+                  By submitting this inquiry, you confirm agreement to our{' '}
+                  <a href={withBase('/privacy')} target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
+                    Privacy Policy
+                  </a>{' '}
+                  and{' '}
+                  <a href={withBase('/terms')} target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
+                    Terms of Service
+                  </a>.
+                </>
+              ) : (
+                <>
+                  Отправляя заявку, вы подтверждаете согласие с условиями{' '}
+                  <a href={withBase('/privacy')} target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
+                    Политики конфиденциальности
+                  </a>{' '}
+                  и{' '}
+                  <a href={withBase('/terms')} target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
+                    Условий использования
+                  </a>.
+                </>
+              )}
             </p>
 
             <div className="pt-2 flex items-center justify-end gap-2 border-t border-[#0A0A0A]/20">

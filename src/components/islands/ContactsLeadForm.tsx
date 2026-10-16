@@ -115,7 +115,10 @@ export const ContactsLeadForm: React.FC = () => {
         locale: lang,
       };
 
-      const workerEndpoint = import.meta.env.PUBLIC_LEAD_WORKER_URL;
+      const workerEndpoint =
+        import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ||
+        import.meta.env.PUBLIC_LEAD_WORKER_URL ||
+        import.meta.env.PUBLIC_WEBHOOK_URL;
       let sent = false;
 
       if (workerEndpoint && workerEndpoint.startsWith('http')) {
@@ -131,8 +134,12 @@ export const ContactsLeadForm: React.FC = () => {
         }
       }
 
-      const botToken = import.meta.env.PUBLIC_TELEGRAM_BOT_TOKEN;
-      const chatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID;
+      const botToken =
+        import.meta.env.PUBLIC_TG_BOT_TOKEN ||
+        import.meta.env.PUBLIC_TELEGRAM_BOT_TOKEN;
+      const chatId =
+        import.meta.env.PUBLIC_TG_CHAT_ID ||
+        import.meta.env.PUBLIC_TELEGRAM_CHAT_ID;
 
       if (!sent && botToken && chatId) {
         try {
@@ -184,7 +191,7 @@ export const ContactsLeadForm: React.FC = () => {
 
   if (submitted) {
     return (
-      <div className="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 font-mono text-center space-y-3">
+      <div className="hud-glass-card p-6 font-mono text-center space-y-3">
         <div className="inline-block bg-[#0A0A0A] text-white px-4 py-1.5 font-bold uppercase text-xs">
           {lang === 'uz' ? '✓ SO\'ROV MUVAFFAQIYATLI YUBORILDI' : lang === 'en' ? '✓ INQUIRY SUCCESSFULLY TRANSMITTED' : '✓ ЗАЯВКА УСПЕШНО ОТПРАВЛЕНА'}
         </div>
@@ -200,7 +207,7 @@ export const ContactsLeadForm: React.FC = () => {
   }
 
   return (
-    <div className="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-6 font-mono">
+    <div className="hud-glass-card p-6 font-mono">
       <div className="border-b border-[#0A0A0A] pb-2 mb-4">
         <span className="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider block">
           {lang === 'uz' ? 'TEZKOR SO\'ROV FORMASI' : lang === 'en' ? 'DIRECT PROCUREMENT INQUIRY FORM' : 'ФОРМА ОПЕРАТИВНОГО ЗАПРОСА'}

@@ -27,7 +27,7 @@ async function main() {
 
   const extensions = new Set(['.jpg', '.jpeg', '.png']);
   const MAX_WIDTH = 1600;
-  const SIZE_THRESHOLD_BYTES = 250 * 1024; // 250 KB
+  const SIZE_THRESHOLD_BYTES = 350 * 1024; // 350 KB
 
   function getFilesRecursively(dir) {
     if (!fs.existsSync(dir)) return [];
@@ -76,16 +76,18 @@ async function main() {
           let optimizedBuffer;
           const ext = path.extname(filePath).toLowerCase();
 
-          if (ext === '.png' && !needsCompression && !needsResize) {
-            continue;
+          if (ext === '.png') {
+            optimizedBuffer = await transformer
+              .png({ quality: 85, compressionLevel: 8 })
+              .toBuffer();
+          } else {
+            // Convert/optimize to progressive JPEG at quality 82
+            optimizedBuffer = await transformer
+              .jpeg({ quality: 82, progressive: true, mozjpeg: true })
+              .toBuffer();
           }
 
-          // Convert/optimize to progressive JPEG at quality 82
-          optimizedBuffer = await transformer
-            .jpeg({ quality: 82, progressive: true, mozjpeg: true })
-            .toBuffer();
-
-          if (optimizedBuffer.length < originalSize) {
+          if (optimizedBuffer.length < originalSize * 0.95) {
             fs.writeFileSync(filePath, optimizedBuffer);
             totalOptimized++;
             bytesSaved += (originalSize - optimizedBuffer.length);
