@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import { CatalogFilterTable } from '../../components/islands/CatalogFilterTable';
 import I18nText from '../../components/I18nText.astro';
 import { withBase } from '../../utils/url';
+import pagesData from '../../data/cms/pages.json';
 
 const catalogEntries = await getCollection('catalog');
 catalogEntries.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
@@ -14,12 +15,14 @@ const items = catalogEntries.map((entry) => ({
   title: entry.data.title,
   title_uz: entry.data.title_uz,
   title_en: entry.data.title_en,
-  category: entry.data.category,
-  category_uz: entry.data.category_uz,
-  category_en: entry.data.category_en,
-  subsystem: entry.data.subsystem,
-  subsystem_uz: entry.data.subsystem_uz,
-  subsystem_en: entry.data.subsystem_en,
+  category: entry.data.category || entry.data.subsystem,
+  category_uz: entry.data.category_uz || entry.data.subsystem_uz,
+  category_en: entry.data.category_en || entry.data.subsystem_en,
+  subsystem: entry.data.subsystem || entry.data.category,
+  subsystem_uz: entry.data.subsystem_uz || entry.data.category_uz,
+  subsystem_en: entry.data.subsystem_en || entry.data.category_en,
+  attributes: entry.data.attributes,
+  price: entry.data.price,
   gost: entry.data.gost,
   tnved: entry.data.tnved,
   warehouse: entry.data.warehouse,
@@ -30,15 +33,16 @@ const items = catalogEntries.map((entry) => ({
   specs: entry.data.specs,
   specs_uz: entry.data.specs_uz,
   specs_en: entry.data.specs_en,
-  image: withBase(entry.data.image || '/images/hero/warehouse.jpg'),
+  image: withBase(entry.data.image || `/images/catalog/${entry.data.sku.toLowerCase()}.jpg`),
 }));
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const cPage = pagesData.catalogPage;
 ---
 
 <BaseLayout
-  title="Каталог ЖД оборудования со склада в Ташкенте — ООО «RailTech»"
-  description="Складская программа железнодорожного оборудования и запчастей в Ташкенте: колесные пары РУ1Ш-957, тележки 18-100, автосцепки СА-3, приводы СП-6М, тормозные колодки 25610-Н. ГОСТ, ТН ВЭД, НДС 12%."
-  keywords="каталог жд запчастей ташкент, тележка 18-100 купить узбекистан, колесные пары ру1ш, автосцепка са-3, электропривод сп-6м, колодка 25610-н, склад index b2-2097"
+  title="Каталог оборудования со склада в Ташкенте — ООО «RailTech»"
+  description="Складская программа промышленного оборудования и комплектующих в Ташкенте (комплекс Index B2-2097). Паспорта качества, гарантия 12 месяцев, официальная поставка с НДС 12%."
+  keywords="каталог оборудования ташкент, склад index b2-2097, поставка оборудования узбекистан, ндс 12%, технический паспорт"
 >
   <div class="max-w-7xl mx-auto px-4 py-10 font-sans">
     <!-- Breadcrumbs & Status -->
@@ -56,7 +60,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8">
       <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-3">
         <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
-          <I18nText ru="НОМЕНКЛАТУРНЫЙ КАТАЛОГ" uz="NOMENKLATURA KATALOGI" en="PRODUCT NOMENCLATURE" />
+          {cPage.code || 'PORTAL // SECTION 02'}
         </span>
         <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
           ТАШКЕНТ / ТПК INDEX B2-2097
@@ -67,17 +71,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </div>
 
       <I18nText
-        ru="КАТАЛОГ ПРОДУКЦИИ И ТЕХНИЧЕСКИХ РЕШЕНИЙ"
-        uz="MAHSULOTLAR VA TEXNIK YECHIMLAR KATALOGI"
-        en="CATALOG OF PRODUCTS & TECHNICAL SOLUTIONS"
+        ru={cPage.title}
+        uz={cPage.title_uz}
+        en={cPage.title_en}
         as="h1"
         class="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3"
       />
 
       <I18nText
-        ru="Официальная складская программа ООО «RailTech». Все позиции прошли входной инструментальный контроль ОТК, имеют оригинальные заводские бирки, паспорта и сертификаты соответствия техническим регламентам."
-        uz="«RailTech» MCHJ rasmiy ombor dasturi. Barcha mahsulotlar OTK kirish instrumental nazoratidan o'tgan, original zavod yorliqlariga, texnik pasportlariga va muvofiqlik sertifikatlariga ega."
-        en="Official inventory program of RailTech LLC. All parts have undergone stringent incoming QC inspection, bearing original factory tags, quality passports, and compliance declarations."
+        ru={cPage.subtitle}
+        uz={cPage.subtitle_uz}
+        en={cPage.subtitle_en}
         as="p"
         class="text-base text-[#4A5056] max-w-3xl leading-relaxed"
       />
@@ -92,16 +96,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </div>
         <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]">
           <div class="text-[#4A5056] text-[10px]">
-            <I18nText ru="ПОДЪЕЗДНЫЕ ПУТИ:" uz="KIRISH YO'LLARI:" en="ACCESS SPUR:" />
+            <I18nText ru="ЛОГИСТИЧЕСКИЙ ДОСТУП:" uz="LOGISTIKA YO'LLARI:" en="LOGISTICS ACCESS:" />
           </div>
-          <div class="font-bold text-[#0A0A0A]">Прямой доступ (Ж/Д и авто)</div>
+          <div class="font-bold text-[#0A0A0A]">КПП №3 (ТПК Index)</div>
         </div>
         <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]">
           <div class="text-[#4A5056] text-[10px]">
             <I18nText ru="СКОРОСТЬ ОТГРУЗКИ:" uz="YUKLASH TEZLIGI:" en="DISPATCH LEAD TIME:" />
           </div>
           <div class="font-bold text-[#0A0A0A]">
-            <I18nText ru="В день оплаты (ЖД/авто)" uz="To'lov kuni (T/y/avto)" en="Same-day dispatch" />
+            <I18nText ru="От 24 часов" uz="24 soatdan boshlab" en="From 24 hours" />
           </div>
         </div>
         <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#C8CDD2]">
@@ -116,23 +120,23 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <!-- Interactive Filter Table Island -->
     <CatalogFilterTable client:load items={items} />
 
-    <!-- Sourcing Banner -->
+    <!-- Sourcing Banner from CMS -->
     <div class="mt-12 border-2 border-[#0A0A0A] bg-[#C8CDD2] p-6 lg:p-8 flex flex-col md:flex-row items-center justify-between gap-6 font-mono">
       <div class="space-y-2">
         <div class="text-xs font-bold text-[#0A0A0A] flex items-center space-x-2">
           <span class="w-2.5 h-2.5 bg-[#0A0A0A] inline-block"></span>
           <span>
             <I18nText
-              ru="ТРЕБУЕТСЯ СПЕЦИФИЧЕСКАЯ ПОЗИЦИЯ ИЛИ КРУПНАЯ ПАРТИЯ?"
-              uz="MAXSUS POZITSIYA YOKI YIRIK PARTIYA KERAKMI?"
-              en="NEED CUSTOM SPECIFICATION OR BULK PROCUREMENT?"
+              ru={cPage.ctaTitle}
+              uz={cPage.ctaTitle_uz}
+              en={cPage.ctaTitle_en}
             />
           </span>
         </div>
         <I18nText
-          ru="Если нужного типоразмера нет в наличии на складе в Ташкенте, наш отдел ВЭД организует прямую поставку с 86+ заводов-производителей на условиях DDP Ташкент с фиксацией цены в сумах."
-          uz="Agar kerakli o'lcham Toshkentdagi omborda mavjud bo'lmasa, TIF bo'limimiz 86+ ishlab chiqaruvchi zavoddan so'mda narxni qat'iy belgilagan holda DDP Toshkent shartlarida to'g'ridan-to'g'ri yetkazib berishni tashkil etadi."
-          en="If a specific size or component is not currently in Tashkent stock, our foreign trade desk will organize direct delivery from 86+ global manufacturers under DDP Tashkent terms with pricing fixed in UZS."
+          ru={cPage.ctaSubtitle}
+          uz={cPage.ctaSubtitle_uz}
+          en={cPage.ctaSubtitle_en}
           as="p"
           class="text-xs text-[#4A5056] max-w-2xl font-sans leading-relaxed"
         />
@@ -141,13 +145,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <button
         type="button"
         data-lead-modal
-        data-lead-subject="Запрос контрактного поиска и поставки спецификации"
+        data-lead-subject="Запрос подбора и поставки оборудования с сайта"
         class="border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white px-6 py-3 text-xs font-bold whitespace-nowrap hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
       >
         <I18nText
-          ru="[ ЗАГРУЗИТЬ ВЕДОМОСТЬ ПОТРЕБНОСТИ ]"
-          uz="[ TALAB VEDOMOSTINI YUKLASH ]"
-          en="[ UPLOAD BILL OF MATERIALS ]"
+          ru={cPage.ctaButton}
+          uz={cPage.ctaButton_uz}
+          en={cPage.ctaButton_en}
         />
       </button>
     </div>

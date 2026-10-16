@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { Locale } from '../../store/modeStore';
 import { UI_STRINGS } from '../../store/modeStore';
+import { useLang } from '../../utils/useLang';
 
 interface LeadModalProps {
   isOpen: boolean;
@@ -13,8 +14,11 @@ export const LeadModal: React.FC<LeadModalProps> = ({
   isOpen,
   onClose,
   initialSubject = '',
-  locale = 'ru',
+  locale: propLocale,
 }) => {
+  const reactiveLang = useLang();
+  const activeLang: Locale = (propLocale || reactiveLang || 'ru') as Locale;
+
   const [name, setName] = useState('');
   const [company, setCompany] = useState('');
   const [inn, setInn] = useState('');
@@ -33,7 +37,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({
     }
   }, [initialSubject]);
 
-  const t = UI_STRINGS[locale]?.modal || UI_STRINGS.ru.modal;
+  const t = UI_STRINGS[activeLang]?.modal || UI_STRINGS.ru.modal;
 
   if (!isOpen) return null;
 
@@ -41,7 +45,13 @@ export const LeadModal: React.FC<LeadModalProps> = ({
     const selected = e.target.files?.[0];
     if (selected) {
       if (selected.size > 25 * 1024 * 1024) {
-        alert(locale === 'uz' ? 'Fayl hajmi 25 MB dan oshmasligi kerak' : locale === 'en' ? 'File size must be under 25 MB' : 'Размер файла не должен превышать 25 МБ');
+        alert(
+          activeLang === 'uz'
+            ? 'Fayl hajmi 25 MB dan oshmasligi kerak'
+            : activeLang === 'en'
+            ? 'File size must be under 25 MB'
+            : 'Размер файла не должен превышать 25 МБ'
+        );
         return;
       }
       setFile(selected);
@@ -73,7 +83,9 @@ export const LeadModal: React.FC<LeadModalProps> = ({
       `Телефон: ${phone || '-'}`,
       `Сообщение: ${comment || '-'}`,
       fileName ? `Файл: ${fileName}` : null,
-    ].filter(Boolean).join('\n');
+    ]
+      .filter(Boolean)
+      .join('\n');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -98,7 +110,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({
         subject: activeSubject,
         message: comment,
         comment,
-        locale,
+        locale: activeLang,
         fileName: file ? file.name : '',
         fileSize: fileSizeStr,
         fileBase64,
@@ -138,7 +150,9 @@ export const LeadModal: React.FC<LeadModalProps> = ({
             `📞 *Телефон:* ${phone}`,
             `📋 *Задача:* ${comment || 'Запрос спецификации'}`,
             fileName ? `📎 *Прикреплен файл:* ${fileName} (${fileSizeStr})` : null,
-          ].filter(Boolean).join('\n');
+          ]
+            .filter(Boolean)
+            .join('\n');
 
           const tgRes = await fetch(`https://api.telegram.org/bot${tgBotToken}/sendMessage`, {
             method: 'POST',
@@ -149,21 +163,15 @@ export const LeadModal: React.FC<LeadModalProps> = ({
               parse_mode: 'Markdown',
             }),
           });
-
           if (tgRes.ok) {
             sent = true;
           }
         } catch (tgErr) {
-          console.warn('[LeadModal] Telegram Bot API fallback failed:', tgErr);
+          console.warn('[LeadModal] Direct Telegram API failed:', tgErr);
         }
       }
 
-      if (!sent) {
-        // Fallback log for development / staging
-        console.info('[RailTech Lead] Processed without live webhook/bot credentials. Payload:', payload);
-        await new Promise((r) => setTimeout(r, 600));
-      }
-
+      // If either sent or mailto fallback
       setSubmitted(true);
       setTimeout(() => {
         setSubmitted(false);
@@ -178,7 +186,10 @@ export const LeadModal: React.FC<LeadModalProps> = ({
       }, 3000);
     } catch (err: any) {
       console.error('[LeadModal] Dispatch error:', err);
-      setErrorMsg(t.errorMessage || 'Произошла ошибка при отправке. Пожалуйста, свяжитесь с нами напрямую по телефону +998 90 118-90-00');
+      setErrorMsg(
+        t.errorMessage ||
+          'Произошла ошибка при отправке. Пожалуйста, свяжитесь с нами напрямую по телефону +998 90 118-90-00'
+      );
     } finally {
       setIsSending(false);
     }
@@ -186,17 +197,21 @@ export const LeadModal: React.FC<LeadModalProps> = ({
 
   const formattedMsg = getFormattedMessage();
   const tgShareUrl = `https://t.me/railtech_uz?text=${encodeURIComponent(formattedMsg)}`;
-  const mailShareUrl = `mailto:supply@railtech.uz?subject=${encodeURIComponent(subject || initialSubject || 'Запрос с сайта RailTech')}&body=${encodeURIComponent(formattedMsg)}`;
+  const mailShareUrl = `mailto:supply@railtech.uz?subject=${encodeURIComponent(
+    subject || initialSubject || 'Запрос с сайта RailTech'
+  )}&body=${encodeURIComponent(formattedMsg)}`;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0A0A0A]/60 backdrop-blur-xs p-4">
-      <div className="bg-[#D4D8DC] border-2 border-[#0A0A0A] w-full max-w-lg p-6 font-mono text-xs relative shadow-2xl max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0A0A0A]/60 backdrop-blur-xs p-3 sm:p-4">
+      <div className="bg-[#D4D8DC] border-2 border-[#0A0A0A] w-[calc(100vw-1.5rem)] max-w-[520px] p-5 sm:p-7 font-mono text-xs relative shadow-2xl max-h-[92vh] overflow-y-auto">
         {/* Modal Header */}
-        <div className="flex justify-between items-center border-b border-[#0A0A0A] pb-3 mb-5">
+        <div className="flex justify-between items-center border-b border-[#0A0A0A] pb-3 mb-4">
           <div>
             <div className="flex items-center space-x-2">
               <span className="w-2.5 h-2.5 bg-[#0A0A0A] inline-block animate-pulse"></span>
-              <span className="font-bold uppercase tracking-tight text-xs">{t.badge || 'ЗАПРОС КП / СЧЕТА С НДС 12%'}</span>
+              <span className="font-bold uppercase tracking-tight text-xs">
+                {t.badge || 'ЗАПРОС КП / СЧЕТА С НДС 12%'}
+              </span>
             </div>
             <div className="text-[10px] text-[#4A5056]">{t.locationMeta || 'ТАШКЕНТ // СКЛАД INDEX B2-2097'}</div>
           </div>
@@ -210,21 +225,76 @@ export const LeadModal: React.FC<LeadModalProps> = ({
           </button>
         </div>
 
+        {/* 3 Branded Quick-Contact Buttons (Task 4) */}
+        <div className="mb-4">
+          <div className="text-[10px] uppercase text-[#4A5056] mb-1.5 font-bold tracking-wider">
+            {activeLang === 'uz' ? 'TEZKOR ALOQA KANALLARI:' : activeLang === 'en' ? 'DIRECT CONTACT CHANNELS:' : 'КАНАЛЫ БЫСТРОЙ СВЯЗИ:'}
+          </div>
+          <div className="grid grid-cols-3 gap-2">
+            {/* Telegram */}
+            <a
+              href={tgShareUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="h-[42px] flex items-center justify-center gap-1.5 px-2 border border-[#0A0A0A]/25 hover:bg-[#0A0A0A] hover:text-white transition-colors text-xs font-mono font-bold whitespace-nowrap bg-white/50"
+            >
+              <svg className="w-4 h-4 shrink-0 fill-current" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
+              </svg>
+              <span>Telegram</span>
+            </a>
+
+            {/* Email */}
+            <a
+              href={mailShareUrl}
+              className="h-[42px] flex items-center justify-center gap-1.5 px-2 border border-[#0A0A0A]/25 hover:bg-[#0A0A0A] hover:text-white transition-colors text-xs font-mono font-bold whitespace-nowrap bg-white/50"
+            >
+              <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="0" />
+                <path d="m22 7-10 7L2 7" />
+              </svg>
+              <span>Email</span>
+            </a>
+
+            {/* Phone */}
+            <a
+              href="tel:+998901189000"
+              className="h-[42px] flex items-center justify-center gap-1.5 px-2 border border-[#0A0A0A]/25 hover:bg-[#0A0A0A] hover:text-white transition-colors text-xs font-mono font-bold whitespace-nowrap bg-white/50"
+            >
+              <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              <span>{activeLang === 'uz' ? "Qo'ng'iroq" : activeLang === 'en' ? 'Call' : 'Звонок'}</span>
+            </a>
+          </div>
+        </div>
+
         {submitted ? (
           <div className="py-8 text-center space-y-4">
             <div className="inline-block bg-[#0A0A0A] text-white px-4 py-1.5 font-bold uppercase text-xs">
               {t.successBadge || '✓ ЗАЯВКА УСПЕШНО ЗАРЕГИСТРИРОВАНА'}
             </div>
             <p className="text-[#4A5056] font-sans text-sm leading-relaxed">
-              {t.successMessage || 'Дежурный инженер отдела поставок свяжется с вами в течение 60 минут с готовым расчетом сметы.'}
+              {t.successMessage ||
+                'Дежурный инженер отдела поставок свяжется с вами в течение 60 минут с готовым расчетом сметы.'}
             </p>
             <div className="border border-[#0A0A0A] bg-[#C8CDD2] p-3 text-[11px] text-[#0A0A0A] space-y-1">
-              <div>Прямая линия снабжения: <a href="tel:+998901189000" className="font-bold underline">+998 90 118-90-00</a></div>
-              <div>Официальная почта: <a href="mailto:supply@railtech.uz" className="font-bold underline">supply@railtech.uz</a></div>
+              <div>
+                Прямая линия снабжения:{' '}
+                <a href="tel:+998901189000" className="font-bold underline">
+                  +998 90 118-90-00
+                </a>
+              </div>
+              <div>
+                Официальная почта:{' '}
+                <a href="mailto:supply@railtech.uz" className="font-bold underline">
+                  supply@railtech.uz
+                </a>
+              </div>
             </div>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-3.5">
+          <form onSubmit={handleSubmit} className="space-y-3">
             {errorMsg && (
               <div className="border border-[#0A0A0A] bg-red-100 text-red-900 p-2.5 text-xs font-mono">
                 {errorMsg}
@@ -233,7 +303,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({
 
             <div>
               <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-                ТЕМА ЗАПРОСА
+                {activeLang === 'uz' ? "SO'ROV MAVZUSI" : activeLang === 'en' ? 'REQUEST SUBJECT' : 'ТЕМА ЗАПРОСА'}
               </label>
               <input
                 type="text"
@@ -310,7 +380,10 @@ export const LeadModal: React.FC<LeadModalProps> = ({
                 rows={3}
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                placeholder={t.taskPlaceholder || 'Укажите артикулы, количество, требования к сертификации или базис доставки...'}
+                placeholder={
+                  t.taskPlaceholder ||
+                  'Укажите артикулы, количество, требования к сертификации или базис доставки...'
+                }
                 className="w-full bg-[#DCE0E4] border border-[#0A0A0A] px-3 py-2 text-xs focus:outline-none focus:bg-white font-sans"
               />
             </div>
@@ -337,7 +410,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({
             <p className="text-[10px] text-[#4A5056] leading-tight">
               Отправляя заявку, вы подтверждаете согласие с условиями{' '}
               <a href="/privacy" target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
-                Политики конфиденциальности (ЗРУ-547)
+                Политики конфиденциальности
               </a>{' '}
               и{' '}
               <a href="/terms" target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
@@ -345,43 +418,22 @@ export const LeadModal: React.FC<LeadModalProps> = ({
               </a>.
             </p>
 
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-[#0A0A0A]/20">
-              {/* Direct channels fallback */}
-              <div className="flex items-center space-x-2 text-[10px]">
-                <span className="text-[#4A5056]">Быстро:</span>
-                <a
-                  href={tgShareUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border border-[#0A0A0A] bg-white px-2 py-1 text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors"
-                >
-                  Telegram ↗
-                </a>
-                <a
-                  href={mailShareUrl}
-                  className="border border-[#0A0A0A] bg-white px-2 py-1 text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors"
-                >
-                  Email ↗
-                </a>
-              </div>
-
-              <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
-                <button
-                  type="button"
-                  onClick={onClose}
-                  disabled={isSending}
-                  className="px-3 py-1.5 border border-[#0A0A0A] hover:bg-[#0A0A0A]/10 uppercase transition-colors"
-                >
-                  {t.cancelButton || 'ОТМЕНА'}
-                </button>
-                <button
-                  type="submit"
-                  disabled={isSending}
-                  className="px-5 py-1.5 bg-[#0A0A0A] text-white font-bold uppercase hover:opacity-90 transition-opacity disabled:opacity-50 cursor-pointer"
-                >
-                  {isSending ? (t.sendingButton || 'ОТПРАВКА...') : (t.submitButton || '[ ОТПРАВИТЬ ЗАЯВКУ ]')}
-                </button>
-              </div>
+            <div className="pt-2 flex items-center justify-end gap-2 border-t border-[#0A0A0A]/20">
+              <button
+                type="button"
+                onClick={onClose}
+                disabled={isSending}
+                className="px-4 py-2 border border-[#0A0A0A] hover:bg-[#0A0A0A]/10 uppercase transition-colors text-xs font-mono"
+              >
+                {t.cancelButton || 'ОТМЕНА'}
+              </button>
+              <button
+                type="submit"
+                disabled={isSending}
+                className="px-5 py-2 bg-[#0A0A0A] text-white font-bold uppercase hover:opacity-90 transition-opacity disabled:opacity-50 cursor-pointer text-xs font-mono"
+              >
+                {isSending ? t.sendingButton || 'ОТПРАВКА...' : t.submitButton || '[ ОТПРАВИТЬ ЗАЯВКУ ]'}
+              </button>
             </div>
           </form>
         )}
@@ -389,3 +441,5 @@ export const LeadModal: React.FC<LeadModalProps> = ({
     </div>
   );
 };
+
+export default LeadModal;

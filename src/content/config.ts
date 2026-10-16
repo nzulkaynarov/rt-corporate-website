@@ -10,6 +10,15 @@ const attributeSchema = z.object({
   value_en: z.string().optional(),
 });
 
+/** Universal document attachment schema for download links & files */
+const documentSchema = z.object({
+  title: z.string(),
+  title_uz: z.string().optional(),
+  title_en: z.string().optional(),
+  file: z.string(), // Путь к загруженному файлу (PDF, DOCX, XLSX) ИЛИ внешняя ссылка (https://...)
+  type: z.string().optional(), // например "PDF • 1.4 MB"
+});
+
 const catalogCollection = defineCollection({
   type: 'content',
   schema: z.object({
@@ -30,6 +39,8 @@ const catalogCollection = defineCollection({
     attributes: z.array(attributeSchema).optional(),
     price: z.string().optional(),
     gallery: z.array(z.string()).optional(),
+    images: z.array(z.string()).optional(),
+    documents: z.array(documentSchema).optional(),
     warehouse: z.string().default('Ташкент, Index B2-2097'),
     warehouse_uz: z.string().optional(),
     warehouse_en: z.string().optional(),
@@ -71,6 +82,8 @@ const servicesCollection = defineCollection({
     summary_uz: z.string().optional(),
     summary_en: z.string().optional(),
     image: z.string().optional(),
+    images: z.array(z.string()).optional(),
+    documents: z.array(documentSchema).optional(),
     steps: z
       .array(
         z.object({
@@ -101,6 +114,8 @@ const projectsCollection = defineCollection({
     category_uz: z.string().optional(),
     category_en: z.string().optional(),
     gallery: z.array(z.string()).optional(),
+    images: z.array(z.string()).optional(),
+    documents: z.array(documentSchema).optional(),
     year: z.string().optional(),
     tag: z.string(),
     tag_uz: z.string().optional(),

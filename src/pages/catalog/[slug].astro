@@ -8,13 +8,29 @@ import { withBase } from '../../utils/url';
 
 export async function getStaticPaths() {
   const catalogEntries = await getCollection('catalog');
-  return catalogEntries.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+  return catalogEntries.map((entry) => {
+    const entryCat = entry.data.category || entry.data.subsystem || '';
+    const related = catalogEntries
+      .filter((e) => e.slug !== entry.slug)
+      .sort((a, b) => {
+        const aCat = a.data.category || a.data.subsystem || '';
+        const bCat = b.data.category || b.data.subsystem || '';
+        const aMatch = aCat === entryCat;
+        const bMatch = bCat === entryCat;
+        if (aMatch && !bMatch) return -1;
+        if (!aMatch && bMatch) return 1;
+        return 0;
+      })
+      .slice(0, 3);
+
+    return {
+      params: { slug: entry.slug },
+      props: { entry, related },
+    };
+  });
 }
 
-const { entry } = Astro.props;
+const { entry, related } = Astro.props;
 const { Content } = await entry.render();
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -25,16 +41,16 @@ const categoryName = entry.data.category || entry.data.subsystem || 'Обору�
 const categoryNameUz = entry.data.category_uz || entry.data.subsystem_uz || categoryName;
 const categoryNameEn = entry.data.category_en || entry.data.subsystem_en || categoryName;
 
+const mainImageUrl = entry.data.image || `/images/catalog/${entry.data.sku.toLowerCase()}.jpg`;
+
 const productJsonLd = {
   '@context': 'https://schema.org/',
   '@type': 'Product',
   name: entry.data.title,
-  image: entry.data.image
-    ? (entry.data.image.startsWith('http') ? entry.data.image : new URL(withBase(entry.data.image), siteUrl).href)
-    : `https://railtech.uz/images/catalog/${entry.data.sku.toLowerCase()}.jpg`,
+  image: mainImageUrl.startsWith('http') ? mainImageUrl : new URL(withBase(mainImageUrl), siteUrl).href,
   description: entry.data.specs || entry.data.title,
   sku: entry.data.sku,
-  mpn: entry.data.gost || entry.data.sku,
+  mpn: entry.data.sku,
   category: categoryName,
   brand: {
     '@type': 'Brand',
@@ -82,10 +98,10 @@ const breadcrumbJsonLd = {
 ---
 
 <BaseLayout
-  title={`${entry.data.title} (${entry.data.sku}) — Паспорт изделия | ООО «RailTech»`}
-  description={`Технический паспорт и заказ: ${entry.data.title} (${entry.data.sku}). ${entry.data.gost ? `Стандарт ${entry.data.gost}.` : ''} ${entry.data.tnved ? `ТН ВЭД ${entry.data.tnved}.` : ''} Склад: ${entry.data.warehouse}. Поставка с НДС 12%.`}
-  keywords={`${entry.data.title}, ${entry.data.sku}, ${entry.data.gost || ''}, ${entry.data.tnved || ''}, купить в ташкенте, оборудование узбекистан`}
-  image={withBase(entry.data.image)}
+  title={`${entry.data.title} (${entry.data.sku}) — Спецификация оборудования | ООО «RailTech»`}
+  description={`Технические параметры и заказ: ${entry.data.title} (${entry.data.sku}). Категория: ${categoryName}. Склад: ${entry.data.warehouse}. Официальная поставка в Ташкенте с НДС 12%.`}
+  keywords={`${entry.data.title}, ${entry.data.sku}, промышленное оборудование, ташкент, склад index, узбекистан`}
+  image={withBase(mainImageUrl)}
 >
   <!-- Product & Breadcrumb Schema.org -->
   <script type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />
@@ -125,13 +141,13 @@ const breadcrumbJsonLd = {
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       <!-- Left Column: Specs Table & Detailed Text -->
       <div class="lg:col-span-7 flex flex-col space-y-6">
-        <!-- Technical Passport Table -->
+        <!-- Technical Specifications Table -->
         <div class="hud-glass-card p-6">
           <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 flex justify-between items-center font-mono text-xs">
             <span class="font-bold text-[#0A0A0A] tracking-wider uppercase">
-              <I18nText ru="ТЕХНИЧЕСКИЙ ПАСПОРТ ИЗДЕЛИЯ" uz="MAHSULOT TEXNIK PASPORTI" en="PRODUCT TECHNICAL DATASHEET" />
+              <I18nText ru="ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ" uz="TEXNIK XUSUSIYATLAR" en="TECHNICAL SPECIFICATIONS" />
             </span>
-            <span class="text-[#4A5056]">RT // PASSPORT-SPEC</span>
+            <span class="text-[#4A5056]">RT // TECHNICAL-SPEC</span>
           </div>
 
           <table class="w-full font-mono text-xs border-collapse">
@@ -142,22 +158,6 @@ const breadcrumbJsonLd = {
                 </td>
                 <td class="py-2.5 font-bold text-[#0A0A0A]">{entry.data.sku}</td>
               </tr>
-              {entry.data.gost && (
-                <tr class="hover:bg-white/30 transition-colors">
-                  <td class="py-2.5 pr-3 text-[#4A5056]">
-                    <I18nText ru="Стандарт / ГОСТ:" uz="Standart / GOST:" en="Standard / Specification:" />
-                  </td>
-                  <td class="py-2.5 font-bold text-[#0A0A0A]">{entry.data.gost}</td>
-                </tr>
-              )}
-              {entry.data.tnved && (
-                <tr class="hover:bg-white/30 transition-colors">
-                  <td class="py-2.5 pr-3 text-[#4A5056]">
-                    <I18nText ru="Код ТН ВЭД:" uz="TIF TN kodi:" en="HS Code:" />
-                  </td>
-                  <td class="py-2.5 font-bold text-[#0A0A0A]">{entry.data.tnved}</td>
-                </tr>
-              )}
               <tr class="hover:bg-white/30 transition-colors">
                 <td class="py-2.5 pr-3 text-[#4A5056]">
                   <I18nText ru="Категория:" uz="Kategoriya:" en="Category:" />
@@ -166,30 +166,6 @@ const breadcrumbJsonLd = {
                   <I18nText ru={categoryName} uz={categoryNameUz} en={categoryNameEn} />
                 </td>
               </tr>
-              {entry.data.dimensions && (
-                <tr class="hover:bg-white/30 transition-colors">
-                  <td class="py-2.5 pr-3 text-[#4A5056]">
-                    <I18nText ru="Габариты (мм):" uz="O'lchamlar (mm):" en="Dimensions (mm):" />
-                  </td>
-                  <td class="py-2.5 font-bold text-[#0A0A0A]">{entry.data.dimensions}</td>
-                </tr>
-              )}
-              {entry.data.weight && (
-                <tr class="hover:bg-white/30 transition-colors">
-                  <td class="py-2.5 pr-3 text-[#4A5056]">
-                    <I18nText ru="Масса / вес:" uz="Massa / og'irlik:" en="Weight:" />
-                  </td>
-                  <td class="py-2.5 font-bold text-[#0A0A0A]">{entry.data.weight}</td>
-                </tr>
-              )}
-              {entry.data.material && (
-                <tr class="hover:bg-white/30 transition-colors">
-                  <td class="py-2.5 pr-3 text-[#4A5056]">
-                    <I18nText ru="Материал / сталь:" uz="Material / po'lat:" en="Material / Alloy:" />
-                  </td>
-                  <td class="py-2.5 font-bold text-[#0A0A0A]">{entry.data.material}</td>
-                </tr>
-              )}
               {/* Dynamic CMS attributes */}
               {entry.data.attributes && entry.data.attributes.map((attr) => (
                 <tr class="hover:bg-white/30 transition-colors">
@@ -255,7 +231,48 @@ const breadcrumbJsonLd = {
           </div>
         </div>
 
-        <!-- Compliance & Regulatory Box -->
+        <!-- Downloadable Documentation & Files -->
+        {entry.data.documents && entry.data.documents.length > 0 && (
+          <div class="hud-glass-card p-6">
+            <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 flex justify-between items-center font-mono text-xs">
+              <span class="font-bold text-[#0A0A0A] tracking-wider uppercase flex items-center gap-2">
+                <span class="w-2 h-2 bg-[#0A0A0A] inline-block"></span>
+                <I18nText ru="ДОКУМЕНТАЦИЯ И ФАЙЛЫ ДЛЯ СКАЧИВАНИЯ" uz="HUJJATLAR VA YUKLAB OLISH UCHUN FAYLLAR" en="DOCUMENTATION & DOWNLOADABLE FILES" />
+              </span>
+              <span class="text-[#4A5056]">FILES // 0{entry.data.documents.length}</span>
+            </div>
+            <div class="space-y-2.5 font-mono text-xs">
+              {entry.data.documents.map((doc) => {
+                const fileUrl = doc.file.startsWith('http') ? doc.file : withBase(doc.file);
+                return (
+                  <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 border border-[#0A0A0A]/20 bg-white/40 hover:bg-white/80 transition-colors gap-2">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                      <span class="text-base select-none">📄</span>
+                      <div class="min-w-0">
+                        <div class="font-bold text-[#0A0A0A] truncate">
+                          <I18nText ru={doc.title} uz={doc.title_uz} en={doc.title_en} />
+                        </div>
+                        <div class="text-[10px] text-[#4A5056] uppercase tracking-wider">
+                          {doc.type || 'PDF DOCUMENT'}
+                        </div>
+                      </div>
+                    </div>
+                    <a
+                      href={fileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="hud-btn hud-btn--ghost text-[11px] py-1.5 px-3 self-start sm:self-auto text-center shrink-0"
+                    >
+                      <I18nText ru="СКАЧАТЬ / ОТКРЫТЬ ↓" uz="YUKLAB OLISH / OCHISH ↓" en="DOWNLOAD / OPEN ↓" />
+                    </a>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        <!-- Completeness of Supply & Regulatory Box -->
         <div class="hud-glass-card p-5 font-mono text-xs space-y-2">
           <div class="font-bold text-[#0A0A0A] flex items-center gap-2">
             <span class="w-2 h-2 bg-[#0A0A0A] inline-block"></span>
@@ -264,16 +281,16 @@ const breadcrumbJsonLd = {
           <div class="text-[#4A5056] space-y-1.5 text-[11px] leading-relaxed">
             <div>
               <I18nText
-                ru="• Оригинальный паспорт завода-изготовителя с отметкой ОТК и сертификатом плавки/качества."
-                uz="• OTK belgisi va sifat sertifikatiga ega ishlab chiqaruvchining asl pasporti."
-                en="• Original manufacturer quality passport with QC stamp and test certificates."
+                ru="• Оригинальный технический паспорт и сертификат соответствия завода-изготовителя."
+                uz="• Ishlab chiqaruvchining asl texnik pasporti va muvofiqlik sertifikati."
+                en="• Original manufacturer technical passport and certificate of conformity."
               />
             </div>
             <div>
               <I18nText
-                ru="• Сертификаты соответствия действующим техническим регламентам и стандартам РУз."
-                uz="• O'zR amaldagi texnik reglamentlari va standartlariga muvofiqlik sertifikatlari."
-                en="• Certificates of conformity with applicable technical regulations and standards."
+                ru="• Сертификаты соответствия техническим регламентам и стандартам Республики Узбекистан."
+                uz="• O'zbekiston Respublikasi texnik reglamentlari va standartlariga muvofiqlik sertifikatlari."
+                en="• Certificates of conformity with technical regulations and standards of Uzbekistan."
               />
             </div>
             <div>
@@ -304,7 +321,8 @@ const breadcrumbJsonLd = {
           specs={entry.data.specs}
           specs_uz={entry.data.specs_uz}
           specs_en={entry.data.specs_en}
-          image={withBase(entry.data.image || '/images/hero/warehouse.jpg')}
+          image={mainImageUrl}
+          images={entry.data.images}
           gallery={entry.data.gallery}
         />
 
@@ -357,5 +375,58 @@ const breadcrumbJsonLd = {
         </div>
       </div>
     </div>
+
+    <!-- Related Products -->
+    {related && related.length > 0 && (
+      <div class="mt-12 pt-8 border-t border-[#0A0A0A]/20 font-mono">
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 bg-[#0A0A0A] inline-block"></span>
+            <h2 class="text-sm sm:text-base font-bold text-[#0A0A0A] uppercase tracking-wider">
+              <I18nText ru="ПОХОЖИЕ ПОЗИЦИИ ИЗ КАТАЛОГА" uz="KATALOGDAGI O'XSHASH MAHSULOTLAR" en="SIMILAR ITEMS FROM CATALOG" />
+            </h2>
+          </div>
+          <a href={`${base}/catalog/`} class="text-xs font-bold text-[#0A0A0A] hover:underline">
+            <I18nText ru="ВЕСЬ КАТАЛОГ →" uz="BARCHA KATALOG →" en="VIEW FULL CATALOG →" />
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {related.map((item) => (
+            <a
+              href={`${base}/catalog/${item.slug}`}
+              class="hud-glass-card p-4 group flex flex-col justify-between hover:border-[#0A0A0A] transition-all"
+            >
+              <div>
+                <div class="hud-viewport-frame mb-3 overflow-hidden aspect-[16/10]">
+                  <img
+                    src={withBase(item.data.image || `/images/catalog/${item.data.sku.toLowerCase()}.jpg`)}
+                    alt={item.data.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div class="flex items-center justify-between text-[11px] text-[#4A5056] mb-1">
+                  <span class="font-bold text-[#0A0A0A]">{item.data.sku}</span>
+                  <span class="uppercase truncate max-w-[50%]">{item.data.category || item.data.subsystem}</span>
+                </div>
+                <h3 class="text-xs sm:text-sm font-bold text-[#0A0A0A] line-clamp-2 mb-2 group-hover:underline">
+                  {item.data.title}
+                </h3>
+              </div>
+              <div class="pt-3 border-t border-[#0A0A0A]/15 flex items-center justify-between text-xs mt-2">
+                <span class="text-emerald-900 font-bold text-[11px] bg-emerald-100/60 px-1.5 py-0.5">
+                  {item.data.status}
+                </span>
+                <span class="font-bold text-[#0A0A0A]">
+                  Подробнее →
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
   </div>
 </BaseLayout>

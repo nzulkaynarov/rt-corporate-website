@@ -3,7 +3,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import I18nText from '../../components/I18nText.astro';
 import HudPageHeader from '../../components/hud/HudPageHeader.astro';
-import HudViewportFrame from '../../components/hud/HudViewportFrame.astro';
 import { withBase } from '../../utils/url';
 
 export async function getStaticPaths() {
@@ -21,22 +20,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const projectUrl = `https://railtech.uz/projects/${entry.slug}`;
 const siteUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : projectUrl;
 
-const projectJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: entry.data.title,
-  description: entry.data.subtitle,
-  image: entry.data.image ? new URL(withBase(entry.data.image), siteUrl).href : undefined,
-  author: {
-    '@type': 'Organization',
-    name: 'ООО «RailTech»',
-  },
-  publisher: {
-    '@type': 'Organization',
-    name: 'ООО «RailTech»',
-  },
-  url: siteUrl,
-};
+const categoryName = entry.data.category || entry.data.tag || 'Спецпроект';
+const categoryNameUz = entry.data.category_uz || entry.data.tag_uz || categoryName;
+const categoryNameEn = entry.data.category_en || entry.data.tag_en || categoryName;
+
+const photoUrl = withBase(entry.data.image || '/images/hero/warehouse.jpg');
 
 const breadcrumbJsonLd = {
   '@context': 'https://schema.org',
@@ -65,49 +53,123 @@ const breadcrumbJsonLd = {
 ---
 
 <BaseLayout
-  title={`${entry.data.title} (${entry.data.code}) — Проекты ООО «RailTech»`}
-  description={entry.data.subtitle}
-  keywords={`${entry.data.title}, ${entry.data.category || ''}, проекты railtech, узбекистан`}
-  image={withBase(entry.data.image)}
+  title={`${entry.data.title} — Проекты ООО «RailTech»`}
+  description={entry.data.subtitle || entry.data.title}
+  keywords={`${entry.data.title}, ${categoryName}, проекты railtech, узбекистан, ddp ташкент`}
+  image={photoUrl}
 >
-  <!-- Schema.org JSON-LD -->
-  <script type="application/ld+json" set:html={JSON.stringify(projectJsonLd)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
 
   <div class="max-w-7xl mx-auto px-4 pb-16 font-sans">
     <HudPageHeader
-      code={`PRJ // ${entry.data.code}`}
+      code={`CASE // ${entry.data.code}`}
       parent={{ href: '/projects/', label: { ru: 'ПРОЕКТЫ', uz: 'LOYIHALAR', en: 'PROJECTS' } }}
-      crumb={{ ru: entry.data.code, uz: entry.data.code, en: entry.data.code }}
+      crumb={{ ru: entry.data.title, uz: entry.data.title_uz, en: entry.data.title_en }}
       title={{ ru: entry.data.title, uz: entry.data.title_uz, en: entry.data.title_en }}
       lead={{ ru: entry.data.subtitle, uz: entry.data.subtitle_uz, en: entry.data.subtitle_en }}
     />
 
-    <!-- Status Badges Bar -->
+    <!-- Telemetry Status Bar -->
     <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-8">
       <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A] font-bold border border-[#0A0A0A]">
         {entry.data.code}
       </span>
-      {entry.data.category && (
+      <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
+        <I18nText ru={categoryName} uz={categoryNameUz} en={categoryNameEn} />
+      </span>
+      {entry.data.year && (
         <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
-          <I18nText ru={entry.data.category} uz={entry.data.category_uz} en={entry.data.category_en} />
+          YEAR // {entry.data.year}
         </span>
       )}
       <span class="hud-glass-card px-2.5 py-1 text-emerald-900 font-bold bg-emerald-100/50">
-        <I18nText ru="СТАТУС: РЕАЛИЗОВАН" uz="HOLAT: AMALGA OSHIRILDI" en="STATUS: DELIVERED" />
-      </span>
-      <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
-        ТАШКЕНТ // УЗБЕКИСТАН
+        STATUS // COMPLETED
       </span>
     </div>
 
-    <!-- Main Content Grid -->
+    <!-- Main Content Layout -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      <!-- Left Column: Case Study Narrative -->
+      <!-- Left Column: Photo & Key Metrics -->
       <div class="lg:col-span-7 flex flex-col space-y-6">
+        <!-- Project Photo in HUD Viewport Frame -->
+        <div class="hud-viewport-frame relative overflow-hidden">
+          <span class="hud-vf-outline" aria-hidden="true"></span>
+          <div class="hud-viewport-inner relative min-h-[300px] sm:min-h-[420px] bg-[#D4D8DC] flex items-center justify-center">
+            <img
+              src={photoUrl}
+              alt={entry.data.title}
+              class="w-full h-full object-cover"
+              loading="eager"
+              decoding="async"
+            />
+            {/* Grid overlay */}
+            <div class="absolute inset-0 cad-grid-bg opacity-25 pointer-events-none" aria-hidden="true" />
+
+            {/* Top telemetry */}
+            <div class="absolute top-2.5 right-3 font-mono text-[9px] tracking-wider text-white bg-black/60 px-2 py-0.5 pointer-events-none">
+              CLIENT // UZB INDUSTRIAL · YEAR // {entry.data.year || '2025'}
+            </div>
+
+            {/* Bottom stamp */}
+            <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between pointer-events-none font-mono text-[10px]">
+              <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#D4D8DC]/90 font-bold text-[#0A0A0A]">
+                CAT // {categoryName}
+              </span>
+              <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#0A0A0A] text-white font-bold">
+                VERIFIED CASE
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metrics Cards Grid -->
+        {entry.data.metrics && entry.data.metrics.length > 0 && (
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono">
+            {entry.data.metrics.map((m, idx) => (
+              <div class="hud-glass-card p-4 flex flex-col justify-between">
+                <span class="text-[10px] text-[#4A5056] border-b border-[#0A0A0A]/15 pb-1 block mb-2">
+                  METRIC // 0{idx + 1}
+                </span>
+                <span class="font-bold text-[#0A0A0A] text-sm leading-snug">
+                  <I18nText ru={m} uz={entry.data.metrics_uz?.[idx]} en={entry.data.metrics_en?.[idx]} />
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <!-- Downloadable Documents (if attached) -->
+        {entry.data.documents && entry.data.documents.length > 0 && (
+          <div class="hud-glass-card p-6 font-mono text-xs">
+            <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 font-bold text-[#0A0A0A] flex items-center justify-between">
+              <span>ПРИКРЕПЛЕННЫЕ МАТЕРИАЛЫ КЕЙСА</span>
+              <span class="text-[#4A5056]">FILES // 0{entry.data.documents.length}</span>
+            </div>
+            <div class="space-y-2">
+              {entry.data.documents.map((doc) => (
+                <div class="flex items-center justify-between p-2.5 border border-[#0A0A0A]/20 bg-white/40">
+                  <span class="font-bold text-[#0A0A0A]">{doc.title}</span>
+                  <a
+                    href={doc.file.startsWith('http') ? doc.file : withBase(doc.file)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hud-btn hud-btn--ghost text-[10px] py-1 px-2.5"
+                  >
+                    СКАЧАТЬ ↓
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <!-- Right Column: Case Scope, Solution & RFQ Form -->
+      <div class="lg:col-span-5 flex flex-col space-y-6">
+        <!-- Case Details -->
         <div class="hud-glass-card p-6">
           <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 font-mono text-xs font-bold text-[#0A0A0A] uppercase tracking-wider">
-            <I18nText ru="ОПИСАНИЕ И ИТОГИ ПРОЕКТА" uz="LOYIHA TAVSIFI VA NATIJALARI" en="CASE OVERVIEW & DELIVERABLES" />
+            <I18nText ru="ОПИСАНИЕ И РЕЗУЛЬТАТЫ ПРОЕКТА" uz="LOYIHA TAVSIFI VA NATIJALARI" en="PROJECT SCOPE & DELIVERABLES" />
           </div>
           <div class="prose prose-sm text-[#0A0A0A] max-w-none leading-relaxed">
             <div class="rt-lang rt-lang-ru">
@@ -122,78 +184,46 @@ const breadcrumbJsonLd = {
           </div>
         </div>
 
-        <!-- Metrics Box -->
-        <div class="hud-glass-card p-5">
-          <div class="border-b border-[#0A0A0A]/20 pb-2 mb-3 font-mono text-xs font-bold text-[#0A0A0A] uppercase tracking-wider">
-            <I18nText ru="КЛЮЧЕВЫЕ ПОКАЗАТЕЛИ КЕЙСА" uz="LOYIHANING ASOSIY KO'RSATKICHLARI" en="KEY PERFORMANCE INDICATORS" />
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono text-xs">
-            {entry.data.metrics.map((m, idx) => (
-              <div class="p-2.5 bg-white/40 border border-[#0A0A0A]/15">
-                <span class="text-[#4A5056] text-[10px] block">METRIC 0{idx + 1}</span>
-                <span class="font-bold text-[#0A0A0A]">
-                  <I18nText ru={m} uz={entry.data.metrics_uz?.[idx]} en={entry.data.metrics_en?.[idx]} />
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Column: Media Frame & Action Box -->
-      <div class="lg:col-span-5 flex flex-col space-y-6">
-        {entry.data.image && (
-          <HudViewportFrame
-            topLabel={`CASE // ${entry.data.code}`}
-            bottomLabel="RAILTECH SPECIAL INITIATIVE"
-          >
-            <div class="aspect-[16/10] overflow-hidden">
-              <img
-                src={withBase(entry.data.image)}
-                alt={entry.data.title}
-                class="w-full h-full object-cover"
-                style={{ filter: 'grayscale(0.15) contrast(1.05)' }}
-                loading="eager"
-                decoding="async"
-                onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full bg-[#C4C9CE] flex flex-col items-center justify-center p-4 font-mono text-[11px] text-[#4A5056] text-center border border-[#0A0A0A]/20\'><span class=\'font-bold text-[#0A0A0A]\'>OPTICAL_FEED // READY</span><span>CASE_MEDIA // ARCHIVE</span></div>';"
-              />
-            </div>
-          </HudViewportFrame>
-        )}
-
-        <!-- Commercial Action Card -->
-        <div class="hud-glass-card p-6 font-mono gap-4">
+        <!-- Commercial CTA Card -->
+        <div class="hud-glass-card p-6 font-mono text-xs space-y-4">
           <div class="border-b border-[#0A0A0A]/20 pb-2">
-            <span class="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider block">
-              <I18nText ru="ИНИЦИИРОВАТЬ АНАЛОГИЧНЫЙ КЕЙС" uz="O'XSHASH LOYIHANI BOSHLASH" en="INITIATE SIMILAR PROJECT" />
+            <span class="font-bold text-[#0A0A0A] text-sm block">
+              <I18nText ru="ЗАКАЗАТЬ АНАЛОГИЧНЫЙ ПРОЕКТ" uz="O'XSHASH LOYIHANI BUYURTMA QILISH" en="ORDER A SIMILAR PROJECT" />
             </span>
-            <span class="text-[11px] text-[#4A5056]">
-              <I18nText ru="Консультация с проектным бюро RailTech" uz="RailTech loyiha byurosi bilan konsultatsiya" en="Consultation with RailTech Engineering Desk" />
+            <span class="text-[11px] text-[#4A5056] leading-tight block mt-1">
+              Реализация под ключ: ВЭД, инженерная адаптация, поставка со склада в Ташкенте и техническое сопровождение.
             </span>
           </div>
 
-          <p class="text-xs text-[#4A5056] font-sans leading-relaxed">
-            <I18nText
-              ru="Заинтересованы во внедрении аналогичных решений, технологическом трансфере или проведении совместных испытаний в Узбекистане?"
-              uz="O'zbekistonda shunga o'xshash yechimlarni joriy etish, texnologiyalar transferi yoki birgalikda sinovlar o'tkazishga qiziqasizmi?"
-              en="Interested in deploying similar solutions, technology localization, or coordinated track trials in Uzbekistan?"
-            />
-          </p>
+          <div class="space-y-2 text-[#4A5056]">
+            <div class="flex justify-between">
+              <span>Базис расчетов:</span>
+              <span class="font-bold text-[#0A0A0A]">DDP Ташкент (12% НДС)</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Сроки подготовки сметы:</span>
+              <span class="font-bold text-[#0A0A0A]">24-48 часов</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Прямой телефон:</span>
+              <a href="tel:+998901189000" class="font-bold text-[#0A0A0A] hover:underline">+998 90 118-90-00</a>
+            </div>
+          </div>
 
           <div class="pt-2 flex flex-col gap-2">
             <button
               type="button"
               data-lead-modal
-              data-lead-subject={`Запрос по проекту ${entry.data.title} (${entry.data.code})`}
-              class="hud-btn w-full cursor-pointer"
+              data-lead-subject={`Запрос на реализацию проекта по кейсу: ${entry.data.title} (${entry.data.code})`}
+              class="hud-btn w-full cursor-pointer text-center"
             >
-              <I18nText ru="ОБСУДИТЬ ПРОЕКТ ↗" uz="LOYIHANI MUHOKAMA QILISH ↗" en="DISCUSS PROJECT ↗" />
+              <I18nText ru="[ ЗАКАЗАТЬ АНАЛОГИЧНЫЙ ПРОЕКТ ↗ ]" uz="[ O'XSHASH LOYIHANI BUYURTMA QILISH ↗ ]" en="[ REQUEST SIMILAR PROJECT ↗ ]" />
             </button>
             <a
               href={`${base}/projects/`}
               class="hud-btn hud-btn--ghost w-full text-center"
             >
-              <I18nText ru="← ВСЕ ПРОЕКТЫ" uz="← BARCHA LOYIHALAR" en="← ALL PROJECTS" />
+              <I18nText ru="← ВСЕ ПРОЕКТЫ КОМПАНИИ" uz="← BARCHA LOYIHALAR" en="← ALL COMPANY PROJECTS" />
             </a>
           </div>
         </div>
@@ -201,4 +231,3 @@ const breadcrumbJsonLd = {
     </div>
   </div>
 </BaseLayout>
-

@@ -81,13 +81,13 @@ const navItems = [
         </span>
       </div>
 
-      <!-- Right: Phone & B2B Portal on desktop, compact phone on mobile -->
-      <div class="flex items-center space-x-3 flex-none text-[11px]">
+      <!-- Right: Phone & B2B Portal on desktop (hidden on mobile < 768px) -->
+      <div class="hidden md:flex items-center space-x-3 flex-none text-[11px]">
         <a
           href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`}
           class="hover:text-[#0A0A0A] transition-colors font-bold text-[#0A0A0A] flex items-center space-x-1"
         >
-          <span class="hidden sm:inline">ТЕЛ:</span>
+          <span>ТЕЛ:</span>
           <span>{globalData.phone}</span>
         </a>
         {globalData.b2bPortalUrl && (
@@ -198,7 +198,7 @@ const navItems = [
         id="mobile-nav-toggle"
         type="button"
         aria-expanded="false"
-        aria-controls="mobile-nav-drawer"
+        aria-controls="mobile-menu"
         aria-label="Открыть мобильное меню"
         class="lg:hidden min-w-[44px] min-h-[44px] p-2 border border-[#0A0A0A] bg-white/40 hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer flex items-center justify-center font-mono text-xs font-bold gap-1"
       >
@@ -208,27 +208,16 @@ const navItems = [
     </div>
   </div>
 
-  <!-- 3. Fullscreen Matte Mobile HUD Drawer (< 1024px) -->
+  <!-- 3. Fullscreen Matte Mobile HUD Menu (< 1024px) -->
   <div
-    id="mobile-nav-drawer"
-    class="fixed inset-0 z-50 hidden transition-opacity duration-300"
+    id="mobile-menu"
+    class="fixed inset-x-0 top-[60px] w-full max-w-[100vw] h-[calc(100dvh-60px)] z-[100] overflow-y-auto overflow-x-hidden bg-[#D4D8DC]/95 backdrop-blur-xl p-5 flex-col justify-between hidden"
     style="overscroll-behavior: contain;"
     role="dialog"
     aria-modal="true"
     aria-label="Навигация по сайту"
   >
-    <!-- Matte Blur Backdrop -->
-    <div
-      id="mobile-nav-backdrop"
-      class="absolute inset-0 bg-[#0A0A0A]/60 backdrop-blur-md"
-      aria-hidden="true"
-    ></div>
-
-    <!-- Slide-in Drawer Container -->
-    <div
-      class="relative ml-auto w-full max-w-md h-full bg-[#D4D8DC] border-l-2 border-[#0A0A0A] shadow-2xl p-6 flex flex-col justify-between overflow-y-auto"
-      style="overscroll-behavior: contain;"
-    >
+    <div class="w-full max-w-xl mx-auto flex flex-col justify-between h-full">
       <div>
         <!-- Drawer Header -->
         <div class="flex items-center justify-between pb-4 border-b border-[#0A0A0A]/20 mb-6">
@@ -253,7 +242,7 @@ const navItems = [
             return (
               <a
                 href={item.href}
-                class={`p-3.5 border transition-all flex items-center justify-between ${
+                class={`p-3.5 border transition-all flex items-center justify-between min-h-[48px] ${
                   isActive
                     ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] font-bold'
                     : 'bg-white/40 border-[#0A0A0A]/30 text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white'
@@ -407,24 +396,40 @@ const navItems = [
     // Mobile menu drawer toggle
     var toggle = document.getElementById('mobile-nav-toggle');
     var closeBtn = document.getElementById('mobile-nav-close');
-    var backdrop = document.getElementById('mobile-nav-backdrop');
-    var drawer = document.getElementById('mobile-nav-drawer');
+    var drawer = document.getElementById('mobile-menu');
 
     function openDrawer() {
       if (!drawer) return;
       drawer.classList.remove('hidden');
+      drawer.classList.add('flex');
+      document.body.style.overflow = 'hidden';
       if (toggle) toggle.setAttribute('aria-expanded', 'true');
     }
 
     function closeDrawer() {
       if (!drawer) return;
       drawer.classList.add('hidden');
+      drawer.classList.remove('flex');
+      document.body.style.overflow = '';
       if (toggle) toggle.setAttribute('aria-expanded', 'false');
     }
 
-    if (toggle) toggle.addEventListener('click', openDrawer);
+    if (toggle) toggle.addEventListener('click', function() {
+      if (drawer && drawer.classList.contains('hidden')) {
+        openDrawer();
+      } else {
+        closeDrawer();
+      }
+    });
     if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
-    if (backdrop) backdrop.addEventListener('click', closeDrawer);
+
+    if (drawer) {
+      drawer.querySelectorAll('a, button[data-lead-modal]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          closeDrawer();
+        });
+      });
+    }
 
     window.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && drawer && !drawer.classList.contains('hidden')) {

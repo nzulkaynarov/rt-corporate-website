@@ -3,11 +3,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { withBase } from '../../utils/url';
 import I18nText from '../../components/I18nText.astro';
+import pagesData from '../../data/cms/pages.json';
 
 const allPosts = await getCollection('blog');
 allPosts.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const bPage = pagesData.blogPage;
 
 const categories = [
   { ru: 'Все публикации', uz: 'Barcha maqolalar', en: 'All publications' },
@@ -22,9 +24,9 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
 ---
 
 <BaseLayout
-  title="Блог и Новости компании — Инженерная аналитика и регламенты ЖД поставок | ООО «RailTech»"
-  description="Экспертные статьи инженеров ООО «RailTech»: организация складского резерва в Ташкенте, расчет Landed Cost DDP, алгоритмы Smart Match AI и технологический трансфер."
-  keywords="блог railtech, новости жд снабжения ташкент, landed cost ddp узбекистан, склад index b2-2097, smart match ai, жд запчасти узбекистан"
+  title="Блог и Новости компании — Инженерная аналитика и регламенты поставок | ООО «RailTech»"
+  description="Экспертные статьи инженеров ООО «RailTech»: организация складского резерва в Ташкенте, расчет Landed Cost DDP, алгоритмы цифровой обработки и технологический трансфер."
+  keywords="блог railtech, новости снабжения ташкент, landed cost ddp узбекистан, склад index b2-2097, промышленное оборудование узбекистан"
 >
   <div class="max-w-7xl mx-auto px-4 py-10 font-sans">
     <!-- Breadcrumbs -->
@@ -42,7 +44,7 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
     <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8">
       <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-3">
         <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold inline-block">
-          <I18nText ru="ИНЖЕНЕРНЫЙ ВЕСТНИК" uz="MUHANDISLIK XABARNOMASI" en="ENGINEERING BULLETIN" />
+          {bPage.code || 'PORTAL // SECTION 05'}
         </span>
         <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A] inline-block">
           <I18nText ru="АРХИВ ТЕХНИЧЕСКОЙ АНАЛИТИКИ" uz="TEXNIK TAHLIL ARXIVI" en="TECHNICAL ANALYSIS ARCHIVE" />
@@ -55,17 +57,17 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
       <I18nText
         as="h1"
         class="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-3"
-        ru="БЛОГ И ЭКСПЕРТНЫЕ МАТЕРИАЛЫ RAILTECH"
-        uz="RAILTECH BLOGI VA EKSPERT MAQOLALARI"
-        en="RAILTECH BLOG & TECHNICAL PAPERS"
+        ru={bPage.title}
+        uz={bPage.title_uz}
+        en={bPage.title_en}
       />
 
       <I18nText
         as="p"
         class="text-base text-[#4A5056] max-w-3xl leading-relaxed"
-        ru="Практическая аналитика от инженеров поставок, специалистов по внешнеэкономической деятельности и разработчиков IT-решений. Разборы регламентов ГОСТ, таможенного оформления DDP и цифровизации снабжения в Узбекистане."
-        uz="Ta'minot muhandislari, tashqi iqtisodiy faoliyat mutaxassislari va IT-yechimlar dasturchilarining amaliy tahlillari. O'zbekistonda GOST qoidalari, DDP bojxona rasmiylashtiruvi va ta'minotni raqamlashtirish tahlillari."
-        en="In-depth insights from procurement engineers, foreign trade compliance specialists, and software developers. Practical walkthroughs of GOST standards, DDP customs clearance, and supply chain digitalization in Uzbekistan."
+        ru={bPage.subtitle}
+        uz={bPage.subtitle_uz}
+        en={bPage.subtitle_en}
       />
     </div>
 
@@ -120,7 +122,7 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
                 <I18nText ru="АВТОР:" uz="MUALLIF:" en="AUTHOR:" /> <span class="font-bold text-[#0A0A0A]">{featuredPost.data.author}</span>
               </div>
               <div>
-                <I18nText ru="РЕЦЕНЗИЯ:" uz="TAQRIZ:" en="REVIEW:" /> <span class="text-emerald-800 font-bold">ОТК & Инженерный отдел</span>
+                <I18nText ru="РЕЦЕНЗИЯ:" uz="TAQRIZ:" en="REVIEW:" /> <span class="text-emerald-800 font-bold">Инженерный отдел RailTech</span>
               </div>
             </div>
             <a
@@ -193,6 +195,8 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
                 <img
                   src={withBase(post.data.image)}
                   alt={post.data.title}
+                  loading="lazy"
+                  decoding="async"
                   class="w-full h-36 object-cover"
                 />
               </div>

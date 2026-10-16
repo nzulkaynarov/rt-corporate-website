@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import I18nText from '../components/I18nText.astro';
+import globalData from '../data/cms/global.json';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title={`404 — Маршрут не найден // ${globalData.companyName}`}
+  description="Запрошенная страница не найдена в реестре портала ООО «RailTech»."
+>
+  <div class="min-h-[75vh] flex items-center justify-center px-4 py-12 font-sans">
+    <div class="w-full max-w-2xl hud-glass-card p-6 sm:p-10 relative">
+      <!-- Target Corner Brackets -->
+      <div class="hud-target-corner hud-corner-tl"></div>
+      <div class="hud-target-corner hud-corner-tr"></div>
+      <div class="hud-target-corner hud-corner-bl"></div>
+      <div class="hud-target-corner hud-corner-br"></div>
+
+      <!-- Header Telemetry Strip -->
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b-2 border-[#0A0A0A] pb-3 mb-6 font-mono text-xs">
+        <div class="flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 bg-red-600 animate-pulse"></span>
+          <span class="font-bold text-red-600">SYS_ALERT // ERROR_404</span>
+        </div>
+        <div class="text-[#4A5056] text-[11px]">
+          ROUTE_NOT_FOUND // PORTAL_STATUS_FAIL
+        </div>
+      </div>
+
+      <!-- Main Display Frame -->
+      <div class="hud-viewport-frame p-6 sm:p-8 bg-[#0A0A0A] text-white font-mono mb-6">
+        <div class="text-[11px] text-[#D4D8DC]/60 mb-2 tracking-widest">
+          DIAGNOSTIC_CONSOLE // NODE: TASHKENT_INDEX_B2
+        </div>
+        <div class="text-3xl sm:text-5xl font-black text-white tracking-tight mb-3">
+          404 // NOT_FOUND
+        </div>
+        <div class="text-xs text-red-400 font-bold mb-4 tracking-wider">
+          ERROR // 404 — ROUTE_NOT_FOUND
+        </div>
+
+        <div class="border-t border-white/20 pt-4 text-xs font-sans text-[#D4D8DC] space-y-2 leading-relaxed">
+          <p class="rt-lang rt-lang-ru">
+            Запрошенный маршрут или технический документ не существует, был перемещен или временно недоступен в каталоге портала {globalData.companyName}.
+          </p>
+          <p class="rt-lang rt-lang-uz">
+            So'ralgan manzil yoki texnik hujjat mavjud emas, ko'chirilgan yoki «RailTech» MChJ portali katalogida vaqtincha mavjud emas.
+          </p>
+          <p class="rt-lang rt-lang-en">
+            The requested route or technical specification does not exist, has been relocated, or is temporarily unavailable in the {globalData.companyName} portal directory.
+          </p>
+        </div>
+
+        <div class="mt-5 pt-3 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] text-[#D4D8DC]/70 font-mono">
+          <div>STATUS: <span class="text-white font-bold">404</span></div>
+          <div>PROTOCOL: <span class="text-white">TLS 1.3</span></div>
+          <div>ZONE: <span class="text-white">INDEX B2</span></div>
+          <div>VAT: <span class="text-white">12% ACCREDITED</span></div>
+        </div>
+      </div>
+
+      <!-- Navigation & Action Buttons -->
+      <div class="space-y-3 font-mono text-xs">
+        <div class="text-[#4A5056] text-[11px] font-bold">
+          <I18nText
+            ru="РЕКОМЕНДУЕМЫЕ ДЕЙСТВИЯ ПО МАРШРУТИЗАЦИИ:"
+            uz="TAVSIYA ETILADIGAN HARAKATLAR:"
+            en="RECOMMENDED ROUTING ACTIONS:"
+          />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <a
+            href={`${base}/`}
+            class="border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white p-3 text-center font-bold hover:bg-transparent hover:text-[#0A0A0A] transition-colors flex items-center justify-center min-h-[44px]"
+          >
+            <I18nText ru="[ НА ГЛАВНУЮ ]" uz="[ BOSH SAHIFA ]" en="[ HOME PAGE ]" />
+          </a>
+          <a
+            href={`${base}/catalog/`}
+            class="border-2 border-[#0A0A0A] bg-white text-[#0A0A0A] p-3 text-center font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors flex items-center justify-center min-h-[44px]"
+          >
+            <I18nText ru="[ ОТКРЫТЬ КАТАЛОГ ]" uz="[ KATALOGNI OCHISH ]" en="[ OPEN CATALOG ]" />
+          </a>
+          <a
+            href={`${base}/services/`}
+            class="border-2 border-[#0A0A0A] bg-white text-[#0A0A0A] p-3 text-center font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors flex items-center justify-center min-h-[44px]"
+          >
+            <I18nText ru="[ УСЛУГИ КОМПАНИИ ]" uz="[ XIZMATLAR ]" en="[ SERVICES ]" />
+          </a>
+        </div>
+
+        <div class="pt-3 text-center">
+          <button
+            type="button"
+            data-lead-modal
+            data-lead-subject="Запрос из страницы 404 (ошибка маршрута)"
+            class="text-[#4A5056] hover:text-[#0A0A0A] underline text-xs cursor-pointer"
+          >
+            <I18nText
+              ru="Сообщить о неработающей ссылке или запросить спецификацию ↗"
+              uz="Ishlamayotgan havola haqida xabar berish yoki spetsifikatsiya so'rash ↗"
+              en="Report a broken link or request specification ↗"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

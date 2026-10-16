@@ -1,7 +1,16 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import type { Lang } from '../../i18n/ui';
+import React, { useState, useMemo } from 'react';
 import { HudSmartImage } from './HudSmartImage';
 import { withBase } from '../../utils/url';
+import { useLang } from '../../utils/useLang';
+
+export interface CatalogItemAttribute {
+  label: string;
+  label_uz?: string;
+  label_en?: string;
+  value: string;
+  value_uz?: string;
+  value_en?: string;
+}
 
 export interface CatalogItemProps {
   slug: string;
@@ -16,7 +25,7 @@ export interface CatalogItemProps {
   subsystem_uz?: string;
   subsystem_en?: string;
   warehouse?: string;
-  status?: 'В наличии' | 'Резерв' | 'Под заказ' | string;
+  status?: string;
   status_uz?: string;
   status_en?: string;
   statusKey?: 'in_stock' | 'reserved' | 'on_order';
@@ -24,6 +33,8 @@ export interface CatalogItemProps {
   specs_uz?: string;
   specs_en?: string;
   image?: string;
+  price?: string;
+  attributes?: CatalogItemAttribute[];
 }
 
 interface Props {
@@ -31,33 +42,10 @@ interface Props {
 }
 
 export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
-  const [lang, setLang] = useState<Lang>('ru');
+  const lang = useLang();
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
-
-  useEffect(() => {
-    const cur =
-      (document.documentElement.lang as Lang) ||
-      ((typeof localStorage !== 'undefined' ? localStorage.getItem('rt_lang') : null) as Lang) ||
-      'ru';
-    if (cur === 'ru' || cur === 'uz' || cur === 'en') {
-      setLang(cur);
-    }
-
-    const handleLang = (e: Event) => {
-      const customEvent = e as CustomEvent<Lang>;
-      if (
-        customEvent.detail &&
-        (customEvent.detail === 'ru' || customEvent.detail === 'uz' || customEvent.detail === 'en')
-      ) {
-        setLang(customEvent.detail);
-      }
-    };
-
-    window.addEventListener('rt-lang-change', handleLang);
-    return () => window.removeEventListener('rt-lang-change', handleLang);
-  }, []);
 
   const base =
     typeof window !== 'undefined' && window.location.pathname.startsWith('/rt-corporate-website')
@@ -163,7 +151,7 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
     <div className="flex flex-col space-y-6">
       {/* Controls Bar: Horizontal Category Chips + Search + View Mode Switcher */}
       <div className="hud-glass-card p-4 flex flex-col gap-4">
-        {/* Horizontal Scrollable Category Chips on Mobile & Wrap on Desktop */}
+        {/* Horizontal Scrollable Category Chips */}
         <div className="flex items-center overflow-x-auto no-scrollbar gap-2 pb-1 font-mono text-xs">
           <button
             type="button"
@@ -226,51 +214,52 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
             )}
           </div>
 
-          {/* Results Counter and View Mode Toggle */}
+          {/* Results Counter and View Mode Toggle (Grid vs Table) */}
           <div className="flex items-center justify-between sm:justify-end gap-3 text-xs">
             <span className="text-[#4A5056]">
               {lang === 'uz' ? 'Topildi:' : lang === 'en' ? 'Found:' : 'Найдено:'}{' '}
               <b className="text-[#0A0A0A]">{filteredItems.length}</b>
             </span>
 
-            {/* Desktop View Toggle */}
-            <div className="hidden md:inline-flex border border-[#0A0A0A] bg-[#C8CDD2] p-0.5" role="group">
+            {/* View Mode Toggle Switcher */}
+            <div className="inline-flex border border-[#0A0A0A] bg-[#C8CDD2] p-0.5" role="group" aria-label="View switch">
               <button
                 type="button"
                 onClick={() => setViewMode('grid')}
-                className={`px-2.5 py-1 text-xs font-bold transition-colors cursor-pointer ${
+                className={`px-2.5 py-1 text-xs font-mono font-bold transition-colors cursor-pointer flex items-center gap-1 ${
                   viewMode === 'grid'
                     ? 'bg-[#0A0A0A] text-white'
                     : 'text-[#0A0A0A] hover:bg-white/40'
                 }`}
-                title="Сетка карточек"
+                title="Сетка карточек с фото"
               >
-                ⊞ СЕТКА
+                <span>⊞</span>
+                <span>{lang === 'uz' ? 'KATAKLAR' : lang === 'en' ? 'GRID' : 'ПЛИТКА'}</span>
               </button>
               <button
                 type="button"
                 onClick={() => setViewMode('table')}
-                className={`px-2.5 py-1 text-xs font-bold transition-colors cursor-pointer ${
+                className={`px-2.5 py-1 text-xs font-mono font-bold transition-colors cursor-pointer flex items-center gap-1 ${
                   viewMode === 'table'
                     ? 'bg-[#0A0A0A] text-white'
                     : 'text-[#0A0A0A] hover:bg-white/40'
                 }`}
-                title="Таблица"
+                title="Инженерная таблица"
               >
-                ☰ ТАБЛИЦА
+                <span>≡</span>
+                <span>{lang === 'uz' ? 'JADVAL' : lang === 'en' ? 'TABLE' : 'ТАБЛИЦА'}</span>
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 1. GRID OF CARDS VIEW (Standard & Mobile Responsive) */}
+      {/* 1. GRID OF CARDS VIEW */}
       {(viewMode === 'grid' || filteredItems.length === 0) && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {filteredItems.map((item) => {
             const title = getItemTitle(item);
             const category = getItemCategory(item);
-            const specs = getItemSpecs(item);
             const status = getItemStatus(item);
 
             const statusClass =
@@ -280,12 +269,14 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                 ? 'bg-amber-100/70 text-amber-900 border-amber-600'
                 : 'bg-zinc-200 text-zinc-900 border-zinc-600';
 
+            const itemAttrs = item.attributes || [];
+
             return (
               <div
                 key={item.sku}
-                className="hud-glass-card p-5 flex flex-col justify-between gap-3 group relative"
+                className="hud-glass-card p-5 flex flex-col justify-between gap-3 group relative hover:border-[#0A0A0A] transition-all"
               >
-                {/* Target Corners for Hover Reticle */}
+                {/* Target Corners for Reticle */}
                 <span className="hud-target-corner hud-tc-tl" aria-hidden="true">┌</span>
                 <span className="hud-target-corner hud-tc-tr" aria-hidden="true">┐</span>
                 <span className="hud-target-corner hud-tc-bl" aria-hidden="true">└</span>
@@ -301,14 +292,15 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                   </div>
 
                   {/* Photo with Smart Fallback */}
-                  <div className="hud-card-media aspect-[16/10] my-3">
+                  <div className="hud-card-media aspect-[16/10] my-3 border border-[#0A0A0A]/15 overflow-hidden">
                     <HudSmartImage
-                      src={item.image || withBase('/images/hero/warehouse.jpg')}
+                      src={item.image || withBase(`/images/catalog/${item.sku.toLowerCase()}.jpg`)}
                       alt={title}
                       sku={item.sku}
                       category={category}
                       aspect="w-full h-full"
                       objectFit="cover"
+                      loading="lazy"
                     />
                   </div>
 
@@ -319,36 +311,57 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                     </a>
                   </h3>
 
-                  {/* Category and Specs */}
-                  <div className="text-[11px] font-mono text-[#4A5056] space-y-1 mt-2">
-                    <div className="truncate">
-                      <span className="text-[#0A0A0A]/60">
-                        {lang === 'uz' ? 'Kategoriya:' : lang === 'en' ? 'Category:' : 'Категория:'}{' '}
-                      </span>
-                      <span className="text-[#0A0A0A] font-semibold">{category}</span>
+                  {/* Category and Key Attributes */}
+                  <div className="text-[11px] font-mono text-[#4A5056] space-y-1.5 mt-2">
+                    <div className="flex justify-between items-center text-[10px] text-[#4A5056] border-b border-[#0A0A0A]/10 pb-1">
+                      <span>{lang === 'uz' ? 'KATEGORIYA:' : lang === 'en' ? 'CATEGORY:' : 'КАТЕГОРИЯ:'}</span>
+                      <span className="font-bold text-[#0A0A0A] uppercase truncate max-w-[55%]">{category}</span>
                     </div>
-                    {specs && (
-                      <p className="line-clamp-2 text-xs text-[#4A5056] font-sans">
-                        {specs}
-                      </p>
+
+                    {/* First 3 Dynamic Attributes */}
+                    {itemAttrs.length > 0 ? (
+                      itemAttrs.slice(0, 3).map((attr, i) => {
+                        const lbl = lang === 'uz' ? attr.label_uz || attr.label : lang === 'en' ? attr.label_en || attr.label : attr.label;
+                        const val = lang === 'uz' ? attr.value_uz || attr.value : lang === 'en' ? attr.value_en || attr.value : attr.value;
+                        return (
+                          <div key={i} className="flex justify-between text-[11px] gap-2">
+                            <span className="text-[#4A5056] truncate max-w-[50%]">{lbl}:</span>
+                            <span className="font-bold text-[#0A0A0A] text-right truncate max-w-[50%]">{val}</span>
+                          </div>
+                        );
+                      })
+                    ) : (
+                      item.specs && (
+                        <p className="line-clamp-2 text-xs text-[#4A5056] font-sans">
+                          {getItemSpecs(item)}
+                        </p>
+                      )
+                    )}
+
+                    {/* Price if available */}
+                    {item.price && (
+                      <div className="flex justify-between text-xs pt-1 font-bold text-[#0A0A0A]">
+                        <span>{lang === 'uz' ? 'Narx:' : lang === 'en' ? 'Price:' : 'Цена:'}</span>
+                        <span>{item.price}</span>
+                      </div>
                     )}
                   </div>
                 </div>
 
-                {/* Bottom Action Buttons (min-h-[44px] for touch ergonomics) */}
+                {/* Bottom Action Buttons */}
                 <div className="pt-3 border-t border-[#0A0A0A]/15 mt-auto flex items-center gap-2 font-mono text-xs">
                   <a
                     href={`${base}/catalog/${item.slug}`}
-                    className="flex-1 min-h-[44px] border border-[#0A0A0A] flex items-center justify-center text-center hover:bg-[#0A0A0A] hover:text-white transition-colors"
+                    className="flex-1 min-h-[44px] border border-[#0A0A0A] flex items-center justify-center text-center hover:bg-[#0A0A0A] hover:text-white transition-colors font-bold"
                   >
-                    {lang === 'uz' ? 'PASPORT ↗' : lang === 'en' ? 'DATASHEET ↗' : 'ПАСПОРТ ↗'}
+                    {lang === 'uz' ? 'Batafsil →' : lang === 'en' ? 'Details →' : 'Подробнее →'}
                   </a>
                   <button
                     type="button"
                     onClick={() => handleOpenModal(item)}
                     className="flex-1 min-h-[44px] border border-[#0A0A0A] bg-[#0A0A0A] text-white flex items-center justify-center text-center font-bold hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
                   >
-                    {lang === 'uz' ? 'BUYURTMA' : lang === 'en' ? 'RFQ' : 'ЗАПРОС КП'}
+                    {lang === 'uz' ? 'So‘rov ↗' : lang === 'en' ? 'Request ↗' : 'Запросить ↗'}
                   </button>
                 </div>
               </div>
@@ -357,23 +370,26 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
         </div>
       )}
 
-      {/* 2. TABLE VIEW (Desktop only — mobile automatically falls back to clean card list) */}
+      {/* 2. TABLE VIEW WITH 48x36px THUMBNAILS */}
       {viewMode === 'table' && filteredItems.length > 0 && (
-        <div className="hidden md:block border border-[#0A0A0A] overflow-x-auto bg-[#D4D8DC]">
-          <table className="w-full text-left font-mono text-xs border-collapse">
+        <div className="border border-[#0A0A0A] overflow-x-auto bg-[#D4D8DC] shadow-sm">
+          <table className="w-full text-left font-mono text-xs border-collapse min-w-[720px]">
             <thead>
               <tr className="border-b border-[#0A0A0A] bg-[#0A0A0A] text-white">
-                <th className="p-3 font-semibold">SKU</th>
-                <th className="p-3 font-semibold">
+                <th className="p-2.5 font-semibold w-16">
+                  {lang === 'uz' ? 'Foto' : lang === 'en' ? 'Photo' : 'Фото'}
+                </th>
+                <th className="p-2.5 font-semibold">SKU</th>
+                <th className="p-2.5 font-semibold">
                   {lang === 'uz' ? 'Nomi va parametrlari' : lang === 'en' ? 'Product & Specs' : 'Наименование и параметры'}
                 </th>
-                <th className="p-3 font-semibold">
+                <th className="p-2.5 font-semibold">
                   {lang === 'uz' ? 'Kategoriya' : lang === 'en' ? 'Category' : 'Категория'}
                 </th>
-                <th className="p-3 font-semibold">
+                <th className="p-2.5 font-semibold">
                   {lang === 'uz' ? 'Holat' : lang === 'en' ? 'Status' : 'Статус'}
                 </th>
-                <th className="p-3 font-semibold text-right">
+                <th className="p-2.5 font-semibold text-right">
                   {lang === 'uz' ? 'Harakat' : lang === 'en' ? 'Action' : 'Действие'}
                 </th>
               </tr>
@@ -394,40 +410,56 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
 
                 return (
                   <tr key={item.sku} className="hover:bg-white/40 transition-colors group">
-                    <td className="p-3 font-bold text-[#0A0A0A] whitespace-nowrap">
+                    {/* 48x36px Photo Thumbnail */}
+                    <td className="p-2.5">
+                      <a href={`${base}/catalog/${item.slug}`} className="block w-[48px] h-[36px] border border-[#0A0A0A]/30 overflow-hidden bg-[#C8CDD2]">
+                        <img
+                          src={item.image || withBase(`/images/catalog/${item.sku.toLowerCase()}.jpg`)}
+                          alt={title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-200"
+                          loading="lazy"
+                          decoding="async"
+                          onError={(e) => {
+                            const t = e.currentTarget;
+                            t.src = withBase('/images/hero/warehouse.jpg');
+                          }}
+                        />
+                      </a>
+                    </td>
+                    <td className="p-2.5 font-bold text-[#0A0A0A] whitespace-nowrap">
                       <a href={`${base}/catalog/${item.slug}`} className="underline group-hover:no-underline">
                         {item.sku}
                       </a>
                     </td>
-                    <td className="p-3 max-w-md">
+                    <td className="p-2.5 max-w-sm">
                       <a
                         href={`${base}/catalog/${item.slug}`}
-                        className="font-sans font-bold text-sm text-[#0A0A0A] block group-hover:underline"
+                        className="font-sans font-bold text-xs text-[#0A0A0A] block group-hover:underline line-clamp-1"
                       >
                         {title}
                       </a>
-                      {specs && <div className="text-[11px] text-[#4A5056] mt-0.5">{specs}</div>}
+                      {specs && <div className="text-[11px] text-[#4A5056] truncate mt-0.5">{specs}</div>}
                     </td>
-                    <td className="p-3 text-[#4A5056] whitespace-nowrap">{category}</td>
-                    <td className="p-3 whitespace-nowrap">
+                    <td className="p-2.5 text-[#4A5056] whitespace-nowrap">{category}</td>
+                    <td className="p-2.5 whitespace-nowrap">
                       <span className={`px-2 py-0.5 text-[10px] font-bold ${statusClass}`}>
                         {status}
                       </span>
                     </td>
-                    <td className="p-3 text-right whitespace-nowrap">
+                    <td className="p-2.5 text-right whitespace-nowrap">
                       <div className="flex items-center justify-end space-x-2">
                         <a
                           href={`${base}/catalog/${item.slug}`}
-                          className="border border-[#0A0A0A] px-2.5 py-1 text-[11px] hover:bg-[#0A0A0A] hover:text-white transition-colors"
+                          className="border border-[#0A0A0A] px-2 py-1 text-[11px] hover:bg-[#0A0A0A] hover:text-white transition-colors"
                         >
-                          {lang === 'uz' ? 'PASPORT ↗' : lang === 'en' ? 'DATASHEET ↗' : 'ПАСПОРТ ↗'}
+                          {lang === 'uz' ? 'Batafsil →' : lang === 'en' ? 'Details →' : 'Подробнее →'}
                         </a>
                         <button
                           type="button"
                           onClick={() => handleOpenModal(item)}
                           className="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2.5 py-1 text-[11px] hover:bg-transparent hover:text-[#0A0A0A] transition-colors font-bold cursor-pointer"
                         >
-                          {lang === 'uz' ? 'BUYURTMA' : lang === 'en' ? 'RFQ' : 'ЗАПРОС КП'}
+                          {lang === 'uz' ? 'So‘rov ↗' : lang === 'en' ? 'RFQ ↗' : 'Запросить ↗'}
                         </button>
                       </div>
                     </td>

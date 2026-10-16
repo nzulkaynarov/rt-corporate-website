@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { withBase } from '../../utils/url';
+import { useLang } from '../../utils/useLang';
 
 type Lang = 'ru' | 'uz' | 'en';
 
@@ -66,7 +67,7 @@ const pad4 = (n: number) => String(Math.floor(n)).padStart(4, '0');
 export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500 }) => {
   const [active, setActive] = useState(0);
   const [tick, setTick] = useState(0); // re-triggers animations
-  const [lang, setLang] = useState<Lang>('ru');
+  const lang = useLang();
   const [paused, setPaused] = useState(false);
   const [isRecalibrating, setIsRecalibrating] = useState(false);
   const [coords, setCoords] = useState<{ x: number; y: number }>({ x: 340, y: 180 });
@@ -95,18 +96,6 @@ export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500 }) =
     }, 400);
     return () => window.clearTimeout(timer);
   }, [isRecalibrating, tick]);
-
-  // Language sync with Header switcher
-  useEffect(() => {
-    const l = document.documentElement.lang as Lang;
-    if (l === 'uz' || l === 'en' || l === 'ru') setLang(l);
-    const onLang = (e: Event) => {
-      const d = (e as CustomEvent<Lang>).detail;
-      if (d === 'ru' || d === 'uz' || d === 'en') setLang(d);
-    };
-    window.addEventListener('rt-lang-change', onLang);
-    return () => window.removeEventListener('rt-lang-change', onLang);
-  }, []);
 
   // External control: left-column "Modes" dispatch `hud-slide-go`
   useEffect(() => {

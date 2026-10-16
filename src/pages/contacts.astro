@@ -176,8 +176,54 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
               <I18nText ru="МФО:" uz="MFO:" en="MFO:" /> {contactsData.bankDetails.mfo}
             </div>
           </div>
+
+          <button
+            type="button"
+            id="copy-requisites-btn"
+            class="w-full mt-3 border border-[#0A0A0A] bg-white py-2 px-3 text-xs font-mono font-bold text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+          >
+            <span id="copy-btn-text">
+              <I18nText
+                ru="[ Скопировать реквизиты компании 📋 ]"
+                uz="[ Korxona rekvizitlarini nusxalash 📋 ]"
+                en="[ Copy Company Requisites 📋 ]"
+              />
+            </span>
+          </button>
         </div>
       </div>
     </div>
   </div>
+
+  <script define:vars={{
+    requisitesPayload: `ООО «RailTech»
+ИНН: ${globalData.inn} (${contactsData.bankDetails.vatCode})
+Р/С: ${contactsData.bankDetails.account}
+Банк: ${contactsData.bankDetails.bank}
+МФО: ${contactsData.bankDetails.mfo}
+ОКЭД: 46.69.0
+Юр. адрес: 100140, Республика Узбекистан, ${globalData.address}
+ЭСФ: Didox / Soliq / Factura.uz
+Телефон: ${globalData.phone}
+Email: ${globalData.emailGeneral}`
+  }}>
+    const btn = document.getElementById('copy-requisites-btn');
+    const label = document.getElementById('copy-btn-text');
+    if (btn && label) {
+      const originalHTML = label.innerHTML;
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(requisitesPayload);
+          label.textContent = '✓ Реквизиты скопированы';
+          btn.classList.add('bg-[#0A0A0A]', 'text-white');
+          setTimeout(() => {
+            label.innerHTML = originalHTML;
+            btn.classList.remove('bg-[#0A0A0A]', 'text-white');
+          }, 2000);
+        } catch (e) {
+          console.error(e);
+        }
+      });
+    }
+  </script>
 </BaseLayout>

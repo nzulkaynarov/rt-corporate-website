@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { withBase } from '../../utils/url';
 import { HudSmartImage } from './HudSmartImage';
-import type { Lang } from '../../i18n/ui';
+import { useLang } from '../../utils/useLang';
 
 interface Props {
   sku: string;
@@ -18,10 +18,12 @@ interface Props {
   specs_uz?: string;
   specs_en?: string;
   image?: string;
+  images?: string[];
   gallery?: string[];
 }
 
 const pad4 = (n: number) => String(Math.floor(n)).padStart(4, '0');
+const pad2 = (n: number) => String(Math.floor(n)).padStart(2, '0');
 
 export const ProductMediaGallery: React.FC<Props> = ({
   sku,
@@ -35,72 +37,86 @@ export const ProductMediaGallery: React.FC<Props> = ({
   status_uz,
   status_en,
   image,
+  images = [],
   gallery = [],
 }) => {
-  const [lang, setLang] = useState<Lang>('ru');
+  const lang = useLang();
   const [activeIdx, setActiveIdx] = useState(0);
   const [isScanning, setIsScanning] = useState(false);
   const [coords, setCoords] = useState<{ x: number; y: number }>({ x: 260, y: 150 });
   const [reticleOffset, setReticleOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Sync language
-  useEffect(() => {
-    const cur =
-      (document.documentElement.lang as Lang) ||
-      ((typeof localStorage !== 'undefined' ? localStorage.getItem('rt_lang') : null) as Lang) ||
-      'ru';
-    if (cur === 'ru' || cur === 'uz' || cur === 'en') {
-      setLang(cur);
-    }
-
-    const handleLang = (e: Event) => {
-      const customEvent = e as CustomEvent<Lang>;
-      if (
-        customEvent.detail &&
-        (customEvent.detail === 'ru' || customEvent.detail === 'uz' || customEvent.detail === 'en')
-      ) {
-        setLang(customEvent.detail);
-      }
-    };
-
-    window.addEventListener('rt-lang-change', handleLang);
-    return () => window.removeEventListener('rt-lang-change', handleLang);
-  }, []);
+  const touchStartX = useRef<number | null>(null);
 
   const curTitle = lang === 'uz' ? title_uz || title : lang === 'en' ? title_en || title : title;
   const curCategory =
     lang === 'uz' ? category_uz || category : lang === 'en' ? category_en || category : category;
   const curStatus = lang === 'uz' ? status_uz || status : lang === 'en' ? status_en || status : status;
 
-  // Build photo list (main image + gallery, or fallback to main image)
-  const allImages = React.useMemo(() => {
-    const list: string[] = [];
-    if (image) list.push(image);
-    if (gallery && gallery.length > 0) {
-      gallery.forEach((g) => {
-        if (g && !list.includes(g)) list.push(g);
-      });
-    }
-    if (list.length === 0) {
-      list.push(`/images/catalog/${sku.toLowerCase()}.jpg`);
-    }
-    return list;
-  }, [image, gallery, sku]);
+  // Build clean photo list from image, images, and legacy gallery
+  const allImages = useMemo(() => {
+    const rawList: (string | undefined)[] = [image, ...(images || []), ...(gallery || [])];
+    const uniqueList: string[] = [];
+    rawList.forEach((item) => {
+      if (item && typeof item === 'string' && item.trim()) {
+        const trimmed = item.trim();
+        if (!uniqueList.includes(trimmed)) {
+          uniqueList.push(trimmed);
+        }
+      }
+    });
 
-  const activeImage = allImages[activeIdx] || allImages[0];
+    if (uniqueList.length === 0) {
+      uniqueList.push(`/images/catalog/${sku.toLowerCase()}.jpg`);
+    }
+    return uniqueList;
+  }, [image, images, gallery, sku]);
+
+  // Keep index within range
+  const safeIdx = activeIdx >= allImages.length ? 0 : activeIdx;
+  const activeImage = allImages[safeIdx] || allImages[0];
 
   const handleSelectImage = (idx: number) => {
     setActiveIdx(idx);
     setIsScanning(true);
   };
 
+  const handlePrev = () => {
+    setActiveIdx((prev) => (prev > 0 ? prev - 1 : allImages.length - 1));
+    setIsScanning(true);
+  };
+
+  const handleNext = () => {
+    setActiveIdx((prev) => (prev < allImages.length - 1 ? prev + 1 : 0));
+    setIsScanning(true);
+  };
+
+  // Touch swipe support on mobile devices
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length > 0) {
+      touchStartX.current = e.touches[0].clientX;
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || e.changedTouches.length === 0) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    if (deltaX > 45) {
+      // Swiped right -> previous image
+      handlePrev();
+    } else if (deltaX < -45) {
+      // Swiped left -> next image
+      handleNext();
+    }
+    touchStartX.current = null;
+  };
+
   useEffect(() => {
     if (!isScanning) return;
-    const t = window.setTimeout(() => setIsScanning(false), 400);
+    const t = window.setTimeout(() => setIsScanning(false), 350);
     return () => window.clearTimeout(t);
-  }, [isScanning, activeIdx]);
+  }, [isScanning, safeIdx]);
 
   // Live mouse telemetry inside frame
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -140,6 +156,8 @@ export const ProductMediaGallery: React.FC<Props> = ({
         ref={containerRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         className="hud-viewport-frame relative overflow-hidden"
       >
         <span className="hud-vf-outline" aria-hidden="true"></span>
@@ -147,7 +165,7 @@ export const ProductMediaGallery: React.FC<Props> = ({
         <div className="hud-viewport-inner relative min-h-[300px] sm:min-h-[360px] flex items-center justify-center bg-[#D4D8DC]">
           {/* Smart Image with generative blueprint on error */}
           <HudSmartImage
-            key={`prod-img-${activeIdx}-${sku}`}
+            key={`prod-img-${safeIdx}-${sku}`}
             src={activeImage}
             alt={curTitle}
             sku={sku}
@@ -208,28 +226,55 @@ export const ProductMediaGallery: React.FC<Props> = ({
         </div>
       </div>
 
-      {/* Thumbnails row (if multiple images) */}
+      {/* Multi-Photo Controls: Thumbnails, Counter & Navigation (when 2+ images) */}
       {allImages.length > 1 && (
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1">
-          {allImages.map((imgUrl, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => handleSelectImage(i)}
-              className={`relative flex-none w-16 h-12 border transition-all cursor-pointer overflow-hidden ${
-                activeIdx === i
-                  ? 'border-2 border-[#0A0A0A] bg-white'
-                  : 'border-[#0A0A0A]/40 bg-[#C8CDD2] opacity-75 hover:opacity-100'
-              }`}
-            >
-              <img
-                src={withBase(imgUrl)}
-                alt={`${sku} view ${i + 1}`}
-                className="w-full h-full object-contain"
-                loading="lazy"
-              />
-            </button>
-          ))}
+        <div className="flex flex-col space-y-2 pt-1">
+          <div className="flex items-center justify-between text-xs font-mono text-[#4A5056] border-b border-[#0A0A0A]/15 pb-1">
+            <span className="font-bold text-[#0A0A0A] tracking-wider">
+              FRAME // {pad2(safeIdx + 1)} OF {pad2(allImages.length)}
+            </span>
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={handlePrev}
+                className="px-2 py-0.5 border border-[#0A0A0A]/40 hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer text-[11px]"
+                aria-label="Previous image"
+              >
+                &lt; {lang === 'uz' ? 'OLDINGI' : lang === 'en' ? 'PREV' : 'ПРЕД'}
+              </button>
+              <button
+                type="button"
+                onClick={handleNext}
+                className="px-2 py-0.5 border border-[#0A0A0A]/40 hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer text-[11px]"
+                aria-label="Next image"
+              >
+                {lang === 'uz' ? 'KEYINGI' : lang === 'en' ? 'NEXT' : 'СЛЕД'} &gt;
+              </button>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-0.5 scrollbar-thin">
+            {allImages.map((imgUrl, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => handleSelectImage(i)}
+                className={`relative flex-none w-[64px] h-[48px] border transition-all cursor-pointer overflow-hidden ${
+                  safeIdx === i
+                    ? 'border-2 border-[#0A0A0A] bg-white ring-1 ring-[#0A0A0A]'
+                    : 'border-[#0A0A0A]/30 bg-[#C8CDD2] opacity-75 hover:opacity-100'
+                }`}
+                title={`View ${i + 1}`}
+              >
+                <img
+                  src={withBase(imgUrl)}
+                  alt={`${sku} frame ${i + 1}`}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </button>
+            ))}
+          </div>
         </div>
       )}
 

@@ -2,14 +2,19 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import I18nText from '../../components/I18nText.astro';
-import HudCard from '../../components/hud/HudCard.astro';
 import HudPageHeader from '../../components/hud/HudPageHeader.astro';
 import HudStepDivider from '../../components/hud/HudStepDivider.astro';
+
+import { withBase } from '../../utils/url';
+import pagesData from '../../data/cms/pages.json';
 
 const allServices = await getCollection('services');
 allServices.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
 
-// Unique categories for filtering
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const sPage = pagesData.servicesPage;
+
+// Unique categories for filtering (only if > 6 services)
 const categoryMap = new Map<string, { ru: string; uz?: string; en?: string }>();
 for (const s of allServices) {
   const ru = s.data.category;
@@ -27,64 +32,126 @@ const categories = [...categoryMap.values()];
 >
   <div class="max-w-7xl mx-auto px-4 pb-16 font-sans">
     <HudPageHeader
-      code="SEC.02 // SERVICES"
+      code={sPage.code || "SEC.02 // SERVICES"}
       crumb={{ ru: 'УСЛУГИ', uz: 'XIZMATLAR', en: 'SERVICES' }}
       title={{
-        ru: 'Услуги компании: ВЭД, сорсинг, IT и дистрибуция',
-        uz: 'Kompaniya xizmatlari: TQI, sorsing, IT va distribyutsiya',
-        en: 'Corporate Services: Turnkey Import, Sourcing, IT & Distribution',
+        ru: sPage.title,
+        uz: sPage.title_uz,
+        en: sPage.title_en,
       }}
       lead={{
-        ru: 'ООО «RailTech» выступает универсальным оператором для промышленных предприятий, девелоперов и транспортных операторов Республики Узбекистан. Мы закрываем задачи снабжения под ключ, снижаем валютные риски и разрабатываем современный цифровой софт.',
-        uz: "«RailTech» MChJ O'zbekiston sanoat korxonalari, quruvchilari va transport operatorlari uchun universal operator hisoblanadi. Biz ta'minot vazifalarini to'liq bajaramiz, valyuta xatarlarini kamaytiramiz va zamonaviy dasturiy ta'minot ishlab chiqamiz.",
-        en: 'RailTech LLC serves as a multi-sector partner for heavy industry, mining combines, developers, and transport operators across Uzbekistan. We deliver turnkey procurement, eliminate currency exposure, and engineer modern industrial software.',
+        ru: sPage.subtitle,
+        uz: sPage.subtitle_uz,
+        en: sPage.subtitle_en,
       }}
     />
 
-    <!-- Filter toolbar -->
-    <div class="hud-glass-card p-3 mb-8 flex-row flex-wrap items-center gap-2 font-mono text-[11px]" role="group" aria-label="Services Category Filter">
-      <span class="text-[#4A5056] uppercase tracking-widest mr-2"><I18nText ru="НАПРАВЛЕНИЕ:" uz="YO'NALISH:" en="CATEGORY:" /></span>
-      <button type="button" id="srv-filter-all" data-filter="all" class="srv-filter px-3 py-1.5 border border-[#0A0A0A] bg-[#0A0A0A] text-white cursor-pointer font-bold">
-        <I18nText ru="Все услуги" uz="Barcha xizmatlar" en="All services" />
-      </button>
-      {categories.map((c, i) => (
-        <button type="button" id={`srv-filter-${i + 1}`} data-filter={c.ru} class="srv-filter px-3 py-1.5 border border-[#0A0A0A] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer font-bold">
-          <I18nText ru={c.ru} uz={c.uz} en={c.en} />
+    {allServices.length > 6 && (
+      <div class="hud-glass-card p-3 mb-8 flex flex-row flex-wrap items-center gap-2 font-mono text-[11px]" role="group" aria-label="Services Category Filter">
+        <span class="text-[#4A5056] uppercase tracking-widest mr-2"><I18nText ru="НАПРАВЛЕНИЕ:" uz="YO'NALISH:" en="CATEGORY:" /></span>
+        <button type="button" id="srv-filter-all" data-filter="all" class="srv-filter px-3 py-1.5 border border-[#0A0A0A] bg-[#0A0A0A] text-white cursor-pointer font-bold">
+          <I18nText ru="Все услуги" uz="Barcha xizmatlar" en="All services" />
         </button>
-      ))}
-    </div>
+        {categories.map((c, i) => (
+          <button type="button" id={`srv-filter-${i + 1}`} data-filter={c.ru} class="srv-filter px-3 py-1.5 border border-[#0A0A0A] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer font-bold">
+            <I18nText ru={c.ru} uz={c.uz} en={c.en} />
+          </button>
+        ))}
+      </div>
+    )}
 
-    <!-- Services Grid -->
-    <div id="srv-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-      {allServices.map((srv) => (
-        <div class="srv-item flex flex-col" data-category={srv.data.category}>
-          <HudCard
-            class="h-full"
-            index={srv.data.code}
-            tag={{ ru: srv.data.category, uz: srv.data.category_uz, en: srv.data.category_en }}
-            title={{ ru: srv.data.title, uz: srv.data.title_uz, en: srv.data.title_en }}
-            text={{ ru: srv.data.summary, uz: srv.data.summary_uz, en: srv.data.summary_en }}
-            image={srv.data.image}
-            href={`/services/${srv.slug}/`}
-            cta={{ ru: srv.data.ctaLabel || 'Подробнее об услуге', uz: srv.data.ctaLabel_uz || "Xizmat haqida batafsil", en: srv.data.ctaLabel_en || 'Learn more' }}
-            headingLevel="h2"
-          >
-            <!-- Key Benefits Badges -->
-            <div class="pt-2 border-t border-[#0A0A0A]/15 grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono text-[11px]">
-              {srv.data.benefits.slice(0, 4).map((b) => (
-                <div class="p-2 bg-white/40 border border-[#0A0A0A]/15">
-                  <div class="text-[9px] text-[#4A5056] uppercase tracking-wider">
-                    <I18nText ru={b.label} uz={b.label_uz} en={b.label_en} />
-                  </div>
-                  <div class="font-bold text-[#0A0A0A] truncate">
-                    <I18nText ru={b.value} uz={b.value_uz} en={b.value_en} />
-                  </div>
+    <!-- Services Grid (2x2 Matrix) -->
+    <div id="srv-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+      {allServices.map((srv, idx) => {
+        const photoUrl = withBase(srv.data.image || '/images/hero/logistics.jpg');
+        const detailHref = `${base}/services/${srv.slug}/`;
+        const firstSteps = (srv.data.steps || []).slice(0, 3);
+        const cardIndex = `0${idx + 1} //`;
+
+        return (
+          <div class="srv-item hud-glass-card p-6 flex flex-col justify-between gap-5 relative group" data-category={srv.data.category}>
+            {/* Target Reticle Corner Brackets */}
+            <span class="hud-target-corner hud-tc-tl" aria-hidden="true">┌</span>
+            <span class="hud-target-corner hud-tc-tr" aria-hidden="true">┐</span>
+            <span class="hud-target-corner hud-tc-bl" aria-hidden="true">└</span>
+            <span class="hud-target-corner hud-tc-br" aria-hidden="true">┘</span>
+
+            <div class="flex flex-col gap-4">
+              {/* Header: Index + Category Badge */}
+              <div class="flex items-center justify-between border-b border-[#0A0A0A]/15 pb-2 font-mono text-xs">
+                <span class="hud-card-index"><b>{cardIndex}</b> {srv.data.code}</span>
+                <span class="border border-[#0A0A0A] bg-white/70 px-2 py-0.5 text-[10px] font-bold text-[#0A0A0A]">
+                  <I18nText ru={srv.data.category} uz={srv.data.category_uz} en={srv.data.category_en} />
+                </span>
+              </div>
+
+              {/* Real Photo in frame with corners */}
+              <div class="hud-card-media aspect-[16/10] overflow-hidden border border-[#0A0A0A]/20 relative">
+                <img
+                  src={photoUrl}
+                  alt={srv.data.title}
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  onerror={`this.onerror=null; this.src='${withBase('/images/hero/warehouse.jpg')}';`}
+                />
+                <span class="absolute top-1.5 left-1.5 font-mono text-[9px] tracking-widest text-white/90 mix-blend-difference bg-black/40 px-1 py-0.5">
+                  SERVICE // {srv.data.code}
+                </span>
+              </div>
+
+              {/* Title & Summary */}
+              <div>
+                <h2 class="font-sans font-bold text-lg sm:text-xl text-[#0A0A0A] leading-snug mb-2">
+                  <a href={detailHref} class="hover:underline">
+                    <I18nText ru={srv.data.title} uz={srv.data.title_uz} en={srv.data.title_en} />
+                  </a>
+                </h2>
+                <p class="text-xs sm:text-[13px] text-[#4A5056] leading-relaxed line-clamp-3">
+                  <I18nText ru={srv.data.summary} uz={srv.data.summary_uz} en={srv.data.summary_en} />
+                </p>
+              </div>
+
+              {/* Key Steps / What's Included */}
+              {firstSteps.length > 0 && (
+                <div class="pt-3 border-t border-[#0A0A0A]/15 space-y-1.5 font-mono text-xs">
+                  <span class="text-[10px] text-[#4A5056] uppercase tracking-wider block font-bold mb-1">
+                    <I18nText ru="// ЧТО ВХОДИТ В УСЛУГУ:" uz="// XIZMATGA NIMALAR KIRADI:" en="// DELIVERABLES & STAGES:" />
+                  </span>
+                  {firstSteps.map((step, sIdx) => (
+                    <div class="flex items-start gap-2 text-[11px] text-[#0A0A0A]">
+                      <span class="text-[#4A5056] font-bold flex-none">0{sIdx + 1}.</span>
+                      <span class="truncate">
+                        <I18nText ru={step.title} uz={step.title_uz} en={step.title_en} />
+                      </span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
-          </HudCard>
-        </div>
-      ))}
+
+            {/* Bottom Actions in one line: [ Подробнее → ] and [ Заказать расчет ↗ ] */}
+            <div class="pt-4 border-t border-[#0A0A0A]/20 flex items-center justify-between gap-3 font-mono text-xs">
+              <a
+                href={detailHref}
+                class="border border-[#0A0A0A] px-3 py-2 bg-white/40 hover:bg-[#0A0A0A] hover:text-white transition-colors font-bold flex items-center gap-1.5 min-h-[44px]"
+              >
+                <span><I18nText ru="Подробнее" uz="Batafsil" en="Details" /></span>
+                <span>→</span>
+              </a>
+              <button
+                type="button"
+                data-lead-modal
+                data-lead-subject={`Запрос расчета по услуге: ${srv.data.title}`}
+                class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-3.5 py-2 hover:bg-white hover:text-[#0A0A0A] transition-colors font-bold cursor-pointer flex items-center gap-1.5 min-h-[44px]"
+              >
+                <span><I18nText ru="Заказать расчет" uz="Hisobni buyurtma qilish" en="Request quotation" /></span>
+                <span>↗</span>
+              </button>
+            </div>
+          </div>
+        );
+      })}
     </div>
 
     <HudStepDivider label="CONSULTATION // RFQ" class="my-12" />
@@ -94,10 +161,10 @@ const categories = [...categoryMap.values()];
       <div class="space-y-2 max-w-2xl">
         <span class="hud-callout"><i></i>CUSTOM CONSULTATION</span>
         <h3 class="font-sans text-xl font-bold text-[#0A0A0A]">
-          Требуется нестандартное решение или комплексное проектное снабжение?
+          <I18nText ru={sPage.ctaTitle} uz={sPage.ctaTitle_uz} en={sPage.ctaTitle_en} />
         </h3>
         <p class="text-xs text-[#4A5056] leading-relaxed font-sans">
-          Наши ведущие специалисты по ВЭД и инженеры подготовят развернутое технико-коммерческое предложение с фиксацией цены в сумах в течение 24 часов.
+          <I18nText ru={sPage.ctaSubtitle} uz={sPage.ctaSubtitle_uz} en={sPage.ctaSubtitle_en} />
         </p>
       </div>
       <button
@@ -106,7 +173,7 @@ const categories = [...categoryMap.values()];
         data-lead-subject="Запрос консультации по услугам компании"
         class="hud-btn whitespace-nowrap cursor-pointer"
       >
-        <span>[ ЗАПРОСИТЬ КОНСУЛЬТАЦИЮ ↗ ]</span>
+        <span>[ <I18nText ru={sPage.ctaButton} uz={sPage.ctaButton_uz} en={sPage.ctaButton_en} /> ]</span>
       </button>
     </div>
   </div>

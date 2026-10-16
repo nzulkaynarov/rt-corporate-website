@@ -18,6 +18,10 @@ const latestPosts = allPosts
   .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime())
   .slice(0, 3);
 
+const allProjects = await getCollection('projects');
+allProjects.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
+const featuredProjects = allProjects.slice(0, 3);
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 // Format hero slides with proper base URL for images
@@ -296,8 +300,41 @@ const modes = [
     </div>
   </section>
 
-  <!-- Section: Engineering Blog & News (Knowledge Base) -->
+  <!-- Section: Delivered Projects & Case Studies -->
   <section class="border-b border-[#0A0A0A] bg-[#D4D8DC] py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="hud-section-head">
+        <div>
+          <span class="hud-callout mb-1"><i></i><I18nText ru="КЕЙСЫ И СПЕЦПРОЕКТЫ" uz="KEYSLAR VA MAXSUS LOYIHALAR" en="CASE STUDIES & SPECIAL PROJECTS" /></span>
+          <I18nText as="h2" class="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-[#0A0A0A]" ru="РЕАЛИЗОВАННЫЕ ПРОЕКТЫ RAILTECH" uz="RAILTECH AMALGA OSHIRGAN LOYIHALARI" en="DELIVERED RAILTECH PROJECTS" />
+        </div>
+        <a
+          href={`${base}/projects/`}
+          class="font-mono text-xs font-bold text-[#0A0A0A] hover:underline flex items-center gap-1.5 min-h-[44px]"
+        >
+          <span><I18nText ru="ВСЕ ПРОЕКТЫ →" uz="BARCHA LOYIHALAR →" en="ALL PROJECTS →" /></span>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {featuredProjects.map((prj) => (
+          <HudCard
+            index={prj.data.code}
+            tag={{ ru: prj.data.category || prj.data.tag, uz: prj.data.category_uz || prj.data.tag_uz, en: prj.data.category_en || prj.data.tag_en }}
+            title={{ ru: prj.data.title, uz: prj.data.title_uz, en: prj.data.title_en }}
+            text={{ ru: prj.data.subtitle, uz: prj.data.subtitle_uz, en: prj.data.subtitle_en }}
+            image={prj.data.image}
+            href={`/projects/${prj.slug}/`}
+            cta={{ ru: 'Открыть кейс', uz: "Loyihani ochish", en: 'Open project' }}
+            headingLevel="h3"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Engineering Blog & News (Knowledge Base) -->
+  <section class="border-b border-[#0A0A0A] bg-[#C8CDD2] py-16">
     <div class="max-w-7xl mx-auto px-4">
       <div class="hud-section-head">
         <div>

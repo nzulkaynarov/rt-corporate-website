@@ -5,9 +5,12 @@ import I18nText from '../../components/I18nText.astro';
 import HudCard from '../../components/hud/HudCard.astro';
 import HudPageHeader from '../../components/hud/HudPageHeader.astro';
 import HudStepDivider from '../../components/hud/HudStepDivider.astro';
+import pagesData from '../../data/cms/pages.json';
 
 const projectItems = await getCollection('projects');
 projectItems.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
+
+const pPage = pagesData.projectsPage;
 
 // Unique categories derived from CMS content (RU value is the filter key).
 const categoryMap = new Map<string, { ru: string; uz?: string; en?: string }>();
@@ -22,18 +25,18 @@ const directions = [
     n: '01',
     title: { ru: 'ТРАНСФЕР ТЕХНОЛОГИЙ И ЛОКАЛИЗАЦИЯ', uz: 'TEXNOLOGIYALAR TRANSFERI VA LOKALIZATSIYA', en: 'TECHNOLOGY TRANSFER & LOCALIZATION' },
     text: {
-      ru: 'Адаптация конструкторской документации европейских и азиатских машиностроительных заводов под стандарты и регламенты Узбекистана.',
-      uz: "Yevropa va Osiyo mashinasozlik korxonalari konstruktorlik hujjatlarini O'zbekiston standartlari va reglamentlariga moslashtirish.",
-      en: 'Adapting engineering documentation from European and Asian machinery builders to national standards and regulations of Uzbekistan.',
+      ru: 'Адаптация конструкторской документации машиностроительных заводов под стандарты и регламенты Узбекистана.',
+      uz: "Mashinasozlik korxonalari konstruktorlik hujjatlarini O'zbekiston standartlari va reglamentlariga moslashtirish.",
+      en: 'Adapting engineering documentation from machinery builders to national standards and regulations of Uzbekistan.',
     },
   },
   {
     n: '02',
-    title: { ru: 'ПОЛИГОННЫЕ ИСПЫТАНИЯ И СЕРТИФИКАЦИЯ', uz: 'POLIGON SINOVLARI VA SERTIFIKATSIYA', en: 'TRACK TESTING & CERTIFICATION' },
+    title: { ru: 'ИСПЫТАНИЯ И СЕРТИФИКАЦИЯ', uz: 'SINOVLAR VA SERTIFIKATSIYA', en: 'TESTING & CERTIFICATION' },
     text: {
-      ru: 'Организация опытной эксплуатации новых типов оборудования на полигонах ГАЖК «Узбекистон темир йуллари» с инструментальной фиксацией износа.',
-      uz: "«O'zbekiston temir yo'llari» AJ sinov poligonlarida yangi uskuna turlarini tajriba sinovlaridan o'tkazish va yeyilishni asbobiy qayd etish.",
-      en: 'Coordinating in-service operational trials of advanced rolling stock assemblies on Uzbekistan Railways (UTY) testbeds with wear instrumentation.',
+      ru: 'Организация опытной эксплуатации новых типов оборудования на промышленных полигонах с инструментальной фиксацией параметров.',
+      uz: "Sanoat poligonlarida yangi uskuna turlarini tajriba sinovlaridan o'tkazish va parametrlarni asbobiy qayd etish.",
+      en: 'Coordinating in-service operational trials of advanced industrial assemblies on testing beds with instrumentation.',
     },
   },
   {
@@ -50,22 +53,22 @@ const directions = [
 
 <BaseLayout
   title="Проекты: промышленные поставки, IT-продукты и Арт-лаборатория — ООО «RailTech»"
-  description="Портфель проектов ООО «RailTech»: промышленные поставки DDP Ташкент, трансфер технологий и испытания на путях ГАЖК «УТЙ», IT-продукты b2b.railtech.uz, выставки и живопись RailTech Art Lab."
-  keywords="проекты railtech, локализация жд производства узбекистан, испытания утй, b2b.railtech.uz, railtech art lab, индустриальное искусство ташкент"
+  description="Портфель проектов ООО «RailTech»: промышленные поставки DDP Ташкент, трансфер технологий, IT-продукты, выставки и живопись RailTech Art Lab."
+  keywords="проекты railtech, локализация производства узбекистан, промышленный инжиниринг, railtech art lab, индустриальное искусство ташкент"
 >
   <div class="max-w-7xl mx-auto px-4 pb-16 font-sans">
     <HudPageHeader
-      code="SEC.05 // PROJECTS"
+      code={pPage.code || "SEC.04 // PROJECTS"}
       crumb={{ ru: 'ПРОЕКТЫ', uz: 'LOYIHALAR', en: 'PROJECTS' }}
       title={{
-        ru: 'Проекты: поставки, IT-продукты и Арт-лаборатория',
-        uz: "Loyihalar: ta'minot, IT-mahsulotlar va Art-laboratoriya",
-        en: 'Projects: supply, IT products & Art Lab',
+        ru: pPage.title,
+        uz: pPage.title_uz,
+        en: pPage.title_en,
       }}
       lead={{
-        ru: 'Деятельность RailTech выходит за рамки классической дистрибуции. Мы внедряем инженерные решения в транспортную инфраструктуру Республики Узбекистан, развиваем цифровые продукты и поддерживаем индустриальное искусство через собственную Арт-лабораторию.',
-        uz: "«RailTech» faoliyati an'anaviy distribyutsiya doirasidan kengroq. Biz O'zbekiston transport infratuzilmasiga muhandislik yechimlarini joriy etamiz, raqamli mahsulotlarni rivojlantiramiz va Art-laboratoriyamiz orqali sanoat san'atini qo'llab-quvvatlaymiz.",
-        en: "RailTech's scope extends beyond classic distribution. We deploy engineering solutions across Uzbekistan's transport grid, build digital products and patronize industrial art through the RailTech Art Lab.",
+        ru: pPage.subtitle,
+        uz: pPage.subtitle_uz,
+        en: pPage.subtitle_en,
       }}
     />
 

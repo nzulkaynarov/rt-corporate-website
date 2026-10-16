@@ -54,18 +54,18 @@
       "description_uz": "Index B2-2097 omboridagi shaxsiy defektoskopiya uchastkasi. Geometriyani shablonlar bilan o'lchash, mijozga yuklashdan oldin yashirin bo'shliqlar va yoriqlarni UZN tekshiruvi.",
       "description_en": "In-house ultrasonic testing facility at the Index B2-2097 terminal. Precise caliper geometry checks and non-destructive testing for hidden cavities and cracks prior to customer handover.",
       "items": [
-        "Сертификаты ТР ТС 001/2011",
-        "Ультразвуковой контроль плавок",
+        "Сертификаты ТР ТС / ГОСТ",
+        "Инструментальный контроль параметров",
         "Заводские паспорта качества"
       ],
       "items_uz": [
-        "TR TS 001/2011 sertifikatlari",
-        "Eritmalarni ultratovushli nazorat qilish",
+        "TR TS / GOST sertifikatlari",
+        "Parametrlarni instrumental nazorat qilish",
         "Zavod sifat pasportlari"
       ],
       "items_en": [
-        "TR CU 001/2011 technical certificates",
-        "Ultrasonic testing for melt integrity",
+        "TR CU / GOST certificates",
+        "Instrumental quality inspection",
         "Factory quality passports and test sheets"
       ]
     },
@@ -109,9 +109,9 @@
       "title": "Контрактный импорт под ключ",
       "title_uz": "Kalit topshirish shartnomaviy importi",
       "title_en": "Turnkey Contractual Import Management",
-      "desc": "Поставки нестандартного и тяжелого оборудования из РФ, КНР и ЕС с доставкой непосредственно на подъездной путь заказчика.",
-      "desc_uz": "Rossiya, Xitoy va YI mamlakatlaridan nostandart va og'ir uskunalarni to'g'ridan-to'g'ri buyurtmachining temir yo'l iziga yetkazib berish.",
-      "desc_en": "Procurement and door-to-door delivery of heavy and non-standard industrial equipment from CIS, China, and Europe directly to the customer's siding."
+      "desc": "Поставки нестандартного и тяжелого оборудования из РФ, КНР и ЕС с доставкой непосредственно на объект заказчика.",
+      "desc_uz": "Rossiya, Xitoy va YI mamlakatlaridan nostandart va og'ir uskunalarni to'g'ridan-to'g'ri buyurtmachining ishlab chiqarish maydoniga yetkazib berish.",
+      "desc_en": "Procurement and door-to-door delivery of heavy and non-standard industrial equipment from CIS, China, and Europe directly to the customer's facility."
     },
     {
       "title": "Цифровые B2B сервисы",
@@ -151,17 +151,17 @@
       "q": "Какими документами подтверждается качество и происхождение продукции?",
       "q_uz": "Mahsulotning sifati va kelib chiqishi qaysi hujjatlar bilan tasdiqlanadi?",
       "q_en": "What documentation verifies product quality and origin?",
-      "a": "К каждой партии прилагаются: оригинальный паспорт завода-изготовителя с отметкой ОТК и сертификатом плавки, сертификат соответствия ТР ТС 001/2011 «О безопасности железнодорожного подвижного состава», сертификат происхождения формы СТ-1, акт входного контроля УЗК-дефектоскопии и электронная счет-фактура (ЭСФ) через систему Didox/Soliq.",
-      "a_uz": "Har bir partiyaga quyidagilar ilova qilinadi: TNZ muhri va eritma sertifikati bilan ishlab chiqaruvchi zavod asl pasporti, TR TS 001/2011 muvofiqlik sertifikati, ST-1 shaklidagi kelib chiqish sertifikati, UZN defektoskopiya kirish nazorati dalolatnomasi va Didox/Soliq orqali elektron hisob-faktura (EHF).",
-      "a_en": "Every consignment is accompanied by: authentic manufacturer passport with QC stamp and melt certificate, TR CU 001/2011 rolling stock safety certificate, CT-1 Certificate of Origin, ultrasonic defectoscopy incoming inspection report, and Electronic Tax Invoice via Didox/Soliq."
+      "a": "К каждой партии прилагаются: оригинальный технический паспорт завода-изготовителя со штампом службы контроля качества, сертификат соответствия стандартам ГОСТ / ISO, сертификат происхождения формы СТ-1, протоколы заводских испытаний и электронная счет-фактура (ЭСФ) через государственную систему Didox/Soliq.",
+      "a_uz": "Har bir partiyaga quyidagilar ilova qilinadi: sifat nazorati xizmati muhri bilan ishlab chiqaruvchi zavod asl texnik pasporti, GOST / ISO standartlariga muvofiqlik sertifikati, ST-1 shaklidagi kelib chiqish sertifikati, zavod laboratoriya sinov bayonnomalari va davlat Didox/Soliq tizimi orqali elektron hisob-faktura (EHF).",
+      "a_en": "Every consignment is accompanied by: authentic manufacturer technical passport with QA inspection stamp, certificate of conformity with GOST / ISO standards, CT-1 Certificate of Origin, factory laboratory test protocols, and Electronic Tax Invoice via Didox/Soliq."
     },
     {
       "q": "Каковы условия гарантии и порядок возврата/замены в случае брака?",
       "q_uz": "Kafolat shartlari qanday va nosozlik aniqlanganda almashtirish tartibi qanday?",
       "q_en": "What are the warranty terms and defective unit replacement procedures?",
-      "a": "Стандартная заводская гарантия составляет от 12 до 36 месяцев с момента ввода узла в эксплуатацию (или до достижения нормативного пробега). В случае выявления скрытого производственного дефекта составляется рекламационный акт формы ВУ-41 / ВУ-25, после чего деталь заменяется со склада в Ташкенте за 24-48 часов за счет RailTech.",
-      "a_uz": "Standart zavod kafolati uzel foydalanishga topshirilgan kundan boshlab 12 oydan 36 oygacha (yoki me'yoriy masofani bosib o'tgunga qadar) davom etadi. Yashirin ishlab chiqarish nuqsoni aniqlanganda VU-41 / VU-25 shaklidagi dalolatnoma tuziladi va detal RailTech hisobidan 24-48 soat ichida Toshkent omboridan almashtirib beriladi.",
-      "a_en": "Standard manufacturer warranty spans 12 to 36 months from commissioning (or up to standard mileage thresholds). Should a latent factory defect occur, a formal VU-41 / VU-25 claim report is drawn up, and replacement parts are supplied from the Tashkent warehouse within 24-48 hours at RailTech's expense."
+      "a": "Стандартная заводская гарантия составляет от 12 до 36 месяцев с момента ввода оборудования в эксплуатацию. В случае выявления скрытого производственного дефекта составляется двусторонний рекламационный акт, после чего позиция оперативно заменяется со склада в Ташкенте за 24-48 часов за счет RailTech.",
+      "a_uz": "Standart zavod kafolati uskuna foydalanishga topshirilgan kundan boshlab 12 oydan 36 oygacha davom etadi. Yashirin ishlab chiqarish nuqsoni aniqlanganda ikki tomonlama dalolatnoma tuziladi va mahsulot RailTech hisobidan 24-48 soat ichida Toshkent omboridan almashtirib beriladi.",
+      "a_en": "Standard manufacturer warranty spans 12 to 36 months from equipment commissioning. Should a latent factory defect occur, a bilateral inspection claim report is drawn up, and replacement units are supplied from our Tashkent warehouse within 24-48 hours at RailTech's expense."
     },
     {
       "q": "Как получить доступ к закрытому каталогу и оптовым ценам на b2b.railtech.uz?",

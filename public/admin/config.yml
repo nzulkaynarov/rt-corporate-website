@@ -33,7 +33,22 @@ collections:
       - { label: "⚙️ Базис склада (EN)", name: "warehouse_en", widget: "string", default: "Tashkent, Index B2-2097", required: false }
       - { label: "⚙️ Статус наличия (RU)", name: "status", widget: "select", options: ["В наличии", "Резерв", "Под заказ"], default: "В наличии" }
       - { label: "⚙️ Ключ статуса для фильтра", name: "statusKey", widget: "select", options: ["in_stock", "reserved", "on_order"], default: "in_stock" }
-      - { label: "⚙️ Фотография изделия", name: "image", widget: "image", required: false, hint: "Реальное фото узла на складе Index" }
+      - { label: "⚙️ Фотография изделия (главная)", name: "image", widget: "image", required: false, hint: "Реальное фото узла на складе Index" }
+      - label: "⚙️ Дополнительные фото товара (Галерея ракурсов)"
+        name: "images"
+        widget: "list"
+        required: false
+        field: { label: "Фотография", name: "image", widget: "image" }
+      - label: "⚙️ Документы и ссылки для скачивания"
+        name: "documents"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "🇷🇺 Название документа", name: "title", widget: "string" }
+          - { label: "🇺🇿 Hujjat nomi (UZ)", name: "title_uz", widget: "string", required: false }
+          - { label: "🇬🇧 Document title (EN)", name: "title_en", widget: "string", required: false }
+          - { label: "Файл или ссылка (URL)", name: "file", widget: "file", hint: "Загрузите файл (PDF, DOCX) или вставьте внешнюю ссылку" }
+          - { label: "Тип и размер (напр. PDF • 1.4 MB)", name: "type", widget: "string", required: false }
       - { label: "⚙️ Габаритные размеры (мм)", name: "dimensions", widget: "string", required: false }
       - { label: "⚙️ Масса / вес", name: "weight", widget: "string", required: false }
       - { label: "⚙️ Материал / марка стали", name: "material", widget: "string", required: false }
@@ -398,3 +413,65 @@ collections:
               - { label: "Расчетный счет", name: "account", widget: "string" }
               - { label: "Банк", name: "bank", widget: "string" }
               - { label: "МФО", name: "mfo", widget: "string" }
+
+      # --- STATIC PAGES CMS (CATALOG, SERVICES, PROJECTS, BLOG HEADERS) ---
+      - name: "pages"
+        label: "Заголовки и тексты страниц (/pages.json)"
+        file: "src/data/cms/pages.json"
+        fields:
+          - label: "Страница Каталога"
+            name: "catalogPage"
+            widget: "object"
+            fields:
+              - { label: "Код", name: "code", widget: "string" }
+              - { label: "Заголовок [RU]", name: "title", widget: "string" }
+              - { label: "Sarlavha [UZ]", name: "title_uz", widget: "string", required: false }
+              - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
+              - { label: "Подзаголовок [RU]", name: "subtitle", widget: "text" }
+              - { label: "Tavsif [UZ]", name: "subtitle_uz", widget: "text", required: false }
+              - { label: "Subtitle [EN]", name: "subtitle_en", widget: "text", required: false }
+              - { label: "CTA Заголовок", name: "ctaTitle", widget: "string" }
+              - { label: "CTA Текст", name: "ctaSubtitle", widget: "text" }
+              - { label: "CTA Кнопка", name: "ctaButton", widget: "string" }
+          - label: "Страница Услуг"
+            name: "servicesPage"
+            widget: "object"
+            fields:
+              - { label: "Код", name: "code", widget: "string" }
+              - { label: "Заголовок [RU]", name: "title", widget: "string" }
+              - { label: "Sarlavha [UZ]", name: "title_uz", widget: "string", required: false }
+              - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
+              - { label: "Подзаголовок [RU]", name: "subtitle", widget: "text" }
+              - { label: "Tavsif [UZ]", name: "subtitle_uz", widget: "text", required: false }
+              - { label: "Subtitle [EN]", name: "subtitle_en", widget: "text", required: false }
+              - { label: "CTA Заголовок", name: "ctaTitle", widget: "string" }
+              - { label: "CTA Текст", name: "ctaSubtitle", widget: "text" }
+              - { label: "CTA Кнопка", name: "ctaButton", widget: "string" }
+          - label: "Страница Проектов"
+            name: "projectsPage"
+            widget: "object"
+            fields:
+              - { label: "Код", name: "code", widget: "string" }
+              - { label: "Заголовок [RU]", name: "title", widget: "string" }
+              - { label: "Sarlavha [UZ]", name: "title_uz", widget: "string", required: false }
+              - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
+              - { label: "Подзаголовок [RU]", name: "subtitle", widget: "text" }
+              - { label: "Tavsif [UZ]", name: "subtitle_uz", widget: "text", required: false }
+              - { label: "Subtitle [EN]", name: "subtitle_en", widget: "text", required: false }
+              - { label: "CTA Заголовок", name: "ctaTitle", widget: "string" }
+              - { label: "CTA Текст", name: "ctaSubtitle", widget: "text" }
+              - { label: "CTA Кнопка", name: "ctaButton", widget: "string" }
+          - label: "Страница Блога"
+            name: "blogPage"
+            widget: "object"
+            fields:
+              - { label: "Код", name: "code", widget: "string" }
+              - { label: "Заголовок [RU]", name: "title", widget: "string" }
+              - { label: "Sarlavha [UZ]", name: "title_uz", widget: "string", required: false }
+              - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
+              - { label: "Подзаголовок [RU]", name: "subtitle", widget: "text" }
+              - { label: "Tavsif [UZ]", name: "subtitle_uz", widget: "text", required: false }
+              - { label: "Subtitle [EN]", name: "subtitle_en", widget: "text", required: false }
+              - { label: "CTA Заголовок", name: "ctaTitle", widget: "string" }
+              - { label: "CTA Текст", name: "ctaSubtitle", widget: "text" }
+              - { label: "CTA Кнопка", name: "ctaButton", widget: "string" }
