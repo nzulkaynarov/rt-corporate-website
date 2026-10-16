@@ -295,16 +295,17 @@ const breadcrumbJsonLd = {
           title={entry.data.title}
           title_uz={entry.data.title_uz}
           title_en={entry.data.title_en}
-          gost={entry.data.gost}
-          subsystem={categoryName}
-          subsystem_uz={categoryNameUz}
-          subsystem_en={categoryNameEn}
           category={categoryName}
+          category_uz={categoryNameUz}
+          category_en={categoryNameEn}
+          status={entry.data.status}
+          status_uz={entry.data.status_uz}
+          status_en={entry.data.status_en}
           specs={entry.data.specs}
           specs_uz={entry.data.specs_uz}
           specs_en={entry.data.specs_en}
-          modelType="bogie"
-          image={withBase(entry.data.image)}
+          image={entry.data.image}
+          gallery={entry.data.gallery}
         />
 
         <!-- Commercial Action Box -->

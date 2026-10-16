@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { WireframeViewport } from './WireframeViewport';
 
 interface Props {
-  modelType?: 'bogie' | 'container' | 'network' | 'hypercube';
+  modelType?: 'mechanism' | 'container' | 'network' | 'hypercube';
   title?: string;
   titleUz?: string;
   titleEn?: string;
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const CadInspector: React.FC<Props> = ({
-  modelType = 'bogie',
+  modelType = 'container',
   title = 'ИНЖЕНЕРНАЯ CAD-СБОРКА В МАСШТАБЕ 1:1',
   titleUz = '1:1 MASSHTABDAGI MUHANDISLIK CAD-YIG\'ILMASI',
   titleEn = 'ENGINEERING 1:1 SCALE CAD ASSEMBLY',
@@ -136,7 +136,7 @@ export const CadInspector: React.FC<Props> = ({
           >
             FRONT
           </button>
-          {modelType === 'bogie' && (
+          {modelType === 'mechanism' && (
             <button
               type="button"
               onClick={() => setIsExploded(!isExploded)}
@@ -164,7 +164,7 @@ export const CadInspector: React.FC<Props> = ({
         {/* Viewport Overlay Markers */}
         <div className="absolute top-3 left-3 pointer-events-none text-[10px] text-[#4A5056] font-mono space-y-0.5">
           <div>SCALE: 1:1 CALIBRATED</div>
-          <div>DATUM: WGS-84 / GAUGE 1520</div>
+          <div>DATUM: WGS-84 / CAD.STD</div>
           <div>GLB SUPPORT: /public/models/{modelType}.glb</div>
         </div>
 

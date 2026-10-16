@@ -45,9 +45,9 @@ const DATABASE: Record<string, MatchedData> = {
   },
   'тележка': {
     sku: 'RT-RS-118',
-    title_ru: 'Тележка двухосная грузового вагона 18-100 (колея 1520 мм)',
-    title_uz: '18-100 rusumli yuk vagonining ikki o\'qli aravachasi (1520 mm koleya)',
-    title_en: 'Two-axle freight wagon bogie model 18-100 (1520 mm track gauge)',
+    title_ru: 'Тележка двухосная грузового вагона 18-100 (стандартная база)',
+    title_uz: '18-100 rusumli yuk vagonining ikki o\'qli aravachasi (standart baza)',
+    title_en: 'Two-axle freight wagon chassis model 18-100 (standard wheelbase)',
     gost: 'ГОСТ 9246-2013',
     tnved: '8607 12 000 0',
     confidence: 99.1,
@@ -91,7 +91,7 @@ DATABASE['yuritma'] = DATABASE['привод'];
 DATABASE['uzatma'] = DATABASE['привод'];
 DATABASE['switch'] = DATABASE['привод'];
 DATABASE['aravacha'] = DATABASE['тележка'];
-DATABASE['bogie'] = DATABASE['тележка'];
+DATABASE['chassis'] = DATABASE['тележка'];
 DATABASE['avtobirlashma'] = DATABASE['автосцепка'];
 DATABASE['coupler'] = DATABASE['автосцепка'];
 DATABASE['gildirak'] = DATABASE['пара'];
@@ -135,7 +135,7 @@ export const SmartMatchAiTester: React.FC = () => {
     },
     {
       label: lang === 'uz' ? '18-100 aravachasi' : lang === 'en' ? 'Bogie 18-100' : 'Тележка 18-100',
-      query: lang === 'uz' ? '18-100 aravacha koleya 1520 mm' : lang === 'en' ? '18-100 bogie gauge 1520 mm' : 'Тележка 18-100 в сборе колея 1520'
+      query: lang === 'uz' ? '18-100 aravacha standart baza' : lang === 'en' ? '18-100 chassis standard base' : 'Тележка 18-100 в сборе'
     },
     {
       label: lang === 'uz' ? 'SA-3 avtobirlashmasi' : lang === 'en' ? 'Coupler SA-3' : 'Автосцепка СА-3',

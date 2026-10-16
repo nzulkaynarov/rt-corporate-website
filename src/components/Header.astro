@@ -6,120 +6,108 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const navItems = [
   {
-    href: `${base}/`,
-    label_ru: 'ГЛАВНАЯ',
-    label_uz: 'BOSH SAHIFA',
-    label_en: 'HOME',
-    id: 'home',
-    match: (p: string) => p === `${base}/` || p === `${base}`
-  },
-  {
     href: `${base}/catalog/`,
     label_ru: 'КАТАЛОГ',
     label_uz: 'KATALOG',
     label_en: 'CATALOG',
-    id: 'catalog',
-    match: (p: string) => p.startsWith(`${base}/catalog`)
+    index: '01',
+    match: (p: string) => p.startsWith(`${base}/catalog`),
   },
   {
     href: `${base}/services/`,
     label_ru: 'УСЛУГИ',
     label_uz: 'XIZMATLAR',
     label_en: 'SERVICES',
-    id: 'services',
-    match: (p: string) => p.startsWith(`${base}/services`) || p.startsWith(`${base}/contract`) || p.startsWith(`${base}/digital`)
+    index: '02',
+    match: (p: string) => p.startsWith(`${base}/services`),
   },
   {
     href: `${base}/projects/`,
     label_ru: 'ПРОЕКТЫ',
     label_uz: 'LOYIHALAR',
     label_en: 'PROJECTS',
-    id: 'projects',
-    match: (p: string) => p.startsWith(`${base}/projects`)
+    index: '03',
+    match: (p: string) => p.startsWith(`${base}/projects`),
   },
   {
     href: `${base}/blog/`,
     label_ru: 'БЛОГ',
     label_uz: 'BLOG',
     label_en: 'BLOG',
-    id: 'blog',
-    match: (p: string) => p.startsWith(`${base}/blog`)
+    index: '04',
+    match: (p: string) => p.startsWith(`${base}/blog`),
   },
   {
     href: `${base}/about`,
     label_ru: 'О КОМПАНИИ',
     label_uz: 'KOMPANIYA HAQIDA',
     label_en: 'ABOUT US',
-    id: 'about',
-    match: (p: string) => p.startsWith(`${base}/about`)
+    index: '05',
+    match: (p: string) => p.startsWith(`${base}/about`),
   },
   {
     href: `${base}/contacts`,
     label_ru: 'КОНТАКТЫ',
     label_uz: 'ALOQA',
     label_en: 'CONTACTS',
-    id: 'contacts',
-    match: (p: string) => p.startsWith(`${base}/contacts`)
+    index: '06',
+    match: (p: string) => p.startsWith(`${base}/contacts`),
   },
 ];
 ---
 
-<header class="border-b border-[#0A0A0A] bg-[#D4D8DC] sticky top-0 z-50 select-none">
-  <!-- Top Operational Telemetry Bar -->
-  <div class="hidden lg:flex items-center justify-between px-4 py-1.5 border-b border-[#0A0A0A]/20 font-mono text-[11px] tracking-wider text-[#4A5056] bg-[#C8CDD2]/60">
-    <div class="flex items-center space-x-4">
-      <div class="flex items-center space-x-1.5 text-[#0A0A0A]">
-        <span class="w-2 h-2 bg-[#0A0A0A] inline-block animate-pulse"></span>
-        <span class="font-bold">
-          <span class="rt-lang rt-lang-ru">РЕСПУБЛИКА УЗБЕКИСТАН</span>
-          <span class="rt-lang rt-lang-uz">O'ZBEKISTON RESPUBLIKASI</span>
-          <span class="rt-lang rt-lang-en">REPUBLIC OF UZBEKISTAN</span>
+<header class="border-b border-[#0A0A0A] bg-[#D4D8DC] sticky top-0 z-40 select-none">
+  <!-- 1. Top Status Bar: Responsive (Compact on < 768px, Full Telemetry on >= 768px) -->
+  <div class="px-4 py-1.5 border-b border-[#0A0A0A]/20 font-mono text-[11px] tracking-wider text-[#4A5056] bg-[#C8CDD2]/70">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
+      <!-- Left: Mobile compact [ ● ONLINE ] + Company / Desktop Full Telemetry -->
+      <div class="flex items-center space-x-2 sm:space-x-3 truncate">
+        <span class="inline-flex items-center gap-1.5 font-bold text-[#0A0A0A] flex-none">
+          <span class="w-2 h-2 bg-emerald-600 inline-block animate-pulse"></span>
+          <span>[ ● ONLINE ]</span>
+        </span>
+        <span class="text-[#0A0A0A]/30">|</span>
+        <span class="truncate font-bold text-[#0A0A0A]">
+          {globalData.companyName}
+        </span>
+        <!-- Extra telemetry visible only on desktop -->
+        <span class="hidden md:inline text-[#0A0A0A]/30">|</span>
+        <span class="hidden md:inline">
+          ИНН: {globalData.inn}
+        </span>
+        <span class="hidden lg:inline text-[#0A0A0A]/30">|</span>
+        <span class="hidden lg:inline border border-[#0A0A0A] px-1.5 bg-[#D4D8DC] text-[#0A0A0A] font-semibold text-[10px]">
+          НДС 12% ВКЛЮЧЕН
         </span>
       </div>
-      <span class="text-[#0A0A0A]/30">|</span>
-      <span>{globalData.companyName} // ИНН: {globalData.inn}</span>
-      <span class="text-[#0A0A0A]/30">|</span>
-      <span>
-        <span class="rt-lang rt-lang-ru">СКЛАД: {globalData.address.toUpperCase()}</span>
-        <span class="rt-lang rt-lang-uz">OMBOR: {globalData.address.toUpperCase()}</span>
-        <span class="rt-lang rt-lang-en">WAREHOUSE: {globalData.address.toUpperCase()}</span>
-      </span>
-      <span class="text-[#0A0A0A]/30">|</span>
-      <span class="border border-[#0A0A0A] px-1 bg-[#D4D8DC] text-[#0A0A0A] font-semibold">
-        <span class="rt-lang rt-lang-ru">НДС 12% ВКЛЮЧЕН</span>
-        <span class="rt-lang rt-lang-uz">QQS 12% KIRITILGAN</span>
-        <span class="rt-lang rt-lang-en">VAT 12% INCLUDED</span>
-      </span>
-    </div>
 
-    <div class="flex items-center space-x-4">
-      <a
-        href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`}
-        class="hover:text-[#0A0A0A] transition-colors font-bold text-[#0A0A0A] flex items-center space-x-1"
-      >
-        <span>
-          <span class="rt-lang rt-lang-ru">ТЕЛ:</span>
-          <span class="rt-lang rt-lang-uz">TEL:</span>
-          <span class="rt-lang rt-lang-en">TEL:</span>
-        </span>
-        <span>{globalData.phone}</span>
-      </a>
-      <span class="text-[#0A0A0A]/30">|</span>
-      <a
-        href={globalData.b2bPortalUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="border border-[#0A0A0A] px-2 py-0.5 bg-[#0A0A0A] text-white hover:bg-transparent hover:text-[#0A0A0A] transition-colors"
-      >
-        B2B.RAILTECH.UZ ↗
-      </a>
+      <!-- Right: Phone & B2B Portal on desktop, compact phone on mobile -->
+      <div class="flex items-center space-x-3 flex-none text-[11px]">
+        <a
+          href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`}
+          class="hover:text-[#0A0A0A] transition-colors font-bold text-[#0A0A0A] flex items-center space-x-1"
+        >
+          <span class="hidden sm:inline">ТЕЛ:</span>
+          <span>{globalData.phone}</span>
+        </a>
+        {globalData.b2bPortalUrl && (
+          <a
+            href={globalData.b2bPortalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hidden sm:inline-block border border-[#0A0A0A] px-2 py-0.5 bg-[#0A0A0A] text-white hover:bg-transparent hover:text-[#0A0A0A] transition-colors font-bold text-[10px]"
+          >
+            PORTAL ↗
+          </a>
+        )}
+      </div>
     </div>
   </div>
 
-  <!-- Main Navigation Row -->
-  <div class="flex items-center justify-between px-4 py-2">
-    <!-- Brand / Logo -->
-    <a href={`${base}/`} class="flex items-center space-x-3 group">
+  <!-- 2. Main Navigation Row -->
+  <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-2.5">
+    <!-- Brand / Logo (Always takes user to home /) -->
+    <a href={`${base}/`} class="flex items-center space-x-3 group flex-none" aria-label="RailTech Главная">
       <div class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2.5 py-1.5 font-mono font-bold tracking-widest text-sm group-hover:bg-transparent group-hover:text-[#0A0A0A] transition-colors">
         RAILTECH
       </div>
@@ -135,19 +123,20 @@ const navItems = [
       </div>
     </a>
 
-    <!-- Desktop Navigation Links -->
-    <nav class="hidden xl:flex items-center space-x-1 font-mono text-[11px] font-semibold tracking-wider">
+    <!-- Desktop Navigation Links (Visible on >= 1024px) -->
+    <nav class="hidden lg:flex items-center space-x-1 font-mono text-[11px] font-semibold tracking-wider">
       {navItems.map((item) => {
         const isActive = item.match(pathname);
         return (
           <a
             href={item.href}
-            class={`px-2 py-1.5 border transition-colors ${
+            class={`px-2.5 py-1.5 border transition-colors ${
               isActive
                 ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
                 : 'border-transparent text-[#0A0A0A] hover:border-[#0A0A0A] hover:bg-[#0A0A0A]/5'
             }`}
           >
+            <span class="text-[#4A5056] group-hover:text-white mr-1 text-[9px]">{item.index}.</span>
             <span class="rt-lang rt-lang-ru">{item.label_ru}</span>
             <span class="rt-lang rt-lang-uz">{item.label_uz}</span>
             <span class="rt-lang rt-lang-en">{item.label_en}</span>
@@ -156,14 +145,18 @@ const navItems = [
       })}
     </nav>
 
-    <!-- Right Controls: CAD Language Switcher + Lead Button -->
+    <!-- Right Controls: Language Switcher + RFQ Button + Mobile Menu Trigger -->
     <div class="flex items-center space-x-2">
-      <!-- Brutalist CAD Language Switcher [ RU | UZ | EN ] -->
-      <div class="rt-lang-switcher border border-[#0A0A0A] bg-[#C8CDD2] p-0.5 inline-flex items-center font-mono text-[11px] font-bold" role="group" aria-label="Language selector">
+      <!-- Brutalist Language Switcher [ RU | UZ | EN ] -->
+      <div
+        class="rt-lang-switcher border border-[#0A0A0A] bg-[#C8CDD2] p-0.5 inline-flex items-center font-mono text-[11px] font-bold"
+        role="group"
+        aria-label="Language selector"
+      >
         <button
           type="button"
           data-lang-btn="ru"
-          class="px-2 py-0.5 transition-colors cursor-pointer text-[#0A0A0A] hover:bg-[#0A0A0A]/10"
+          class="px-2 py-1 min-h-[32px] sm:min-h-0 transition-colors cursor-pointer text-[#0A0A0A] hover:bg-[#0A0A0A]/10"
           aria-label="Русский язык"
         >
           RU
@@ -172,7 +165,7 @@ const navItems = [
         <button
           type="button"
           data-lang-btn="uz"
-          class="px-2 py-0.5 transition-colors cursor-pointer text-[#0A0A0A] hover:bg-[#0A0A0A]/10"
+          class="px-2 py-1 min-h-[32px] sm:min-h-0 transition-colors cursor-pointer text-[#0A0A0A] hover:bg-[#0A0A0A]/10"
           aria-label="O'zbek tili"
         >
           UZ
@@ -181,74 +174,167 @@ const navItems = [
         <button
           type="button"
           data-lang-btn="en"
-          class="px-2 py-0.5 transition-colors cursor-pointer text-[#0A0A0A] hover:bg-[#0A0A0A]/10"
+          class="px-2 py-1 min-h-[32px] sm:min-h-0 transition-colors cursor-pointer text-[#0A0A0A] hover:bg-[#0A0A0A]/10"
           aria-label="English language"
         >
           EN
         </button>
       </div>
 
-      <!-- Lead Request Button -->
+      <!-- Quick Lead Request Button (hidden on narrow screens to protect spacing) -->
       <button
         type="button"
         data-lead-modal
         data-lead-subject="Запрос коммерческого предложения / спецификации с сайта"
-        class="border border-[#0A0A0A] bg-[#0A0A0A] text-white font-mono text-[11px] font-bold px-3 py-1.5 tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer whitespace-nowrap"
+        class="hidden sm:inline-block border border-[#0A0A0A] bg-[#0A0A0A] text-white font-mono text-[11px] font-bold px-3 py-1.5 tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer whitespace-nowrap"
       >
-        <span class="rt-lang rt-lang-ru">[ ЗАПРОС КП / СЧЕТА ]</span>
-        <span class="rt-lang rt-lang-uz">[ TIJORAT TAKLIFI / HISOB ]</span>
-        <span class="rt-lang rt-lang-en">[ RFQ / INVOICE REQUEST ]</span>
+        <span class="rt-lang rt-lang-ru">[ ЗАПРОС КП ↗ ]</span>
+        <span class="rt-lang rt-lang-uz">[ SO'ROV ↗ ]</span>
+        <span class="rt-lang rt-lang-en">[ RFQ ↗ ]</span>
       </button>
 
-      <!-- Mobile Menu Trigger -->
+      <!-- Tactical Mobile Menu Trigger (Zone >= 44x44px for touch) -->
       <button
         id="mobile-nav-toggle"
         type="button"
-        aria-label="Меню навигации"
-        class="xl:hidden border border-[#0A0A0A] p-1.5 hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer"
+        aria-expanded="false"
+        aria-controls="mobile-nav-drawer"
+        aria-label="Открыть мобильное меню"
+        class="lg:hidden min-w-[44px] min-h-[44px] p-2 border border-[#0A0A0A] bg-white/40 hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer flex items-center justify-center font-mono text-xs font-bold gap-1"
       >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
+        <span>МЕНЮ</span>
+        <span class="text-sm">≡</span>
       </button>
     </div>
   </div>
 
-  <!-- Mobile Drawer -->
-  <div id="mobile-nav-menu" class="hidden xl:hidden border-t border-[#0A0A0A] bg-[#D4D8DC] px-4 py-3 font-mono text-xs">
-    <div class="flex flex-col space-y-2">
-      <!-- Mobile Language Switcher -->
-      <div class="pb-2 border-b border-[#0A0A0A]/20 flex items-center justify-between">
-        <span class="text-[#4A5056] font-bold">ЯЗЫК / TIL / LANGUAGE:</span>
-        <div class="rt-lang-switcher border border-[#0A0A0A] bg-[#C8CDD2] p-0.5 inline-flex items-center font-mono text-xs font-bold">
-          <button type="button" data-lang-btn="ru" class="px-2 py-0.5 transition-colors cursor-pointer">RU</button>
-          <span class="text-[#0A0A0A]/30">|</span>
-          <button type="button" data-lang-btn="uz" class="px-2 py-0.5 transition-colors cursor-pointer">UZ</button>
-          <span class="text-[#0A0A0A]/30">|</span>
-          <button type="button" data-lang-btn="en" class="px-2 py-0.5 transition-colors cursor-pointer">EN</button>
+  <!-- 3. Fullscreen Matte Mobile HUD Drawer (< 1024px) -->
+  <div
+    id="mobile-nav-drawer"
+    class="fixed inset-0 z-50 hidden transition-opacity duration-300"
+    style="overscroll-behavior: contain;"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Навигация по сайту"
+  >
+    <!-- Matte Blur Backdrop -->
+    <div
+      id="mobile-nav-backdrop"
+      class="absolute inset-0 bg-[#0A0A0A]/60 backdrop-blur-md"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Slide-in Drawer Container -->
+    <div
+      class="relative ml-auto w-full max-w-md h-full bg-[#D4D8DC] border-l-2 border-[#0A0A0A] shadow-2xl p-6 flex flex-col justify-between overflow-y-auto"
+      style="overscroll-behavior: contain;"
+    >
+      <div>
+        <!-- Drawer Header -->
+        <div class="flex items-center justify-between pb-4 border-b border-[#0A0A0A]/20 mb-6">
+          <div class="flex items-center space-x-2 font-mono text-xs font-bold text-[#0A0A0A]">
+            <span class="w-2.5 h-2.5 bg-[#0A0A0A] inline-block"></span>
+            <span>СИСТЕМНОЕ МЕНЮ // HUD</span>
+          </div>
+          <button
+            id="mobile-nav-close"
+            type="button"
+            aria-label="Закрыть меню"
+            class="min-w-[44px] min-h-[44px] border border-[#0A0A0A] bg-white/40 hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer flex items-center justify-center font-mono text-xs font-bold px-3"
+          >
+            ✕ ЗАКРЫТЬ
+          </button>
+        </div>
+
+        <!-- 6 Main Universal Sections -->
+        <nav class="flex flex-col space-y-2 font-mono" aria-label="Мобильная навигация">
+          {navItems.map((item) => {
+            const isActive = item.match(pathname);
+            return (
+              <a
+                href={item.href}
+                class={`p-3.5 border transition-all flex items-center justify-between ${
+                  isActive
+                    ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] font-bold'
+                    : 'bg-white/40 border-[#0A0A0A]/30 text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white'
+                }`}
+              >
+                <span class="flex items-center gap-2 text-sm">
+                  <span class="opacity-60">{item.index}.</span>
+                  <span class="rt-lang rt-lang-ru">{item.label_ru}</span>
+                  <span class="rt-lang rt-lang-uz">{item.label_uz}</span>
+                  <span class="rt-lang rt-lang-en">{item.label_en}</span>
+                </span>
+                <span class="text-sm font-bold">→</span>
+              </a>
+            );
+          })}
+        </nav>
+
+        <!-- Language Switcher in Drawer -->
+        <div class="mt-6 pt-4 border-t border-[#0A0A0A]/20">
+          <div class="font-mono text-[10px] text-[#4A5056] uppercase tracking-wider mb-2">
+            ВЫБОР ЯЗЫКА / TIL / LANGUAGE:
+          </div>
+          <div class="grid grid-cols-3 gap-1 font-mono text-xs font-bold">
+            <button
+              type="button"
+              data-lang-btn="ru"
+              class="min-h-[44px] border border-[#0A0A0A] py-2 transition-colors cursor-pointer text-center"
+            >
+              RU
+            </button>
+            <button
+              type="button"
+              data-lang-btn="uz"
+              class="min-h-[44px] border border-[#0A0A0A] py-2 transition-colors cursor-pointer text-center"
+            >
+              UZ
+            </button>
+            <button
+              type="button"
+              data-lang-btn="en"
+              class="min-h-[44px] border border-[#0A0A0A] py-2 transition-colors cursor-pointer text-center"
+            >
+              EN
+            </button>
+          </div>
         </div>
       </div>
 
-      {navItems.map((item) => {
-        const isActive = item.match(pathname);
-        return (
+      <!-- Drawer Bottom: 1-Tap Quick Action Contacts & Lead Modal -->
+      <div class="mt-8 pt-6 border-t-2 border-[#0A0A0A] flex flex-col space-y-3 font-mono text-xs">
+        <button
+          type="button"
+          data-lead-modal
+          data-lead-subject="Запрос консультации из мобильного меню"
+          class="hud-btn w-full min-h-[48px] text-xs font-bold cursor-pointer"
+        >
+          <span>[ ОСТАВИТЬ ЗАЯВКУ ↗ ]</span>
+        </button>
+
+        <div class="grid grid-cols-2 gap-2">
           <a
-            href={item.href}
-            class={`p-2 border border-[#0A0A0A] ${
-              isActive ? 'bg-[#0A0A0A] text-white' : 'bg-[#C8CDD2] hover:bg-[#0A0A0A] hover:text-white'
-            }`}
+            href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`}
+            class="min-h-[44px] border border-[#0A0A0A] bg-white/40 flex items-center justify-center gap-1.5 font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors"
           >
-            <span class="rt-lang rt-lang-ru">{item.label_ru}</span>
-            <span class="rt-lang rt-lang-uz">{item.label_uz}</span>
-            <span class="rt-lang rt-lang-en">{item.label_en}</span>
+            <span>📞</span>
+            <span>ПОЗВОНИТЬ</span>
           </a>
-        );
-      })}
-      <div class="pt-2 border-t border-[#0A0A0A]/20 flex flex-col space-y-1.5 text-[11px] text-[#4A5056]">
-        <div>ИНН: {globalData.inn} | НДС 12%</div>
-        <div>Склад: {globalData.address}</div>
-        <a href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`} class="text-[#0A0A0A] font-bold underline">{globalData.phone}</a>
-        <a href={globalData.b2bPortalUrl} target="_blank" class="text-[#0A0A0A] font-bold underline">B2B.RAILTECH.UZ ↗</a>
+          <a
+            href="https://t.me/railtech_uz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="min-h-[44px] border border-[#0A0A0A] bg-white/40 flex items-center justify-center gap-1.5 font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors"
+          >
+            <span>💬</span>
+            <span>TELEGRAM</span>
+          </a>
+        </div>
+
+        <div class="text-[10px] text-[#4A5056] text-center pt-2">
+          {globalData.address}
+        </div>
       </div>
     </div>
   </div>
@@ -270,10 +356,12 @@ const navItems = [
       document.querySelectorAll('[data-lang-btn]').forEach(function(btn) {
         var lang = btn.getAttribute('data-lang-btn');
         if (lang === activeLang) {
-          btn.className = 'px-2 py-0.5 transition-colors cursor-pointer bg-[#0A0A0A] text-white font-bold';
+          btn.className = btn.className.replace(/bg-[\w/]+|text-[\w/]+/g, '');
+          btn.classList.add('bg-[#0A0A0A]', 'text-white', 'font-bold');
           btn.setAttribute('aria-current', 'true');
         } else {
-          btn.className = 'px-2 py-0.5 transition-colors cursor-pointer text-[#0A0A0A] hover:bg-[#0A0A0A]/10 font-bold';
+          btn.className = btn.className.replace(/bg-[\w/]+|text-[\w/]+/g, '');
+          btn.classList.add('text-[#0A0A0A]');
           btn.removeAttribute('aria-current');
         }
       });
@@ -316,13 +404,32 @@ const navItems = [
       }
     });
 
-    // Mobile menu toggle
+    // Mobile menu drawer toggle
     var toggle = document.getElementById('mobile-nav-toggle');
-    var menu = document.getElementById('mobile-nav-menu');
-    if (toggle && menu) {
-      toggle.addEventListener('click', function() {
-        menu.classList.toggle('hidden');
-      });
+    var closeBtn = document.getElementById('mobile-nav-close');
+    var backdrop = document.getElementById('mobile-nav-backdrop');
+    var drawer = document.getElementById('mobile-nav-drawer');
+
+    function openDrawer() {
+      if (!drawer) return;
+      drawer.classList.remove('hidden');
+      if (toggle) toggle.setAttribute('aria-expanded', 'true');
     }
+
+    function closeDrawer() {
+      if (!drawer) return;
+      drawer.classList.add('hidden');
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    if (toggle) toggle.addEventListener('click', openDrawer);
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+    if (backdrop) backdrop.addEventListener('click', closeDrawer);
+
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && drawer && !drawer.classList.contains('hidden')) {
+        closeDrawer();
+      }
+    });
   })();
 </script>

@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 interface WireframeViewportProps {
-  modelType: 'bogie' | 'container' | 'network' | 'hypercube';
+  modelType: 'mechanism' | 'container' | 'network' | 'hypercube';
   rotationDeg: number;
   onRotationChange: (deg: number) => void;
   pitchDeg: number;
@@ -191,7 +191,7 @@ export const WireframeViewport: React.FC<WireframeViewportProps> = ({
     const buildHighPrecisionProceduralModel = () => {
       setModelSource('procedural');
 
-      if (modelType === 'bogie') {
+      if (modelType === 'mechanism') {
         // High-Precision Bogie 18-100 (ГОСТ 9246-2013)
         const explodeY = displayMode === 'EXPLODED' ? 0.7 : 0;
         const explodeZ = displayMode === 'EXPLODED' ? 0.8 : 0;
@@ -474,7 +474,7 @@ export const WireframeViewport: React.FC<WireframeViewportProps> = ({
           >
             Чертеж
           </button>
-          {modelType === 'bogie' && (
+          {modelType === 'mechanism' && (
             <button
               onClick={() => setDisplayMode(displayMode === 'EXPLODED' ? 'CAD' : 'EXPLODED')}
               className={`px-1.5 py-0.5 uppercase transition-colors ${

@@ -13,9 +13,9 @@ interface Props {
 }
 
 const {
-  title = `${globalData.companyName} — Промышленные и ЖД поставки, ВЭД и IT-решения в Узбекистане`,
-  description = `Официальный B2B/B2G портал ${globalData.companyName} (Ташкент, комплекс Index B2-2097). Складская программа ЖД оборудования (${globalData.metrics.skuCount} SKU), контрактный импорт под ключ DDP Ташкент с НДС 12%, B2B платформа b2b.railtech.uz и заказная IT-разработка.`,
-  keywords = 'RailTech, ООО RailTech, Ташкент, Узбекистан, железнодорожные запчасти, тележка 18-100, колесная пара РУ1Ш-957-Г, автосцепка СА-3, привод СП-6М, колодка 25610-Н, склад Index B2-2097, Landed Cost DDP Ташкент, НДС 12%, b2b.railtech.uz, разработка ERP WMS, дилерство в Узбекистане',
+  title = `${globalData.companyName} — Промышленное оборудование, ВЭД под ключ и IT-решения в Узбекистане`,
+  description = `Официальный B2B/B2G портал ${globalData.companyName} (Ташкент, комплекс Index B2-2097). Каталог оборудования и компонентов (${globalData.metrics.skuCount} SKU), контрактный импорт под ключ DDP Ташкент с НДС 12%, B2B платформа b2b.railtech.uz и заказная IT-разработка.`,
+  keywords = 'RailTech, ООО RailTech, Ташкент, Узбекистан, промышленное оборудование, комплектующие, автоматизация, склад Index B2-2097, Landed Cost DDP Ташкент, НДС 12%, b2b.railtech.uz, разработка ERP WMS',
   image,
 } = Astro.props;
 
@@ -120,12 +120,12 @@ const ogImageUrl = image
               globalData.b2bPortalUrl,
             ],
             knowsAbout: [
-              'Железнодорожное оборудование',
-              'Тележки грузовых вагонов 18-100',
-              'Колесные пары РУ1Ш-957-Г',
-              'Стрелочные электроприводы СП-6М',
+              'Промышленное оборудование',
+              'Комплектующие и узлы',
+              'Системы автоматизации и управления',
               'Поставки ВЭД DDP Ташкент',
-              'Разработка B2B порталов и ERP систем',
+              'IT-разработка и B2B порталы',
+              'Инжиниринг и спецпроекты',
             ],
           },
           {
@@ -149,5 +149,34 @@ const ogImageUrl = image
     </main>
     <Footer />
     <GlobalLeadManager client:load />
+
+    <script is:inline>
+      // Self-drawing step dividers on scroll
+      (function() {
+        if (typeof window === 'undefined') return;
+        var initDividers = function() {
+          var dividers = document.querySelectorAll('.hud-step-divider-container');
+          if (!dividers.length) return;
+          if ('IntersectionObserver' in window) {
+            var obs = new IntersectionObserver(function(entries) {
+              entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('is-drawn');
+                  obs.unobserve(entry.target);
+                }
+              });
+            }, { threshold: 0.1 });
+            dividers.forEach(function(el) { obs.observe(el); });
+          } else {
+            dividers.forEach(function(el) { el.classList.add('is-drawn'); });
+          }
+        };
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initDividers);
+        } else {
+          initDividers();
+        }
+      })();
+    </script>
   </body>
 </html>

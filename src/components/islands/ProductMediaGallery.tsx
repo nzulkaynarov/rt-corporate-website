@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { CadInspector } from './CadInspector';
+import React, { useState, useEffect, useRef } from 'react';
 import { withBase } from '../../utils/url';
+import { HudSmartImage } from './HudSmartImage';
 import type { Lang } from '../../i18n/ui';
 
 interface Props {
@@ -8,42 +8,48 @@ interface Props {
   title: string;
   title_uz?: string;
   title_en?: string;
-  gost?: string;
-  subsystem?: string;
-  subsystem_uz?: string;
-  subsystem_en?: string;
   category?: string;
+  category_uz?: string;
+  category_en?: string;
+  status?: string;
+  status_uz?: string;
+  status_en?: string;
   specs?: string;
   specs_uz?: string;
   specs_en?: string;
-  drawingNumber?: string;
-  modelType?: 'bogie' | 'container' | 'network' | 'hypercube';
   image?: string;
+  gallery?: string[];
 }
+
+const pad4 = (n: number) => String(Math.floor(n)).padStart(4, '0');
 
 export const ProductMediaGallery: React.FC<Props> = ({
   sku,
   title,
   title_uz,
   title_en,
-  gost,
-  subsystem,
-  subsystem_uz,
-  subsystem_en,
-  category,
-  specs,
-  specs_uz,
-  specs_en,
-  drawingNumber,
-  modelType = 'bogie',
+  category = 'Оборудование',
+  category_uz,
+  category_en,
+  status = 'В наличии',
+  status_uz,
+  status_en,
   image,
+  gallery = [],
 }) => {
   const [lang, setLang] = useState<Lang>('ru');
-  const [activeTab, setActiveTab] = useState<'PHOTO' | 'BLUEPRINT' | '3D_CAD'>('PHOTO');
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [isScanning, setIsScanning] = useState(false);
+  const [coords, setCoords] = useState<{ x: number; y: number }>({ x: 260, y: 150 });
+  const [reticleOffset, setReticleOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Sync language
   useEffect(() => {
-    const cur = (document.documentElement.lang as Lang) || 
-      ((typeof localStorage !== 'undefined' ? localStorage.getItem('rt_lang') : null) as Lang) || 
+    const cur =
+      (document.documentElement.lang as Lang) ||
+      ((typeof localStorage !== 'undefined' ? localStorage.getItem('rt_lang') : null) as Lang) ||
       'ru';
     if (cur === 'ru' || cur === 'uz' || cur === 'en') {
       setLang(cur);
@@ -51,7 +57,10 @@ export const ProductMediaGallery: React.FC<Props> = ({
 
     const handleLang = (e: Event) => {
       const customEvent = e as CustomEvent<Lang>;
-      if (customEvent.detail && (customEvent.detail === 'ru' || customEvent.detail === 'uz' || customEvent.detail === 'en')) {
+      if (
+        customEvent.detail &&
+        (customEvent.detail === 'ru' || customEvent.detail === 'uz' || customEvent.detail === 'en')
+      ) {
         setLang(customEvent.detail);
       }
     };
@@ -60,202 +69,186 @@ export const ProductMediaGallery: React.FC<Props> = ({
     return () => window.removeEventListener('rt-lang-change', handleLang);
   }, []);
 
-  const curTitle = lang === 'uz' ? (title_uz || title) : lang === 'en' ? (title_en || title) : title;
-  const rawSub = subsystem || category || 'Оборудование';
-  const curSubsystem = (lang === 'uz' ? (subsystem_uz || rawSub) : lang === 'en' ? (subsystem_en || rawSub) : rawSub) || 'Оборудование';
-  const curSpecs = lang === 'uz' ? (specs_uz || specs || '') : lang === 'en' ? (specs_en || specs || '') : (specs || '');
+  const curTitle = lang === 'uz' ? title_uz || title : lang === 'en' ? title_en || title : title;
+  const curCategory =
+    lang === 'uz' ? category_uz || category : lang === 'en' ? category_en || category : category;
+  const curStatus = lang === 'uz' ? status_uz || status : lang === 'en' ? status_en || status : status;
 
-  // Realistic drawing number fallback based on SKU
-  const resolvedDrawing = drawingNumber || (
-    sku === 'RT-RS-118' ? 'Чертеж 100.00.000-0сб' :
-    sku === 'RT-RS-102' ? 'Чертеж РУ1Ш-957-Г (ГОСТ 4835)' :
-    sku === 'RT-RS-208' ? 'Чертеж 106.01.000-0сб' :
-    sku === 'RT-RS-305' ? 'Чертеж 25610-Н (ГОСТ 30249)' :
-    sku === 'RT-SCB-001' ? 'Чертеж СП-6М ТУ 32 ЦШ 2045-98' :
-    sku === 'RT-SCB-014' ? 'Чертеж ПОБС-2А ТУ 32 ЦШ 2038-95' :
-    sku === 'RT-TRK-401' ? 'Чертеж Скрепление КБ-65 ЦП-328' :
-    sku === 'RT-TRK-419' ? 'Чертеж Башмак 8739.000' :
-    sku === 'RT-KIP-045' ? 'Формуляр ПР-УПМ ТУ 32 ЦШ 45-2018' :
-    'Чертеж ПС-70Е ГОСТ 6490-93'
-  );
+  // Build photo list (main image + gallery, or fallback to main image)
+  const allImages = React.useMemo(() => {
+    const list: string[] = [];
+    if (image) list.push(image);
+    if (gallery && gallery.length > 0) {
+      gallery.forEach((g) => {
+        if (g && !list.includes(g)) list.push(g);
+      });
+    }
+    if (list.length === 0) {
+      list.push(`/images/catalog/${sku.toLowerCase()}.svg`);
+    }
+    return list;
+  }, [image, gallery, sku]);
+
+  const activeImage = allImages[activeIdx] || allImages[0];
+
+  const handleSelectImage = (idx: number) => {
+    setActiveIdx(idx);
+    setIsScanning(true);
+  };
+
+  useEffect(() => {
+    if (!isScanning) return;
+    const t = window.setTimeout(() => setIsScanning(false), 400);
+    return () => window.clearTimeout(t);
+  }, [isScanning, activeIdx]);
+
+  // Live mouse telemetry inside frame
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = containerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const relX = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
+    const relY = Math.max(0, Math.min(rect.height, e.clientY - rect.top));
+    setCoords({ x: relX, y: relY });
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const dx = Math.max(-6, Math.min(6, ((relX - centerX) / centerX) * 6));
+    const dy = Math.max(-6, Math.min(6, ((relY - centerY) / centerY) * 6));
+    setReticleOffset({ x: dx, y: dy });
+  };
+
+  const handleMouseLeave = () => {
+    setReticleOffset({ x: 0, y: 0 });
+  };
 
   return (
-    <div className="border-2 border-[#0A0A0A] bg-[#D4D8DC] font-mono select-none">
-      {/* Media Navigation Tabs */}
-      <div className="border-b border-[#0A0A0A] px-3 py-2 bg-[#C8CDD2] flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center space-x-1 text-xs">
-          <button
-            type="button"
-            onClick={() => setActiveTab('PHOTO')}
-            className={`border border-[#0A0A0A] px-3 py-1 font-bold transition-colors cursor-pointer ${
-              activeTab === 'PHOTO'
-                ? 'bg-[#0A0A0A] text-white'
-                : 'bg-white text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white'
-            }`}
-          >
-            {lang === 'uz' ? '📷 MAHSULOT FOTOSI' : lang === 'en' ? '📷 PRODUCT PHOTO' : '📷 ФОТО ИЗДЕЛИЯ'}
-          </button>
+    <div className="flex flex-col space-y-4 font-mono select-none">
+      {/* Top Telemetry Row */}
+      <div className="flex items-center justify-between text-[11px] text-[#4A5056] border-b border-[#0A0A0A]/20 pb-2">
+        <span className="flex items-center gap-1.5 font-bold text-[#0A0A0A]">
+          <span className="w-2 h-2 bg-emerald-600 inline-block animate-pulse"></span>
+          ITEM // {sku}
+        </span>
+        <span className="truncate max-w-[45%] uppercase text-right">
+          CAT // {curCategory}
+        </span>
+      </div>
 
-          <button
-            type="button"
-            onClick={() => setActiveTab('BLUEPRINT')}
-            className={`border border-[#0A0A0A] px-3 py-1 font-bold transition-colors cursor-pointer ${
-              activeTab === 'BLUEPRINT'
-                ? 'bg-[#0A0A0A] text-white'
-                : 'bg-white text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white'
-            }`}
-          >
-            {lang === 'uz' ? '📐 GOST CHIZMASI' : lang === 'en' ? '📐 BLUEPRINT DRAWING' : '📐 ЧЕРТЕЖ ПО ГОСТ'}
-          </button>
+      {/* Main Viewport Frame */}
+      <div
+        ref={containerRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className="hud-viewport-frame relative overflow-hidden"
+      >
+        <span className="hud-vf-outline" aria-hidden="true"></span>
 
-          <button
-            type="button"
-            onClick={() => setActiveTab('3D_CAD')}
-            className={`border border-[#0A0A0A] px-3 py-1 font-bold transition-colors cursor-pointer ${
-              activeTab === '3D_CAD'
-                ? 'bg-[#0A0A0A] text-white'
-                : 'bg-white text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white'
-            }`}
-          >
-            🎲 3D CAD
-          </button>
-        </div>
+        <div className="hud-viewport-inner relative min-h-[300px] sm:min-h-[360px] flex items-center justify-center bg-[#D4D8DC]">
+          {/* Smart Image with generative blueprint on error */}
+          <HudSmartImage
+            key={`prod-img-${activeIdx}-${sku}`}
+            src={activeImage}
+            alt={curTitle}
+            sku={sku}
+            category={curCategory}
+            aspect="aspect-[16/10] w-full h-full"
+            loading="eager"
+            fetchPriority="high"
+            className="w-full h-full object-contain p-2"
+          />
 
-        <div className="text-[10px] text-[#4A5056] hidden sm:block">
-          {resolvedDrawing}
+          {/* Isometric grid overlay */}
+          <div className="absolute inset-0 cad-grid-bg opacity-30 pointer-events-none" aria-hidden="true" />
+
+          {/* Crosshair Reticle with soft damping parallax */}
+          <svg
+            className="absolute left-1/2 top-1/2 w-28 sm:w-36 h-28 sm:h-36 text-white pointer-events-none transition-transform duration-100 ease-out"
+            style={{
+              transform: `translate(calc(-50% + ${reticleOffset.x}px), calc(-50% + ${reticleOffset.y}px))`,
+              transformOrigin: 'center',
+              mixBlendMode: 'difference',
+            }}
+            viewBox="0 0 160 160"
+            aria-hidden="true"
+          >
+            <g fill="none" stroke="currentColor" strokeWidth="1">
+              <circle cx="80" cy="80" r="44" />
+              <circle cx="80" cy="80" r="2" fill="currentColor" />
+              <path d="M80 0v50M80 110v50M0 80h50M110 80h50" />
+            </g>
+          </svg>
+
+          {/* Top-Right Micro Telemetry: Coordinates & Status */}
+          <div className="absolute top-2.5 right-3 font-mono text-[9px] tracking-[0.16em] text-white/90 mix-blend-difference pointer-events-none flex items-center gap-2">
+            <span className="hidden sm:inline tabular-nums">
+              X: {pad4(coords.x)} // Y: {pad4(coords.y)}
+            </span>
+            <span className="border border-white/40 px-1 py-0.5 bg-black/40">
+              {isScanning ? 'HUD_SCAN: RECALIBRATING...' : 'STATUS // ONLINE'}
+            </span>
+          </div>
+
+          {/* Scanline Sweep on image change */}
+          {isScanning && (
+            <div className="hud-scanline" aria-hidden="true">
+              <div className="absolute bottom-0 left-0 right-0 h-px bg-white/90 shadow-[0_0_8px_white]" />
+            </div>
+          )}
+
+          {/* Bottom Stamp Plate */}
+          <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between pointer-events-none">
+            <span className="border border-[#0A0A0A] px-2 py-0.5 bg-[#D4D8DC]/90 text-[10px] font-bold text-[#0A0A0A] backdrop-blur-sm">
+              INDEX B2-2097 // UZ
+            </span>
+            <span className="border border-[#0A0A0A] px-2 py-0.5 bg-[#0A0A0A] text-[10px] font-bold text-white">
+              {curStatus.toUpperCase()}
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Main Display Area */}
-      <div className="relative min-h-[360px] md:min-h-[420px] bg-[#E2E6EA] flex items-center justify-center p-4 overflow-hidden">
-        {/* TAB 1: PRODUCT PHOTO & FACTORY SPECIMEN */}
-        {activeTab === 'PHOTO' && (
-          <div className="w-full h-full flex flex-col items-center justify-between">
-            <div className="relative w-full max-w-lg aspect-video bg-[#D0D6DC] border border-[#0A0A0A] p-6 flex flex-col items-center justify-center shadow-inner">
-              {image ? (
-                <img
-                  src={withBase(image)}
-                  alt={curTitle}
-                  className="max-h-48 max-w-full object-contain mx-auto"
-                />
-              ) : (
-                <svg className="w-full h-48 text-[#0A0A0A]" viewBox="0 0 400 220" fill="none" stroke="currentColor">
-                  <defs>
-                    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(10,10,10,0.08)" strokeWidth="0.8" />
-                    </pattern>
-                  </defs>
-                  <rect width="100%" height="100%" fill="url(#grid)" />
-                  <rect x="30" y="30" width="340" height="160" stroke="#0A0A0A" strokeWidth="2" strokeDasharray="4 4" />
-                  <line x1="200" y1="20" x2="200" y2="200" stroke="#0A0A0A" strokeWidth="1" strokeDasharray="2 2" />
-                  <line x1="20" y1="110" x2="380" y2="110" stroke="#0A0A0A" strokeWidth="1" strokeDasharray="2 2" />
-                  <circle cx="200" cy="110" r="50" stroke="#0A0A0A" strokeWidth="2" />
-                  <text x="200" y="115" textAnchor="middle" fill="#0A0A0A" fontSize="12" fontFamily="monospace" fontWeight="bold">
-                    {sku}
-                  </text>
-                  <text x="200" y="175" textAnchor="middle" fill="#4A5056" fontSize="10" fontFamily="monospace">
-                    {gost}
-                  </text>
-                </svg>
-              )}
+      {/* Thumbnails row (if multiple images) */}
+      {allImages.length > 1 && (
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1">
+          {allImages.map((imgUrl, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => handleSelectImage(i)}
+              className={`relative flex-none w-16 h-12 border transition-all cursor-pointer overflow-hidden ${
+                activeIdx === i
+                  ? 'border-2 border-[#0A0A0A] bg-white'
+                  : 'border-[#0A0A0A]/40 bg-[#C8CDD2] opacity-75 hover:opacity-100'
+              }`}
+            >
+              <img
+                src={withBase(imgUrl)}
+                alt={`${sku} view ${i + 1}`}
+                className="w-full h-full object-contain"
+                loading="lazy"
+              />
+            </button>
+          ))}
+        </div>
+      )}
 
-              {/* Watermark / Calibration stamp */}
-              <div className="absolute bottom-2 right-2 border border-[#0A0A0A] px-2 py-0.5 bg-[#C8CDD2]/90 text-[9px] font-mono font-bold text-[#0A0A0A]">
-                {lang === 'uz' ? 'OTK NAZORATI: 100%' : lang === 'en' ? 'QC VERIFIED: 100%' : 'ОТК КОНТРОЛЬ: 100%'}
-              </div>
-            </div>
-
-            <div className="w-full mt-4 flex items-center justify-between text-[11px] text-[#4A5056] px-2">
-              <div>
-                <span>{lang === 'uz' ? 'STANDART:' : lang === 'en' ? 'STANDARD:' : 'СТАНДАРТ:'} </span>
-                <span className="font-bold text-[#0A0A0A]">{gost}</span>
-              </div>
-              <div>
-                <span>{lang === 'uz' ? 'BOJXONA:' : lang === 'en' ? 'HS CODE:' : 'ТАМОЖНЯ:'} </span>
-                <span className="font-bold text-[#0A0A0A]">DDP Tashkent (12% VAT)</span>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* TAB 2: TECHNICAL BLUEPRINT */}
-        {activeTab === 'BLUEPRINT' && (
-          <div className="w-full h-full flex flex-col justify-between">
-            <div className="border border-[#0A0A0A] bg-[#2D3748] p-4 text-[#D4D8DC] font-mono text-xs shadow-inner">
-              <div className="border-b border-zinc-600 pb-2 mb-3 flex justify-between items-center text-[11px]">
-                <span className="text-zinc-400">{lang === 'uz' ? 'STANDART // TEXNIK CHIZMA' : lang === 'en' ? 'ESKD // ENGINEERING BLUEPRINT' : 'ЕСКД // ТЕХНИЧЕСКИЙ ЧЕРТЕЖ'}</span>
-                <span className="text-white font-bold">{resolvedDrawing}</span>
-              </div>
-
-              <div className="space-y-2 text-[11px] leading-relaxed text-zinc-300">
-                <div className="flex justify-between border-b border-zinc-700 pb-1">
-                  <span className="text-zinc-400">{lang === 'uz' ? 'Chizma belgisi:' : lang === 'en' ? 'Drawing designation:' : 'Обозначение чертежа:'}</span>
-                  <span className="font-bold text-white">{resolvedDrawing}</span>
-                </div>
-                <div className="flex justify-between border-b border-zinc-700 pb-1">
-                  <span className="text-zinc-400">{lang === 'uz' ? 'Koleya kengligi:' : lang === 'en' ? 'Track gauge:' : 'Ширина колеи:'}</span>
-                  <span className="font-bold text-white">1520 mm ({gost})</span>
-                </div>
-                <div className="flex justify-between border-b border-zinc-700 pb-1">
-                  <span className="text-zinc-400">{lang === 'uz' ? 'Parametrlar:' : lang === 'en' ? 'Parameters:' : 'Параметры и допуски:'}</span>
-                  <span className="text-white">{curSpecs}</span>
-                </div>
-                <div className="flex justify-between border-b border-zinc-700 pb-1">
-                  <span className="text-zinc-400">{lang === 'uz' ? 'Material / Qotishma:' : lang === 'en' ? 'Material / Alloy:' : 'Материал / Сплав:'}</span>
-                  <span className="text-white">Сталь 20ГЛ / 20ФЛ ГОСТ 977-88</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-zinc-400">{lang === 'uz' ? 'Sifat nazorati:' : lang === 'en' ? 'Quality control:' : 'Контроль качества:'}</span>
-                  <span className="text-emerald-400 font-bold">{lang === 'uz' ? '100% UZD defektoskopiya nazorati' : lang === 'en' ? '100% Ultrasonic non-destructive test' : '100% УЗК контроль литья и осей'}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-[#4A5056] gap-2">
-              <span>{lang === 'uz' ? 'Zavod chizmasi DWG / PDF formatida mavjud' : lang === 'en' ? 'Factory blueprint available in DWG / PDF' : 'Заводской чертеж доступен в формате DWG / PDF'}</span>
-              <button
-                type="button"
-                onClick={() => {
-                  window.dispatchEvent(
-                    new CustomEvent('open-lead-modal', {
-                      detail: { subject: `Запрос чертежа ${resolvedDrawing} для ${curTitle} (${sku})` },
-                    })
-                  );
-                }}
-                className="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-3 py-1 font-bold hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
-              >
-                {lang === 'uz' ? '[ DWG / PDF CHIZMASINI SO\'RASH ]' : lang === 'en' ? '[ REQUEST DWG / PDF BLUEPRINT ]' : '[ ЗАПРОСИТЬ ЧЕРТЕЖ DWG / PDF ]'}
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* TAB 3: 3D CAD INSPECTOR */}
-        {activeTab === '3D_CAD' && (
-          <div className="w-full">
-            <CadInspector
-              modelType={modelType}
-              title={`${sku} // 3D CAD`}
-              subtitle={lang === 'uz' ? '1:1 KO\'LAMDAGI MUHANDISLIK 3D-YIG\'MASI' : lang === 'en' ? '1:1 SCALE ENGINEERING 3D ASSEMBLY' : 'ИНЖЕНЕРНАЯ 3D-СБОРКА В МАСШТАБЕ 1:1'}
-            />
-          </div>
-        )}
-      </div>
-
-      {/* Footer Status */}
-      <div className="border-t border-[#0A0A0A] px-4 py-2 bg-[#C8CDD2] flex flex-wrap items-center justify-between text-[11px] text-[#4A5056] gap-2">
+      {/* Bottom Status / Order Dispatch Bar */}
+      <div className="hud-glass-card p-3 flex flex-wrap items-center justify-between text-xs gap-2">
         <div className="flex items-center space-x-2">
-          <span className="w-2 h-2 bg-emerald-600 inline-block"></span>
-          <span>
-            {lang === 'uz' ? 'KIRISH NAZORATI: O\'ZBEKISTONDA SERTIFIKATLANGAN // ' : lang === 'en' ? 'INCOMING QC: CERTIFIED IN UZBEKISTAN // ' : 'ВХОДНОЙ КОНТРОЛЬ: СЕРТИФИЦИРОВАНО В РУЗ // '}
-            {curSubsystem.toUpperCase()}
+          <span className="font-bold text-[#0A0A0A]">
+            {lang === 'uz' ? 'YUKLASH: ' : lang === 'en' ? 'DISPATCH: ' : 'ОТГРУЗКА: '}
+          </span>
+          <span className="text-[#4A5056]">
+            {lang === 'uz' ? 'Index B2-2097 omboridan' : lang === 'en' ? 'Direct from Index B2-2097' : 'Со склада Index B2-2097'}
           </span>
         </div>
-        <div>
-          <span>{lang === 'uz' ? 'HAQIQIY OMBOR: ' : lang === 'en' ? 'PHYSICAL HUB: ' : 'ФАКТИЧЕСКИЙ СКЛАД: '}</span>
-          <span className="text-[#0A0A0A] font-bold">ТАШКЕНТ (INDEX B2-2097)</span>
+        <div className="font-bold text-[#0A0A0A]">
+          12% {lang === 'uz' ? 'QQS kiritilgan' : lang === 'en' ? 'VAT included' : 'НДС включен'}
         </div>
       </div>
     </div>
   );
 };
+
+export default ProductMediaGallery;

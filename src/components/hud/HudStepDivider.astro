@@ -10,22 +10,23 @@ interface Props {
 const { label, class: className = '' } = Astro.props;
 ---
 
-<div class={`relative ${className}`} aria-hidden="true">
+<div class={`relative hud-step-divider-container ${className}`} aria-hidden="true">
   <div class="hud-step-divider">
     <svg viewBox="0 0 1000 18" preserveAspectRatio="none">
-      <circle cx="3" cy="4" r="2.5" fill="currentColor" />
+      <circle cx="3" cy="4" r="2.5" fill="currentColor" class="hud-step-node" />
       <path
         d="M3 4 H560 L572 14 H700 L712 4 H997"
         fill="none"
         stroke="currentColor"
         stroke-width="1"
         vector-effect="non-scaling-stroke"
+        class="hud-step-path"
       />
       <circle cx="997" cy="4" r="2.5" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke" />
     </svg>
   </div>
   {label && (
-    <span class="absolute -top-3 left-6 font-mono text-[10px] tracking-[0.16em] uppercase text-[#4A5056] bg-[#D4D8DC]/80 px-1.5">
+    <span class="absolute -top-3 left-6 font-mono text-[10px] tracking-[0.16em] uppercase text-[#4A5056] bg-[#D4D8DC]/90 px-1.5 backdrop-blur-sm">
       {label}
     </span>
   )}

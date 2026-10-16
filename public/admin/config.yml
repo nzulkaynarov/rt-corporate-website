@@ -17,7 +17,7 @@ collections:
   # 1. CATALOG COLLECTION
   # --------------------------------------------------------------------------
   - name: "catalog"
-    label: "1. Номенклатура склада (.SUPPLY)"
+    label: "1. Каталог продукции (/catalog)"
     folder: "src/content/catalog"
     create: true
     slug: "{{sku}}"
@@ -83,7 +83,7 @@ collections:
   # 2. SERVICES COLLECTION
   # --------------------------------------------------------------------------
   - name: "services"
-    label: "2. Услуги компании (.SERVICES)"
+    label: "2. Каталог услуг (/services)"
     folder: "src/content/services"
     create: true
     slug: "{{slug}}"
@@ -141,79 +141,10 @@ collections:
       - { label: "🇬🇧 [EN] Full documentation (body_en)", name: "body_en", widget: "markdown", required: false }
 
   # --------------------------------------------------------------------------
-  # 3. CONTRACT COLLECTION
-  # --------------------------------------------------------------------------
-  - name: "contract"
-    label: "2. Этапы поставок ВЭД (.CONTRACT)"
-    folder: "src/content/contract"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      # --- ОБЩИЕ ТЕХНИЧЕСКИЕ ДАННЫЕ ---
-      - { label: "⚙️ Код этапа (напр. STEP 01)", name: "code", widget: "string" }
-      - { label: "⚙️ Порядковый номер", name: "order", widget: "number", default: 1 }
-
-      # --- 🇷🇺 ОСНОВНОЙ ТЕКСТ (RU — ОБЯЗАТЕЛЬНЫЙ) ---
-      - { label: "🇷🇺 [RU] Тег этапа", name: "tag", widget: "string" }
-      - { label: "🇷🇺 [RU] Заголовок этапа", name: "title", widget: "string" }
-      - { label: "🇷🇺 [RU] Подзаголовок", name: "subtitle", widget: "string" }
-      - { label: "🇷🇺 [RU] Ключевые метрики / буллеты", name: "metrics", widget: "list" }
-      - { label: "🇷🇺 [RU] Подробное описание регламента", name: "body", widget: "markdown" }
-
-      # --- 🇺🇿 ПЕРЕВОД НА УЗБЕКСКИЙ (UZ — O'ZBEKCHA, ОПЦИОНАЛЬНО) ---
-      - { label: "🇺🇿 [UZ] Bosqich tegi (tag_uz)", name: "tag_uz", widget: "string", required: false, hint: "Если оставить пустым, отобразится русский текст" }
-      - { label: "🇺🇿 [UZ] Sarlavha (title_uz)", name: "title_uz", widget: "string", required: false }
-      - { label: "🇺🇿 [UZ] Qisqa tavsif (subtitle_uz)", name: "subtitle_uz", widget: "string", required: false }
-      - { label: "🇺🇿 [UZ] Metrikalar ro'yxati (metrics_uz)", name: "metrics_uz", widget: "list", required: false }
-      - { label: "🇺🇿 [UZ] To'liq tavsif (body_uz - Markdown)", name: "body_uz", widget: "markdown", required: false }
-
-      # --- 🇬🇧 ПЕРЕВОД НА АНГЛИЙСКИЙ (EN — ENGLISH, ОПЦИОНАЛЬНО) ---
-      - { label: "🇬🇧 [EN] Stage Tag (tag_en)", name: "tag_en", widget: "string", required: false, hint: "If left blank, Russian text will be displayed" }
-      - { label: "🇬🇧 [EN] Stage Title (title_en)", name: "title_en", widget: "string", required: false }
-      - { label: "🇬🇧 [EN] Subtitle (subtitle_en)", name: "subtitle_en", widget: "string", required: false }
-      - { label: "🇬🇧 [EN] Key Metrics List (metrics_en)", name: "metrics_en", widget: "list", required: false }
-      - { label: "🇬🇧 [EN] Full Description (body_en - Markdown)", name: "body_en", widget: "markdown", required: false }
-
-  # --------------------------------------------------------------------------
-  # 3. DIGITAL COLLECTION
-  # --------------------------------------------------------------------------
-  - name: "digital"
-    label: "3. Цифровые IT-продукты (.DIGITAL)"
-    folder: "src/content/digital"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      # --- ОБЩИЕ ТЕХНИЧЕСКИЕ ДАННЫЕ ---
-      - { label: "⚙️ Код продукта (напр. PROD 01)", name: "code", widget: "string" }
-      - { label: "⚙️ Ссылка на сервис (если есть)", name: "link", widget: "string", required: false }
-      - { label: "⚙️ Порядок отображения", name: "order", widget: "number", default: 1 }
-
-      # --- 🇷🇺 ОСНОВНОЙ ТЕКСТ (RU — ОБЯЗАТЕЛЬНЫЙ) ---
-      - { label: "🇷🇺 [RU] Тег продукта", name: "tag", widget: "string" }
-      - { label: "🇷🇺 [RU] Название IT-продукта / Услуги", name: "title", widget: "string" }
-      - { label: "🇷🇺 [RU] Подзаголовок", name: "subtitle", widget: "string" }
-      - { label: "🇷🇺 [RU] Метрики продукта", name: "metrics", widget: "list" }
-      - { label: "🇷🇺 [RU] Описание IT-решения (Markdown)", name: "body", widget: "markdown" }
-
-      # --- 🇺🇿 ПЕРЕВОД НА УЗБЕКСКИЙ (UZ — O'ZBEKCHA, ОПЦИОНАЛЬНО) ---
-      - { label: "🇺🇿 [UZ] Mahsulot tegi (tag_uz)", name: "tag_uz", widget: "string", required: false, hint: "Если оставить пустым, отобразится русский текст" }
-      - { label: "🇺🇿 [UZ] IT-mahsulot nomi (title_uz)", name: "title_uz", widget: "string", required: false }
-      - { label: "🇺🇿 [UZ] Qisqa tavsif (subtitle_uz)", name: "subtitle_uz", widget: "string", required: false }
-      - { label: "🇺🇿 [UZ] Mahsulot metrikalari (metrics_uz)", name: "metrics_uz", widget: "list", required: false }
-      - { label: "🇺🇿 [UZ] To'liq tavsif (body_uz - Markdown)", name: "body_uz", widget: "markdown", required: false }
-
-      # --- 🇬🇧 ПЕРЕВОД НА АНГЛИЙСКИЙ (EN — ENGLISH, ОПЦИОНАЛЬНО) ---
-      - { label: "🇬🇧 [EN] Product Tag (tag_en)", name: "tag_en", widget: "string", required: false, hint: "If left blank, Russian text will be displayed" }
-      - { label: "🇬🇧 [EN] Product Name (title_en)", name: "title_en", widget: "string", required: false }
-      - { label: "🇬🇧 [EN] Subtitle (subtitle_en)", name: "subtitle_en", widget: "string", required: false }
-      - { label: "🇬🇧 [EN] Product Metrics (metrics_en)", name: "metrics_en", widget: "list", required: false }
-      - { label: "🇬🇧 [EN] Full Description (body_en - Markdown)", name: "body_en", widget: "markdown", required: false }
-
-  # --------------------------------------------------------------------------
-  # 4. PROJECTS COLLECTION
+  # 3. PROJECTS COLLECTION
   # --------------------------------------------------------------------------
   - name: "projects"
-    label: "4. Спецпроекты и Арт-лаборатория (.PROJECTS)"
+    label: "3. Проекты и Кейсы (/projects)"
     folder: "src/content/projects"
     create: true
     slug: "{{slug}}"
@@ -245,10 +176,10 @@ collections:
       - { label: "🇬🇧 [EN] Full Description (body_en - Markdown)", name: "body_en", widget: "markdown", required: false }
 
   # --------------------------------------------------------------------------
-  # 5. BLOG COLLECTION
+  # 4. BLOG COLLECTION
   # --------------------------------------------------------------------------
   - name: "blog"
-    label: "5. Блог и Новости компании (.BLOG)"
+    label: "4. Блог и Новости (/blog)"
     folder: "src/content/blog"
     create: true
     slug: "{{slug}}"
@@ -284,10 +215,10 @@ collections:
       - { label: "🇬🇧 [EN] Article Body (body_en - Markdown)", name: "body_en", widget: "markdown", required: false }
 
   # --------------------------------------------------------------------------
-  # 6. SITE SETTINGS & STATIC PAGES
+  # 5. SITE SETTINGS & STATIC PAGES
   # --------------------------------------------------------------------------
   - name: "site_settings"
-    label: "6. Настройки сайта и Статические страницы"
+    label: "5. Настройки сайта и Статические страницы"
     files:
       # --- GLOBAL SETTINGS ---
       - name: "global"

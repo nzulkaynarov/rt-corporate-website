@@ -13,9 +13,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         {globalData.companyName.toUpperCase()}
       </div>
       <p class="text-[11px] text-[#4A5056] leading-relaxed">
-        <span class="rt-lang rt-lang-ru">{globalData.legalStatus}. Инженерный поставщик комплектующих подвижного состава, систем СЦБ и инфраструктурных решений для железных дорог Центральной Азии.</span>
-        <span class="rt-lang rt-lang-uz">{globalData.legalStatus_uz || globalData.legalStatus}. Markaziy Osiyo temir yo'llari uchun harakatdagi tarkib ehtiyot qismlari, ISB tizimlari va infratuzilma yechimlarining muhandislik yetkazib beruvchisi.</span>
-        <span class="rt-lang rt-lang-en">{globalData.legalStatus_en || globalData.legalStatus}. Engineering supplier of rolling stock spare parts, signaling systems, and infrastructure solutions for Central Asian railways.</span>
+        <span class="rt-lang rt-lang-ru">{globalData.legalStatus}. Многопрофильный оператор промышленных поставок, контрактного ВЭД под ключ, инженерного сорсинга и заказного цифрового ПО в Узбекистане.</span>
+        <span class="rt-lang rt-lang-uz">{globalData.legalStatus_uz || globalData.legalStatus}. O'zbekistonda sanoat ta'minoti, kalit topshirish shartnomaviy TQI, muhandislik sorsingi va buyurtma dasturiy ta'minotning ko'p tarmoqli operatori.</span>
+        <span class="rt-lang rt-lang-en">{globalData.legalStatus_en || globalData.legalStatus}. Multi-sector operator for industrial supply, turnkey DDP import, engineering sourcing, and enterprise software engineering in Uzbekistan.</span>
       </p>
       <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#D4D8DC] text-[11px] space-y-1">
         <div class="font-bold text-[#0A0A0A]">
@@ -52,25 +52,25 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </div>
     </div>
 
-    <!-- Col 2: Navigation -->
+    <!-- Col 2: Navigation (Strict 6 Universal Sections) -->
     <div class="flex flex-col space-y-2">
       <div class="border-b border-[#0A0A0A] pb-1 font-bold text-[11px] tracking-wider text-[#0A0A0A]">
-        <span class="rt-lang rt-lang-ru">НАВИГАЦИЯ ПО ПОРТАЛУ</span>
-        <span class="rt-lang rt-lang-uz">PORTAL NAVIGATSIYASI</span>
-        <span class="rt-lang rt-lang-en">PORTAL NAVIGATION</span>
+        <span class="rt-lang rt-lang-ru">РАЗДЕЛЫ ПОРТАЛА</span>
+        <span class="rt-lang rt-lang-uz">PORTAL BO'LIMLARI</span>
+        <span class="rt-lang rt-lang-en">PORTAL SECTIONS</span>
       </div>
       <ul class="space-y-1.5 text-[11px]">
         <li>
           <a href={`${base}/catalog/`} class="hover:underline flex items-center justify-between">
             <span>
-              <span class="rt-lang rt-lang-ru">[01] Каталог со склада</span>
-              <span class="rt-lang rt-lang-uz">[01] Ombor katalogi</span>
-              <span class="rt-lang rt-lang-en">[01] Warehouse catalog</span>
+              <span class="rt-lang rt-lang-ru">[01] Каталог продукции</span>
+              <span class="rt-lang rt-lang-uz">[01] Mahsulotlar katalogi</span>
+              <span class="rt-lang rt-lang-en">[01] Products catalog</span>
             </span>
             <span class="text-[#4A5056]">
-              <span class="rt-lang rt-lang-ru">10 групп</span>
-              <span class="rt-lang rt-lang-uz">10 guruh</span>
-              <span class="rt-lang rt-lang-en">10 groups</span>
+              <span class="rt-lang rt-lang-ru">1 200+ SKU</span>
+              <span class="rt-lang rt-lang-uz">1 200+ SKU</span>
+              <span class="rt-lang rt-lang-en">1,200+ SKU</span>
             </span>
           </a>
         </li>
@@ -84,63 +84,63 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <span class="text-[#4A5056]">
               <span class="rt-lang rt-lang-ru">ВЭД / IT / Сорсинг</span>
               <span class="rt-lang rt-lang-uz">TQI / IT / Sorsing</span>
-              <span class="rt-lang rt-lang-en">Import / IT / Sourcing</span>
+              <span class="rt-lang rt-lang-en">DDP / IT / Sourcing</span>
             </span>
           </a>
         </li>
         <li>
           <a href={`${base}/projects/`} class="hover:underline flex items-center justify-between">
             <span>
-              <span class="rt-lang rt-lang-ru">[03] Спецпроекты & Арт-лаб</span>
-              <span class="rt-lang rt-lang-uz">[03] Maxsus loyihalar & Art</span>
-              <span class="rt-lang rt-lang-en">[03] Special Projects & Art</span>
+              <span class="rt-lang rt-lang-ru">[03] Проекты и кейсы</span>
+              <span class="rt-lang rt-lang-uz">[03] Loyihalar va keyslar</span>
+              <span class="rt-lang rt-lang-en">[03] Projects & cases</span>
             </span>
             <span class="text-[#4A5056]">
-              <span class="rt-lang rt-lang-ru">Локализация</span>
-              <span class="rt-lang rt-lang-uz">Mahalliylashtirish</span>
-              <span class="rt-lang rt-lang-en">Localization</span>
+              <span class="rt-lang rt-lang-ru">Кейсы</span>
+              <span class="rt-lang rt-lang-uz">Keyslar</span>
+              <span class="rt-lang rt-lang-en">Portfolio</span>
             </span>
           </a>
         </li>
         <li>
           <a href={`${base}/blog/`} class="hover:underline flex items-center justify-between">
             <span>
-              <span class="rt-lang rt-lang-ru">[05] Блог и Новости</span>
-              <span class="rt-lang rt-lang-uz">[05] Blog va Yangiliklar</span>
-              <span class="rt-lang rt-lang-en">[05] Blog & News</span>
+              <span class="rt-lang rt-lang-ru">[04] Блог и аналитика</span>
+              <span class="rt-lang rt-lang-uz">[04] Blog va tahlil</span>
+              <span class="rt-lang rt-lang-en">[04] Blog & analytics</span>
             </span>
             <span class="text-[#4A5056]">
-              <span class="rt-lang rt-lang-ru">Аналитика</span>
-              <span class="rt-lang rt-lang-uz">Tahlil</span>
-              <span class="rt-lang rt-lang-en">Analytics</span>
+              <span class="rt-lang rt-lang-ru">Статьи</span>
+              <span class="rt-lang rt-lang-uz">Maqolalar</span>
+              <span class="rt-lang rt-lang-en">Articles</span>
             </span>
           </a>
         </li>
         <li>
           <a href={`${base}/about`} class="hover:underline flex items-center justify-between">
             <span>
-              <span class="rt-lang rt-lang-ru">[06] О компании</span>
-              <span class="rt-lang rt-lang-uz">[06] Kompaniya haqida</span>
-              <span class="rt-lang rt-lang-en">[06] About company</span>
+              <span class="rt-lang rt-lang-ru">[05] О компании</span>
+              <span class="rt-lang rt-lang-uz">[05] Kompaniya haqida</span>
+              <span class="rt-lang rt-lang-en">[05] About company</span>
             </span>
             <span class="text-[#4A5056]">
-              <span class="rt-lang rt-lang-ru">Статус юрлица</span>
-              <span class="rt-lang rt-lang-uz">Yuridik maqom</span>
-              <span class="rt-lang rt-lang-en">Legal status</span>
+              <span class="rt-lang rt-lang-ru">Статус РУз</span>
+              <span class="rt-lang rt-lang-uz">O'zR maqomi</span>
+              <span class="rt-lang rt-lang-en">Accreditation</span>
             </span>
           </a>
         </li>
         <li>
           <a href={`${base}/contacts`} class="hover:underline flex items-center justify-between">
             <span>
-              <span class="rt-lang rt-lang-ru">[07] Контакты и реквизиты</span>
-              <span class="rt-lang rt-lang-uz">[07] Aloqa va rekvizitlar</span>
-              <span class="rt-lang rt-lang-en">[07] Contacts & requisites</span>
+              <span class="rt-lang rt-lang-ru">[06] Контакты и реквизиты</span>
+              <span class="rt-lang rt-lang-uz">[06] Aloqa va rekvizitlar</span>
+              <span class="rt-lang rt-lang-en">[06] Contacts & requisites</span>
             </span>
             <span class="text-[#4A5056]">
-              <span class="rt-lang rt-lang-ru">Схема проезда</span>
-              <span class="rt-lang rt-lang-uz">Yo'l xaritasi</span>
-              <span class="rt-lang rt-lang-en">Route map</span>
+              <span class="rt-lang rt-lang-ru">КПП №3</span>
+              <span class="rt-lang rt-lang-uz">KPP №3</span>
+              <span class="rt-lang rt-lang-en">Gate №3</span>
             </span>
           </a>
         </li>
@@ -155,7 +155,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </ul>
     </div>
 
-    <!-- Col 3: Logistics & Warehouse -->
+    <!-- Col 3: Logistics & Warehouse Hub -->
     <div class="flex flex-col space-y-2">
       <div class="border-b border-[#0A0A0A] pb-1 font-bold text-[11px] tracking-wider text-[#0A0A0A]">
         <span class="rt-lang rt-lang-ru">СКЛАДСКОЙ ХАБ В ТАШКЕНТЕ</span>
@@ -163,16 +163,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <span class="rt-lang rt-lang-en">WAREHOUSE HUB IN TASHKENT</span>
       </div>
       <p class="text-[11px] text-[#4A5056] leading-relaxed">
-        <span class="rt-lang rt-lang-ru">Собственный складской комплекс в {globalData.address}. Постоянный неснижаемый запас критических позиций (СА-3, СП-6М, колесные пары, колодки 25610-Н).</span>
-        <span class="rt-lang rt-lang-uz">{globalData.address} manzilidagi shaxsiy ombor majmuasi. Kritik muhim ehtiyot qismlarning (SA-3, SP-6M, g'ildirak juftliklari, 25610-N kolodkalari) doimiy zaxirasi.</span>
-        <span class="rt-lang rt-lang-en">Company-owned logistics hub at {globalData.address}. Constant safety stock of critical components (SA-3, SP-6M, wheelsets, 25610-N brake shoes).</span>
+        <span class="rt-lang rt-lang-ru">Собственный распределительный терминал в {globalData.address}. Постоянный неснижаемый запас сертифицированной промышленной продукции, оборудования и комплектующих.</span>
+        <span class="rt-lang rt-lang-uz">{globalData.address} manzilidagi shaxsiy taqsimlash terminali. Sertifikatlangan sanoat mahsulotlari, uskunalar va butlovchi qismlarning doimiy kamaymaydigan zaxirasi.</span>
+        <span class="rt-lang rt-lang-en">Company-owned distribution terminal at {globalData.address}. Constant safety stock of certified industrial products, equipment, and components.</span>
       </p>
       <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#D4D8DC] text-[11px] space-y-1">
         <div>GPS: 41.2214° N, 69.1852° E</div>
         <div>
-          <span class="rt-lang rt-lang-ru">Колея: 1520 мм (подъездной ЖД путь)</span>
-          <span class="rt-lang rt-lang-uz">Koleya: 1520 mm (kirish temir yo'li)</span>
-          <span class="rt-lang rt-lang-en">Gauge: 1520 mm (railway spur)</span>
+          <span class="rt-lang rt-lang-ru">Подъездные пути: Прямой доступ (Ж/Д и авто)</span>
+          <span class="rt-lang rt-lang-uz">Kirish yo'llari: To'g'ridan-to'g'ri (T/y va avto)</span>
+          <span class="rt-lang rt-lang-en">Access: Direct rail & road connectivity</span>
         </div>
         <div>
           <span class="rt-lang rt-lang-ru">Режим: Пн-Пт 09:00 - 18:00</span>
@@ -180,9 +180,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <span class="rt-lang rt-lang-en">Hours: Mon-Fri 09:00 - 18:00</span>
         </div>
         <div class="text-[#0A0A0A] font-semibold">
-          <span class="rt-lang rt-lang-ru">Отгрузка ЖД платформ: 24/7</span>
-          <span class="rt-lang rt-lang-uz">Platformalarni yuklash: 24/7</span>
-          <span class="rt-lang rt-lang-en">Railcar dispatch: 24/7</span>
+          <span class="rt-lang rt-lang-ru">Отгрузка и приемка: 24/7</span>
+          <span class="rt-lang rt-lang-uz">Yuklash va qabul: 24/7</span>
+          <span class="rt-lang rt-lang-en">Dispatch & intake: 24/7</span>
         </div>
       </div>
     </div>
@@ -213,20 +213,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <a href={`mailto:${globalData.emailGeneral}`} class="block text-[#0A0A0A] underline hover:no-underline">
           {globalData.emailGeneral}
         </a>
-        <a href={`mailto:supply@railtech.uz`} class="block text-[#0A0A0A] underline hover:no-underline">
-          supply@railtech.uz
-        </a>
       </div>
       <div class="pt-2">
         <button
           type="button"
           data-lead-modal
-          data-lead-subject="Запрос счета и паспортов качества"
+          data-lead-subject="Запрос спецификации с сайта"
           class="w-full border border-[#0A0A0A] bg-[#0A0A0A] text-white py-2 text-center hover:bg-transparent hover:text-[#0A0A0A] transition-colors font-bold cursor-pointer"
         >
-          <span class="rt-lang rt-lang-ru">[ ЗАГРУЗИТЬ СПЕЦИФИКАЦИЮ ]</span>
-          <span class="rt-lang rt-lang-uz">[ SPETSIFIKATSIYANI YUKLASH ]</span>
-          <span class="rt-lang rt-lang-en">[ UPLOAD SPECIFICATION ]</span>
+          <span class="rt-lang rt-lang-ru">[ ОСТАВИТЬ ЗАЯВКУ ↗ ]</span>
+          <span class="rt-lang rt-lang-uz">[ ARIZA QOLDIRISH ↗ ]</span>
+          <span class="rt-lang rt-lang-en">[ SUBMIT REQUEST ↗ ]</span>
         </button>
       </div>
     </div>

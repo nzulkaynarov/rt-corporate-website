@@ -278,3 +278,62 @@ input[type="range"].cad-slider::-moz-range-thumb {
   border: none;
   border-radius: 0;
 }
+
+/* --- Block 3 Dynamic HUD Features --- */
+
+/* 1. Tactical Reticle Corners on .hud-glass-card */
+.hud-target-corner {
+  position: absolute;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--hud-ink);
+  opacity: 0.22;
+  pointer-events: none;
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.24s ease;
+  z-index: 4;
+}
+.hud-tc-tl { top: 3px; left: 3px; }
+.hud-tc-tr { top: 3px; right: 3px; }
+.hud-tc-bl { bottom: 3px; left: 3px; }
+.hud-tc-br { bottom: 3px; right: 3px; }
+
+.hud-glass-card:hover .hud-target-corner {
+  opacity: 0.85;
+}
+.hud-glass-card:hover .hud-tc-tl { transform: translate(3px, 3px); }
+.hud-glass-card:hover .hud-tc-tr { transform: translate(-3px, 3px); }
+.hud-glass-card:hover .hud-tc-bl { transform: translate(3px, -3px); }
+.hud-glass-card:hover .hud-tc-br { transform: translate(-3px, -3px); }
+
+/* 2. Self-drawing step dividers on scroll */
+.hud-step-path {
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hud-step-divider-container.is-drawn .hud-step-path {
+  transform: scaleX(1);
+}
+.hud-step-divider-container.is-drawn .hud-step-node {
+  animation: hud-node-pulse 2s infinite ease-in-out;
+}
+@keyframes hud-node-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.6); opacity: 1; fill: #0A0A0A; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hud-step-path { transform: scaleX(1) !important; transition: none !important; }
+  .hud-step-divider-container.is-drawn .hud-step-node { animation: none !important; }
+  .hud-target-corner { transition: none !important; }
+}
+
+/* Modern dialog & modal overscroll containment per web guidance */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}

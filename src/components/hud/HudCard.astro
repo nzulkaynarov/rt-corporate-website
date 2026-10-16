@@ -36,8 +36,14 @@ const img = withBase(image);
 
 <Wrapper
   href={link}
-  class={`hud-glass-card ${chamferTopLeft ? 'hud-glass-card--tl' : ''} group p-4 gap-3 ${className}`}
+  class={`hud-glass-card ${chamferTopLeft ? 'hud-glass-card--tl' : ''} group p-4 gap-3 relative ${className}`}
 >
+  <!-- Tactical Reticle Corner Brackets -->
+  <span class="hud-target-corner hud-tc-tl" aria-hidden="true">┌</span>
+  <span class="hud-target-corner hud-tc-tr" aria-hidden="true">┐</span>
+  <span class="hud-target-corner hud-tc-bl" aria-hidden="true">└</span>
+  <span class="hud-target-corner hud-tc-br" aria-hidden="true">┘</span>
+
   <div class="flex items-center justify-between gap-2 border-b border-[#0A0A0A]/15 pb-2">
     <span class="hud-card-index"><b>{index}</b> //</span>
     {tag && (
@@ -49,7 +55,13 @@ const img = withBase(image);
 
   {img && (
     <div class={`hud-card-media ${aspect}`}>
-      <img src={img} alt={imageAlt || title.ru} loading="lazy" decoding="async" />
+      <img
+        src={img}
+        alt={imageAlt || title.ru}
+        loading="lazy"
+        decoding="async"
+        onerror={`this.onerror=null;this.src='${base}/images/slider-01.svg';`}
+      />
       <span class="absolute top-1.5 left-1.5 font-mono text-[9px] tracking-widest text-white/90 mix-blend-difference">+ IMG_{index}</span>
     </div>
   )}

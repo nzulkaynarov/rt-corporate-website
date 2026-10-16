@@ -56,60 +56,6 @@ const catalogCollection = defineCollection({
   }),
 });
 
-const contractCollection = defineCollection({
-  type: 'content',
-  schema: z.object({
-    code: z.string(),
-    tag: z.string(),
-    tag_uz: z.string().optional(),
-    tag_en: z.string().optional(),
-    title: z.string(),
-    title_uz: z.string().optional(),
-    title_en: z.string().optional(),
-    subtitle: z.string(),
-    subtitle_uz: z.string().optional(),
-    subtitle_en: z.string().optional(),
-    description_uz: z.string().optional(),
-    description_en: z.string().optional(),
-    badge_uz: z.string().optional(),
-    badge_en: z.string().optional(),
-    metrics: z.array(z.string()),
-    metrics_uz: z.array(z.string()).optional(),
-    metrics_en: z.array(z.string()).optional(),
-    order: z.number().default(1),
-    body_uz: z.string().optional(),
-    body_en: z.string().optional(),
-  }),
-});
-
-const digitalCollection = defineCollection({
-  type: 'content',
-  schema: z.object({
-    code: z.string(),
-    tag: z.string(),
-    tag_uz: z.string().optional(),
-    tag_en: z.string().optional(),
-    title: z.string(),
-    title_uz: z.string().optional(),
-    title_en: z.string().optional(),
-    subtitle: z.string(),
-    subtitle_uz: z.string().optional(),
-    subtitle_en: z.string().optional(),
-    category_uz: z.string().optional(),
-    category_en: z.string().optional(),
-    description_uz: z.string().optional(),
-    description_en: z.string().optional(),
-    status_uz: z.string().optional(),
-    status_en: z.string().optional(),
-    metrics: z.array(z.string()),
-    metrics_uz: z.array(z.string()).optional(),
-    metrics_en: z.array(z.string()).optional(),
-    link: z.string().optional(),
-    order: z.number().default(1),
-    body_uz: z.string().optional(),
-    body_en: z.string().optional(),
-  }),
-});
 
 const servicesCollection = defineCollection({
   type: 'content',
@@ -210,8 +156,6 @@ const blogCollection = defineCollection({
 
 export const collections = {
   catalog: catalogCollection,
-  contract: contractCollection,
-  digital: digitalCollection,
   services: servicesCollection,
   projects: projectsCollection,
   blog: blogCollection,

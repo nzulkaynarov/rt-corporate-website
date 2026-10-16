@@ -35,7 +35,7 @@ export interface ModeConfig {
   label: string;
   shortTitle: string;
   topBarStatus: string;
-  modelType: 'bogie' | 'container' | 'network' | 'hypercube';
+  modelType: 'mechanism' | 'container' | 'network' | 'hypercube';
   modelName: string;
   modelScale: string;
   tools: ToolItem[];
@@ -175,7 +175,7 @@ export const SKU_CATALOG: Record<Locale, SkuItem[]> = {
       warehouse: 'Ташкент / Консолидация',
       status: 'Резерв',
       statusKey: 'reserved',
-      specs: 'Колея 1520 мм, база 1850 мм, тара 4.85 т',
+      specs: 'База 1850 мм, расчетная нагрузка 23.5 тс, тара 4.85 т',
     },
     {
       sku: 'RT-RS-208',
@@ -287,7 +287,7 @@ export const SKU_CATALOG: Record<Locale, SkuItem[]> = {
       warehouse: 'Toshkent / Konsolidatsiya',
       status: 'Zaxirada',
       statusKey: 'reserved',
-      specs: 'Iz kengligi 1520 mm, baza 1850 mm, og‘irligi 4.85 t',
+      specs: 'Baza 1850 mm, hisoblangan yuk 23.5 ts, og‘irligi 4.85 t',
     },
     {
       sku: 'RT-RS-208',
@@ -399,7 +399,7 @@ export const SKU_CATALOG: Record<Locale, SkuItem[]> = {
       warehouse: 'Tashkent / Consolidation',
       status: 'Reserved',
       statusKey: 'reserved',
-      specs: 'Gauge 1520 mm, wheelbase 1850 mm, tare 4.85 t',
+      specs: 'Wheelbase 1850 mm, axle load 23.5 tf, tare 4.85 t',
     },
     {
       sku: 'RT-RS-208',
@@ -771,8 +771,8 @@ export const MODES_DATA: Record<Locale, Record<AppMode, ModeConfig>> = {
       label: '.SUPPLY',
       shortTitle: 'Складская программа (Ташкент)',
       topBarStatus: 'B2B/B2G Склад и поставки ЖД оборудования',
-      modelType: 'bogie',
-      modelName: 'BOGIE // MODEL 18-100 WHEELSET',
+      modelType: 'mechanism',
+      modelName: 'ASSEMBLY // CAD MODEL 18-100',
       modelScale: 'SCALE 1:12 // GOST 9246-2013',
       tools: [
         { code: '00', name: 'Все категории склада', filterKey: 'ALL', description: 'Полная складская матрица в Ташкенте' },
@@ -902,8 +902,8 @@ export const MODES_DATA: Record<Locale, Record<AppMode, ModeConfig>> = {
       label: '.SUPPLY',
       shortTitle: 'Ombor dasturi (Toshkent)',
       topBarStatus: 'B2B/B2G Ombor va temir yo‘l ta’minoti',
-      modelType: 'bogie',
-      modelName: 'BOGIE // MODEL 18-100 WHEELSET',
+      modelType: 'mechanism',
+      modelName: 'ASSEMBLY // CAD MODEL 18-100',
       modelScale: 'SCALE 1:12 // GOST 9246-2013',
       tools: [
         { code: '00', name: 'Barcha ombor toifalari', filterKey: 'ALL', description: 'Toshkentdagi to‘liq ombor matritsasi' },
@@ -1033,12 +1033,12 @@ export const MODES_DATA: Record<Locale, Record<AppMode, ModeConfig>> = {
       label: '.SUPPLY',
       shortTitle: 'Warehouse Supply (Tashkent)',
       topBarStatus: 'B2B/B2G Warehouse & Railway Supply',
-      modelType: 'bogie',
-      modelName: 'BOGIE // MODEL 18-100 WHEELSET',
+      modelType: 'mechanism',
+      modelName: 'ASSEMBLY // CAD MODEL 18-100',
       modelScale: 'SCALE 1:12 // GOST 9246-2013',
       tools: [
         { code: '00', name: 'All Inventory Categories', filterKey: 'ALL', description: 'Complete warehouse matrix in Tashkent' },
-        { code: '01', name: 'Rolling Stock', filterKey: 'Подвижной состав', description: 'Wheelsets, bogies, couplers, brake shoes' },
+        { code: '01', name: 'Rolling Stock', filterKey: 'Подвижной состав', description: 'Wheelsets, assemblies, couplers, brake shoes' },
         { code: '02', name: 'Signalling & Automation', filterKey: 'СЦБ и автоматика', description: 'SP-6M point machines, POBS transformers, relays' },
         { code: '03', name: 'Track Infrastructure', filterKey: 'Путевое хозяйство', description: 'ZhBR rail fastenings, track maintenance tools' },
         { code: '04', name: 'Testing & Diagnostics', filterKey: 'КИП и диагностика', description: 'Ultrasonic flaw detectors, gauges' },

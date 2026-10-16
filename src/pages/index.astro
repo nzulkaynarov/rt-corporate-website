@@ -144,21 +144,23 @@ const modes = [
 
         <!-- 3. RIGHT COLUMN: Corporate Passport & CTA -->
         <div class="lg:col-span-3 flex flex-col justify-between gap-3">
-          <div class="flex flex-col gap-3">
-            <span class="font-mono text-[10px] tracking-wider text-[#4A5056] uppercase mb-0.5">
+          <div>
+            <span class="font-mono text-[10px] tracking-wider text-[#4A5056] uppercase block mb-2">
               // ПАСПОРТ ОПЕРАТОРА
             </span>
 
-            {homeData.passport.map((p, idx) => (
-              <div class="hud-glass-card p-4">
-                <div class="hud-card-index mb-1">
-                  <b>0{idx + 1}</b> // <I18nText ru={p.label} uz={p.label_uz} en={p.label_en} />
+            <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3">
+              {homeData.passport.map((p, idx) => (
+                <div class="hud-glass-card p-4">
+                  <div class="hud-card-index mb-1">
+                    <b>0{idx + 1}</b> // <I18nText ru={p.label} uz={p.label_uz} en={p.label_en} />
+                  </div>
+                  <div class="font-sans font-bold text-sm text-[#0A0A0A] leading-snug">
+                    <I18nText ru={p.value} uz={p.value_uz} en={p.value_en} />
+                  </div>
                 </div>
-                <div class="font-sans font-bold text-sm text-[#0A0A0A] leading-snug">
-                  <I18nText ru={p.value} uz={p.value_uz} en={p.value_en} />
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           <!-- Direct RFQ Action Button -->
@@ -167,7 +169,7 @@ const modes = [
               type="button"
               data-lead-modal
               data-lead-subject="Запрос общего КП и прайс-листа с главной консоли"
-              class="hud-btn w-full py-4 text-xs font-bold cursor-pointer"
+              class="hud-btn w-full py-4 text-xs font-bold cursor-pointer min-h-[44px]"
             >
               <span><I18nText ru={homeData.ctaLead || 'Оставить заявку'} uz={homeData.ctaLead_uz || 'Ariza qoldirish'} en={homeData.ctaLead_en || 'Submit a request'} /></span>
               <span>↗</span>
@@ -210,7 +212,7 @@ const modes = [
         </div>
         <a
           href={`${base}/catalog/`}
-          class="font-mono text-xs font-bold text-[#0A0A0A] hover:underline flex items-center gap-1.5"
+          class="font-mono text-xs font-bold text-[#0A0A0A] hover:underline flex items-center gap-1.5 min-h-[44px]"
         >
           <span><I18nText ru="СМОТРЕТЬ ВЕСЬ КАТАЛОГ (1 200+ SKU)" uz="BARCHA KATALOGNI KO'RISH (1 200+ SKU)" en="VIEW FULL CATALOG (1,200+ SKUs)" /></span>
           <span>→</span>
@@ -229,7 +231,13 @@ const modes = [
 
             {item.data.image && (
               <div class="hud-card-media aspect-[16/10]">
-                <img src={withBase(item.data.image)} alt={item.data.title} loading="lazy" decoding="async" />
+                <img
+                  src={withBase(item.data.image)}
+                  alt={item.data.title}
+                  loading="lazy"
+                  decoding="async"
+                  onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full bg-[#C4C9CE] flex flex-col items-center justify-center p-3 font-mono text-[10px] text-[#4A5056] text-center border border-[#0A0A0A]/20\'><span class=\'font-bold text-[#0A0A0A]\'>OPTICAL_FEED // READY</span><span>ITEM // SPEC_ONLINE</span></div>';"
+                />
               </div>
             )}
 
@@ -240,26 +248,30 @@ const modes = [
             </h3>
 
             <div class="space-y-1.5 font-mono text-xs text-[#4A5056] my-2">
-              {item.data.gost && (
+              {item.data.category && (
                 <div class="flex justify-between">
-                  <span><I18nText ru="Стандарт:" uz="Standart:" en="Standard:" /></span>
-                  <span class="font-bold text-[#0A0A0A]">{item.data.gost}</span>
-                </div>
-              )}
-              {item.data.tnved && (
-                <div class="flex justify-between">
-                  <span><I18nText ru="ТН ВЭД:" uz="TQI TH:" en="HS Code:" /></span>
-                  <span class="font-bold text-[#0A0A0A]">{item.data.tnved}</span>
+                  <span><I18nText ru="Категория:" uz="Kategoriya:" en="Category:" /></span>
+                  <span class="font-bold text-[#0A0A0A] truncate max-w-[170px]">
+                    <I18nText ru={item.data.category} uz={item.data.category_uz} en={item.data.category_en} />
+                  </span>
                 </div>
               )}
               {item.data.specs && (
                 <div class="flex justify-between">
                   <span><I18nText ru="Параметры:" uz="Parametrlar:" en="Specs:" /></span>
-                  <span class="text-[#0A0A0A] text-right truncate max-w-[180px]">
+                  <span class="text-[#0A0A0A] text-right truncate max-w-[170px]">
                     <I18nText ru={item.data.specs} uz={item.data.specs_uz} en={item.data.specs_en} />
                   </span>
                 </div>
               )}
+              {item.data.attributes && item.data.attributes.slice(0, 2).map((attr) => (
+                <div class="flex justify-between">
+                  <span><I18nText ru={attr.label} uz={attr.label_uz} en={attr.label_en} />:</span>
+                  <span class="font-bold text-[#0A0A0A] truncate max-w-[170px]">
+                    <I18nText ru={attr.value} uz={attr.value_uz} en={attr.value_en} />
+                  </span>
+                </div>
+              ))}
             </div>
 
             <div class="pt-3 border-t border-[#0A0A0A]/15 mt-auto flex items-center gap-2 font-mono text-xs">

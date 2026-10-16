@@ -98,12 +98,12 @@
   ],
   "directions": [
     {
-      "title": "Складская программа ЖД запчастей",
-      "title_uz": "Temir yo'l ehtiyot qismlari ombor dasturi",
-      "title_en": "Railway Spare Parts Inventory Program",
-      "desc": "Более 1 247 позиций в наличии в Ташкенте: колесные пары, тележки 18-100, автосцепки СА-3, тормозные колодки, реле и приводы СП-6М.",
-      "desc_uz": "Toshkentda mavjud 1 247 dan ortiq nom: g'ildirak juftliklari, 18-100 aravachalari, SA-3 avtobirikmalari, tormoz kolodkalari, relelar va SP-6M yuritmalar.",
-      "desc_en": "Over 1,247 SKUs stocked in Tashkent: wheelsets, 18-100 bogies, SA-3 couplers, composite brake shoes, signaling relays, and SP-6M point machines."
+      "title": "Складская программа промышленного оборудования",
+      "title_uz": "Sanoat uskunalari ombor dasturi",
+      "title_en": "Industrial Equipment Inventory Program",
+      "desc": "Более 1 247 позиций в наличии в Ташкенте: электротехническое оборудование, узлы автоматизации, приводы, комплектующие и расходные материалы.",
+      "desc_uz": "Toshkentda mavjud 1 247 dan ortiq nom: elektrotexnika uskunalari, avtomatlashtirish uzellari, yuritmalar va butlovchi qismlar.",
+      "desc_en": "Over 1,247 SKUs stocked in Tashkent: electrical equipment, automation units, drives, components, and industrial supplies."
     },
     {
       "title": "Контрактный импорт под ключ",

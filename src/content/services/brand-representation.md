@@ -52,7 +52,7 @@ benefits:
     label_en: "Railway Connectivity"
     value: "Собственный маневровый ЖД путь"
     value_uz: "Xususiy manyovr temir yo'l shoxobchasi"
-    value_en: "Direct 1520 mm rail siding connection"
+    value_en: "Direct rail siding connection"
   - label: "Юридический статус"
     label_uz: "Yuridik maqom"
     label_en: "Tax Status"
