@@ -1,5 +1,6 @@
 ---
 sku: "RT-ELC-502"
+image: "/images/catalog/rt-elc-502.jpg"
 title: "Разъединитель контактной сети РКЖ-3.3 кВ"
 title_uz: "RKJ-3.3 kV kontakt tarmog'i ajratgichi"
 title_en: "Overhead catenary disconnector RKZh-3.3 kV"

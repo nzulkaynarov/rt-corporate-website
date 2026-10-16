@@ -1,5 +1,6 @@
 ---
 sku: "RT-RS-208"
+image: "/images/catalog/rt-rs-208.jpg"
 title: "Автосцепка СА-3 (корпус + механизм)"
 title_uz: "SA-3 avtobirlashmasi (korpus + mexanizm)"
 title_en: "Automatic Coupler SA-3 (body + locking mechanism)"

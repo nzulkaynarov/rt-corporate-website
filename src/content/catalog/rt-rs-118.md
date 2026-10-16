@@ -1,5 +1,6 @@
 ---
 sku: "RT-RS-118"
+image: "/images/catalog/rt-rs-118.jpg"
 title: "Тележка двухосная грузового вагона 18-100"
 title_uz: "18-100 rusumli yuk vagonining ikki o'qli aravachasi"
 title_en: "Two-axle freight car bogie model 18-100"

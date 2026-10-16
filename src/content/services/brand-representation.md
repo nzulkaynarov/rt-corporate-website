@@ -10,7 +10,6 @@ summary: "Вывод зарубежных производителей обор�
 summary_uz: "Xorijiy uskuna ishlab chiqaruvchilarini O'zbekiston Respublikasi bozoriga olib chiqish: mahalliy sertifikatlashtirish, Toshkentda ombor zaxirasi, tenderlarda qatnashish va kafolat xizmati."
 summary_en: "Market entry and localized representation for international manufacturers in Uzbekistan: regulatory certification, dedicated inventory buffer in Tashkent, tender support, and warranty service."
 image: "/images/hero/engineering-art.jpg"
-tool: "none"
 order: 4
 ctaLabel: "Обсудить дистрибуцию бренда"
 ctaLabel_uz: "Brend distribyutsiyasini muhokama qilish"

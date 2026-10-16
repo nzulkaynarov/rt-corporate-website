@@ -1,5 +1,6 @@
 ---
 sku: "RT-TRK-419"
+image: "/images/catalog/rt-trk-419.jpg"
 title: "Шуруповерт путевой бензиновый ШПБ-2"
 title_uz: "ShPB-2 benzinli yo'l gaykaburari (shurupovort)"
 title_en: "Petrol-driven track wrench & screw machine ShPB-2"

@@ -1,5 +1,6 @@
 ---
 sku: "RT-TRK-401"
+image: "/images/catalog/rt-trk-401.jpg"
 title: "Клемма упругая рельсового скрепления ЖБР-65"
 title_uz: "JBR-65 rels birkamasining elastik klemmasi"
 title_en: "Elastic rail fastener spring clip ZhBR-65"

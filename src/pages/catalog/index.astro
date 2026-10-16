@@ -30,7 +30,7 @@ const items = catalogEntries.map((entry) => ({
   specs: entry.data.specs,
   specs_uz: entry.data.specs_uz,
   specs_en: entry.data.specs_en,
-  image: withBase(entry.data.image),
+  image: withBase(entry.data.image || '/images/hero/warehouse.jpg'),
 }));
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---

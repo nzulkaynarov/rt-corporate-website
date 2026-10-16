@@ -1,5 +1,6 @@
 ---
 sku: "RT-RS-305"
+image: "/images/catalog/rt-rs-305.jpg"
 title: "Колодка тормозная композиционная 25610-Н"
 title_uz: "25610-N kompozitsion tormoz kolodkasi"
 title_en: "Composite brake shoe 25610-N"

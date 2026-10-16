@@ -10,7 +10,6 @@ summary: "Комплексный импорт промышленного обо�
 summary_uz: "Sanoat uskunalari, xomashyo va butlovchi qismlarni kompleks import qilish. 12% QQS bilan so'mda qat'iy narx, kechikishlarsiz bojxona rasmiylashtiruvi va 86+ ishlab chiqaruvchi zavodlar bilan to'g'ridan-to'g'ri shartnomalar."
 summary_en: "End-to-end import of industrial equipment, raw materials, and components. Final Landed Cost fixed in UZS with 12% VAT, zero-delay customs clearance, and direct agreements with 86+ global manufacturers."
 image: "/images/hero/logistics.jpg"
-tool: "landed-cost"
 order: 1
 ctaLabel: "Рассчитать стоимость поставки"
 ctaLabel_uz: "Yetkazib berish narxini hisoblash"

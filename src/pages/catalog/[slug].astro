@@ -304,7 +304,7 @@ const breadcrumbJsonLd = {
           specs={entry.data.specs}
           specs_uz={entry.data.specs_uz}
           specs_en={entry.data.specs_en}
-          image={entry.data.image}
+          image={withBase(entry.data.image || '/images/hero/warehouse.jpg')}
           gallery={entry.data.gallery}
         />
 

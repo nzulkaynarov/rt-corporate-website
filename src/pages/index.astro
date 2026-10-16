@@ -21,10 +21,11 @@ const latestPosts = allPosts
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 // Format hero slides with proper base URL for images
-const heroSlides = homeData.heroSlides.map((slide) => ({
-  ...slide,
-  image: withBase(slide.image) || slide.image,
-  link: slide.link ? (slide.link.startsWith('http') ? slide.link : `${base}${slide.link.startsWith('/') ? '' : '/'}${slide.link}`) : undefined,
+const heroSlides = (homeData.heroSlides || []).map((s: any) => ({
+  ...s,
+  image: withBase(s.image),
+  href: withBase(s.href || s.link || '/catalog/'),
+  link: withBase(s.link || s.href || '/catalog/'),
 }));
 
 const modes = [
@@ -229,17 +230,16 @@ const modes = [
               </span>
             </div>
 
-            {item.data.image && (
-              <div class="hud-card-media aspect-[16/10]">
-                <img
-                  src={withBase(item.data.image)}
-                  alt={item.data.title}
-                  loading="lazy"
-                  decoding="async"
-                  onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full bg-[#C4C9CE] flex flex-col items-center justify-center p-3 font-mono text-[10px] text-[#4A5056] text-center border border-[#0A0A0A]/20\'><span class=\'font-bold text-[#0A0A0A]\'>OPTICAL_FEED // READY</span><span>ITEM // SPEC_ONLINE</span></div>';"
-                />
-              </div>
-            )}
+            <div class="hud-card-media aspect-[16/10]">
+              <img
+                src={withBase(item.data.image || '/images/hero/warehouse.jpg')}
+                alt={item.data.title}
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover"
+                onerror={`this.onerror=null; this.src='${withBase('/images/hero/warehouse.jpg')}';`}
+              />
+            </div>
 
             <h3 class="font-sans font-bold text-base text-[#0A0A0A] leading-snug">
               <a href={`${base}/catalog/${item.slug}`} class="hover:underline">

@@ -1,5 +1,6 @@
 ---
 sku: "RT-SCB-001"
+image: "/images/catalog/rt-scb-001.jpg"
 title: "Электропривод стрелочный СП-6М"
 title_uz: "SP-6M strelka elektr uzatmasi (yuritmasi)"
 title_en: "Railway switch machine SP-6M"

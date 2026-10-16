@@ -10,7 +10,6 @@ summary: "Поиск дефицитных, специализированных 
 summary_uz: "Og'ir sanoat, kon texnikasi va temir yo'l transporti uchun taqchil, maxsus va ishlab chiqarishdan olingan uzellar, agregatlar va ehtiyot qismlarni qidirish va yetkazib berish."
 summary_en: "Global sourcing of rare, highly-specialized, or legacy components and heavy machinery for industrial plants, mining equipment, and rail infrastructure."
 image: "/images/hero/warehouse.jpg"
-tool: "none"
 order: 3
 ctaLabel: "Загрузить дефектную ведомость"
 ctaLabel_uz: "Nuqsonlar vedomostini yuklash"

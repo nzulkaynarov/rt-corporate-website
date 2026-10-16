@@ -5,7 +5,7 @@
   "consoleSubtitle_en": "Multi-sector B2B / B2G Operator",
   "heroSlides": [
     {
-      "image": "/images/slider-01.svg",
+      "image": "/images/hero/warehouse.jpg",
       "tag": "CATALOG // SUPPLY",
       "link": "/catalog/",
       "title": "Оборудование и товары со склада в Ташкенте",
@@ -16,7 +16,7 @@
       "description_en": "1,200+ items of industrial equipment, components and goods dispatched from 24 hours, 12% VAT included."
     },
     {
-      "image": "/images/slider-02.svg",
+      "image": "/images/hero/logistics.jpg",
       "tag": "SERVICES // DDP",
       "link": "/services/turnkey-import-ddp/",
       "title": "Поставки под ключ на условиях DDP Ташкент",
@@ -27,7 +27,7 @@
       "description_en": "Sourcing, procurement, logistics and customs clearance of any goods with prices fixed in UZS."
     },
     {
-      "image": "/images/slider-03.svg",
+      "image": "/images/hero/software.jpg",
       "tag": "SERVICES // SOFTWARE",
       "link": "/services/custom-software/",
       "title": "IT-разработка и цифровые платформы",
@@ -38,7 +38,7 @@
       "description_en": "Custom software, B2B portals, 1C integrations and AI tools for business."
     },
     {
-      "image": "/images/slider-04.svg",
+      "image": "/images/hero/engineering-art.jpg",
       "tag": "PROJECTS // ENGINEERING",
       "link": "/projects/",
       "title": "Инжиниринг, спецпроекты и RailTech Art Lab",
@@ -109,7 +109,7 @@
       "title": "Каталог товаров",
       "title_uz": "Tovarlar katalogi",
       "title_en": "Product catalog",
-      "image": "/images/slider-01.svg",
+      "image": "/images/hero/warehouse.jpg",
       "href": "/catalog/",
       "text": "Оборудование, комплектующие и товары с фото, характеристиками и ценой.",
       "text_uz": "Rasm, xususiyatlar va narx bilan uskunalar va tovarlar.",
@@ -119,7 +119,7 @@
       "title": "Услуги B2B/B2G",
       "title_uz": "B2B/B2G xizmatlari",
       "title_en": "B2B/B2G services",
-      "image": "/images/slider-02.svg",
+      "image": "/images/hero/logistics.jpg",
       "href": "/services/",
       "text": "ВЭД под ключ, поиск товаров под заказ, IT-консалтинг и разработка.",
       "text_uz": "Kalit topshirish TIF, buyurtma bo'yicha tovar qidirish, IT-konsalting.",
@@ -129,7 +129,7 @@
       "title": "Проекты и кейсы",
       "title_uz": "Loyihalar va keyslar",
       "title_en": "Projects & cases",
-      "image": "/images/slider-04.svg",
+      "image": "/images/hero/engineering-art.jpg",
       "href": "/projects/",
       "text": "Промышленные поставки, IT-продукты, выставки и арт-проекты.",
       "text_uz": "Sanoat ta'minoti, IT-mahsulotlar, ko'rgazmalar va san'at loyihalari.",
@@ -139,7 +139,7 @@
       "title": "Блог и новости",
       "title_uz": "Blog va yangiliklar",
       "title_en": "Blog & news",
-      "image": "/images/slider-03.svg",
+      "image": "/images/hero/software.jpg",
       "href": "/blog/",
       "text": "Инженерные обзоры, аналитика рынка и хроника компании.",
       "text_uz": "Muhandislik sharhlari, bozor tahlili va kompaniya xronikasi.",

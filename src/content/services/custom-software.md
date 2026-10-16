@@ -10,7 +10,6 @@ summary: "Разработка B2B-порталов, парсинг ведомо
 summary_uz: "B2B-portallar ishlab chiqish, NLP Smart Match AI (98.4% aniqlik) orqali spetsifikatsiyalarni tahlil qilish, 1C integratsiyasi hamda sanoat va transport korxonalari uchun maxsus ERP/WMS tizimlari."
 summary_en: "B2B procurement platform development, NLP-powered Smart Match AI bill-of-materials parsing (98.4% accuracy), 1C ERP integrations, and custom warehouse management systems."
 image: "/images/hero/software.jpg"
-tool: "smart-match"
 order: 2
 ctaLabel: "Протестировать Smart Match AI"
 ctaLabel_uz: "Smart Match AI ni sinab ko'rish"

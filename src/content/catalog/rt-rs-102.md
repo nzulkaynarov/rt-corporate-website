@@ -1,5 +1,6 @@
 ---
 sku: "RT-RS-102"
+image: "/images/catalog/rt-rs-102.jpg"
 title: "Колесная пара РУ1Ш-957-Г в сборе с буксами"
 title_uz: "Buksalar bilan to'liq yig'ilgan RU1Sh-957-G g'ildirak juftligi"
 title_en: "Wheelset RU1Sh-957-G complete with axle boxes"

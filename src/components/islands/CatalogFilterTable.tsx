@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import type { Lang } from '../../i18n/ui';
 import { HudSmartImage } from './HudSmartImage';
+import { withBase } from '../../utils/url';
 
 export interface CatalogItemProps {
   slug: string;
@@ -302,11 +303,12 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                   {/* Photo with Smart Fallback */}
                   <div className="hud-card-media aspect-[16/10] my-3">
                     <HudSmartImage
-                      src={item.image}
+                      src={item.image || withBase('/images/hero/warehouse.jpg')}
                       alt={title}
                       sku={item.sku}
                       category={category}
                       aspect="w-full h-full"
+                      objectFit="cover"
                     />
                   </div>
 

@@ -84,7 +84,7 @@ export const ProductMediaGallery: React.FC<Props> = ({
       });
     }
     if (list.length === 0) {
-      list.push(`/images/catalog/${sku.toLowerCase()}.svg`);
+      list.push(`/images/catalog/${sku.toLowerCase()}.jpg`);
     }
     return list;
   }, [image, gallery, sku]);
@@ -154,8 +154,8 @@ export const ProductMediaGallery: React.FC<Props> = ({
             category={curCategory}
             aspect="aspect-[16/10] w-full h-full"
             loading="eager"
-            fetchPriority="high"
-            className="w-full h-full object-contain p-2"
+            objectFit="cover"
+            className="w-full h-full object-cover"
           />
 
           {/* Isometric grid overlay */}

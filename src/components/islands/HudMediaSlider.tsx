@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { withBase } from '../../utils/url';
-import { HudSmartImage } from './HudSmartImage';
 
 type Lang = 'ru' | 'uz' | 'en';
 
@@ -14,6 +13,7 @@ export interface HudSlide {
   description_en?: string;
   tag?: string;
   link?: string;
+  href?: string;
 }
 
 interface Props {
@@ -233,18 +233,22 @@ export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500 }) =
         <span className="hud-vf-outline" aria-hidden="true"></span>
 
         <div className="hud-viewport-inner h-[260px] sm:h-[350px] lg:h-[420px] relative w-full">
-          {/* Smart Image with fallback */}
-          <HudSmartImage
+          {/* Active slide real photo */}
+          <img
             key={`img-${active}`}
-            src={slide.image}
+            src={withBase(slide.image)}
             alt={title}
-            sku={`SLIDE // 0${active + 1}`}
-            category={slide.tag || 'SYSTEM_FEED'}
-            aspect="h-full w-full"
             loading={active === 0 ? 'eager' : 'lazy'}
             fetchPriority={active === 0 ? 'high' : 'auto'}
+            decoding="async"
             className="hud-slide-img absolute inset-0 w-full h-full object-cover"
-            style={{ filter: 'grayscale(0.2) contrast(1.04)' }}
+            onError={(e) => {
+              const target = e.currentTarget;
+              const fallback = withBase('/images/hero/warehouse.jpg');
+              if (target.src !== fallback) {
+                target.src = fallback;
+              }
+            }}
           />
 
           {/* Subtle grid over photo */}
@@ -308,9 +312,9 @@ export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500 }) =
                 {desc}
               </p>
             )}
-            {slide.link && (
+            {(slide.href || slide.link) && (
               <a
-                href={withBase(slide.link)}
+                href={withBase(slide.href || slide.link)}
                 className="inline-flex items-center gap-1 mt-1.5 font-mono text-[10px] sm:text-[11px] font-bold text-[#0A0A0A] hover:underline underline-offset-4"
               >
                 {more} ↗

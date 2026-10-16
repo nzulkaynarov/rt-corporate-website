@@ -4,8 +4,6 @@ import { getCollection } from 'astro:content';
 import I18nText from '../../components/I18nText.astro';
 import HudPageHeader from '../../components/hud/HudPageHeader.astro';
 import HudViewportFrame from '../../components/hud/HudViewportFrame.astro';
-import { LandedCostCalculator } from '../../components/islands/LandedCostCalculator';
-import { SmartMatchAiTester } from '../../components/islands/SmartMatchAiTester';
 import { withBase } from '../../utils/url';
 
 export async function getStaticPaths() {
@@ -158,26 +156,7 @@ const breadcrumbJsonLd = {
           </div>
         </div>
 
-        <!-- Embedded Interactive Tool (if applicable) -->
-        {entry.data.tool === 'landed-cost' && (
-          <div class="hud-glass-card p-6">
-            <div class="border-b border-[#0A0A0A]/20 pb-3 mb-4 font-mono text-xs flex justify-between items-center">
-              <span class="font-bold text-[#0A0A0A]">ИНЖЕНЕРНЫЙ КАЛЬКУЛЯТОР LANDED COST DDP ТАШКЕНТ</span>
-              <span class="text-[#4A5056]">UZS / НДС 12%</span>
-            </div>
-            <LandedCostCalculator client:load />
-          </div>
-        )}
 
-        {entry.data.tool === 'smart-match' && (
-          <div class="hud-glass-card p-6">
-            <div class="border-b border-[#0A0A0A]/20 pb-3 mb-4 font-mono text-xs flex justify-between items-center">
-              <span class="font-bold text-[#0A0A0A]">ИНТЕРАКТИВНЫЙ ДЕМОНСТРАТОР SMART MATCH AI</span>
-              <span class="text-[#4A5056]">NLP PARSER DEMO</span>
-            </div>
-            <SmartMatchAiTester client:load />
-          </div>
-        )}
       </div>
 
       <!-- Right Column: Media Frame, Benefits & Order Box -->

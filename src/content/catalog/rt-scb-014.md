@@ -1,5 +1,6 @@
 ---
 sku: "RT-SCB-014"
+image: "/images/catalog/rt-scb-014.jpg"
 title: "Трансформатор путевой ПОБС-2А"
 title_uz: "POBS-2A yo'l transformatori"
 title_en: "Track circuit transformer POBS-2A"

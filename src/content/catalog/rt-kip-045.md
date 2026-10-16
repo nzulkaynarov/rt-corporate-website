@@ -1,5 +1,6 @@
 ---
 sku: "RT-KIP-045"
+image: "/images/catalog/rt-kip-045.jpg"
 title: "Дефектоскоп ультразвуковой рельсовый РДМ-22"
 title_uz: "RDM-22 rels ultratovush defektoskopi"
 title_en: "Ultrasonic rail flaw detector RDM-22"

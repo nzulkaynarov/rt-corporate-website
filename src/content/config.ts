@@ -71,8 +71,6 @@ const servicesCollection = defineCollection({
     summary_uz: z.string().optional(),
     summary_en: z.string().optional(),
     image: z.string().optional(),
-    /** Interactive tool embedded on the detail page. */
-    tool: z.enum(['none', 'landed-cost', 'smart-match']).default('none'),
     steps: z
       .array(
         z.object({

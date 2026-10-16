@@ -93,7 +93,6 @@ collections:
       - { label: "⚙️ Категория (UZ)", name: "category_uz", widget: "string", required: false }
       - { label: "⚙️ Категория (EN)", name: "category_en", widget: "string", required: false }
       - { label: "⚙️ Изображение услуги", name: "image", widget: "image", required: false }
-      - { label: "⚙️ Интерактивный инструмент", name: "tool", widget: "select", options: ["none", "landed-cost", "smart-match"], default: "none" }
       - { label: "⚙️ Порядок отображения", name: "order", widget: "number", default: 1 }
 
       # --- 🇷🇺 ОСНОВНОЙ ТЕКСТ (RU) ---
