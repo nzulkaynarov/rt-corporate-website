@@ -5,7 +5,7 @@ import I18nText from '../../../components/I18nText.astro';
 import HudPageHeader from '../../../components/hud/HudPageHeader.astro';
 import { ProductMediaGallery } from '../../../components/islands/ProductMediaGallery';
 import { withBase, telHref } from '../../../utils/url';
-import { marked } from 'marked';
+import { renderBody } from '../../../utils/markdown';
 import globalData from '../../../data/cms/global.json';
 import pagesData from '../../../data/cms/pages.json';
 import { expandLangs, localeHref, tField } from '../../../i18n';
@@ -23,7 +23,6 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
 const lang = Astro.locals.lang;
 const tr = (key: string, vars?: Record<string, string | number>) => t(lang, key, vars);
 const L = (obj: Record<string, any>, field: string) => tField(obj, field, lang) as string;
@@ -37,7 +36,7 @@ const title = L(data, 'title');
 
 // Markdown body: translated body_uz / body_en when present, otherwise the RU body.
 const localizedBody = lang === 'uz' ? data.body_uz : lang === 'en' ? data.body_en : undefined;
-const bodyHtml = localizedBody ? await marked.parse(localizedBody) : '';
+const bodyHtml = await renderBody(localizedBody || entry.body, lang); // links/images localized (src/utils/markdown.ts)
 
 const seo = entrySeo(data, lang, { descriptionFields: ['summary'], body: localizedBody || entry.body });
 
@@ -130,7 +129,7 @@ const phoneHref = telHref(globalData.phone);
             <I18nText ru={detail.bodyTitle} uz={detail.bodyTitle_uz} en={detail.bodyTitle_en} />
           </div>
           <div class="prose prose-sm text-[#0A0A0A] max-w-none leading-relaxed">
-            {bodyHtml ? <div set:html={bodyHtml} /> : <Content />}
+            <div set:html={bodyHtml} />
           </div>
         </div>
 

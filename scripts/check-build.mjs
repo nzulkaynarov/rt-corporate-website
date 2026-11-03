@@ -110,6 +110,10 @@ for (const rel of files) {
   for (const a of html.match(/<a\b[^>]*>/gi) || []) {
     const href = attr(a, 'href');
     if (!href || attr(a, 'hreflang')) continue;
+    if (BASE && href.startsWith('/') && !href.startsWith('//') && !href.startsWith(`${BASE}/`) && href !== BASE) {
+      err(`internal link without the base path ${BASE}: ${href}`);
+      continue;
+    }
     if (!href.startsWith(`${BASE}/`) && href !== BASE) continue;
     const p = href.slice(BASE.length).split(/[?#]/)[0] || '/';
     if (/\.[a-z0-9]{2,5}$/i.test(p) || p.startsWith('/admin/') || p.startsWith('/_astro/')) continue; // files / CMS

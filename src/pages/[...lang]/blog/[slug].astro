@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 import { withBase, telHref } from '../../../utils/url';
 import I18nText from '../../../components/I18nText.astro';
 import HudViewportFrame from '../../../components/hud/HudViewportFrame.astro';
-import { marked } from 'marked';
+import { renderBody } from '../../../utils/markdown';
 import globalData from '../../../data/cms/global.json';
 import pagesData from '../../../data/cms/pages.json';
 import { expandLangs, localeHref, pick, tField } from '../../../i18n';
@@ -23,7 +23,6 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
 const lang = Astro.locals.lang;
 const tr = (key: string, vars?: Record<string, string | number>) => t(lang, key, vars);
 const L = (obj: Record<string, any>, field: string) => tField(obj, field, lang) as string;
@@ -40,7 +39,7 @@ const tags = pick<string[]>(lang, data.tags, data.tags_uz, data.tags_en);
 
 // Markdown body: translated body_uz / body_en when present, otherwise the RU body.
 const localizedBody = lang === 'uz' ? data.body_uz : lang === 'en' ? data.body_en : undefined;
-const bodyHtml = localizedBody ? await marked.parse(localizedBody) : '';
+const bodyHtml = await renderBody(localizedBody || entry.body, lang); // links/images localized (src/utils/markdown.ts)
 
 // Author: explicit per-post author, otherwise the site-wide default from pages.json (localized).
 const author =
@@ -179,7 +178,7 @@ const phoneHref = telHref(globalData.phone);
 
         <div class="hud-glass-card p-6 lg:p-8 font-sans">
           <div class="prose prose-sm sm:prose max-w-none text-[#0A0A0A] leading-relaxed prose-headings:font-bold prose-headings:text-[#0A0A0A] prose-headings:border-b prose-headings:border-[#0A0A0A]/30 prose-headings:pb-2 prose-pre:bg-[#0A0A0A] prose-pre:text-[#D4D8DC] prose-pre:border prose-pre:border-[#0A0A0A] prose-code:font-mono prose-code:text-[#0A0A0A] prose-code:bg-[#D4D8DC] prose-code:px-1 prose-strong:text-[#0A0A0A] prose-blockquote:border-l-4 prose-blockquote:border-[#0A0A0A] prose-blockquote:bg-[#D4D8DC] prose-blockquote:p-3 prose-li:text-[#0A0A0A]">
-            {bodyHtml ? <div set:html={bodyHtml} /> : <Content />}
+            <div set:html={bodyHtml} />
           </div>
         </div>
 
