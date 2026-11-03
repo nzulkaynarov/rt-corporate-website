@@ -1,12 +1,21 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { CatalogFilterTable } from '../../components/islands/CatalogFilterTable';
-import I18nText from '../../components/I18nText.astro';
-import HudPageHeader from '../../components/hud/HudPageHeader.astro';
-import HudStepDivider from '../../components/hud/HudStepDivider.astro';
-import { withBase } from '../../utils/url';
-import pagesData from '../../data/cms/pages.json';
+import { CatalogFilterTable } from '../../../components/islands/CatalogFilterTable';
+import I18nText from '../../../components/I18nText.astro';
+import HudPageHeader from '../../../components/hud/HudPageHeader.astro';
+import HudStepDivider from '../../../components/hud/HudStepDivider.astro';
+import { withBase } from '../../../utils/url';
+import pagesData from '../../../data/cms/pages.json';
+import { langStaticPaths, pick } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { pageSeo } from '../../../utils/seo';
+import { navLabel, navLabels } from '../../../utils/nav';
+
+export const getStaticPaths = langStaticPaths;
+
+const lang = Astro.locals.lang;
+const seo = pageSeo('catalog', lang);
 
 const catalogEntries = await getCollection('catalog');
 catalogEntries.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
@@ -41,14 +50,20 @@ const cPage = pagesData.catalogPage;
 ---
 
 <BaseLayout
-  title="Каталог оборудования со склада в Ташкенте — ООО «RailTech»"
-  description="Складская программа промышленного оборудования и комплектующих в Ташкенте (комплекс Index B2-2097). Паспорта качества, гарантия 12 месяцев, официальная поставка с НДС 12%."
-  keywords="каталог оборудования ташкент, склад index b2-2097, поставка оборудования узбекистан, ндс 12%, технический паспорт"
+  title={seo.title}
+  description={seo.description}
+  breadcrumbs={[{ name: navLabel('/catalog/', lang), path: '/catalog/' }]}
+  jsonLd={{
+    '@type': 'CollectionPage',
+    name: pick(lang, cPage.title, cPage.title_uz, cPage.title_en),
+    description: seo.description,
+    inLanguage: lang,
+  }}
 >
   <div class="max-w-7xl mx-auto px-4 py-6 font-sans">
     <HudPageHeader
-      code={cPage.code || 'SEC.01 // CATALOG'}
-      crumb={{ ru: 'КАТАЛОГ', uz: 'KATALOG', en: 'CATALOG' }}
+      code={cPage.code}
+      crumb={navLabels('/catalog/')}
       title={{ ru: cPage.title, uz: cPage.title_uz, en: cPage.title_en }}
       lead={{ ru: cPage.subtitle, uz: cPage.subtitle_uz, en: cPage.subtitle_en }}
     />
@@ -68,7 +83,7 @@ const cPage = pagesData.catalogPage;
     </div>
 
     <!-- Interactive Filter Table Island -->
-    <CatalogFilterTable client:load items={items} />
+    <CatalogFilterTable client:load items={items} lang={lang} />
 
     <!-- Sourcing Divider & Banner from CMS -->
     <HudStepDivider label="SOURCING // RFQ" class="my-10" />
@@ -97,7 +112,7 @@ const cPage = pagesData.catalogPage;
       <button
         type="button"
         data-lead-modal
-        data-lead-subject="Запрос подбора и поставки оборудования с сайта"
+        data-lead-subject={t('ru', 'lead.subject.catalogSourcing')}
         class="hud-btn px-6 py-3 text-xs font-bold whitespace-nowrap cursor-pointer"
       >
         <I18nText

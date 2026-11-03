@@ -1,13 +1,13 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { HudMediaSlider } from '../components/islands/HudMediaSlider';
-import I18nText from '../components/I18nText.astro';
-import HudCard from '../components/hud/HudCard.astro';
-import HudStepDivider from '../components/hud/HudStepDivider.astro';
-import homeData from '../data/cms/home.json';
-import globalData from '../data/cms/global.json';
-import { withBase } from '../utils/url';
+import { HudMediaSlider } from '../../components/islands/HudMediaSlider';
+import I18nText from '../../components/I18nText.astro';
+import HudCard from '../../components/hud/HudCard.astro';
+import HudStepDivider from '../../components/hud/HudStepDivider.astro';
+import homeData from '../../data/cms/home.json';
+import globalData from '../../data/cms/global.json';
+import { withBase } from '../../utils/url';
 
 const allSkus = await getCollection('catalog');
 allSkus.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));

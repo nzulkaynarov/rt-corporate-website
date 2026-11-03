@@ -20,24 +20,34 @@ Welcome, AI Agent. This repository contains the official corporate B2B/B2G porta
 
 ---
 
-## 2. Multi-Page Architecture (Strictly NOT a Single-Page Landing)
+## 2. Multi-Page, Multi-Language Architecture (Strictly NOT a Single-Page Landing)
 
-Every business unit of ООО «RailTech» has its own distinct physical URL with full SEO metadata, OpenGraph, and Schema.org rich snippets:
+Every page exists once per language, each with its own URL, `<html lang>`, title/description, canonical and hreflang:
+`/…` = Russian (default, no prefix), `/uz/…` = Uzbek (Latin), `/en/…` = English. All public pages live in
+`src/pages/[...lang]/` and export `getStaticPaths` (`langStaticPaths` or `expandLangs(paths)` from `src/i18n`).
 
-1. `/` (`src/pages/index.astro`) — Institutional Swiss CAD Hub.
-2. `/catalog/` (`src/pages/catalog/index.astro`) — Warehouse equipment catalog with `CatalogFilterTable.tsx` live filter island.
-3. `/catalog/[slug]` (`src/pages/catalog/[slug].astro`) — Dynamic technical datasheet / passport pages with Schema.org `Product` JSON-LD, `ProductMediaGallery.tsx`, and full Markdown rendering.
-4. `/services/` (`src/pages/services/index.astro`) — Corporate services directory.
-5. `/services/[slug]` (`src/pages/services/[slug].astro`) — Dynamic service detail pages (Turnkey DDP import, Bespoke software, Sourcing, Brand representation) with steps, benefits, specifications, and RFQ form.
-6. `/projects/` (`src/pages/projects/index.astro`) — Delivered case studies portfolio, technology transfer, and RailTech Art Lab curatorial manifesto.
-7. `/projects/[slug]` (`src/pages/projects/[slug].astro`) — Delivered case study reader with metrics and documentation.
-8. `/blog/` (`src/pages/blog/index.astro`) — Technical engineering blog and news archive with category filtering.
-9. `/blog/[slug]` (`src/pages/blog/[slug].astro`) — Article reader with Schema.org `TechArticle` JSON-LD and direct RFQ form.
-10. `/about` (`src/pages/about.astro`) — Official legal entity status, warehouse complex Index B2-2097, 12% VAT accreditation, and `FAQPage` JSON-LD.
-11. `/contacts` (`src/pages/contacts.astro`) — Direct phone lines (`+998 90 118-90-00`), logistics directions with КПП №3, and `ContactsLeadForm.tsx`.
-12. `/privacy` (`src/pages/privacy.astro`) — Privacy policy compliant with Republic of Uzbekistan Law № ЗРУ-547 (CMS-managed via `legal.json`).
-13. `/terms` (`src/pages/terms.astro`) — Terms of service, KYC verification levels («Гость» / «Клиент»), Landed Cost DDP formula (CMS-managed via `legal.json`).
-14. `/admin` (`src/pages/admin.astro`) — Sveltia CMS content management panel (6 universal collections).
+| Route | File | Notes |
+|---|---|---|
+| `/` | `[...lang]/index.astro` | Hub, `HudMediaSlider` island |
+| `/catalog/` | `[...lang]/catalog/index.astro` | `CatalogFilterTable` island, CollectionPage JSON-LD |
+| `/catalog/<slug>/` | `[...lang]/catalog/[slug].astro` | Datasheet, `Product` JSON-LD, `ProductMediaGallery` |
+| `/services/`, `/services/<slug>/` | `[...lang]/services/…` | `Service` JSON-LD |
+| `/projects/`, `/projects/<slug>/` | `[...lang]/projects/…` | Case studies |
+| `/blog/`, `/blog/<slug>/` | `[...lang]/blog/…` | `BlogPosting` JSON-LD |
+| `/about/` | `[...lang]/about.astro` | `FAQPage` JSON-LD |
+| `/contacts/` | `[...lang]/contacts.astro` | `ContactsLeadForm` island |
+| `/privacy/`, `/terms/` | `[...lang]/privacy.astro`, `terms.astro` | Texts in `legal.json` |
+| `/404.html` | `404.astro` | Trilingual, noindex |
+| `/admin/` | `admin.astro` | Sveltia CMS (version pinned) |
+| `/contract/`, `/digital/` | legacy redirects | noindex, excluded from sitemap |
+
+### i18n & content rules (enforced by `npm run build`)
+* **Language comes from the URL.** `src/middleware.ts` sets `Astro.locals.lang`; React islands receive a required `lang` prop. Never use localStorage, `?lang=` or CSS-hidden translations.
+* **No human-readable text in code.** Interface labels → `src/data/cms/ui/<area>.json` (`<I18nText k="area.key" />`, `t(lang, key)`; islands use `makeT([json])`). Business content → `src/data/cms/*.json` or `src/content/**` with the `field` / `field_uz` / `field_en` pattern (`<I18nText ru uz en />`, `tField`). Both are editable in `/admin`.
+* **Links:** pages → `localeHref('/route/', lang)`; static files → `withBase()`.
+* **SEO:** every page passes `title`/`description` from `pageSeo()` (texts in `src/data/cms/seo.json`) or `entrySeo()` (optional `seoTitle`/`seoDescription` fields on entries) to `BaseLayout`, plus `breadcrumbs` and page-specific `jsonLd`. BaseLayout renders canonical, hreflang, Open Graph, Organization/WebSite/BreadcrumbList JSON-LD.
+* **CMS schema:** every field present in the data must be declared in `public/admin/config.yml`, and every field (incl. a list's single `field:`) must have a `name` — otherwise Sveltia refuses to load or silently drops data on save. `scripts/validate-cms-config.mjs` (prebuild) enforces both.
+* **Build gate:** `scripts/check-build.mjs` (postbuild) fails on cross-language links, leftover `rt-lang` markup, wrong `<html lang>`, missing title/description/canonical/hreflang, ≠1 `<h1>`, `<img>` without alt; warns on long meta texts, duplicate titles and untranslated pages.
 
 ---
 

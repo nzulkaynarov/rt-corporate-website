@@ -1,12 +1,12 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { ProductMediaGallery } from '../../components/islands/ProductMediaGallery';
-import I18nText from '../../components/I18nText.astro';
-import HudPageHeader from '../../components/hud/HudPageHeader.astro';
-import { withBase } from '../../utils/url';
+import { ProductMediaGallery } from '../../../components/islands/ProductMediaGallery';
+import I18nText from '../../../components/I18nText.astro';
+import HudPageHeader from '../../../components/hud/HudPageHeader.astro';
+import { withBase } from '../../../utils/url';
 import { marked } from 'marked';
-import globalData from '../../data/cms/global.json';
+import globalData from '../../../data/cms/global.json';
 
 export async function getStaticPaths() {
   const catalogEntries = await getCollection('catalog');

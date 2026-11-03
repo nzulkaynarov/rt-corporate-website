@@ -5,79 +5,143 @@ import Footer from '../components/Footer.astro';
 import { GlobalLeadManager } from '../components/islands/GlobalLeadManager';
 import globalData from '../data/cms/global.json';
 import { withBase } from '../utils/url';
+import { LANGS, LANG_META, DEFAULT_LANG, alternateHrefs, localeHref, pick } from '../i18n';
+import { t } from '../i18n/ui';
+import { pageSeo, siteSeo, absoluteUrl } from '../utils/seo';
 
-interface Props {
-  title?: string;
-  description?: string;
-  keywords?: string;
-  image?: string;
+interface Crumb {
+  /** Already localized label */
+  name: string;
+  /** Site route, e.g. '/catalog/' (localized automatically) */
+  path: string;
 }
 
+interface Props {
+  /** Localized <title>. Use pageSeo()/entrySeo() from src/utils/seo.ts — never hardcode. */
+  title?: string;
+  description?: string;
+  /** Social preview image (asset path or absolute URL) */
+  image?: string;
+  ogType?: 'website' | 'article' | 'product';
+  noindex?: boolean;
+  /** Breadcrumb trail after «Home» → rendered as schema.org BreadcrumbList */
+  breadcrumbs?: Crumb[];
+  /** Extra page-specific schema.org nodes (Product, Article, Service, FAQPage…) */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const lang = Astro.locals.lang;
+const site = siteSeo(lang);
+const fallback = pageSeo('home', lang);
 const {
-  title = `${globalData.companyName} — Промышленное оборудование, ВЭД под ключ и IT-решения в Узбекистане`,
-  description = `Официальный B2B/B2G портал ${globalData.companyName} (Ташкент, комплекс Index B2-2097). Каталог оборудования и компонентов (${globalData.metrics.skuCount} SKU), контрактный импорт под ключ DDP Ташкент с НДС 12%, B2B платформа b2b.railtech.uz и заказная IT-разработка.`,
-  keywords = 'RailTech, ООО RailTech, Ташкент, Узбекистан, промышленное оборудование, комплектующие, автоматизация, склад Index B2-2097, Landed Cost DDP Ташкент, НДС 12%, b2b.railtech.uz, разработка ERP WMS',
+  title = fallback.title,
+  description = fallback.description,
   image,
+  ogType = 'website',
+  noindex = false,
+  breadcrumbs = [],
+  jsonLd,
 } = Astro.props;
 
-const siteBase = Astro.site || 'https://railtech.uz';
-const canonicalURL = new URL(Astro.url.pathname, siteBase);
-const resolvedImage = image ? withBase(image) : withBase('/og-cover.png');
-const ogImageUrl = resolvedImage.startsWith('http') ? resolvedImage : new URL(resolvedImage, siteBase).href;
+const g = globalData as Record<string, any>;
+const L = (field: string) => pick(lang, g[field] ?? '', g[`${field}_uz`], g[`${field}_en`]);
+
+const siteUrl = Astro.site;
+const alternates = alternateHrefs(Astro.url.pathname);
+const canonicalURL = absoluteUrl(alternates[lang], siteUrl);
+const homeUrl = absoluteUrl(localeHref('/', lang), siteUrl);
+const orgId = `${absoluteUrl('/', siteUrl)}#organization`;
+const ogImageUrl = absoluteUrl(withBase(image || site.defaultImage), siteUrl);
+const isPng = /\.png($|\?)/i.test(ogImageUrl);
+
+const sameAs = [g.telegramUrl, g.b2bPortalUrl].filter(Boolean);
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': 'Organization',
+    '@id': orgId,
+    name: g.brandName || g.companyName,
+    legalName: L('fullName') || L('companyName'),
+    description: site.organizationDescription,
+    url: absoluteUrl('/', siteUrl),
+    telephone: g.phone,
+    email: g.emailGeneral,
+    taxID: g.inn || g.taxId,
+    ...(g.vatNumber ? { vatID: g.vatNumber } : {}),
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: L('address'),
+      addressLocality: L('city'),
+      addressRegion: L('region'),
+      postalCode: g.postalCode,
+      addressCountry: g.countryCode || 'UZ',
+    },
+    ...(g.latitude && g.longitude ? { location: { '@type': 'Place', geo: { '@type': 'GeoCoordinates', latitude: g.latitude, longitude: g.longitude } } } : {}),
+    ...(sameAs.length ? { sameAs } : {}),
+    knowsAbout: site.knowsAbout,
+  },
+  {
+    '@type': 'WebSite',
+    '@id': `${homeUrl}#website`,
+    url: homeUrl,
+    name: site.siteName,
+    inLanguage: LANG_META[lang].hreflang,
+    publisher: { '@id': orgId },
+  },
+];
+if (breadcrumbs.length) {
+  graph.push({
+    '@type': 'BreadcrumbList',
+    itemListElement: [{ name: t(lang, 'nav.home'), path: '/' }, ...breadcrumbs].map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      item: absoluteUrl(localeHref(c.path, lang), siteUrl),
+    })),
+  });
+}
+if (jsonLd) graph.push(...(Array.isArray(jsonLd) ? jsonLd : [jsonLd]));
 ---
 
 <!doctype html>
-<html lang="ru">
+<html lang={LANG_META[lang].hreflang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script is:inline>
-      (function() {
-        try {
-          var param = new URLSearchParams(window.location.search).get('lang');
-          var stored = localStorage.getItem('rt_lang');
-          var lang = (param === 'ru' || param === 'uz' || param === 'en') ? param : (stored === 'uz' || stored === 'en') ? stored : 'ru';
-          document.documentElement.lang = lang;
-        } catch (e) {}
-      })();
-    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content={keywords} />
-    <meta name="author" content={globalData.companyName} />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href={canonicalURL.href} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+    <link rel="canonical" href={canonicalURL} />
+    {LANGS.map((code) => (
+      <link rel="alternate" hreflang={LANG_META[code].hreflang} href={absoluteUrl(alternates[code], siteUrl)} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={absoluteUrl(alternates[DEFAULT_LANG], siteUrl)} />
 
-    <!-- Favicon with BASE_URL -->
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="sitemap" href={withBase('/sitemap-index.xml')} />
 
-    <!-- Hreflang alternates with exact page URL & localized parameters -->
-    <link rel="alternate" hreflang="ru" href={canonicalURL.href} />
-    <link rel="alternate" hreflang="uz" href={`${canonicalURL.href}?lang=uz`} />
-    <link rel="alternate" hreflang="en" href={`${canonicalURL.href}?lang=en`} />
-    <link rel="alternate" hreflang="x-default" href={canonicalURL.href} />
-
-    <!-- Geo tags for Tashkent, Uzbekistan -->
-    <meta name="geo.region" content="UZ-TO" />
-    <meta name="geo.placename" content="Tashkent, Index Complex" />
-    <meta name="geo.position" content="41.2214;69.1852" />
-    <meta name="ICBM" content="41.2214, 69.1852" />
+    {g.latitude && g.longitude && (
+      <>
+        <meta name="geo.region" content={`${g.countryCode || 'UZ'}-TK`} />
+        <meta name="geo.placename" content={L('city')} />
+        <meta name="geo.position" content={`${g.latitude};${g.longitude}`} />
+        <meta name="ICBM" content={`${g.latitude}, ${g.longitude}`} />
+      </>
+    )}
 
     <!-- Open Graph & Social -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType === 'product' ? 'website' : ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalURL.href} />
+    <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={ogImageUrl} />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:site_name" content="RailTech Узбекистан" />
-    <meta property="og:locale" content="ru_UZ" />
-    <meta property="og:locale:alternate" content="uz_UZ" />
-    <meta property="og:locale:alternate" content="en_US" />
-
-    <!-- Twitter Card -->
+    {isPng && <meta property="og:image:type" content="image/png" />}
+    {isPng && <meta property="og:image:width" content="1200" />}
+    {isPng && <meta property="og:image:height" content="630" />}
+    <meta property="og:site_name" content={site.siteName} />
+    <meta property="og:locale" content={LANG_META[lang].ogLocale} />
+    {LANGS.filter((code) => code !== lang).map((code) => (
+      <meta property="og:locale:alternate" content={LANG_META[code].ogLocale} />
+    ))}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -91,55 +155,17 @@ const ogImageUrl = resolvedImage.startsWith('http') ? resolvedImage : new URL(re
       rel="stylesheet"
     />
 
-    <!-- Schema.org JSON-LD (Rich Graph) -->
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@graph': [
-          {
-            '@type': 'Organization',
-            '@id': 'https://railtech.uz/#organization',
-            name: 'RailTech',
-            legalName: globalData.companyName,
-            url: 'https://railtech.uz',
-            telephone: globalData.phone,
-            email: globalData.emailGeneral,
-            taxID: globalData.taxId || '308912445',
-            vatID: `UZ${globalData.taxId || '308912445'}`,
-            address: {
-              '@type': 'PostalAddress',
-              streetAddress: globalData.address,
-              addressLocality: 'Ташкент',
-              addressRegion: 'Ташкент',
-              postalCode: '100140',
-              addressCountry: 'UZ',
-            },
-            sameAs: [
-              globalData.b2bPortalUrl,
-            ],
-            knowsAbout: [
-              'Промышленное оборудование',
-              'Комплектующие и узлы',
-              'Системы автоматизации и управления',
-              'Поставки ВЭД DDP Ташкент',
-              'IT-разработка и B2B порталы',
-              'Инжиниринг и спецпроекты',
-            ],
-          },
-          {
-            '@type': 'WebSite',
-            '@id': 'https://railtech.uz/#website',
-            url: 'https://railtech.uz',
-            name: 'RailTech — Официальный портал',
-            publisher: {
-              '@id': 'https://railtech.uz/#organization',
-            },
-            inLanguage: ['ru-UZ', 'uz-UZ', 'en-US'],
-          },
-        ],
-      })}
-    />
+    <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })} />
+
+    <!-- Legacy ?lang=uz|en links (old language switcher) → real language URL -->
+    <script is:inline define:vars={{ alternates }}>
+      try {
+        var legacy = new URLSearchParams(window.location.search).get('lang');
+        if (legacy && alternates[legacy] && window.location.pathname !== alternates[legacy]) {
+          window.location.replace(alternates[legacy] + window.location.hash);
+        }
+      } catch (e) {}
+    </script>
   </head>
   <body class="bg-[#D4D8DC] text-[#0A0A0A] font-sans antialiased min-h-screen flex flex-col selection:bg-[#0A0A0A] selection:text-white">
     <Header />
@@ -147,7 +173,7 @@ const ogImageUrl = resolvedImage.startsWith('http') ? resolvedImage : new URL(re
       <slot />
     </main>
     <Footer />
-    <GlobalLeadManager client:load />
+    <GlobalLeadManager client:load lang={lang} />
 
     <script is:inline>
       // Self-drawing step dividers on scroll

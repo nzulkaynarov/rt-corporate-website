@@ -1,11 +1,11 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { withBase } from '../../utils/url';
-import I18nText from '../../components/I18nText.astro';
-import HudViewportFrame from '../../components/hud/HudViewportFrame.astro';
+import { withBase } from '../../../utils/url';
+import I18nText from '../../../components/I18nText.astro';
+import HudViewportFrame from '../../../components/hud/HudViewportFrame.astro';
 import { marked } from 'marked';
-import globalData from '../../data/cms/global.json';
+import globalData from '../../../data/cms/global.json';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');

@@ -1,10 +1,10 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { withBase } from '../../utils/url';
-import I18nText from '../../components/I18nText.astro';
-import HudPageHeader from '../../components/hud/HudPageHeader.astro';
-import pagesData from '../../data/cms/pages.json';
+import { withBase } from '../../../utils/url';
+import I18nText from '../../../components/I18nText.astro';
+import HudPageHeader from '../../../components/hud/HudPageHeader.astro';
+import pagesData from '../../../data/cms/pages.json';
 
 const allPosts = await getCollection('blog');
 allPosts.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());

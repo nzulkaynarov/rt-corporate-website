@@ -1,0 +1,26 @@
+{
+  "strings": [
+    {
+      "key": "lead.subject.catalogSourcing",
+      "ru": "Запрос подбора и поставки оборудования с сайта"
+    },
+    {
+      "key": "catalog.status.in_stock",
+      "ru": "В наличии",
+      "uz": "Mavjud",
+      "en": "In stock"
+    },
+    {
+      "key": "catalog.status.reserved",
+      "ru": "Резерв",
+      "uz": "Zaxirada",
+      "en": "Reserved"
+    },
+    {
+      "key": "catalog.status.on_order",
+      "ru": "Под заказ",
+      "uz": "Buyurtma asosida",
+      "en": "On order"
+    }
+  ]
+}

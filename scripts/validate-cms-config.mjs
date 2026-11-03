@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import path from 'node:path';
 import yaml from 'js-yaml';
 
 /**
@@ -7,6 +8,10 @@ import yaml from 'js-yaml';
  * Sveltia refuses to start the whole admin panel ("There are errors in the
  * CMS configuration") if any field — including the single `field:` of a list
  * widget — lacks `name`. This script catches such mistakes before deploy.
+ *
+ * It also checks every content file (JSON data, Markdown front matter) against the
+ * config: a key that exists in the data but is not declared in config.yml would be
+ * silently DELETED the first time an editor saves that entry in the CMS.
  */
 const CONFIG_PATH = 'public/admin/config.yml';
 const errors = [];
@@ -84,8 +89,70 @@ if (!Array.isArray(config?.collections) || config.collections.length === 0) {
   });
 }
 
+// ---------------------------------------------------------------------------
+// Data ↔ config consistency
+// ---------------------------------------------------------------------------
+function readEntry(file) {
+  const raw = fs.readFileSync(file, 'utf8');
+  if (file.endsWith('.json')) return JSON.parse(raw);
+  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
+  if (!m) return { body: raw };
+  return { ...(yaml.load(m[1]) || {}), body: m[2] };
+}
+
+const SCALAR_WIDGETS = new Set(['string', 'text', 'markdown', 'image', 'file', 'datetime', 'color', 'code', 'hidden', 'uuid', 'map', 'relation', 'compute', 'keyvalue']);
+
+function checkData(fields, data, where) {
+  if (data === null || typeof data !== 'object' || Array.isArray(data)) {
+    errors.push(`${where}: expected an object`);
+    return;
+  }
+  const declared = new Set(fields.map((f) => f.name));
+  for (const key of Object.keys(data)) {
+    if (!declared.has(key)) errors.push(`${where}: key "${key}" is not declared in config.yml (would be lost on save)`);
+  }
+  for (const field of fields) {
+    const value = data[field.name];
+    if (value === undefined || value === null) continue;
+    const at = `${where}.${field.name}`;
+    const widget = field.widget || 'string';
+    if (widget === 'object' && field.fields) checkData(field.fields, value, at);
+    else if (widget === 'list') {
+      if (!Array.isArray(value)) { errors.push(`${at}: list widget but value is not an array`); continue; }
+      value.forEach((item, i) => {
+        if (field.fields) checkData(field.fields, item, `${at}[${i}]`);
+        else if (field.field?.widget === 'object') checkData(field.field.fields || [], item, `${at}[${i}]`);
+        else if (item !== null && typeof item === 'object') errors.push(`${at}[${i}]: expected a plain value`);
+      });
+    } else if (widget === 'number' && typeof value !== 'number') errors.push(`${at}: number widget but value is ${JSON.stringify(value)}`);
+    else if (widget === 'boolean' && typeof value !== 'boolean') errors.push(`${at}: boolean widget but value is ${JSON.stringify(value)}`);
+    else if (widget === 'select') {
+      const options = (field.options || []).map((o) => (typeof o === 'object' ? o.value : o));
+      const values = Array.isArray(value) ? value : [value];
+      for (const v of values) if (!options.includes(v)) errors.push(`${at}: "${v}" is not one of the select options`);
+    } else if (SCALAR_WIDGETS.has(widget) && typeof value === 'object') errors.push(`${at}: ${widget} widget but value is an object/array`);
+  }
+}
+
+if (!errors.length) {
+  for (const col of config.collections) {
+    if (col.folder) {
+      const ext = col.extension || (col.format === 'json' ? 'json' : 'md');
+      if (!fs.existsSync(col.folder)) { errors.push(`collection ${col.name}: folder "${col.folder}" does not exist`); continue; }
+      for (const name of fs.readdirSync(col.folder).filter((n) => n.endsWith(`.${ext}`)).sort()) {
+        const file = path.join(col.folder, name);
+        try { checkData(col.fields, readEntry(file), file); } catch (e) { errors.push(`${file}: ${e.message}`); }
+      }
+    } else {
+      for (const f of col.files) {
+        try { checkData(f.fields, readEntry(f.file), f.file); } catch (e) { errors.push(`${f.file}: ${e.message}`); }
+      }
+    }
+  }
+}
+
 if (errors.length) {
-  console.error(`[validate-cms-config] ${CONFIG_PATH}: ${errors.length} error(s) — the admin panel would not load:`);
+  console.error(`[validate-cms-config] ${CONFIG_PATH}: ${errors.length} error(s) — the admin panel would not load or would lose data:`);
   for (const e of errors) console.error('  - ' + e);
   process.exit(1);
 }

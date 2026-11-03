@@ -10,7 +10,10 @@
     "prebuild": "node scripts/validate-cms-config.mjs && node scripts/optimize-images.mjs",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "postbuild": "node scripts/check-build.mjs",
+    "check:build": "node scripts/check-build.mjs",
+    "check:cms": "node scripts/validate-cms-config.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^3.6.2",

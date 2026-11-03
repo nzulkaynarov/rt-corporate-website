@@ -1,11 +1,11 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import I18nText from '../../components/I18nText.astro';
-import HudCard from '../../components/hud/HudCard.astro';
-import HudPageHeader from '../../components/hud/HudPageHeader.astro';
-import HudStepDivider from '../../components/hud/HudStepDivider.astro';
-import pagesData from '../../data/cms/pages.json';
+import I18nText from '../../../components/I18nText.astro';
+import HudCard from '../../../components/hud/HudCard.astro';
+import HudPageHeader from '../../../components/hud/HudPageHeader.astro';
+import HudStepDivider from '../../../components/hud/HudStepDivider.astro';
+import pagesData from '../../../data/cms/pages.json';
 
 const projectItems = await getCollection('projects');
 projectItems.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
