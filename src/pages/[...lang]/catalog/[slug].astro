@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 import { ProductMediaGallery } from '../../../components/islands/ProductMediaGallery';
 import I18nText from '../../../components/I18nText.astro';
 import HudPageHeader from '../../../components/hud/HudPageHeader.astro';
-import { withBase } from '../../../utils/url';
+import { withBase, telHref } from '../../../utils/url';
 import { marked } from 'marked';
 import globalData from '../../../data/cms/global.json';
 import pagesData from '../../../data/cms/pages.json';
@@ -12,6 +12,7 @@ import { expandLangs, localeHref, pick, tField, type Lang } from '../../../i18n'
 import { t } from '../../../i18n/ui';
 import { entrySeo, siteSeo, absoluteUrl } from '../../../utils/seo';
 import { navLabel, navLabels } from '../../../utils/nav';
+import { stockKey, stockLabel, STOCK_SCHEMA } from '../../../utils/stock';
 
 export async function getStaticPaths() {
   const catalogEntries = await getCollection('catalog');
@@ -62,17 +63,12 @@ const categoryOf = (d: CatalogData) => {
 const category = categoryOf(data);
 const categoryName = pick(lang, category.ru, category.uz, category.en);
 
-/** Stock status: explicit status_uz/status_en override, otherwise the dictionary label for statusKey. */
-const statusLabel = (d: CatalogData, l: Lang) => {
-  const override = l === 'uz' ? d.status_uz : l === 'en' ? d.status_en : undefined;
-  return override || t(l, `catalog.status.${d.statusKey}`);
-};
-const status = statusLabel(data, lang);
+const status = stockLabel(data, lang, t);
 
 const title = L(data, 'title');
-const warehouse = data.warehouse ? L(data, 'warehouse') : L(cPage, 'defaultWarehouse');
-const warranty = data.warranty ? L(data, 'warranty') : L(cPage, 'defaultWarranty');
-const priceNote = data.priceNote ? L(data, 'priceNote') : L(cPage, 'defaultPriceNote');
+const warehouse = L(data, 'warehouse') || L(cPage, 'defaultWarehouse');
+const warranty = L(data, 'warranty') || L(cPage, 'defaultWarranty');
+const priceNote = L(data, 'priceNote') || L(cPage, 'defaultPriceNote');
 
 // Markdown body: translated body_uz / body_en when present, otherwise the RU body.
 const localizedBody = lang === 'uz' ? data.body_uz : lang === 'en' ? data.body_en : undefined;
@@ -87,11 +83,7 @@ const seo = entrySeo(data, lang, {
 });
 
 // schema.org Offer: availability from statusKey; price only when the CMS has a real numeric price.
-const availability: Record<string, string> = {
-  in_stock: 'https://schema.org/InStock',
-  reserved: 'https://schema.org/LimitedAvailability',
-  on_order: 'https://schema.org/PreOrder',
-};
+
 const priceDigits = (data.price || '').replace(/[^\d.,]/g, '');
 const priceValue = /^\d+,\d{1,2}$/.test(priceDigits) ? priceDigits.replace(',', '.') : priceDigits.replace(/,/g, '');
 const hasPrice = priceValue !== '' && Number(priceValue) > 0;
@@ -111,14 +103,14 @@ const productJsonLd = {
   offers: {
     '@type': 'Offer',
     url: productUrl,
-    availability: availability[data.statusKey] || availability.in_stock,
+    availability: STOCK_SCHEMA[stockKey(data)],
     itemCondition: 'https://schema.org/NewCondition',
     seller: { '@id': orgId },
     ...(hasPrice ? { price: priceValue, priceCurrency: 'UZS' } : {}),
   },
 };
 
-const phoneHref = `tel:${globalData.phone.replace(/[\s-]/g, '')}`;
+const phoneHref = telHref(globalData.phone);
 const catalogHref = localeHref('/catalog/', lang);
 ---
 
@@ -466,7 +458,7 @@ const catalogHref = localeHref('/catalog/', lang);
                 </div>
                 <div class="pt-3 border-t border-[#0A0A0A]/15 flex items-center justify-between text-xs mt-2">
                   <span class="text-emerald-900 font-bold text-[11px] bg-emerald-100/60 px-1.5 py-0.5">
-                    {statusLabel(item.data, lang)}
+                    {stockLabel(item.data, lang, t)}
                   </span>
                   <span class="font-bold text-[#0A0A0A]">
                     <I18nText k="catalog.detail.details" />

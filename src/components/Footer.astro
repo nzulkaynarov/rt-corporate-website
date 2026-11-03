@@ -2,7 +2,7 @@
 import globalData from '../data/cms/global.json';
 import { localeHref, tField } from '../i18n';
 import { t } from '../i18n/ui';
-import { withBase } from '../utils/url';
+import { withBase, telHref } from '../utils/url';
 
 const lang = Astro.locals.lang;
 const tr = (key: string) => t(lang, key);
@@ -19,7 +19,7 @@ const links = (footer.links || []).map((link: any) => ({
   badge: tField(link, 'badge', lang),
 }));
 const hubText = F('hubText').replace('{address}', address);
-const phoneHref = `tel:${g.phone.replace(/[\s-]/g, '')}`;
+const phoneHref = telHref(g.phone);
 ---
 
 <footer class="border-t-2 border-[#0A0A0A] bg-[#C8CDD2] text-[#0A0A0A] font-mono text-xs select-none">

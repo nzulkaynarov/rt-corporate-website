@@ -69,13 +69,15 @@ function withTrailingSlash(path: string): string {
  * Localized, BASE-prefixed href for an internal page route.
  *   localeHref('/catalog/rt-rs-118', 'uz') → '/rt-corporate-website/uz/catalog/rt-rs-118/'
  * External URLs, anchors, tel:/mailto: are returned untouched.
- * Do NOT use for static assets (images, PDFs) — use withBase() for those.
+ * Paths with a file extension (CMS links to PDFs etc.) get BASE only, without a language prefix.
  */
 export function localeHref(path: string | undefined, lang: Lang): string {
   if (!path) return '';
   if (PASSTHROUGH.test(path)) return path;
   let route = path.startsWith('/') ? path : `/${path}`;
   route = getRouteFromPath(route); // tolerate already base-/lang-prefixed input
+  // Files (PDF, images…) are language-neutral: BASE only, never /uz/ or /en/.
+  if (/\.[a-z0-9]{2,5}$/i.test(route.split(/[?#]/)[0])) return `${BASE}${route}`;
   const prefix = lang === DEFAULT_LANG ? '' : `/${lang}`;
   const localized = withTrailingSlash(`${prefix}${route === '/' ? '/' : route}`);
   return `${BASE}${localized}`;

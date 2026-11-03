@@ -1,4 +1,5 @@
 ---
+import { stockLabel } from '../../utils/stock';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { HudMediaSlider } from '../../components/islands/HudMediaSlider';
@@ -33,7 +34,8 @@ const featuredProjects = allProjects.slice(0, 3);
 
 // Hero slides: images are assets (withBase), links are localized page routes.
 const heroSlides = (homeData.heroSlides || []).map((s: any) => {
-  const href = localeHref(s.href || s.link, lang);
+  // Routes stay language-neutral here; HudMediaSlider localizes them (single place).
+  const href = s.href || s.link;
   return { ...s, image: withBase(s.image), href, link: href };
 });
 
@@ -242,7 +244,7 @@ const skuTitle = (item: (typeof showcaseSkus)[number]) => pick(lang, item.data.t
                   <span class="font-bold text-[#0A0A0A]">{item.data.sku}</span>
                   <span>•</span>
                   <span class="text-emerald-800 font-semibold truncate">
-                    <I18nText ru={item.data.status} uz={item.data.status_uz} en={item.data.status_en} />
+                    {stockLabel(item.data, lang, t)}
                   </span>
                 </div>
                 <a href={localeHref(`/catalog/${item.slug}/`, lang)} class="font-sans font-bold text-xs text-[#0A0A0A] hover:underline line-clamp-1 block leading-tight">
@@ -284,7 +286,7 @@ const skuTitle = (item: (typeof showcaseSkus)[number]) => pick(lang, item.data.t
             <div class="flex items-center justify-between border-b border-[#0A0A0A]/15 pb-2 font-mono text-xs">
               <span class="font-bold text-[#0A0A0A]">{item.data.sku}</span>
               <span class="px-2 py-0.5 text-[10px] font-bold border border-[#0A0A0A] bg-white/60">
-                <I18nText ru={item.data.status} uz={item.data.status_uz} en={item.data.status_en} />
+                {stockLabel(item.data, lang, t)}
               </span>
             </div>
 

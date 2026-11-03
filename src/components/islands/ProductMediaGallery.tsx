@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { withBase } from '../../utils/url';
 import { HudSmartImage } from './HudSmartImage';
 import { useLang } from '../../utils/useLang';
+import { stockLabel } from '../../utils/stock';
 import { makeT, pick, type Lang } from '../../i18n';
 import islandsUi from '../../data/cms/ui/islands.json';
 import catalogUi from '../../data/cms/ui/catalog.json';
@@ -62,17 +63,8 @@ export const ProductMediaGallery: React.FC<Props> = ({
   const curTitle = pick(lang, title, title_uz, title_en);
   const curCategory = pick(lang, category || t(lang, 'islands.defaultCategory'), category_uz, category_en);
 
-  // Status badge: localized CMS value → dictionary label by key → RU CMS value → "in stock".
-  const ownStatus = lang === 'ru' ? status : lang === 'uz' ? status_uz : status_en;
-  const statusKeyResolved =
-    statusKey ||
-    (['in_stock', 'reserved', 'on_order'] as const).find(
-      (k) => !!status && t('ru', `catalog.status.${k}`).toLowerCase() === status.trim().toLowerCase(),
-    );
-  const curStatus =
-    ownStatus ||
-    (statusKeyResolved ? t(lang, `catalog.status.${statusKeyResolved}`) : status) ||
-    t(lang, 'catalog.status.in_stock');
+  // Status badge: shared rule (src/utils/stock.ts) — same label as the product page and catalog table.
+  const curStatus = stockLabel({ status, status_uz, status_en, statusKey }, lang, t);
 
   // Build clean photo list from image, images, and legacy gallery
   const allImages = useMemo(() => {

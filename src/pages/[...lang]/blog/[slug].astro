@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { withBase } from '../../../utils/url';
+import { withBase, telHref } from '../../../utils/url';
 import I18nText from '../../../components/I18nText.astro';
 import HudViewportFrame from '../../../components/hud/HudViewportFrame.astro';
 import { marked } from 'marked';
@@ -76,7 +76,7 @@ const blogPostingJsonLd = {
   ...(tags.length ? { keywords: tags.join(', ') } : {}),
 };
 
-const phoneHref = `tel:${globalData.phone.replace(/[\s-]/g, '')}`;
+const phoneHref = telHref(globalData.phone);
 ---
 
 <BaseLayout

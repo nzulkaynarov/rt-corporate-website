@@ -25,3 +25,8 @@ export function withBase(path?: string): string {
   }
   return `${base}${cleanPath}`;
 }
+
+/** `tel:` link from a human-formatted phone ('+998 (90) 118-90-00' → 'tel:+998901189000'). */
+export function telHref(phone?: string): string {
+  return phone ? `tel:${phone.replace(/[^\d+]/g, '')}` : '';
+}

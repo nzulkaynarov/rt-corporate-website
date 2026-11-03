@@ -20,6 +20,10 @@
       "ru": "Тема"
     },
     {
+      "key": "lead.message.language",
+      "ru": "Язык сайта"
+    },
+    {
       "key": "lead.message.contact",
       "ru": "Контакт"
     },

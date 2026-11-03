@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { localeHref, makeT, tField, type Lang } from '../../i18n';
+import { LANG_META, localeHref, makeT, tField, type Lang } from '../../i18n';
+import { telHref } from '../../utils/url';
 import { useLang } from '../../utils/useLang';
 import globalData from '../../data/cms/global.json';
 import pagesData from '../../data/cms/pages.json';
@@ -15,7 +16,7 @@ const lm = pagesData.leadModal;
 /** Direct contact channels from the CMS (global.json). */
 export const leadContacts = {
   phone: globalData.phone,
-  telHref: `tel:${globalData.phone.replace(/[\s-]/g, '')}`,
+  telHref: telHref(globalData.phone),
   email: globalData.emailSupply || globalData.emailGeneral,
   telegramUrl: globalData.telegramUrl,
 };
@@ -39,14 +40,19 @@ export interface LeadMessageFields {
   phone: string;
   message: string;
   fileName?: string;
+  lang?: Lang;
 }
 
-/** Plain-text lead for Telegram / e-mail sharing. Always Russian (read by the sales team). */
+/**
+ * Plain-text lead for Telegram / e-mail sharing. Row labels are Russian (read by the sales team);
+ * the subject is in the visitor's language, so the site language is added as its own row.
+ */
 export function buildLeadMessage(titleKey: string, f: LeadMessageFields): string {
   const row = (key: string, value: string) => `${t('ru', key)}: ${value || '-'}`;
   return [
     t('ru', titleKey),
     row('lead.message.subject', f.subject),
+    f.lang ? row('lead.message.language', LANG_META[f.lang].name) : null,
     row('lead.message.contact', f.name),
     row('lead.message.company', f.company),
     row('lead.message.inn', f.inn),
@@ -204,6 +210,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose, initialSu
 
   const formattedMsg = buildLeadMessage('lead.message.title', {
     subject: activeSubject,
+    lang,
     name,
     company,
     inn,

@@ -151,6 +151,52 @@ if (!errors.length) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Interface dictionary: every key used in src/ must exist in src/data/cms/ui/*.json
+// (an editor deleting a string in the CMS must fail the build, not break the live site)
+// ---------------------------------------------------------------------------
+const UI_DIR = 'src/data/cms/ui';
+if (fs.existsSync(UI_DIR)) {
+  const uiKeys = new Set();
+  for (const name of fs.readdirSync(UI_DIR).filter((n) => n.endsWith('.json'))) {
+    try {
+      const data = JSON.parse(fs.readFileSync(path.join(UI_DIR, name), 'utf8'));
+      for (const s of data.strings || []) {
+        if (!s.key || !s.ru) errors.push(`${UI_DIR}/${name}: entry ${JSON.stringify(s.key || s)} needs "key" and "ru"`);
+        if (uiKeys.has(s.key)) errors.push(`${UI_DIR}/${name}: duplicate key "${s.key}"`);
+        uiKeys.add(s.key);
+      }
+    } catch (e) {
+      errors.push(`${UI_DIR}/${name}: ${e.message}`);
+    }
+  }
+  const sourceFiles = (dir) =>
+    fs.readdirSync(dir, { withFileTypes: true }).flatMap((d) => {
+      const p = path.join(dir, d.name);
+      return d.isDirectory() ? sourceFiles(p) : /\.(astro|tsx?|jsx?)$/.test(d.name) ? [p] : [];
+    });
+  // t(lang, 'key' …) / t('ru', 'key' …) / tr('key' …) / <I18nText k="key" />
+  const patterns = [/\btr?\(\s*(?:[\w.]+|'[a-z]{2}'),\s*(['"`])([a-zA-Z][\w-]*(?:\.[\w${}()+ -]+)+)\1/g, /\btr\(\s*(['"`])([a-zA-Z][\w-]*(?:\.[\w${}()+ -]+)+)\1/g, /\bk=(["'])([a-zA-Z][\w-]*(?:\.[\w-]+)+)\1/g];
+  for (const file of sourceFiles('src')) {
+    const code = fs
+      .readFileSync(file, 'utf8')
+      .replace(/\/\*[\s\S]*?\*\//g, '') // block / JSDoc comments
+      .replace(/<!--[\s\S]*?-->/g, '') // HTML comments
+      .replace(/^\s*\/\/.*$/gm, ''); // line comments
+    for (const re of patterns) {
+      for (const m of code.matchAll(re)) {
+        const key = m[2];
+        if (key.includes('${')) {
+          const prefix = key.slice(0, key.indexOf('${'));
+          if (![...uiKeys].some((k) => k.startsWith(prefix))) errors.push(`${file}: no UI strings match dynamic key "${key}"`);
+        } else if (!uiKeys.has(key)) {
+          errors.push(`${file}: UI string "${key}" is used in code but missing in ${UI_DIR}/*.json`);
+        }
+      }
+    }
+  }
+}
+
 if (errors.length) {
   console.error(`[validate-cms-config] ${CONFIG_PATH}: ${errors.length} error(s) — the admin panel would not load or would lose data:`);
   for (const e of errors) console.error('  - ' + e);

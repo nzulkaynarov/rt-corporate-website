@@ -1,4 +1,5 @@
 ---
+import { telHref } from '../../utils/url';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { ContactsLeadForm } from '../../components/islands/ContactsLeadForm';
 import I18nText from '../../components/I18nText.astro';
@@ -19,7 +20,6 @@ const g = globalData as Record<string, any>;
 const C = (field: string): string => tField(contactsData, field, lang);
 const tri = (obj: Record<string, any>, field: string) => ({ ru: obj[field], uz: obj[`${field}_uz`], en: obj[`${field}_en`] });
 const bank = contactsData.bankDetails;
-const telHref = (phone: string) => `tel:${phone.replace(/[\s-]/g, '')}`;
 
 const orgId = `${absoluteUrl('/', Astro.site)}#organization`;
 

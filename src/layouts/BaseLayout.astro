@@ -28,6 +28,8 @@ interface Props {
   breadcrumbs?: Crumb[];
   /** Extra page-specific schema.org nodes (Product, Article, Service, FAQPage…) */
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** Override the language-switcher targets (e.g. the 404 page has no per-language twin). */
+  langLinks?: Record<'ru' | 'uz' | 'en', string>;
 }
 
 const lang = Astro.locals.lang;
@@ -41,6 +43,7 @@ const {
   noindex = false,
   breadcrumbs = [],
   jsonLd,
+  langLinks,
 } = Astro.props;
 
 const g = globalData as Record<string, any>;
@@ -172,7 +175,7 @@ if (jsonLd) graph.push(...(Array.isArray(jsonLd) ? jsonLd : [jsonLd]));
     </script>
   </head>
   <body class="bg-[#D4D8DC] text-[#0A0A0A] font-sans antialiased min-h-screen flex flex-col selection:bg-[#0A0A0A] selection:text-white">
-    <Header />
+    <Header alternates={langLinks} />
     <main class="flex-grow">
       <slot />
     </main>

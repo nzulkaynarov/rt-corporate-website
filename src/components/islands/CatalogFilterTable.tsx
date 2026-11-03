@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { HudSmartImage } from './HudSmartImage';
 import { withBase } from '../../utils/url';
 import { useLang } from '../../utils/useLang';
+import { stockLabel } from '../../utils/stock';
 import { localeHref, makeT, pick, tField, type Lang } from '../../i18n';
 import islandsUi from '../../data/cms/ui/islands.json';
 import catalogUi from '../../data/cms/ui/catalog.json';
@@ -48,17 +49,6 @@ interface Props {
 }
 
 const t = makeT([islandsUi, catalogUi]);
-const STATUS_KEYS = ['in_stock', 'reserved', 'on_order'] as const;
-type StatusKey = (typeof STATUS_KEYS)[number];
-
-/** statusKey, or the key whose RU dictionary label equals the CMS RU status. */
-function resolveStatusKey(item: CatalogItemProps): StatusKey | undefined {
-  if (item.statusKey) return item.statusKey;
-  if (!item.status) return undefined;
-  const ru = item.status.trim().toLowerCase();
-  return STATUS_KEYS.find((k) => t('ru', `catalog.status.${k}`).toLowerCase() === ru);
-}
-
 export const CatalogFilterTable: React.FC<Props> = (props) => {
   const { items } = props;
   const lang = useLang(props.lang);
@@ -96,13 +86,7 @@ export const CatalogFilterTable: React.FC<Props> = (props) => {
 
   const getItemSpecs = (item: CatalogItemProps): string => tField(item, 'specs', lang) || '';
 
-  const getItemStatus = (item: CatalogItemProps): string => {
-    const own = lang === 'ru' ? item.status : lang === 'uz' ? item.status_uz : item.status_en;
-    if (own) return own;
-    const key = resolveStatusKey(item);
-    if (key) return t(lang, `catalog.status.${key}`);
-    return item.status || t(lang, 'catalog.status.in_stock');
-  };
+  const getItemStatus = (item: CatalogItemProps): string => stockLabel(item, lang, t);
 
   const filteredItems = useMemo(() => {
     return items.filter((item) => {
@@ -123,7 +107,7 @@ export const CatalogFilterTable: React.FC<Props> = (props) => {
   }, [items, selectedCategory, searchQuery]);
 
   const handleOpenModal = (item: CatalogItemProps) => {
-    // Internal subject for the sales team — always Russian.
+    // Subject in the visitor's language (the lead message also states the site language).
     const subject = t(lang, 'lead.subject.catalogTableItem', { title: tField(item, 'title', lang), sku: item.sku });
 
     window.dispatchEvent(

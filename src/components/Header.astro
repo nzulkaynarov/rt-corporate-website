@@ -1,4 +1,5 @@
 ---
+import { telHref } from '../utils/url';
 import globalData from '../data/cms/global.json';
 import { LANGS, LANG_META, localeHref, alternateHrefs, pick } from '../i18n';
 import { t } from '../i18n/ui';
@@ -6,8 +7,12 @@ import { t } from '../i18n/ui';
 const lang = Astro.locals.lang;
 const tr = (key: string) => t(lang, key);
 const L = (ru?: string, uz?: string, en?: string) => pick(lang, ru || '', uz, en);
+interface Props {
+  /** Language-switcher targets; defaults to the same page in each language. */
+  alternates?: Record<'ru' | 'uz' | 'en', string>;
+}
 const route = Astro.url.pathname;
-const alternates = alternateHrefs(route);
+const alternates = Astro.props.alternates ?? alternateHrefs(route);
 const homeHref = localeHref('/', lang);
 const topBar: Record<string, string> = (globalData as any).topBar || {};
 
@@ -20,7 +25,7 @@ const navItems = (globalData.navigation || []).map((item: any) => {
     match: (p: string) => p.replace(/\/?$/, '/').startsWith(href),
   };
 });
-const phoneHref = `tel:${globalData.phone.replace(/[^\d+]/g, '')}`;
+const phoneHref = telHref(globalData.phone);
 ---
 
 <header class="border-b border-[#0A0A0A] bg-[#D4D8DC] sticky top-0 z-40 select-none">

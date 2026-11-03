@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 import I18nText from '../../../components/I18nText.astro';
 import HudPageHeader from '../../../components/hud/HudPageHeader.astro';
 import { ProductMediaGallery } from '../../../components/islands/ProductMediaGallery';
-import { withBase } from '../../../utils/url';
+import { withBase, telHref } from '../../../utils/url';
 import { marked } from 'marked';
 import globalData from '../../../data/cms/global.json';
 import pagesData from '../../../data/cms/pages.json';
@@ -67,7 +67,7 @@ const articleJsonLd = {
   mainEntityOfPage: { '@type': 'WebPage', '@id': projectUrl },
 };
 
-const phoneHref = `tel:${globalData.phone.replace(/[\s-]/g, '')}`;
+const phoneHref = telHref(globalData.phone);
 ---
 
 <BaseLayout

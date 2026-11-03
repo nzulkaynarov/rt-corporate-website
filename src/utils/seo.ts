@@ -6,6 +6,7 @@
  */
 import seoData from '../data/cms/seo.json';
 import { pick, tField, type Lang } from '../i18n';
+import { withBase } from './url';
 
 export interface SeoMeta {
   title: string;
@@ -103,9 +104,5 @@ export function entrySeo(
 /** Absolute URL on the production site (respects BASE_URL). Accepts routes, asset paths or full URLs. */
 export function absoluteUrl(path: string, site: URL | string | undefined): string {
   if (/^https?:\/\//i.test(path)) return path;
-  const origin = new URL(String(site || 'https://railtech.uz'));
-  const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
-  const clean = path.startsWith('/') ? path : `/${path}`;
-  const full = base && (clean === base || clean.startsWith(`${base}/`)) ? clean : `${base}${clean}`;
-  return new URL(full, origin.origin).href;
+  return new URL(withBase(path), String(site)).href;
 }

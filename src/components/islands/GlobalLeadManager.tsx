@@ -21,7 +21,7 @@ export const GlobalLeadManager: React.FC<GlobalLeadManagerProps> = (props) => {
   const [subject, setSubject] = useState('');
 
   useEffect(() => {
-    // Internal subject for the sales team — always Russian.
+    // Subject in the visitor's language (the lead message also states the site language).
     const defaultSubject = t(lang, 'lead.subject.siteDefault');
 
     const handleOpen = (e: Event) => {

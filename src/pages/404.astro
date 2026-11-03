@@ -11,6 +11,8 @@ import { t } from '../i18n/ui';
 import { pageSeo } from '../utils/seo';
 
 const seo = pageSeo('notFound', 'ru');
+// No per-language twin of the 404 page: the switcher leads to each language's home page.
+const homeLinks = { ru: localeHref('/', 'ru'), uz: localeHref('/', 'uz'), en: localeHref('/', 'en') };
 const tr = (key: string) => t('ru', key);
 const blocks = LANGS.map((code) => ({
   code,
@@ -21,7 +23,7 @@ const blocks = LANGS.map((code) => ({
 }));
 ---
 
-<BaseLayout title={seo.title} description={seo.description} noindex>
+<BaseLayout title={seo.title} description={seo.description} noindex langLinks={homeLinks}>
   <div class="min-h-[75vh] flex items-center justify-center px-4 py-12 font-sans">
     <div class="w-full max-w-2xl hud-glass-card p-6 sm:p-10 relative">
       <!-- Target Corner Brackets -->

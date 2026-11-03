@@ -38,6 +38,7 @@ export const ContactsLeadForm: React.FC<ContactsLeadFormProps> = (props) => {
 
   const formattedMsg = buildLeadMessage('lead.message.titleContacts', {
     subject,
+    lang,
     name,
     company,
     inn,

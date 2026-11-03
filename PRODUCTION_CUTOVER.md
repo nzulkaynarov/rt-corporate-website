@@ -6,28 +6,18 @@
 
 ---
 
-## ШАГ 1. Корректировка конфигурации в `astro.config.mjs`
+## ШАГ 1. Включить боевой домен в сборке
 
-В файле [`astro.config.mjs`](./astro.config.mjs) переключите `site` и `base` на боевой домен без подпапки:
+`astro.config.mjs` уже переключается переменной окружения `CUSTOM_DOMAIN`: при её наличии `site = https://railtech.uz`, `base = /`. Добавьте её в шаг сборки `.github/workflows/deploy.yml`:
 
 ```diff
-- const isGHPages = Boolean(process.env.GITHUB_ACTIONS && !process.env.CUSTOM_DOMAIN);
--
-  export default defineConfig({
--   site: isGHPages ? 'https://nzulkaynarov.github.io' : 'https://railtech.uz',
--   base: isGHPages ? '/rt-corporate-website' : '/',
-+   site: 'https://railtech.uz',
-+   base: '/',
-    output: 'static',
-    integrations: [
-      tailwind({ applyBaseStyles: false }),
-      react(),
-      sitemap(),
-    ],
-  });
+       - name: Build static site with Astro
+         run: npm run build
++        env:
++          CUSTOM_DOMAIN: "1"
 ```
 
-> **Важно:** Все внутренние ссылки в компонентах и страницах проекта уже построены через универсальный хелпер `withBase()` и `import.meta.env.BASE_URL`, поэтому при `base: '/'` все URL автоматически перестроятся на корень домена (например, `/catalog/`, `/blog/`, `/images/uploads/...`).
+> Все внутренние ссылки строятся через `localeHref()` (страницы, с языковым префиксом `/uz/`, `/en/`) и `withBase()` (файлы), а canonical, hreflang, sitemap, `robots.txt` и schema.org — из `site`/`base`, поэтому при переключении всё перестроится автоматически. Проверка `npm run build` (postbuild `scripts/check-build.mjs`) подтвердит, что ссылки и мета-теги корректны.
 
 ---
 
@@ -73,7 +63,7 @@ echo "railtech.uz" > public/CNAME
 
    Убедитесь, что:
    * Сборка завершается с кодом `0` (0 errors, 0 warnings).
-   * В сгенерированном `dist/sitemap-0.xml` все URL начинаются с `https://railtech.uz/`.
+   * В сгенерированном `dist/sitemap-0.xml` все URL начинаются с `https://railtech.uz/`, у каждой страницы есть альтернативы `hreflang` ru / uz / en, а `dist/robots.txt` указывает на `https://railtech.uz/sitemap-index.xml`.
    * В `dist/index.html` канонический URL и OpenGraph обложка указывают на:
      * `<link rel="canonical" href="https://railtech.uz/" />`
      * `<meta property="og:image" content="https://railtech.uz/og-cover.png" />`
