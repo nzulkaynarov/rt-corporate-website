@@ -252,7 +252,7 @@ const phoneHref = `tel:${globalData.phone.replace(/[\s-]/g, '')}`;
             <button
               type="button"
               data-lead-modal
-              data-lead-subject={t('ru', 'lead.subject.serviceInquiry', { title: data.title, code: data.code })}
+              data-lead-subject={t(lang, 'lead.subject.serviceInquiry', { title: tField(data, 'title', lang), code: data.code })}
               class="hud-btn w-full cursor-pointer"
             >
               <I18nText ru={ctaLabel} />

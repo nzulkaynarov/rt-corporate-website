@@ -3,6 +3,12 @@
   "consoleSubtitle": "Многопрофильный B2B / B2G Оператор",
   "consoleSubtitle_uz": "Ko'p tarmoqli B2B / B2G operatori",
   "consoleSubtitle_en": "Multi-sector B2B / B2G Operator",
+  "consoleKicker": "SYSTEM CONSOLE",
+  "consoleKicker_uz": "SYSTEM CONSOLE",
+  "consoleKicker_en": "SYSTEM CONSOLE",
+  "consoleStamp": "RT // CAD.UI 026",
+  "consoleStamp_uz": "RT // CAD.UI 026",
+  "consoleStamp_en": "RT // CAD.UI 026",
   "topCalloutTag": "RT_CONSOLE // SYS.ACTIVE",
   "topCalloutStatus": "АККРЕДИТОВАННЫЙ ОПЕРАТОР РУз",
   "topCalloutStatus_uz": "O'zR AKKREDITATSIYALANGAN OPERATORI",
@@ -14,11 +20,41 @@
   "topCalloutSla": "Ответ отдела снабжения: от 15 минут",
   "topCalloutSla_uz": "Ta'minot bo'limi javobi: 15 daqiqadan",
   "topCalloutSla_en": "Supply desk response: from 15 minutes",
+  "modesLabel": "// MODES",
+  "modesLabel_uz": "// MODES",
+  "modesLabel_en": "// MODES",
+  "directionsLabel": "// НАПРАВЛЕНИЯ",
+  "directionsLabel_uz": "// YO'NALISHLAR",
+  "directionsLabel_en": "// SECTORS",
   "modes": [
-    { "n": "01", "label": "КАТАЛОГ", "label_uz": "KATALOG", "label_en": "CATALOG", "href": "/catalog/" },
-    { "n": "02", "label": "УСЛУГИ", "label_uz": "XIZMATLAR", "label_en": "SERVICES", "href": "/services/" },
-    { "n": "03", "label": "ПРОЕКТЫ", "label_uz": "LOYIHALAR", "label_en": "PROJECTS", "href": "/projects/" },
-    { "n": "04", "label": "БЛОГ", "label_uz": "BLOG", "label_en": "BLOG", "href": "/blog/" }
+    {
+      "n": "01",
+      "label": "КАТАЛОГ",
+      "label_uz": "KATALOG",
+      "label_en": "CATALOG",
+      "href": "/catalog/"
+    },
+    {
+      "n": "02",
+      "label": "УСЛУГИ",
+      "label_uz": "XIZMATLAR",
+      "label_en": "SERVICES",
+      "href": "/services/"
+    },
+    {
+      "n": "03",
+      "label": "ПРОЕКТЫ",
+      "label_uz": "LOYIHALAR",
+      "label_en": "PROJECTS",
+      "href": "/projects/"
+    },
+    {
+      "n": "04",
+      "label": "БЛОГ",
+      "label_uz": "BLOG",
+      "label_en": "BLOG",
+      "href": "/blog/"
+    }
   ],
   "projectsSectionBadge": "КЕЙСЫ И СПЕЦПРОЕКТЫ",
   "projectsSectionBadge_uz": "KEYSLAR VA MAXSUS LOYIHALAR",
@@ -127,9 +163,15 @@
       "value_en": "1,200+ SKU · 86+ partners"
     }
   ],
+  "passportLabel": "// ПАСПОРТ ОПЕРАТОРА",
+  "passportLabel_uz": "// OPERATOR PASPORTI",
+  "passportLabel_en": "// OPERATOR PASSPORT",
   "ctaLead": "Оставить заявку",
   "ctaLead_uz": "Ariza qoldirish",
   "ctaLead_en": "Submit a request",
+  "gatewaysDivider": "CHANNELS // 04 GATEWAYS",
+  "gatewaysDivider_uz": "CHANNELS // 04 GATEWAYS",
+  "gatewaysDivider_en": "CHANNELS // 04 GATEWAYS",
   "gatewayCards": [
     {
       "title": "Каталог товаров",
@@ -178,6 +220,9 @@
   "showcaseSectionTitle": "КРИТИЧЕСКИЕ ПОЗИЦИИ В ТАШКЕНТЕ (INDEX B2-2097)",
   "showcaseSectionTitle_uz": "TOSHKENTDAGI STRATEGIK POZITSIYALAR (INDEX B2-2097)",
   "showcaseSectionTitle_en": "CRITICAL IN-STOCK ITEMS IN TASHKENT (INDEX B2-2097)",
+  "showcaseAllLink": "СМОТРЕТЬ ВЕСЬ КАТАЛОГ (1 200+ SKU)",
+  "showcaseAllLink_uz": "BARCHA KATALOGNI KO'RISH (1 200+ SKU)",
+  "showcaseAllLink_en": "VIEW FULL CATALOG (1,200+ SKUs)",
   "blogBadge": "РАЗДЕЛ 05 // БАЗА ЗНАНИЙ & ХРОНИКА",
   "blogBadge_uz": "BO'LIM 05 // BILIMLAR BAZASI VA XRONIKA",
   "blogBadge_en": "SECTION 05 // KNOWLEDGE BASE & CHRONICLE",

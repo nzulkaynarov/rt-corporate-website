@@ -124,7 +124,7 @@ export const CatalogFilterTable: React.FC<Props> = (props) => {
 
   const handleOpenModal = (item: CatalogItemProps) => {
     // Internal subject for the sales team — always Russian.
-    const subject = t('ru', 'lead.subject.catalogTableItem', { title: item.title, sku: item.sku });
+    const subject = t(lang, 'lead.subject.catalogTableItem', { title: tField(item, 'title', lang), sku: item.sku });
 
     window.dispatchEvent(
       new CustomEvent('open-lead-modal', {

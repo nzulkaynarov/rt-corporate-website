@@ -14,6 +14,9 @@
   "pageSubtitle": "Складской комплекс и центральный офис ООО «RailTech» расположены на территории современного Торгово-производственного комплекса Index в Ташкенте с удобным логистическим подъездом для всех видов грузового транспорта.",
   "pageSubtitle_uz": "«RailTech» MChJ ombor majmuasi va markaziy ofisi Toshkentdagi zamonaviy Index savdo-ishlab chiqarish majmuasi hududida, barcha turdagi yuk transporti uchun qulay logistika kirish yo'liga ega.",
   "pageSubtitle_en": "The central office and warehouse terminal of RailTech LLC are located within the modern Index Trade and Industrial Complex in Tashkent, with streamlined logistics access for all types of freight transport.",
+  "departmentsTitle": "ПРЯМЫЕ КОНТАКТЫ ПОДРАЗДЕЛЕНИЙ",
+  "departmentsTitle_uz": "BO'LIMLARNING TO'G'RIDAN-TO'G'RI KONTAKTLARI",
+  "departmentsTitle_en": "DIRECT DEPARTMENTAL CONTACTS",
   "departments": [
     {
       "name": "ОТДЕЛ СНАБЖЕНИЯ И СКЛАДСКИХ ОТГРУЗОК",
@@ -56,6 +59,9 @@
       "email": "accounting@railtech.uz"
     }
   ],
+  "logisticsTitle": "ИНСТРУКЦИЯ ПО ПРОЕЗДУ ДЛЯ ГРУЗОВОГО ТРАНСПОРТА:",
+  "logisticsTitle_uz": "YUK TRANSPORTI UCHUN HARAKAT YO'RIQNOMASI:",
+  "logisticsTitle_en": "HEAVY TRANSPORT ACCESS GUIDELINES:",
   "logisticsInstructions": [
     "1. Заезд с ТКАД: Двигаясь по Ташкентской кольцевой автомобильной дороге в сторону Сергелийского / Янгихаётского района, поверните по указателю «ТПК Index».",
     "2. КПП №3: Для длинномерных фур, тралов и грузовиков с полуприцепами въезд осуществляется через КПП №3 (грузовой терминал).",
@@ -84,6 +90,9 @@
     "weekend_uz": "Shanba: oldindan so'rov bo'yicha, Yakshanba: dam olish kuni",
     "weekend_en": "Saturday: by prior notice, Sunday: closed"
   },
+  "bankTitle": "БАНКОВСКИЕ РЕКВИЗИТЫ ДЛЯ ДОГОВОРОВ:",
+  "bankTitle_uz": "SHARTNOMALAR UCHUN BANK REKVIZITLARI:",
+  "bankTitle_en": "BANKING DETAILS FOR AGREEMENTS:",
   "bankDetails": {
     "recipient": "ООО «RailTech»",
     "recipient_uz": "«RailTech» MChJ",

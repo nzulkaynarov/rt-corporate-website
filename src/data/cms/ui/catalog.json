@@ -1,9 +1,11 @@
 {
-  "title": "Каталог",
+  "title": "Каталог и карточка товара",
   "strings": [
     {
       "key": "lead.subject.catalogSourcing",
-      "ru": "Запрос подбора и поставки оборудования с сайта"
+      "ru": "Запрос подбора и поставки оборудования с сайта",
+      "uz": "Saytdan uskunalarni tanlash va yetkazib berish so'rovi",
+      "en": "Equipment sourcing and supply request"
     },
     {
       "key": "catalog.status.in_stock",
@@ -25,11 +27,15 @@
     },
     {
       "key": "lead.subject.catalogDatasheet",
-      "ru": "Запрос технического паспорта: {doc} ({sku})"
+      "ru": "Запрос технического паспорта: {doc} ({sku})",
+      "uz": "Texnik pasport so'rovi: {doc} ({sku})",
+      "en": "Datasheet request: {doc} ({sku})"
     },
     {
       "key": "lead.subject.catalogInvoice",
-      "ru": "Запрос счета на позицию {title} ({sku})"
+      "ru": "Запрос счета на позицию {title} ({sku})",
+      "uz": "Pozitsiya bo'yicha hisob so'rovi: {title} ({sku})",
+      "en": "Invoice request for item: {title} ({sku})"
     },
     {
       "key": "catalog.detail.code",

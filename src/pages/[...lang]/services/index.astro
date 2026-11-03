@@ -166,7 +166,7 @@ const categories = [...categoryMap.values()];
               <button
                 type="button"
                 data-lead-modal
-                data-lead-subject={t('ru', 'lead.subject.serviceQuote', { title: srv.data.title })}
+                data-lead-subject={t(lang, 'lead.subject.serviceQuote', { title: tField(srv.data, 'title', lang) })}
                 class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-3.5 py-2 hover:bg-white hover:text-[#0A0A0A] transition-colors font-bold cursor-pointer flex items-center gap-1.5 min-h-[44px]"
               >
                 <span><I18nText k="services.card.requestQuote" /></span>
@@ -194,7 +194,7 @@ const categories = [...categoryMap.values()];
       <button
         type="button"
         data-lead-modal
-        data-lead-subject={t('ru', 'lead.subject.servicesConsultation')}
+        data-lead-subject={t(lang, 'lead.subject.servicesConsultation')}
         class="hud-btn whitespace-nowrap cursor-pointer"
       >
         <span>[ <I18nText ru={sPage.ctaButton} uz={sPage.ctaButton_uz} en={sPage.ctaButton_en} /> ]</span>

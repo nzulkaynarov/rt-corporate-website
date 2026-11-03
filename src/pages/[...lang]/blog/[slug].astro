@@ -213,7 +213,7 @@ const phoneHref = `tel:${globalData.phone.replace(/[\s-]/g, '')}`;
             <button
               type="button"
               data-lead-modal
-              data-lead-subject={t('ru', 'lead.subject.blogArticle', { title: data.title })}
+              data-lead-subject={t(lang, 'lead.subject.blogArticle', { title: tField(data, 'title', lang) })}
               class="w-full border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white py-3 text-xs font-bold tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
             >
               <I18nText k="blog.article.requestQuote" />

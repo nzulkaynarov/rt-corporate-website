@@ -1,12 +1,17 @@
 {
+  "title": "Блог",
   "strings": [
     {
       "key": "lead.subject.blogConsultation",
-      "ru": "Запрос инженерной консультации со страницы Блога"
+      "ru": "Запрос инженерной консультации со страницы Блога",
+      "uz": "Blog sahifasidan muhandislik maslahati so'rovi",
+      "en": "Engineering consultation request from the blog"
     },
     {
       "key": "lead.subject.blogArticle",
-      "ru": "Запрос расчета по материалу: {title}"
+      "ru": "Запрос расчета по материалу: {title}",
+      "uz": "Maqola bo'yicha hisob-kitob so'rovi: {title}",
+      "en": "Quote request based on the article: {title}"
     },
     {
       "key": "blog.author",

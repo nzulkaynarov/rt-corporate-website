@@ -47,10 +47,12 @@ export function siteSeo(lang: Lang) {
   const s = seoData as Record<string, any>;
   return {
     siteName: tField(s, 'siteName', lang) as string,
-    titleSuffix: (s.titleSuffix as string) || '',
+    // CMS trims whitespace on save, so the separator space is added here
+    titleSuffix: s.titleSuffix ? ` ${String(s.titleSuffix).trim()}` : '',
     defaultImage: (s.defaultImage as string) || '/og-cover.png',
     organizationDescription: tField(s, 'organizationDescription', lang) as string,
     knowsAbout: pick<string[]>(lang, s.knowsAbout || [], s.knowsAbout_uz, s.knowsAbout_en),
+    catalogDescription: tField(s, 'catalogDescription', lang) as string,
   };
 }
 
@@ -62,9 +64,16 @@ export function siteSeo(lang: Lang) {
 export function entrySeo(
   data: Record<string, any>,
   lang: Lang,
-  options: { titleField?: string; titleExtra?: string; descriptionFields?: string[]; body?: string } = {},
+  options: {
+    titleField?: string;
+    titleExtra?: string;
+    descriptionFields?: string[];
+    /** e.g. '{title} ({sku}): {specs}. …' — placeholders are localized entry fields */
+    descriptionTemplate?: string;
+    body?: string;
+  } = {},
 ): SeoMeta {
-  const { titleField = 'title', titleExtra, descriptionFields = ['summary', 'subtitle', 'specs'], body } = options;
+  const { titleField = 'title', titleExtra, descriptionFields = ['summary', 'subtitle', 'specs'], descriptionTemplate, body } = options;
   const { titleSuffix } = siteSeo(lang);
 
   let title = plainText(tField(data, 'seoTitle', lang));
@@ -74,6 +83,13 @@ export function entrySeo(
   }
 
   let description = plainText(tField(data, 'seoDescription', lang));
+  if (!description && descriptionTemplate) {
+    description = plainText(
+      descriptionTemplate.replace(/\{(\w+)\}/g, (_, field) => plainText(tField(data, field, lang)).replace(/[.\s]+$/, '')),
+    )
+      .replace(/\s+([:.,])/g, '$1')
+      .replace(/([:.,])\1+/g, '$1');
+  }
   if (!description) {
     for (const field of descriptionFields) {
       description = plainText(tField(data, field, lang));

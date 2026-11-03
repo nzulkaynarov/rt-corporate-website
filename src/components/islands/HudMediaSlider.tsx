@@ -327,7 +327,7 @@ export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500, lan
             type="button"
             onClick={() => go(i)}
             id={`hud-slider-dot-${i + 1}`}
-            aria-label={t(lang, 'slider.dotAria', { n: i + 1 })}
+            aria-label={`${pad(i + 1)} — ${t(lang, 'slider.dotAria', { n: i + 1 })}`}
             aria-current={i === active}
             className={`min-h-[32px] sm:min-h-[28px] px-2 py-1 transition-colors cursor-pointer text-xs ${
               i === active
@@ -335,7 +335,7 @@ export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500, lan
                 : 'text-[#0A0A0A] hover:bg-[#0A0A0A]/10'
             }`}
           >
-            {i === active ? '■' : '□'} {pad(i + 1)}
+            <span aria-hidden="true">{i === active ? '■' : '□'} </span>{pad(i + 1)}
           </button>
         ))}
         <button

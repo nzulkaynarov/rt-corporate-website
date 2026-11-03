@@ -259,17 +259,17 @@ export const ProductMediaGallery: React.FC<Props> = ({
                 type="button"
                 onClick={handlePrev}
                 className="px-2 py-0.5 border border-[#0A0A0A]/40 hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer text-[11px]"
-                aria-label={t(lang, 'gallery.prevAria')}
+                aria-label={`${t(lang, 'gallery.prev')} — ${t(lang, 'gallery.prevAria')}`}
               >
-                &lt; {t(lang, 'gallery.prev')}
+                <span aria-hidden="true">&lt; </span>{t(lang, 'gallery.prev')}
               </button>
               <button
                 type="button"
                 onClick={handleNext}
                 className="px-2 py-0.5 border border-[#0A0A0A]/40 hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer text-[11px]"
-                aria-label={t(lang, 'gallery.nextAria')}
+                aria-label={`${t(lang, 'gallery.next')} — ${t(lang, 'gallery.nextAria')}`}
               >
-                {t(lang, 'gallery.next')} &gt;
+                {t(lang, 'gallery.next')}<span aria-hidden="true"> &gt;</span>
               </button>
             </div>
           </div>

@@ -10,7 +10,7 @@ import globalData from '../../../data/cms/global.json';
 import pagesData from '../../../data/cms/pages.json';
 import { expandLangs, localeHref, pick, tField, type Lang } from '../../../i18n';
 import { t } from '../../../i18n/ui';
-import { entrySeo, absoluteUrl } from '../../../utils/seo';
+import { entrySeo, siteSeo, absoluteUrl } from '../../../utils/seo';
 import { navLabel, navLabels } from '../../../utils/nav';
 
 export async function getStaticPaths() {
@@ -81,6 +81,7 @@ const bodyHtml = localizedBody ? await marked.parse(localizedBody) : '';
 const mainImageUrl = data.image || `/images/catalog/${data.sku.toLowerCase()}.jpg`;
 const seo = entrySeo(data, lang, {
   titleExtra: `(${data.sku})`,
+  descriptionTemplate: siteSeo(lang).catalogDescription,
   descriptionFields: ['specs'],
   body: localizedBody || entry.body,
 });
@@ -310,7 +311,7 @@ const catalogHref = localeHref('/catalog/', lang);
                       <button
                         type="button"
                         data-lead-modal
-                        data-lead-subject={t('ru', 'lead.subject.catalogDatasheet', { doc: doc.title, sku: data.sku })}
+                        data-lead-subject={t(lang, 'lead.subject.catalogDatasheet', { doc: tField(doc, 'title', lang), sku: data.sku })}
                         class="hud-btn hud-btn--ghost text-[11px] py-1.5 px-3 self-start sm:self-auto text-center shrink-0 cursor-pointer"
                       >
                         <I18nText k="catalog.detail.requestDatasheet" />
@@ -403,7 +404,7 @@ const catalogHref = localeHref('/catalog/', lang);
             <button
               type="button"
               data-lead-modal
-              data-lead-subject={t('ru', 'lead.subject.catalogInvoice', { title: data.title, sku: data.sku })}
+              data-lead-subject={t(lang, 'lead.subject.catalogInvoice', { title: tField(data, 'title', lang), sku: data.sku })}
               class="hud-btn w-full cursor-pointer"
             >
               <I18nText k="catalog.detail.requestQuote" />

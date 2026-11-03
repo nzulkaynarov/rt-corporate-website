@@ -1,16 +1,23 @@
 {
+  "title": "Услуги",
   "strings": [
     {
       "key": "lead.subject.serviceQuote",
-      "ru": "Запрос расчета по услуге: {title}"
+      "ru": "Запрос расчета по услуге: {title}",
+      "uz": "Xizmat bo'yicha hisob-kitob so'rovi: {title}",
+      "en": "Quote request for the service: {title}"
     },
     {
       "key": "lead.subject.servicesConsultation",
-      "ru": "Запрос консультации по услугам компании"
+      "ru": "Запрос консультации по услугам компании",
+      "uz": "Kompaniya xizmatlari bo'yicha maslahat so'rovi",
+      "en": "Consultation request about our services"
     },
     {
       "key": "lead.subject.serviceInquiry",
-      "ru": "Заявка на услугу: {title} ({code})"
+      "ru": "Заявка на услугу: {title} ({code})",
+      "uz": "Xizmatga ariza: {title} ({code})",
+      "en": "Service request: {title} ({code})"
     },
     {
       "key": "services.filter.aria",

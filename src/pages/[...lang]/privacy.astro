@@ -3,29 +3,38 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import I18nText from '../../components/I18nText.astro';
 import globalData from '../../data/cms/global.json';
 import legalData from '../../data/cms/legal.json';
+import { langStaticPaths, localeHref, tField } from '../../i18n';
+import { pageSeo, plainText } from '../../utils/seo';
 
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const p = legalData.privacy;
+export const getStaticPaths = langStaticPaths;
+
+const lang = Astro.locals.lang;
+const seo = pageSeo('privacy', lang);
+const doc = legalData.privacy;
+const other = legalData.terms;
+const crumb: string = tField(doc, 'crumb', lang);
 ---
 
 <BaseLayout
-  title={`Политика конфиденциальности — ${globalData.companyName} (Закон РУз № ЗРУ-547)`}
-  description={`Регламент обработки и защиты персональных данных пользователей сервисов ${globalData.officialDomains} в соответствии с Законом Республики Узбекистан «О персональных данных» № ЗРУ-547.`}
-  keywords="политика конфиденциальности railtech, зру-547 узбекистан, защита персональных данных, privacy railtech uz"
+  title={seo.title}
+  description={seo.description}
+  breadcrumbs={[{ name: plainText(crumb), path: '/privacy/' }]}
+  jsonLd={{
+    '@type': 'WebPage',
+    name: plainText(tField(doc, 'title', lang)),
+    description: seo.description,
+    inLanguage: lang,
+  }}
 >
   <div class="max-w-4xl mx-auto px-4 py-10 font-sans">
     <!-- Breadcrumbs -->
     <div class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-4">
-      <a href={`${base}/`} class="hover:underline">
-        <I18nText ru="ГЛАВНАЯ" uz="BOSH SAHIFA" en="HOME" />
+      <a href={localeHref('/', lang)} class="hover:underline">
+        <I18nText k="nav.home" />
       </a>
       <span>/</span>
       <span class="text-[#0A0A0A] font-bold">
-        <I18nText
-          ru="ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ (.LEGAL)"
-          uz="MAXFIYLIK SIYOSATI (.LEGAL)"
-          en="PRIVACY POLICY (.LEGAL)"
-        />
+        <I18nText ru={doc.crumb} uz={doc.crumb_uz} en={doc.crumb_en} />
       </span>
     </div>
 
@@ -33,36 +42,36 @@ const p = legalData.privacy;
     <div class="border-b-2 border-[#0A0A0A] pb-6 mb-8 font-mono">
       <div class="flex flex-wrap items-center gap-2 text-xs mb-3">
         <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold inline-block">
-          <I18nText ru={p.badgeLaw} uz={p.badgeLaw_uz} en={p.badgeLaw_en} />
+          <I18nText ru={doc.badgeLaw} uz={doc.badgeLaw_uz} en={doc.badgeLaw_en} />
         </span>
         <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A] inline-block">
-          <I18nText ru={p.badgeCountry} uz={p.badgeCountry_uz} en={p.badgeCountry_en} />
+          <I18nText ru={doc.badgeCountry} uz={doc.badgeCountry_uz} en={doc.badgeCountry_en} />
         </span>
         <span class="border border-emerald-600 bg-emerald-100 text-emerald-900 px-2 py-0.5 font-bold inline-block">
-          <I18nText ru={p.badgeEdition} uz={p.badgeEdition_uz} en={p.badgeEdition_en} />
+          <I18nText ru={doc.badgeEdition} uz={doc.badgeEdition_uz} en={doc.badgeEdition_en} />
         </span>
       </div>
 
       <I18nText
         as="h1"
         class="font-sans text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-2"
-        ru={p.title}
-        uz={p.title_uz}
-        en={p.title_en}
+        ru={doc.title}
+        uz={doc.title_uz}
+        en={doc.title_en}
       />
 
       <p class="text-sm text-[#4A5056]">
         <I18nText
-          ru={p.subtitle}
-          uz={p.subtitle_uz}
-          en={p.subtitle_en}
+          ru={doc.subtitle}
+          uz={doc.subtitle_uz}
+          en={doc.subtitle_en}
         />
       </p>
     </div>
 
     <!-- Document Content from CMS -->
     <div class="border border-[#0A0A0A] bg-[#D4D8DC] p-6 lg:p-8 font-mono text-xs space-y-6 leading-relaxed">
-      {p.sections.map((sec) => (
+      {doc.sections.map((sec) => (
         <div class="border-b border-[#0A0A0A]/15 pb-4 last:border-0 last:pb-0">
           <div class="font-bold text-sm text-[#0A0A0A] mb-2">
             <I18nText ru={sec.title} uz={sec.title_uz} en={sec.title_en} />
@@ -77,17 +86,13 @@ const p = legalData.privacy;
     <!-- Bottom Actions -->
     <div class="mt-8 pt-6 border-t border-[#0A0A0A]/30 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
       <div class="text-[#4A5056]">
-        <I18nText
-          ru={`Контактная линия DPO: ${globalData.emailPrivacy}`}
-          uz={`DPO aloqa liniyasi: ${globalData.emailPrivacy}`}
-          en={`DPO contact line: ${globalData.emailPrivacy}`}
-        />
+        {tField(doc, 'contactLabel', lang)} {globalData.emailPrivacy}
       </div>
       <a
-        href={`${base}/terms`}
+        href={localeHref('/terms/', lang)}
         class="border border-[#0A0A0A] bg-white px-4 py-2 hover:bg-[#0A0A0A] hover:text-white transition-colors"
       >
-        <I18nText ru="УСЛОВИЯ ИСПОЛЬЗОВАНИЯ (.TERMS) →" uz="FOYDALANISH SHARTLARI (.TERMS) →" en="TERMS OF SERVICE (.TERMS) →" />
+        <I18nText ru={other.crumb} uz={other.crumb_uz} en={other.crumb_en} /> <span aria-hidden="true">→</span>
       </a>
     </div>
   </div>

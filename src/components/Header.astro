@@ -139,7 +139,7 @@ const phoneHref = `tel:${globalData.phone.replace(/[^\d+]/g, '')}`;
       <button
         type="button"
         data-lead-modal
-        data-lead-subject={t('ru', 'lead.subject.header')}
+        data-lead-subject={t(lang, 'lead.subject.header')}
         class="hidden sm:inline-block border border-[#0A0A0A] bg-[#0A0A0A] text-white font-mono text-[11px] font-bold px-3 py-1.5 tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer whitespace-nowrap"
       >
         {tr('header.rfq')}
@@ -221,7 +221,7 @@ const phoneHref = `tel:${globalData.phone.replace(/[^\d+]/g, '')}`;
         <button
           type="button"
           data-lead-modal
-          data-lead-subject={t('ru', 'lead.subject.mobileMenu')}
+          data-lead-subject={t(lang, 'lead.subject.mobileMenu')}
           class="hud-btn w-full min-h-[48px] text-xs font-bold cursor-pointer"
         >
           <span>{tr('header.submitRequest')}</span>

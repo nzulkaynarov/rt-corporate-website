@@ -64,6 +64,26 @@ benefits:
     value: "Регулярные сборные и целые поезда"
     value_uz: "Muntazam yig'ma va yaxlit poyezdlar"
     value_en: "Scheduled block and intermodal trains"
+body_uz: |
+  ### Tashqi iqtisodiy faoliyatni xavfsiz tashkil etish
+
+  «RailTech» MChJ loyiha ta'minotining barcha bosqichlarini o'z zimmasiga oladi: ishlab chiqaruvchi zavodni malakaviy tanlashdan tortib tayyor mahsulotni Toshkentdagi omborda buyurtmachiga topshirishgacha.
+
+  Biz quyidagilarni bajaramiz:
+  - Tashqi savdo operatsiyalarining yagona elektron axborot tizimida (YEAIS TSO) tashqi savdo bitimi pasportini ishlab chiqish va kelishish.
+  - Mahsulotni kirish sifat nazorati va GOST / TR TS / O'zDSt bo'yicha sertifikatlash.
+  - To'liq bojxona rasmiylashtiruvi va barcha yig'imlarni O'zbekiston davlat byudjetiga to'lash.
+  - 12% QQSni kafolatli hisobga olish uchun yopuvchi buxgalteriya hujjatlarining to'liq to'plamini shakllantirish.
+body_en: |
+  ### Risk-free foreign trade operations
+
+  RailTech LLC handles every stage of project procurement: from qualifying the manufacturer to handing over the finished goods to the customer at our Tashkent warehouse.
+
+  We take care of:
+  - Preparing and registering the foreign trade contract passport in the Unified Electronic Information System for Foreign Trade Operations.
+  - Incoming quality control and certification under GOST / TR CU / O'zDSt.
+  - Full customs clearance and payment of all duties to the state budget of Uzbekistan.
+  - A complete set of closing accounting documents so you can reliably offset 12% VAT.
 ---
 
 ### Организация внешнеэкономической деятельности без рисков

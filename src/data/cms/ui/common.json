@@ -111,11 +111,15 @@
     },
     {
       "key": "lead.subject.header",
-      "ru": "Запрос коммерческого предложения / спецификации с сайта"
+      "ru": "Запрос коммерческого предложения / спецификации с сайта",
+      "uz": "Saytdan tijorat taklifi / spetsifikatsiya so'rovi",
+      "en": "Request for quotation / specification"
     },
     {
       "key": "lead.subject.mobileMenu",
-      "ru": "Запрос консультации из мобильного меню"
+      "ru": "Запрос консультации из мобильного меню",
+      "uz": "Mobil menyudan maslahat so'rovi",
+      "en": "Consultation request from the mobile menu"
     },
     {
       "key": "legacyRedirect.note",

@@ -1,12 +1,17 @@
 {
+  "title": "Проекты",
   "strings": [
     {
       "key": "lead.subject.projectsArtLab",
-      "ru": "Запрос сотрудничества по спецпроектам / Art Lab"
+      "ru": "Запрос сотрудничества по спецпроектам / Art Lab",
+      "uz": "Maxsus loyihalar / Art Lab bo'yicha hamkorlik so'rovi",
+      "en": "Collaboration request: special projects / Art Lab"
     },
     {
       "key": "lead.subject.projectSimilar",
-      "ru": "Запрос на реализацию проекта по кейсу: {title} ({code})"
+      "ru": "Запрос на реализацию проекта по кейсу: {title} ({code})",
+      "uz": "Keys bo'yicha loyihani amalga oshirish so'rovi: {title} ({code})",
+      "en": "Request to deliver a similar project: {title} ({code})"
     },
     {
       "key": "projects.filter.aria",

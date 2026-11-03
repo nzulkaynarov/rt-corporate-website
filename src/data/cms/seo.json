@@ -2,7 +2,7 @@
   "siteName": "RailTech",
   "siteName_uz": "RailTech",
   "siteName_en": "RailTech",
-  "titleSuffix": " | RailTech",
+  "titleSuffix": "| RailTech",
   "defaultImage": "/og-cover.png",
   "organizationDescription": "Поставщик железнодорожных комплектующих и промышленного оборудования в Узбекистане: склад в Ташкенте, импорт под ключ DDP, B2B-платформа и IT-разработка.",
   "organizationDescription_uz": "O'zbekistonda temir yo'l butlovchi qismlari va sanoat uskunalari yetkazib beruvchisi: Toshkentdagi ombor, DDP import, B2B platforma va IT ishlanmalar.",
@@ -28,6 +28,9 @@
     "Turnkey DDP equipment import",
     "B2B platforms and software development"
   ],
+  "catalogDescription": "{title} ({sku}): {specs}. В наличии на складе в Ташкенте — паспорт, сертификаты, счёт с НДС 12%.",
+  "catalogDescription_uz": "{title} ({sku}): {specs}. Toshkentdagi omborda mavjud — pasport, sertifikatlar, 12% QQS bilan hisob.",
+  "catalogDescription_en": "{title} ({sku}): {specs}. Stocked in Tashkent — manufacturer passport, certificates, 12% VAT invoice.",
   "pages": {
     "home": {
       "title": "RailTech — ЖД комплектующие и оборудование в Ташкенте",

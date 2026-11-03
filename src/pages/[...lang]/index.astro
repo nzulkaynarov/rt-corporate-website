@@ -6,8 +6,17 @@ import I18nText from '../../components/I18nText.astro';
 import HudCard from '../../components/hud/HudCard.astro';
 import HudStepDivider from '../../components/hud/HudStepDivider.astro';
 import homeData from '../../data/cms/home.json';
-import globalData from '../../data/cms/global.json';
 import { withBase } from '../../utils/url';
+import { langStaticPaths, localeHref, pick, tField } from '../../i18n';
+import { t } from '../../i18n/ui';
+import { pageSeo } from '../../utils/seo';
+
+export const getStaticPaths = langStaticPaths;
+
+const lang = Astro.locals.lang;
+const tr = (key: string, vars?: Record<string, string | number>) => t(lang, key, vars);
+const seo = pageSeo('home', lang);
+const H = (field: string): string => tField(homeData, field, lang);
 
 const allSkus = await getCollection('catalog');
 allSkus.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
@@ -22,38 +31,22 @@ const allProjects = await getCollection('projects');
 allProjects.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
 const featuredProjects = allProjects.slice(0, 3);
 
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+// Hero slides: images are assets (withBase), links are localized page routes.
+const heroSlides = (homeData.heroSlides || []).map((s: any) => {
+  const href = localeHref(s.href || s.link, lang);
+  return { ...s, image: withBase(s.image), href, link: href };
+});
 
-// Format hero slides with proper base URL for images
-const heroSlides = (homeData.heroSlides || []).map((s: any) => ({
-  ...s,
-  image: withBase(s.image),
-  href: withBase(s.href || s.link || '/catalog/'),
-  link: withBase(s.link || s.href || '/catalog/'),
-}));
-
-const rawModes = homeData.modes || [
-  { n: '01', label: 'КАТАЛОГ', label_uz: 'KATALOG', label_en: 'CATALOG', href: '/catalog/' },
-  { n: '02', label: 'УСЛУГИ', label_uz: 'XIZMATLAR', label_en: 'SERVICES', href: '/services/' },
-  { n: '03', label: 'ПРОЕКТЫ', label_uz: 'LOYIHALAR', label_en: 'PROJECTS', href: '/projects/' },
-  { n: '04', label: 'БЛОГ', label_uz: 'BLOG', label_en: 'BLOG', href: '/blog/' },
-];
-
-const modes = rawModes.map((m: any) => ({
+const modes = (homeData.modes || []).map((m: any) => ({
   n: m.n,
-  label: {
-    ru: m.label?.ru || m.label || '',
-    uz: m.label?.uz || m.label_uz || m.label || '',
-    en: m.label?.en || m.label_en || m.label || '',
-  },
-  href: m.href,
+  label: tField(m, 'label', lang),
+  href: localeHref(m.href, lang),
 }));
+
+const skuTitle = (item: (typeof showcaseSkus)[number]) => pick(lang, item.data.title, item.data.title_uz, item.data.title_en);
 ---
 
-<BaseLayout
-  title={`${globalData.companyName} — Многопрофильный B2B / B2G Оператор в Узбекистане`}
-  description={`Официальный портал ${globalData.companyName} (Ташкент, склад Index B2-2097, ИНН ${globalData.inn}). Каталог оборудования и товаров со склада, контрактные поставки DDP с НДС 12%, IT-разработка и платформа b2b.railtech.uz.`}
->
+<BaseLayout title={seo.title} description={seo.description}>
   <!-- Screen 1: CAD 3-Column Console Hero -->
   <section class="border-b border-[#0A0A0A] bg-[#D4D8DC] relative overflow-hidden pt-8 pb-12">
     <!-- Isometric CAD background grid -->
@@ -63,26 +56,18 @@ const modes = rawModes.map((m: any) => ({
       <!-- Top Telemetry Callout Row -->
       <div class="flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] text-[#4A5056] pb-4 mb-6 border-b border-[#0A0A0A]/20">
         <div class="flex items-center gap-3">
-          <span class="hud-callout"><i></i>{homeData.topCalloutTag || 'RT_CONSOLE // SYS.ACTIVE'}</span>
+          <span class="hud-callout"><i></i>{H('topCalloutTag')}</span>
           <span class="hidden sm:inline text-[#0A0A0A]/30">|</span>
           <span class="hidden sm:inline font-bold text-[#0A0A0A]">
-            <I18nText
-              ru={homeData.topCalloutStatus || 'АККРЕДИТОВАННЫЙ ОПЕРАТОР РУз'}
-              uz={homeData.topCalloutStatus_uz || "O'zR AKKREDITATSIYALANGAN OPERATORI"}
-              en={homeData.topCalloutStatus_en || 'UZBEKISTAN ACCREDITED OPERATOR'}
-            />
+            {H('topCalloutStatus')}
           </span>
         </div>
         <div class="flex items-center gap-3">
           <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#C8CDD2] text-[#0A0A0A] font-bold">
-            <I18nText
-              ru={homeData.topCalloutVat || 'НДС 12% ВКЛЮЧЕН'}
-              uz={homeData.topCalloutVat_uz || '12% QQS BILAN'}
-              en={homeData.topCalloutVat_en || '12% VAT INCLUDED'}
-            />
+            {H('topCalloutVat')}
           </span>
           <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#0A0A0A] text-white font-bold">
-            {homeData.topCalloutHub || 'INDEX B2-2097'}
+            {H('topCalloutHub')}
           </span>
         </div>
       </div>
@@ -95,36 +80,32 @@ const modes = rawModes.map((m: any) => ({
             <!-- Brand & Subtitle -->
             <div class="border-b border-[#0A0A0A]/20 pb-3 mb-4">
               <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-[#4A5056] block mb-1">
-                SYSTEM CONSOLE
+                {H('consoleKicker')}
               </span>
               <h1 class="font-sans text-2xl font-black tracking-tight text-[#0A0A0A] leading-none mb-1">
-                {homeData.consoleTitle || 'RailTech'}
+                {H('consoleTitle')}
               </h1>
               <p class="font-mono text-[11px] text-[#4A5056] leading-tight">
-                <I18nText
-                  ru={homeData.consoleSubtitle || 'Многопрофильный B2B / B2G Оператор'}
-                  uz={homeData.consoleSubtitle_uz || "Ko'p tarmoqli B2B / B2G operatori"}
-                  en={homeData.consoleSubtitle_en || 'Multi-sector B2B / B2G Operator'}
-                />
+                {H('consoleSubtitle')}
               </p>
             </div>
 
             <!-- Block Modes (2x2 Grid) -->
             <div class="mb-5">
               <span class="font-mono text-[10px] tracking-wider text-[#4A5056] block uppercase mb-2">
-                // MODES
+                {H('modesLabel')}
               </span>
               <div class="grid grid-cols-2 gap-1.5 font-mono text-xs" id="hud-modes-grid">
                 {modes.map((m, idx) => (
                   <button
                     type="button"
                     data-mode-idx={idx}
-                    data-mode-href={`${base}${m.href}`}
+                    data-mode-href={m.href}
                     class={`mode-btn p-2 border border-[#0A0A0A] text-left transition-colors cursor-pointer flex items-center justify-between group ${
                       idx === 0 ? 'bg-[#0A0A0A] text-white font-bold' : 'bg-white/40 text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white'
                     }`}
                   >
-                    <span>{m.n}. <I18nText ru={m.label.ru} uz={m.label.uz} en={m.label.en} /></span>
+                    <span>{m.n}. {m.label}</span>
                     <span class="text-[10px] opacity-60 group-hover:opacity-100">↗</span>
                   </button>
                 ))}
@@ -134,12 +115,12 @@ const modes = rawModes.map((m: any) => ({
             <!-- Block Directions (CMS Editable List) -->
             <div>
               <span class="font-mono text-[10px] tracking-wider text-[#4A5056] block uppercase mb-2">
-                <I18nText ru="// НАПРАВЛЕНИЯ" uz="// YO'NALISHLAR" en="// SECTORS" />
+                {H('directionsLabel')}
               </span>
               <div class="flex flex-col space-y-1 font-mono text-xs">
                 {homeData.directions.map((dir, idx) => (
                   <a
-                    href={`${base}${dir.href}`}
+                    href={localeHref(dir.href, lang)}
                     class="p-2 border border-[#0A0A0A]/20 bg-white/30 hover:bg-[#0A0A0A] hover:text-white hover:border-[#0A0A0A] transition-colors flex items-center justify-between group"
                   >
                     <span class="truncate">
@@ -155,21 +136,21 @@ const modes = rawModes.map((m: any) => ({
 
           <!-- Bottom CAD UI Stamp -->
           <div class="pt-3 border-t border-[#0A0A0A]/20 flex items-center justify-between font-mono text-[10px] text-[#4A5056]">
-            <span>RT // CAD.UI 026</span>
+            <span>{H('consoleStamp')}</span>
             <span class="inline-block w-2 h-2 bg-emerald-600"></span>
           </div>
         </div>
 
         <!-- 2. CENTER COLUMN: Interactive HUD Photo Multi-Slider -->
         <div class="lg:col-span-6 flex flex-col">
-          <HudMediaSlider client:load slides={heroSlides} intervalMs={6500} />
+          <HudMediaSlider client:load slides={heroSlides} intervalMs={6500} lang={lang} />
         </div>
 
         <!-- 3. RIGHT COLUMN: Corporate Passport & CTA -->
         <div class="lg:col-span-3 flex flex-col justify-between gap-3">
           <div>
             <span class="font-mono text-[10px] tracking-wider text-[#4A5056] uppercase block mb-2">
-              <I18nText ru="// ПАСПОРТ ОПЕРАТОРА" uz="// OPERATOR PASPORTI" en="// OPERATOR PASSPORT" />
+              {H('passportLabel')}
             </span>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3">
@@ -191,21 +172,21 @@ const modes = rawModes.map((m: any) => ({
             <button
               type="button"
               data-lead-modal
-              data-lead-subject="Запрос общего КП и прайс-листа с главной консоли"
+              data-lead-subject={t(lang, 'lead.subject.homeConsole')}
               class="hud-btn w-full py-4 text-xs font-bold cursor-pointer min-h-[44px]"
             >
-              <span><I18nText ru={homeData.ctaLead || 'Оставить заявку'} uz={homeData.ctaLead_uz || 'Ariza qoldirish'} en={homeData.ctaLead_en || 'Submit a request'} /></span>
+              <span>{H('ctaLead')}</span>
               <span>↗</span>
             </button>
             <div class="mt-2 text-center font-mono text-[10px] text-[#4A5056]">
-              <I18nText ru="Ответ отдела снабжения: от 15 минут" uz="Ta'minot javobi: 15 daqiqadan" en="Procurement response: from 15 min" />
+              {H('topCalloutSla')}
             </div>
           </div>
         </div>
       </div>
 
       <!-- Step Divider -->
-      <HudStepDivider label="CHANNELS // 04 GATEWAYS" class="mt-12 mb-8" />
+      <HudStepDivider label={H('gatewaysDivider')} class="mt-12 mb-8" />
 
       <!-- 4. BOTTOM ROW: 4 Gateway Cards -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -217,7 +198,7 @@ const modes = rawModes.map((m: any) => ({
             image={g.image}
             href={g.href}
             aspect="aspect-[16/10]"
-            cta={{ ru: 'Перейти в раздел', uz: "Bo'limga o'tish", en: 'Open section' }}
+            cta={{ ru: tr('home.gateway.cta') }}
             headingLevel="h2"
           />
         ))}
@@ -234,10 +215,10 @@ const modes = rawModes.map((m: any) => ({
           <I18nText as="h2" class="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-[#0A0A0A]" ru={homeData.showcaseSectionTitle} uz={homeData.showcaseSectionTitle_uz} en={homeData.showcaseSectionTitle_en} />
         </div>
         <a
-          href={`${base}/catalog/`}
+          href={localeHref('/catalog/', lang)}
           class="font-mono text-xs font-bold text-[#0A0A0A] hover:underline flex items-center gap-1.5 min-h-[44px]"
         >
-          <span><I18nText ru="СМОТРЕТЬ ВЕСЬ КАТАЛОГ (1 200+ SKU)" uz="BARCHA KATALOGNI KO'RISH (1 200+ SKU)" en="VIEW FULL CATALOG (1,200+ SKUs)" /></span>
+          <span>{H('showcaseAllLink')}</span>
           <span>→</span>
         </a>
       </div>
@@ -250,7 +231,7 @@ const modes = rawModes.map((m: any) => ({
               <div class="w-14 h-11 flex-none border border-[#0A0A0A]/40 overflow-hidden bg-[#D4D8DC] relative">
                 <img
                   src={withBase(item.data.image || '/images/hero/warehouse.jpg')}
-                  alt={item.data.title}
+                  alt={skuTitle(item)}
                   loading="lazy"
                   decoding="async"
                   class="w-full h-full object-cover"
@@ -264,7 +245,7 @@ const modes = rawModes.map((m: any) => ({
                     <I18nText ru={item.data.status} uz={item.data.status_uz} en={item.data.status_en} />
                   </span>
                 </div>
-                <a href={`${base}/catalog/${item.slug}`} class="font-sans font-bold text-xs text-[#0A0A0A] hover:underline line-clamp-1 block leading-tight">
+                <a href={localeHref(`/catalog/${item.slug}/`, lang)} class="font-sans font-bold text-xs text-[#0A0A0A] hover:underline line-clamp-1 block leading-tight">
                   <I18nText ru={item.data.title} uz={item.data.title_uz} en={item.data.title_en} />
                 </a>
                 {item.data.specs && (
@@ -277,19 +258,19 @@ const modes = rawModes.map((m: any) => ({
 
             <div class="flex items-center gap-1.5 flex-none">
               <a
-                href={`${base}/catalog/${item.slug}`}
+                href={localeHref(`/catalog/${item.slug}/`, lang)}
                 class="px-2 py-1.5 border border-[#0A0A0A] bg-white text-[11px] font-bold text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors flex items-center justify-center min-h-[34px]"
-                aria-label={`Паспорт ${item.data.sku}`}
+                aria-label={tr('home.showcase.passportAria', { sku: item.data.sku })}
               >
                 →
               </a>
               <button
                 type="button"
                 data-lead-modal
-                data-lead-subject={`Запрос счета на позицию ${item.data.title} (${item.data.sku})`}
+                data-lead-subject={t(lang, 'lead.subject.homeSku', { title: tField(item.data, 'title', lang), sku: item.data.sku })}
                 class="px-2 py-1.5 border border-[#0A0A0A] bg-[#0A0A0A] text-white text-[10px] font-bold hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer min-h-[34px] whitespace-nowrap"
               >
-                <I18nText ru="КП ↗" uz="SO'ROV" en="RFQ" />
+                <I18nText k="home.showcase.rfqShort" />
               </button>
             </div>
           </div>
@@ -310,7 +291,7 @@ const modes = rawModes.map((m: any) => ({
             <div class="hud-card-media aspect-[16/10]">
               <img
                 src={withBase(item.data.image || '/images/hero/warehouse.jpg')}
-                alt={item.data.title}
+                alt={skuTitle(item)}
                 loading="lazy"
                 decoding="async"
                 class="w-full h-full object-cover"
@@ -319,7 +300,7 @@ const modes = rawModes.map((m: any) => ({
             </div>
 
             <h3 class="font-sans font-bold text-base text-[#0A0A0A] leading-snug">
-              <a href={`${base}/catalog/${item.slug}`} class="hover:underline">
+              <a href={localeHref(`/catalog/${item.slug}/`, lang)} class="hover:underline">
                 <I18nText ru={item.data.title} uz={item.data.title_uz} en={item.data.title_en} />
               </a>
             </h3>
@@ -327,7 +308,7 @@ const modes = rawModes.map((m: any) => ({
             <div class="space-y-1.5 font-mono text-xs text-[#4A5056] my-2">
               {item.data.category && (
                 <div class="flex justify-between">
-                  <span><I18nText ru="Категория:" uz="Kategoriya:" en="Category:" /></span>
+                  <span><I18nText k="home.showcase.category" /></span>
                   <span class="font-bold text-[#0A0A0A] truncate max-w-[170px]">
                     <I18nText ru={item.data.category} uz={item.data.category_uz} en={item.data.category_en} />
                   </span>
@@ -335,7 +316,7 @@ const modes = rawModes.map((m: any) => ({
               )}
               {item.data.specs && (
                 <div class="flex justify-between">
-                  <span><I18nText ru="Параметры:" uz="Parametrlar:" en="Specs:" /></span>
+                  <span><I18nText k="home.showcase.specs" /></span>
                   <span class="text-[#0A0A0A] text-right truncate max-w-[170px]">
                     <I18nText ru={item.data.specs} uz={item.data.specs_uz} en={item.data.specs_en} />
                   </span>
@@ -353,18 +334,18 @@ const modes = rawModes.map((m: any) => ({
 
             <div class="pt-3 border-t border-[#0A0A0A]/15 mt-auto flex items-center gap-2 font-mono text-xs">
               <a
-                href={`${base}/catalog/${item.slug}`}
+                href={localeHref(`/catalog/${item.slug}/`, lang)}
                 class="flex-1 border border-[#0A0A0A] py-1.5 text-center hover:bg-[#0A0A0A] hover:text-white transition-colors"
               >
-                <I18nText ru="ПАСПОРТ ↗" uz="PASPORT ↗" en="PASSPORT ↗" />
+                <I18nText k="home.showcase.passport" />
               </a>
               <button
                 type="button"
                 data-lead-modal
-                data-lead-subject={`Запрос счета на позицию ${item.data.title} (${item.data.sku})`}
+                data-lead-subject={t(lang, 'lead.subject.homeSku', { title: tField(item.data, 'title', lang), sku: item.data.sku })}
                 class="flex-1 border border-[#0A0A0A] bg-[#0A0A0A] text-white py-1.5 text-center font-bold hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
               >
-                <I18nText ru="ЗАПРОС КП" uz="SO'ROV" en="RFQ" />
+                <I18nText k="home.showcase.rfq" />
               </button>
             </div>
           </div>
@@ -378,14 +359,14 @@ const modes = rawModes.map((m: any) => ({
     <div class="max-w-7xl mx-auto px-4">
       <div class="hud-section-head">
         <div>
-          <span class="hud-callout mb-1"><i></i><I18nText ru={homeData.projectsSectionBadge || 'КЕЙСЫ И СПЕЦПРОЕКТЫ'} uz={homeData.projectsSectionBadge_uz || 'KEYSLAR VA MAXSUS LOYIHALAR'} en={homeData.projectsSectionBadge_en || 'CASE STUDIES & SPECIAL PROJECTS'} /></span>
-          <I18nText as="h2" class="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-[#0A0A0A]" ru={homeData.projectsSectionTitle || 'РЕАЛИЗОВАННЫЕ ПРОЕКТЫ RAILTECH'} uz={homeData.projectsSectionTitle_uz || 'RAILTECH AMALGA OSHIRGAN LOYIHALARI'} en={homeData.projectsSectionTitle_en || 'DELIVERED RAILTECH PROJECTS'} />
+          <span class="hud-callout mb-1"><i></i><I18nText ru={homeData.projectsSectionBadge} uz={homeData.projectsSectionBadge_uz} en={homeData.projectsSectionBadge_en} /></span>
+          <I18nText as="h2" class="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-[#0A0A0A]" ru={homeData.projectsSectionTitle} uz={homeData.projectsSectionTitle_uz} en={homeData.projectsSectionTitle_en} />
         </div>
         <a
-          href={`${base}/projects/`}
+          href={localeHref('/projects/', lang)}
           class="font-mono text-xs font-bold text-[#0A0A0A] hover:underline flex items-center gap-1.5 min-h-[44px]"
         >
-          <span><I18nText ru="ВСЕ ПРОЕКТЫ →" uz="BARCHA LOYIHALAR →" en="ALL PROJECTS →" /></span>
+          <span><I18nText k="home.projects.all" /></span>
         </a>
       </div>
 
@@ -393,7 +374,7 @@ const modes = rawModes.map((m: any) => ({
       <div class="md:hidden space-y-2.5">
         {featuredProjects.map((prj) => (
           <a
-            href={`${base}/projects/${prj.slug}/`}
+            href={localeHref(`/projects/${prj.slug}/`, lang)}
             class="hud-glass-card p-4 block hover:bg-white/50 transition-colors font-mono"
           >
             <div class="flex items-center justify-between text-[10px] text-[#4A5056] mb-1.5">
@@ -429,7 +410,7 @@ const modes = rawModes.map((m: any) => ({
             text={{ ru: prj.data.subtitle, uz: prj.data.subtitle_uz, en: prj.data.subtitle_en }}
             image={prj.data.image}
             href={`/projects/${prj.slug}/`}
-            cta={{ ru: 'Открыть кейс', uz: "Loyihani ochish", en: 'Open project' }}
+            cta={{ ru: tr('home.projects.cta') }}
             headingLevel="h3"
           />
         ))}
@@ -446,10 +427,10 @@ const modes = rawModes.map((m: any) => ({
           <I18nText as="h2" class="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-[#0A0A0A]" ru={homeData.blogTitle} uz={homeData.blogTitle_uz} en={homeData.blogTitle_en} />
         </div>
         <a
-          href={`${base}/blog/`}
+          href={localeHref('/blog/', lang)}
           class="font-mono text-xs font-bold text-[#0A0A0A] hover:underline"
         >
-          <I18nText ru="[ ВСЕ ПУБЛИКАЦИИ → ]" uz="[ BARCHA MAQOLALAR → ]" en="[ ALL PUBLICATIONS → ]" />
+          <I18nText k="home.blog.all" />
         </a>
       </div>
 
@@ -457,7 +438,7 @@ const modes = rawModes.map((m: any) => ({
       <div class="md:hidden space-y-2.5">
         {latestPosts.map((post) => (
           <a
-            href={`${base}/blog/${post.slug}`}
+            href={localeHref(`/blog/${post.slug}/`, lang)}
             class="hud-glass-card p-4 block hover:bg-white/50 transition-colors font-mono"
           >
             <div class="flex items-center justify-between text-[10px] text-[#4A5056] mb-1.5">
@@ -488,8 +469,8 @@ const modes = rawModes.map((m: any) => ({
             title={{ ru: post.data.title, uz: post.data.title_uz, en: post.data.title_en }}
             text={{ ru: post.data.summary, uz: post.data.summary_uz, en: post.data.summary_en }}
             image={post.data.image}
-            href={`/blog/${post.slug}`}
-            cta={{ ru: 'Читать материал', uz: "Maqolani o'qish", en: 'Read article' }}
+            href={`/blog/${post.slug}/`}
+            cta={{ ru: tr('home.blog.cta') }}
             headingLevel="h3"
           />
         ))}

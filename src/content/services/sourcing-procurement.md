@@ -64,6 +64,18 @@ benefits:
     value: "Сертификаты соответствия O'zDSt / ГОСТ"
     value_uz: "O'zDSt / GOST muvofiqlik sertifikatlari"
     value_en: "Official O'zDSt & GOST certificates"
+body_uz: |
+  ### Noyob va taqchil nomenklaturani yetkazib berish
+
+  «RailTech» MChJ yirik mashinasozlik xoldinglari, zavod laboratoriyalari va ixtisoslashgan ta'mirlash depolari orasida noyob aloqalar tarmog'iga ega.
+
+  Agar korxonangizda endi seriyali ishlab chiqarilmaydigan uzelni zudlik bilan almashtirish zarurati tug'ilsa, muhandislarimiz sertifikatlangan ombor analogini topadi yoki asl chizmalar bo'yicha tajriba partiyasini tayyorlashga buyurtma joylashtiradi.
+body_en: |
+  ### Supply of rare and hard-to-find items
+
+  RailTech LLC has a unique network of contacts among major machine-building holdings, factory laboratories and specialised repair depots.
+
+  If your plant urgently needs to replace a unit that is no longer in serial production, our engineers will find a certified equivalent in stock or place an order for a pilot batch made to the original drawings.
 ---
 
 ### Поставка редкой и дефицитной номенклатуры

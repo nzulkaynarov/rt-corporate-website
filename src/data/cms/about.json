@@ -96,6 +96,12 @@
       ]
     }
   ],
+  "directionsBadge": "ПРОФИЛЬ",
+  "directionsBadge_uz": "PROFIL",
+  "directionsBadge_en": "PROFILE",
+  "directionsTitle": "КЛЮЧЕВЫЕ НАПРАВЛЕНИЯ ОПЕРАЦИОННОЙ ДЕЯТЕЛЬНОСТИ",
+  "directionsTitle_uz": "ASOSIY OPERATSION YO'NALISHLAR",
+  "directionsTitle_en": "KEY OPERATIONAL SECTORS",
   "directions": [
     {
       "title": "Складская программа промышленного оборудования",
@@ -130,6 +136,24 @@
       "desc_en": "Integration of advanced locomotive speed control and train protection automation (SAUT) into Uzbekistan's traction fleet."
     }
   ],
+  "dossierTitle": "ОФИЦИАЛЬНОЕ ЮРИДИЧЕСКОЕ ДОСЬЕ И РЕКВИЗИТЫ ПРЕДПРИЯТИЯ",
+  "dossierTitle_uz": "RASMIY YURIDIK DOSYE VA KORXONA REKVIZITLARI",
+  "dossierTitle_en": "OFFICIAL LEGAL DOSSIER & CORPORATE REQUISITES",
+  "vatStatus": "Плательщик НДС 12%",
+  "vatStatus_uz": "12% QQS to'lovchisi",
+  "vatStatus_en": "12% VAT Accredited",
+  "faqBadge": "ИНСТИТУЦИОНАЛЬНЫЙ FAQ",
+  "faqBadge_uz": "INSTITUTSIONAL FAQ",
+  "faqBadge_en": "INSTITUTIONAL FAQ",
+  "faqTitle": "ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ О КОМПАНИИ",
+  "faqTitle_uz": "KOMPANIYA HAQIDA KO'P SO'RALADIGAN SAVOLLAR",
+  "faqTitle_en": "FREQUENTLY ASKED QUESTIONS ABOUT RAILTECH",
+  "faqSubtitle": "Регламент поставок, сертификация продукции, входной контроль и условия гарантии",
+  "faqSubtitle_uz": "Yetkazib berish tartibi, mahsulot sertifikatsiyasi, kirish nazorati va kafolat shartlari",
+  "faqSubtitle_en": "Supply protocol, product certification, quality inspection, and warranty terms",
+  "faqNote": "ОФИЦИАЛЬНЫЙ РЕГЛАМЕНТ ООО «RAILTECH»",
+  "faqNote_uz": "«RAILTECH» MCHJ RASMIY REGLAMENTI",
+  "faqNote_en": "OFFICIAL RAILTECH LLC REGULATIONS",
   "faq": [
     {
       "q": "В какие сроки рассчитывается коммерческое предложение и Landed Cost DDP?",

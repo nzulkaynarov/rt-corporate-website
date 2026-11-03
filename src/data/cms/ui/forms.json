@@ -1,8 +1,11 @@
 {
+  "title": "Формы заявок",
   "strings": [
     {
       "key": "lead.subject.siteDefault",
-      "ru": "Запрос КП / Счета с сайта"
+      "ru": "Запрос КП / Счета с сайта",
+      "uz": "Saytdan tijorat taklifi / hisob so'rovi",
+      "en": "Quotation / invoice request"
     },
     {
       "key": "lead.message.title",
@@ -144,9 +147,9 @@
     },
     {
       "key": "form.consent.before",
-      "ru": "Отправляя заявку, вы подтверждаете согласие с условиями ",
-      "uz": "So'rov yuborish orqali siz ",
-      "en": "By submitting this inquiry, you confirm agreement to our "
+      "ru": "Отправляя заявку, вы подтверждаете согласие с условиями",
+      "uz": "So'rov yuborish orqali siz",
+      "en": "By submitting this inquiry, you confirm agreement to our"
     },
     {
       "key": "form.consent.privacy",
@@ -156,9 +159,9 @@
     },
     {
       "key": "form.consent.and",
-      "ru": " и ",
-      "uz": " va ",
-      "en": " and "
+      "ru": "и",
+      "uz": "va",
+      "en": "and"
     },
     {
       "key": "form.consent.terms",
@@ -234,9 +237,9 @@
     },
     {
       "key": "form.contacts.innPlaceholder",
-      "ru": "308912445",
-      "uz": "308912445",
-      "en": "308912445"
+      "ru": "9 цифр ИНН предприятия",
+      "uz": "9 xonali korxona STIR",
+      "en": "9-digit entity TIN"
     },
     {
       "key": "form.contacts.messageLabel",

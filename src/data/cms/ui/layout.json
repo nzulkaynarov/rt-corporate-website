@@ -1,0 +1,95 @@
+{
+  "title": "Подвал сайта (footer)",
+  "strings": [
+    {
+      "key": "lead.subject.footer",
+      "ru": "Запрос спецификации с сайта",
+      "uz": "Saytdan spetsifikatsiya so'rovi",
+      "en": "Specification request"
+    },
+    {
+      "key": "footer.requisites",
+      "ru": "РЕКВИЗИТЫ ПРЕДПРИЯТИЯ:",
+      "uz": "KORXONA REKVIZITLARI:",
+      "en": "COMPANY REQUISITES:"
+    },
+    {
+      "key": "footer.tin",
+      "ru": "ИНН:",
+      "uz": "STIR (INN):",
+      "en": "TIN / INN:"
+    },
+    {
+      "key": "footer.vat",
+      "ru": "НДС:",
+      "uz": "QQS:",
+      "en": "VAT:"
+    },
+    {
+      "key": "footer.oked",
+      "ru": "ОКЭД:",
+      "uz": "IFUT:",
+      "en": "NACE:"
+    },
+    {
+      "key": "footer.esf",
+      "ru": "ЭСФ:",
+      "uz": "EHF:",
+      "en": "ESF:"
+    },
+    {
+      "key": "footer.privacy",
+      "ru": "Политика конфиденциальности",
+      "uz": "Maxfiylik siyosati",
+      "en": "Privacy Policy"
+    },
+    {
+      "key": "footer.terms",
+      "ru": "Условия использования",
+      "uz": "Foydalanish shartlari",
+      "en": "Terms of Service"
+    },
+    {
+      "key": "footer.privacyShort",
+      "ru": "Конфиденциальность",
+      "uz": "Maxfiylik",
+      "en": "Privacy"
+    },
+    {
+      "key": "footer.termsShort",
+      "ru": "Условия сервиса",
+      "uz": "Foydalanish shartlari",
+      "en": "Terms"
+    },
+    {
+      "key": "footer.admin",
+      "ru": "Панель управления",
+      "uz": "Boshqaruv paneli",
+      "en": "Admin panel"
+    },
+    {
+      "key": "footer.gps",
+      "ru": "GPS:",
+      "uz": "GPS:",
+      "en": "GPS:"
+    },
+    {
+      "key": "footer.phone",
+      "ru": "Прямая линия снабжения:",
+      "uz": "To'g'ridan-to'g'ri ta'minot:",
+      "en": "Direct supply line:"
+    },
+    {
+      "key": "footer.email",
+      "ru": "Электронная почта:",
+      "uz": "Elektron pochta:",
+      "en": "Email address:"
+    },
+    {
+      "key": "footer.submitRequest",
+      "ru": "[ ОСТАВИТЬ ЗАЯВКУ ↗ ]",
+      "uz": "[ ARIZA QOLDIRISH ↗ ]",
+      "en": "[ SUBMIT REQUEST ↗ ]"
+    }
+  ]
+}

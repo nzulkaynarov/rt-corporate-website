@@ -1,8 +1,11 @@
 {
+  "title": "Интерактивные блоки: фильтр, галерея, слайдер",
   "strings": [
     {
       "key": "lead.subject.catalogTableItem",
-      "ru": "Запрос счета/КП на позицию: {title} ({sku})"
+      "ru": "Запрос счета/КП на позицию: {title} ({sku})",
+      "uz": "Pozitsiya bo'yicha hisob/tijorat taklifi so'rovi: {title} ({sku})",
+      "en": "Invoice / quotation request for item: {title} ({sku})"
     },
     {
       "key": "islands.defaultCategory",
@@ -222,9 +225,9 @@
     },
     {
       "key": "gallery.dispatchLabel",
-      "ru": "ОТГРУЗКА: ",
-      "uz": "YUKLASH: ",
-      "en": "DISPATCH: "
+      "ru": "ОТГРУЗКА:",
+      "uz": "YUKLASH:",
+      "en": "DISPATCH:"
     },
     {
       "key": "gallery.dispatchValue",

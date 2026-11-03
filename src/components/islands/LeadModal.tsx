@@ -133,7 +133,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose, initialSu
 
   if (!isOpen) return null;
 
-  const defaultSubject = t('ru', 'lead.subject.siteDefault');
+  const defaultSubject = t(lang, 'lead.subject.siteDefault');
   const activeSubject = subject || initialSubject || defaultSubject;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -402,11 +402,12 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose, initialSu
 
             {/* Privacy & Legal disclaimer */}
             <p className="text-[10px] text-[#4A5056] leading-tight">
-              {t(lang, 'form.consent.before')}
+              {/* Spaces live in code: the CMS trims leading/trailing whitespace on save */}
+              {t(lang, 'form.consent.before').trim()}{' '}
               <a href={localeHref('/privacy/', lang)} target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
                 {t(lang, 'form.consent.privacy')}
               </a>
-              {t(lang, 'form.consent.and')}
+              {' '}{t(lang, 'form.consent.and').trim()}{' '}
               <a href={localeHref('/terms/', lang)} target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
                 {t(lang, 'form.consent.terms')}
               </a>
