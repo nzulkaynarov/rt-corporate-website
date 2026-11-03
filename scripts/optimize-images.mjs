@@ -1,114 +1,107 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import sharp from 'sharp';
 
 /**
- * Build-time image optimization script.
- * Walks through public/images and public/uploads.
- * Compresses images > 250KB or > 1600px width using sharp.
- * Failsafe: Wrapped in try/catch so build never crashes.
+ * Image pipeline (runs before `astro build` via prebuild; `npm run images` to run it alone).
+ *
+ * For every JPG/PNG under public/images and public/uploads (incl. photos uploaded via the CMS):
+ *  1. Originals wider than 1600 px or heavier than 350 KB are recompressed in place
+ *     (they remain the <img src> fallback and the Open Graph image).
+ *  2. Responsive WebP variants are written next to the original:
+ *       rt-rs-118.jpg → rt-rs-118.w480.webp, .w800.webp, .w1200.webp   (never upscaled)
+ *     src/utils/images.ts references them in `srcset`. They are build artefacts (.gitignore)
+ *     and are regenerated only when the original is newer.
+ *
+ * A failure here fails the build: a missing variant would be a broken image in the browser.
+ * scripts/check-build.mjs additionally verifies that every srcset file exists in dist/.
  */
-async function main() {
-  console.log('[optimize-images] Checking images for optimization...');
+const ROOT = process.cwd();
+const DIRS = ['public/images', 'public/uploads'].map((d) => path.join(ROOT, d));
+const RASTER = /\.(jpe?g|png)$/i;
+const VARIANT = /\.w\d+\.webp$/i;
 
-  let sharp;
+/** Keep in sync with IMAGE_WIDTHS in src/utils/images.ts */
+const WIDTHS = [480, 800, 1200];
+const WEBP = { quality: 72, effort: 5, smartSubsample: true };
+const MAX_WIDTH = 1600;
+const MAX_BYTES = 350 * 1024;
+
+const walk = (dir) =>
+  fs.existsSync(dir)
+    ? fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
+        const p = path.join(dir, e.name);
+        return e.isDirectory() ? walk(p) : RASTER.test(e.name) ? [p] : [];
+      })
+    : [];
+
+const rel = (p) => path.relative(ROOT, p);
+const kb = (n) => `${(n / 1024).toFixed(0)} KB`;
+
+// Settings fingerprint: changing WIDTHS or WEBP options regenerates every variant.
+const STAMP = path.join(ROOT, 'public', '.webp-variants.json');
+const settings = JSON.stringify({ WIDTHS, WEBP });
+const settingsChanged = !fs.existsSync(STAMP) || fs.readFileSync(STAMP, 'utf8') !== settings;
+
+let originalsOptimized = 0;
+let variantsWritten = 0;
+let variantsBytes = 0;
+const errors = [];
+
+for (const file of DIRS.flatMap(walk)) {
   try {
-    const sharpModule = await import('sharp');
-    sharp = sharpModule.default;
+    // 1. Keep originals reasonable (they are still served as fallback / OG image).
+    let stat = fs.statSync(file);
+    const meta = await sharp(file).metadata();
+    if ((meta.width || 0) > MAX_WIDTH || stat.size > MAX_BYTES) {
+      let t = sharp(file).rotate().resize({ width: MAX_WIDTH, withoutEnlargement: true });
+      t = /\.png$/i.test(file) ? t.png({ compressionLevel: 9, palette: true }) : t.jpeg({ quality: 82, progressive: true, mozjpeg: true });
+      const buf = await t.toBuffer();
+      if (buf.length < stat.size * 0.95) {
+        fs.writeFileSync(file, buf);
+        originalsOptimized++;
+        console.log(`[images] recompressed ${rel(file)} ${kb(stat.size)} → ${kb(buf.length)}`);
+        stat = fs.statSync(file);
+      }
+    }
+
+    // 2. WebP variants, regenerated only when missing or older than the original.
+    const stem = file.replace(RASTER, '');
+    for (const w of WIDTHS) {
+      const out = `${stem}.w${w}.webp`;
+      if (!settingsChanged && fs.existsSync(out) && fs.statSync(out).mtimeMs >= stat.mtimeMs) continue;
+      const info = await sharp(file).rotate().resize({ width: w, withoutEnlargement: true }).webp(WEBP).toFile(out);
+      variantsWritten++;
+      variantsBytes += info.size;
+    }
   } catch (err) {
-    console.warn('[optimize-images] Sharp is not available, skipping image compression.', err?.message);
-    return;
+    errors.push(`${rel(file)}: ${err?.message || err}`);
   }
-
-  const rootDir = process.cwd();
-  const targetDirs = [
-    path.join(rootDir, 'public', 'images'),
-    path.join(rootDir, 'public', 'uploads'),
-  ];
-
-  const extensions = new Set(['.jpg', '.jpeg', '.png']);
-  const MAX_WIDTH = 1600;
-  const SIZE_THRESHOLD_BYTES = 350 * 1024; // 350 KB
-
-  function getFilesRecursively(dir) {
-    if (!fs.existsSync(dir)) return [];
-    const entries = fs.readdirSync(dir, { withFileTypes: true });
-    let files = [];
-    for (const entry of entries) {
-      const fullPath = path.join(dir, entry.name);
-      if (entry.isDirectory()) {
-        files = files.concat(getFilesRecursively(fullPath));
-      } else if (entry.isFile()) {
-        const ext = path.extname(entry.name).toLowerCase();
-        if (extensions.has(ext)) {
-          files.push(fullPath);
-        }
-      }
-    }
-    return files;
-  }
-
-  let totalChecked = 0;
-  let totalOptimized = 0;
-  let bytesSaved = 0;
-
-  for (const dir of targetDirs) {
-    const files = getFilesRecursively(dir);
-    for (const filePath of files) {
-      totalChecked++;
-      try {
-        const stats = fs.statSync(filePath);
-        const metadata = await sharp(filePath).metadata();
-
-        const needsResize = (metadata.width && metadata.width > MAX_WIDTH);
-        const needsCompression = stats.size > SIZE_THRESHOLD_BYTES;
-
-        if (needsResize || needsCompression) {
-          const originalSize = stats.size;
-          let transformer = sharp(filePath);
-
-          if (needsResize) {
-            transformer = transformer.resize({
-              width: MAX_WIDTH,
-              withoutEnlargement: true,
-            });
-          }
-
-          let optimizedBuffer;
-          const ext = path.extname(filePath).toLowerCase();
-
-          if (ext === '.png') {
-            optimizedBuffer = await transformer
-              .png({ quality: 85, compressionLevel: 8 })
-              .toBuffer();
-          } else {
-            // Convert/optimize to progressive JPEG at quality 82
-            optimizedBuffer = await transformer
-              .jpeg({ quality: 82, progressive: true, mozjpeg: true })
-              .toBuffer();
-          }
-
-          if (optimizedBuffer.length < originalSize * 0.95) {
-            fs.writeFileSync(filePath, optimizedBuffer);
-            totalOptimized++;
-            bytesSaved += (originalSize - optimizedBuffer.length);
-            console.log(
-              `[optimize-images] Optimized: ${path.relative(rootDir, filePath)} ` +
-              `(${(originalSize / 1024).toFixed(1)} KB → ${(optimizedBuffer.length / 1024).toFixed(1)} KB)`
-            );
-          }
-        }
-      } catch (fileErr) {
-        console.warn(`[optimize-images] Warning processing ${filePath}:`, fileErr?.message);
-      }
-    }
-  }
-
-  console.log(
-    `[optimize-images] Completed. Scanned: ${totalChecked}, Optimized: ${totalOptimized}, ` +
-    `Saved: ${(bytesSaved / 1024 / 1024).toFixed(2)} MB.`
-  );
 }
 
-main().catch((err) => {
-  console.warn('[optimize-images] Unexpected top-level error (ignoring to prevent build halt):', err);
-});
+// Remove variants whose original was deleted (e.g. a photo removed in the CMS).
+for (const dir of DIRS) {
+  const stale = (d) =>
+    fs.existsSync(d)
+      ? fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => {
+          const p = path.join(d, e.name);
+          return e.isDirectory() ? stale(p) : VARIANT.test(e.name) ? [p] : [];
+        })
+      : [];
+  for (const v of stale(dir)) {
+    const stem = v.replace(VARIANT, '');
+    if (!['.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG'].some((ext) => fs.existsSync(stem + ext))) fs.unlinkSync(v);
+  }
+}
+
+if (errors.length) {
+  fs.rmSync(STAMP, { force: true });
+  console.error(`[images] ${errors.length} image(s) failed:`);
+  errors.forEach((e) => console.error(`  - ${e}`));
+  process.exit(1);
+}
+fs.writeFileSync(STAMP, settings);
+console.log(
+  `[images] OK — originals recompressed: ${originalsOptimized}, WebP variants written: ${variantsWritten}` +
+    (variantsWritten ? ` (${kb(variantsBytes)} in total)` : ' (all up to date)'),
+);

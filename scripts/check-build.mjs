@@ -7,7 +7,7 @@ import path from 'node:path';
  * Errors (fail the build): leftovers of the old client-side language switcher, wrong <html lang>,
  * internal links on /uz/ and /en/ pages that lead to another language, missing title /
  * description / canonical / hreflang, canonical not pointing to the page itself,
- * not exactly one <h1>, <img> without alt.
+ * not exactly one <h1>, <img> without alt, srcset pointing to a missing WebP variant.
  * Warnings: title > 60 / description outside 50–160 chars, duplicate titles, pages whose
  * visible text is still mostly in another language (untranslated CMS fields).
  */
@@ -53,6 +53,7 @@ if (!homeCanonical) {
 const BASE = new URL(homeCanonical).pathname.replace(/\/$/, '');
 
 const titles = new Map();
+const checkedSrcset = new Map();
 const files = walk(DIST)
   .map((f) => path.relative(DIST, f).split(path.sep).join('/'))
   .filter((rel) => !SKIP.some((re) => re.test(rel)));
@@ -95,6 +96,14 @@ for (const rel of files) {
 
   for (const img of html.match(/<img\b[^>]*>/gi) || []) {
     if (attr(img, 'alt') === null) err(`<img> without alt: ${img.slice(0, 120)}`);
+    // Every responsive WebP variant must exist (scripts/optimize-images.mjs), otherwise the browser shows a broken image.
+    for (const candidate of (attr(img, 'srcset') || '').split(',')) {
+      const url = candidate.trim().split(/\s+/)[0];
+      if (!url || !url.startsWith(`${BASE}/`)) continue;
+      const file = path.join(DIST, decodeURI(url.slice(BASE.length)));
+      if (!checkedSrcset.has(file)) checkedSrcset.set(file, fs.existsSync(file));
+      if (!checkedSrcset.get(file)) err(`srcset file missing: ${url}`);
+    }
   }
 
   // Internal page links must stay in the page language (the language switcher links carry hreflang).

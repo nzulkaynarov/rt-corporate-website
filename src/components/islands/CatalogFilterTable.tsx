@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { HudSmartImage } from './HudSmartImage';
+import { webpSrcSet, SIZES } from '../../utils/images';
 import { withBase } from '../../utils/url';
 import { useLang } from '../../utils/useLang';
 import { stockLabel } from '../../utils/stock';
@@ -380,12 +381,15 @@ export const CatalogFilterTable: React.FC<Props> = (props) => {
                       <a href={productHref(item)} className="block w-[48px] h-[36px] border border-[#0A0A0A]/30 overflow-hidden bg-[#C8CDD2]">
                         <img
                           src={item.image || withBase(`/images/catalog/${item.sku.toLowerCase()}.jpg`)}
+                          srcSet={webpSrcSet(item.image || `/images/catalog/${item.sku.toLowerCase()}.jpg`)}
+                          sizes={SIZES.thumb}
                           alt={title}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-200"
                           loading="lazy"
                           decoding="async"
                           onError={(e) => {
                             const t = e.currentTarget;
+                            t.removeAttribute('srcset');
                             t.src = withBase('/images/hero/warehouse.jpg');
                           }}
                         />

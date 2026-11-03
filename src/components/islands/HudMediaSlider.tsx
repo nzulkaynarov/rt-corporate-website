@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { withBase } from '../../utils/url';
+import { webpSrcSet, SIZES } from '../../utils/images';
 import { useLang } from '../../utils/useLang';
 import { localeHref, makeT, tField, type Lang } from '../../i18n';
 import islandsUi from '../../data/cms/ui/islands.json';
@@ -222,6 +223,8 @@ export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500, lan
           <img
             key={`img-${active}`}
             src={withBase(slide.image)}
+            srcSet={webpSrcSet(slide.image)}
+            sizes={SIZES.half}
             alt={title}
             loading={active === 0 ? 'eager' : 'lazy'}
             fetchPriority={active === 0 ? 'high' : 'auto'}
@@ -231,6 +234,7 @@ export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500, lan
               const target = e.currentTarget;
               const fallback = withBase('/images/hero/warehouse.jpg');
               if (target.src !== fallback) {
+                target.removeAttribute('srcset');
                 target.src = fallback;
               }
             }}

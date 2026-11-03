@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { withBase } from '../../utils/url';
 import { HudSmartImage } from './HudSmartImage';
+import { webpSrcSet, SIZES } from '../../utils/images';
 import { useLang } from '../../utils/useLang';
 import { stockLabel } from '../../utils/stock';
 import { makeT, pick, type Lang } from '../../i18n';
@@ -185,6 +186,8 @@ export const ProductMediaGallery: React.FC<Props> = ({
             lang={lang}
             aspect="aspect-[16/10] w-full h-full"
             loading="eager"
+            fetchPriority="high"
+            sizes={SIZES.half}
             objectFit="cover"
             className="w-full h-full object-cover"
           />
@@ -281,6 +284,8 @@ export const ProductMediaGallery: React.FC<Props> = ({
               >
                 <img
                   src={withBase(imgUrl)}
+                  srcSet={webpSrcSet(imgUrl)}
+                  sizes={SIZES.thumb}
                   alt={t(lang, 'gallery.thumbAlt', { title: curTitle, n: i + 1 })}
                   className="w-full h-full object-cover"
                   loading="lazy"

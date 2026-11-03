@@ -1,4 +1,5 @@
 ---
+import { responsiveImage, SIZES } from '../../../utils/images';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import I18nText from '../../../components/I18nText.astro';
@@ -112,12 +113,12 @@ const categories = [...categoryMap.values()];
               {/* Real Photo in frame with corners */}
               <div class="hud-card-media aspect-[16/10] overflow-hidden border border-[#0A0A0A]/20 relative">
                 <img
-                  src={photoUrl}
+                  {...responsiveImage(photoUrl, SIZES.card)}
                   alt={tField(srv.data, 'title', lang)}
                   loading="lazy"
                   decoding="async"
                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                  onerror={`this.onerror=null; this.src='${withBase('/images/hero/warehouse.jpg')}';`}
+                  onerror={`this.onerror=null;this.removeAttribute('srcset');this.src='${withBase('/images/hero/warehouse.jpg')}';`}
                 />
                 <span class="absolute top-1.5 left-1.5 font-mono text-[9px] tracking-widest text-white/90 mix-blend-difference bg-black/40 px-1 py-0.5">
                   {tr('services.card.mediaCode', { code: srv.data.code })}

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { withBase } from '../../utils/url';
+import { webpSrcSet, SIZES } from '../../utils/images';
 import { makeT, type Lang } from '../../i18n';
 import { useLang } from '../../utils/useLang';
 import islandsUi from '../../data/cms/ui/islands.json';
@@ -18,6 +19,8 @@ export interface HudSmartImageProps {
   loading?: 'lazy' | 'eager';
   fetchPriority?: 'auto' | 'high' | 'low';
   objectFit?: 'cover' | 'contain';
+  /** `sizes` for the WebP srcset (see SIZES in src/utils/images.ts) */
+  sizes?: string;
   grayscale?: boolean;
   style?: React.CSSProperties;
   lang: Lang;
@@ -35,6 +38,7 @@ export const HudSmartImage: React.FC<HudSmartImageProps> = ({
   loading = 'lazy',
   fetchPriority = 'auto',
   objectFit = 'cover',
+  sizes = SIZES.card,
   grayscale = false,
   style = {},
   lang: propLang,
@@ -43,17 +47,20 @@ export const HudSmartImage: React.FC<HudSmartImageProps> = ({
   const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
 
   const resolvedSrc = src ? withBase(src) : '';
+  const srcSet = webpSrcSet(src);
+  const imgRef = useRef<HTMLImageElement>(null);
 
+  // Status comes from the <img> itself (no extra preload request, lazy loading keeps working).
+  // An image that finished before hydration fired its load/error event too early for React,
+  // so read its state once after mount.
   useEffect(() => {
     if (!resolvedSrc) {
       setStatus('error');
       return;
     }
-    setStatus('loading');
-    const img = new Image();
-    img.src = resolvedSrc;
-    img.onload = () => setStatus('loaded');
-    img.onerror = () => setStatus('error');
+    const img = imgRef.current;
+    if (img?.complete) setStatus(img.naturalWidth > 0 ? 'loaded' : 'error');
+    else setStatus('loading');
   }, [resolvedSrc]);
 
   const identifier = sku || code || t(lang, 'hudImage.idFallback');
@@ -125,7 +132,10 @@ export const HudSmartImage: React.FC<HudSmartImageProps> = ({
           )}
 
           <img
+            ref={imgRef}
             src={resolvedSrc}
+            srcSet={srcSet}
+            sizes={srcSet ? sizes : undefined}
             alt={alt || t(lang, 'hudImage.altFallback')}
             loading={loading}
             fetchPriority={fetchPriority}
