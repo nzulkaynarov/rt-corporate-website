@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "cms": "decap-server",
-    "prebuild": "node scripts/optimize-images.mjs",
+    "prebuild": "node scripts/validate-cms-config.mjs && node scripts/optimize-images.mjs",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro"
@@ -28,6 +28,7 @@
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "decap-server": "^3.11.5",
+    "js-yaml": "^4.3.2",
     "typescript": "^5.6.3"
   }
 }

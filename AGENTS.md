@@ -47,7 +47,7 @@ Every business unit of ООО «RailTech» has its own distinct physical URL wit
 * **Client Islands:** React 18 (`client:load` for critical interactive elements like calculators and lead modals, `client:visible` for below-the-fold components).
 * **3D Graphics:** Three.js with `GLTFLoader`. Models are kept in `public/models/{modelType}.glb`. Product cards must use real photos and blueprints by default, with 3D as an optional tab.
 * **Styling:** Tailwind CSS with custom fonts and CAD styling utilities.
-* **Content Management:** Astro Content Collections (`src/content/config.ts`) + Decap CMS (`public/admin/config.yml`).
+* **Content Management:** Astro Content Collections (`src/content/config.ts`) + Sveltia CMS (`public/admin/config.yml`). Sveltia rejects the whole config if any field — including the single `field:` of a `list` widget — has no `name`; `scripts/validate-cms-config.mjs` (run in `prebuild`) enforces this.
 * **Lead Capturing:** Cloudflare Worker webhook (`cloudflare-worker/telegram-webhook.js`) forwarding Base64 files and specs directly to Telegram.
 * **CI/CD:** GitHub Actions (`.github/workflows/deploy.yml`) deploying static build to GitHub Pages upon push to `main`.
 

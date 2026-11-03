@@ -33,7 +33,7 @@ collections:
         name: "images"
         widget: "list"
         required: false
-        field: { label: "Фотография", widget: "image" }
+        field: { label: "Фотография", name: "image", widget: "image" }
       - label: "⚙️ Документы и ссылки для скачивания"
         name: "documents"
         widget: "list"
@@ -106,7 +106,7 @@ collections:
         name: "images"
         widget: "list"
         required: false
-        field: { label: "Фотография", widget: "image" }
+        field: { label: "Фотография", name: "image", widget: "image" }
       - label: "⚙️ Документы и файлы регламентов"
         name: "documents"
         widget: "list"
@@ -184,7 +184,7 @@ collections:
         name: "images"
         widget: "list"
         required: false
-        field: { label: "Фотография", widget: "image" }
+        field: { label: "Фотография", name: "image", widget: "image" }
       - label: "⚙️ Документы и материалы кейса"
         name: "documents"
         widget: "list"
@@ -204,7 +204,7 @@ collections:
       - label: "🇷🇺 [RU] Метрики проекта"
         name: "metrics"
         widget: "list"
-        field: { label: "Метрика", widget: "string" }
+        field: { label: "Метрика", name: "item", widget: "string" }
       - { label: "🇷🇺 [RU] Описание проекта (Markdown)", name: "body", widget: "markdown" }
 
       # --- 🇺🇿 ПЕРЕВОД НА УЗБЕКСКИЙ (UZ) ---
@@ -215,7 +215,7 @@ collections:
         name: "metrics_uz"
         widget: "list"
         required: false
-        field: { label: "Metrika", widget: "string" }
+        field: { label: "Metrika", name: "item", widget: "string" }
       - { label: "🇺🇿 [UZ] To'liq tavsif (body_uz - Markdown)", name: "body_uz", widget: "markdown", required: false }
 
       # --- 🇬🇧 ПЕРЕВОД НА АНГЛИЙСКИЙ (EN) ---
@@ -226,7 +226,7 @@ collections:
         name: "metrics_en"
         widget: "list"
         required: false
-        field: { label: "Metric", widget: "string" }
+        field: { label: "Metric", name: "item", widget: "string" }
       - { label: "🇬🇧 [EN] Full Description (body_en - Markdown)", name: "body_en", widget: "markdown", required: false }
 
   # --------------------------------------------------------------------------
@@ -252,7 +252,7 @@ collections:
         name: "tags"
         widget: "list"
         required: false
-        field: { label: "Тег", widget: "string" }
+        field: { label: "Тег", name: "item", widget: "string" }
       - { label: "🇷🇺 [RU] Текст статьи (Markdown)", name: "body", widget: "markdown" }
 
       # --- 🇺🇿 ПЕРЕВОД НА УЗБЕКСКИЙ (UZ) ---
@@ -264,7 +264,7 @@ collections:
         name: "tags_uz"
         widget: "list"
         required: false
-        field: { label: "Teg", widget: "string" }
+        field: { label: "Teg", name: "item", widget: "string" }
       - { label: "🇺🇿 [UZ] Maqola matni (body_uz - Markdown)", name: "body_uz", widget: "markdown", required: false }
 
       # --- 🇬🇧 ПЕРЕВОД НА АНГЛИЙСКИЙ (EN) ---
@@ -276,7 +276,7 @@ collections:
         name: "tags_en"
         widget: "list"
         required: false
-        field: { label: "Tag", widget: "string" }
+        field: { label: "Tag", name: "item", widget: "string" }
       - { label: "🇬🇧 [EN] Article Body (body_en - Markdown)", name: "body_en", widget: "markdown", required: false }
 
   # --------------------------------------------------------------------------
@@ -556,17 +556,17 @@ collections:
                 name: "items"
                 widget: "list"
                 required: false
-                field: { label: "Тезис [RU]", widget: "string" }
+                field: { label: "Тезис [RU]", name: "item", widget: "string" }
               - label: "Afzallik punktlari [UZ]"
                 name: "items_uz"
                 widget: "list"
                 required: false
-                field: { label: "Punkt [UZ]", widget: "string" }
+                field: { label: "Punkt [UZ]", name: "item", widget: "string" }
               - label: "Advantage Bullets [EN]"
                 name: "items_en"
                 widget: "list"
                 required: false
-                field: { label: "Bullet [EN]", widget: "string" }
+                field: { label: "Bullet [EN]", name: "item", widget: "string" }
           - label: "⚙️ Направления деятельности (directions)"
             name: "directions"
             widget: "list"
@@ -629,17 +629,17 @@ collections:
             name: "logisticsInstructions"
             widget: "list"
             required: false
-            field: { label: "Пункт инструкции [RU]", widget: "string" }
+            field: { label: "Пункт инструкции [RU]", name: "item", widget: "string" }
           - label: "Omborga kirish yo'riqnomasi [UZ]"
             name: "logisticsInstructions_uz"
             widget: "list"
             required: false
-            field: { label: "Yo'riqnoma bandi [UZ]", widget: "string" }
+            field: { label: "Yo'riqnoma bandi [UZ]", name: "item", widget: "string" }
           - label: "Warehouse Access Guidelines [EN]"
             name: "logisticsInstructions_en"
             widget: "list"
             required: false
-            field: { label: "Instruction Step [EN]", widget: "string" }
+            field: { label: "Instruction Step [EN]", name: "item", widget: "string" }
           - label: "Режим работы (schedule)"
             name: "schedule"
             widget: "object"
