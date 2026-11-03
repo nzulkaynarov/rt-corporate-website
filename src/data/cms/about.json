@@ -46,20 +46,12 @@
       "description_uz": "",
       "description_en": "",
       "items": [
-        "КП с логистикой, пошлинами и НДС",
+        "КП с полной стоимостью поставки",
         "Документы для рынка РУз",
         "Условия DDP и CIP"
       ],
-      "items_uz": [
-        "Logistika, boj va QQS bilan tijorat taklifi",
-        "O'zR bozori uchun hujjatlar",
-        "DDP va CIP shartlari"
-      ],
-      "items_en": [
-        "Quotations incl. logistics, duties and VAT",
-        "Documents for the Uzbek market",
-        "DDP and CIP terms"
-      ]
+      "items_uz": [],
+      "items_en": []
     },
     {
       "code": "[03] ПЛАТФОРМА И КАБИНЕТ",

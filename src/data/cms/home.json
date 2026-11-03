@@ -13,7 +13,7 @@
   "topCalloutStatus": "ПОСТАВКИ · ИНЖИНИРИНГ · ЛОКАЛИЗАЦИЯ · ПРЕДСТАВИТЕЛЬСТВО",
   "topCalloutStatus_uz": "",
   "topCalloutStatus_en": "",
-  "topCalloutVat": "НДС 12% · ЭСФ",
+  "topCalloutVat": "",
   "topCalloutVat_uz": "",
   "topCalloutVat_en": "",
   "topCalloutHub": "TASHKENT, A. QAHHOR 46",
@@ -240,33 +240,25 @@
   "trustSectionTitle_en": "DOCUMENTS & GUARANTEES FOR CUSTOMERS",
   "trustItems": [
     {
-      "code": "[01] НДС 12%",
-      "code_uz": "[01] 12% QQS",
-      "code_en": "[01] 12% VAT",
-      "text": "ООО «RailTech» — плательщик НДС. Цены в коммерческих предложениях указываются с НДС 12%.",
-      "text_uz": "«RailTech» MChJ — QQS to'lovchisi. Tijorat takliflaridagi narxlar 12% QQS bilan ko'rsatiladi.",
-      "text_en": "RailTech LLC is a VAT payer. Prices in quotations include 12% VAT."
+      "code": "[01] ГАРАНТИЯ",
+      "code_uz": "",
+      "code_en": "",
+      "text": "На позиции в наличии — 12 месяцев с момента поставки; на позиции под заказ — по условиям изготовителя, срок указывается в КП.",
+      "text_uz": "",
+      "text_en": ""
     },
     {
-      "code": "[02] ГАРАНТИЯ 12 МЕСЯЦЕВ",
-      "code_uz": "[02] 12 OYLIK KAFOLAT",
-      "code_en": "[02] 12-MONTH WARRANTY",
-      "text": "Гарантия на поставляемое оборудование — 12 месяцев с момента поставки.",
-      "text_uz": "Yetkazib beriladigan uskunalarga kafolat — yetkazib berilgan paytdan boshlab 12 oy.",
-      "text_en": "Supplied equipment carries a 12-month warranty from the date of delivery."
-    },
-    {
-      "code": "[03] DDP И CIP",
-      "code_uz": "[03] DDP VA CIP",
-      "code_en": "[03] DDP AND CIP",
+      "code": "[02] DDP И CIP",
+      "code_uz": "",
+      "code_en": "",
       "text": "Поставки под заказ включают международную логистику, таможенное оформление и доставку до Ташкента. Базис — DDP или CIP по договору.",
       "text_uz": "Buyurtma asosidagi yetkazib berish xalqaro logistika, bojxona rasmiylashtiruvi va Toshkentgacha yetkazishni o'z ichiga oladi. Bazis — shartnoma bo'yicha DDP yoki CIP.",
       "text_en": "On-order supplies include international logistics, customs clearance and delivery to Tashkent. Terms: DDP or CIP under the contract."
     },
     {
-      "code": "[04] ОДНО ОКНО ДЛЯ ДОКУМЕНТОВ",
-      "code_uz": "[04] HUJJATLAR UCHUN BITTA OYNA",
-      "code_en": "[04] ONE WINDOW FOR DOCUMENTS",
+      "code": "[03] ОДНО ОКНО ДЛЯ ДОКУМЕНТОВ",
+      "code_uz": "",
+      "code_en": "",
       "text": "Договор, счета, акты и сертификаты хранятся в сделке в Кабинете cabinet.railtech.uz; вопрос менеджеру — там же.",
       "text_uz": "Shartnoma, hisoblar, dalolatnomalar va sertifikatlar cabinet.railtech.uz kabinetidagi bitimda saqlanadi; menejerga savol ham shu yerda.",
       "text_en": "Contracts, invoices, acceptance reports and certificates are stored in the deal in the cabinet.railtech.uz Cabinet, where you can also message your manager."

@@ -148,9 +148,11 @@ const catalogHref = localeHref('/catalog/', lang);
       <span class="hud-glass-card px-2.5 py-1 text-emerald-900 font-bold bg-emerald-100/50">
         {status}
       </span>
-      <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
-        <I18nText ru={detail.vatBadge} uz={detail.vatBadge_uz} en={detail.vatBadge_en} />
-      </span>
+      {detail.vatBadge && (
+        <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
+          <I18nText ru={detail.vatBadge} uz={detail.vatBadge_uz} en={detail.vatBadge_en} />
+        </span>
+      )}
       {data.price && (
         <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A] font-bold">
           {data.price}
@@ -391,12 +393,14 @@ const catalogHref = localeHref('/catalog/', lang);
                 {status}
               </span>
             </div>
-            <div class="flex justify-between text-[#4A5056]">
-              <span><I18nText k="catalog.detail.taxation" /></span>
-              <span class="font-bold text-[#0A0A0A]">
-                <I18nText ru={detail.taxationValue} uz={detail.taxationValue_uz} en={detail.taxationValue_en} />
-              </span>
-            </div>
+            {detail.taxationValue && (
+              <div class="flex justify-between text-[#4A5056]">
+                <span><I18nText k="catalog.detail.taxation" /></span>
+                <span class="font-bold text-[#0A0A0A]">
+                  <I18nText ru={detail.taxationValue} uz={detail.taxationValue_uz} en={detail.taxationValue_en} />
+                </span>
+              </div>
+            )}
             <div class="flex justify-between text-[#4A5056]">
               <span><I18nText k="catalog.detail.salesDirect" /></span>
               <a href={phoneHref} class="font-bold text-[#0A0A0A] hover:underline">{globalData.phone}</a>

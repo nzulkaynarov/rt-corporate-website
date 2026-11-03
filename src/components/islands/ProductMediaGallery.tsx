@@ -304,9 +304,6 @@ export const ProductMediaGallery: React.FC<Props> = ({
             {t(lang, 'gallery.dispatchValue')}
           </span>
         </div>
-        <div className="font-bold text-[#0A0A0A]">
-          {t(lang, 'gallery.vat')}
-        </div>
       </div>
     </div>
   );

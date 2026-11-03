@@ -47,10 +47,14 @@ const phoneHref = telHref(globalData.phone);
         <span class="hidden md:inline">
           {tr('header.tin')} {globalData.inn}
         </span>
-        <span class="hidden lg:inline text-[#0A0A0A]/30">|</span>
-        <span class="hidden lg:inline border border-[#0A0A0A] px-1.5 bg-[#D4D8DC] text-[#0A0A0A] font-semibold text-[10px]">
-          {L(topBar.vatBadge, topBar.vatBadge_uz, topBar.vatBadge_en)}
-        </span>
+        {topBar.vatBadge && (
+          <>
+            <span class="hidden lg:inline text-[#0A0A0A]/30">|</span>
+            <span class="hidden lg:inline border border-[#0A0A0A] px-1.5 bg-[#D4D8DC] text-[#0A0A0A] font-semibold text-[10px]">
+              {L(topBar.vatBadge, topBar.vatBadge_uz, topBar.vatBadge_en)}
+            </span>
+          </>
+        )}
       </div>
 
       <!-- Right: Phone & B2B Portal on desktop (hidden on mobile < 768px) -->

@@ -6,7 +6,7 @@ title_en: "Supply of Railway Electronics, Components and Equipment"
 category: "Поставки"
 category_uz: "Yetkazib berish"
 category_en: "Supply"
-summary: "Поставки железнодорожной электроники, систем безопасности движения и промышленного оборудования в Узбекистан под ключ: расчёт КП с логистикой, пошлинами и НДС 12%, сертификация, таможня и доставка до склада на условиях DDP или CIP."
+summary: "Поставки железнодорожной электроники, систем безопасности движения и промышленного оборудования в Узбекистан под ключ: расчёт КП с полной стоимостью поставки, сертификация, таможня и доставка до склада на условиях DDP или CIP."
 summary_uz: "Temir yo'l elektronikasi, poezdlar harakati xavfsizligi tizimlari va sanoat uskunalarini O'zbekistonga kalit topshirish sharti bilan yetkazib berish: logistika, boj to'lovlari va 12% QQS bilan tijorat taklifi, sertifikatlash, bojxona va DDP yoki CIP shartlarida omborgacha yetkazish."
 summary_en: "Turnkey supply of railway electronics, train safety systems and industrial equipment to Uzbekistan: a quotation with logistics, duties and 12% VAT, certification, customs clearance and delivery to the warehouse on DDP or CIP terms."
 image: "/images/hero/logistics.jpg"
@@ -75,7 +75,7 @@ benefits:
 seoTitle: "Поставки ж/д электроники в Узбекистан | RailTech"
 seoTitle_uz: "Temir yo'l elektronikasini yetkazib berish | RailTech"
 seoTitle_en: "Railway Electronics Supply in Uzbekistan | RailTech"
-seoDescription: "Поставки ж/д электроники и запчастей для локомотивов UzTE16M, ТЭП70БС, 3ЭС5К в Узбекистан: КП с пошлинами и НДС 12%, таможня, DDP или CIP."
+seoDescription: "Поставки ж/д электроники и запчастей для локомотивов UzTE16M, ТЭП70БС, 3ЭС5К в Узбекистан: подбор по обозначению, КП с полной стоимостью, таможня, DDP или CIP."
 ---
 
 ### Поставки железнодорожной электроники под ключ

@@ -83,7 +83,7 @@
   ],
   "topBar": {
     "telemetryStatus": "[ ● ONLINE ]",
-    "vatBadge": "НДС 12% · ЭСФ",
+    "vatBadge": "",
     "vatBadge_uz": "",
     "vatBadge_en": "",
     "industryBadge": "RAIL ELECTRONICS & TRAIN SAFETY",

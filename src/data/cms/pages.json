@@ -63,13 +63,13 @@
     "defaultWarranty": "12 месяцев с момента поставки",
     "defaultWarranty_uz": "Yetkazib berilgan kundan boshlab 12 oy",
     "defaultWarranty_en": "12 months from delivery",
-    "defaultPriceNote": "Цена по запросу (с НДС 12%)",
-    "defaultPriceNote_uz": "Narx so'rov bo'yicha (12% QQS bilan)",
-    "defaultPriceNote_en": "Price on request (incl. 12% VAT)",
+    "defaultPriceNote": "Цена по запросу",
+    "defaultPriceNote_uz": "",
+    "defaultPriceNote_en": "",
     "detail": {
-      "vatBadge": "НДС 12% ВКЛЮЧЕН",
-      "vatBadge_uz": "12% QQS BILAN",
-      "vatBadge_en": "12% VAT INCLUDED",
+      "vatBadge": "",
+      "vatBadge_uz": "",
+      "vatBadge_en": "",
       "specsTitle": "ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ",
       "specsTitle_uz": "TEXNIK XUSUSIYATLAR",
       "specsTitle_en": "TECHNICAL SPECIFICATIONS",
@@ -95,9 +95,9 @@
           "text_en": "• Certificates and permits for the specific item are listed in the quotation."
         },
         {
-          "text": "• Договор, счёт на оплату, акт и электронный счёт-фактура (ЭСФ) с НДС 12%; документы сделки — также в Кабинете cabinet.railtech.uz.",
-          "text_uz": "• Shartnoma, to'lov uchun hisob, dalolatnoma va 12% QQS bilan EHF (elektron hisob-faktura); bitim hujjatlari cabinet.railtech.uz kabinetida ham mavjud.",
-          "text_en": "• Contract, invoice, acceptance certificate and electronic tax invoice (ESF) with 12% VAT; deal documents are also available in the client & partner cabinet at cabinet.railtech.uz."
+          "text": "• Договор, счёт на оплату, акт и электронный счёт-фактура (ЭСФ); документы сделки — также в Кабинете cabinet.railtech.uz.",
+          "text_uz": "",
+          "text_en": ""
         }
       ],
       "procurementTitle": "ОТДЕЛ СНАБЖЕНИЯ // ТАШКЕНТ",
@@ -106,9 +106,9 @@
       "dispatchNote": "В наличии — отгрузка со склада в Ташкенте; под заказ — доставка до Ташкента",
       "dispatchNote_uz": "Mavjud — Toshkent omboridan jo'natish; buyurtma asosida — Toshkentgacha yetkazib berish",
       "dispatchNote_en": "In stock: dispatch from the Tashkent warehouse; on order: delivery to Tashkent",
-      "taxationValue": "НДС 12% включен",
-      "taxationValue_uz": "12% QQS kiritilgan",
-      "taxationValue_en": "12% VAT included",
+      "taxationValue": "",
+      "taxationValue_uz": "",
+      "taxationValue_en": "",
       "relatedTitle": "ПОХОЖИЕ ПОЗИЦИИ ИЗ КАТАЛОГА",
       "relatedTitle_uz": "KATALOGDAGI O'XSHASH MAHSULOTLAR",
       "relatedTitle_en": "SIMILAR ITEMS FROM CATALOG"
@@ -137,9 +137,9 @@
       "activeBadge": "НАПРАВЛЕНИЕ RAILTECH 2026",
       "activeBadge_uz": "RAILTECH YO'NALISHI 2026",
       "activeBadge_en": "RAILTECH DIRECTION 2026",
-      "vatBadge": "НДС 12% ВКЛЮЧЕН",
-      "vatBadge_uz": "12% QQS BILAN",
-      "vatBadge_en": "12% VAT INCLUDED",
+      "vatBadge": "",
+      "vatBadge_uz": "",
+      "vatBadge_en": "",
       "stepsTitle": "ЭТАПЫ ВЫПОЛНЕНИЯ РАБОТ",
       "stepsTitle_uz": "ISHLARNI BAJARISH BOSQICHLARI",
       "stepsTitle_en": "EXECUTION MILESTONES",
@@ -152,9 +152,9 @@
       "benefitsTitle": "ПАРАМЕТРЫ И ГАРАНТИИ",
       "benefitsTitle_uz": "PARAMETRLAR VA KAFOLATLAR",
       "benefitsTitle_en": "PARAMETERS & ASSURANCES",
-      "contractValue": "Договор, счёт и акт с НДС 12%",
-      "contractValue_uz": "Shartnoma, hisob va dalolatnoma 12% QQS bilan",
-      "contractValue_en": "Contract, invoice and acceptance act incl. 12% VAT",
+      "contractValue": "Договор, счёт и акт",
+      "contractValue_uz": "",
+      "contractValue_en": "",
       "orderTitle": "ЗАПРОС И КОММЕРЧЕСКОЕ ПРЕДЛОЖЕНИЕ",
       "orderTitle_uz": "SO'ROV VA TIJORAT TAKLIFI",
       "orderTitle_en": "REQUEST & QUOTATION",
@@ -164,9 +164,9 @@
       "currencyValue": "UZS (Узбекские сумы)",
       "currencyValue_uz": "UZS (O'zbek so'mi)",
       "currencyValue_en": "UZS (Uzbek som)",
-      "taxationValue": "НДС 12% включен",
-      "taxationValue_uz": "12% QQS kiritilgan",
-      "taxationValue_en": "12% VAT included",
+      "taxationValue": "",
+      "taxationValue_uz": "",
+      "taxationValue_en": "",
       "defaultCtaLabel": "ОСТАВИТЬ ЗАЯВКУ ↗",
       "defaultCtaLabel_uz": "ARIZA QOLDIRISH ↗",
       "defaultCtaLabel_en": "SUBMIT INQUIRY ↗"
@@ -247,9 +247,9 @@
       "orderNote": "Поставки, инжиниринг, локализация и представительство — единая точка ответственности от запроса до доставки на склад.",
       "orderNote_uz": "Yetkazib berish, injiniring, mahalliylashtirish va vakillik — so'rovdan omborgacha yetkazib berishgacha yagona mas'uliyat nuqtasi.",
       "orderNote_en": "Supply, engineering, localization and representation — a single point of responsibility from the request to delivery to the warehouse.",
-      "settlementValue": "DDP / CIP, НДС 12%",
-      "settlementValue_uz": "DDP / CIP, 12% QQS",
-      "settlementValue_en": "DDP / CIP, incl. 12% VAT",
+      "settlementValue": "DDP / CIP",
+      "settlementValue_uz": "",
+      "settlementValue_en": "",
       "leadTimeValue": "Ответ в течение рабочего дня",
       "leadTimeValue_uz": "Ish kuni davomida javob",
       "leadTimeValue_en": "Response within one working day",
@@ -302,11 +302,6 @@
           "text_en": ""
         },
         {
-          "text": "• Плательщик НДС: счёт с НДС 12%",
-          "text_uz": "• QQS to'lovchisi: 12% QQS bilan hisob",
-          "text_en": "• VAT payer: invoice incl. 12% VAT"
-        },
-        {
           "text": "• Ответ в течение рабочего дня",
           "text_uz": "• Javob ish kuni davomida",
           "text_en": "• Response within one business day"
@@ -315,9 +310,9 @@
     }
   },
   "leadModal": {
-    "badge": "ЗАПРОС КП / СЧЕТА С НДС 12%",
-    "badge_uz": "TIJORAT TAKLIFI / 12% QQS BILAN HISOB SO'ROVI",
-    "badge_en": "REQUEST FOR QUOTATION / INVOICE (12% VAT)",
+    "badge": "ЗАПРОС КП",
+    "badge_uz": "",
+    "badge_en": "",
     "locationMeta": "ТАШКЕНТ // ОФИС УЛ. АБДУЛЛЫ КАХХАРА, 46",
     "locationMeta_uz": "TOSHKENT // OFIS ABDULLA QAHHOR KO'CHASI, 46",
     "locationMeta_en": "TASHKENT // OFFICE 46 ABDULLA QAHHOR ST.",

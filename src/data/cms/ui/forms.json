@@ -235,9 +235,9 @@
     },
     {
       "key": "form.contacts.innLabel",
-      "ru": "ИНН (ДЛЯ ЭСФ С НДС)",
-      "uz": "STIR (INN, EHF UCHUN)",
-      "en": "TAX ID / INN"
+      "ru": "ИНН ОРГАНИЗАЦИИ",
+      "uz": "TASHKILOT STIR",
+      "en": "COMPANY TAX ID (INN)"
     },
     {
       "key": "form.contacts.innPlaceholder",
