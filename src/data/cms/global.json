@@ -49,8 +49,6 @@
   "metrics": {
     "years": "5+",
     "partners": "30+",
-    "skuCount": "250+",
-    "manufacturers": "10+",
     "smartMatch": ""
   },
   "manufacturers": [
@@ -152,9 +150,9 @@
         "label": "Каталог оборудования",
         "label_uz": "Uskunalar katalogi",
         "label_en": "Equipment catalog",
-        "badge": "250+ позиций",
-        "badge_uz": "250+ pozitsiya",
-        "badge_en": "250+ items"
+        "badge": "{items|позиция|позиции|позиций}",
+        "badge_uz": "",
+        "badge_en": ""
       },
       {
         "index": "02",

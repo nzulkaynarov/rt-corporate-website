@@ -520,11 +520,10 @@ collections:
             name: "metrics"
             widget: "object"
             required: false
+            hint: "Число позиций, категорий и производителей сайт считает сам по каталогу. В текстах — плейсхолдеры {items}, {manufacturers}, {categories}, {years}, {partners}; со склонением: {items|позиция|позиции|позиций}."
             fields:
               - { label: "Лет на рынке", name: "years", widget: "string", required: false }
               - { label: "Партнеры", name: "partners", widget: "string", required: false }
-              - { label: "Количество SKU", name: "skuCount", widget: "string", required: false }
-              - { label: "Заводы-изготовители", name: "manufacturers", widget: "string", required: false }
               - { label: "Точность Smart Match", name: "smartMatch", widget: "string", required: false }
           - label: "⚙️ Производители и статус RailTech (страница «О компании»)"
             name: "manufacturers"

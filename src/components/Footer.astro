@@ -3,6 +3,7 @@ import globalData from '../data/cms/global.json';
 import { localeHref, tField } from '../i18n';
 import { t } from '../i18n/ui';
 import { withBase, telHref } from '../utils/url';
+import { fillCounters, getCounters } from '../utils/counters';
 
 const lang = Astro.locals.lang;
 const tr = (key: string) => t(lang, key);
@@ -12,11 +13,12 @@ const F = (field: string): string => tField(footer, field, lang);
 
 const companyName: string = tField(g, 'companyName', lang);
 const address: string = tField(g, 'address', lang);
+const counters = await getCounters();
 const links = (footer.links || []).map((link: any) => ({
   href: localeHref(link.path, lang),
   index: link.index,
   label: tField(link, 'label', lang),
-  badge: tField(link, 'badge', lang),
+  badge: fillCounters(tField(link, 'badge', lang), counters),
 }));
 const hubText = F('hubText').replace('{address}', address);
 const phoneHref = telHref(g.phone);

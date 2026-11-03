@@ -5,10 +5,12 @@
  *   <I18nText k="common.details" />                      — interface string from src/data/cms/ui/*.json
  *   <I18nText ru={d.title} uz={d.title_uz} en={d.title_en} />  — CMS content with RU fallback
  *
- * Values are rendered as HTML (CMS fields may contain <br>, <b> …).
+ * Values are rendered as HTML (CMS fields may contain <br>, <b> …). Counter placeholders such as
+ * {items|позиция|позиции|позиций} are filled from the catalog (src/utils/counters.ts).
  */
 import { pick } from '../i18n';
 import { t } from '../i18n/ui';
+import { fillCounters, getCounters } from '../utils/counters';
 
 interface Props {
   k?: string;
@@ -22,7 +24,7 @@ interface Props {
 
 const { k, vars, ru = '', uz, en, class: className, as: Tag = 'span' } = Astro.props;
 const lang = Astro.locals.lang;
-const value = k ? t(lang, k, vars) : pick(lang, ru, uz, en);
+const value = fillCounters(k ? t(lang, k, vars) : pick(lang, ru, uz, en), await getCounters());
 ---
 
 <Tag class={className || undefined} set:html={value} />

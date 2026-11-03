@@ -158,9 +158,9 @@
       "label": "Масштаб",
       "label_uz": "Ko'lam",
       "label_en": "Scale",
-      "value": "5+ лет · 30+ партнёров · 10+ производителей · 250+ позиций",
-      "value_uz": "5+ yil · 30+ hamkor · 10+ ishlab chiqaruvchi · 250+ pozitsiya",
-      "value_en": "5+ years · 30+ partners · 10+ manufacturers · 250+ items"
+      "value": "{years} лет · {partners} партнёров · {manufacturers|производитель|производителя|производителей} · {items|позиция|позиции|позиций} в каталоге",
+      "value_uz": "",
+      "value_en": ""
     }
   ],
   "passportLabel": "// ПАСПОРТ КОМПАНИИ",

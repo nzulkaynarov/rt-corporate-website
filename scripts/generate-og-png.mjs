@@ -1,10 +1,29 @@
 import sharp from 'sharp';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 const outputPath = path.join(rootDir, 'public', 'og-cover.png');
+
+// Figures come from the data (same rules as src/utils/counters.ts): catalog entries and manufacturers,
+// years / partners from global.json → metrics. Re-run after big catalog changes: node scripts/generate-og-png.mjs
+const catalogDir = path.join(rootDir, 'src', 'content', 'catalog');
+const globalData = JSON.parse(fs.readFileSync(path.join(rootDir, 'src', 'data', 'cms', 'global.json'), 'utf8'));
+const catalogFiles = fs.readdirSync(catalogDir).filter((f) => f.endsWith('.md'));
+const makers = new Set((globalData.manufacturers || []).map((m) => String(m.name || '').trim()).filter(Boolean));
+for (const f of catalogFiles) {
+  const m = fs.readFileSync(path.join(catalogDir, f), 'utf8').match(/^manufacturer:\s*"?(.+?)"?\s*$/m);
+  if (m) makers.add(m[1].trim());
+}
+const esc = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const C = {
+  years: esc(globalData.metrics?.years || ''),
+  partners: esc(globalData.metrics?.partners || ''),
+  items: catalogFiles.length,
+  manufacturers: makers.size,
+};
 
 const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630' width='1200' height='630'>
   <defs>
@@ -81,19 +100,19 @@ const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630' widt
     <g transform='translate(0, 275)'>
       <rect x='0' y='0' width='145' height='55' fill='#D4D8DC' stroke='#0A0A0A' stroke-width='1.5'/>
       <text x='12' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#4A5056'>НА РЫНКЕ</text>
-      <text x='12' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#0A0A0A'>5+ ЛЕТ</text>
+      <text x='12' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#0A0A0A'>${C.years} ЛЕТ</text>
 
       <rect x='155' y='0' width='145' height='55' fill='#D4D8DC' stroke='#0A0A0A' stroke-width='1.5'/>
       <text x='167' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#4A5056'>ПАРТНЁРОВ</text>
-      <text x='167' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#0A0A0A'>30+</text>
+      <text x='167' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#0A0A0A'>${C.partners}</text>
 
       <rect x='310' y='0' width='145' height='55' fill='#D4D8DC' stroke='#0A0A0A' stroke-width='1.5'/>
-      <text x='322' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#4A5056'>КОЛЕЯ Ж/Д</text>
-      <text x='322' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#0A0A0A'>1520 ММ</text>
+      <text x='322' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#4A5056'>ПОЗИЦИЙ В КАТАЛОГЕ</text>
+      <text x='322' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#0A0A0A'>${C.items}</text>
 
       <rect x='465' y='0' width='145' height='55' fill='#0A0A0A' stroke='#0A0A0A' stroke-width='1.5'/>
       <text x='477' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#D4D8DC'>ПРОИЗВОДИТЕЛЕЙ</text>
-      <text x='477' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#FFFFFF'>10+</text>
+      <text x='477' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#FFFFFF'>${C.manufacturers}</text>
     </g>
   </g>
 

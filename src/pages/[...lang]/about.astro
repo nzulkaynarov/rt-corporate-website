@@ -1,4 +1,5 @@
 ---
+import { fillCounters, getCounters } from '../../utils/counters';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FaqAccordion from '../../components/FaqAccordion.astro';
 import I18nText from '../../components/I18nText.astro';
@@ -20,6 +21,7 @@ const A = (field: string): string => tField(aboutData, field, lang);
 const tri = (obj: Record<string, any>, field: string) => ({ ru: obj[field], uz: obj[`${field}_uz`], en: obj[`${field}_en`] });
 
 const faqItems = aboutData.faq || [];
+const counters = await getCounters();
 
 // Manufacturers and RailTech status — data: global.json → manufacturers (editable in /admin)
 const manufacturers: Record<string, string>[] = Array.isArray(g.manufacturers) ? g.manufacturers : [];
@@ -50,10 +52,10 @@ const dossier: { label: string; value: string; accent?: boolean }[] = [
       inLanguage: lang,
       mainEntity: faqItems.map((item) => ({
         '@type': 'Question',
-        name: plainText(tField(item, 'q', lang)),
+        name: plainText(fillCounters(tField(item, 'q', lang), counters)),
         acceptedAnswer: {
           '@type': 'Answer',
-          text: plainText(tField(item, 'a', lang)),
+          text: plainText(fillCounters(tField(item, 'a', lang), counters)),
         },
       })),
     },
@@ -147,7 +149,7 @@ const dossier: { label: string; value: string; accent?: boolean }[] = [
           </h2>
         </div>
         <p class="font-sans text-xs text-[#4A5056] leading-relaxed mb-4">
-          {tr('about.manufacturers.note', { n: g.metrics?.manufacturers || '' })}
+          {tr('about.manufacturers.note', { n: counters.manufacturers })}
         </p>
         <div class="overflow-x-auto">
           <table class="w-full border-collapse border border-[#0A0A0A] text-xs text-left">
