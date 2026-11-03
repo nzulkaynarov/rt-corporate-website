@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { withBase } from '../../utils/url';
+import { makeT, type Lang } from '../../i18n';
+import { useLang } from '../../utils/useLang';
+import islandsUi from '../../data/cms/ui/islands.json';
+
+const t = makeT([islandsUi]);
 
 export interface HudSmartImageProps {
   src?: string;
@@ -15,11 +20,12 @@ export interface HudSmartImageProps {
   objectFit?: 'cover' | 'contain';
   grayscale?: boolean;
   style?: React.CSSProperties;
+  lang: Lang;
 }
 
 export const HudSmartImage: React.FC<HudSmartImageProps> = ({
   src,
-  alt = 'Industrial equipment blueprint',
+  alt,
   className = '',
   containerClassName = '',
   sku,
@@ -31,7 +37,9 @@ export const HudSmartImage: React.FC<HudSmartImageProps> = ({
   objectFit = 'cover',
   grayscale = false,
   style = {},
+  lang: propLang,
 }) => {
+  const lang = useLang(propLang);
   const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
 
   const resolvedSrc = src ? withBase(src) : '';
@@ -48,8 +56,8 @@ export const HudSmartImage: React.FC<HudSmartImageProps> = ({
     img.onerror = () => setStatus('error');
   }, [resolvedSrc]);
 
-  const identifier = sku || code || 'RT-ITEM';
-  const categoryLabel = category || 'PRECISION HARDWARE';
+  const identifier = sku || code || t(lang, 'hudImage.idFallback');
+  const categoryLabel = category || t(lang, 'hudImage.categoryFallback');
 
   return (
     <div
@@ -70,18 +78,18 @@ export const HudSmartImage: React.FC<HudSmartImageProps> = ({
           </svg>
 
           {/* Precision Corner Brackets */}
-          <span className="absolute top-2 left-2 text-[10px] leading-none text-[#0A0A0A] font-bold">┌</span>
-          <span className="absolute top-2 right-2 text-[10px] leading-none text-[#0A0A0A] font-bold">┐</span>
-          <span className="absolute bottom-2 left-2 text-[10px] leading-none text-[#0A0A0A] font-bold">└</span>
-          <span className="absolute bottom-2 right-2 text-[10px] leading-none text-[#0A0A0A] font-bold">┘</span>
+          <span className="absolute top-2 left-2 text-[10px] leading-none text-[#0A0A0A] font-bold" aria-hidden="true">┌</span>
+          <span className="absolute top-2 right-2 text-[10px] leading-none text-[#0A0A0A] font-bold" aria-hidden="true">┐</span>
+          <span className="absolute bottom-2 left-2 text-[10px] leading-none text-[#0A0A0A] font-bold" aria-hidden="true">└</span>
+          <span className="absolute bottom-2 right-2 text-[10px] leading-none text-[#0A0A0A] font-bold" aria-hidden="true">┘</span>
 
           {/* Top Bar: Telemetry / Status */}
           <div className="relative z-10 flex items-center justify-between text-[9px] tracking-wider text-[#4A5056] border-b border-[#0A0A0A]/20 pb-1">
             <span className="flex items-center gap-1.5 font-bold text-[#0A0A0A]">
               <span className="w-1.5 h-1.5 bg-emerald-600 inline-block animate-pulse"></span>
-              OPTICAL_FEED // READY
+              {t(lang, 'hudImage.feedReady')}
             </span>
-            <span className="text-[#0A0A0A]/40">CAD.1:1</span>
+            <span className="text-[#0A0A0A]/40">{t(lang, 'hudImage.scale')}</span>
           </div>
 
           {/* Center: Reticle Crosshair & SKU */}
@@ -102,8 +110,8 @@ export const HudSmartImage: React.FC<HudSmartImageProps> = ({
 
           {/* Bottom Bar: Calibration Stamp */}
           <div className="relative z-10 flex items-center justify-between text-[9px] text-[#4A5056] pt-1 border-t border-[#0A0A0A]/20">
-            <span>INDEX B2-2097</span>
-            <span className="font-bold text-[#0A0A0A]">QC: PASS 100%</span>
+            <span>{t(lang, 'hudImage.location')}</span>
+            <span className="font-bold text-[#0A0A0A]">{t(lang, 'hudImage.qc')}</span>
           </div>
         </div>
       ) : (
@@ -112,13 +120,13 @@ export const HudSmartImage: React.FC<HudSmartImageProps> = ({
           {/* Subtle loading placeholder while image is fetching */}
           {status === 'loading' && (
             <div className="absolute inset-0 flex items-center justify-center bg-[#D4D8DC] font-mono text-[10px] text-[#4A5056]">
-              <span className="animate-pulse">LOADING_FEED // ...</span>
+              <span className="animate-pulse">{t(lang, 'hudImage.loading')}</span>
             </div>
           )}
 
           <img
             src={resolvedSrc}
-            alt={alt}
+            alt={alt || t(lang, 'hudImage.altFallback')}
             loading={loading}
             fetchPriority={fetchPriority}
             decoding="async"
