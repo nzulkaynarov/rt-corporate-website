@@ -22,7 +22,7 @@ collections:
       - { label: "⚙️ Категория (EN)", name: "category_en", widget: "string", required: false }
       - { label: "⚙️ ГОСТ / Стандарт", name: "gost", widget: "string", required: false, hint: "ГОСТ или ТУ (напр. ГОСТ 9246-2013)" }
       - { label: "⚙️ Код ТН ВЭД (HS Code)", name: "tnved", widget: "string", required: false, hint: "Таможенный код ТН ВЭД РУз (напр. 8607 12 000 0)" }
-      - { label: "⚙️ Цена (UZS)", name: "price", widget: "string", required: false, hint: "Фиксированная цена в сумах или оставьте пустым" }
+      - { label: "⚙️ Цена — НЕ ЗАПОЛНЯТЬ", name: "price", widget: "string", required: false, hint: "Цены на сайте не публикуются: оставьте пустым, сайт покажет «Цена по запросу». Заполненное поле не пройдёт проверку." }
       - { label: "⚙️ Базис склада", name: "warehouse", widget: "string", default: "Ташкент, Index B2-2097", required: false }
       - { label: "⚙️ Базис склада (UZ)", name: "warehouse_uz", widget: "string", default: "Toshkent, Index B2-2097", required: false }
       - { label: "⚙️ Базис склада (EN)", name: "warehouse_en", widget: "string", default: "Tashkent, Index B2-2097", required: false }

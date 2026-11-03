@@ -158,6 +158,7 @@ const RULES = {
     trilingual(file, d, d.category ? 'category' : 'subsystem', 'category');
     trilingual(file, d, 'specs');
     for (const f of ['warehouse', 'warranty', 'priceNote']) trilingual(file, d, f, f, { optional: true });
+    if (!isEmpty(d.price)) err(file, 'price must stay empty — prices are not published on the site (docs/content/STYLE_GUIDE.md §2)');
     trilingualList(file, d.attributes, ['label', 'value'], 'attributes');
     trilingualList(file, d.documents, ['title'], 'documents');
     if (d.status) {

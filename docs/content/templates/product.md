@@ -13,7 +13,6 @@ category_uz: "TODO: Harakatlanuvchi tarkib"
 category_en: "TODO: Rolling Stock"
 gost: "TODO: ГОСТ 4835-2013"                 # необязательно
 tnved: "TODO: 8607 19 100 0"                 # необязательно, формат XXXX XX XXX X
-price: ""                                    # только число из брифа (сум с НДС), иначе пусто
 status: "В наличии"                          # В наличии | Резерв | Под заказ
 statusKey: "in_stock"                        # in_stock | reserved | on_order — строго соответствует status
 specs: "TODO: ключевые параметры одной строкой"
