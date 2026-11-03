@@ -177,9 +177,9 @@
     },
     {
       "key": "gallery.locationStamp",
-      "ru": "INDEX B2-2097 // UZ",
-      "uz": "INDEX B2-2097 // UZ",
-      "en": "INDEX B2-2097 // UZ"
+      "ru": "TASHKENT // UZ",
+      "uz": "TASHKENT // UZ",
+      "en": "TASHKENT // UZ"
     },
     {
       "key": "gallery.frameCounter",
@@ -231,9 +231,9 @@
     },
     {
       "key": "gallery.dispatchValue",
-      "ru": "Со склада Index B2-2097",
-      "uz": "Index B2-2097 omboridan",
-      "en": "Direct from Index B2-2097"
+      "ru": "Ташкент, склад RailTech",
+      "uz": "Toshkent, RailTech ombori",
+      "en": "Tashkent, RailTech warehouse"
     },
     {
       "key": "gallery.vat",
@@ -339,15 +339,15 @@
     },
     {
       "key": "hudImage.location",
-      "ru": "INDEX B2-2097",
-      "uz": "INDEX B2-2097",
-      "en": "INDEX B2-2097"
+      "ru": "TASHKENT // UZ",
+      "uz": "TASHKENT // UZ",
+      "en": "TASHKENT // UZ"
     },
     {
       "key": "hudImage.qc",
-      "ru": "QC: PASS 100%",
-      "uz": "QC: PASS 100%",
-      "en": "QC: PASS 100%"
+      "ru": "WARRANTY: 12 MO",
+      "uz": "WARRANTY: 12 MO",
+      "en": "WARRANTY: 12 MO"
     },
     {
       "key": "hudImage.loading",

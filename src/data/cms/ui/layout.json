@@ -75,9 +75,9 @@
     },
     {
       "key": "footer.phone",
-      "ru": "Прямая линия снабжения:",
-      "uz": "To'g'ridan-to'g'ri ta'minot:",
-      "en": "Direct supply line:"
+      "ru": "Телефон:",
+      "uz": "Telefon:",
+      "en": "Phone:"
     },
     {
       "key": "footer.email",

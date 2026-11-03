@@ -57,9 +57,9 @@
     },
     {
       "key": "about.dossier.address",
-      "ru": "ЮРИДИЧЕСКИЙ И ФАКТИЧЕСКИЙ АДРЕС:",
-      "uz": "YURIDIK VA HAQIQIY MANZIL:",
-      "en": "LEGAL & OPERATIONAL ADDRESS:"
+      "ru": "ЮРИДИЧЕСКИЙ АДРЕС:",
+      "uz": "YURIDIK MANZIL:",
+      "en": "LEGAL ADDRESS:"
     },
     {
       "key": "about.dossier.esf",
@@ -225,9 +225,9 @@
     },
     {
       "key": "notFound.strip.vatValue",
-      "ru": "12% ACCREDITED",
-      "uz": "12% ACCREDITED",
-      "en": "12% ACCREDITED"
+      "ru": "12% VAT PAYER",
+      "uz": "12% VAT PAYER",
+      "en": "12% VAT PAYER"
     },
     {
       "key": "notFound.actions",
