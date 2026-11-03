@@ -16,7 +16,7 @@
   "topCalloutVat": "ЦЕНЫ С НДС 12%",
   "topCalloutVat_uz": "NARXLAR 12% QQS BILAN",
   "topCalloutVat_en": "PRICES INCL. 12% VAT",
-  "topCalloutHub": "INDEX B2-2097",
+  "topCalloutHub": "TASHKENT, A. QAHHOR 46",
   "topCalloutSla": "Ответ в течение рабочего дня",
   "topCalloutSla_uz": "Ish kuni davomida javob beramiz",
   "topCalloutSla_en": "Response within one business day",
@@ -150,9 +150,9 @@
       "label": "Локация",
       "label_uz": "Joylashuv",
       "label_en": "Location",
-      "value": "Ташкент, Index B2-2097",
-      "value_uz": "Toshkent, Index B2-2097",
-      "value_en": "Tashkent, Index B2-2097"
+      "value": "Ташкент, ул. Абдуллы Каххара, 46",
+      "value_uz": "Toshkent, Abdulla Qahhor ko'chasi, 46",
+      "value_en": "46 Abdulla Qahhor Street, Tashkent"
     },
     {
       "label": "Масштаб",

@@ -27,7 +27,7 @@
 | DDP Ташкент | DDP Toshkent | DDP Tashkent | — | Инкотермс не переводится |
 | Landed Cost (полная стоимость поставки) | Landed Cost (yetkazib berishning to'liq qiymati) | landed cost | — | |
 | Склад | ombor | warehouse | — | |
-| ТПК Index, блок B2-2097 | Index SICHM, B2-2097 bloki | Index Complex, Unit B2-2097 | — | Адрес — только из `global.json` |
+| ул. Абдуллы Каххара, 46 | Abdulla Qahhor ko'chasi, 46 | 46 Abdulla Qahhor Street | — | Адрес офиса — только из `global.json` (`officeAddress`) |
 | Отдел снабжения | ta'minot bo'limi | procurement desk | — | |
 | Завод-изготовитель | ishlab chiqaruvchi zavod | manufacturer | — | |
 | Сорсинг / поиск поставщика | sorsing / yetkazib beruvchini izlash | sourcing | — | |

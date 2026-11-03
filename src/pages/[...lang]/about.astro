@@ -26,8 +26,8 @@ const dossier = [
   { label: 'about.dossier.shortName', value: g.shortName },
   { label: 'about.dossier.tin', value: g.inn },
   { label: 'about.dossier.vat', value: `${A('vatStatus')} (${tField(g, 'legalStatus', lang)})`, accent: true },
-  { label: 'about.dossier.oked', value: `${g.oked} — ${tField(g, 'okedName', lang)}` },
-  { label: 'about.dossier.address', value: `${g.postalCode}, ${tr('company.country')}, ${tField(g, 'address', lang)}` },
+  { label: 'about.dossier.address', value: `${tr('company.country')}, ${tField(g, 'address', lang)}` },
+  { label: 'about.dossier.office', value: tField(g, 'officeAddress', lang) },
   { label: 'about.dossier.esf', value: g.esfOperators },
   { label: 'about.dossier.domains', value: g.officialDomains },
 ];

@@ -23,9 +23,9 @@ collections:
       - { label: "⚙️ ГОСТ / Стандарт", name: "gost", widget: "string", required: false, hint: "ГОСТ или ТУ (напр. ГОСТ 9246-2013)" }
       - { label: "⚙️ Код ТН ВЭД (HS Code)", name: "tnved", widget: "string", required: false, hint: "Таможенный код ТН ВЭД РУз (напр. 8607 12 000 0)" }
       - { label: "⚙️ Цена — НЕ ЗАПОЛНЯТЬ", name: "price", widget: "string", required: false, hint: "Цены на сайте не публикуются: оставьте пустым, сайт покажет «Цена по запросу». Заполненное поле не пройдёт проверку." }
-      - { label: "⚙️ Базис склада", name: "warehouse", widget: "string", default: "Ташкент, Index B2-2097", required: false }
-      - { label: "⚙️ Базис склада (UZ)", name: "warehouse_uz", widget: "string", default: "Toshkent, Index B2-2097", required: false }
-      - { label: "⚙️ Базис склада (EN)", name: "warehouse_en", widget: "string", default: "Tashkent, Index B2-2097", required: false }
+      - { label: "⚙️ Базис склада", name: "warehouse", widget: "string", default: "Ташкент", required: false }
+      - { label: "⚙️ Базис склада (UZ)", name: "warehouse_uz", widget: "string", default: "Toshkent", required: false }
+      - { label: "⚙️ Базис склада (EN)", name: "warehouse_en", widget: "string", default: "Tashkent", required: false }
       - { label: "⚙️ Статус наличия (RU)", name: "status", widget: "select", options: ["В наличии", "Резерв", "Под заказ"], default: "В наличии", required: false }
       - { label: "⚙️ Ключ статуса для фильтра", name: "statusKey", widget: "select", options: ["in_stock", "reserved", "on_order"], default: "in_stock", required: false }
       - { label: "⚙️ Фотография изделия (главная)", name: "image", widget: "image", required: false, hint: "Реальное фото изделия (JPG/PNG, ≥ 1200 px). WebP создаются автоматически" }
@@ -480,13 +480,7 @@ collections:
           - { label: '⚙️ Сокращённое наименование [EN]', name: shortName_en, widget: string, required: false }
           - { label: "⚙️ ИНН предприятия", name: "inn", widget: "string" }
           - { label: "⚙️ ИНН / Код плательщика НДС (taxId)", name: "taxId", widget: "string", required: false }
-          - { label: "⚙️ Номер плательщика НДС (vatNumber)", name: "vatNumber", widget: "string", required: false }
-          - { label: "⚙️ ОКЭД код", name: "oked", widget: "string", required: false }
-          - { label: "⚙️ Название ОКЭД (RU)", name: "okedName", widget: "string", required: false }
-          - { label: "⚙️ IFUT nomi (UZ)", name: "okedName_uz", widget: "string", required: false }
-          - { label: "⚙️ OKED Name (EN)", name: "okedName_en", widget: "string", required: false }
           - { label: '⚙️ ОКПО', name: okpo, widget: string, required: false }
-          - { label: "⚙️ Почтовый индекс", name: "postalCode", widget: "string", required: false }
           - { label: "⚙️ Город [RU]", name: "city", widget: "string", required: false }
           - { label: "⚙️ Shahar [UZ]", name: "city_uz", widget: "string", required: false }
           - { label: "⚙️ City [EN]", name: "city_en", widget: "string", required: false }
@@ -521,10 +515,6 @@ collections:
           - { label: "🇷🇺 [RU] Режим работы склада", name: "warehouseSchedule", widget: "string", required: false }
           - { label: "🇺🇿 [UZ] Ombor ish tartibi", name: "warehouseSchedule_uz", widget: "string", required: false }
           - { label: "🇬🇧 [EN] Warehouse Schedule", name: "warehouseSchedule_en", widget: "string", required: false }
-          - { label: "⚙️ Координаты GPS", name: "gps", widget: "string", required: false }
-          - { label: "⚙️ Широта (для schema.org / карт)", name: "latitude", widget: "number", value_type: "float", required: false, hint: "Напр. 41.2214" }
-          - { label: "⚙️ Долгота", name: "longitude", widget: "number", value_type: "float", required: false, hint: "Напр. 69.1852" }
-          - { label: "⚙️ Ссылка на Яндекс.Карты", name: "yandexMapUrl", widget: "string", required: false }
           - label: "⚙️ Ключевые метрики"
             name: "metrics"
             widget: "object"
@@ -885,8 +875,6 @@ collections:
           - { label: 'Заголовок — departmentsTitle [RU]', name: departmentsTitle, widget: string, required: false }
           - { label: 'Заголовок — departmentsTitle [UZ]', name: departmentsTitle_uz, widget: string, required: false }
           - { label: 'Заголовок — departmentsTitle [EN]', name: departmentsTitle_en, widget: string, required: false }
-          - { label: "⚙️ Координаты GPS", name: "gps", widget: "string", required: false }
-          - { label: "⚙️ Ссылка на Яндекс.Карты", name: "yandexMapUrl", widget: "string", required: false }
           - label: "⚙️ Отделы компании (departments)"
             name: "departments"
             widget: "list"
@@ -946,9 +934,6 @@ collections:
               - { label: "ИНН / Статус [RU]", name: "inn", widget: "string" }
               - { label: "STIR / Maqom [UZ]", name: "inn_uz", widget: "string", required: false }
               - { label: "TIN / Status [EN]", name: "inn_en", widget: "string", required: false }
-              - { label: "Статус плательщика НДС [RU]", name: "vatCode", widget: "string" }
-              - { label: "QQS to'lovchi maqomi [UZ]", name: "vatCode_uz", widget: "string", required: false }
-              - { label: "VAT Payer Status [EN]", name: "vatCode_en", widget: "string", required: false }
               - { label: "Расчетный счет", name: "account", widget: "string" }
               - { label: "Банк [RU]", name: "bank", widget: "string" }
               - { label: "Bank [UZ]", name: "bank_uz", widget: "string", required: false }

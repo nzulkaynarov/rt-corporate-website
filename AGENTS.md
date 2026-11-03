@@ -80,7 +80,7 @@ Every page exists once per language, each with its own URL, `<html lang>`, title
 
 Single source for company facts is `src/data/cms/global.json` / `contacts.json`; this is only orientation.
 
-* **Legal Entity:** ООО «RAILTECH» (RailTech LLC), Tashkent, Uzbekistan, since 2021. ИНН `308346339`, ОКПО `30664447`. Legal address: г. Ташкент, Ц-1, 47/33; office: ТПК Index, офис B2-2097.
+* **Legal Entity:** ООО «RAILTECH» (RailTech LLC), Tashkent, Uzbekistan, since 2021. ИНН `308346339`, ОКПО `30664447`. Legal address: г. Ташкент, Ц-1, 47/33; office: г. Ташкент, ул. Абдуллы Каххара, 46 (only from `global.json` → `officeAddress`). OKED, VAT code, postal code and map coordinates are intentionally not published.
 * **Profile:** electronics and train-safety systems for railways and industry; «надёжный мост между международными производителями и предприятиями Узбекистана». Directions: Поставки, Инжиниринг, Локализация, Представительство.
 * **Official dealer & representative of ООО «НПО САУТ» in Uzbekistan** (certificate № 1 of 26.02.2026, valid to 31.12.2026). Direct supplies of ADZ NAGANO, GERSYS, Siemens Mobility, РАТЕП-ИННОВАЦИЯ products (no dealer status claimed for them).
 * **Digital:** Cabinet `cabinet.railtech.uz` (web + Telegram Mini App) for clients and partners.

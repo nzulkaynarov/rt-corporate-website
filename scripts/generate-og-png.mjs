@@ -39,10 +39,10 @@ const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630' widt
   <!-- Top Strip -->
   <rect x='48' y='48' width='1104' height='36' fill='#D4D8DC' stroke='#0A0A0A' stroke-width='1'/>
   <text x='64' y='71' font-family='Arial, Helvetica, sans-serif' font-size='12' font-weight='700' fill='#0A0A0A' letter-spacing='2'>
-    REF: UZ-RAILTECH-DOC-2026 // NODE: TASHKENT (INDEX B2-2097) // VAT 12% CERTIFIED
+    REF: UZ-RAILTECH-2026 // NODE: TASHKENT // OFFICIAL NPO SAUT DEALER
   </text>
   <text x='1136' y='71' text-anchor='end' font-family='Arial, Helvetica, sans-serif' font-size='12' font-weight='700' fill='#0A0A0A' letter-spacing='1'>
-    B2B.RAILTECH.UZ
+    RAILTECH.UZ
   </text>
 
   <!-- Left Block -->
@@ -53,7 +53,7 @@ const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630' widt
       RAILTECH
     </text>
     <text x='245' y='22' font-family='Arial, Helvetica, sans-serif' font-size='11' font-weight='700' fill='#4A5056' letter-spacing='2'>
-      ENGINEERING &amp; RAILWAY LOGISTICS
+      RAILWAY ELECTRONICS &amp; TRAIN SAFETY
     </text>
     <text x='245' y='42' font-family='Arial, Helvetica, sans-serif' font-size='13' font-weight='700' fill='#0A0A0A' letter-spacing='1'>
       РЕСПУБЛИКА УЗБЕКИСТАН // B2B &amp; B2G
@@ -66,34 +66,34 @@ const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630' widt
 
     <!-- Subtitle / Signature -->
     <text x='0' y='160' font-family='Arial, Helvetica, sans-serif' font-size='17' font-weight='700' fill='#0A0A0A' letter-spacing='0.5'>
-      ПРОМЫШЛЕННЫЕ И ЖД ПОСТАВКИ · ВЭД DDP · IT-РЕШЕНИЯ · ТАШКЕНТ, INDEX B2-2097
+      ЖД-ЭЛЕКТРОНИКА И СИСТЕМЫ БЕЗОПАСНОСТИ ДВИЖЕНИЯ · ТАШКЕНТ
     </text>
 
     <!-- Description -->
     <text x='0' y='205' font-family='Arial, Helvetica, sans-serif' font-size='16' fill='#4A5056'>
-      Складской комплекс Index B2-2097 · Снабжение подвижного состава (18-100, СА-3)
+      Официальный дилер ООО «НПО САУТ» в Узбекистане · Поставки, инжиниринг, локализация
     </text>
     <text x='0' y='232' font-family='Arial, Helvetica, sans-serif' font-size='16' fill='#4A5056'>
-      Контрактный ВЭД под ключ с НДС 12% · Платформа b2b.railtech.uz
+      Запросы КП — в Кабинете cabinet.railtech.uz
     </text>
 
     <!-- Metrics -->
     <g transform='translate(0, 275)'>
       <rect x='0' y='0' width='145' height='55' fill='#D4D8DC' stroke='#0A0A0A' stroke-width='1.5'/>
-      <text x='12' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#4A5056'>СКЛАД ТАШКЕНТ</text>
-      <text x='12' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#0A0A0A'>1 247+ SKU</text>
+      <text x='12' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#4A5056'>НА РЫНКЕ</text>
+      <text x='12' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#0A0A0A'>5+ ЛЕТ</text>
 
       <rect x='155' y='0' width='145' height='55' fill='#D4D8DC' stroke='#0A0A0A' stroke-width='1.5'/>
-      <text x='167' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#4A5056'>ЗАВОДЫ-ИЗГОТ.</text>
-      <text x='167' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#0A0A0A'>86+ ПАРТН.</text>
+      <text x='167' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#4A5056'>ПАРТНЁРОВ</text>
+      <text x='167' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#0A0A0A'>30+</text>
 
       <rect x='310' y='0' width='145' height='55' fill='#D4D8DC' stroke='#0A0A0A' stroke-width='1.5'/>
       <text x='322' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#4A5056'>КОЛЕЯ Ж/Д</text>
       <text x='322' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#0A0A0A'>1520 ММ</text>
 
       <rect x='465' y='0' width='145' height='55' fill='#0A0A0A' stroke='#0A0A0A' stroke-width='1.5'/>
-      <text x='477' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#D4D8DC'>НАЛОГОВЫЙ ЗАЧЕТ</text>
-      <text x='477' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#FFFFFF'>НДС 12%</text>
+      <text x='477' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#D4D8DC'>ДИЛЕР</text>
+      <text x='477' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#FFFFFF'>НПО САУТ</text>
     </g>
   </g>
 
@@ -126,7 +126,7 @@ const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630' widt
     </g>
 
     <text x='185' y='345' text-anchor='middle' font-family='Arial, Helvetica, sans-serif' font-size='11' font-weight='700' fill='#0A0A0A' letter-spacing='1'>
-      BOGIE 18-100 // CAD SCHEMATIC
+      ROLLING STOCK // CAD SCHEMATIC
     </text>
   </g>
 
@@ -136,7 +136,7 @@ const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630' widt
     © 2026 ООО «RAILTECH» // ТАШКЕНТ // ТЕЛ: +998 90 118-90-00 // INFO@RAILTECH.UZ
   </text>
   <text x='1136' y='569' text-anchor='end' font-family='Arial, Helvetica, sans-serif' font-size='12' font-weight='700' fill='#FFFFFF' letter-spacing='2'>
-    B2B.RAILTECH.UZ ↗
+    CABINET.RAILTECH.UZ ↗
   </text>
 </svg>`;
 

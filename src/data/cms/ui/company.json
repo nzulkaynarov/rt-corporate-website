@@ -50,12 +50,6 @@
       "en": "VALUE ADDED TAX (VAT) STATUS:"
     },
     {
-      "key": "about.dossier.oked",
-      "ru": "ОСНОВНОЙ ВИД ДЕЯТЕЛЬНОСТИ (ОКЭД):",
-      "uz": "ASOSIY FAOLIYAT TURI (IFUT):",
-      "en": "PRIMARY ACTIVITY CLASSIFICATION (NACE):"
-    },
-    {
       "key": "about.dossier.address",
       "ru": "ЮРИДИЧЕСКИЙ АДРЕС:",
       "uz": "YURIDIK MANZIL:",
@@ -74,12 +68,6 @@
       "en": "OFFICIAL DOMAINS:"
     },
     {
-      "key": "contacts.gps",
-      "ru": "GPS:",
-      "uz": "GPS:",
-      "en": "GPS:"
-    },
-    {
       "key": "contacts.openMap",
       "ru": "ОТКРЫТЬ НА ЯНДЕКС.КАРТАХ ↗",
       "uz": "YANDEX.XARITALARDA OCHISH ↗",
@@ -96,12 +84,6 @@
       "ru": "ИНН:",
       "uz": "STIR:",
       "en": "TIN:"
-    },
-    {
-      "key": "contacts.bank.vat",
-      "ru": "Статус НДС:",
-      "uz": "QQS maqomi:",
-      "en": "VAT Status:"
     },
     {
       "key": "contacts.bank.account",
@@ -132,12 +114,6 @@
       "ru": "[ ✓ Реквизиты скопированы ]",
       "uz": "[ ✓ Rekvizitlar nusxalandi ]",
       "en": "[ ✓ Requisites copied ]"
-    },
-    {
-      "key": "contacts.copy.oked",
-      "ru": "ОКЭД:",
-      "uz": "IFUT:",
-      "en": "NACE:"
     },
     {
       "key": "contacts.copy.address",
@@ -177,9 +153,9 @@
     },
     {
       "key": "notFound.consoleNode",
-      "ru": "DIAGNOSTIC_CONSOLE // NODE: TASHKENT_INDEX_B2",
-      "uz": "DIAGNOSTIC_CONSOLE // NODE: TASHKENT_INDEX_B2",
-      "en": "DIAGNOSTIC_CONSOLE // NODE: TASHKENT_INDEX_B2"
+      "ru": "DIAGNOSTIC_CONSOLE // NODE: TASHKENT_HQ",
+      "uz": "DIAGNOSTIC_CONSOLE // NODE: TASHKENT_HQ",
+      "en": "DIAGNOSTIC_CONSOLE // NODE: TASHKENT_HQ"
     },
     {
       "key": "notFound.heading",
@@ -252,6 +228,18 @@
       "ru": "Запрос из страницы 404 (ошибка маршрута)",
       "uz": "404 sahifasidan so'rov",
       "en": "Request from the 404 page"
+    },
+    {
+      "key": "contacts.office",
+      "ru": "Офис:",
+      "uz": "Ofis:",
+      "en": "Office:"
+    },
+    {
+      "key": "about.dossier.office",
+      "ru": "Офис",
+      "uz": "Ofis",
+      "en": "Office"
     }
   ]
 }
