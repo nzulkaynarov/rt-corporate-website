@@ -84,7 +84,7 @@
 | Блок КОН (контроль несанкционированного отключения ЭПК) | КОН bloki | КОН unit | — | |
 | ЭПК (электропневматический клапан автостопа) | EPK (avtostop elektropnevmatik klapani) | EPK (autostop electro-pneumatic valve) | — | |
 | Гибкий вал | egiluvchan val | flexible shaft | — | |
-| Официальный дилер и представитель | rasmiy diler va vakil | official dealer and representative | — | Только для НПО САУТ (свидетельство № 1 от 26.02.2026) |
+| Официальный дилер и представитель | rasmiy diler va vakil | official dealer and representative | — | Только для производителей, с которыми есть дилерский документ (сейчас — НПО САУТ, свидетельство № 1 от 26.02.2026) |
 | ООО «НПО САУТ» | «НПО САУТ» MChJ | NPO SAUT LLC | — | В UZ допускается кириллическое название в кавычках, как в официальных новостях |
 | Локализация производства | ishlab chiqarishni mahalliylashtirish | production localization | — | |
 | Кабинет клиента и партнёра | mijoz va hamkor kabineti | client & partner cabinet | — | cabinet.railtech.uz |

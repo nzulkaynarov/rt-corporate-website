@@ -6,9 +6,7 @@ title_en: "Engineering: Technical Expertise and Pilot Projects"
 category: "Инжиниринг"
 category_uz: "Injiniring"
 category_en: "Engineering"
-summary: "Техническое консультирование, предпроектная и методологическая поддержка, пилотные проекты, опытная эксплуатация и внедрение систем обеспечения безопасности движения поездов для железной дороги и промышленных предприятий Узбекистана."
-summary_uz: "O'zbekiston temir yo'li va sanoat korxonalari uchun texnik maslahat, loyihadan oldingi va metodologik ko'mak, pilot loyihalar, poezdlar harakati xavfsizligini ta'minlash tizimlarini tajriba ekspluatatsiyasi va joriy etish."
-summary_en: "Technical consulting, pre-design and methodological support, pilot projects, trial operation and implementation of train safety systems for the railway and industrial companies of Uzbekistan."
+summary: "Техническая экспертиза и пилотные проекты для железной дороги и промышленных предприятий Узбекистана: консультирование по ж/д электронике и оборудованию, предпроектная и методологическая поддержка, опытная эксплуатация и внедрение вместе с заводом-изготовителем."
 image: "/images/hero/software.jpg"
 order: 2
 ctaLabel: "Обсудить техническую задачу"
@@ -40,12 +38,8 @@ steps:
     text_uz: "Ishlab chiqaruvchi va buyurtmachi bilan birga pilot loyihalar, tajriba ekspluatatsiyasi va joriy etishda ishtirok etamiz."
     text_en: "We take part in pilot projects, trial operation and implementation together with the manufacturer and the customer."
 benefits:
-  - label: "Основание"
-    label_uz: "Asos"
-    label_en: "Basis"
-    value: "Права официального дилера ООО «НПО САУТ» (свидетельство № 1 от 26.02.2026)"
-    value_uz: "«НПО САУТ» MChJ rasmiy dilerining huquqlari (26.02.2026 yildagi 1-son guvohnoma)"
-    value_en: "Official dealer rights of NPO SAUT LLC (certificate No. 1 of 26.02.2026)"
+  - label: "Участники"
+    value: "Заказчик, RailTech и завод-изготовитель"
   - label: "Формат работ"
     label_uz: "Ish formati"
     label_en: "Scope"
@@ -67,55 +61,25 @@ benefits:
 seoTitle: "Инжиниринг и пилотные проекты | RailTech"
 seoTitle_uz: "Injiniring va pilot loyihalar | RailTech"
 seoTitle_en: "Engineering and Pilot Projects | RailTech"
-seoDescription: "Техническое консультирование, предпроектная поддержка, пилотные проекты и опытная эксплуатация систем безопасности движения поездов в Узбекистане."
-seoDescription_uz: "O'zbekistonda poezdlar harakati xavfsizligi tizimlari bo'yicha texnik maslahat, loyihadan oldingi ko'mak, pilot loyihalar va tajriba ekspluatatsiyasi."
-seoDescription_en: "Technical consulting, pre-design support, pilot projects and trial operation of train safety systems in Uzbekistan from RailTech, Tashkent."
-body_uz: |
-  ### Poezdlar harakati xavfsizligi tizimlari uchun injiniring
-
-  Uskunani tanlash va joriy etish uni yetkazib berishdan oldin boshlanadi. RailTech buyurtmachiga texnik yechimni tanlash, uning O'zbekiston Respublikasi talablariga muvofiqligini baholash va qarorni amalda tekshirishga yordam beradi. «НПО САУТ» MChJ ning rasmiy diler va vakili sifatida RailTech texnik maslahat, loyihadan oldingi va metodologik ko'mak berish, pilot loyihalar, tajriba ekspluatatsiyasi va joriy etishda ishtirok etish huquqiga ega (2026 yil 26 fevraldagi 1-son guvohnoma).
-
-  ### Xizmatga nimalar kiradi
-
-  - Lokomotiv xavfsizlik qurilmalari va poezdlar harakati xavfsizligini ta'minlash tizimlari bo'yicha texnik maslahat.
-  - Texnik yechimlar va butlovchi qismlarni buyurtmachi talablari hamda O'zbekiston Respublikasi me'yorlari bilan solishtirish.
-  - Loyihadan oldingi ko'mak: dastlabki talablar, ishlar tarkibi va qaror qabul qilish uchun hujjatlar.
-  - Yechimni tayyorlash va joriy etish bosqichlarida metodologik ko'mak.
-  - Ishlab chiqaruvchi va buyurtmachi bilan birga pilot loyihalar va tajriba ekspluatatsiyasida ishtirok etish.
-
-  ### Buyurtmachi uchun natija
-
-  Buyurtmachi asoslangan texnik yechim va joriy etishning tushunarli tarkibini oladi, keyingi yetkazib berish esa — bitta mas'ul ijrochi orqali amalga oshiriladi. Kerakli uskunani [yetkazib berish](/services/supply/) va [mahsulotni mahalliylashtirish](/services/localization/) bilan injiniringni bitta bitimda birlashtirish mumkin. Lokomotiv xavfsizlik qurilmalari va servis uskunalari — [katalogda](/catalog/).
-body_en: |
-  ### Engineering for train safety systems
-
-  Choosing and implementing equipment starts well before delivery. RailTech helps the customer select a technical solution, assess its compliance with the requirements of the Republic of Uzbekistan and verify the decision in practice. As the official dealer and representative of NPO SAUT LLC, RailTech is authorized to provide technical consulting, pre-design and methodological support, and to take part in pilot projects, trial operation and implementation (certificate No. 1 of February 26, 2026).
-
-  ### What is included
-
-  - Technical consulting on locomotive safety equipment and train safety systems.
-  - Checking technical solutions and components against the customer's requirements and the regulations of the Republic of Uzbekistan.
-  - Pre-design support: initial requirements, scope of work and documents for decision-making.
-  - Methodological support at the preparation and implementation stages.
-  - Participation in pilot projects and trial operation together with the manufacturer and the customer.
-
-  ### Result for the customer
-
-  The customer receives a substantiated technical solution and a clear implementation scope, and the subsequent supply runs through one accountable contractor. Engineering can be combined in one deal with the [supply](/services/supply/) of the required equipment and [product localization](/services/localization/). Locomotive safety equipment and service & test equipment are listed in the [catalog](/catalog/).
+seoDescription: "Техническая экспертиза и пилотные проекты по ж/д электронике и оборудованию в Узбекистане: консультирование, предпроектная поддержка, опытная эксплуатация."
 ---
 
-### Инжиниринг для систем безопасности движения поездов
+### Инжиниринг для ж/д электроники и оборудования
 
-Выбор и внедрение оборудования начинаются раньше поставки. RailTech помогает заказчику подобрать техническое решение, оценить его соответствие требованиям Республики Узбекистан и проверить решение на практике. Как официальный дилер и представитель ООО «НПО САУТ», RailTech имеет право на техническое консультирование, предпроектную и методологическую поддержку, участие в пилотных проектах, опытной эксплуатации и внедрении (свидетельство № 1 от 26 февраля 2026 г.).
+Выбор и внедрение оборудования начинаются раньше поставки. RailTech помогает заказчику подобрать техническое решение, оценить его соответствие требованиям Республики Узбекистан и проверить решение на практике. Мы работаем между заказчиком и заводом-изготовителем: передаём производителю структурированные требования и возвращаем заказчику исчерпывающую информацию по решению на каждом этапе.
 
 ### Что входит в услугу
 
-- Техническое консультирование по локомотивным устройствам безопасности и системам обеспечения безопасности движения поездов.
+- Техническое консультирование по ж/д электронике для локомотивов и электропоездов: системам безопасности и бортовой электронике, датчикам и преобразователям, электроаппаратуре, электрическим машинам.
 - Сопоставление технических решений и комплектующих с требованиями заказчика и нормативами Республики Узбекистан.
 - Предпроектная поддержка: исходные требования, состав работ и документы для принятия решения.
 - Методологическая поддержка на этапах подготовки и внедрения решения.
 - Участие в пилотных проектах и опытной эксплуатации вместе с производителем и заказчиком.
 
+### С какими производителями
+
+Инжиниринг ведём по продукции производителей, с которыми RailTech работает как официальный дилер или прямой поставщик, — перечень и статусы на странице [«О компании»](/about/). Например, по дилерскому свидетельству ООО «НПО САУТ» (№ 1 от 26 февраля 2026 г.) RailTech вправе вести техническое консультирование, предпроектную и методологическую поддержку, участвовать в пилотных проектах, опытной эксплуатации и внедрении систем безопасности движения поездов.
+
 ### Результат для заказчика
 
-Заказчик получает обоснованное техническое решение и понятный состав внедрения, а последующая поставка идёт через одного ответственного исполнителя. Инжиниринг можно объединить в одной сделке с [поставкой](/services/supply/) необходимого оборудования и [локализацией продукции](/services/localization/). Локомотивные устройства безопасности и сервисная аппаратура — в [каталоге](/catalog/).
+Заказчик получает обоснованное техническое решение и понятный состав внедрения, а последующая поставка идёт через одного ответственного исполнителя. Инжиниринг можно объединить в одной сделке с [поставкой](/services/supply/) необходимого оборудования и [локализацией продукции](/services/localization/). Ж/д электроника и сервисная аппаратура — в [каталоге](/catalog/).

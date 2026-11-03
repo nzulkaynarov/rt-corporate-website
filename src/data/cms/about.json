@@ -2,46 +2,38 @@
   "badge": "НА РЫНКЕ С 2021 ГОДА · РЕСПУБЛИКА УЗБЕКИСТАН",
   "badge_uz": "2021-YILDAN BOZORDA · O'ZBEKISTON RESPUBLIKASI",
   "badge_en": "ON THE MARKET SINCE 2021 · REPUBLIC OF UZBEKISTAN",
-  "pageTitle": "ООО «RAILTECH»: ЭЛЕКТРОНИКА И СИСТЕМЫ БЕЗОПАСНОСТИ ДВИЖЕНИЯ ПОЕЗДОВ",
-  "pageTitle_uz": "«RAILTECH» MCHJ: ELEKTRONIKA VA POEZDLAR HARAKATI XAVFSIZLIGI TIZIMLARI",
-  "pageTitle_en": "RAILTECH LLC: RAIL ELECTRONICS AND TRAIN SAFETY SYSTEMS",
-  "pageSubtitle": "ООО «RailTech» — надёжный мост между международными производителями и предприятиями Узбекистана. Поставляем оборудование и услуги железной дороге и крупным промышленным предприятиям Узбекистана, представляем интересы международных производителей в регионе. Основной профиль — электроника и системы безопасности движения поездов; RailTech — официальный дилер и представитель ООО «НПО САУТ» в Республике Узбекистан.",
-  "pageSubtitle_uz": "«RailTech» MChJ — xalqaro ishlab chiqaruvchilar va O'zbekiston korxonalari o'rtasidagi ishonchli ko'prik. O'zbekiston temir yo'li va yirik sanoat korxonalariga uskunalar va xizmatlar yetkazib beramiz, mintaqada xalqaro ishlab chiqaruvchilar manfaatlarini ifodalaymiz. Asosiy yo'nalish — elektronika va poezdlar harakati xavfsizligini ta'minlash tizimlari; RailTech O'zbekiston Respublikasida «НПО САУТ» MChJning rasmiy dileri va vakili.",
-  "pageSubtitle_en": "RailTech LLC is a reliable bridge between international manufacturers and enterprises of Uzbekistan. We supply equipment and services to the railway and major industrial companies of Uzbekistan and represent international manufacturers in the region. Our core field is rail electronics and train safety systems; RailTech is the official dealer and representative of NPO SAUT LLC in the Republic of Uzbekistan.",
+  "pageTitle": "ООО «RAILTECH»: ПОСТАВКИ Ж/Д ОБОРУДОВАНИЯ И ПРЕДСТАВИТЕЛЬСТВО МЕЖДУНАРОДНЫХ ПРОИЗВОДИТЕЛЕЙ В УЗБЕКИСТАНЕ",
+  "pageTitle_uz": "",
+  "pageTitle_en": "",
+  "pageSubtitle": "ООО «RailTech» — Ташкент, с 2021 года. Поставляем оборудование и услуги железной дороге и крупным промышленным предприятиям Узбекистана. Представляем интересы международных производителей в регионе: с одними работаем как официальный дилер и представитель, с другими — как прямой поставщик; перечень производителей — ниже. Основной профиль каталога — ж/д электроника для локомотивов и электропоездов, эксплуатируемых в Узбекистане.",
+  "pageSubtitle_uz": "",
+  "pageSubtitle_en": "",
   "mission": {
     "title": "МИССИЯ",
     "title_uz": "MISSIYA",
     "title_en": "MISSION",
-    "text": "Быть надёжным мостом между международными производителями и предприятиями Узбекистана. Мы снимаем барьеры, с которыми сталкиваются обе стороны: разные форматы заявок и неполные запросы, неизвестная итоговая стоимость с пошлинами и налогами, сертификаты и паспорта, которые сложно проверить, непрозрачный статус заказа, таможни и доставки. RailTech берёт эти задачи на себя как единая точка ответственности.",
-    "text_uz": "Xalqaro ishlab chiqaruvchilar va O'zbekiston korxonalari o'rtasida ishonchli ko'prik bo'lish. Ikkala tomon duch keladigan to'siqlarni bartaraf etamiz: so'rovlarning turli formatlari va to'liq bo'lmagan so'rovlar, boj va soliqlar bilan yakuniy qiymatning noma'lumligi, tekshirish qiyin bo'lgan sertifikat va pasportlar, buyurtma, bojxona va yetkazib berish holatining noaniqligi. RailTech bu vazifalarni yagona mas'ul tomon sifatida o'z zimmasiga oladi.",
-    "text_en": "To be a reliable bridge between international manufacturers and enterprises of Uzbekistan. We remove the barriers both sides face: different request formats and incomplete inquiries, an unknown final cost with duties and taxes, certificates and passports that are hard to verify, and no visibility of order status, customs and delivery. RailTech takes these tasks on as a single point of responsibility."
+    "text": "Наша миссия — надёжный мост между заказчиком и международным партнёром: быстрая обработка заявки и исчерпывающая информация на каждом этапе. Партнёры — заводы-изготовители, поставщики товаров и услуг. Заказчики — железная дорога, промышленные компании, инженерные проекты. RailTech между ними — единая точка ответственности: обработка заявки, расчёт и КП, сертификация, договор и документы, таможня, доставка до склада.",
+    "text_uz": "",
+    "text_en": ""
   },
   "advantages": [
     {
-      "code": "[01] ОФИЦИАЛЬНЫЙ ДИЛЕР НПО САУТ",
-      "code_uz": "[01] «НПО САУТ» RASMIY DILERI",
-      "code_en": "[01] OFFICIAL NPO SAUT DEALER",
-      "title": "Дилер и представитель НПО САУТ в Узбекистане",
-      "title_uz": "O'zbekistonda «НПО САУТ» dileri va vakili",
-      "title_en": "NPO SAUT dealer and representative in Uzbekistan",
-      "description": "Свидетельство № 1 от 26.02.2026, действует до 31.12.2026: продажа, поставка и продвижение комплектующих и технических решений ООО «НПО САУТ» для устройств и систем железнодорожной безопасности. Также поставляем продукцию ADZ NAGANO GmbH, GERSYS GmbH, Siemens Mobility GmbH, ООО «РАТЕП-ИННОВАЦИЯ» и других производителей.",
-      "description_uz": "2026-yil 26-fevraldagi 1-son guvohnoma, 2026-yil 31-dekabrgacha amal qiladi: temir yo'l xavfsizligi qurilmalari va tizimlari uchun «НПО САУТ» MChJ butlovchi qismlari va texnik yechimlarini sotish, yetkazib berish va ilgari surish. Shuningdek, ADZ NAGANO GmbH, GERSYS GmbH, Siemens Mobility GmbH, «РАТЕП-ИННОВАЦИЯ» MChJ va boshqa ishlab chiqaruvchilar mahsulotlarini yetkazib beramiz.",
-      "description_en": "Certificate No. 1 of February 26, 2026, valid until December 31, 2026: sale, supply and promotion of NPO SAUT LLC components and technical solutions for railway safety devices and systems. We also supply products of ADZ NAGANO GmbH, GERSYS GmbH, Siemens Mobility GmbH, РАТЕП-ИННОВАЦИЯ LLC and other manufacturers.",
+      "code": "[01] ПРОИЗВОДИТЕЛИ И ПАРТНЁРЫ",
+      "code_uz": "",
+      "code_en": "",
+      "title": "Официальный дилер и прямой поставщик производителей",
+      "title_uz": "",
+      "title_en": "",
+      "description": "RailTech работает с 10+ производителями и 30+ активными партнёрами — по дилерскому соглашению или по прямым поставкам. Официальный дилер и представитель ООО «НПО САУТ» в Республике Узбекистан: свидетельство № 1 от 26.02.2026, действует до 31.12.2026. Прямые поставки — продукция ADZ NAGANO GmbH, GERSYS GmbH, Siemens Mobility GmbH, ООО «РАТЕП-ИННОВАЦИЯ» и других производителей.",
+      "description_uz": "",
+      "description_en": "",
       "items": [
-        "Свидетельство № 1 от 26.02.2026",
         "10+ производителей",
-        "30+ активных партнёров"
+        "30+ активных партнёров",
+        "250+ позиций оборудования"
       ],
-      "items_uz": [
-        "2026-yil 26-fevraldagi 1-son guvohnoma",
-        "10+ ishlab chiqaruvchi",
-        "30+ faol hamkor"
-      ],
-      "items_en": [
-        "Certificate No. 1 of February 26, 2026",
-        "10+ manufacturers",
-        "30+ active partners"
-      ]
+      "items_uz": [],
+      "items_en": []
     },
     {
       "code": "[02] ЕДИНАЯ ТОЧКА ОТВЕТСТВЕННОСТИ",
@@ -50,9 +42,9 @@
       "title": "От заявки до доставки на склад",
       "title_uz": "So'rovdan omborgacha yetkazib berishgacha",
       "title_en": "From request to delivery to the warehouse",
-      "description": "Обработка заявки, расчёт и КП, сертификация, договор и документы, таможня и доставка до склада — за все этапы отвечает одна компания. Международным партнёрам предлагаем условия DDP и CIP.",
-      "description_uz": "So'rovni ko'rib chiqish, hisob-kitob va tijorat taklifi, sertifikatlash, shartnoma va hujjatlar, bojxona va omborgacha yetkazib berish — barcha bosqichlar uchun bitta kompaniya javob beradi. Xalqaro hamkorlarga DDP va CIP shartlarini taklif qilamiz.",
-      "description_en": "Request processing, calculation and quotation, certification, contract and documents, customs and delivery to the warehouse: one company is responsible for every stage. We offer DDP and CIP terms to international partners.",
+      "description": "Обе стороны сделки теряют время на одних и тех же этапах: запрос, цена, документы, исполнение. RailTech берёт их на себя: обработка заявки, расчёт и КП, сертификация, договор и документы, таможня и доставка до склада. Международным партнёрам предлагаем условия DDP и CIP.",
+      "description_uz": "",
+      "description_en": "",
       "items": [
         "КП с логистикой, пошлинами и НДС",
         "Документы для рынка РУз",
@@ -76,9 +68,9 @@
       "title": "Сделка по стадиям в Кабинете",
       "title_uz": "Bitim kabinetda bosqichma-bosqich",
       "title_en": "Deals tracked stage by stage in the Cabinet",
-      "description": "Единая платформа ведёт каждую заявку от запроса до закрытия, рутину берут ИИ и шаблоны. Кабинет cabinet.railtech.uz — одно окно для клиента и партнёра: запросы, КП, договоры, счета и акты; работает в вебе и в Telegram Mini App.",
-      "description_uz": "Yagona platforma har bir so'rovni boshidan yopilishigacha olib boradi, odatiy ishlarni sun'iy intellekt va shablonlar bajaradi. cabinet.railtech.uz kabineti — mijoz va hamkor uchun bitta oyna: so'rovlar, tijorat takliflari, shartnomalar, hisoblar va dalolatnomalar; vebda va Telegram Mini App'da ishlaydi.",
-      "description_en": "A single platform takes every request from inquiry to closing, with AI and templates handling routine work. The cabinet.railtech.uz Cabinet is one window for clients and partners: requests, quotations, contracts, invoices and acceptance reports, on the web and in a Telegram Mini App.",
+      "description": "Единая платформа ведёт каждую заявку от запроса до закрытия в пять шагов: запрос (бот, письмо, Excel или Кабинет), разбор в позиции каталога, КП с логистикой, пошлинами и НДС, договор по шаблонам, исполнение — оплата, поставка и акт по стадиям. Рутину берут ИИ и шаблоны. Кабинет cabinet.railtech.uz — одно окно для клиента и партнёра в вебе и в Telegram Mini App; каждый контрагент получает набор модулей под свою роль.",
+      "description_uz": "",
+      "description_en": "",
       "items": [
         "Приём заявок 24/7 на трёх языках",
         "Часы до первого КП вместо дней",
@@ -107,9 +99,9 @@
       "title": "Поставки",
       "title_uz": "Yetkazib berish",
       "title_en": "Supply",
-      "desc": "Ж/д комплектующие и промышленное оборудование для железной дороги и промышленных предприятий: позиции в наличии — со склада в Ташкенте, под заказ — с международной логистикой, таможней и доставкой до Ташкента.",
-      "desc_uz": "Temir yo'l va sanoat korxonalari uchun temir yo'l butlovchi qismlari va sanoat uskunalari: mavjud pozitsiyalar — Toshkentdagi ombordan, buyurtma asosidagilar — xalqaro logistika, bojxona va Toshkentgacha yetkazib berish bilan.",
-      "desc_en": "Railway components and industrial equipment for the railway and industrial companies: in-stock items ship from the Tashkent warehouse; on-order items include international logistics, customs and delivery to Tashkent."
+      "desc": "Ж/д комплектующие, электроника и промышленное оборудование для железной дороги и промышленных предприятий: позиции в наличии — со склада в Ташкенте, под заказ — с международной логистикой, таможней и доставкой до Ташкента.",
+      "desc_uz": "",
+      "desc_en": ""
     },
     {
       "title": "Инжиниринг",
@@ -131,9 +123,9 @@
       "title": "Представительство",
       "title_uz": "Vakillik",
       "title_en": "Representation",
-      "desc": "Интересы международных компаний в регионе: выход на рынок Узбекистана без собственного офиса — дилерское соглашение и защита интересов бренда, структурированные заявки, полный пакет документов для рынка РУз.",
-      "desc_uz": "Mintaqada xalqaro kompaniyalar manfaatlarini ifodalash: o'z ofisisiz O'zbekiston bozoriga chiqish — dilerlik shartnomasi va brend manfaatlarini himoya qilish, tuzilgan so'rovlar, O'zR bozori uchun to'liq hujjatlar to'plami.",
-      "desc_en": "Representing international companies in the region: entering the Uzbek market without your own office, with a dealer agreement and brand protection, structured requests and a complete document package for the Uzbek market."
+      "desc": "Интересы международных компаний в регионе: партнёр выходит на рынок Узбекистана без собственного офиса. Дилерское соглашение и защита интересов бренда, готовые структурированные заявки со спецификациями, полный пакет документов для рынка РУз, таможенная очистка и доставка до склада на условиях DDP и CIP.",
+      "desc_uz": "",
+      "desc_en": ""
     }
   ],
   "dossierTitle": "ОФИЦИАЛЬНОЕ ЮРИДИЧЕСКОЕ ДОСЬЕ И РЕКВИЗИТЫ ПРЕДПРИЯТИЯ",
@@ -148,9 +140,9 @@
   "faqTitle": "ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ О КОМПАНИИ",
   "faqTitle_uz": "KOMPANIYA HAQIDA KO'P SO'RALADIGAN SAVOLLAR",
   "faqTitle_en": "FREQUENTLY ASKED QUESTIONS ABOUT RAILTECH",
-  "faqSubtitle": "Кто мы, дилерский статус, запрос КП, условия поставки и гарантия",
-  "faqSubtitle_uz": "Biz kimmiz, dilerlik maqomi, tijorat taklifi so'rovi, yetkazib berish shartlari va kafolat",
-  "faqSubtitle_en": "Who we are, dealer status, requesting a quotation, delivery terms and warranty",
+  "faqSubtitle": "Кто мы, с какими производителями работаем, запрос КП, условия поставки и гарантия",
+  "faqSubtitle_uz": "",
+  "faqSubtitle_en": "",
   "faqNote": "ООО «RAILTECH» // ОТВЕТЫ НА ЧАСТЫЕ ВОПРОСЫ",
   "faqNote_uz": "«RAILTECH» MCHJ // KO'P SO'RALADIGAN SAVOLLARGA JAVOBLAR",
   "faqNote_en": "RAILTECH LLC // ANSWERS TO COMMON QUESTIONS",
@@ -159,25 +151,41 @@
       "q": "Чем занимается ООО «RailTech»?",
       "q_uz": "«RailTech» MChJ nima bilan shug'ullanadi?",
       "q_en": "What does RailTech LLC do?",
-      "a": "ООО «RailTech» — компания из Ташкента, на рынке с 2021 года. Поставляем оборудование и услуги железной дороге и крупным промышленным предприятиям Узбекистана и представляем интересы международных производителей в регионе. Основной профиль — электроника и системы безопасности движения поездов. Направления работы: поставки, инжиниринг, локализация и представительство.",
-      "a_uz": "«RailTech» MChJ — Toshkentdagi kompaniya, 2021-yildan beri bozorda. O'zbekiston temir yo'li va yirik sanoat korxonalariga uskunalar va xizmatlar yetkazib beramiz hamda mintaqada xalqaro ishlab chiqaruvchilar manfaatlarini ifodalaymiz. Asosiy yo'nalish — elektronika va poezdlar harakati xavfsizligini ta'minlash tizimlari. Faoliyat yo'nalishlari: yetkazib berish, injiniring, lokalizatsiya va vakillik.",
-      "a_en": "RailTech LLC is a Tashkent-based company on the market since 2021. We supply equipment and services to the railway and major industrial companies of Uzbekistan and represent international manufacturers in the region. Our core field is rail electronics and train safety systems. Our directions are supply, engineering, localization and representation."
+      "a": "ООО «RailTech» — компания из Ташкента, на рынке с 2021 года. Поставляем оборудование и услуги железной дороге и крупным промышленным предприятиям Узбекистана и представляем интересы международных производителей в регионе. Направления работы: поставки, инжиниринг, локализация и представительство. Основной профиль каталога — ж/д электроника для локомотивов и электропоездов: системы безопасности и бортовая электроника, датчики и преобразователи, электроаппаратура, электрические машины.",
+      "a_uz": "",
+      "a_en": ""
     },
     {
-      "q": "Вы официальный дилер НПО САУТ? До какого срока действует статус?",
-      "q_uz": "Siz «НПО САУТ»ning rasmiy dilerimisiz? Maqom qachongacha amal qiladi?",
-      "q_en": "Are you an official NPO SAUT dealer? How long is the status valid?",
-      "a": "Да. ООО «RailTech» — официальный дилер и представитель ООО «НПО САУТ» (Екатеринбург, Россия) на территории Республики Узбекистан. Статус подтверждён свидетельством № 1 от 26.02.2026 и действует до 31.12.2026. Он включает продажу, поставку и продвижение комплектующих и технических решений НПО САУТ для систем железнодорожной безопасности, техническое консультирование и участие в пилотных проектах, локализацию и представление интересов НПО САУТ в Узбекистане.",
-      "a_uz": "Ha. «RailTech» MChJ O'zbekiston Respublikasi hududida «НПО САУТ» MChJning (Yekaterinburg, Rossiya) rasmiy dileri va vakili. Maqom 2026-yil 26-fevraldagi 1-son guvohnoma bilan tasdiqlangan va 2026-yil 31-dekabrgacha amal qiladi. U temir yo'l xavfsizligi tizimlari uchun «НПО САУТ» butlovchi qismlari va texnik yechimlarini sotish, yetkazib berish va ilgari surish, texnik maslahat va pilot loyihalarda ishtirok etish, lokalizatsiya hamda O'zbekistonda «НПО САУТ» manfaatlarini ifodalashni o'z ichiga oladi.",
-      "a_en": "Yes. RailTech LLC is the official dealer and representative of NPO SAUT LLC (Yekaterinburg, Russia) in the Republic of Uzbekistan. The status is confirmed by Certificate No. 1 of February 26, 2026 and is valid until December 31, 2026. It covers the sale, supply and promotion of NPO SAUT components and technical solutions for railway safety systems, technical consulting and participation in pilot projects, localization, and representation of NPO SAUT in Uzbekistan."
+      "q": "Какие задачи сделки RailTech решает для заказчика и для производителя?",
+      "q_uz": "",
+      "q_en": "",
+      "a": "Обе стороны теряют время на одних и тех же этапах. Запрос: у заказчика — заявки в разных форматах и долгий поиск поставщика, у международного партнёра — неполные запросы без спецификаций. Цена: заказчику неизвестна итоговая стоимость с пошлинами и логистикой, партнёру — местные налоги и требования. Документы: сертификаты и паспорта качества сложно проверить, а нормативы и сертификация требуют локальной экспертизы. Исполнение: статус заказа непрозрачен, документы теряются в переписке, таможня и доставка до склада клиента вне контроля. RailTech закрывает эти этапы как единая точка ответственности, а все документы сделки хранятся в Кабинете.",
+      "a_uz": "",
+      "a_en": ""
+    },
+    {
+      "q": "С какими производителями вы работаете и в каком статусе?",
+      "q_uz": "",
+      "q_en": "",
+      "a": "RailTech работает с производителями как официальный дилер и представитель или как прямой поставщик. ООО «RailTech» — официальный дилер и представитель ООО «НПО САУТ» (Екатеринбург, Россия) на территории Республики Узбекистан: свидетельство № 1 от 26.02.2026, действует до 31.12.2026. Прямые поставки — продукция ADZ NAGANO GmbH, GERSYS GmbH, Siemens Mobility GmbH (Германия), ООО «РАТЕП-ИННОВАЦИЯ» (Россия) и других производителей. Статус по каждому производителю — в перечне на этой странице.",
+      "a_uz": "",
+      "a_en": ""
+    },
+    {
+      "q": "Как международному производителю выйти на рынок Узбекистана через RailTech?",
+      "q_uz": "",
+      "q_en": "",
+      "a": "Через представительство: партнёр выходит на рынок Узбекистана без собственного офиса. RailTech оформляет дилерское соглашение и защищает интересы бренда, передаёт производителю готовые структурированные заявки со спецификациями, готовит полный пакет документов для рынка РУз, организует таможенную очистку и доставку до склада на условиях DDP и CIP. В Кабинете производитель работает в роли «Партнёр-принципал»: дилерское соглашение, каталог продукции и отчёт о продажах.",
+      "a_uz": "",
+      "a_en": ""
     },
     {
       "q": "Какое оборудование вы поставляете?",
       "q_uz": "Qanday uskunalarni yetkazib berasiz?",
       "q_en": "What equipment do you supply?",
-      "a": "Локомотивные устройства безопасности и сервисную аппаратуру — например, датчики угла поворота ДПС, блоки БС-ДПС и КОН, стенды для проверки ДПС и БС-ДПС, а также ж/д комплектующие и промышленное оборудование. Работаем с 10+ производителями, среди них ООО «НПО САУТ», ADZ NAGANO GmbH, GERSYS GmbH, Siemens Mobility GmbH и ООО «РАТЕП-ИННОВАЦИЯ»; в номенклатуре 250+ позиций оборудования.",
-      "a_uz": "Lokomotiv xavfsizlik qurilmalari va servis uskunalari — masalan, ДПС burilish burchagi datchiklari, БС-ДПС va КОН bloklari, ДПС va БС-ДПС tekshirish stendlari, shuningdek, temir yo'l butlovchi qismlari va sanoat uskunalari. 10+ ishlab chiqaruvchi bilan ishlaymiz, jumladan «НПО САУТ» MChJ, ADZ NAGANO GmbH, GERSYS GmbH, Siemens Mobility GmbH va «РАТЕП-ИННОВАЦИЯ» MChJ; nomenklaturada 250+ pozitsiya uskuna bor.",
-      "a_en": "Locomotive safety equipment and service equipment, for example ДПС angle-of-rotation sensors, БС-ДПС and КОН units and test benches for ДПС and БС-ДПС, as well as railway components and industrial equipment. We work with 10+ manufacturers, including NPO SAUT LLC, ADZ NAGANO GmbH, GERSYS GmbH, Siemens Mobility GmbH and РАТЕП-ИННОВАЦИЯ LLC; our range covers 250+ equipment items."
+      "a": "Основной профиль — ж/д электроника для локомотивов и электропоездов, эксплуатируемых в Узбекистане: UzTE16M, ТЭП70БС, O'zbekiston, O'z-Y, O'z-ELR, 3ЭС5К, ВЛ80/ВЛ60, ЭР9Е, ТЭ10М, ЧМЭ3, ТЭМ2. Группы оборудования: системы безопасности и бортовая электроника, датчики и преобразователи, электроаппаратура, электрические машины. Также поставляем ж/д комплектующие и промышленное оборудование. В номенклатуре 250+ позиций оборудования от 10+ производителей; актуальный перечень — в каталоге, цена — по запросу КП.",
+      "a_uz": "",
+      "a_en": ""
     },
     {
       "q": "Как запросить коммерческое предложение?",

@@ -76,54 +76,17 @@ benefits:
     value: "Официальное представительство ООО «НПО САУТ» в РУз"
     value_uz: "«НПО САУТ» MChJ ning O'zR dagi rasmiy vakilligi"
     value_en: "Official representation of NPO SAUT LLC in Uzbekistan"
+seoTitle: "Представительство производителей в Узбекистане | RailTech"
 seoDescription: "Представительство международных производителей в Узбекистане без своего офиса: дилерское соглашение, сертификация, таможня и логистика DDP/CIP."
 seoDescription_uz: "Xalqaro ishlab chiqaruvchilarning O'zbekistondagi vakilligi, o'z ofisisiz: dilerlik shartnomasi, sertifikatlash, bojxona va DDP/CIP logistikasi."
 seoDescription_en: "Representing international manufacturers in Uzbekistan without a local office: dealer agreement, certification, customs and DDP/CIP logistics."
-body_uz: |
-  ### O'zbekiston bozoriga o'z ofisisiz chiqish
-
-  RailTech xalqaro ishlab chiqaruvchilar manfaatlarini O'zbekistonda ifodalaydi va ularning mahsulotlarini temir yo'l va yirik sanoat korxonalariga yetkazib beradi. Ishlab chiqaruvchi uchun bu bozorga mahalliy ofis ochmasdan chiqish imkoniyati: arizalar, hujjatlar, bojxona va yetkazib berish bilan ishlashni RailTech o'z zimmasiga oladi. Ikkala tomon ham bir xil to'siqlarga duch keladi — turli formatdagi va to'liq bo'lmagan so'rovlar, boj to'lovlari va mahalliy soliqlar bilan noaniq yakuniy narx, tekshirish qiyin bo'lgan sertifikatlar, buyurtma holatining shaffof emasligi. Vakillik ularni yagona mas'uliyat nuqtasida yopadi.
-
-  ### Xizmatga nimalar kiradi
-
-  - Dilerlik shartnomasi va O'zbekistonda brend manfaatlarini himoya qilish.
-  - Tayyor arizalar: tuzilgan, spetsifikatsiyalar bilan.
-  - Sertifikatlash: O'zR bozori uchun hujjatlarning to'liq to'plami.
-  - Bojxona va logistika: rasmiylashtirish va DDP yoki CIP shartlarida omborgacha yetkazib berish.
-  - Mahsulotni sotish, [yetkazib berish](/services/supply/) va ilgari surish.
-
-  ### Kabinetda ishlash
-
-  Ishlab chiqaruvchi [mijoz va hamkor kabinetida](/projects/railtech-platform/) ishlaydi. «Hamkor-prinsipal» roli — dilerlik shartnomasi, katalog va savdo hisoboti. «Xalqaro hamkor» roli — ingliz tili, valyuta, Incoterms va xorijiy rekvizitlar. Bitta kompaniya bir nechta rolda ishlashi mumkin.
-
-  ### Misol: «НПО САУТ» MChJ
-
-  RailTech — «НПО САУТ» MChJ (Yekaterinburg) ning O'zbekiston Respublikasi hududidagi rasmiy diler va vakili, 2026 yil 26 fevraldagi 1-son guvohnoma. Huquqlar tarkibi va 2026 yil tadbirlari — [loyiha sahifasida](/projects/npo-saut-representation/). Vakillikni [injiniring](/services/engineering/) va [mahalliylashtirish](/services/localization/) bilan to'ldirish mumkin.
-body_en: |
-  ### Entering the Uzbek market without your own office
-
-  RailTech represents the interests of international manufacturers in Uzbekistan and supplies their products to the railway and large industrial companies. For a manufacturer, this is a way to enter the market without opening a local office: RailTech handles requests, documents, customs and delivery. Both sides face the same barriers — requests in different formats and incomplete inquiries, a final price with duties and local taxes that is hard to predict, certificates that are difficult to verify, and an order status that is not transparent. Representation closes them at a single point of responsibility.
-
-  ### What is included
-
-  - A dealer agreement and protection of the brand's interests in Uzbekistan.
-  - Ready-made requests: structured, with specifications.
-  - Certification: the full document package for the Uzbek market.
-  - Customs and logistics: clearance and delivery to the warehouse on DDP or CIP terms.
-  - Sales, [supply](/services/supply/) and promotion of the products.
-
-  ### Working in the cabinet
-
-  The manufacturer works in the [client & partner cabinet](/projects/railtech-platform/). The Principal Partner role covers the dealer agreement, catalog and sales report. The International Partner role supports the English language, currency, Incoterms and foreign bank details. One company can work in several roles.
-
-  ### Example: NPO SAUT LLC
-
-  RailTech is the official dealer and representative of NPO SAUT LLC (Yekaterinburg) in the Republic of Uzbekistan under certificate No. 1 of February 26, 2026. The scope of rights and the 2026 events are on the [project page](/projects/npo-saut-representation/). Representation can be complemented with [engineering](/services/engineering/) and [localization](/services/localization/).
 ---
 
 ### Выход на рынок Узбекистана без собственного офиса
 
-RailTech представляет интересы международных производителей в Узбекистане и поставляет их продукцию железной дороге и крупным промышленным предприятиям. Для производителя это способ выйти на рынок, не открывая местный офис: работу с заявками, документами, таможней и доставкой берёт на себя RailTech. Обе стороны сталкиваются с одними и теми же барьерами — разные форматы и неполные запросы, неизвестная итоговая стоимость с пошлинами и местными налогами, сертификаты, которые сложно проверить, непрозрачный статус заказа. Представительство закрывает их в единой точке ответственности.
+RailTech представляет интересы международных производителей в Узбекистане и поставляет их продукцию железной дороге и крупным промышленным предприятиям. Для производителя это способ выйти на рынок, не открывая местный офис: работу с заявками, документами, таможней и доставкой берёт на себя RailTech. Формат работы — дилерское соглашение, по которому RailTech становится официальным дилером и представителем производителя, или прямые поставки; действующие статусы — в перечне производителей на странице [«О компании»](/about/).
+
+Обе стороны сделки сталкиваются с одними и теми же барьерами — разные форматы и неполные запросы, неизвестная итоговая стоимость с пошлинами и местными налогами, сертификаты, которые сложно проверить, непрозрачный статус заказа, таможня и доставка вне контроля. Представительство закрывает их в единой точке ответственности.
 
 ### Что входит в услугу
 

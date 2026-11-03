@@ -1,8 +1,8 @@
 {
   "consoleTitle": "RailTech",
-  "consoleSubtitle": "Электроника и системы безопасности движения поездов",
-  "consoleSubtitle_uz": "Elektronika va poezdlar harakati xavfsizligi tizimlari",
-  "consoleSubtitle_en": "Rail electronics & train safety systems",
+  "consoleSubtitle": "Поставки ж/д электроники и представительство производителей",
+  "consoleSubtitle_uz": "",
+  "consoleSubtitle_en": "",
   "consoleKicker": "SYSTEM CONSOLE",
   "consoleKicker_uz": "SYSTEM CONSOLE",
   "consoleKicker_en": "SYSTEM CONSOLE",
@@ -10,12 +10,12 @@
   "consoleStamp_uz": "RT // CAD.UI 026",
   "consoleStamp_en": "RT // CAD.UI 026",
   "topCalloutTag": "RT_CONSOLE // SYS.ACTIVE",
-  "topCalloutStatus": "ОФИЦИАЛЬНЫЙ ДИЛЕР НПО САУТ В РУз",
-  "topCalloutStatus_uz": "O'zR DA «НПО САУТ» RASMIY DILERI",
-  "topCalloutStatus_en": "OFFICIAL NPO SAUT DEALER IN UZBEKISTAN",
-  "topCalloutVat": "ЦЕНЫ С НДС 12%",
-  "topCalloutVat_uz": "NARXLAR 12% QQS BILAN",
-  "topCalloutVat_en": "PRICES INCL. 12% VAT",
+  "topCalloutStatus": "ПОСТАВКИ · ИНЖИНИРИНГ · ЛОКАЛИЗАЦИЯ · ПРЕДСТАВИТЕЛЬСТВО",
+  "topCalloutStatus_uz": "",
+  "topCalloutStatus_en": "",
+  "topCalloutVat": "НДС 12% · ЭСФ",
+  "topCalloutVat_uz": "",
+  "topCalloutVat_en": "",
   "topCalloutHub": "TASHKENT, A. QAHHOR 46",
   "topCalloutSla": "Ответ в течение рабочего дня",
   "topCalloutSla_uz": "Ish kuni davomida javob beramiz",
@@ -62,31 +62,31 @@
   "projectsSectionTitle": "ПРОЕКТЫ RAILTECH",
   "projectsSectionTitle_uz": "RAILTECH LOYIHALARI",
   "projectsSectionTitle_en": "RAILTECH PROJECTS",
-  "projectsSectionSubtitle": "ПРЕДСТАВИТЕЛЬСТВО НПО САУТ, ОБРАЗОВАНИЕ И ЦИФРОВАЯ ПЛАТФОРМА",
-  "projectsSectionSubtitle_uz": "«НПО САУТ» VAKILLIGI, TA'LIM VA RAQAMLI PLATFORMA",
-  "projectsSectionSubtitle_en": "NPO SAUT REPRESENTATION, EDUCATION & DIGITAL PLATFORM",
+  "projectsSectionSubtitle": "ПРЕДСТАВИТЕЛЬСТВО ПРОИЗВОДИТЕЛЕЙ, ОТРАСЛЕВОЕ ОБРАЗОВАНИЕ И ЦИФРОВАЯ ПЛАТФОРМА",
+  "projectsSectionSubtitle_uz": "",
+  "projectsSectionSubtitle_en": "",
   "heroSlides": [
     {
       "image": "/images/hero/warehouse.jpg",
-      "tag": "CATALOG // SAFETY",
+      "tag": "CATALOG // RAIL ELECTRONICS",
       "link": "/catalog/",
-      "title": "Электроника и устройства безопасности движения поездов",
-      "title_uz": "Poezdlar harakati xavfsizligi uchun elektronika va qurilmalar",
-      "title_en": "Electronics & train safety equipment",
-      "description": "250+ позиций оборудования: датчики угла поворота ДПС, блоки БС-ДПС и КОН, стенды для их проверки. Позиции в наличии — на складе в Ташкенте; цена — по запросу КП.",
-      "description_uz": "250+ pozitsiya uskuna: ДПС burilish burchagi datchiklari, БС-ДПС va КОН bloklari, ularni tekshirish stendlari. Mavjud pozitsiyalar Toshkentdagi omborda; narx — tijorat taklifi so'rovi bo'yicha.",
-      "description_en": "250+ equipment items: ДПС angle-of-rotation sensors, БС-ДПС and КОН units, and test benches for them. In-stock items are held in Tashkent; prices on request for quotation."
+      "title": "Ж/д электроника для локомотивов и электропоездов",
+      "title_uz": "",
+      "title_en": "",
+      "description": "Системы безопасности и бортовая электроника, датчики и преобразователи, электроаппаратура и электрические машины для UzTE16M, ТЭП70БС, O'zbekiston, 3ЭС5К, ВЛ80/ВЛ60, ЭР9Е, ТЭ10М, ЧМЭ3 и ТЭМ2. Цена — по запросу КП.",
+      "description_uz": "",
+      "description_en": ""
     },
     {
       "image": "/images/hero/engineering-art.jpg",
-      "tag": "DEALER // NPO SAUT",
-      "link": "/services/representation/",
-      "title": "Официальный дилер и представитель НПО САУТ в Узбекистане",
-      "title_uz": "O'zbekistonda «НПО САУТ»ning rasmiy dileri va vakili",
-      "title_en": "Official dealer and representative of NPO SAUT in Uzbekistan",
-      "description": "Свидетельство № 1 от 26.02.2026, действует до 31.12.2026: поставка, техническое консультирование, локализация и представление интересов ООО «НПО САУТ» в Республике Узбекистан.",
-      "description_uz": "2026-yil 26-fevraldagi 1-son guvohnoma, 2026-yil 31-dekabrgacha amal qiladi: O'zbekiston Respublikasida «НПО САУТ» MChJ mahsulotlarini yetkazib berish, texnik maslahat, lokalizatsiya va manfaatlarini ifodalash.",
-      "description_en": "Certificate No. 1 of February 26, 2026, valid until December 31, 2026: supply, technical consulting, localization and representation of NPO SAUT LLC in the Republic of Uzbekistan."
+      "tag": "PARTNERS // MANUFACTURERS",
+      "link": "/about/",
+      "title": "Официальный дилер и прямой поставщик производителей",
+      "title_uz": "",
+      "title_en": "",
+      "description": "Официальный дилер и представитель ООО «НПО САУТ» в Республике Узбекистан; прямые поставки продукции ADZ NAGANO, GERSYS, Siemens Mobility, РАТЕП-ИННОВАЦИЯ и других производителей. Партнёр выходит на рынок Узбекистана без собственного офиса.",
+      "description_uz": "",
+      "description_en": ""
     },
     {
       "image": "/images/hero/logistics.jpg",
@@ -139,12 +139,12 @@
   ],
   "passport": [
     {
-      "label": "Статус",
-      "label_uz": "Maqom",
-      "label_en": "Status",
-      "value": "Официальный дилер и представитель НПО САУТ",
-      "value_uz": "«НПО САУТ» rasmiy dileri va vakili",
-      "value_en": "Official dealer and representative of NPO SAUT"
+      "label": "Модель работы",
+      "label_uz": "",
+      "label_en": "",
+      "value": "Единая точка ответственности между производителем и заказчиком",
+      "value_uz": "",
+      "value_en": ""
     },
     {
       "label": "Локация",
@@ -179,9 +179,9 @@
       "title_en": "Equipment catalog",
       "image": "/images/hero/warehouse.jpg",
       "href": "/catalog/",
-      "text": "Локомотивные устройства безопасности, сервисная и испытательная аппаратура. Цена — по запросу КП.",
-      "text_uz": "Lokomotiv xavfsizlik qurilmalari, servis va sinov uskunalari. Narx — tijorat taklifi so'rovi bo'yicha.",
-      "text_en": "Locomotive safety equipment, service & test equipment. Prices on request for quotation."
+      "text": "Ж/д электроника для локомотивов и электропоездов: системы безопасности, датчики и преобразователи, электроаппаратура, электрические машины. Цена — по запросу КП.",
+      "text_uz": "",
+      "text_en": ""
     },
     {
       "title": "Услуги: 4 направления",
@@ -199,9 +199,9 @@
       "title_en": "Projects",
       "image": "/images/hero/engineering-art.jpg",
       "href": "/projects/",
-      "text": "Представительство НПО САУТ, учебная аудитория в ТГТУ и цифровая платформа RailTech.",
-      "text_uz": "«НПО САУТ» vakilligi, TDTUdagi o'quv auditoriyasi va RailTech raqamli platformasi.",
-      "text_en": "NPO SAUT representation, the training classroom at TSTU and the RailTech digital platform."
+      "text": "Представительство производителя в Узбекистане, учебная аудитория в ТГТУ, цифровая платформа и Кабинет RailTech.",
+      "text_uz": "",
+      "text_en": ""
     },
     {
       "title": "Блог и новости",
@@ -209,9 +209,9 @@
       "title_en": "Blog & news",
       "image": "/images/hero/software.jpg",
       "href": "/blog/",
-      "text": "Новости компании, отраслевые события и материалы о системах безопасности движения.",
-      "text_uz": "Kompaniya yangiliklari, soha tadbirlari va harakat xavfsizligi tizimlari haqida materiallar.",
-      "text_en": "Company news, industry events and articles on train safety systems."
+      "text": "Новости компании, отраслевые события и материалы о ж/д электронике и поставках оборудования.",
+      "text_uz": "",
+      "text_en": ""
     }
   ],
   "showcaseSectionBadge": "КАТАЛОГ",
@@ -229,9 +229,9 @@
   "blogTitle": "Новости RailTech и отрасли",
   "blogTitle_uz": "RailTech va soha yangiliklari",
   "blogTitle_en": "RailTech & Industry News",
-  "blogSubtitle": "Новости компании, отраслевые события и материалы о системах безопасности движения поездов",
-  "blogSubtitle_uz": "Kompaniya yangiliklari, soha tadbirlari va poezdlar harakati xavfsizligi tizimlari haqida materiallar",
-  "blogSubtitle_en": "Company news, industry events and articles on train safety systems",
+  "blogSubtitle": "Новости компании, отраслевые события и материалы о ж/д электронике и поставках оборудования",
+  "blogSubtitle_uz": "",
+  "blogSubtitle_en": "",
   "trustSectionBadge": "УСЛОВИЯ РАБОТЫ",
   "trustSectionBadge_uz": "ISH SHARTLARI",
   "trustSectionBadge_en": "HOW WE WORK",

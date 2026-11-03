@@ -39,7 +39,7 @@ const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630' widt
   <!-- Top Strip -->
   <rect x='48' y='48' width='1104' height='36' fill='#D4D8DC' stroke='#0A0A0A' stroke-width='1'/>
   <text x='64' y='71' font-family='Arial, Helvetica, sans-serif' font-size='12' font-weight='700' fill='#0A0A0A' letter-spacing='2'>
-    REF: UZ-RAILTECH-2026 // NODE: TASHKENT // OFFICIAL NPO SAUT DEALER
+    REF: UZ-RAILTECH-2026 // NODE: TASHKENT // MANUFACTURERS - RAILTECH - CUSTOMERS
   </text>
   <text x='1136' y='71' text-anchor='end' font-family='Arial, Helvetica, sans-serif' font-size='12' font-weight='700' fill='#0A0A0A' letter-spacing='1'>
     RAILTECH.UZ
@@ -53,7 +53,7 @@ const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630' widt
       RAILTECH
     </text>
     <text x='245' y='22' font-family='Arial, Helvetica, sans-serif' font-size='11' font-weight='700' fill='#4A5056' letter-spacing='2'>
-      RAILWAY ELECTRONICS &amp; TRAIN SAFETY
+      RAIL EQUIPMENT · MANUFACTURER REPRESENTATION
     </text>
     <text x='245' y='42' font-family='Arial, Helvetica, sans-serif' font-size='13' font-weight='700' fill='#0A0A0A' letter-spacing='1'>
       РЕСПУБЛИКА УЗБЕКИСТАН // B2B &amp; B2G
@@ -66,15 +66,15 @@ const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630' widt
 
     <!-- Subtitle / Signature -->
     <text x='0' y='160' font-family='Arial, Helvetica, sans-serif' font-size='17' font-weight='700' fill='#0A0A0A' letter-spacing='0.5'>
-      ЖД-ЭЛЕКТРОНИКА И СИСТЕМЫ БЕЗОПАСНОСТИ ДВИЖЕНИЯ · ТАШКЕНТ
+      ПОСТАВКИ · ИНЖИНИРИНГ · ЛОКАЛИЗАЦИЯ · ПРЕДСТАВИТЕЛЬСТВО
     </text>
 
     <!-- Description -->
     <text x='0' y='205' font-family='Arial, Helvetica, sans-serif' font-size='16' fill='#4A5056'>
-      Официальный дилер ООО «НПО САУТ» в Узбекистане · Поставки, инжиниринг, локализация
+      Надёжный мост между международными производителями и предприятиями Узбекистана
     </text>
     <text x='0' y='232' font-family='Arial, Helvetica, sans-serif' font-size='16' fill='#4A5056'>
-      Запросы КП — в Кабинете cabinet.railtech.uz
+      Ж/д электроника и оборудование · Запросы КП — в Кабинете cabinet.railtech.uz
     </text>
 
     <!-- Metrics -->
@@ -92,8 +92,8 @@ const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630' widt
       <text x='322' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#0A0A0A'>1520 ММ</text>
 
       <rect x='465' y='0' width='145' height='55' fill='#0A0A0A' stroke='#0A0A0A' stroke-width='1.5'/>
-      <text x='477' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#D4D8DC'>ДИЛЕР</text>
-      <text x='477' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#FFFFFF'>НПО САУТ</text>
+      <text x='477' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#D4D8DC'>ПРОИЗВОДИТЕЛЕЙ</text>
+      <text x='477' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#FFFFFF'>10+</text>
     </g>
   </g>
 

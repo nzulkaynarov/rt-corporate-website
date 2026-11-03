@@ -4,9 +4,9 @@
   "siteName_en": "RailTech",
   "titleSuffix": "| RailTech",
   "defaultImage": "/og-cover.png",
-  "organizationDescription": "Поставщик электроники и систем безопасности движения поездов для железной дороги и промышленности Узбекистана; официальный дилер и представитель ООО «НПО САУТ» в Республике Узбекистан.",
-  "organizationDescription_uz": "O'zbekiston temir yo'li va sanoati uchun elektronika va poezdlar harakati xavfsizligini ta'minlash tizimlari yetkazib beruvchisi; O'zbekiston Respublikasida «НПО САУТ» MChJning rasmiy dileri va vakili.",
-  "organizationDescription_en": "Supplier of rail electronics and train safety systems to the railway and industry of Uzbekistan; official dealer and representative of NPO SAUT LLC in the Republic of Uzbekistan.",
+  "organizationDescription": "Поставки ж/д электроники, оборудования и услуг железной дороге и промышленным предприятиям Узбекистана; представительство международных производителей в регионе.",
+  "organizationDescription_uz": "",
+  "organizationDescription_en": "",
   "knowsAbout": [
     "Системы обеспечения безопасности движения поездов",
     "Локомотивные устройства безопасности",
@@ -36,20 +36,20 @@
   "catalogDescription_en": "{title} ({sku}): {specs}. Supplied by RailTech in Tashkent, 12-month warranty, price on request.",
   "pages": {
     "home": {
-      "title": "RailTech — системы безопасности движения поездов, Ташкент",
-      "description": "Электроника и системы безопасности движения поездов для железной дороги и промышленности Узбекистана. Официальный дилер НПО САУТ. Поставки и локализация.",
-      "title_uz": "RailTech — poezdlar harakati xavfsizligi tizimlari, Toshkent",
-      "description_uz": "O'zbekiston temir yo'li va sanoati uchun elektronika va poezdlar harakati xavfsizligi tizimlari. «НПО САУТ» rasmiy dileri. Yetkazib berish va lokalizatsiya.",
-      "title_en": "RailTech — Train Safety Systems & Electronics, Tashkent",
-      "description_en": "Rail electronics and train safety systems for the railway and industry of Uzbekistan. Official NPO SAUT dealer: supply, engineering and localization."
+      "title": "RailTech — поставки ж/д электроники и оборудования, Ташкент",
+      "title_uz": "",
+      "title_en": "",
+      "description": "Поставки ж/д электроники и оборудования для локомотивов и промышленности Узбекистана, представительство международных производителей. КП с НДС 12%.",
+      "description_uz": "",
+      "description_en": ""
     },
     "catalog": {
-      "title": "Каталог: локомотивные устройства безопасности | RailTech",
-      "description": "Датчики угла поворота ДПС, блоки БС-ДПС и КОН, стенды для проверки — локомотивные устройства безопасности и сервисная аппаратура. Ташкент, цена по запросу КП.",
-      "title_uz": "Katalog: lokomotiv xavfsizlik qurilmalari | RailTech",
-      "description_uz": "ДПС burilish burchagi datchiklari, БС-ДПС va КОН bloklari, tekshirish stendlari — lokomotiv xavfsizlik qurilmalari va servis uskunalari. Narx so'rov bo'yicha.",
-      "title_en": "Catalog: Locomotive Safety Equipment | RailTech",
-      "description_en": "ДПС angle-of-rotation sensors, БС-ДПС and КОН units, test benches: locomotive safety equipment and service & test equipment in Tashkent. Price on request."
+      "title": "Каталог ж/д электроники для локомотивов | RailTech",
+      "title_uz": "",
+      "title_en": "",
+      "description": "Системы безопасности, бортовая электроника, датчики, электроаппаратура и электрические машины для UzTE16M, ТЭП70БС, 3ЭС5К, ВЛ80. Цена по запросу КП.",
+      "description_uz": "",
+      "description_en": ""
     },
     "services": {
       "title": "Услуги: поставки, инжиниринг, локализация | RailTech",
@@ -60,28 +60,28 @@
       "description_en": "Four RailTech directions: supply of railway components and equipment, engineering and pilot projects, localization to Uzbek rules, representation."
     },
     "projects": {
-      "title": "Проекты RailTech: НПО САУТ, ТГТУ, цифровая платформа",
-      "description": "Проекты RailTech: представительство НПО САУТ в Узбекистане, учебная аудитория САУТ в ТГТУ и цифровая платформа с Кабинетом для клиентов и партнёров.",
-      "title_uz": "RailTech loyihalari: «НПО САУТ», TDTU, raqamli platforma",
-      "description_uz": "RailTech loyihalari: O'zbekistonda «НПО САУТ» vakilligi, TDTUdagi САУТ o'quv auditoriyasi hamda mijoz va hamkorlar kabinetiga ega raqamli platforma.",
-      "title_en": "RailTech Projects: NPO SAUT, TSTU and Digital Platform",
-      "description_en": "RailTech projects: NPO SAUT representation in Uzbekistan, the SAUT training classroom at TSTU and a digital platform with a Cabinet for clients and partners."
+      "title": "Проекты RailTech: представительство, ТГТУ, платформа",
+      "title_uz": "",
+      "title_en": "",
+      "description": "Кейсы RailTech: представительство международного производителя в Узбекистане (НПО САУТ), учебная аудитория в ТГТУ, цифровая платформа и Кабинет.",
+      "description_uz": "",
+      "description_en": ""
     },
     "blog": {
-      "title": "Блог RailTech: новости и безопасность движения поездов",
-      "description": "Новости RailTech и отрасли: официальное дилерство НПО САУТ, конференция и учебная аудитория в ТГТУ, запуск сайта и Кабинета, материалы о системах безопасности.",
-      "title_uz": "RailTech blogi: yangiliklar va poezdlar harakati xavfsizligi",
-      "description_uz": "RailTech va soha yangiliklari: «НПО САУТ» rasmiy dilerligi, TDTUdagi konferensiya va o'quv auditoriyasi, sayt va kabinet ishga tushirilishi.",
-      "title_en": "RailTech Blog: News and Train Safety Systems",
-      "description_en": "RailTech and industry news: official NPO SAUT dealership, the conference and training classroom at TSTU, the launch of the website and Cabinet, safety systems."
+      "title": "Блог RailTech: новости, ж/д электроника и поставки",
+      "title_uz": "",
+      "title_en": "",
+      "description": "Новости RailTech и отрасли: события с производителями-партнёрами, конференция и учебная аудитория в ТГТУ, запуск сайта и Кабинета, материалы о ж/д электронике.",
+      "description_uz": "",
+      "description_en": ""
     },
     "about": {
-      "title": "О компании RailTech — дилер НПО САУТ в Узбекистане",
-      "description": "ООО «RailTech» — на рынке с 2021 года: электроника и системы безопасности движения поездов, официальный дилер НПО САУТ в РУз. Направления, реквизиты, FAQ.",
-      "title_uz": "RailTech haqida — O'zbekistonda «НПО САУТ» dileri",
-      "description_uz": "«RailTech» MChJ — 2021-yildan bozorda: elektronika va poezdlar harakati xavfsizligi tizimlari, O'zR da «НПО САУТ» rasmiy dileri. Yo'nalishlar, rekvizitlar, FAQ.",
-      "title_en": "About RailTech — NPO SAUT Dealer in Uzbekistan",
-      "description_en": "RailTech LLC, on the market since 2021: rail electronics and train safety systems, official NPO SAUT dealer in Uzbekistan. Directions, company details and FAQ."
+      "title": "О RailTech — представительство производителей в Узбекистане",
+      "title_uz": "",
+      "title_en": "",
+      "description": "ООО «RailTech», Ташкент, с 2021 года: поставки ж/д оборудования, официальный дилер и прямой поставщик производителей в Узбекистане. Перечень, реквизиты, FAQ.",
+      "description_uz": "",
+      "description_en": ""
     },
     "contacts": {
       "title": "Контакты RailTech — офис в Ташкенте, ул. А. Каххара",

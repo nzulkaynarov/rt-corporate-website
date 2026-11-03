@@ -53,15 +53,43 @@
     "manufacturers": "10+",
     "smartMatch": ""
   },
+  "manufacturers": [
+    {
+      "name": "ООО «НПО САУТ»",
+      "country": "Россия",
+      "status": "Официальный дилер и представитель",
+      "note": "Свидетельство № 1 от 26.02.2026, действует до 31.12.2026; территория — Республика Узбекистан"
+    },
+    {
+      "name": "ADZ NAGANO GmbH",
+      "country": "Германия",
+      "status": "Прямые поставки"
+    },
+    {
+      "name": "GERSYS GmbH",
+      "country": "Германия",
+      "status": "Прямые поставки"
+    },
+    {
+      "name": "Siemens Mobility GmbH",
+      "country": "Германия",
+      "status": "Прямые поставки"
+    },
+    {
+      "name": "ООО «РАТЕП-ИННОВАЦИЯ»",
+      "country": "Россия",
+      "status": "Прямые поставки"
+    }
+  ],
   "topBar": {
     "telemetryStatus": "[ ● ONLINE ]",
-    "vatBadge": "ЦЕНЫ С НДС 12%",
-    "vatBadge_uz": "NARXLAR 12% QQS BILAN",
-    "vatBadge_en": "PRICES INCL. 12% VAT",
+    "vatBadge": "НДС 12% · ЭСФ",
+    "vatBadge_uz": "",
+    "vatBadge_en": "",
     "industryBadge": "RAIL ELECTRONICS & TRAIN SAFETY",
-    "geoBadge": "ДИЛЕР НПО САУТ • УЗБЕКИСТАН",
-    "geoBadge_uz": "«НПО САУТ» DILERI • O'ZBEKISTON",
-    "geoBadge_en": "NPO SAUT DEALER • UZBEKISTAN"
+    "geoBadge": "Ж/Д ЭЛЕКТРОНИКА • УЗБЕКИСТАН",
+    "geoBadge_uz": "",
+    "geoBadge_en": ""
   },
   "navigation": [
     {
@@ -108,9 +136,9 @@
     }
   ],
   "footer": {
-    "companyDesc": "Электроника и системы безопасности движения поездов для железной дороги и промышленности Узбекистана. Официальный дилер и представитель ООО «НПО САУТ» в Республике Узбекистан: поставки, инжиниринг, локализация, представительство.",
-    "companyDesc_uz": "O'zbekiston temir yo'li va sanoati uchun elektronika va poezdlar harakati xavfsizligini ta'minlash tizimlari. O'zbekiston Respublikasida «НПО САУТ» MChJning rasmiy dileri va vakili: yetkazib berish, injiniring, lokalizatsiya, vakillik.",
-    "companyDesc_en": "Electronics and train safety systems for the railway and industry of Uzbekistan. Official dealer and representative of NPO SAUT LLC in the Republic of Uzbekistan: supply, engineering, localization and representation.",
+    "companyDesc": "Поставляем оборудование и услуги железной дороге и крупным промышленным предприятиям Узбекистана, представляем интересы международных производителей в регионе. Поставки, инжиниринг, локализация и представительство — единая точка ответственности от заявки до доставки на склад.",
+    "companyDesc_uz": "",
+    "companyDesc_en": "",
     "vatValue": "12% (ПЛАТЕЛЬЩИК)",
     "vatValue_uz": "12% (TO'LOVCHI)",
     "vatValue_en": "12% (VAT PAYER)",
@@ -164,9 +192,9 @@
         "label": "О компании",
         "label_uz": "Kompaniya haqida",
         "label_en": "About us",
-        "badge": "Дилер НПО САУТ",
-        "badge_uz": "«НПО САУТ» dileri",
-        "badge_en": "NPO SAUT dealer"
+        "badge": "Производители",
+        "badge_uz": "",
+        "badge_en": ""
       },
       {
         "index": "06",

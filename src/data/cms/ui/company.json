@@ -240,6 +240,48 @@
       "ru": "Офис",
       "uz": "Ofis",
       "en": "Office"
+    },
+    {
+      "key": "about.manufacturers.badge",
+      "ru": "ПРОИЗВОДИТЕЛИ",
+      "uz": "ISHLAB CHIQARUVCHILAR",
+      "en": "MANUFACTURERS"
+    },
+    {
+      "key": "about.manufacturers.title",
+      "ru": "С КЕМ РАБОТАЕТ RAILTECH: СТАТУС ПО КАЖДОМУ ПРОИЗВОДИТЕЛЮ",
+      "uz": "RAILTECH KIMLAR BILAN ISHLAYDI: HAR BIR ISHLAB CHIQARUVCHI BO'YICHA MAQOM",
+      "en": "WHO RAILTECH WORKS WITH: STATUS BY MANUFACTURER"
+    },
+    {
+      "key": "about.manufacturers.note",
+      "ru": "RailTech работает с {n} производителями — как официальный дилер и представитель или как прямой поставщик. Дилерский статус указан только при наличии документа производителя; перечень пополняется.",
+      "uz": "RailTech {n} ishlab chiqaruvchi bilan rasmiy diler va vakil yoki to'g'ridan-to'g'ri yetkazib beruvchi sifatida ishlaydi. Dilerlik maqomi faqat ishlab chiqaruvchining hujjati mavjud bo'lganda ko'rsatiladi; ro'yxat to'ldirib boriladi.",
+      "en": "RailTech works with {n} manufacturers, either as an official dealer and representative or as a direct supplier. Dealer status is shown only where the manufacturer has issued a dealer document; the list is being expanded."
+    },
+    {
+      "key": "about.manufacturers.col.name",
+      "ru": "ПРОИЗВОДИТЕЛЬ",
+      "uz": "ISHLAB CHIQARUVCHI",
+      "en": "MANUFACTURER"
+    },
+    {
+      "key": "about.manufacturers.col.country",
+      "ru": "СТРАНА",
+      "uz": "MAMLAKAT",
+      "en": "COUNTRY"
+    },
+    {
+      "key": "about.manufacturers.col.status",
+      "ru": "СТАТУС RAILTECH",
+      "uz": "RAILTECH MAQOMI",
+      "en": "RAILTECH STATUS"
+    },
+    {
+      "key": "about.manufacturers.col.note",
+      "ru": "ДОКУМЕНТ / ПРИМЕЧАНИЕ",
+      "uz": "HUJJAT / IZOH",
+      "en": "DOCUMENT / NOTE"
     }
   ]
 }
