@@ -1,0 +1,108 @@
+{
+  "strings": [
+    {
+      "key": "lead.subject.blogConsultation",
+      "ru": "Запрос инженерной консультации со страницы Блога"
+    },
+    {
+      "key": "lead.subject.blogArticle",
+      "ru": "Запрос расчета по материалу: {title}"
+    },
+    {
+      "key": "blog.author",
+      "ru": "АВТОР:",
+      "uz": "MUALLIF:",
+      "en": "AUTHOR:"
+    },
+    {
+      "key": "blog.reviewer",
+      "ru": "РЕЦЕНЗИЯ:",
+      "uz": "TAQRIZ:",
+      "en": "REVIEW:"
+    },
+    {
+      "key": "blog.date",
+      "ru": "ДАТА:",
+      "uz": "SANA:",
+      "en": "DATE:"
+    },
+    {
+      "key": "blog.readTimeLabel",
+      "ru": "ВРЕМЯ ЧТЕНИЯ:",
+      "uz": "O'QISH VAQTI:",
+      "en": "READ TIME:"
+    },
+    {
+      "key": "blog.readTimeMinutes",
+      "ru": "{n} мин",
+      "uz": "{n} daq",
+      "en": "{n} min"
+    },
+    {
+      "key": "blog.readFeatured",
+      "ru": "[ ЧИТАТЬ ПУБЛИКАЦИЮ → ]",
+      "uz": "[ MAQOLANI O'QISH → ]",
+      "en": "[ READ PUBLICATION → ]"
+    },
+    {
+      "key": "blog.read",
+      "ru": "ЧИТАТЬ →",
+      "uz": "O'QISH →",
+      "en": "READ →"
+    },
+    {
+      "key": "blog.filter.aria",
+      "ru": "Фильтр публикаций по рубрикам",
+      "uz": "Maqolalarni ruknlar bo'yicha filtrlash",
+      "en": "Filter publications by category"
+    },
+    {
+      "key": "blog.filter.all",
+      "ru": "Все публикации",
+      "uz": "Barcha maqolalar",
+      "en": "All publications"
+    },
+    {
+      "key": "blog.search.label",
+      "ru": "ПОИСК:",
+      "uz": "QIDIRUV:",
+      "en": "SEARCH:"
+    },
+    {
+      "key": "blog.search.placeholder",
+      "ru": "Поиск по темам, ГОСТ, тегам...",
+      "uz": "Mavzular, GOST, teglar bo'yicha qidiruv...",
+      "en": "Search by topic, GOST, tags..."
+    },
+    {
+      "key": "blog.empty.title",
+      "ru": "МАТЕРИАЛЫ НЕ НАЙДЕНЫ",
+      "uz": "MAQOLALAR TOPILMADI",
+      "en": "NO PUBLICATIONS FOUND"
+    },
+    {
+      "key": "blog.empty.text",
+      "ru": "Попробуйте изменить поисковый запрос или сбросить фильтр рубрик.",
+      "uz": "Qidiruv so'rovini o'zgartiring yoki ruknlar filtrini bekor qiling.",
+      "en": "Try adjusting your search query or reset the category filter."
+    },
+    {
+      "key": "blog.article.frameTop",
+      "ru": "ARTICLE // {category}",
+      "uz": "ARTICLE // {category}",
+      "en": "ARTICLE // {category}"
+    },
+    {
+      "key": "blog.article.requestQuote",
+      "ru": "[ ЗАПРОСИТЬ РАСЧЕТ КП ]",
+      "uz": "[ TIJORAT TAKLIFINI SO'RASH ]",
+      "en": "[ REQUEST RFQ ESTIMATE ]"
+    },
+    {
+      "key": "blog.article.back",
+      "ru": "← ВЕРНУТЬСЯ В РАЗДЕЛ БЛОГА",
+      "uz": "← BLOG BO'LIMIGA QAYTISH",
+      "en": "← BACK TO BLOG ARCHIVE"
+    }
+  ]
+}

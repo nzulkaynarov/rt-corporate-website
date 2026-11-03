@@ -1,0 +1,96 @@
+{
+  "strings": [
+    {
+      "key": "lead.subject.projectsArtLab",
+      "ru": "Запрос сотрудничества по спецпроектам / Art Lab"
+    },
+    {
+      "key": "lead.subject.projectSimilar",
+      "ru": "Запрос на реализацию проекта по кейсу: {title} ({code})"
+    },
+    {
+      "key": "projects.filter.aria",
+      "ru": "Фильтр проектов",
+      "uz": "Loyihalar filtri",
+      "en": "Projects filter"
+    },
+    {
+      "key": "projects.filter.label",
+      "ru": "ФИЛЬТР:",
+      "uz": "FILTR:",
+      "en": "FILTER:"
+    },
+    {
+      "key": "projects.filter.all",
+      "ru": "Все проекты",
+      "uz": "Barcha loyihalar",
+      "en": "All projects"
+    },
+    {
+      "key": "projects.card.cta",
+      "ru": "Открыть проект",
+      "uz": "Loyihani ochish",
+      "en": "Open project"
+    },
+    {
+      "key": "projects.detail.code",
+      "ru": "CASE // {code}",
+      "uz": "CASE // {code}",
+      "en": "CASE // {code}"
+    },
+    {
+      "key": "projects.detail.year",
+      "ru": "YEAR // {year}",
+      "uz": "YEAR // {year}",
+      "en": "YEAR // {year}"
+    },
+    {
+      "key": "projects.detail.statusCompleted",
+      "ru": "STATUS // COMPLETED",
+      "uz": "STATUS // COMPLETED",
+      "en": "STATUS // COMPLETED"
+    },
+    {
+      "key": "projects.detail.statusShort",
+      "ru": "COMPLETED",
+      "uz": "COMPLETED",
+      "en": "COMPLETED"
+    },
+    {
+      "key": "projects.detail.metric",
+      "ru": "METRIC // 0{n}",
+      "uz": "METRIC // 0{n}",
+      "en": "METRIC // 0{n}"
+    },
+    {
+      "key": "projects.detail.download",
+      "ru": "СКАЧАТЬ ↓",
+      "uz": "YUKLAB OLISH ↓",
+      "en": "DOWNLOAD ↓"
+    },
+    {
+      "key": "projects.detail.settlement",
+      "ru": "Базис расчетов:",
+      "uz": "Hisob-kitob asosi:",
+      "en": "Settlement basis:"
+    },
+    {
+      "key": "projects.detail.leadTime",
+      "ru": "Сроки подготовки сметы:",
+      "uz": "Smeta tayyorlash muddati:",
+      "en": "Proposal preparation time:"
+    },
+    {
+      "key": "projects.detail.directLine",
+      "ru": "Прямой телефон:",
+      "uz": "To'g'ridan-to'g'ri aloqa:",
+      "en": "Direct line:"
+    },
+    {
+      "key": "projects.detail.back",
+      "ru": "← ВСЕ ПРОЕКТЫ КОМПАНИИ",
+      "uz": "← BARCHA LOYIHALAR",
+      "en": "← ALL COMPANY PROJECTS"
+    }
+  ]
+}

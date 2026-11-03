@@ -7,11 +7,20 @@ import HudStepDivider from '../../../components/hud/HudStepDivider.astro';
 
 import { withBase } from '../../../utils/url';
 import pagesData from '../../../data/cms/pages.json';
+import { langStaticPaths, localeHref, pick, tField } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { pageSeo, absoluteUrl } from '../../../utils/seo';
+import { navLabel, navLabels } from '../../../utils/nav';
+
+export const getStaticPaths = langStaticPaths;
+
+const lang = Astro.locals.lang;
+const tr = (key: string, vars?: Record<string, string | number>) => t(lang, key, vars);
+const seo = pageSeo('services', lang);
 
 const allServices = await getCollection('services');
 allServices.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
 
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const sPage = pagesData.servicesPage;
 
 // Unique categories for filtering (only if > 6 services)
@@ -26,14 +35,29 @@ const categories = [...categoryMap.values()];
 ---
 
 <BaseLayout
-  title="Услуги B2B / B2G: ВЭД под ключ, IT-разработка, сорсинг и дистрибуция — ООО «RailTech»"
-  description="Комплексные услуги ООО «RailTech»: контрактные поставки DDP Ташкент с НДС 12%, разработка заказного ПО и платформы b2b.railtech.uz, поиск редкого оборудования и представительство брендов."
-  keywords="услуги railtech, контрактный вэд ddp ташкент, сорсинг оборудования узбекистан, разработка b2b порталов, b2b railtech uz, дистрибуция брендов узбекистан"
+  title={seo.title}
+  description={seo.description}
+  breadcrumbs={[{ name: navLabel('/services/', lang), path: '/services/' }]}
+  jsonLd={{
+    '@type': 'CollectionPage',
+    name: pick(lang, sPage.title, sPage.title_uz, sPage.title_en),
+    description: seo.description,
+    inLanguage: lang,
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: allServices.map((srv, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: tField(srv.data, 'title', lang),
+        url: absoluteUrl(localeHref(`/services/${srv.slug}/`, lang), Astro.site),
+      })),
+    },
+  }}
 >
   <div class="max-w-7xl mx-auto px-4 pb-16 font-sans">
     <HudPageHeader
-      code={sPage.code || "SEC.02 // SERVICES"}
-      crumb={{ ru: 'УСЛУГИ', uz: 'XIZMATLAR', en: 'SERVICES' }}
+      code={sPage.code}
+      crumb={navLabels('/services/')}
       title={{
         ru: sPage.title,
         uz: sPage.title_uz,
@@ -47,10 +71,10 @@ const categories = [...categoryMap.values()];
     />
 
     {allServices.length > 6 && (
-      <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-3 mb-8 flex flex-row flex-wrap items-center gap-2 font-mono text-[11px]" role="group" aria-label="Services Category Filter">
-        <span class="text-[#4A5056] uppercase tracking-widest mr-2"><I18nText ru="НАПРАВЛЕНИЕ:" uz="YO'NALISH:" en="CATEGORY:" /></span>
+      <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-3 mb-8 flex flex-row flex-wrap items-center gap-2 font-mono text-[11px]" role="group" aria-label={tr('services.filter.aria')}>
+        <span class="text-[#4A5056] uppercase tracking-widest mr-2"><I18nText k="services.filter.label" /></span>
         <button type="button" id="srv-filter-all" data-filter="all" class="srv-filter px-3 py-1.5 border border-[#0A0A0A] bg-[#0A0A0A] text-white cursor-pointer font-bold">
-          <I18nText ru="Все услуги" uz="Barcha xizmatlar" en="All services" />
+          <I18nText k="services.filter.all" />
         </button>
         {categories.map((c, i) => (
           <button type="button" id={`srv-filter-${i + 1}`} data-filter={c.ru} class="srv-filter px-3 py-1.5 border border-[#0A0A0A] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer font-bold">
@@ -64,7 +88,7 @@ const categories = [...categoryMap.values()];
     <div id="srv-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
       {allServices.map((srv, idx) => {
         const photoUrl = withBase(srv.data.image || '/images/hero/logistics.jpg');
-        const detailHref = `${base}/services/${srv.slug}/`;
+        const detailHref = localeHref(`/services/${srv.slug}/`, lang);
         const firstSteps = (srv.data.steps || []).slice(0, 3);
         const cardIndex = `0${idx + 1} //`;
 
@@ -89,14 +113,14 @@ const categories = [...categoryMap.values()];
               <div class="hud-card-media aspect-[16/10] overflow-hidden border border-[#0A0A0A]/20 relative">
                 <img
                   src={photoUrl}
-                  alt={srv.data.title}
+                  alt={tField(srv.data, 'title', lang)}
                   loading="lazy"
                   decoding="async"
                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                   onerror={`this.onerror=null; this.src='${withBase('/images/hero/warehouse.jpg')}';`}
                 />
                 <span class="absolute top-1.5 left-1.5 font-mono text-[9px] tracking-widest text-white/90 mix-blend-difference bg-black/40 px-1 py-0.5">
-                  SERVICE // {srv.data.code}
+                  {tr('services.card.mediaCode', { code: srv.data.code })}
                 </span>
               </div>
 
@@ -116,7 +140,7 @@ const categories = [...categoryMap.values()];
               {firstSteps.length > 0 && (
                 <div class="pt-3 border-t border-[#0A0A0A]/15 space-y-1.5 font-mono text-xs">
                   <span class="text-[10px] text-[#4A5056] uppercase tracking-wider block font-bold mb-1">
-                    <I18nText ru="// ЧТО ВХОДИТ В УСЛУГУ:" uz="// XIZMATGA NIMALAR KIRADI:" en="// DELIVERABLES & STAGES:" />
+                    <I18nText k="services.card.deliverables" />
                   </span>
                   {firstSteps.map((step, sIdx) => (
                     <div class="flex items-start gap-2 text-[11px] text-[#0A0A0A]">
@@ -130,22 +154,22 @@ const categories = [...categoryMap.values()];
               )}
             </div>
 
-            {/* Bottom Actions in one line: [ Подробнее → ] and [ Заказать расчет ↗ ] */}
+            {/* Bottom Actions in one line: details link and quotation request */}
             <div class="pt-4 border-t border-[#0A0A0A]/20 flex items-center justify-between gap-3 font-mono text-xs">
               <a
                 href={detailHref}
                 class="border border-[#0A0A0A] px-3 py-2 bg-white/40 hover:bg-[#0A0A0A] hover:text-white transition-colors font-bold flex items-center gap-1.5 min-h-[44px]"
               >
-                <span><I18nText ru="Подробнее" uz="Batafsil" en="Details" /></span>
+                <span><I18nText k="services.card.details" /></span>
                 <span>→</span>
               </a>
               <button
                 type="button"
                 data-lead-modal
-                data-lead-subject={`Запрос расчета по услуге: ${srv.data.title}`}
+                data-lead-subject={t('ru', 'lead.subject.serviceQuote', { title: srv.data.title })}
                 class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-3.5 py-2 hover:bg-white hover:text-[#0A0A0A] transition-colors font-bold cursor-pointer flex items-center gap-1.5 min-h-[44px]"
               >
-                <span><I18nText ru="Заказать расчет" uz="Hisobni buyurtma qilish" en="Request quotation" /></span>
+                <span><I18nText k="services.card.requestQuote" /></span>
                 <span>↗</span>
               </button>
             </div>
@@ -154,12 +178,12 @@ const categories = [...categoryMap.values()];
       })}
     </div>
 
-    <HudStepDivider label="CONSULTATION // RFQ" class="my-12" />
+    <HudStepDivider label={sPage.dividerLabel} class="my-12" />
 
     <!-- Consultation / RFQ Banner -->
     <div class="hud-glass-card p-8 flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="space-y-2 max-w-2xl">
-        <span class="hud-callout"><i></i>CUSTOM CONSULTATION</span>
+        <span class="hud-callout"><i></i>{sPage.ctaBadge}</span>
         <h3 class="font-sans text-xl font-bold text-[#0A0A0A]">
           <I18nText ru={sPage.ctaTitle} uz={sPage.ctaTitle_uz} en={sPage.ctaTitle_en} />
         </h3>
@@ -170,7 +194,7 @@ const categories = [...categoryMap.values()];
       <button
         type="button"
         data-lead-modal
-        data-lead-subject="Запрос консультации по услугам компании"
+        data-lead-subject={t('ru', 'lead.subject.servicesConsultation')}
         class="hud-btn whitespace-nowrap cursor-pointer"
       >
         <span>[ <I18nText ru={sPage.ctaButton} uz={sPage.ctaButton_uz} en={sPage.ctaButton_en} /> ]</span>

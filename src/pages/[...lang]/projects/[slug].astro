@@ -7,115 +7,104 @@ import { ProductMediaGallery } from '../../../components/islands/ProductMediaGal
 import { withBase } from '../../../utils/url';
 import { marked } from 'marked';
 import globalData from '../../../data/cms/global.json';
+import pagesData from '../../../data/cms/pages.json';
+import { expandLangs, localeHref, pick, tField } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { entrySeo, absoluteUrl } from '../../../utils/seo';
+import { navLabel, navLabels } from '../../../utils/nav';
 
 export async function getStaticPaths() {
   const projectEntries = await getCollection('projects');
-  return projectEntries.map((entry) => ({
+  const paths = projectEntries.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry },
   }));
+  return expandLangs(paths);
 }
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const lang = Astro.locals.lang;
+const tr = (key: string, vars?: Record<string, string | number>) => t(lang, key, vars);
+const L = (obj: Record<string, any>, field: string) => tField(obj, field, lang) as string;
 
-const projectUrl = `https://railtech.uz/projects/${entry.slug}`;
-const siteUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : projectUrl;
+const data = entry.data;
+const pPage = pagesData.projectsPage;
+const detail = pPage.detail;
+const projectRoute = `/projects/${entry.slug}/`;
+const projectUrl = absoluteUrl(localeHref(projectRoute, lang), Astro.site);
+const orgId = `${absoluteUrl('/', Astro.site)}#organization`;
+const title = L(data, 'title');
 
-const categoryName = entry.data.category || entry.data.tag || 'Спецпроект';
-const categoryNameUz = entry.data.category_uz || entry.data.tag_uz || categoryName;
-const categoryNameEn = entry.data.category_en || entry.data.tag_en || categoryName;
+// Category → legacy tag → pages.json projectsPage.defaultCategory
+const category = data.category
+  ? { ru: data.category, uz: data.category_uz, en: data.category_en }
+  : data.tag
+    ? { ru: data.tag, uz: data.tag_uz, en: data.tag_en }
+    : { ru: pPage.defaultCategory, uz: pPage.defaultCategory_uz, en: pPage.defaultCategory_en };
+const categoryName = pick(lang, category.ru, category.uz, category.en);
 
-const photoUrl = withBase(entry.data.image || '/images/hero/warehouse.jpg');
-const fullPhotoUrl = photoUrl.startsWith('http') ? photoUrl : `https://railtech.uz${photoUrl}`;
+const imagePath = data.image || '/images/hero/warehouse.jpg';
+
+// Markdown body: translated body_uz / body_en when present, otherwise the RU body.
+const localizedBody = lang === 'uz' ? data.body_uz : lang === 'en' ? data.body_en : undefined;
+const bodyHtml = localizedBody ? await marked.parse(localizedBody) : '';
+
+const seo = entrySeo(data, lang, { descriptionFields: ['subtitle', 'description'], body: localizedBody || entry.body });
 
 const articleJsonLd = {
-  '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: entry.data.title,
-  description: entry.data.subtitle || entry.data.title,
-  image: fullPhotoUrl,
-  url: siteUrl,
-  author: {
-    '@type': 'Organization',
-    name: 'ООО «RailTech»',
-    url: 'https://railtech.uz',
-  },
-  publisher: {
-    '@type': 'Organization',
-    name: 'ООО «RailTech»',
-    url: 'https://railtech.uz',
-    logo: {
-      '@type': 'ImageObject',
-      url: 'https://railtech.uz/favicon.svg',
-    },
-  },
-  mainEntityOfPage: {
-    '@type': 'WebPage',
-    '@id': siteUrl,
-  },
+  '@id': `${projectUrl}#article`,
+  headline: title,
+  description: seo.description,
+  image: absoluteUrl(withBase(imagePath), Astro.site),
+  url: projectUrl,
+  inLanguage: lang,
+  articleSection: categoryName,
+  ...(data.year ? { dateCreated: data.year } : {}),
+  author: { '@id': orgId },
+  publisher: { '@id': orgId },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': projectUrl },
 };
 
-const breadcrumbJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Главная',
-      item: 'https://railtech.uz/',
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Проекты',
-      item: 'https://railtech.uz/projects/',
-    },
-    {
-      '@type': 'ListItem',
-      position: 3,
-      name: entry.data.title,
-      item: siteUrl,
-    },
-  ],
-};
+const phoneHref = `tel:${globalData.phone.replace(/[\s-]/g, '')}`;
 ---
 
 <BaseLayout
-  title={`${entry.data.title} — Проекты ООО «RailTech»`}
-  description={entry.data.subtitle || entry.data.title}
-  keywords={`${entry.data.title}, ${categoryName}, проекты railtech, узбекистан, ddp ташкент`}
-  image={photoUrl}
+  title={seo.title}
+  description={seo.description}
+  image={imagePath}
+  ogType="article"
+  breadcrumbs={[
+    { name: navLabel('/projects/', lang), path: '/projects/' },
+    { name: title, path: projectRoute },
+  ]}
+  jsonLd={articleJsonLd}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
-
   <div class="max-w-7xl mx-auto px-4 pb-16 font-sans">
     <HudPageHeader
-      code={`CASE // ${entry.data.code}`}
-      parent={{ href: '/projects/', label: { ru: 'ПРОЕКТЫ', uz: 'LOYIHALAR', en: 'PROJECTS' } }}
-      crumb={{ ru: entry.data.title, uz: entry.data.title_uz, en: entry.data.title_en }}
-      title={{ ru: entry.data.title, uz: entry.data.title_uz, en: entry.data.title_en }}
-      lead={{ ru: entry.data.subtitle, uz: entry.data.subtitle_uz, en: entry.data.subtitle_en }}
+      code={tr('projects.detail.code', { code: data.code })}
+      parent={{ href: '/projects/', label: navLabels('/projects/') }}
+      crumb={{ ru: data.title, uz: data.title_uz, en: data.title_en }}
+      title={{ ru: data.title, uz: data.title_uz, en: data.title_en }}
+      lead={{ ru: data.subtitle, uz: data.subtitle_uz, en: data.subtitle_en }}
     />
 
     <!-- Telemetry Status Bar -->
     <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-8">
       <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A] font-bold border border-[#0A0A0A]">
-        {entry.data.code}
+        {data.code}
       </span>
       <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
-        <I18nText ru={categoryName} uz={categoryNameUz} en={categoryNameEn} />
+        {categoryName}
       </span>
-      {entry.data.year && (
+      {data.year && (
         <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
-          YEAR // {entry.data.year}
+          {tr('projects.detail.year', { year: data.year })}
         </span>
       )}
       <span class="hud-glass-card px-2.5 py-1 text-emerald-900 font-bold bg-emerald-100/50">
-        STATUS // COMPLETED
+        {tr('projects.detail.statusCompleted')}
       </span>
     </div>
 
@@ -125,29 +114,30 @@ const breadcrumbJsonLd = {
       <div class="lg:col-span-7 flex flex-col space-y-6">
         <ProductMediaGallery
           client:load
-          sku={entry.data.code}
-          title={entry.data.title}
-          title_uz={entry.data.title_uz}
-          title_en={entry.data.title_en}
-          category={categoryName}
-          category_uz={categoryNameUz}
-          category_en={categoryNameEn}
-          status="COMPLETED"
-          image={entry.data.image || '/images/hero/warehouse.jpg'}
-          images={entry.data.images}
-          gallery={entry.data.gallery}
+          lang={lang}
+          sku={data.code}
+          title={data.title}
+          title_uz={data.title_uz}
+          title_en={data.title_en}
+          category={category.ru}
+          category_uz={category.uz}
+          category_en={category.en}
+          status={tr('projects.detail.statusShort')}
+          image={imagePath}
+          images={data.images}
+          gallery={data.gallery}
         />
 
         <!-- Metrics Cards Grid -->
-        {entry.data.metrics && entry.data.metrics.length > 0 && (
+        {data.metrics && data.metrics.length > 0 && (
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono">
-            {entry.data.metrics.map((m, idx) => (
+            {data.metrics.map((m, idx) => (
               <div class="hud-glass-card p-4 flex flex-col justify-between">
                 <span class="text-[10px] text-[#4A5056] border-b border-[#0A0A0A]/15 pb-1 block mb-2">
-                  METRIC // 0{idx + 1}
+                  {tr('projects.detail.metric', { n: idx + 1 })}
                 </span>
                 <span class="font-bold text-[#0A0A0A] text-sm leading-snug">
-                  <I18nText ru={m} uz={entry.data.metrics_uz?.[idx]} en={entry.data.metrics_en?.[idx]} />
+                  <I18nText ru={m} uz={data.metrics_uz?.[idx]} en={data.metrics_en?.[idx]} />
                 </span>
               </div>
             ))}
@@ -155,16 +145,16 @@ const breadcrumbJsonLd = {
         )}
 
         <!-- Downloadable Documents (if attached) -->
-        {entry.data.documents && entry.data.documents.length > 0 && (
+        {data.documents && data.documents.length > 0 && (
           <div class="hud-glass-card p-6 font-mono text-xs">
             <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 font-bold text-[#0A0A0A] flex items-center justify-between">
               <span>
-                <I18nText ru="ПРИКРЕПЛЕННЫЕ МАТЕРИАЛЫ КЕЙСА" uz="LOYIHAGA BIRIKTIRILGAN MATERIALLAR" en="ATTACHED CASE MATERIALS" />
+                <I18nText ru={detail.materialsTitle} uz={detail.materialsTitle_uz} en={detail.materialsTitle_en} />
               </span>
-              <span class="text-[#4A5056]">FILES // 0{entry.data.documents.length}</span>
+              <span class="text-[#4A5056]">{tr('docs.filesCount', { count: data.documents.length })}</span>
             </div>
             <div class="space-y-2">
-              {entry.data.documents.map((doc) => (
+              {data.documents.map((doc) => (
                 <div class="flex items-center justify-between p-2.5 border border-[#0A0A0A]/20 bg-white/40">
                   <span class="font-bold text-[#0A0A0A]">
                     <I18nText ru={doc.title} uz={doc.title_uz} en={doc.title_en} />
@@ -175,7 +165,7 @@ const breadcrumbJsonLd = {
                     rel="noopener noreferrer"
                     class="hud-btn hud-btn--ghost text-[10px] py-1 px-2.5"
                   >
-                    <I18nText ru="СКАЧАТЬ ↓" uz="YUKLAB OLISH ↓" en="DOWNLOAD ↓" />
+                    <I18nText k="projects.detail.download" />
                   </a>
                 </div>
               ))}
@@ -189,18 +179,10 @@ const breadcrumbJsonLd = {
         <!-- Case Details -->
         <div class="hud-glass-card p-6">
           <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 font-mono text-xs font-bold text-[#0A0A0A] uppercase tracking-wider">
-            <I18nText ru="ОПИСАНИЕ И РЕЗУЛЬТАТЫ ПРОЕКТА" uz="LOYIHA TAVSIFI VA NATIJALARI" en="PROJECT SCOPE & DELIVERABLES" />
+            <I18nText ru={detail.scopeTitle} uz={detail.scopeTitle_uz} en={detail.scopeTitle_en} />
           </div>
           <div class="prose prose-sm text-[#0A0A0A] max-w-none leading-relaxed">
-            <div class="rt-lang rt-lang-ru">
-              <Content />
-            </div>
-            <div class="rt-lang rt-lang-uz">
-              {entry.data.body_uz ? <div set:html={marked.parse(entry.data.body_uz)} /> : <Content />}
-            </div>
-            <div class="rt-lang rt-lang-en">
-              {entry.data.body_en ? <div set:html={marked.parse(entry.data.body_en)} /> : <Content />}
-            </div>
+            {bodyHtml ? <div set:html={bodyHtml} /> : <Content />}
           </div>
         </div>
 
@@ -208,29 +190,25 @@ const breadcrumbJsonLd = {
         <div class="hud-glass-card p-6 font-mono text-xs space-y-4">
           <div class="border-b border-[#0A0A0A]/20 pb-2">
             <span class="font-bold text-[#0A0A0A] text-sm block">
-              <I18nText ru="ЗАКАЗАТЬ АНАЛОГИЧНЫЙ ПРОЕКТ" uz="O'XSHASH LOYIHANI BUYURTMA QILISH" en="ORDER A SIMILAR PROJECT" />
+              <I18nText ru={detail.orderTitle} uz={detail.orderTitle_uz} en={detail.orderTitle_en} />
             </span>
             <span class="text-[11px] text-[#4A5056] leading-tight block mt-1">
-              <I18nText
-                ru="Реализация под ключ: ВЭД, инженерная адаптация, поставка со склада в Ташкенте и техническое сопровождение."
-                uz="Kalit ostida amalga oshirish: TQI, muhandislik adaptatsiyasi, Toshkent omboridan yetkazib berish va texnik ko'mak."
-                en="Turnkey implementation: foreign trade, engineering adaptation, Tashkent warehouse delivery, and ongoing technical support."
-              />
+              <I18nText ru={detail.orderNote} uz={detail.orderNote_uz} en={detail.orderNote_en} />
             </span>
           </div>
 
           <div class="space-y-2 text-[#4A5056]">
             <div class="flex justify-between">
-              <span><I18nText ru="Базис расчетов:" uz="Hisob-kitob asosi:" en="Settlement basis:" /></span>
-              <span class="font-bold text-[#0A0A0A]"><I18nText ru="DDP Ташкент (12% НДС)" uz="DDP Toshkent (12% QQS)" en="DDP Tashkent (12% VAT)" /></span>
+              <span><I18nText k="projects.detail.settlement" /></span>
+              <span class="font-bold text-[#0A0A0A]"><I18nText ru={detail.settlementValue} uz={detail.settlementValue_uz} en={detail.settlementValue_en} /></span>
             </div>
             <div class="flex justify-between">
-              <span><I18nText ru="Сроки подготовки сметы:" uz="Smeta tayyorlash muddati:" en="Proposal preparation time:" /></span>
-              <span class="font-bold text-[#0A0A0A]"><I18nText ru="24-48 часов" uz="24-48 soat" en="24-48 hours" /></span>
+              <span><I18nText k="projects.detail.leadTime" /></span>
+              <span class="font-bold text-[#0A0A0A]"><I18nText ru={detail.leadTimeValue} uz={detail.leadTimeValue_uz} en={detail.leadTimeValue_en} /></span>
             </div>
             <div class="flex justify-between">
-              <span><I18nText ru="Прямой телефон:" uz="To'g'ridan-to'g'ri aloqa:" en="Direct line:" /></span>
-              <a href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`} class="font-bold text-[#0A0A0A] hover:underline">{globalData.phone}</a>
+              <span><I18nText k="projects.detail.directLine" /></span>
+              <a href={phoneHref} class="font-bold text-[#0A0A0A] hover:underline">{globalData.phone}</a>
             </div>
           </div>
 
@@ -238,16 +216,16 @@ const breadcrumbJsonLd = {
             <button
               type="button"
               data-lead-modal
-              data-lead-subject={`Запрос на реализацию проекта по кейсу: ${entry.data.title} (${entry.data.code})`}
+              data-lead-subject={t('ru', 'lead.subject.projectSimilar', { title: data.title, code: data.code })}
               class="hud-btn w-full cursor-pointer text-center"
             >
-              <I18nText ru="[ ЗАКАЗАТЬ АНАЛОГИЧНЫЙ ПРОЕКТ ↗ ]" uz="[ O'XSHASH LOYIHANI BUYURTMA QILISH ↗ ]" en="[ REQUEST SIMILAR PROJECT ↗ ]" />
+              <I18nText ru={detail.orderButton} uz={detail.orderButton_uz} en={detail.orderButton_en} />
             </button>
             <a
-              href={`${base}/projects/`}
+              href={localeHref('/projects/', lang)}
               class="hud-btn hud-btn--ghost w-full text-center"
             >
-              <I18nText ru="← ВСЕ ПРОЕКТЫ КОМПАНИИ" uz="← BARCHA LOYIHALAR" en="← ALL COMPANY PROJECTS" />
+              <I18nText k="projects.detail.back" />
             </a>
           </div>
         </div>

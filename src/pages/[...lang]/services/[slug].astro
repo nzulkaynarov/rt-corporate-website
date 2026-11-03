@@ -7,104 +7,88 @@ import { ProductMediaGallery } from '../../../components/islands/ProductMediaGal
 import { withBase } from '../../../utils/url';
 import { marked } from 'marked';
 import globalData from '../../../data/cms/global.json';
+import pagesData from '../../../data/cms/pages.json';
+import { expandLangs, localeHref, tField } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { entrySeo, absoluteUrl } from '../../../utils/seo';
+import { navLabel, navLabels } from '../../../utils/nav';
 
 export async function getStaticPaths() {
   const serviceEntries = await getCollection('services');
-  return serviceEntries.map((entry) => ({
+  const paths = serviceEntries.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry },
   }));
+  return expandLangs(paths);
 }
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const lang = Astro.locals.lang;
+const tr = (key: string, vars?: Record<string, string | number>) => t(lang, key, vars);
+const L = (obj: Record<string, any>, field: string) => tField(obj, field, lang) as string;
 
-const serviceUrl = `https://railtech.uz/services/${entry.slug}`;
-const siteUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : serviceUrl;
+const data = entry.data;
+const detail = pagesData.servicesPage.detail;
+const serviceRoute = `/services/${entry.slug}/`;
+const serviceUrl = absoluteUrl(localeHref(serviceRoute, lang), Astro.site);
+const orgId = `${absoluteUrl('/', Astro.site)}#organization`;
+const title = L(data, 'title');
+
+// Markdown body: translated body_uz / body_en when present, otherwise the RU body.
+const localizedBody = lang === 'uz' ? data.body_uz : lang === 'en' ? data.body_en : undefined;
+const bodyHtml = localizedBody ? await marked.parse(localizedBody) : '';
+
+const seo = entrySeo(data, lang, { descriptionFields: ['summary'], body: localizedBody || entry.body });
 
 const serviceJsonLd = {
-  '@context': 'https://schema.org',
   '@type': 'Service',
-  name: entry.data.title,
-  serviceType: entry.data.category,
-  description: entry.data.summary,
-  provider: {
-    '@type': 'Organization',
-    name: 'ООО «RailTech»',
-    url: 'https://railtech.uz',
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Ташкент',
-      streetAddress: 'ТПК Index B2-2097',
-      addressCountry: 'UZ',
-    },
-  },
-  areaServed: {
-    '@type': 'Country',
-    name: 'Uzbekistan',
-  },
-  url: siteUrl,
+  '@id': `${serviceUrl}#service`,
+  name: title,
+  serviceType: L(data, 'category'),
+  description: seo.description,
+  url: serviceUrl,
+  ...(data.image ? { image: absoluteUrl(withBase(data.image), Astro.site) } : {}),
+  provider: { '@id': orgId },
+  areaServed: { '@type': 'Country', name: globalData.countryCode },
 };
 
-const breadcrumbJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Главная',
-      item: 'https://railtech.uz/',
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Услуги',
-      item: 'https://railtech.uz/services/',
-    },
-    {
-      '@type': 'ListItem',
-      position: 3,
-      name: entry.data.title,
-      item: siteUrl,
-    },
-  ],
-};
+const ctaLabel = data.ctaLabel ? L(data, 'ctaLabel') : L(detail, 'defaultCtaLabel');
+const phoneHref = `tel:${globalData.phone.replace(/[\s-]/g, '')}`;
 ---
 
 <BaseLayout
-  title={`${entry.data.title} — Услуги ООО «RailTech» Ташкент`}
-  description={entry.data.summary}
-  keywords={`${entry.data.title}, ${entry.data.category}, вэд узбекистан, ddp ташкент, railtech`}
-  image={withBase(entry.data.image)}
+  title={seo.title}
+  description={seo.description}
+  image={data.image}
+  breadcrumbs={[
+    { name: navLabel('/services/', lang), path: '/services/' },
+    { name: title, path: serviceRoute },
+  ]}
+  jsonLd={serviceJsonLd}
 >
-  <!-- Schema.org JSON-LD -->
-  <script type="application/ld+json" set:html={JSON.stringify(serviceJsonLd)} />
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
-
   <div class="max-w-7xl mx-auto px-4 pb-16 font-sans">
     <HudPageHeader
-      code={`SRV // ${entry.data.code}`}
-      parent={{ href: '/services/', label: { ru: 'УСЛУГИ', uz: 'XIZMATLAR', en: 'SERVICES' } }}
-      crumb={{ ru: entry.data.code, uz: entry.data.code, en: entry.data.code }}
-      title={{ ru: entry.data.title, uz: entry.data.title_uz, en: entry.data.title_en }}
-      lead={{ ru: entry.data.summary, uz: entry.data.summary_uz, en: entry.data.summary_en }}
+      code={tr('services.detail.code', { code: data.code })}
+      parent={{ href: '/services/', label: navLabels('/services/') }}
+      crumb={{ ru: data.code, uz: data.code, en: data.code }}
+      title={{ ru: data.title, uz: data.title_uz, en: data.title_en }}
+      lead={{ ru: data.summary, uz: data.summary_uz, en: data.summary_en }}
     />
 
     <!-- Status Badges Bar -->
     <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-8">
       <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A] font-bold border border-[#0A0A0A]">
-        {entry.data.code}
+        {data.code}
       </span>
       <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
-        <I18nText ru={entry.data.category} uz={entry.data.category_uz} en={entry.data.category_en} />
+        <I18nText ru={data.category} uz={data.category_uz} en={data.category_en} />
       </span>
       <span class="hud-glass-card px-2.5 py-1 text-emerald-900 font-bold bg-emerald-100/50">
-        <I18nText ru="АКТИВНЫЙ РЕГЛАМЕНТ 2026" uz="FAOLLIK REGLAMENTI 2026" en="ACTIVE SERVICE 2026" />
+        <I18nText ru={detail.activeBadge} uz={detail.activeBadge_uz} en={detail.activeBadge_en} />
       </span>
       <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
-        <I18nText ru="НДС 12% ВКЛЮЧЕН" uz="12% QQS BILAN" en="12% VAT INCLUDED" />
+        <I18nText ru={detail.vatBadge} uz={detail.vatBadge_uz} en={detail.vatBadge_en} />
       </span>
     </div>
 
@@ -116,13 +100,13 @@ const breadcrumbJsonLd = {
         <div class="hud-glass-card p-6">
           <div class="border-b border-[#0A0A0A]/20 pb-2 mb-5 flex justify-between items-center font-mono text-xs">
             <span class="font-bold text-[#0A0A0A] tracking-wider uppercase">
-              <I18nText ru="ЭТАПЫ ВЫПОЛНЕНИЯ РАБОТ" uz="ISHLARNI BAJARISH BOSQICHLARI" en="EXECUTION MILESTONES" />
+              <I18nText ru={detail.stepsTitle} uz={detail.stepsTitle_uz} en={detail.stepsTitle_en} />
             </span>
-            <span class="text-[#4A5056]">{entry.data.steps.length} STAGES</span>
+            <span class="text-[#4A5056]">{tr('services.detail.stagesCount', { count: data.steps.length })}</span>
           </div>
 
           <div class="space-y-4">
-            {entry.data.steps.map((st, idx) => (
+            {data.steps.map((st, idx) => (
               <div class="flex items-start gap-3.5 p-3.5 bg-white/40 border border-[#0A0A0A]/15">
                 <span class="font-mono bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold flex-none mt-0.5">
                   0{idx + 1}
@@ -143,33 +127,25 @@ const breadcrumbJsonLd = {
         <!-- Markdown Body -->
         <div class="hud-glass-card p-6">
           <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 font-mono text-xs font-bold text-[#0A0A0A] uppercase tracking-wider">
-            <I18nText ru="РЕГЛАМЕНТ И СПЕЦИФИКА УСЛУГИ" uz="XIZMAT REGLAMENTI VA XUSUSIYATLARI" en="REGULATIONS & SERVICE SPECIFICATIONS" />
+            <I18nText ru={detail.bodyTitle} uz={detail.bodyTitle_uz} en={detail.bodyTitle_en} />
           </div>
           <div class="prose prose-sm text-[#0A0A0A] max-w-none leading-relaxed">
-            <div class="rt-lang rt-lang-ru">
-              <Content />
-            </div>
-            <div class="rt-lang rt-lang-uz">
-              {entry.data.body_uz ? <div set:html={marked.parse(entry.data.body_uz)} /> : <Content />}
-            </div>
-            <div class="rt-lang rt-lang-en">
-              {entry.data.body_en ? <div set:html={marked.parse(entry.data.body_en)} /> : <Content />}
-            </div>
+            {bodyHtml ? <div set:html={bodyHtml} /> : <Content />}
           </div>
         </div>
 
         <!-- Downloadable Documentation & Service Agreements -->
-        {entry.data.documents && entry.data.documents.length > 0 && (
+        {data.documents && data.documents.length > 0 && (
           <div class="hud-glass-card p-6">
             <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 flex justify-between items-center font-mono text-xs">
               <span class="font-bold text-[#0A0A0A] tracking-wider uppercase flex items-center gap-2">
                 <span class="w-2 h-2 bg-[#0A0A0A] inline-block"></span>
-                <I18nText ru="ДОКУМЕНТАЦИЯ И РЕГЛАМЕНТЫ" uz="HUJJATLAR VA REGLAMENTLAR" en="DOCUMENTATION & REGULATIONS" />
+                <I18nText ru={detail.documentsTitle} uz={detail.documentsTitle_uz} en={detail.documentsTitle_en} />
               </span>
-              <span class="text-[#4A5056]">FILES // 0{entry.data.documents.length}</span>
+              <span class="text-[#4A5056]">{tr('docs.filesCount', { count: data.documents.length })}</span>
             </div>
             <div class="space-y-2.5 font-mono text-xs">
-              {entry.data.documents.map((doc) => {
+              {data.documents.map((doc) => {
                 const fileUrl = doc.file.startsWith('http') ? doc.file : withBase(doc.file);
                 return (
                   <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 border border-[#0A0A0A]/20 bg-white/40 hover:bg-white/80 transition-colors gap-2">
@@ -180,7 +156,7 @@ const breadcrumbJsonLd = {
                           <I18nText ru={doc.title} uz={doc.title_uz} en={doc.title_en} />
                         </div>
                         <div class="text-[10px] text-[#4A5056] uppercase tracking-wider">
-                          {doc.type || 'PDF DOCUMENT'}
+                          {doc.type || tr('docs.typeFallback')}
                         </div>
                       </div>
                     </div>
@@ -190,7 +166,7 @@ const breadcrumbJsonLd = {
                       rel="noopener noreferrer"
                       class="hud-btn hud-btn--ghost text-[11px] py-1.5 px-3 self-start sm:self-auto text-center shrink-0"
                     >
-                      <I18nText ru="СКАЧАТЬ / ОТКРЫТЬ ↓" uz="YUKLAB OLISH / OCHISH ↓" en="DOWNLOAD / OPEN ↓" />
+                      <I18nText k="docs.download" />
                     </a>
                   </div>
                 );
@@ -204,26 +180,27 @@ const breadcrumbJsonLd = {
       <div class="lg:col-span-5 flex flex-col space-y-6">
         <ProductMediaGallery
           client:load
-          sku={entry.data.code}
-          title={entry.data.title}
-          title_uz={entry.data.title_uz}
-          title_en={entry.data.title_en}
-          category={entry.data.category}
-          category_uz={entry.data.category_uz}
-          category_en={entry.data.category_en}
-          image={entry.data.image}
-          images={entry.data.images}
+          lang={lang}
+          sku={data.code}
+          title={data.title}
+          title_uz={data.title_uz}
+          title_en={data.title_en}
+          category={data.category}
+          category_uz={data.category_uz}
+          category_en={data.category_en}
+          image={data.image}
+          images={data.images}
         />
 
         <!-- Key Benefits & Facts -->
         <div class="hud-glass-card p-6 font-mono text-xs">
           <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 font-bold text-[#0A0A0A] uppercase tracking-wider">
-            <I18nText ru="ПАРАМЕТРЫ И ГАРАНТИИ" uz="PARAMETRLAR VA KAFOLATLAR" en="PARAMETERS & ASSURANCES" />
+            <I18nText ru={detail.benefitsTitle} uz={detail.benefitsTitle_uz} en={detail.benefitsTitle_en} />
           </div>
 
           <table class="w-full border-collapse">
             <tbody class="divide-y divide-[#0A0A0A]/15">
-              {entry.data.benefits.map((b) => (
+              {data.benefits.map((b) => (
                 <tr class="hover:bg-white/30 transition-colors">
                   <td class="py-2.5 pr-2 text-[#4A5056] w-2/5">
                     <I18nText ru={b.label} uz={b.label_uz} en={b.label_en} />
@@ -235,10 +212,10 @@ const breadcrumbJsonLd = {
               ))}
               <tr class="hover:bg-white/30 transition-colors">
                 <td class="py-2.5 pr-2 text-[#4A5056]">
-                  <I18nText ru="Договор / ЭСФ:" uz="Shartnoma / EHF:" en="Contract / Invoice:" />
+                  <I18nText k="services.detail.contract" />
                 </td>
                 <td class="py-2.5 font-bold text-[#0A0A0A]">
-                  ЭСФ Didox / Soliq (12% НДС)
+                  <I18nText ru={detail.contractValue} uz={detail.contractValue_uz} en={detail.contractValue_en} />
                 </td>
               </tr>
             </tbody>
@@ -249,25 +226,25 @@ const breadcrumbJsonLd = {
         <div class="hud-glass-card p-6 font-mono gap-4">
           <div class="border-b border-[#0A0A0A]/20 pb-2">
             <span class="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider block">
-              <I18nText ru="ЗАКАЗ И СОГЛАСОВАНИЕ СМЕТЫ" uz="BUYURTMA VA SMETANI TASDIQLASH" en="SERVICE INQUIRY & ESTIMATE" />
+              <I18nText ru={detail.orderTitle} uz={detail.orderTitle_uz} en={detail.orderTitle_en} />
             </span>
             <span class="text-[11px] text-[#4A5056]">
-              <I18nText ru="Подготовка ТКП: в течение 24 часов" uz="TKP tayyorlash: 24 soat ichida" en="Formal proposal: within 24 hours" />
+              <I18nText ru={detail.orderNote} uz={detail.orderNote_uz} en={detail.orderNote_en} />
             </span>
           </div>
 
           <div class="space-y-2 text-xs">
             <div class="flex justify-between text-[#4A5056]">
-              <span><I18nText ru="Базис расчетов:" uz="Hisob-kitob asosi:" en="Settlement currency:" /></span>
-              <span class="font-bold text-[#0A0A0A]">UZS (Узбекские сумы)</span>
+              <span><I18nText k="services.detail.settlement" /></span>
+              <span class="font-bold text-[#0A0A0A]"><I18nText ru={detail.currencyValue} uz={detail.currencyValue_uz} en={detail.currencyValue_en} /></span>
             </div>
             <div class="flex justify-between text-[#4A5056]">
-              <span><I18nText ru="Налогообложение:" uz="Soliqqa tortish:" en="Taxation:" /></span>
-              <span class="font-bold text-[#0A0A0A]">НДС 12% включен</span>
+              <span><I18nText k="services.detail.taxation" /></span>
+              <span class="font-bold text-[#0A0A0A]"><I18nText ru={detail.taxationValue} uz={detail.taxationValue_uz} en={detail.taxationValue_en} /></span>
             </div>
             <div class="flex justify-between text-[#4A5056]">
-              <span><I18nText ru="Прямая линия:" uz="To'g'ridan-to'g'ri aloqa:" en="Direct line:" /></span>
-              <a href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`} class="font-bold text-[#0A0A0A] hover:underline">{globalData.phone}</a>
+              <span><I18nText k="services.detail.directLine" /></span>
+              <a href={phoneHref} class="font-bold text-[#0A0A0A] hover:underline">{globalData.phone}</a>
             </div>
           </div>
 
@@ -275,16 +252,16 @@ const breadcrumbJsonLd = {
             <button
               type="button"
               data-lead-modal
-              data-lead-subject={`Заявка на услугу: ${entry.data.title} (${entry.data.code})`}
+              data-lead-subject={t('ru', 'lead.subject.serviceInquiry', { title: data.title, code: data.code })}
               class="hud-btn w-full cursor-pointer"
             >
-              <I18nText ru={entry.data.ctaLabel || 'ОСТАВИТЬ ЗАЯВКУ ↗'} uz={entry.data.ctaLabel_uz || 'ARIZA QOLDIRISH ↗'} en={entry.data.ctaLabel_en || 'SUBMIT INQUIRY ↗'} />
+              <I18nText ru={ctaLabel} />
             </button>
             <a
-              href={`${base}/services/`}
+              href={localeHref('/services/', lang)}
               class="hud-btn hud-btn--ghost w-full text-center"
             >
-              <I18nText ru="← ВСЕ УСЛУГИ КОМПАНИИ" uz="← BARCHA XIZMATLAR" en="← ALL SERVICES" />
+              <I18nText k="services.detail.back" />
             </a>
           </div>
         </div>

@@ -6,6 +6,16 @@ import HudCard from '../../../components/hud/HudCard.astro';
 import HudPageHeader from '../../../components/hud/HudPageHeader.astro';
 import HudStepDivider from '../../../components/hud/HudStepDivider.astro';
 import pagesData from '../../../data/cms/pages.json';
+import { langStaticPaths, localeHref, pick, tField } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { pageSeo, absoluteUrl } from '../../../utils/seo';
+import { navLabel, navLabels } from '../../../utils/nav';
+
+export const getStaticPaths = langStaticPaths;
+
+const lang = Astro.locals.lang;
+const tr = (key: string) => t(lang, key);
+const seo = pageSeo('projects', lang);
 
 const projectItems = await getCollection('projects');
 projectItems.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
@@ -13,69 +23,46 @@ projectItems.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
 const pPage = pagesData.projectsPage;
 
 // Unique categories derived from CMS content (RU value is the filter key).
+// Entries without a category fall back to pages.json projectsPage.defaultCategory.
+const categoryOf = (d: (typeof projectItems)[number]['data']) =>
+  d.category
+    ? { ru: d.category, uz: d.category_uz, en: d.category_en }
+    : { ru: pPage.defaultCategory, uz: pPage.defaultCategory_uz, en: pPage.defaultCategory_en };
 const categoryMap = new Map<string, { ru: string; uz?: string; en?: string }>();
 for (const p of projectItems) {
-  const ru = p.data.category || 'Спецпроекты';
-  if (!categoryMap.has(ru)) categoryMap.set(ru, { ru, uz: p.data.category_uz, en: p.data.category_en });
+  const c = categoryOf(p.data);
+  if (!categoryMap.has(c.ru)) categoryMap.set(c.ru, c);
 }
 const categories = [...categoryMap.values()];
 
-const rawDirections = pPage.directions || [
-  {
-    n: '01',
-    title: 'ТРАНСФЕР ТЕХНОЛОГИЙ И ЛОКАЛИЗАЦИЯ',
-    title_uz: 'TEXNOLOGIYALAR TRANSFERI VA LOKALIZATSIYA',
-    title_en: 'TECHNOLOGY TRANSFER & LOCALIZATION',
-    text: 'Адаптация конструкторской документации машиностроительных заводов под стандарты и регламенты Узбекистана.',
-    text_uz: "Mashinasozlik korxonalari konstruktorlik hujjatlarini O'zbekiston standartlari va reglamentlariga moslashtirish.",
-    text_en: 'Adapting engineering documentation from machinery builders to national standards and regulations of Uzbekistan.',
-  },
-  {
-    n: '02',
-    title: 'ИСПЫТАНИЯ И СЕРТИФИКАЦИЯ',
-    title_uz: 'SINOVLAR VA SERTIFIKATSIYA',
-    title_en: 'TESTING & CERTIFICATION',
-    text: 'Организация опытной эксплуатации новых типов оборудования на промышленных полигонах с инструментальной фиксацией параметров.',
-    text_uz: "Sanoat poligonlarida yangi uskuna turlarini tajriba sinovlaridan o'tkazish va parametrlarni asbobiy qayd etish.",
-    text_en: 'Coordinating in-service operational trials of advanced industrial assemblies on testing beds with instrumentation.',
-  },
-  {
-    n: '03',
-    title: 'RAILTECH ART LAB (КУРАТОРСКАЯ ПРОГРАММА)',
-    title_uz: 'RAILTECH ART LAB (KURATORLIK DASTURI)',
-    title_en: 'RAILTECH ART LAB (CURATORIAL PROGRAM)',
-    text: 'Исследование индустриальной эстетики, коллекционирование современной живописи, архитектурной графики и проведение тематических экспозиций в Ташкенте.',
-    text_uz: "Sanoat estetikasini o'rganish, zamonaviy rangtasvir va me'moriy grafikani to'plash hamda Toshkentda ko'rgazmalar o'tkazish.",
-    text_en: 'Exploring industrial aesthetics, curating contemporary painting and architectural graphics, and organizing public exhibitions in Tashkent.',
-  },
-];
-
-const directions = rawDirections.map((d: any) => ({
-  n: d.n,
-  title: {
-    ru: d.title?.ru || d.title || '',
-    uz: d.title?.uz || d.title_uz || d.title || '',
-    en: d.title?.en || d.title_en || d.title || '',
-  },
-  text: {
-    ru: d.text?.ru || d.text || '',
-    uz: d.text?.uz || d.text_uz || d.text || '',
-    en: d.text?.en || d.text_en || d.text || '',
-  },
-}));
-
-const artLab = pPage.artLab || {};
+const directions = pPage.directions || [];
+const artLab = pPage.artLab;
 ---
 
 <BaseLayout
-  title="Проекты: промышленные поставки, IT-продукты и Арт-лаборатория — ООО «RailTech»"
-  description="Портфель проектов ООО «RailTech»: промышленные поставки DDP Ташкент, трансфер технологий, IT-продукты, выставки и живопись RailTech Art Lab."
-  keywords="проекты railtech, локализация производства узбекистан, промышленный инжиниринг, railtech art lab, индустриальное искусство ташкент"
+  title={seo.title}
+  description={seo.description}
+  breadcrumbs={[{ name: navLabel('/projects/', lang), path: '/projects/' }]}
+  jsonLd={{
+    '@type': 'CollectionPage',
+    name: pick(lang, pPage.title, pPage.title_uz, pPage.title_en),
+    description: seo.description,
+    inLanguage: lang,
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: projectItems.map((prj, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: tField(prj.data, 'title', lang),
+        url: absoluteUrl(localeHref(`/projects/${prj.slug}/`, lang), Astro.site),
+      })),
+    },
+  }}
 >
   <div class="max-w-7xl mx-auto px-4 pb-16 font-sans">
     <HudPageHeader
-      code={pPage.code || "SEC.04 // PROJECTS"}
-      crumb={{ ru: 'ПРОЕКТЫ', uz: 'LOYIHALAR', en: 'PROJECTS' }}
+      code={pPage.code}
+      crumb={navLabels('/projects/')}
       title={{
         ru: pPage.title,
         uz: pPage.title_uz,
@@ -89,10 +76,10 @@ const artLab = pPage.artLab || {};
     />
 
     {projectItems.length > 6 && (
-      <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-3 mb-8 flex flex-row flex-wrap items-center gap-2 font-mono text-[11px]" role="group" aria-label="Projects Filter Toolbar">
-        <span class="text-[#4A5056] uppercase tracking-widest mr-2"><I18nText ru="ФИЛЬТР:" uz="FILTR:" en="FILTER:" /></span>
+      <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-3 mb-8 flex flex-row flex-wrap items-center gap-2 font-mono text-[11px]" role="group" aria-label={tr('projects.filter.aria')}>
+        <span class="text-[#4A5056] uppercase tracking-widest mr-2"><I18nText k="projects.filter.label" /></span>
         <button type="button" id="prj-filter-all" data-filter="all" class="prj-filter px-3 py-1.5 border border-[#0A0A0A] bg-[#0A0A0A] text-white cursor-pointer font-bold">
-          <I18nText ru="Все проекты" uz="Barcha loyihalar" en="All projects" />
+          <I18nText k="projects.filter.all" />
         </button>
         {categories.map((c, i) => (
           <button type="button" id={`prj-filter-${i + 1}`} data-filter={c.ru} class="prj-filter px-3 py-1.5 border border-[#0A0A0A] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer font-bold">
@@ -104,7 +91,7 @@ const artLab = pPage.artLab || {};
 
     <div id="prj-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {projectItems.map((prj) => (
-        <div class="prj-item flex" data-category={prj.data.category || 'Спецпроекты'}>
+        <div class="prj-item flex" data-category={categoryOf(prj.data).ru}>
           <HudCard
             class="w-full"
             index={prj.data.code}
@@ -113,7 +100,7 @@ const artLab = pPage.artLab || {};
             text={{ ru: prj.data.subtitle, uz: prj.data.subtitle_uz, en: prj.data.subtitle_en }}
             image={prj.data.image}
             href={`/projects/${prj.slug}/`}
-            cta={{ ru: 'Открыть проект', uz: 'Loyihani ochish', en: 'Open project' }}
+            cta={{ ru: tr('projects.card.cta') }}
             headingLevel="h2"
           >
             <div class="flex flex-wrap gap-1.5 font-mono text-[10px]">
@@ -128,72 +115,72 @@ const artLab = pPage.artLab || {};
       ))}
     </div>
 
-    <HudStepDivider label="DIRECTIONS" class="my-12" />
+    <HudStepDivider label={pPage.directionsDivider} class="my-12" />
 
     <!-- Strategic directions -->
     <section class="hud-glass-card p-6 lg:p-8 gap-4">
       <div class="hud-section-head font-mono text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A]/15 pb-2">
-        <I18nText as="h2" ru="НАПРАВЛЕНИЯ СПЕЦИАЛЬНЫХ ПРОЕКТОВ RAILTECH" uz="RAILTECH MAXSUS LOYIHALARINING ASOSIY YO'NALISHLARI" en="RAILTECH SPECIAL PROJECTS STRATEGIC DIRECTIONS" />
+        <I18nText as="h2" ru={pPage.directionsTitle} uz={pPage.directionsTitle_uz} en={pPage.directionsTitle_en} />
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs mt-2">
         {directions.map((d) => (
           <div class="flex items-start gap-3">
             <span class="font-mono bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">{d.n}</span>
             <div>
-              <span class="font-mono font-bold text-[#0A0A0A] block mb-1"><I18nText ru={d.title.ru} uz={d.title.uz} en={d.title.en} /></span>
-              <span class="text-[#4A5056] leading-relaxed"><I18nText ru={d.text.ru} uz={d.text.uz} en={d.text.en} /></span>
+              <span class="font-mono font-bold text-[#0A0A0A] block mb-1"><I18nText ru={d.title} uz={d.title_uz} en={d.title_en} /></span>
+              <span class="text-[#4A5056] leading-relaxed"><I18nText ru={d.text} uz={d.text_uz} en={d.text_en} /></span>
             </div>
           </div>
         ))}
       </div>
     </section>
 
-    <HudStepDivider label="ART LAB" class="my-12" />
+    <HudStepDivider label={pPage.artLabDivider} class="my-12" />
 
     <!-- Art Lab manifesto -->
     <section class="hud-glass-card p-6 lg:p-8 gap-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#0A0A0A]/15 pb-3">
-        <span class="hud-callout"><i></i><I18nText ru={artLab.badge || "МАНИФЕСТ RAILTECH ART LAB"} uz={artLab.badge_uz || "RAILTECH ART LAB MANIFESTI"} en={artLab.badge_en || "RAILTECH ART LAB MANIFESTO"} /></span>
+        <span class="hud-callout"><i></i><I18nText ru={artLab.badge} uz={artLab.badge_uz} en={artLab.badge_en} /></span>
         <span class="font-mono text-[11px] text-[#4A5056]">
-          <I18nText ru={artLab.location || "КУРАТОРСКАЯ РЕЗИДЕНЦИЯ В КОМПЛЕКСЕ INDEX"} uz={artLab.location_uz || "INDEX MAJMUASIDAGI KURATORLIK REZIDENSIYASI"} en={artLab.location_en || "CURATORIAL RESIDENCY AT INDEX COMPLEX"} />
+          <I18nText ru={artLab.location} uz={artLab.location_uz} en={artLab.location_en} />
         </span>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-[#0A0A0A] leading-relaxed">
         <div class="space-y-3">
           <I18nText
             as="p"
-            ru={artLab.p1 || "Железная дорога — это не просто логистическая артерия, но и величайшая визуальная метафора индустриального века. Геометрия параллельных рельсов, строгие контуры стрелочных переводов, массивная текстура литой стали и мерный ритм колесных пар сформировали визуальный язык конструктивизма и модернизма XX века."}
-            uz={artLab.p1_uz || "Temir yo'l shunchaki logistika arteriyasi emas, balki sanoat asrining eng buyuk vizual metaforasidir. Parallel relslar geometriyasi, strelka o'tkazgichlarining qat'iy konturlari, quyma po'latning ulkan teksturasi va g'ildirak juftlarining bir maromdagi ritmi XX asr konstruktivizmi va modernizmining vizual tilini shakllantirdi."}
-            en={artLab.p1_en || "The railway is more than a logistical artery; it is the definitive visual metaphor of the industrial era. The geometry of parallel tracks, the severe contours of turnout switches, the massive textures of cast steel, and the cadence of rolling wheelsets established the visual vocabulary of 20th-century constructivism and modernism."}
+            ru={artLab.p1}
+            uz={artLab.p1_uz}
+            en={artLab.p1_en}
           />
           <I18nText
             as="p"
-            ru={artLab.p2 || "RailTech Art Lab объединяет художников, архитекторов и инженеров Центральной Азии. Мы предоставляем выставочные площади в пространстве нашего складского хаба, организуем пленэры на действующих депо и формируем постоянную коллекцию монументальной живописи."}
-            uz={artLab.p2_uz || "RailTech Art Lab Markaziy Osiyo rassomlari, me'morlari va muhandislarini birlashtiradi. Biz ombor xabimiz maydonida ko'rgazma maydonlarini taqdim etamiz, faoliyatdagi depolarda plenerlar tashkil qilamiz va monumental rangtasvirning doimiy kolleksiyasini shakllantiramiz."}
-            en={artLab.p2_en || "RailTech Art Lab unites artists, architects, and engineers across Central Asia. We provide exhibition space within our Tashkent terminal, arrange on-site plein-airs at active locomotive depots, and assemble a permanent collection of monumental industrial art."}
+            ru={artLab.p2}
+            uz={artLab.p2_uz}
+            en={artLab.p2_en}
           />
         </div>
         <div class="border border-[#0A0A0A] p-5 font-mono text-xs flex flex-col justify-between gap-4">
           <div class="space-y-2">
             <div class="font-bold text-[#0A0A0A]">
-              <I18nText ru={artLab.vendorTitle || "ДЛЯ ВЕНДОРОВ И ХУДОЖНИКОВ:"} uz={artLab.vendorTitle_uz || "ISHLAB CHIQARUVCHILAR VA RASSOMLAR UCHUN:"} en={artLab.vendorTitle_en || "FOR VENDORS & ARTISTS:"} />
+              <I18nText ru={artLab.vendorTitle} uz={artLab.vendorTitle_uz} en={artLab.vendorTitle_en} />
             </div>
             <I18nText
               as="p"
               class="text-[11px] text-[#4A5056] leading-relaxed"
-              ru={artLab.vendorDesc || "Если вы представляете зарубежный завод и заинтересованы в испытаниях на полигонах Узбекистана, либо являетесь автором индустриального искусства — свяжитесь с кураторской группой RailTech."}
-              uz={artLab.vendorDesc_uz || "Agar siz xorijiy zavod vakili bo'lsangiz va O'zbekiston poligonlaridagi sinovlarga qiziqsangiz, yoki sanoat san'ati muallifi bo'lsangiz — RailTech kuratorlik guruhi bilan bog'laning."}
-              en={artLab.vendorDesc_en || "If you represent an international manufacturer interested in testbed operations in Uzbekistan, or are an artist working with industrial themes, get in touch with the RailTech curatorial team."}
+              ru={artLab.vendorDesc}
+              uz={artLab.vendorDesc_uz}
+              en={artLab.vendorDesc_en}
             />
           </div>
           <button
             type="button"
             id="prj-proposal-btn"
             data-lead-modal
-            data-lead-subject="Запрос сотрудничества по спецпроектам / Art Lab"
+            data-lead-subject={t('ru', 'lead.subject.projectsArtLab')}
             class="hud-btn w-full justify-center"
           >
-            <I18nText ru={artLab.buttonText || "Предложить проект"} uz={artLab.buttonText_uz || "Loyiha taklif qilish"} en={artLab.buttonText_en || "Submit a proposal"} />
+            <I18nText ru={artLab.buttonText} uz={artLab.buttonText_uz} en={artLab.buttonText_en} />
           </button>
         </div>
       </div>

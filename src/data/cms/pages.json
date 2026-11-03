@@ -53,7 +53,66 @@
         "value_uz": "EHF Didox / Soliq (12% QQS)",
         "value_en": "Electronic Invoicing (12% VAT)"
       }
-    ]
+    ],
+    "defaultCategory": "Оборудование",
+    "defaultCategory_uz": "Uskunalar",
+    "defaultCategory_en": "Equipment",
+    "defaultWarehouse": "Ташкент, Index B2-2097",
+    "defaultWarehouse_uz": "Toshkent, Index B2-2097",
+    "defaultWarehouse_en": "Tashkent, Index B2-2097",
+    "defaultWarranty": "12 месяцев с момента ввода в эксплуатацию",
+    "defaultWarranty_uz": "Foydalanishga topshirilgan kundan boshlab 12 oy",
+    "defaultWarranty_en": "12 months from commissioning",
+    "defaultPriceNote": "Цена по запросу (с НДС 12%)",
+    "defaultPriceNote_uz": "Narx so'rov bo'yicha (12% QQS bilan)",
+    "defaultPriceNote_en": "Price on request (incl. 12% VAT)",
+    "detail": {
+      "vatBadge": "НДС 12% ВКЛЮЧЕН",
+      "vatBadge_uz": "12% QQS BILAN",
+      "vatBadge_en": "12% VAT INCLUDED",
+      "specsTitle": "ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ",
+      "specsTitle_uz": "TEXNIK XUSUSIYATLAR",
+      "specsTitle_en": "TECHNICAL SPECIFICATIONS",
+      "specsCode": "RT // TECHNICAL-SPEC",
+      "descriptionTitle": "ОПИСАНИЕ И ЭКСПЛУАТАЦИОННЫЕ ОСОБЕННОСТИ",
+      "descriptionTitle_uz": "TAVSIF VA FOYDALANISH XUSUSIYATLARI",
+      "descriptionTitle_en": "DESCRIPTION & OPERATIONAL PARAMETERS",
+      "documentsTitle": "ДОКУМЕНТАЦИЯ И ФАЙЛЫ ДЛЯ СКАЧИВАНИЯ",
+      "documentsTitle_uz": "HUJJATLAR VA YUKLAB OLISH UCHUN FAYLLAR",
+      "documentsTitle_en": "DOCUMENTATION & DOWNLOADABLE FILES",
+      "supplyTitle": "КОМПЛЕКТНОСТЬ ПОСТАВКИ И ДОКУМЕНТЫ:",
+      "supplyTitle_uz": "YETKAZIB BERISH TO'PLAMI VA HUJJATLAR:",
+      "supplyTitle_en": "COMPLETENESS OF SUPPLY & DOCUMENTATION:",
+      "supplyItems": [
+        {
+          "text": "• Оригинальный технический паспорт и сертификат соответствия завода-изготовителя.",
+          "text_uz": "• Ishlab chiqaruvchining asl texnik pasporti va muvofiqlik sertifikati.",
+          "text_en": "• Original manufacturer technical passport and certificate of conformity."
+        },
+        {
+          "text": "• Сертификаты соответствия техническим регламентам и стандартам Республики Узбекистан.",
+          "text_uz": "• O'zbekiston Respublikasi texnik reglamentlari va standartlariga muvofiqlik sertifikatlari.",
+          "text_en": "• Certificates of conformity with technical regulations and standards of Uzbekistan."
+        },
+        {
+          "text": "• Товарно-транспортная накладная, акт приема-передачи и электронный счет-фактура (ЭСФ Didox) с НДС 12%.",
+          "text_uz": "• Tovar-transport yukxati, topshirish-qabul qilish dalolatnomasi va 12% QQS bilan EHF (Didox).",
+          "text_en": "• Waybill, certificate of acceptance, and electronic tax invoice (Didox) with 12% VAT."
+        }
+      ],
+      "procurementTitle": "ОТДЕЛ СНАБЖЕНИЯ // ТАШКЕНТ",
+      "procurementTitle_uz": "TA'MINOT BO'LIMI // TOSHKENT",
+      "procurementTitle_en": "PROCUREMENT DESK // TASHKENT",
+      "dispatchNote": "Отгрузка со склада Index B2-2097 от 24 часов",
+      "dispatchNote_uz": "Index B2-2097 omboridan 24 soatdan yuklash",
+      "dispatchNote_en": "Dispatch from Index B2-2097 from 24 hours",
+      "taxationValue": "НДС 12% включен",
+      "taxationValue_uz": "12% QQS kiritilgan",
+      "taxationValue_en": "12% VAT included",
+      "relatedTitle": "ПОХОЖИЕ ПОЗИЦИИ ИЗ КАТАЛОГА",
+      "relatedTitle_uz": "KATALOGDAGI O'XSHASH MAHSULOTLAR",
+      "relatedTitle_en": "SIMILAR ITEMS FROM CATALOG"
+    }
   },
   "servicesPage": {
     "code": "PORTAL // SECTION 03",
@@ -70,8 +129,48 @@
     "ctaSubtitle_uz": "So'rov qoldiring — tashqi iqtisodiy faoliyat va texnik mutaxassislarimiz 24 soat ichida 12% QQS bilan Landed Cost hisobini tayyorlaydilar.",
     "ctaSubtitle_en": "Submit your request — our foreign trade desk and engineers will prepare a detailed Landed Cost calculation with 12% VAT within 24 hours.",
     "ctaButton": "ПОЛУЧИТЬ РАСЧЕТ УСЛУГИ ↗",
-    "ctaButton_uz": "XIZMAT HISOBOtINI OLISH ↗",
-    "ctaButton_en": "GET SERVICE ESTIMATE ↗"
+    "ctaButton_uz": "XIZMAT HISOBINI OLISH ↗",
+    "ctaButton_en": "GET SERVICE ESTIMATE ↗",
+    "dividerLabel": "CONSULTATION // RFQ",
+    "ctaBadge": "CUSTOM CONSULTATION",
+    "detail": {
+      "activeBadge": "АКТИВНЫЙ РЕГЛАМЕНТ 2026",
+      "activeBadge_uz": "FAOLLIK REGLAMENTI 2026",
+      "activeBadge_en": "ACTIVE SERVICE 2026",
+      "vatBadge": "НДС 12% ВКЛЮЧЕН",
+      "vatBadge_uz": "12% QQS BILAN",
+      "vatBadge_en": "12% VAT INCLUDED",
+      "stepsTitle": "ЭТАПЫ ВЫПОЛНЕНИЯ РАБОТ",
+      "stepsTitle_uz": "ISHLARNI BAJARISH BOSQICHLARI",
+      "stepsTitle_en": "EXECUTION MILESTONES",
+      "bodyTitle": "РЕГЛАМЕНТ И СПЕЦИФИКА УСЛУГИ",
+      "bodyTitle_uz": "XIZMAT REGLAMENTI VA XUSUSIYATLARI",
+      "bodyTitle_en": "REGULATIONS & SERVICE SPECIFICATIONS",
+      "documentsTitle": "ДОКУМЕНТАЦИЯ И РЕГЛАМЕНТЫ",
+      "documentsTitle_uz": "HUJJATLAR VA REGLAMENTLAR",
+      "documentsTitle_en": "DOCUMENTATION & REGULATIONS",
+      "benefitsTitle": "ПАРАМЕТРЫ И ГАРАНТИИ",
+      "benefitsTitle_uz": "PARAMETRLAR VA KAFOLATLAR",
+      "benefitsTitle_en": "PARAMETERS & ASSURANCES",
+      "contractValue": "ЭСФ Didox / Soliq (12% НДС)",
+      "contractValue_uz": "EHF Didox / Soliq (12% QQS)",
+      "contractValue_en": "E-invoice Didox / Soliq (12% VAT)",
+      "orderTitle": "ЗАКАЗ И СОГЛАСОВАНИЕ СМЕТЫ",
+      "orderTitle_uz": "BUYURTMA VA SMETANI TASDIQLASH",
+      "orderTitle_en": "SERVICE INQUIRY & ESTIMATE",
+      "orderNote": "Подготовка ТКП: в течение 24 часов",
+      "orderNote_uz": "TKP tayyorlash: 24 soat ichida",
+      "orderNote_en": "Formal proposal: within 24 hours",
+      "currencyValue": "UZS (Узбекские сумы)",
+      "currencyValue_uz": "UZS (O'zbek so'mi)",
+      "currencyValue_en": "UZS (Uzbek som)",
+      "taxationValue": "НДС 12% включен",
+      "taxationValue_uz": "12% QQS kiritilgan",
+      "taxationValue_en": "12% VAT included",
+      "defaultCtaLabel": "ОСТАВИТЬ ЗАЯВКУ ↗",
+      "defaultCtaLabel_uz": "ARIZA QOLDIRISH ↗",
+      "defaultCtaLabel_en": "SUBMIT INQUIRY ↗"
+    }
   },
   "projectsPage": {
     "code": "PORTAL // SECTION 04",
@@ -90,6 +189,14 @@
     "ctaButton": "ОБСУДИТЬ ПРОЕКТ ↗",
     "ctaButton_uz": "LOYIHANI MUHOKAMA QILISH ↗",
     "ctaButton_en": "DISCUSS PROJECT ↗",
+    "defaultCategory": "Спецпроекты",
+    "defaultCategory_uz": "Maxsus loyihalar",
+    "defaultCategory_en": "Special projects",
+    "directionsTitle": "НАПРАВЛЕНИЯ СПЕЦИАЛЬНЫХ ПРОЕКТОВ RAILTECH",
+    "directionsTitle_uz": "RAILTECH MAXSUS LOYIHALARINING ASOSIY YO'NALISHLARI",
+    "directionsTitle_en": "RAILTECH SPECIAL PROJECTS STRATEGIC DIRECTIONS",
+    "directionsDivider": "DIRECTIONS",
+    "artLabDivider": "ART LAB",
     "directions": [
       {
         "n": "01",
@@ -141,6 +248,29 @@
       "buttonText": "Предложить проект",
       "buttonText_uz": "Loyiha taklif qilish",
       "buttonText_en": "Submit a proposal"
+    },
+    "detail": {
+      "materialsTitle": "ПРИКРЕПЛЕННЫЕ МАТЕРИАЛЫ КЕЙСА",
+      "materialsTitle_uz": "LOYIHAGA BIRIKTIRILGAN MATERIALLAR",
+      "materialsTitle_en": "ATTACHED CASE MATERIALS",
+      "scopeTitle": "ОПИСАНИЕ И РЕЗУЛЬТАТЫ ПРОЕКТА",
+      "scopeTitle_uz": "LOYIHA TAVSIFI VA NATIJALARI",
+      "scopeTitle_en": "PROJECT SCOPE & DELIVERABLES",
+      "orderTitle": "ЗАКАЗАТЬ АНАЛОГИЧНЫЙ ПРОЕКТ",
+      "orderTitle_uz": "O'XSHASH LOYIHANI BUYURTMA QILISH",
+      "orderTitle_en": "ORDER A SIMILAR PROJECT",
+      "orderNote": "Реализация под ключ: ВЭД, инженерная адаптация, поставка со склада в Ташкенте и техническое сопровождение.",
+      "orderNote_uz": "Kalit ostida amalga oshirish: TQI, muhandislik adaptatsiyasi, Toshkent omboridan yetkazib berish va texnik ko'mak.",
+      "orderNote_en": "Turnkey implementation: foreign trade, engineering adaptation, Tashkent warehouse delivery, and ongoing technical support.",
+      "settlementValue": "DDP Ташкент (12% НДС)",
+      "settlementValue_uz": "DDP Toshkent (12% QQS)",
+      "settlementValue_en": "DDP Tashkent (12% VAT)",
+      "leadTimeValue": "24-48 часов",
+      "leadTimeValue_uz": "24-48 soat",
+      "leadTimeValue_en": "24-48 hours",
+      "orderButton": "[ ЗАКАЗАТЬ АНАЛОГИЧНЫЙ ПРОЕКТ ↗ ]",
+      "orderButton_uz": "[ O'XSHASH LOYIHANI BUYURTMA QILISH ↗ ]",
+      "orderButton_en": "[ REQUEST SIMILAR PROJECT ↗ ]"
     }
   },
   "blogPage": {
@@ -159,7 +289,45 @@
     "ctaSubtitle_en": "Get in touch with RailTech's technical committee for collaborative research or specialized engineering consultations.",
     "ctaButton": "СВЯЗАТЬСЯ С ЭКСПЕРТАМИ ↗",
     "ctaButton_uz": "EKSPERTLAR BILAN BOG'LANISH ↗",
-    "ctaButton_en": "CONTACT EXPERTS ↗"
+    "ctaButton_en": "CONTACT EXPERTS ↗",
+    "defaultAuthor": "Инженерный отдел ООО «RailTech»",
+    "defaultAuthor_uz": "«RailTech» MChJ muhandislik bo'limi",
+    "defaultAuthor_en": "RailTech LLC Engineering Department",
+    "featuredBadge": "ГЛАВНЫЙ МАТЕРИАЛ",
+    "featuredBadge_uz": "ASOSIY MAQOLA",
+    "featuredBadge_en": "FEATURED ARTICLE",
+    "reviewer": "Инженерный отдел RailTech",
+    "reviewer_uz": "RailTech muhandislik bo'limi",
+    "reviewer_en": "RailTech Engineering Department",
+    "detail": {
+      "frameBottom": "RAILTECH ENGINEERING DISPATCH",
+      "sidebarTitle": "КОММЕРЧЕСКИЙ ОТДЕЛ // ВЭД",
+      "sidebarTitle_uz": "TIJORAT BO'LIMI // TQI",
+      "sidebarTitle_en": "COMMERCIAL DESK // TRADE",
+      "sidebarNote": "Расчет спецификации по теме публикации",
+      "sidebarNote_uz": "Maqola mavzusi bo'yicha hisob-kitob",
+      "sidebarNote_en": "RFQ calculation for article subject",
+      "sidebarText": "Отправьте потребность вашего предприятия в ЖД узлах или системах СЦБ. Мы выставим счет с НДС 12% или подготовим расчет Landed Cost DDP в сумах за 60 минут.",
+      "sidebarText_uz": "Korxonangizning temir yo'l uzellari yoki STSB tizimlariga bo'lgan ehtiyojini yuboring. Biz 12% QQS bilan hisob taqdim etamiz yoki 60 daqiqada so'mda Landed Cost DDP hisobini tayyorlaymiz.",
+      "sidebarText_en": "Submit your company's bill of materials for rolling stock components or signaling units. We will issue an invoice with 12% VAT or a Landed Cost DDP quote in 60 minutes.",
+      "sidebarFacts": [
+        {
+          "text": "• Склад в Ташкенте: ТПК Index B2-2097",
+          "text_uz": "• Toshkentdagi ombor: Index SICHM B2-2097",
+          "text_en": "• Tashkent Hub: Index Complex B2-2097"
+        },
+        {
+          "text": "• Плательщик НДС: 12% (ЭСФ Didox)",
+          "text_uz": "• QQS to'lovchisi: 12% (Didox EHF)",
+          "text_en": "• VAT Payer: 12% (Didox ESF)"
+        },
+        {
+          "text": "• Поставка: DDP Ташкент под ключ",
+          "text_uz": "• Yetkazib berish: DDP Toshkent kalit topshirish",
+          "text_en": "• Delivery: DDP Tashkent Turnkey"
+        }
+      ]
+    }
   },
   "leadModal": {
     "badge": "ЗАПРОС КП / СЧЕТА С НДС 12%",

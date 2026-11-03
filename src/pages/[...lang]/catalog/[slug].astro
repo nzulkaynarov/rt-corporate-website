@@ -7,10 +7,15 @@ import HudPageHeader from '../../../components/hud/HudPageHeader.astro';
 import { withBase } from '../../../utils/url';
 import { marked } from 'marked';
 import globalData from '../../../data/cms/global.json';
+import pagesData from '../../../data/cms/pages.json';
+import { expandLangs, localeHref, pick, tField, type Lang } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { entrySeo, absoluteUrl } from '../../../utils/seo';
+import { navLabel, navLabels } from '../../../utils/nav';
 
 export async function getStaticPaths() {
   const catalogEntries = await getCollection('catalog');
-  return catalogEntries.map((entry) => {
+  const paths = catalogEntries.map((entry) => {
     const entryCat = entry.data.category || entry.data.subsystem || '';
     const related = catalogEntries
       .filter((e) => e.slug !== entry.slug)
@@ -30,111 +35,129 @@ export async function getStaticPaths() {
       props: { entry, related },
     };
   });
+  return expandLangs(paths);
 }
 
 const { entry, related } = Astro.props;
 const { Content } = await entry.render();
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const lang = Astro.locals.lang;
+const tr = (key: string, vars?: Record<string, string | number>) => t(lang, key, vars);
+const L = (obj: Record<string, any>, field: string) => tField(obj, field, lang) as string;
 
-const productUrl = `https://railtech.uz/catalog/${entry.slug}`;
-const siteUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : productUrl;
+type CatalogData = typeof entry.data;
+const data = entry.data;
+const cPage = pagesData.catalogPage;
+const detail = cPage.detail;
 
-const categoryName = entry.data.category || entry.data.subsystem || 'Оборудование';
-const categoryNameUz = entry.data.category_uz || entry.data.subsystem_uz || categoryName;
-const categoryNameEn = entry.data.category_en || entry.data.subsystem_en || categoryName;
+const productRoute = `/catalog/${entry.slug}/`;
+const productUrl = absoluteUrl(localeHref(productRoute, lang), Astro.site);
+const orgId = `${absoluteUrl('/', Astro.site)}#organization`;
 
-const mainImageUrl = entry.data.image || `/images/catalog/${entry.data.sku.toLowerCase()}.jpg`;
+/** Category with the legacy `subsystem` alias; falls back to pages.json catalogPage.defaultCategory. */
+const categoryOf = (d: CatalogData) => {
+  const ru = d.category || d.subsystem;
+  if (!ru) return { ru: cPage.defaultCategory, uz: cPage.defaultCategory_uz, en: cPage.defaultCategory_en };
+  return { ru, uz: d.category_uz || d.subsystem_uz, en: d.category_en || d.subsystem_en };
+};
+const category = categoryOf(data);
+const categoryName = pick(lang, category.ru, category.uz, category.en);
+
+/** Stock status: explicit status_uz/status_en override, otherwise the dictionary label for statusKey. */
+const statusLabel = (d: CatalogData, l: Lang) => {
+  const override = l === 'uz' ? d.status_uz : l === 'en' ? d.status_en : undefined;
+  return override || t(l, `catalog.status.${d.statusKey}`);
+};
+const status = statusLabel(data, lang);
+
+const title = L(data, 'title');
+const warehouse = data.warehouse ? L(data, 'warehouse') : L(cPage, 'defaultWarehouse');
+const warranty = data.warranty ? L(data, 'warranty') : L(cPage, 'defaultWarranty');
+const priceNote = data.priceNote ? L(data, 'priceNote') : L(cPage, 'defaultPriceNote');
+
+// Markdown body: translated body_uz / body_en when present, otherwise the RU body.
+const localizedBody = lang === 'uz' ? data.body_uz : lang === 'en' ? data.body_en : undefined;
+const bodyHtml = localizedBody ? await marked.parse(localizedBody) : '';
+
+const mainImageUrl = data.image || `/images/catalog/${data.sku.toLowerCase()}.jpg`;
+const seo = entrySeo(data, lang, {
+  titleExtra: `(${data.sku})`,
+  descriptionFields: ['specs'],
+  body: localizedBody || entry.body,
+});
+
+// schema.org Offer: availability from statusKey; price only when the CMS has a real numeric price.
+const availability: Record<string, string> = {
+  in_stock: 'https://schema.org/InStock',
+  reserved: 'https://schema.org/LimitedAvailability',
+  on_order: 'https://schema.org/PreOrder',
+};
+const priceDigits = (data.price || '').replace(/[^\d.,]/g, '');
+const priceValue = /^\d+,\d{1,2}$/.test(priceDigits) ? priceDigits.replace(',', '.') : priceDigits.replace(/,/g, '');
+const hasPrice = priceValue !== '' && Number(priceValue) > 0;
 
 const productJsonLd = {
-  '@context': 'https://schema.org/',
   '@type': 'Product',
-  name: entry.data.title,
-  image: mainImageUrl.startsWith('http') ? mainImageUrl : new URL(withBase(mainImageUrl), siteUrl).href,
-  description: entry.data.specs || entry.data.title,
-  sku: entry.data.sku,
-  mpn: entry.data.sku,
+  '@id': `${productUrl}#product`,
+  name: title,
+  description: seo.description,
+  image: absoluteUrl(withBase(mainImageUrl), Astro.site),
+  url: productUrl,
+  sku: data.sku,
+  mpn: data.sku,
   category: categoryName,
-  brand: {
-    '@type': 'Brand',
-    name: 'RailTech',
-  },
+  brand: { '@id': orgId },
+  manufacturer: { '@id': orgId },
   offers: {
     '@type': 'Offer',
-    url: siteUrl,
-    priceCurrency: 'UZS',
-    price: entry.data.price || '0',
-    priceValidUntil: '2026-12-31',
+    url: productUrl,
+    availability: availability[data.statusKey] || availability.in_stock,
     itemCondition: 'https://schema.org/NewCondition',
-    availability: 'https://schema.org/InStock',
-    seller: {
-      '@type': 'Organization',
-      name: 'ООО «RailTech»',
-    },
+    seller: { '@id': orgId },
+    ...(hasPrice ? { price: priceValue, priceCurrency: 'UZS' } : {}),
   },
 };
 
-const breadcrumbJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Главная',
-      item: 'https://railtech.uz/',
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Каталог товаров',
-      item: 'https://railtech.uz/catalog/',
-    },
-    {
-      '@type': 'ListItem',
-      position: 3,
-      name: entry.data.title,
-      item: siteUrl,
-    },
-  ],
-};
+const phoneHref = `tel:${globalData.phone.replace(/[\s-]/g, '')}`;
+const catalogHref = localeHref('/catalog/', lang);
 ---
 
 <BaseLayout
-  title={`${entry.data.title} (${entry.data.sku}) — Спецификация оборудования | ООО «RailTech»`}
-  description={`Технические параметры и заказ: ${entry.data.title} (${entry.data.sku}). Категория: ${categoryName}. Склад: ${entry.data.warehouse}. Официальная поставка в Ташкенте с НДС 12%.`}
-  keywords={`${entry.data.title}, ${entry.data.sku}, промышленное оборудование, ташкент, склад index, узбекистан`}
-  image={withBase(mainImageUrl)}
+  title={seo.title}
+  description={seo.description}
+  image={mainImageUrl}
+  ogType="product"
+  breadcrumbs={[
+    { name: navLabel('/catalog/', lang), path: '/catalog/' },
+    { name: title, path: productRoute },
+  ]}
+  jsonLd={productJsonLd}
 >
-  <!-- Product & Breadcrumb Schema.org -->
-  <script type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
-
   <div class="max-w-7xl mx-auto px-4 pb-16 font-sans">
     <HudPageHeader
-      code={`SKU // ${entry.data.sku}`}
-      parent={{ href: '/catalog/', label: { ru: 'КАТАЛОГ', uz: 'KATALOG', en: 'CATALOG' } }}
-      crumb={{ ru: entry.data.sku, uz: entry.data.sku, en: entry.data.sku }}
-      title={{ ru: entry.data.title, uz: entry.data.title_uz, en: entry.data.title_en }}
-      lead={entry.data.specs ? { ru: entry.data.specs, uz: entry.data.specs_uz, en: entry.data.specs_en } : undefined}
+      code={tr('catalog.detail.code', { sku: data.sku })}
+      parent={{ href: '/catalog/', label: navLabels('/catalog/') }}
+      crumb={{ ru: data.sku, uz: data.sku, en: data.sku }}
+      title={{ ru: data.title, uz: data.title_uz, en: data.title_en }}
+      lead={data.specs ? { ru: data.specs, uz: data.specs_uz, en: data.specs_en } : undefined}
     />
 
     <!-- Status and Meta Badges Bar -->
     <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-8">
       <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A] font-bold border border-[#0A0A0A]">
-        {entry.data.sku}
+        {data.sku}
       </span>
       <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
-        <I18nText ru={categoryName} uz={categoryNameUz} en={categoryNameEn} />
+        {categoryName}
       </span>
       <span class="hud-glass-card px-2.5 py-1 text-emerald-900 font-bold bg-emerald-100/50">
-        <I18nText ru={entry.data.status} uz={entry.data.status_uz} en={entry.data.status_en} />
+        {status}
       </span>
       <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
-        <I18nText ru="НДС 12% ВКЛЮЧЕН" uz="12% QQS BILAN" en="12% VAT INCLUDED" />
+        <I18nText ru={detail.vatBadge} uz={detail.vatBadge_uz} en={detail.vatBadge_en} />
       </span>
-      {entry.data.price && (
+      {data.price && (
         <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A] font-bold">
-          {entry.data.price}
+          {data.price}
         </span>
       )}
     </div>
@@ -147,69 +170,69 @@ const breadcrumbJsonLd = {
         <div class="hud-glass-card p-6">
           <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 flex justify-between items-center font-mono text-xs">
             <span class="font-bold text-[#0A0A0A] tracking-wider uppercase">
-              <I18nText ru="ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ" uz="TEXNIK XUSUSIYATLAR" en="TECHNICAL SPECIFICATIONS" />
+              <I18nText ru={detail.specsTitle} uz={detail.specsTitle_uz} en={detail.specsTitle_en} />
             </span>
-            <span class="text-[#4A5056]">RT // TECHNICAL-SPEC</span>
+            <span class="text-[#4A5056]">{detail.specsCode}</span>
           </div>
 
           <table class="w-full font-mono text-xs border-collapse">
             <tbody class="divide-y divide-[#0A0A0A]/15">
               <tr class="hover:bg-white/30 transition-colors">
                 <td class="py-2.5 pr-3 text-[#4A5056] w-2/5">
-                  <I18nText ru="Артикул / SKU:" uz="Artikul / SKU:" en="Part Number / SKU:" />
+                  <I18nText k="catalog.detail.sku" />
                 </td>
-                <td class="py-2.5 font-bold text-[#0A0A0A]">{entry.data.sku}</td>
+                <td class="py-2.5 font-bold text-[#0A0A0A]">{data.sku}</td>
               </tr>
               <tr class="hover:bg-white/30 transition-colors">
                 <td class="py-2.5 pr-3 text-[#4A5056]">
-                  <I18nText ru="Категория:" uz="Kategoriya:" en="Category:" />
+                  <I18nText k="catalog.detail.category" />
                 </td>
                 <td class="py-2.5 text-[#0A0A0A]">
-                  <I18nText ru={categoryName} uz={categoryNameUz} en={categoryNameEn} />
+                  {categoryName}
                 </td>
               </tr>
-              {entry.data.gost && (
+              {data.gost && (
                 <tr class="hover:bg-white/30 transition-colors">
                   <td class="py-2.5 pr-3 text-[#4A5056]">
-                    <I18nText ru="ГОСТ / ТУ:" uz="GOST / TU:" en="Standard / GOST:" />
+                    <I18nText k="catalog.detail.gost" />
                   </td>
-                  <td class="py-2.5 font-bold text-[#0A0A0A]">{entry.data.gost}</td>
+                  <td class="py-2.5 font-bold text-[#0A0A0A]">{data.gost}</td>
                 </tr>
               )}
-              {entry.data.tnved && (
+              {data.tnved && (
                 <tr class="hover:bg-white/30 transition-colors">
                   <td class="py-2.5 pr-3 text-[#4A5056]">
-                    <I18nText ru="Код ТН ВЭД:" uz="TIF TN kodi:" en="HS Code (TN VED):" />
+                    <I18nText k="catalog.detail.tnved" />
                   </td>
-                  <td class="py-2.5 font-bold text-[#0A0A0A]">{entry.data.tnved}</td>
+                  <td class="py-2.5 font-bold text-[#0A0A0A]">{data.tnved}</td>
                 </tr>
               )}
-              {entry.data.dimensions && (
+              {data.dimensions && (
                 <tr class="hover:bg-white/30 transition-colors">
                   <td class="py-2.5 pr-3 text-[#4A5056]">
-                    <I18nText ru="Габариты:" uz="O'lchamlari:" en="Dimensions:" />
+                    <I18nText k="catalog.detail.dimensions" />
                   </td>
-                  <td class="py-2.5 text-[#0A0A0A]">{entry.data.dimensions}</td>
+                  <td class="py-2.5 text-[#0A0A0A]">{data.dimensions}</td>
                 </tr>
               )}
-              {entry.data.weight && (
+              {data.weight && (
                 <tr class="hover:bg-white/30 transition-colors">
                   <td class="py-2.5 pr-3 text-[#4A5056]">
-                    <I18nText ru="Масса / Вес:" uz="Og'irligi:" en="Weight:" />
+                    <I18nText k="catalog.detail.weight" />
                   </td>
-                  <td class="py-2.5 text-[#0A0A0A]">{entry.data.weight}</td>
+                  <td class="py-2.5 text-[#0A0A0A]">{data.weight}</td>
                 </tr>
               )}
-              {entry.data.material && (
+              {data.material && (
                 <tr class="hover:bg-white/30 transition-colors">
                   <td class="py-2.5 pr-3 text-[#4A5056]">
-                    <I18nText ru="Материал:" uz="Material:" en="Material:" />
+                    <I18nText k="catalog.detail.material" />
                   </td>
-                  <td class="py-2.5 text-[#0A0A0A]">{entry.data.material}</td>
+                  <td class="py-2.5 text-[#0A0A0A]">{data.material}</td>
                 </tr>
               )}
               {/* Dynamic CMS attributes */}
-              {entry.data.attributes && entry.data.attributes.map((attr) => (
+              {data.attributes && data.attributes.map((attr) => (
                 <tr class="hover:bg-white/30 transition-colors">
                   <td class="py-2.5 pr-3 text-[#4A5056]">
                     <I18nText ru={attr.label} uz={attr.label_uz} en={attr.label_en} />
@@ -221,34 +244,26 @@ const breadcrumbJsonLd = {
               ))}
               <tr class="hover:bg-white/30 transition-colors">
                 <td class="py-2.5 pr-3 text-[#4A5056]">
-                  <I18nText ru="Базис отгрузки:" uz="Yuklash ombori:" en="Dispatch Facility:" />
+                  <I18nText k="catalog.detail.warehouse" />
                 </td>
                 <td class="py-2.5 font-bold text-[#0A0A0A]">
-                  <I18nText ru={entry.data.warehouse} uz={entry.data.warehouse_uz || entry.data.warehouse} en={entry.data.warehouse_en || entry.data.warehouse} />
+                  {warehouse}
                 </td>
               </tr>
               <tr class="hover:bg-white/30 transition-colors">
                 <td class="py-2.5 pr-3 text-[#4A5056]">
-                  <I18nText ru="Гарантия:" uz="Kafolat:" en="Warranty:" />
+                  <I18nText k="catalog.detail.warranty" />
                 </td>
                 <td class="py-2.5 text-[#0A0A0A]">
-                  <I18nText
-                    ru={entry.data.warranty || '12 месяцев с момента ввода в эксплуатацию'}
-                    uz={entry.data.warranty_uz}
-                    en={entry.data.warranty_en}
-                  />
+                  {warranty}
                 </td>
               </tr>
               <tr class="hover:bg-white/30 transition-colors">
                 <td class="py-2.5 pr-3 text-[#4A5056]">
-                  <I18nText ru="Условия цены:" uz="Narx shartlari:" en="Pricing Terms:" />
+                  <I18nText k="catalog.detail.priceTerms" />
                 </td>
                 <td class="py-2.5 font-bold text-[#0A0A0A]">
-                  <I18nText
-                    ru={entry.data.priceNote || 'Цена по запросу (с НДС 12%)'}
-                    uz={entry.data.priceNote_uz}
-                    en={entry.data.priceNote_en}
-                  />
+                  {priceNote}
                 </td>
               </tr>
             </tbody>
@@ -258,33 +273,25 @@ const breadcrumbJsonLd = {
         <!-- Detailed Description Content -->
         <div class="hud-glass-card p-6">
           <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 font-mono text-xs font-bold text-[#0A0A0A] uppercase tracking-wider">
-            <I18nText ru="ОПИСАНИЕ И ЭКСПЛУАТАЦИОННЫЕ ОСОБЕННОСТИ" uz="TAVSIF VA FOYDALANISH XUSUSIYATLARI" en="DESCRIPTION & OPERATIONAL PARAMETERS" />
+            <I18nText ru={detail.descriptionTitle} uz={detail.descriptionTitle_uz} en={detail.descriptionTitle_en} />
           </div>
           <div class="prose prose-sm text-[#0A0A0A] max-w-none leading-relaxed">
-            <div class="rt-lang rt-lang-ru">
-              <Content />
-            </div>
-            <div class="rt-lang rt-lang-uz">
-              {entry.data.body_uz ? <div set:html={marked.parse(entry.data.body_uz)} /> : <Content />}
-            </div>
-            <div class="rt-lang rt-lang-en">
-              {entry.data.body_en ? <div set:html={marked.parse(entry.data.body_en)} /> : <Content />}
-            </div>
+            {bodyHtml ? <div set:html={bodyHtml} /> : <Content />}
           </div>
         </div>
 
         <!-- Downloadable Documentation & Files -->
-        {entry.data.documents && entry.data.documents.length > 0 && (
+        {data.documents && data.documents.length > 0 && (
           <div class="hud-glass-card p-6">
             <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 flex justify-between items-center font-mono text-xs">
               <span class="font-bold text-[#0A0A0A] tracking-wider uppercase flex items-center gap-2">
                 <span class="w-2 h-2 bg-[#0A0A0A] inline-block"></span>
-                <I18nText ru="ДОКУМЕНТАЦИЯ И ФАЙЛЫ ДЛЯ СКАЧИВАНИЯ" uz="HUJJATLAR VA YUKLAB OLISH UCHUN FAYLLAR" en="DOCUMENTATION & DOWNLOADABLE FILES" />
+                <I18nText ru={detail.documentsTitle} uz={detail.documentsTitle_uz} en={detail.documentsTitle_en} />
               </span>
-              <span class="text-[#4A5056]">FILES // 0{entry.data.documents.length}</span>
+              <span class="text-[#4A5056]">{tr('docs.filesCount', { count: data.documents.length })}</span>
             </div>
             <div class="space-y-2.5 font-mono text-xs">
-              {entry.data.documents.map((doc) => {
+              {data.documents.map((doc) => {
                 const fileUrl = doc.file.startsWith('http') ? doc.file : withBase(doc.file);
                 return (
                   <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 border border-[#0A0A0A]/20 bg-white/40 hover:bg-white/80 transition-colors gap-2">
@@ -295,7 +302,7 @@ const breadcrumbJsonLd = {
                           <I18nText ru={doc.title} uz={doc.title_uz} en={doc.title_en} />
                         </div>
                         <div class="text-[10px] text-[#4A5056] uppercase tracking-wider">
-                          {doc.type || 'PDF DOCUMENT'}
+                          {doc.type || tr('docs.typeFallback')}
                         </div>
                       </div>
                     </div>
@@ -303,10 +310,10 @@ const breadcrumbJsonLd = {
                       <button
                         type="button"
                         data-lead-modal
-                        data-lead-subject={`Запрос технического паспорта: ${doc.title} (${entry.data.sku})`}
+                        data-lead-subject={t('ru', 'lead.subject.catalogDatasheet', { doc: doc.title, sku: data.sku })}
                         class="hud-btn hud-btn--ghost text-[11px] py-1.5 px-3 self-start sm:self-auto text-center shrink-0 cursor-pointer"
                       >
-                        <I18nText ru="ЗАПРОСИТЬ ПАСПОРТ ↗" uz="PASPORTNI SO'RASH ↗" en="REQUEST DATASHEET ↗" />
+                        <I18nText k="catalog.detail.requestDatasheet" />
                       </button>
                     ) : (
                       <a
@@ -315,7 +322,7 @@ const breadcrumbJsonLd = {
                         rel="noopener noreferrer"
                         class="hud-btn hud-btn--ghost text-[11px] py-1.5 px-3 self-start sm:self-auto text-center shrink-0"
                       >
-                        <I18nText ru="СКАЧАТЬ / ОТКРЫТЬ ↓" uz="YUKLAB OLISH / OCHISH ↓" en="DOWNLOAD / OPEN ↓" />
+                        <I18nText k="docs.download" />
                       </a>
                     )}
                   </div>
@@ -329,30 +336,14 @@ const breadcrumbJsonLd = {
         <div class="hud-glass-card p-5 font-mono text-xs space-y-2">
           <div class="font-bold text-[#0A0A0A] flex items-center gap-2">
             <span class="w-2 h-2 bg-[#0A0A0A] inline-block"></span>
-            <I18nText ru="КОМПЛЕКТНОСТЬ ПОСТАВКИ И ДОКУМЕНТЫ:" uz="YETKAZIB BERISH TO'PLAMI VA HUJJATLAR:" en="COMPLETENESS OF SUPPLY & DOCUMENTATION:" />
+            <I18nText ru={detail.supplyTitle} uz={detail.supplyTitle_uz} en={detail.supplyTitle_en} />
           </div>
           <div class="text-[#4A5056] space-y-1.5 text-[11px] leading-relaxed">
-            <div>
-              <I18nText
-                ru="• Оригинальный технический паспорт и сертификат соответствия завода-изготовителя."
-                uz="• Ishlab chiqaruvchining asl texnik pasporti va muvofiqlik sertifikati."
-                en="• Original manufacturer technical passport and certificate of conformity."
-              />
-            </div>
-            <div>
-              <I18nText
-                ru="• Сертификаты соответствия техническим регламентам и стандартам Республики Узбекистан."
-                uz="• O'zbekiston Respublikasi texnik reglamentlari va standartlariga muvofiqlik sertifikatlari."
-                en="• Certificates of conformity with technical regulations and standards of Uzbekistan."
-              />
-            </div>
-            <div>
-              <I18nText
-                ru="• Товарно-транспортная накладная, акт приема-передачи и электронный счет-фактура (ЭСФ Didox) с НДС 12%."
-                uz="• Tovar-transport yukxati, topshirish-qabul qilish dalolatnomasi va 12% QQS bilan EHF (Didox)."
-                en="• Waybill, certificate of acceptance, and electronic tax invoice (Didox) with 12% VAT."
-              />
-            </div>
+            {(detail.supplyItems || []).map((item: any) => (
+              <div>
+                <I18nText ru={item.text} uz={item.text_uz} en={item.text_en} />
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -361,51 +352,50 @@ const breadcrumbJsonLd = {
       <div class="lg:col-span-5 flex flex-col space-y-6">
         <ProductMediaGallery
           client:load
-          sku={entry.data.sku}
-          title={entry.data.title}
-          title_uz={entry.data.title_uz}
-          title_en={entry.data.title_en}
-          category={categoryName}
-          category_uz={categoryNameUz}
-          category_en={categoryNameEn}
-          status={entry.data.status}
-          status_uz={entry.data.status_uz}
-          status_en={entry.data.status_en}
-          specs={entry.data.specs}
-          specs_uz={entry.data.specs_uz}
-          specs_en={entry.data.specs_en}
+          lang={lang}
+          sku={data.sku}
+          title={data.title}
+          title_uz={data.title_uz}
+          title_en={data.title_en}
+          category={category.ru}
+          category_uz={category.uz}
+          category_en={category.en}
+          status={status}
+          specs={data.specs}
+          specs_uz={data.specs_uz}
+          specs_en={data.specs_en}
           image={mainImageUrl}
-          images={entry.data.images}
-          gallery={entry.data.gallery}
+          images={data.images}
+          gallery={data.gallery}
         />
 
         <!-- Commercial Action Box -->
         <div class="hud-glass-card p-6 font-mono gap-4">
           <div class="border-b border-[#0A0A0A]/20 pb-2">
             <span class="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider block">
-              <I18nText ru="ОТДЕЛ СНАБЖЕНИЯ // ТАШКЕНТ" uz="TA'MINOT BO'LIMI // TOSHKENT" en="PROCUREMENT DESK // TASHKENT" />
+              <I18nText ru={detail.procurementTitle} uz={detail.procurementTitle_uz} en={detail.procurementTitle_en} />
             </span>
             <span class="text-[11px] text-[#4A5056]">
-              <I18nText ru="Отгрузка со склада Index B2-2097 от 24 часов" uz="Index B2-2097 omboridan 24 soatdan yuklash" en="Dispatch from Index B2-2097 from 24 hours" />
+              <I18nText ru={detail.dispatchNote} uz={detail.dispatchNote_uz} en={detail.dispatchNote_en} />
             </span>
           </div>
 
           <div class="space-y-2 text-xs">
             <div class="flex justify-between text-[#4A5056]">
-              <span><I18nText ru="Статус наличия:" uz="Mavjudlik holati:" en="Stock status:" /></span>
+              <span><I18nText k="catalog.detail.stockStatus" /></span>
               <span class="font-bold text-[#0A0A0A]">
-                <I18nText ru={entry.data.status} uz={entry.data.status_uz} en={entry.data.status_en} />
+                {status}
               </span>
             </div>
             <div class="flex justify-between text-[#4A5056]">
-              <span><I18nText ru="Налогообложение:" uz="Soliqqa tortish:" en="Taxation:" /></span>
+              <span><I18nText k="catalog.detail.taxation" /></span>
               <span class="font-bold text-[#0A0A0A]">
-                <I18nText ru="НДС 12% включен" uz="12% QQS kiritilgan" en="12% VAT included" />
+                <I18nText ru={detail.taxationValue} uz={detail.taxationValue_uz} en={detail.taxationValue_en} />
               </span>
             </div>
             <div class="flex justify-between text-[#4A5056]">
-              <span><I18nText ru="Отдел продаж:" uz="Sotuv bo'limi:" en="Sales direct:" /></span>
-              <a href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`} class="font-bold text-[#0A0A0A] hover:underline">{globalData.phone}</a>
+              <span><I18nText k="catalog.detail.salesDirect" /></span>
+              <a href={phoneHref} class="font-bold text-[#0A0A0A] hover:underline">{globalData.phone}</a>
             </div>
           </div>
 
@@ -413,16 +403,16 @@ const breadcrumbJsonLd = {
             <button
               type="button"
               data-lead-modal
-              data-lead-subject={`Запрос счета на позицию ${entry.data.title} (${entry.data.sku})`}
+              data-lead-subject={t('ru', 'lead.subject.catalogInvoice', { title: data.title, sku: data.sku })}
               class="hud-btn w-full cursor-pointer"
             >
-              <I18nText ru="ЗАПРОСИТЬ КП / СЧЕТ ↗" uz="TIJORAT TAKLIFI / HISOB SO'ROVI ↗" en="REQUEST QUOTE / INVOICE ↗" />
+              <I18nText k="catalog.detail.requestQuote" />
             </button>
             <a
-              href={`${base}/catalog/`}
+              href={catalogHref}
               class="hud-btn hud-btn--ghost w-full text-center"
             >
-              <I18nText ru="← ВЕРНУТЬСЯ В КАТАЛОГ" uz="← KATALOGGA QAYTISH" en="← BACK TO CATALOG" />
+              <I18nText k="catalog.detail.back" />
             </a>
           </div>
         </div>
@@ -436,62 +426,54 @@ const breadcrumbJsonLd = {
           <div class="flex items-center gap-2">
             <span class="w-2.5 h-2.5 bg-[#0A0A0A] inline-block"></span>
             <h2 class="text-sm sm:text-base font-bold text-[#0A0A0A] uppercase tracking-wider">
-              <I18nText ru="ПОХОЖИЕ ПОЗИЦИИ ИЗ КАТАЛОГА" uz="KATALOGDAGI O'XSHASH MAHSULOTLAR" en="SIMILAR ITEMS FROM CATALOG" />
+              <I18nText ru={detail.relatedTitle} uz={detail.relatedTitle_uz} en={detail.relatedTitle_en} />
             </h2>
           </div>
-          <a href={`${base}/catalog/`} class="text-xs font-bold text-[#0A0A0A] hover:underline">
-            <I18nText ru="ВЕСЬ КАТАЛОГ →" uz="BARCHA KATALOG →" en="VIEW FULL CATALOG →" />
+          <a href={catalogHref} class="text-xs font-bold text-[#0A0A0A] hover:underline">
+            <I18nText k="catalog.detail.viewAll" />
           </a>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {related.map((item) => (
-            <a
-              href={`${base}/catalog/${item.slug}`}
-              class="hud-glass-card p-4 group flex flex-col justify-between hover:border-[#0A0A0A] transition-all"
-            >
-              <div>
-                <div class="hud-card-media aspect-[16/10] mb-3">
-                  <img
-                    src={withBase(item.data.image || `/images/catalog/${item.data.sku.toLowerCase()}.jpg`)}
-                    alt={item.data.title}
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-                <div class="flex items-center justify-between text-[11px] text-[#4A5056] mb-1">
-                  <span class="font-bold text-[#0A0A0A]">{item.data.sku}</span>
-                  <span class="uppercase truncate max-w-[50%]">
-                    <I18nText
-                      ru={item.data.category || item.data.subsystem || ''}
-                      uz={item.data.category_uz || item.data.subsystem_uz}
-                      en={item.data.category_en || item.data.subsystem_en}
+          {related.map((item) => {
+            const itemCategory = categoryOf(item.data);
+            const itemTitle = L(item.data, 'title');
+            return (
+              <a
+                href={localeHref(`/catalog/${item.slug}/`, lang)}
+                class="hud-glass-card p-4 group flex flex-col justify-between hover:border-[#0A0A0A] transition-all"
+              >
+                <div>
+                  <div class="hud-card-media aspect-[16/10] mb-3">
+                    <img
+                      src={withBase(item.data.image || `/images/catalog/${item.data.sku.toLowerCase()}.jpg`)}
+                      alt={tr('catalog.detail.imageAlt', { title: itemTitle, sku: item.data.sku })}
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                      decoding="async"
                     />
+                  </div>
+                  <div class="flex items-center justify-between text-[11px] text-[#4A5056] mb-1">
+                    <span class="font-bold text-[#0A0A0A]">{item.data.sku}</span>
+                    <span class="uppercase truncate max-w-[50%]">
+                      {pick(lang, itemCategory.ru, itemCategory.uz, itemCategory.en)}
+                    </span>
+                  </div>
+                  <h3 class="text-xs sm:text-sm font-bold text-[#0A0A0A] line-clamp-2 mb-2 group-hover:underline">
+                    {itemTitle}
+                  </h3>
+                </div>
+                <div class="pt-3 border-t border-[#0A0A0A]/15 flex items-center justify-between text-xs mt-2">
+                  <span class="text-emerald-900 font-bold text-[11px] bg-emerald-100/60 px-1.5 py-0.5">
+                    {statusLabel(item.data, lang)}
+                  </span>
+                  <span class="font-bold text-[#0A0A0A]">
+                    <I18nText k="catalog.detail.details" />
                   </span>
                 </div>
-                <h3 class="text-xs sm:text-sm font-bold text-[#0A0A0A] line-clamp-2 mb-2 group-hover:underline">
-                  <I18nText
-                    ru={item.data.title}
-                    uz={item.data.title_uz}
-                    en={item.data.title_en}
-                  />
-                </h3>
-              </div>
-              <div class="pt-3 border-t border-[#0A0A0A]/15 flex items-center justify-between text-xs mt-2">
-                <span class="text-emerald-900 font-bold text-[11px] bg-emerald-100/60 px-1.5 py-0.5">
-                  <I18nText
-                    ru={item.data.status}
-                    uz={item.data.status_uz}
-                    en={item.data.status_en}
-                  />
-                </span>
-                <span class="font-bold text-[#0A0A0A]">
-                  <I18nText ru="Подробнее →" uz="Batafsil →" en="Details →" />
-                </span>
-              </div>
-            </a>
-          ))}
+              </a>
+            );
+          })}
         </div>
       </div>
     )}

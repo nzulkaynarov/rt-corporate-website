@@ -6,103 +6,103 @@ import I18nText from '../../../components/I18nText.astro';
 import HudViewportFrame from '../../../components/hud/HudViewportFrame.astro';
 import { marked } from 'marked';
 import globalData from '../../../data/cms/global.json';
+import pagesData from '../../../data/cms/pages.json';
+import { expandLangs, localeHref, pick, tField } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { entrySeo, absoluteUrl, plainText, siteSeo } from '../../../utils/seo';
+import { navLabel } from '../../../utils/nav';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
-  return blogEntries.map((entry) => ({
+  const paths = blogEntries.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry },
   }));
+  return expandLangs(paths);
 }
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const lang = Astro.locals.lang;
+const tr = (key: string, vars?: Record<string, string | number>) => t(lang, key, vars);
+const L = (obj: Record<string, any>, field: string) => tField(obj, field, lang) as string;
 
-const articleUrl = `https://railtech.uz/blog/${entry.slug}`;
-const siteUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : articleUrl;
+const data = entry.data;
+const bPage = pagesData.blogPage;
+const detail = bPage.detail;
+const postRoute = `/blog/${entry.slug}/`;
+const postUrl = absoluteUrl(localeHref(postRoute, lang), Astro.site);
+const orgId = `${absoluteUrl('/', Astro.site)}#organization`;
+const title = L(data, 'title');
+const categoryName = L(data, 'category');
+const tags = pick<string[]>(lang, data.tags, data.tags_uz, data.tags_en);
 
-const techArticleJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'TechArticle',
-  headline: entry.data.title,
-  description: entry.data.summary,
-  image: entry.data.image
-    ? (entry.data.image.startsWith('http') ? entry.data.image : new URL(withBase(entry.data.image), siteUrl).href)
-    : new URL(withBase('/og-cover.png'), siteUrl).href,
-  datePublished: entry.data.publishDate,
-  dateModified: entry.data.publishDate,
-  mainEntityOfPage: {
-    '@type': 'WebPage',
-    '@id': siteUrl,
-  },
-  author: {
-    '@type': 'Organization',
-    name: entry.data.author || 'Инженерный отдел ООО «RailTech»',
-    url: 'https://railtech.uz',
-  },
-  publisher: {
-    '@type': 'Organization',
-    name: 'ООО «RailTech»',
-    url: 'https://railtech.uz',
-    logo: {
-      '@type': 'ImageObject',
-      url: new URL(withBase('/og-cover.png'), siteUrl).href,
-    },
-  },
-  keywords: entry.data.tags.join(', '),
-  articleSection: entry.data.category,
+// Markdown body: translated body_uz / body_en when present, otherwise the RU body.
+const localizedBody = lang === 'uz' ? data.body_uz : lang === 'en' ? data.body_en : undefined;
+const bodyHtml = localizedBody ? await marked.parse(localizedBody) : '';
+
+// Author: explicit per-post author, otherwise the site-wide default from pages.json (localized).
+const author =
+  data.author && data.author !== bPage.defaultAuthor
+    ? data.author
+    : pick(lang, bPage.defaultAuthor, bPage.defaultAuthor_uz, bPage.defaultAuthor_en);
+// Read time: CMS value, otherwise estimated from the body (~180 words per minute).
+const readTime =
+  L(data, 'readTime') ||
+  tr('blog.readTimeMinutes', {
+    n: Math.max(1, Math.round(plainText(localizedBody || entry.body).split(' ').filter(Boolean).length / 180)),
+  });
+
+const seo = entrySeo(data, lang, { descriptionFields: ['summary'], body: localizedBody || entry.body });
+const imagePath = data.image || siteSeo(lang).defaultImage;
+
+const blogPostingJsonLd = {
+  '@type': 'BlogPosting',
+  '@id': `${postUrl}#article`,
+  headline: title,
+  description: seo.description,
+  image: absoluteUrl(withBase(imagePath), Astro.site),
+  datePublished: data.publishDate,
+  dateModified: data.publishDate,
+  inLanguage: lang,
+  url: postUrl,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
+  author:
+    data.author && data.author !== bPage.defaultAuthor
+      ? { '@type': 'Person', name: data.author }
+      : { '@type': 'Organization', name: author, url: absoluteUrl('/', Astro.site) },
+  publisher: { '@id': orgId },
+  articleSection: categoryName,
+  ...(tags.length ? { keywords: tags.join(', ') } : {}),
 };
 
-const breadcrumbJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Главная',
-      item: 'https://railtech.uz/',
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Блог и Новости',
-      item: 'https://railtech.uz/blog/',
-    },
-    {
-      '@type': 'ListItem',
-      position: 3,
-      name: entry.data.title,
-      item: siteUrl,
-    },
-  ],
-};
+const phoneHref = `tel:${globalData.phone.replace(/[\s-]/g, '')}`;
 ---
 
 <BaseLayout
-  title={`${entry.data.title} — Блог инженеров ООО «RailTech»`}
-  description={entry.data.summary}
-  keywords={entry.data.tags.join(', ')}
-  image={withBase(entry.data.image)}
+  title={seo.title}
+  description={seo.description}
+  image={data.image}
+  ogType="article"
+  breadcrumbs={[
+    { name: navLabel('/blog/', lang), path: '/blog/' },
+    { name: title, path: postRoute },
+  ]}
+  jsonLd={blogPostingJsonLd}
 >
-  <!-- Schema.org JSON-LD -->
-  <script type="application/ld+json" set:html={JSON.stringify(techArticleJsonLd)} />
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
-
   <article class="max-w-5xl mx-auto px-4 py-10 font-sans">
     <!-- Breadcrumbs -->
-    <nav aria-label="Breadcrumb" class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-6">
-      <a href={`${base}/`} class="hover:underline">
-        <I18nText ru="ГЛАВНАЯ" uz="BOSH SAHIFA" en="HOME" />
+    <nav aria-label={tr('breadcrumb.aria')} class="flex items-center space-x-2 font-mono text-xs text-[#4A5056] mb-6">
+      <a href={localeHref('/', lang)} class="hover:underline">
+        <I18nText k="nav.home" />
       </a>
       <span>/</span>
-      <a href={`${base}/blog/`} class="hover:underline">
-        <I18nText ru="БЛОГ & НОВОСТИ" uz="BLOG VA YANGILIKLAR" en="BLOG & NEWS" />
+      <a href={localeHref('/blog/', lang)} class="hover:underline">
+        {navLabel('/blog/', lang)}
       </a>
       <span>/</span>
       <span class="text-[#0A0A0A] font-bold truncate max-w-xs sm:max-w-md">
-        <I18nText ru={entry.data.title} uz={entry.data.title_uz} en={entry.data.title_en} />
+        <I18nText ru={data.title} uz={data.title_uz} en={data.title_en} />
       </span>
     </nav>
 
@@ -110,39 +110,39 @@ const breadcrumbJsonLd = {
     <header class="border-b-2 border-[#0A0A0A] pb-6 mb-8 font-mono">
       <div class="flex flex-wrap items-center gap-2 text-xs mb-3">
         <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
-          <I18nText ru={entry.data.category} uz={entry.data.category_uz} en={entry.data.category_en} />
+          <I18nText ru={data.category} uz={data.category_uz} en={data.category_en} />
         </span>
         <span class="border border-[#0A0A0A] bg-[#C8CDD2] px-2 py-0.5 text-[#0A0A0A]">
-          <I18nText ru="ДАТА:" uz="SANA:" en="DATE:" /> {entry.data.publishDate}
+          <I18nText k="blog.date" /> {data.publishDate}
         </span>
         <span class="border border-[#0A0A0A]/40 bg-[#D4D8DC] px-2 py-0.5 text-[#4A5056]">
-          <I18nText ru="ВРЕМЯ ЧТЕНИЯ:" uz="O'QISH VAQTI:" en="READ TIME:" /> <I18nText ru={entry.data.readTime} uz={entry.data.readTime_uz} en={entry.data.readTime_en} />
+          <I18nText k="blog.readTimeLabel" /> {readTime}
         </span>
       </div>
 
       <I18nText
         as="h1"
         class="font-sans text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0A0A0A] tracking-tight mb-4 leading-tight"
-        ru={entry.data.title}
-        uz={entry.data.title_uz}
-        en={entry.data.title_en}
+        ru={data.title}
+        uz={data.title_uz}
+        en={data.title_en}
       />
 
       <I18nText
         as="p"
         class="font-sans text-base text-[#4A5056] leading-relaxed mb-4"
-        ru={entry.data.summary}
-        uz={entry.data.summary_uz}
-        en={entry.data.summary_en}
+        ru={data.summary}
+        uz={data.summary_uz}
+        en={data.summary_en}
       />
 
       <!-- Metadata Telemetry Bar -->
       <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#0A0A0A]/20 text-xs text-[#4A5056]">
         <div>
-          <I18nText ru="АВТОР:" uz="MUALLIF:" en="AUTHOR:" /> <span class="font-bold text-[#0A0A0A]">{entry.data.author}</span>
+          <I18nText k="blog.author" /> <span class="font-bold text-[#0A0A0A]">{author}</span>
         </div>
         <div class="flex flex-wrap gap-1.5 text-[11px]">
-          {entry.data.tags.map((tag) => (
+          {tags.map((tag) => (
             <span class="border border-[#0A0A0A]/30 bg-[#C8CDD2]/60 px-2 py-0.5 text-[#0A0A0A]">
               #{tag}
             </span>
@@ -155,16 +155,16 @@ const breadcrumbJsonLd = {
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
       <!-- Article Body -->
       <div class="lg:col-span-8">
-        {entry.data.image && (
+        {data.image && (
           <div class="mb-8">
             <HudViewportFrame
-              topLabel={`ARTICLE // ${entry.data.category}`}
-              bottomLabel="RAILTECH ENGINEERING DISPATCH"
+              topLabel={tr('blog.article.frameTop', { category: categoryName })}
+              bottomLabel={detail.frameBottom}
             >
               <div class="aspect-[16/9] overflow-hidden">
                 <img
-                  src={withBase(entry.data.image)}
-                  alt={entry.data.title}
+                  src={withBase(data.image)}
+                  alt={title}
                   class="w-full h-full object-cover"
                   style={{ filter: 'grayscale(0.15) contrast(1.05)' }}
                   loading="eager"
@@ -177,33 +177,17 @@ const breadcrumbJsonLd = {
 
         <div class="hud-glass-card p-6 lg:p-8 font-sans">
           <div class="prose prose-sm sm:prose max-w-none text-[#0A0A0A] leading-relaxed prose-headings:font-bold prose-headings:text-[#0A0A0A] prose-headings:border-b prose-headings:border-[#0A0A0A]/30 prose-headings:pb-2 prose-pre:bg-[#0A0A0A] prose-pre:text-[#D4D8DC] prose-pre:border prose-pre:border-[#0A0A0A] prose-code:font-mono prose-code:text-[#0A0A0A] prose-code:bg-[#D4D8DC] prose-code:px-1 prose-strong:text-[#0A0A0A] prose-blockquote:border-l-4 prose-blockquote:border-[#0A0A0A] prose-blockquote:bg-[#D4D8DC] prose-blockquote:p-3 prose-li:text-[#0A0A0A]">
-            <div class="rt-lang rt-lang-ru">
-              <Content />
-            </div>
-            <div class="rt-lang rt-lang-uz">
-              {entry.data.body_uz ? (
-                <div set:html={marked.parse(entry.data.body_uz)} />
-              ) : (
-                <Content />
-              )}
-            </div>
-            <div class="rt-lang rt-lang-en">
-              {entry.data.body_en ? (
-                <div set:html={marked.parse(entry.data.body_en)} />
-              ) : (
-                <Content />
-              )}
-            </div>
+            {bodyHtml ? <div set:html={bodyHtml} /> : <Content />}
           </div>
         </div>
 
         <!-- Back to blog link -->
         <div class="mt-6 font-mono text-xs">
           <a
-            href={`${base}/blog/`}
+            href={localeHref('/blog/', lang)}
             class="hud-btn hud-btn--ghost"
           >
-            <I18nText ru="← ВЕРНУТЬСЯ В РАЗДЕЛ БЛОГА" uz="← BLOG BO'LIMIGA QAYTISH" en="← BACK TO BLOG ARCHIVE" />
+            <I18nText k="blog.article.back" />
           </a>
         </div>
       </div>
@@ -214,33 +198,29 @@ const breadcrumbJsonLd = {
         <div class="hud-glass-card p-6 font-mono sticky top-20 gap-4">
           <div class="border-b border-[#0A0A0A]/20 pb-2">
             <span class="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider block">
-              <I18nText ru="КОММЕРЧЕСКИЙ ОТДЕЛ // ВЭД" uz="TIJORAT BO'LIMI // TQI" en="COMMERCIAL DESK // TRADE" />
+              <I18nText ru={detail.sidebarTitle} uz={detail.sidebarTitle_uz} en={detail.sidebarTitle_en} />
             </span>
             <span class="text-[11px] text-[#4A5056]">
-              <I18nText ru="Расчет спецификации по теме публикации" uz="Maqola mavzusi bo'yicha hisob-kitob" en="RFQ calculation for article subject" />
+              <I18nText ru={detail.sidebarNote} uz={detail.sidebarNote_uz} en={detail.sidebarNote_en} />
             </span>
           </div>
 
           <p class="text-xs text-[#4A5056] font-sans leading-relaxed mb-6">
-            <I18nText
-              ru="Отправьте потребность вашего предприятия в ЖД узлах или системах СЦБ. Мы выставим счет с НДС 12% или подготовим расчет Landed Cost DDP в сумах за 60 минут."
-              uz="Korxonangizning temir yo'l uzellari yoki STSB tizimlariga bo'lgan ehtiyojini yuboring. Biz 12% QQS bilan hisob taqdim etamiz yoki 60 daqiqada so'mda Landed Cost DDP hisobini tayyorlaymiz."
-              en="Submit your company's bill of materials for rolling stock components or signaling units. We will issue an invoice with 12% VAT or a Landed Cost DDP quote in 60 minutes."
-            />
+            <I18nText ru={detail.sidebarText} uz={detail.sidebarText_uz} en={detail.sidebarText_en} />
           </p>
 
           <div class="space-y-3">
             <button
               type="button"
               data-lead-modal
-              data-lead-subject={`Запрос расчета по материалу: ${entry.data.title}`}
+              data-lead-subject={t('ru', 'lead.subject.blogArticle', { title: data.title })}
               class="w-full border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white py-3 text-xs font-bold tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
             >
-              <I18nText ru="[ ЗАПРОСИТЬ РАСЧЕТ КП ]" uz="[ TIJORAT TAKLIFINI SO'RASH ]" en="[ REQUEST RFQ ESTIMATE ]" />
+              <I18nText k="blog.article.requestQuote" />
             </button>
 
             <a
-              href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`}
+              href={phoneHref}
               class="w-full border border-[#0A0A0A] bg-white text-[#0A0A0A] py-2.5 text-xs font-bold text-center block hover:bg-[#0A0A0A] hover:text-white transition-colors"
             >
               {globalData.phone} ↗
@@ -248,15 +228,11 @@ const breadcrumbJsonLd = {
           </div>
 
           <div class="mt-6 pt-4 border-t border-[#0A0A0A]/20 text-[11px] text-[#4A5056] space-y-1">
-            <div>
-              <I18nText ru="• Склад в Ташкенте: ТПК Index B2-2097" uz="• Toshkentdagi ombor: Index SICHM B2-2097" en="• Tashkent Hub: Index Complex B2-2097" />
-            </div>
-            <div>
-              <I18nText ru="• Плательщик НДС: 12% (ЭСФ Didox)" uz="• QQS to'lovchisi: 12% (Didox EHF)" en="• VAT Payer: 12% (Didox ESF)" />
-            </div>
-            <div>
-              <I18nText ru="• Поставка: DDP Ташкент под ключ" uz="• Yetkazib berish: DDP Toshkent kalit topshirish" en="• Delivery: DDP Tashkent Turnkey" />
-            </div>
+            {(detail.sidebarFacts || []).map((fact: any) => (
+              <div>
+                <I18nText ru={fact.text} uz={fact.text_uz} en={fact.text_en} />
+              </div>
+            ))}
           </div>
         </div>
       </aside>
