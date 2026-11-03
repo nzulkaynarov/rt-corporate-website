@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { HudSmartImage } from './HudSmartImage';
 import { webpSrcSet, SIZES } from '../../utils/images';
 import { withBase } from '../../utils/url';
@@ -32,6 +32,7 @@ export interface CatalogItemProps {
   warehouse?: string;
   gost?: string;
   tnved?: string;
+  manufacturer?: string;
   status?: string;
   status_uz?: string;
   status_en?: string;
@@ -50,12 +51,32 @@ interface Props {
 }
 
 const t = makeT([islandsUi, catalogUi]);
+/** Cards rendered per page (and server-side); the rest load with «Показать ещё». */
+const PAGE_SIZE = 36;
+
+/** Lower-cased text the search runs over: titles, SKU, specs, standard, manufacturer and attribute values (designations, applicability). */
+const searchText = (item: CatalogItemProps): string =>
+  [
+    item.title, item.title_uz, item.title_en, item.sku, item.specs, item.specs_uz, item.specs_en, item.gost, item.manufacturer,
+    ...(item.attributes || []).flatMap((a) => [a.value, a.value_uz, a.value_en]),
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
 export const CatalogFilterTable: React.FC<Props> = (props) => {
   const { items } = props;
   const lang = useLang(props.lang);
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
+  const [selectedMaker, setSelectedMaker] = useState<string>('ALL');
+  const [visible, setVisible] = useState<number>(PAGE_SIZE);
+
+  const makers = useMemo(
+    () => Array.from(new Set(items.map((it) => it.manufacturer).filter(Boolean) as string[])).sort(),
+    [items],
+  );
+  const index = useMemo(() => new Map(items.map((it) => [it.sku, searchText(it)])), [items]);
 
   const productHref = (item: CatalogItemProps) => localeHref(`/catalog/${item.slug}/`, lang);
 
@@ -90,22 +111,19 @@ export const CatalogFilterTable: React.FC<Props> = (props) => {
   const getItemStatus = (item: CatalogItemProps): string => stockLabel(item, lang, t);
 
   const filteredItems = useMemo(() => {
+    const words = searchQuery.trim().toLowerCase().split(/\s+/).filter(Boolean);
     return items.filter((item) => {
       const itemCat = item.category || item.subsystem || '';
       const matchCat = selectedCategory === 'ALL' || itemCat === selectedCategory;
-      const query = searchQuery.trim().toLowerCase();
-      const matchQuery =
-        !query ||
-        item.title.toLowerCase().includes(query) ||
-        (item.title_uz && item.title_uz.toLowerCase().includes(query)) ||
-        (item.title_en && item.title_en.toLowerCase().includes(query)) ||
-        item.sku.toLowerCase().includes(query) ||
-        (item.specs && item.specs.toLowerCase().includes(query)) ||
-        (item.specs_uz && item.specs_uz.toLowerCase().includes(query)) ||
-        (item.specs_en && item.specs_en.toLowerCase().includes(query));
-      return matchCat && matchQuery;
+      const matchMaker = selectedMaker === 'ALL' || item.manufacturer === selectedMaker;
+      const text = index.get(item.sku) || '';
+      return matchCat && matchMaker && words.every((w) => text.includes(w));
     });
-  }, [items, selectedCategory, searchQuery]);
+  }, [items, index, selectedCategory, selectedMaker, searchQuery]);
+
+  // A new filter starts from the first page again.
+  useEffect(() => setVisible(PAGE_SIZE), [selectedCategory, selectedMaker, searchQuery]);
+  const shownItems = filteredItems.slice(0, visible);
 
   const handleOpenModal = (item: CatalogItemProps) => {
     // Subject in the visitor's language (the lead message also states the site language).
@@ -179,6 +197,22 @@ export const CatalogFilterTable: React.FC<Props> = (props) => {
             )}
           </div>
 
+          {makers.length > 0 && (
+            <select
+              value={selectedMaker}
+              onChange={(e) => setSelectedMaker(e.target.value)}
+              aria-label={t(lang, 'catalogTable.manufacturerAria')}
+              className="border border-[#0A0A0A] bg-white/60 px-2 py-2 font-mono text-xs focus:outline-none focus:bg-white rounded-none"
+            >
+              <option value="ALL">{t(lang, 'catalogTable.manufacturerAll')}</option>
+              {makers.map((m) => (
+                <option key={m} value={m}>
+                  {m} ({items.filter((it) => it.manufacturer === m).length})
+                </option>
+              ))}
+            </select>
+          )}
+
           {/* Results Counter and View Mode Toggle (Grid vs Table) */}
           <div className="flex items-center justify-between sm:justify-end gap-3 text-xs">
             <span className="text-[#4A5056]">
@@ -222,7 +256,7 @@ export const CatalogFilterTable: React.FC<Props> = (props) => {
       {/* 1. GRID OF CARDS VIEW */}
       {(viewMode === 'grid' || filteredItems.length === 0) && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {filteredItems.map((item) => {
+          {shownItems.map((item) => {
             const title = getItemTitle(item);
             const category = getItemCategory(item);
             const status = getItemStatus(item);
@@ -361,7 +395,7 @@ export const CatalogFilterTable: React.FC<Props> = (props) => {
               </tr>
             </thead>
             <tbody className="divide-y divide-[#0A0A0A]/20">
-              {filteredItems.map((item) => {
+              {shownItems.map((item) => {
                 const title = getItemTitle(item);
                 const category = getItemCategory(item);
                 const specs = getItemSpecs(item);
@@ -446,6 +480,17 @@ export const CatalogFilterTable: React.FC<Props> = (props) => {
         </div>
       )}
 
+      {filteredItems.length > shownItems.length && (
+        <div className="flex flex-col items-center gap-2 font-mono text-xs">
+          <span className="text-[#4A5056]">
+            {t(lang, 'catalogTable.shown', { shown: shownItems.length, total: filteredItems.length })}
+          </span>
+          <button type="button" onClick={() => setVisible((v) => v + PAGE_SIZE)} className="hud-btn text-xs cursor-pointer">
+            {t(lang, 'catalogTable.showMore', { count: Math.min(PAGE_SIZE, filteredItems.length - shownItems.length) })}
+          </button>
+        </div>
+      )}
+
       {/* Zero Results State */}
       {filteredItems.length === 0 && (
         <div className="hud-glass-card p-8 text-center font-mono text-xs space-y-2">
@@ -460,6 +505,7 @@ export const CatalogFilterTable: React.FC<Props> = (props) => {
             onClick={() => {
               setSearchQuery('');
               setSelectedCategory('ALL');
+              setSelectedMaker('ALL');
             }}
             className="hud-btn mt-3 text-xs"
           >

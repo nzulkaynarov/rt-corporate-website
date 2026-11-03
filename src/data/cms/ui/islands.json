@@ -27,9 +27,9 @@
     },
     {
       "key": "catalogTable.searchPlaceholder",
-      "ru": "Поиск по наименованию, артикулу или параметрам...",
-      "uz": "Nom, SKU yoki parametrlar bo'yicha qidiruv...",
-      "en": "Search by title, SKU or specification..."
+      "ru": "Поиск: наименование, обозначение, серия локомотива…",
+      "uz": "Qidiruv: nomi, belgisi, lokomotiv seriyasi…",
+      "en": "Search: name, designation, locomotive series…"
     },
     {
       "key": "catalogTable.clearSearchAria",
@@ -345,15 +345,39 @@
     },
     {
       "key": "hudImage.qc",
-      "ru": "WARRANTY: 12 MO",
-      "uz": "WARRANTY: 12 MO",
-      "en": "WARRANTY: 12 MO"
+      "ru": "SPEC: ПО ЗАПРОСУ",
+      "uz": "SPEC: SO'ROV BO'YICHA",
+      "en": "SPEC: ON REQUEST"
     },
     {
       "key": "hudImage.loading",
       "ru": "LOADING_FEED // ...",
       "uz": "LOADING_FEED // ...",
       "en": "LOADING_FEED // ..."
+    },
+    {
+      "key": "catalogTable.manufacturerAll",
+      "ru": "Все производители",
+      "uz": "Barcha ishlab chiqaruvchilar",
+      "en": "All manufacturers"
+    },
+    {
+      "key": "catalogTable.manufacturerAria",
+      "ru": "Фильтр по производителю",
+      "uz": "Ishlab chiqaruvchi bo'yicha filtr",
+      "en": "Filter by manufacturer"
+    },
+    {
+      "key": "catalogTable.shown",
+      "ru": "Показано {shown} из {total}",
+      "uz": "{total} tadan {shown} tasi ko'rsatilgan",
+      "en": "Showing {shown} of {total}"
+    },
+    {
+      "key": "catalogTable.showMore",
+      "ru": "ПОКАЗАТЬ ЕЩЁ {count}",
+      "uz": "YANA {count} TASINI KO'RSATISH",
+      "en": "SHOW {count} MORE"
     }
   ]
 }

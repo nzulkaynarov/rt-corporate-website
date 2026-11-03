@@ -7,6 +7,7 @@
  *   npm run check:content                      # whole site
  *   node scripts/check-content.mjs --files a.md b.json   # only these files (hook / quick loop)
  *   node scripts/check-content.mjs --strict    # warnings fail too (use before opening a PR)
+ *   node scripts/check-content.mjs --ru-only   # RU-first stage: missing UZ/EN are counted, not errors
  *
  * ERRORS (exit 1): missing UZ/EN translation of a translatable field, Cyrillic in an UZ/EN
  * field, UZ/EN identical to RU, forbidden glossary variants, broken local image/file paths,
@@ -20,6 +21,13 @@ import yaml from 'js-yaml';
 
 const args = process.argv.slice(2);
 const STRICT = args.includes('--strict');
+/** RU-first stage (owner approves Russian texts, translation follows in one pass): missing UZ/EN are only counted. */
+const RU_ONLY = args.includes('--ru-only');
+const pendingTranslation = new Map(); // file → number of missing UZ/EN values
+const missingTr = (file, msg) => {
+  if (RU_ONLY) pendingTranslation.set(file, (pendingTranslation.get(file) || 0) + 1);
+  else err(file, msg);
+};
 const onlyIdx = args.indexOf('--files');
 const ONLY = onlyIdx >= 0 ? args.slice(onlyIdx + 1).filter((a) => !a.startsWith('--')).map((f) => path.relative(process.cwd(), path.resolve(f))) : null;
 
@@ -79,7 +87,7 @@ function trilingual(file, obj, field, where = field, { optional = false } = {}) 
   checkText(file, where, Array.isArray(ru) ? ru.join(' ') : ru, 'ru');
   for (const l of LANGS) {
     const v = obj?.[`${field}_${l}`];
-    if (isEmpty(v)) { err(file, `${where}_${l}: missing ${l.toUpperCase()} translation`); continue; }
+    if (isEmpty(v)) { missingTr(file, `${where}_${l}: missing ${l.toUpperCase()} translation`); continue; }
     if (Array.isArray(ru)) {
       if (!Array.isArray(v)) { err(file, `${where}_${l}: must be a list like ${field}`); continue; }
       if (v.length !== ru.length) err(file, `${where}_${l}: ${v.length} items, RU has ${ru.length}`);
@@ -125,7 +133,7 @@ function checkBody(file, d, body, minRu) {
   checkText(file, 'body', body, 'ru');
   for (const l of LANGS) {
     const v = d[`body_${l}`];
-    if (isEmpty(v)) err(file, `body_${l}: missing ${l.toUpperCase()} translation of the article body`);
+    if (isEmpty(v)) missingTr(file, `body_${l}: missing ${l.toUpperCase()} translation of the article body`);
     else {
       checkText(file, `body_${l}`, v, l);
       if (ruLen && v.trim().length < ruLen * 0.5) warn(file, `body_${l} is much shorter than the RU body (${v.trim().length} vs ${ruLen} chars) — partial translation?`);
@@ -236,7 +244,7 @@ function walkJson(file, node, where) {
       if (lang) checkText(file, at, v, lang);
       else if (CYR.test(v)) {
         checkText(file, at, v, 'ru');
-        for (const l of LANGS) if (isEmpty(node[`${k}_${l}`])) warn(file, `${at}_${l}: missing ${l.toUpperCase()} translation`);
+        for (const l of LANGS) if (isEmpty(node[`${k}_${l}`])) (RU_ONLY ? missingTr : warn)(file, `${at}_${l}: missing ${l.toUpperCase()} translation`);
       }
     } else walkJson(file, v, at);
   }
@@ -267,6 +275,11 @@ const outErrors = pick(errors);
 const outWarnings = pick(warnings);
 const failed = outErrors.length > 0 || (STRICT && outWarnings.length > 0);
 
+const pendingFiles = [...pendingTranslation.keys()].filter((f) => !ONLY || ONLY.includes(f));
+if (RU_ONLY && pendingFiles.length) {
+  const total = pendingFiles.reduce((n, f) => n + pendingTranslation.get(f), 0);
+  console.warn(`[check-content] --ru-only: ${total} UZ/EN value(s) await translation in ${pendingFiles.length} file(s) (not errors at this stage)`);
+}
 if (outWarnings.length) {
   console.warn(`[check-content] ${outWarnings.length} warning(s):`);
   outWarnings.forEach((w) => console.warn(`  ! ${w}`));

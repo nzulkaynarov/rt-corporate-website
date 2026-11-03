@@ -25,7 +25,9 @@ jobs:
 
       # Content rules (translations, glossary, media paths, placeholders) — docs/content/README.md
       - name: Check content
-        run: npm run check:content
+        # RU-first stage (Nov 2026): Russian texts go to the owner for approval, UZ/EN follow in one pass.
+        # Missing translations are only counted. Remove --ru-only after the translation pass.
+        run: npm run check:content -- --ru-only
 
       # CMS schema (prebuild) + astro check + build + SEO/i18n audit of dist/ (postbuild)
       - name: Build site

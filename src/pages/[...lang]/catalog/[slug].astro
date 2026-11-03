@@ -99,8 +99,10 @@ const productJsonLd = {
   sku: data.sku,
   mpn: data.sku,
   category: categoryName,
-  brand: { '@id': orgId },
-  manufacturer: { '@id': orgId },
+  // RailTech is the seller, not the manufacturer: brand/manufacturer only when the CMS names one.
+  ...(data.manufacturer
+    ? { brand: { '@type': 'Brand', name: data.manufacturer }, manufacturer: { '@type': 'Organization', name: data.manufacturer } }
+    : {}),
   offers: {
     '@type': 'Offer',
     url: productUrl,
@@ -185,6 +187,14 @@ const catalogHref = localeHref('/catalog/', lang);
                   {categoryName}
                 </td>
               </tr>
+              {data.manufacturer && (
+                <tr class="hover:bg-white/30 transition-colors">
+                  <td class="py-2.5 pr-3 text-[#4A5056]">
+                    <I18nText k="catalog.detail.manufacturer" />
+                  </td>
+                  <td class="py-2.5 font-bold text-[#0A0A0A]">{data.manufacturer}</td>
+                </tr>
+              )}
               {data.gost && (
                 <tr class="hover:bg-white/30 transition-colors">
                   <td class="py-2.5 pr-3 text-[#4A5056]">

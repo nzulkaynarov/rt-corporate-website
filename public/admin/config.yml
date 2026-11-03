@@ -20,6 +20,7 @@ collections:
       - { label: "⚙️ Категория изделия", name: "category", widget: "string", required: false, hint: "Категория каталога, напр. «Локомотивные устройства безопасности» или «Сервисная и испытательная аппаратура»" }
       - { label: "⚙️ Категория (UZ)", name: "category_uz", widget: "string", required: false }
       - { label: "⚙️ Категория (EN)", name: "category_en", widget: "string", required: false }
+      - { label: "⚙️ Производитель", name: "manufacturer", widget: "string", required: false, hint: "Как в документах производителя, напр. ООО «НПО САУТ», ADZ NAGANO GmbH. Пусто — не показывается и не попадает в фильтр." }
       - { label: "⚙️ ГОСТ / Стандарт", name: "gost", widget: "string", required: false, hint: "ГОСТ или ТУ (напр. ГОСТ 9246-2013)" }
       - { label: "⚙️ Код ТН ВЭД (HS Code)", name: "tnved", widget: "string", required: false, hint: "Таможенный код ТН ВЭД РУз (напр. 8607 12 000 0)" }
       - { label: "⚙️ Цена — НЕ ЗАПОЛНЯТЬ", name: "price", widget: "string", required: false, hint: "Цены на сайте не публикуются: оставьте пустым, сайт покажет «Цена по запросу». Заполненное поле не пройдёт проверку." }
@@ -525,6 +526,22 @@ collections:
               - { label: "Количество SKU", name: "skuCount", widget: "string", required: false }
               - { label: "Заводы-изготовители", name: "manufacturers", widget: "string", required: false }
               - { label: "Точность Smart Match", name: "smartMatch", widget: "string", required: false }
+          - label: "⚙️ Производители и статус RailTech (страница «О компании»)"
+            name: "manufacturers"
+            widget: "list"
+            required: false
+            hint: "Статус «Официальный дилер и представитель» — только при наличии дилерского документа производителя (в примечании — номер и срок документа)."
+            fields:
+              - { label: "Производитель (как в документах)", name: "name", widget: "string" }
+              - { label: "Страна [RU]", name: "country", widget: "string", required: false }
+              - { label: "Mamlakat [UZ]", name: "country_uz", widget: "string", required: false }
+              - { label: "Country [EN]", name: "country_en", widget: "string", required: false }
+              - { label: "Статус RailTech [RU]", name: "status", widget: "select", options: ["Официальный дилер и представитель", "Прямые поставки"] }
+              - { label: "RailTech maqomi [UZ]", name: "status_uz", widget: "string", required: false }
+              - { label: "RailTech status [EN]", name: "status_en", widget: "string", required: false }
+              - { label: "Документ / примечание [RU]", name: "note", widget: "string", required: false }
+              - { label: "Hujjat / izoh [UZ]", name: "note_uz", widget: "string", required: false }
+              - { label: "Document / note [EN]", name: "note_en", widget: "string", required: false }
           - label: "⚙️ Верхняя панель телеметрии (topBar)"
             name: "topBar"
             widget: "object"

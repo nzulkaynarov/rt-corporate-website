@@ -1,18 +1,18 @@
 {
   "catalogPage": {
     "code": "PORTAL // SECTION 02",
-    "title": "Каталог железнодорожной электроники и систем безопасности",
-    "title_uz": "Temir yo'l elektronikasi va xavfsizlik tizimlari katalogi",
-    "title_en": "Railway Electronics & Train Safety Systems Catalog",
-    "subtitle": "Локомотивные устройства безопасности и сервисная аппаратура. RailTech — официальный дилер и представитель ООО «НПО САУТ» в Узбекистане. Позиции в наличии — на складе в Ташкенте, под заказ — с международной логистикой, таможенным оформлением и доставкой до Ташкента. Гарантия 12 месяцев с момента поставки, цены по запросу.",
-    "subtitle_uz": "Lokomotiv xavfsizlik qurilmalari va servis uskunalari. RailTech — «НПО САУТ» MChJ ning O'zbekistondagi rasmiy dileri va vakili. Mavjud pozitsiyalar Toshkentdagi omborda, buyurtma asosidagilari — xalqaro logistika, bojxona rasmiylashtiruvi va Toshkentgacha yetkazib berish bilan. Kafolat — yetkazib berilgan kundan boshlab 12 oy, narxlar so'rov bo'yicha.",
-    "subtitle_en": "Locomotive safety equipment and service & test equipment. RailTech is the official dealer and representative of NPO SAUT LLC in Uzbekistan. In-stock items ship from our Tashkent warehouse; on-order items include international logistics, customs clearance and delivery to Tashkent. 12-month warranty from delivery; prices on request.",
+    "title": "Каталог ж/д электроники и комплектующих для локомотивов",
+    "title_uz": "",
+    "title_en": "",
+    "subtitle": "Бортовая электроника, устройства безопасности, датчики, электроаппаратура и электрические машины для локомотивов и электропоездов, которые работают в Узбекистане: UzTE16M, ТЭП70БС, «O'zbekiston», O'z-Y, O'z-ELR, 3ЭС5К, ВЛ80/ВЛ60, ЭР9Е, ТЭ10М, ЧМЭ3, ТЭМ2. Поставляем как официальный дилер и как прямой поставщик производителей; позиции в наличии — со склада в Ташкенте, под заказ — с подбором по обозначению, таможенным оформлением и доставкой до Ташкента. Цены — по запросу КП.",
+    "subtitle_uz": "",
+    "subtitle_en": "",
     "ctaTitle": "Нужна позиция, которой нет в каталоге?",
     "ctaTitle_uz": "Katalogda yo'q pozitsiya kerakmi?",
     "ctaTitle_en": "Need an item that is not in the catalog?",
-    "ctaSubtitle": "Пришлите обозначение изделия, спецификацию или заявку в свободной форме — подготовим КП с логистикой, таможенными платежами и НДС 12%. Ответ в течение рабочего дня.",
-    "ctaSubtitle_uz": "Mahsulot belgisini, spetsifikatsiyani yoki erkin shakldagi so'rovni yuboring — logistika, bojxona to'lovlari va 12% QQS kiritilgan tijorat taklifini tayyorlaymiz. Ish kuni davomida javob beramiz.",
-    "ctaSubtitle_en": "Send the product designation, a specification or a free-form request and we will prepare a quotation including logistics, customs duties and 12% VAT. We respond within one working day.",
+    "ctaSubtitle": "Пришлите обозначение изделия, номер чертежа, фото шильдика или заявку в свободной форме — подберём позицию и подготовим КП с логистикой, таможенными платежами и НДС 12%. Ответ в течение рабочего дня.",
+    "ctaSubtitle_uz": "",
+    "ctaSubtitle_en": "",
     "ctaButton": "ЗАПРОСИТЬ КП ↗",
     "ctaButton_uz": "TIJORAT TAKLIFINI SO'RASH ↗",
     "ctaButton_en": "REQUEST A QUOTE ↗",
@@ -22,18 +22,18 @@
         "label": "НАПРАВЛЕНИЕ:",
         "label_uz": "YO'NALISH:",
         "label_en": "FOCUS:",
-        "value": "Электроника и системы безопасности движения",
-        "value_uz": "Elektronika va harakat xavfsizligi tizimlari",
-        "value_en": "Electronics & train safety systems"
+        "value": "Ж/д электроника и комплектующие",
+        "value_uz": "",
+        "value_en": ""
       },
       {
         "code": "CAT // 02",
-        "label": "СТАТУС:",
-        "label_uz": "MAQOM:",
-        "label_en": "STATUS:",
-        "value": "Официальный дилер ООО «НПО САУТ»",
-        "value_uz": "«НПО САУТ» MChJ rasmiy dileri",
-        "value_en": "Official dealer of NPO SAUT LLC"
+        "label": "ПРОИЗВОДИТЕЛИ:",
+        "label_uz": "",
+        "label_en": "",
+        "value": "Официальный дилер и прямые поставки",
+        "value_uz": "",
+        "value_en": ""
       },
       {
         "code": "CAT // 03",
@@ -41,17 +41,17 @@
         "label_uz": "MAVJUDLIK:",
         "label_en": "AVAILABILITY:",
         "value": "Склад в Ташкенте / под заказ",
-        "value_uz": "Toshkent ombori / buyurtma asosida",
-        "value_en": "Tashkent stock / on order"
+        "value_uz": "",
+        "value_en": ""
       },
       {
         "code": "CAT // 04",
         "label": "ГАРАНТИЯ И ЦЕНА:",
         "label_uz": "KAFOLAT VA NARX:",
         "label_en": "WARRANTY & PRICE:",
-        "value": "12 месяцев с поставки, цена по запросу",
-        "value_uz": "Yetkazib berilgandan 12 oy, narx so'rov bo'yicha",
-        "value_en": "12 months from delivery, price on request"
+        "value": "Гарантия и цена — в КП",
+        "value_uz": "",
+        "value_en": ""
       }
     ],
     "defaultCategory": "Локомотивные устройства безопасности",
@@ -297,9 +297,9 @@
       "sidebarText_en": "Send a request for equipment or services, and we will prepare a quotation with a price including logistics, duties and 12% VAT.",
       "sidebarFacts": [
         {
-          "text": "• Официальный дилер ООО «НПО САУТ» в РУз",
-          "text_uz": "• «НПО САУТ» MChJning O'zR dagi rasmiy dileri",
-          "text_en": "• Official dealer of NPO SAUT LLC in Uzbekistan"
+          "text": "• Официальный дилер и прямой поставщик производителей ж/д оборудования",
+          "text_uz": "",
+          "text_en": ""
         },
         {
           "text": "• Плательщик НДС: счёт с НДС 12%",
