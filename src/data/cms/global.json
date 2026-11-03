@@ -1,24 +1,114 @@
 {
   "companyName": "ООО «RailTech»",
+  "fullName": "Общество с ограниченной ответственностью «RailTech»",
+  "fullName_uz": "«RailTech» mas'uliyati cheklangan jamiyati",
+  "fullName_en": "RailTech Limited Liability Company",
+  "shortName": "ООО «RailTech» // RailTech LLC",
+  "taxId": "308912445",
+  "inn": "308912445",
+  "vatNumber": "308912445",
   "legalStatus": "Официальное юридическое лицо в Республике Узбекистан · Плательщик НДС 12%",
   "legalStatus_uz": "O'zbekiston Respublikasidagi rasmiy yuridik shaxs · 12% QQS to'lovchisi",
   "legalStatus_en": "Official legal entity in the Republic of Uzbekistan · 12% VAT payer",
-  "inn": "Резидент РУз (НДС 12%)",
-  "inn_uz": "O'zR rezidenti (QQS 12%)",
-  "inn_en": "Resident of Uzbekistan (12% VAT)",
+  "oked": "46.69.0",
+  "okedName": "Оптовая торговля прочими машинами и оборудованием",
+  "okedName_uz": "Boshqa mashina va uskunalarning ulgurji savdosi",
+  "okedName_en": "Wholesale of other machinery and equipment",
+  "postalCode": "100140",
+  "esfOperators": "Didox / Soliq / Factura.uz",
+  "officialDomains": "railtech.uz // b2b.railtech.uz",
   "phone": "+998 90 118-90-00",
   "emailGeneral": "info@railtech.uz",
+  "emailSupply": "supply@railtech.uz",
   "emailLegal": "legal@railtech.uz",
   "emailPrivacy": "privacy@railtech.uz",
   "address": "г. Ташкент, ТПК Index, Офис B2-2097",
   "address_uz": "Toshkent sh., Index SICHM, Ofis B2-2097",
   "address_en": "Tashkent, Index Complex, Office B2-2097",
+  "warehouseAddress": "г. Ташкент, Янгихаётский р-н, ТПК Index, Блок B2, Секция 2097 (КПП №3)",
+  "warehouseAddress_uz": "Toshkent sh., Yangihayot t., Index SICHM, Blok B2, 2097-seksiya (KPP №3)",
+  "warehouseAddress_en": "Tashkent, Yangihayot district, Index Complex, Block B2, Unit 2097 (Gate #3)",
+  "warehouseSchedule": "Пн-Пт: 09:00 - 18:00 (Аварийные отгрузки 24/7)",
+  "warehouseSchedule_uz": "Dush-Jum: 09:00 - 18:00 (Favqulodda yuklash 24/7)",
+  "warehouseSchedule_en": "Mon-Fri: 09:00 - 18:00 (Emergency dispatch 24/7)",
+  "gps": "41.2214° N, 69.1852° E",
+  "yandexMapUrl": "https://yandex.uz/maps/-/CDT4A-0v",
   "b2bPortalUrl": "https://b2b.railtech.uz",
+  "telegramUrl": "https://t.me/railtech_uz",
+  "telegramChannel": "@railtech_uz",
+  "telegramWebhook": "",
+  "copyrightYear": "2026",
   "metrics": {
     "years": "5+",
     "partners": "120+",
     "skuCount": "1 247+",
     "manufacturers": "86",
     "smartMatch": "92%"
+  },
+  "topBar": {
+    "telemetryStatus": "[ ● ONLINE ]",
+    "vatBadge": "НДС 12% ВКЛЮЧЕН",
+    "vatBadge_uz": "12% QQS BILAN",
+    "vatBadge_en": "12% VAT INCLUDED",
+    "industryBadge": "ENGINEERING & LOGISTICS",
+    "geoBadge": "УЗБЕКИСТАН • B2B / B2G",
+    "geoBadge_uz": "O'ZBEKISTON • B2B / B2G",
+    "geoBadge_en": "UZBEKISTAN • B2B / B2G"
+  },
+  "navigation": [
+    {
+      "index": "01",
+      "path": "/catalog/",
+      "label": "КАТАЛОГ",
+      "label_uz": "KATALOG",
+      "label_en": "CATALOG"
+    },
+    {
+      "index": "02",
+      "path": "/services/",
+      "label": "УСЛУГИ",
+      "label_uz": "XIZMATLAR",
+      "label_en": "SERVICES"
+    },
+    {
+      "index": "03",
+      "path": "/projects/",
+      "label": "ПРОЕКТЫ",
+      "label_uz": "LOYIHALAR",
+      "label_en": "PROJECTS"
+    },
+    {
+      "index": "04",
+      "path": "/blog/",
+      "label": "БЛОГ",
+      "label_uz": "BLOG",
+      "label_en": "BLOG"
+    },
+    {
+      "index": "05",
+      "path": "/about",
+      "label": "О КОМПАНИИ",
+      "label_uz": "KOMPANIYA HAQIDA",
+      "label_en": "ABOUT US"
+    },
+    {
+      "index": "06",
+      "path": "/contacts",
+      "label": "КОНТАКТЫ",
+      "label_uz": "ALOQA",
+      "label_en": "CONTACTS"
+    }
+  ],
+  "footer": {
+    "companyDesc": "Многопрофильный оператор промышленных поставок, контрактного ВЭД под ключ, инженерного сорсинга и заказного цифрового ПО в Узбекистане.",
+    "companyDesc_uz": "O'zbekistonda sanoat ta'minoti, kalit topshirish shartnomaviy TQI, muhandislik sorsingi va buyurtma dasturiy ta'minotning ko'p tarmoqli operatori.",
+    "companyDesc_en": "Multi-sector operator for industrial supply, turnkey DDP import, engineering sourcing, and enterprise software engineering in Uzbekistan.",
+    "badges": {
+      "catalog": "1 200+ SKU",
+      "services": "ВЭД / IT / Сорсинг",
+      "services_uz": "TQI / IT / Sorsing",
+      "services_en": "DDP / IT / Sourcing",
+      "contacts": "КПП №3"
+    }
   }
 }

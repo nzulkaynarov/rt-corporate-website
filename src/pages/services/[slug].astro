@@ -5,6 +5,8 @@ import I18nText from '../../components/I18nText.astro';
 import HudPageHeader from '../../components/hud/HudPageHeader.astro';
 import { ProductMediaGallery } from '../../components/islands/ProductMediaGallery';
 import { withBase } from '../../utils/url';
+import { marked } from 'marked';
+import globalData from '../../data/cms/global.json';
 
 export async function getStaticPaths() {
   const serviceEntries = await getCollection('services');
@@ -148,10 +150,10 @@ const breadcrumbJsonLd = {
               <Content />
             </div>
             <div class="rt-lang rt-lang-uz">
-              {entry.data.body_uz ? <div class="space-y-4 whitespace-pre-line">{entry.data.body_uz}</div> : <Content />}
+              {entry.data.body_uz ? <div set:html={marked.parse(entry.data.body_uz)} /> : <Content />}
             </div>
             <div class="rt-lang rt-lang-en">
-              {entry.data.body_en ? <div class="space-y-4 whitespace-pre-line">{entry.data.body_en}</div> : <Content />}
+              {entry.data.body_en ? <div set:html={marked.parse(entry.data.body_en)} /> : <Content />}
             </div>
           </div>
         </div>
@@ -265,7 +267,7 @@ const breadcrumbJsonLd = {
             </div>
             <div class="flex justify-between text-[#4A5056]">
               <span><I18nText ru="Прямая линия:" uz="To'g'ridan-to'g'ri aloqa:" en="Direct line:" /></span>
-              <a href="tel:+998901189000" class="font-bold text-[#0A0A0A] hover:underline">+998 90 118-90-00</a>
+              <a href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`} class="font-bold text-[#0A0A0A] hover:underline">{globalData.phone}</a>
             </div>
           </div>
 

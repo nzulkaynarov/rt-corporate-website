@@ -138,9 +138,9 @@ const faqJsonLd = {
           </span>
           <span class="font-bold text-[#0A0A0A]">
             <I18nText
-              ru="Общество с ограниченной ответственностью «RailTech»"
-              uz="«RailTech» mas'uliyati cheklangan jamiyati"
-              en="RailTech Limited Liability Company"
+              ru={globalData.fullName || "Общество с ограниченной ответственностью «RailTech»"}
+              uz={globalData.fullName_uz || "«RailTech» mas'uliyati cheklangan jamiyati"}
+              en={globalData.fullName_en || "RailTech Limited Liability Company"}
             />
           </span>
         </div>
@@ -148,7 +148,7 @@ const faqJsonLd = {
           <span class="text-[#4A5056] block text-[11px]">
             <I18nText ru="КРАТКОЕ НАИМЕНОВАНИЕ:" uz="QISQA NOMI:" en="SHORT NAME:" />
           </span>
-          <span class="font-bold text-[#0A0A0A]">{globalData.companyName} // RailTech LLC</span>
+          <span class="font-bold text-[#0A0A0A]">{globalData.shortName || `${globalData.companyName} // RailTech LLC`}</span>
         </div>
         <div class="border-b border-[#0A0A0A]/20 pb-2">
           <span class="text-[#4A5056] block text-[11px]">
@@ -174,9 +174,9 @@ const faqJsonLd = {
           </span>
           <span class="font-bold text-[#0A0A0A]">
             <I18nText
-              ru="46.69.0 — Оптовая торговля прочими машинами и оборудованием"
-              uz="46.69.0 — Boshqa mashina va uskunalarning ulgurji savdosi"
-              en="46.69.0 — Wholesale of other machinery and equipment"
+              ru={`${globalData.oked || '46.69.0'} — ${globalData.okedName || 'Оптовая торговля прочими машинами и оборудованием'}`}
+              uz={`${globalData.oked || '46.69.0'} — ${globalData.okedName_uz || "Boshqa mashina va uskunalarning ulgurji savdosi"}`}
+              en={`${globalData.oked || '46.69.0'} — ${globalData.okedName_en || 'Wholesale of other machinery and equipment'}`}
             />
           </span>
         </div>
@@ -186,9 +186,9 @@ const faqJsonLd = {
           </span>
           <span class="font-bold text-[#0A0A0A]">
             <I18nText
-              ru={`100140, Республика Узбекистан, ${globalData.address}`}
-              uz={`100140, O'zbekiston Respublikasi, ${globalData.address_uz || globalData.address}`}
-              en={`100140, Republic of Uzbekistan, ${globalData.address_en || globalData.address}`}
+              ru={`${globalData.postalCode || '100140'}, Республика Узбекистан, ${globalData.address}`}
+              uz={`${globalData.postalCode || '100140'}, O'zbekiston Respublikasi, ${globalData.address_uz || globalData.address}`}
+              en={`${globalData.postalCode || '100140'}, Republic of Uzbekistan, ${globalData.address_en || globalData.address}`}
             />
           </span>
         </div>
@@ -196,13 +196,13 @@ const faqJsonLd = {
           <span class="text-[#4A5056] block text-[11px]">
             <I18nText ru="ЭЛЕКТРОННЫЙ ДОКУМЕНТООБОРОТ (ЭСФ):" uz="ELEKTRON HUJJAT AYLANISHI (EHF):" en="ELECTRONIC TAX INVOICING (ESF):" />
           </span>
-          <span class="font-bold text-[#0A0A0A]">Didox / Soliq / Factura.uz</span>
+          <span class="font-bold text-[#0A0A0A]">{globalData.esfOperators || 'Didox / Soliq / Factura.uz'}</span>
         </div>
         <div class="border-b border-[#0A0A0A]/20 pb-2">
           <span class="text-[#4A5056] block text-[11px]">
             <I18nText ru="ОФИЦИАЛЬНЫЕ ДОМЕНЫ:" uz="RASMIY DOMENLAR:" en="OFFICIAL DOMAINS:" />
           </span>
-          <span class="font-bold text-[#0A0A0A]">railtech.uz // b2b.railtech.uz</span>
+          <span class="font-bold text-[#0A0A0A]">{globalData.officialDomains || 'railtech.uz // b2b.railtech.uz'}</span>
         </div>
       </div>
     </div>

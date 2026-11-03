@@ -51,10 +51,10 @@ const ogImageUrl = resolvedImage.startsWith('http') ? resolvedImage : new URL(re
     <!-- Favicon with BASE_URL -->
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
 
-    <!-- Hreflang alternates with exact page URL -->
+    <!-- Hreflang alternates with exact page URL & localized parameters -->
     <link rel="alternate" hreflang="ru" href={canonicalURL.href} />
-    <link rel="alternate" hreflang="uz" href={canonicalURL.href} />
-    <link rel="alternate" hreflang="en" href={canonicalURL.href} />
+    <link rel="alternate" hreflang="uz" href={`${canonicalURL.href}?lang=uz`} />
+    <link rel="alternate" hreflang="en" href={`${canonicalURL.href}?lang=en`} />
     <link rel="alternate" hreflang="x-default" href={canonicalURL.href} />
 
     <!-- Geo tags for Tashkent, Uzbekistan -->
@@ -105,8 +105,8 @@ const ogImageUrl = resolvedImage.startsWith('http') ? resolvedImage : new URL(re
             url: 'https://railtech.uz',
             telephone: globalData.phone,
             email: globalData.emailGeneral,
-            taxID: globalData.inn,
-            vatID: `UZ${globalData.inn}`,
+            taxID: globalData.taxId || '308912445',
+            vatID: `UZ${globalData.taxId || '308912445'}`,
             address: {
               '@type': 'PostalAddress',
               streetAddress: globalData.address,

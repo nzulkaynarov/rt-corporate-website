@@ -3,6 +3,7 @@ import type { Locale } from '../../store/modeStore';
 import { UI_STRINGS } from '../../store/modeStore';
 import { useLang } from '../../utils/useLang';
 import { withBase } from '../../utils/url';
+import globalData from '../../data/cms/global.json';
 
 interface LeadModalProps {
   isOpen: boolean;
@@ -37,6 +38,20 @@ export const LeadModal: React.FC<LeadModalProps> = ({
       setSubject(initialSubject);
     }
   }, [initialSubject]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
 
   const t = UI_STRINGS[activeLang]?.modal || UI_STRINGS.ru.modal;
 
@@ -119,67 +134,34 @@ export const LeadModal: React.FC<LeadModalProps> = ({
       };
 
       const webhookUrl =
+        globalData.telegramWebhook ||
         import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ||
         import.meta.env.PUBLIC_LEAD_WORKER_URL ||
-        import.meta.env.PUBLIC_WEBHOOK_URL;
-      const tgBotToken =
-        import.meta.env.PUBLIC_TG_BOT_TOKEN ||
-        import.meta.env.PUBLIC_TELEGRAM_BOT_TOKEN;
-      const tgChatId =
-        import.meta.env.PUBLIC_TG_CHAT_ID ||
-        import.meta.env.PUBLIC_TELEGRAM_CHAT_ID;
+        import.meta.env.PUBLIC_WEBHOOK_URL ||
+        '';
 
       let sent = false;
 
-      // 1. Send via Webhook if configured
-      if (webhookUrl && webhookUrl.trim() !== '') {
+      // 1. Send via Secure Webhook (Cloudflare Worker / CMS Endpoint)
+      if (webhookUrl && webhookUrl.trim().startsWith('http')) {
         try {
-          const res = await fetch(webhookUrl, {
+          const res = await fetch(webhookUrl.trim(), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
           });
-          if (res.ok) {
-            sent = true;
-          }
+          if (res.ok) sent = true;
         } catch (webhookErr) {
-          console.warn('[LeadModal] Webhook failed, attempting fallback:', webhookErr);
+          console.warn('[LeadModal] Webhook dispatch notice:', webhookErr);
         }
       }
 
-      // 2. Direct Telegram Bot API fallback if tokens provided in env
-      if (!sent && tgBotToken && tgChatId) {
-        try {
-          const tgText = [
-            '🛠 *НОВАЯ ЗАЯВКА С САЙТА RAILTECH.UZ*',
-            `📌 *Тема:* ${activeSubject}`,
-            `👤 *Контакт:* ${name}`,
-            `🏢 *Организация:* ${company} (ИНН: ${inn || 'не указан'})`,
-            `📞 *Телефон:* ${phone}`,
-            `📋 *Задача:* ${comment || 'Запрос спецификации'}`,
-            fileName ? `📎 *Прикреплен файл:* ${fileName} (${fileSizeStr})` : null,
-          ]
-            .filter(Boolean)
-            .join('\n');
-
-          const tgRes = await fetch(`https://api.telegram.org/bot${tgBotToken}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              chat_id: tgChatId,
-              text: tgText,
-              parse_mode: 'Markdown',
-            }),
-          });
-          if (tgRes.ok) {
-            sent = true;
-          }
-        } catch (tgErr) {
-          console.warn('[LeadModal] Direct Telegram API failed:', tgErr);
-        }
+      // 2. Never show a fake success: if the lead was not delivered, ask the user
+      //    to use the direct channels (Telegram / Email / Phone) shown at the top of the modal.
+      if (!sent) {
+        throw new Error('Lead webhook is not configured or returned an error');
       }
 
-      // If either sent or mailto fallback
       setSubmitted(true);
       setTimeout(() => {
         setSubmitted(false);
@@ -196,7 +178,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({
       console.error('[LeadModal] Dispatch error:', err);
       setErrorMsg(
         t.errorMessage ||
-          'Произошла ошибка при отправке. Пожалуйста, свяжитесь с нами напрямую по телефону +998 90 118-90-00'
+          `Произошла ошибка при отправке. Пожалуйста, свяжитесь с нами напрямую: ${globalData.phone}`
       );
     } finally {
       setIsSending(false);
@@ -204,13 +186,19 @@ export const LeadModal: React.FC<LeadModalProps> = ({
   };
 
   const formattedMsg = getFormattedMessage();
-  const tgShareUrl = `https://t.me/railtech_uz?text=${encodeURIComponent(formattedMsg)}`;
-  const mailShareUrl = `mailto:supply@railtech.uz?subject=${encodeURIComponent(
+  const baseTg = globalData.telegramUrl || 'https://t.me/railtech_uz';
+  const tgShareUrl = `${baseTg}?text=${encodeURIComponent(formattedMsg)}`;
+  const mailShareUrl = `mailto:${globalData.emailSupply || globalData.emailGeneral || 'supply@railtech.uz'}?subject=${encodeURIComponent(
     subject || initialSubject || 'Запрос с сайта RailTech'
   )}&body=${encodeURIComponent(formattedMsg)}`;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0A0A0A]/60 backdrop-blur-xs p-3 sm:p-4">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#0A0A0A]/60 backdrop-blur-xs p-3 sm:p-4"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
       <div className="bg-[#D4D8DC] border-2 border-[#0A0A0A] w-[calc(100vw-1.5rem)] max-w-[520px] p-5 sm:p-7 font-mono text-xs relative shadow-2xl max-h-[92vh] overflow-y-auto">
         {/* Modal Header */}
         <div className="flex justify-between items-center border-b border-[#0A0A0A] pb-3 mb-4">
@@ -266,7 +254,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({
 
             {/* Phone */}
             <a
-              href="tel:+998901189000"
+              href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`}
               className="h-[42px] flex items-center justify-center gap-1.5 px-2 border border-[#0A0A0A]/25 hover:bg-[#0A0A0A] hover:text-white transition-colors text-xs font-mono font-bold whitespace-nowrap bg-white/50"
             >
               <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -289,14 +277,14 @@ export const LeadModal: React.FC<LeadModalProps> = ({
             <div className="border border-[#0A0A0A] bg-[#C8CDD2] p-3 text-[11px] text-[#0A0A0A] space-y-1">
               <div>
                 Прямая линия снабжения:{' '}
-                <a href="tel:+998901189000" className="font-bold underline">
-                  +998 90 118-90-00
+                <a href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`} className="font-bold underline">
+                  {globalData.phone}
                 </a>
               </div>
               <div>
                 Официальная почта:{' '}
-                <a href="mailto:supply@railtech.uz" className="font-bold underline">
-                  supply@railtech.uz
+                <a href={`mailto:${globalData.emailSupply || globalData.emailGeneral}`} className="font-bold underline">
+                  {globalData.emailSupply || globalData.emailGeneral}
                 </a>
               </div>
             </div>

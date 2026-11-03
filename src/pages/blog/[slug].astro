@@ -4,6 +4,8 @@ import { getCollection } from 'astro:content';
 import { withBase } from '../../utils/url';
 import I18nText from '../../components/I18nText.astro';
 import HudViewportFrame from '../../components/hud/HudViewportFrame.astro';
+import { marked } from 'marked';
+import globalData from '../../data/cms/global.json';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
@@ -180,14 +182,14 @@ const breadcrumbJsonLd = {
             </div>
             <div class="rt-lang rt-lang-uz">
               {entry.data.body_uz ? (
-                <div class="space-y-4 whitespace-pre-line">{entry.data.body_uz}</div>
+                <div set:html={marked.parse(entry.data.body_uz)} />
               ) : (
                 <Content />
               )}
             </div>
             <div class="rt-lang rt-lang-en">
               {entry.data.body_en ? (
-                <div class="space-y-4 whitespace-pre-line">{entry.data.body_en}</div>
+                <div set:html={marked.parse(entry.data.body_en)} />
               ) : (
                 <Content />
               )}
@@ -238,10 +240,10 @@ const breadcrumbJsonLd = {
             </button>
 
             <a
-              href={`tel:+998901189000`}
+              href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`}
               class="w-full border border-[#0A0A0A] bg-white text-[#0A0A0A] py-2.5 text-xs font-bold text-center block hover:bg-[#0A0A0A] hover:text-white transition-colors"
             >
-              +998 90 118-90-00 ↗
+              {globalData.phone} ↗
             </a>
           </div>
 

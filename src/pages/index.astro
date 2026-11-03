@@ -32,12 +32,22 @@ const heroSlides = (homeData.heroSlides || []).map((s: any) => ({
   link: withBase(s.link || s.href || '/catalog/'),
 }));
 
-const modes = [
-  { n: '01', label: { ru: 'КАТАЛОГ', uz: 'KATALOG', en: 'CATALOG' }, href: '/catalog/' },
-  { n: '02', label: { ru: 'УСЛУГИ', uz: 'XIZMATLAR', en: 'SERVICES' }, href: '/services/' },
-  { n: '03', label: { ru: 'ПРОЕКТЫ', uz: 'LOYIHALAR', en: 'PROJECTS' }, href: '/projects/' },
-  { n: '04', label: { ru: 'БЛОГ', uz: 'BLOG', en: 'BLOG' }, href: '/blog/' },
+const rawModes = homeData.modes || [
+  { n: '01', label: 'КАТАЛОГ', label_uz: 'KATALOG', label_en: 'CATALOG', href: '/catalog/' },
+  { n: '02', label: 'УСЛУГИ', label_uz: 'XIZMATLAR', label_en: 'SERVICES', href: '/services/' },
+  { n: '03', label: 'ПРОЕКТЫ', label_uz: 'LOYIHALAR', label_en: 'PROJECTS', href: '/projects/' },
+  { n: '04', label: 'БЛОГ', label_uz: 'BLOG', label_en: 'BLOG', href: '/blog/' },
 ];
+
+const modes = rawModes.map((m: any) => ({
+  n: m.n,
+  label: {
+    ru: m.label?.ru || m.label || '',
+    uz: m.label?.uz || m.label_uz || m.label || '',
+    en: m.label?.en || m.label_en || m.label || '',
+  },
+  href: m.href,
+}));
 ---
 
 <BaseLayout
@@ -53,18 +63,26 @@ const modes = [
       <!-- Top Telemetry Callout Row -->
       <div class="flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] text-[#4A5056] pb-4 mb-6 border-b border-[#0A0A0A]/20">
         <div class="flex items-center gap-3">
-          <span class="hud-callout"><i></i>RT_CONSOLE // SYS.ACTIVE</span>
+          <span class="hud-callout"><i></i>{homeData.topCalloutTag || 'RT_CONSOLE // SYS.ACTIVE'}</span>
           <span class="hidden sm:inline text-[#0A0A0A]/30">|</span>
           <span class="hidden sm:inline font-bold text-[#0A0A0A]">
-            <I18nText ru="АККРЕДИТОВАННЫЙ ОПЕРАТОР РУз" uz="O'zR AKKREDITATSIYALANGAN OPERATORI" en="UZBEKISTAN ACCREDITED OPERATOR" />
+            <I18nText
+              ru={homeData.topCalloutStatus || 'АККРЕДИТОВАННЫЙ ОПЕРАТОР РУз'}
+              uz={homeData.topCalloutStatus_uz || "O'zR AKKREDITATSIYALANGAN OPERATORI"}
+              en={homeData.topCalloutStatus_en || 'UZBEKISTAN ACCREDITED OPERATOR'}
+            />
           </span>
         </div>
         <div class="flex items-center gap-3">
           <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#C8CDD2] text-[#0A0A0A] font-bold">
-            <I18nText ru="НДС 12% ВКЛЮЧЕН" uz="12% QQS BILAN" en="12% VAT INCLUDED" />
+            <I18nText
+              ru={homeData.topCalloutVat || 'НДС 12% ВКЛЮЧЕН'}
+              uz={homeData.topCalloutVat_uz || '12% QQS BILAN'}
+              en={homeData.topCalloutVat_en || '12% VAT INCLUDED'}
+            />
           </span>
           <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#0A0A0A] text-white font-bold">
-            INDEX B2-2097
+            {homeData.topCalloutHub || 'INDEX B2-2097'}
           </span>
         </div>
       </div>
@@ -360,8 +378,8 @@ const modes = [
     <div class="max-w-7xl mx-auto px-4">
       <div class="hud-section-head">
         <div>
-          <span class="hud-callout mb-1"><i></i><I18nText ru="КЕЙСЫ И СПЕЦПРОЕКТЫ" uz="KEYSLAR VA MAXSUS LOYIHALAR" en="CASE STUDIES & SPECIAL PROJECTS" /></span>
-          <I18nText as="h2" class="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-[#0A0A0A]" ru="РЕАЛИЗОВАННЫЕ ПРОЕКТЫ RAILTECH" uz="RAILTECH AMALGA OSHIRGAN LOYIHALARI" en="DELIVERED RAILTECH PROJECTS" />
+          <span class="hud-callout mb-1"><i></i><I18nText ru={homeData.projectsSectionBadge || 'КЕЙСЫ И СПЕЦПРОЕКТЫ'} uz={homeData.projectsSectionBadge_uz || 'KEYSLAR VA MAXSUS LOYIHALAR'} en={homeData.projectsSectionBadge_en || 'CASE STUDIES & SPECIAL PROJECTS'} /></span>
+          <I18nText as="h2" class="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-[#0A0A0A]" ru={homeData.projectsSectionTitle || 'РЕАЛИЗОВАННЫЕ ПРОЕКТЫ RAILTECH'} uz={homeData.projectsSectionTitle_uz || 'RAILTECH AMALGA OSHIRGAN LOYIHALARI'} en={homeData.projectsSectionTitle_en || 'DELIVERED RAILTECH PROJECTS'} />
         </div>
         <a
           href={`${base}/projects/`}

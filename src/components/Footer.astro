@@ -13,9 +13,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         {globalData.companyName.toUpperCase()}
       </div>
       <p class="text-[11px] text-[#4A5056] leading-relaxed">
-        <span class="rt-lang rt-lang-ru">{globalData.legalStatus}. Многопрофильный оператор промышленных поставок, контрактного ВЭД под ключ, инженерного сорсинга и заказного цифрового ПО в Узбекистане.</span>
-        <span class="rt-lang rt-lang-uz">{globalData.legalStatus_uz || globalData.legalStatus}. O'zbekistonda sanoat ta'minoti, kalit topshirish shartnomaviy TQI, muhandislik sorsingi va buyurtma dasturiy ta'minotning ko'p tarmoqli operatori.</span>
-        <span class="rt-lang rt-lang-en">{globalData.legalStatus_en || globalData.legalStatus}. Multi-sector operator for industrial supply, turnkey DDP import, engineering sourcing, and enterprise software engineering in Uzbekistan.</span>
+        <span class="rt-lang rt-lang-ru">{globalData.footer?.companyDesc || globalData.legalStatus}</span>
+        <span class="rt-lang rt-lang-uz">{globalData.footer?.companyDesc_uz || globalData.legalStatus_uz || globalData.legalStatus}</span>
+        <span class="rt-lang rt-lang-en">{globalData.footer?.companyDesc_en || globalData.legalStatus_en || globalData.legalStatus}</span>
       </p>
       <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#D4D8DC] text-[11px] space-y-1">
         <div class="font-bold text-[#0A0A0A]">
@@ -34,8 +34,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <span class="rt-lang rt-lang-uz">QQS: <span class="font-bold">12% (TO'LOVCHI)</span></span>
           <span class="rt-lang rt-lang-en">VAT: <span class="font-bold">12% (ACCREDITED)</span></span>
         </div>
-        <div>ОКЭД / IFUT: 46.69.0</div>
-        <div>ЭСФ / EHF: Didox / Soliq / Factura.uz</div>
+        <div>ОКЭД / IFUT: {globalData.oked || '46.69.0'}</div>
+        <div>ЭСФ / EHF: {globalData.esfOperators || 'Didox / Soliq / Factura.uz'}</div>
       </div>
       <div class="pt-1 flex flex-wrap gap-2 text-[10px]">
         <a href={`${base}/privacy`} class="text-[#4A5056] hover:text-[#0A0A0A] underline">
@@ -168,7 +168,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <span class="rt-lang rt-lang-en">Company-owned distribution terminal at {globalData.address}. Constant safety stock of certified industrial products, equipment, and components.</span>
       </p>
       <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#D4D8DC] text-[11px] space-y-1">
-        <div>GPS: 41.2214° N, 69.1852° E</div>
+        <div>GPS: {globalData.gps || '41.2214° N, 69.1852° E'}</div>
         <div>
           <span class="rt-lang rt-lang-ru">Подъездные пути: Прямой доступ (Ж/Д и авто)</span>
           <span class="rt-lang rt-lang-uz">Kirish yo'llari: To'g'ridan-to'g'ri (T/y va avto)</span>
@@ -253,7 +253,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <span class="rt-lang rt-lang-en">Terms</span>
       </a>
       <span>
-        © 2026 {globalData.companyName}.
+        © {globalData.copyrightYear || '2026'} {globalData.companyName}.
       </span>
     </div>
   </div>

@@ -4,56 +4,23 @@ import globalData from '../data/cms/global.json';
 const pathname = Astro.url.pathname;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-const navItems = [
-  {
-    href: `${base}/catalog/`,
-    label_ru: 'КАТАЛОГ',
-    label_uz: 'KATALOG',
-    label_en: 'CATALOG',
-    index: '01',
-    match: (p: string) => p.startsWith(`${base}/catalog`),
-  },
-  {
-    href: `${base}/services/`,
-    label_ru: 'УСЛУГИ',
-    label_uz: 'XIZMATLAR',
-    label_en: 'SERVICES',
-    index: '02',
-    match: (p: string) => p.startsWith(`${base}/services`),
-  },
-  {
-    href: `${base}/projects/`,
-    label_ru: 'ПРОЕКТЫ',
-    label_uz: 'LOYIHALAR',
-    label_en: 'PROJECTS',
-    index: '03',
-    match: (p: string) => p.startsWith(`${base}/projects`),
-  },
-  {
-    href: `${base}/blog/`,
-    label_ru: 'БЛОГ',
-    label_uz: 'BLOG',
-    label_en: 'BLOG',
-    index: '04',
-    match: (p: string) => p.startsWith(`${base}/blog`),
-  },
-  {
-    href: `${base}/about`,
-    label_ru: 'О КОМПАНИИ',
-    label_uz: 'KOMPANIYA HAQIDA',
-    label_en: 'ABOUT US',
-    index: '05',
-    match: (p: string) => p.startsWith(`${base}/about`),
-  },
-  {
-    href: `${base}/contacts`,
-    label_ru: 'КОНТАКТЫ',
-    label_uz: 'ALOQA',
-    label_en: 'CONTACTS',
-    index: '06',
-    match: (p: string) => p.startsWith(`${base}/contacts`),
-  },
+const rawNavItems = globalData.navigation || [
+  { index: '01', path: '/catalog/', label: 'КАТАЛОГ', label_uz: 'KATALOG', label_en: 'CATALOG' },
+  { index: '02', path: '/services/', label: 'УСЛУГИ', label_uz: 'XIZMATLAR', label_en: 'SERVICES' },
+  { index: '03', path: '/projects/', label: 'ПРОЕКТЫ', label_uz: 'LOYIHALAR', label_en: 'PROJECTS' },
+  { index: '04', path: '/blog/', label: 'БЛОГ', label_uz: 'BLOG', label_en: 'BLOG' },
+  { index: '05', path: '/about', label: 'О КОМПАНИИ', label_uz: 'KOMPANIYA HAQIDA', label_en: 'ABOUT US' },
+  { index: '06', path: '/contacts', label: 'КОНТАКТЫ', label_uz: 'ALOQA', label_en: 'CONTACTS' },
 ];
+
+const navItems = rawNavItems.map((item) => ({
+  href: `${base}${item.path}`,
+  label_ru: item.label,
+  label_uz: item.label_uz || item.label,
+  label_en: item.label_en || item.label,
+  index: item.index,
+  match: (p: string) => p.startsWith(`${base}${item.path.replace(/\/$/, '')}`),
+}));
 ---
 
 <header class="border-b border-[#0A0A0A] bg-[#D4D8DC] sticky top-0 z-40 select-none">
@@ -64,7 +31,7 @@ const navItems = [
       <div class="flex items-center space-x-2 sm:space-x-3 truncate">
         <span class="inline-flex items-center gap-1.5 font-bold text-[#0A0A0A] flex-none">
           <span class="w-2 h-2 bg-emerald-600 inline-block animate-pulse"></span>
-          <span>[ ● ONLINE ]</span>
+          <span>{globalData.topBar?.telemetryStatus || '[ ● ONLINE ]'}</span>
         </span>
         <span class="text-[#0A0A0A]/30">|</span>
         <span class="truncate font-bold text-[#0A0A0A]">
@@ -79,9 +46,9 @@ const navItems = [
         </span>
         <span class="hidden lg:inline text-[#0A0A0A]/30">|</span>
         <span class="hidden lg:inline border border-[#0A0A0A] px-1.5 bg-[#D4D8DC] text-[#0A0A0A] font-semibold text-[10px]">
-          <span class="rt-lang rt-lang-ru">НДС 12% ВКЛЮЧЕН</span>
-          <span class="rt-lang rt-lang-uz">QQS 12% KIRITILGAN</span>
-          <span class="rt-lang rt-lang-en">12% VAT INCLUDED</span>
+          <span class="rt-lang rt-lang-ru">{globalData.topBar?.vatBadge || 'НДС 12% ВКЛЮЧЕН'}</span>
+          <span class="rt-lang rt-lang-uz">{globalData.topBar?.vatBadge_uz || '12% QQS BILAN'}</span>
+          <span class="rt-lang rt-lang-en">{globalData.topBar?.vatBadge_en || '12% VAT INCLUDED'}</span>
         </span>
       </div>
 
@@ -121,12 +88,12 @@ const navItems = [
       </div>
       <div class="hidden sm:flex flex-col">
         <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-[#4A5056] leading-none">
-          ENGINEERING & LOGISTICS
+          {globalData.topBar?.industryBadge || 'ENGINEERING & LOGISTICS'}
         </span>
         <span class="text-xs font-bold text-[#0A0A0A] leading-tight">
-          <span class="rt-lang rt-lang-ru">УЗБЕКИСТАН • B2B / B2G</span>
-          <span class="rt-lang rt-lang-uz">O'ZBEKISTON • B2B / B2G</span>
-          <span class="rt-lang rt-lang-en">UZBEKISTAN • B2B / B2G</span>
+          <span class="rt-lang rt-lang-ru">{globalData.topBar?.geoBadge || 'УЗБЕКИСТАН • B2B / B2G'}</span>
+          <span class="rt-lang rt-lang-uz">{globalData.topBar?.geoBadge_uz || "O'ZBEKISTON • B2B / B2G"}</span>
+          <span class="rt-lang rt-lang-en">{globalData.topBar?.geoBadge_en || 'UZBEKISTAN • B2B / B2G'}</span>
         </span>
       </div>
     </a>

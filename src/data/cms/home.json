@@ -3,6 +3,32 @@
   "consoleSubtitle": "Многопрофильный B2B / B2G Оператор",
   "consoleSubtitle_uz": "Ko'p tarmoqli B2B / B2G operatori",
   "consoleSubtitle_en": "Multi-sector B2B / B2G Operator",
+  "topCalloutTag": "RT_CONSOLE // SYS.ACTIVE",
+  "topCalloutStatus": "АККРЕДИТОВАННЫЙ ОПЕРАТОР РУз",
+  "topCalloutStatus_uz": "O'zR AKKREDITATSIYALANGAN OPERATORI",
+  "topCalloutStatus_en": "UZBEKISTAN ACCREDITED OPERATOR",
+  "topCalloutVat": "НДС 12% ВКЛЮЧЕН",
+  "topCalloutVat_uz": "12% QQS BILAN",
+  "topCalloutVat_en": "12% VAT INCLUDED",
+  "topCalloutHub": "INDEX B2-2097",
+  "topCalloutSla": "Ответ отдела снабжения: от 15 минут",
+  "topCalloutSla_uz": "Ta'minot bo'limi javobi: 15 daqiqadan",
+  "topCalloutSla_en": "Supply desk response: from 15 minutes",
+  "modes": [
+    { "n": "01", "label": "КАТАЛОГ", "label_uz": "KATALOG", "label_en": "CATALOG", "href": "/catalog/" },
+    { "n": "02", "label": "УСЛУГИ", "label_uz": "XIZMATLAR", "label_en": "SERVICES", "href": "/services/" },
+    { "n": "03", "label": "ПРОЕКТЫ", "label_uz": "LOYIHALAR", "label_en": "PROJECTS", "href": "/projects/" },
+    { "n": "04", "label": "БЛОГ", "label_uz": "BLOG", "label_en": "BLOG", "href": "/blog/" }
+  ],
+  "projectsSectionBadge": "КЕЙСЫ И СПЕЦПРОЕКТЫ",
+  "projectsSectionBadge_uz": "KEYSLAR VA MAXSUS LOYIHALAR",
+  "projectsSectionBadge_en": "CASE STUDIES & SPECIAL PROJECTS",
+  "projectsSectionTitle": "РЕАЛИЗОВАННЫЕ ПРОЕКТЫ RAILTECH",
+  "projectsSectionTitle_uz": "RAILTECH AMALGA OSHIRGAN LOYIHALARI",
+  "projectsSectionTitle_en": "DELIVERED RAILTECH PROJECTS",
+  "projectsSectionSubtitle": "ПРОМЫШЛЕННЫЕ ВНЕДРЕНИЯ, ЛОГИСТИКА И КУЛЬТУРНЫЕ ИНИЦИАТИВЫ",
+  "projectsSectionSubtitle_uz": "SANOAT INTEGRATSIYALARI, LOGISTIKA VA MADANIY TASHABBUSLAR",
+  "projectsSectionSubtitle_en": "INDUSTRIAL INTEGRATIONS, LOGISTICS & CULTURAL INITIATIVES",
   "heroSlides": [
     {
       "image": "/images/hero/warehouse.jpg",
@@ -144,211 +170,6 @@
       "text": "Инженерные обзоры, аналитика рынка и хроника компании.",
       "text_uz": "Muhandislik sharhlari, bozor tahlili va kompaniya xronikasi.",
       "text_en": "Engineering reviews, market insights and company chronicle."
-    }
-  ],
-  "heroBadge": "B2B / B2G ОПЕРАТОР",
-  "heroBadge_uz": "B2B / B2G OPERATORI",
-  "heroBadge_en": "B2B / B2G OPERATOR",
-  "heroBadgeSub": "УЗБЕКИСТАН // ТАШКЕНТ",
-  "heroBadgeSub_uz": "O'ZBEKISTON // TOSHKENT",
-  "heroBadgeSub_en": "UZBEKISTAN // TASHKENT",
-  "heroBadgeVat": "НДС 12% ВКЛЮЧЕН",
-  "heroBadgeVat_uz": "12% QQS BILAN",
-  "heroBadgeVat_en": "12% VAT INCLUDED",
-  "heroTitle": "ПРОМЫШЛЕННОЕ ОБОРУДОВАНИЕ, КОНТРАКТНЫЙ ВЭД И IT-РЕШЕНИЯ",
-  "heroTitle_uz": "SANOAT USKUNALARI, SHARTNOMAVIY TIF VA IT-YECHIMLAR",
-  "heroTitle_en": "INDUSTRIAL EQUIPMENT, TURNKEY IMPORT & IT SOLUTIONS",
-  "heroSubtitle": "ООО «RailTech» — аккредитованный B2B/B2G оператор и поставщик промышленного оборудования, комплектующих и технологических решений. Собственный складской терминал в Ташкенте (ТПК Index B2-2097), поставки DDP с фиксированной ценой в сумах и разработка специализированного ПО.",
-  "heroSubtitle_uz": "«RailTech» MChJ — sanoat uskunalari, butlovchi qismlar va texnologik yechimlarning akkreditatsiyalangan B2B/B2G operatori. Toshkentdagi xususiy ombor terminali (Index SICHM B2-2097), so'mda qat'iy narx bilan DDP yetkazib berish va maxsus dasturiy ta'minot ishlab chiqish.",
-  "heroSubtitle_en": "RailTech LLC is an accredited B2B/B2G operator and supplier of industrial equipment, components, and technology solutions. Dedicated warehouse terminal in Tashkent (Index Complex B2-2097), DDP delivery with prices fixed in UZS, and specialized software development.",
-  "ctaCatalog": "КАТАЛОГ СО СКЛАДА (10+ ГРУПП) →",
-  "ctaCatalog_uz": "OMBOR KATALOGI (10+ GURUH) →",
-  "ctaCatalog_en": "WAREHOUSE CATALOG (10+ GROUPS) →",
-  "ctaContract": "РАСЧЕТ ВЭД DDP ТАШКЕНТ ↗",
-  "ctaContract_uz": "TQI DDP TOSHKENT HISOBLASH ↗",
-  "ctaContract_en": "CALCULATE DDP TASHKENT ↗",
-  "ctaRfq": "[ ЗАПРОСИТЬ КП / СЧЕТ ]",
-  "ctaRfq_uz": "[ TIJОRAT TAKLIFI / HISOB SO'ROVI ]",
-  "ctaRfq_en": "[ REQUEST RFQ / INVOICE ]",
-  "quickMetrics": [
-    {
-      "label": "НА СКЛАДЕ:",
-      "label_uz": "OMBORDA:",
-      "label_en": "IN STOCK:",
-      "value": "1 247+ SKU",
-      "value_uz": "1 247+ SKU",
-      "value_en": "1,247+ SKUs"
-    },
-    {
-      "label": "ПАРТНЕРЫ:",
-      "label_uz": "HAMKORLAR:",
-      "label_en": "PARTNERS:",
-      "value": "86+ ЗАВОДОВ",
-      "value_uz": "86+ ZAVOD",
-      "value_en": "86+ PLANTS"
-    },
-    {
-      "label": "ПОСТАВКИ:",
-      "label_uz": "YETKAZIB BERISH:",
-      "label_en": "DELIVERY:",
-      "value": "DDP ТАШКЕНТ",
-      "value_uz": "DDP TOSHKENT",
-      "value_en": "DDP TASHKENT"
-    },
-    {
-      "label": "ОТГРУЗКА:",
-      "label_uz": "YUKLASH:",
-      "label_en": "DISPATCH:",
-      "value": "ОТ 24 ЧАСОВ",
-      "value_uz": "24 SOATDAN",
-      "value_en": "FROM 24 HOURS"
-    }
-  ],
-  "pillarsSectionBadge": "НАПРАВЛЕНИЯ",
-  "pillarsSectionBadge_uz": "YO'NALISHLAR",
-  "pillarsSectionBadge_en": "SECTORS",
-  "pillarsSectionTitle": "ЧЕТЫРЕ ОПЕРАЦИОННЫХ СЕКТОРА ООО «RAILTECH»",
-  "pillarsSectionTitle_uz": "«RAILTECH» MCHJ NING TO'RT OPERATSION SEKTORI",
-  "pillarsSectionTitle_en": "FOUR OPERATIONAL SECTORS OF RAILTECH LLC",
-  "pillarsSectionSubtitle": "СТРУКТУРИРОВАННАЯ МНОГОСТРАНИЧНАЯ АРХИТЕКТУРА ПОРТАЛА",
-  "pillarsSectionSubtitle_uz": "PORTALNING STRUKTURILANGAN KO'P SAHIFALI ARXITEKTURASI",
-  "pillarsSectionSubtitle_en": "STRUCTURED MULTI-PAGE PORTAL ARCHITECTURE",
-  "pillars": [
-    {
-      "code": ".SUPPLY // 01",
-      "tag": "СКЛАД В ТАШКЕНТЕ",
-      "tag_uz": "TOSHKENTDAGI OMBOR",
-      "tag_en": "TASHKENT WAREHOUSE",
-      "title": "Складская программа оборудования и компонентов",
-      "title_uz": "Uskunalar va butlovchi qismlar ombor dasturi",
-      "title_en": "Equipment and Components Warehouse Program",
-      "description": "Постоянное наличие сертифицированного оборудования, компонентов и узлов в Ташкенте. Отгрузка со склада Index B2-2097 с полным комплектом паспортов заводов-изготовителей и сертификатов соответствия.",
-      "description_uz": "Toshkentda sertifikatlangan uskunalar, butlovchi qismlar va uzellarning doimiy mavjudligi. Ishlab chiqaruvchi zavod pasportlari va muvofiqlik sertifikatlari to'liq to'plami bilan Index B2-2097 omboridan yuklash.",
-      "description_en": "Continuous stock of certified equipment, components, and assemblies in Tashkent. Direct dispatch from Index B2-2097 warehouse with complete factory passports and quality compliance certificates.",
-      "metrics": [
-        {
-          "label": "НОМЕНКЛАТУРА:",
-          "label_uz": "NOMENKLATURA:",
-          "label_en": "ITEMS:",
-          "value": "1 247+ позиций",
-          "value_uz": "1 247+ birlik",
-          "value_en": "1,247+ items"
-        },
-        {
-          "label": "ГАРАНТИЯ:",
-          "label_uz": "KAFOLAT:",
-          "label_en": "WARRANTY:",
-          "value": "Заводская / ОТК",
-          "value_uz": "Zavod / TNZ",
-          "value_en": "Factory / QC"
-        }
-      ],
-      "linkText": "ОТКРЫТЬ КАТАЛОГ СКЛАДА →",
-      "linkText_uz": "OMBOR KATALOGINI OCHISH →",
-      "linkText_en": "OPEN WAREHOUSE CATALOG →",
-      "linkHref": "/catalog/"
-    },
-    {
-      "code": ".CONTRACT // 02",
-      "tag": "ПРОЕКТНЫЙ ВЭД DDP",
-      "tag_uz": "LOYIHA TQI DDP",
-      "tag_en": "PROJECT DDP IMPORT",
-      "title": "Контрактные поставки ВЭД под ключ",
-      "title_uz": "Kalit topshirish shartnomaviy TQI ta'minoti",
-      "title_en": "Turnkey Contractual DDP Supplies",
-      "description": "Комплексное снабжение промышленных предприятий, карьеров и девелоперов. Фиксация конечной стоимости Landed Cost DDP Ташкент в сумах с НДС 12%. Прямые контракты с 86+ заводами РФ, Китая, Беларуси и стран ЕС без посредников.",
-      "description_uz": "Sanoat korxonalari, konlar va qurilish kompaniyalarini kompleks ta'minlash. Yakuniy Landed Cost DDP Toshkent narxini 12% QQS bilan so'mda qat'iy belgilash. Rossiya, Xitoy, Belarus va YI ning 86+ zavodlari bilan vositachilarsiz to'g'ridan-to'g'ri shartnomalar.",
-      "description_en": "End-to-end procurement for industrial plants, mining operations, and developers. Final Landed Cost DDP Tashkent fixed in UZS with 12% VAT. Direct contracts with 86+ manufacturing plants across CIS, China, and the EU without intermediaries.",
-      "metrics": [
-        {
-          "label": "УСЛОВИЯ:",
-          "label_uz": "SHARTLAR:",
-          "label_en": "TERMS:",
-          "value": "DDP Ташкент (НДС 12%)",
-          "value_uz": "DDP Toshkent (12% QQS)",
-          "value_en": "DDP Tashkent (12% VAT)"
-        },
-        {
-          "label": "ВАЛЮТА:",
-          "label_uz": "VALYUTA:",
-          "label_en": "CURRENCY:",
-          "value": "Фиксация в UZS",
-          "value_uz": "UZS da qat'iy",
-          "value_en": "Fixed in UZS"
-        }
-      ],
-      "linkText": "УСЛОВИЯ И КАЛЬКУЛЯТОР ВЭД →",
-      "linkText_uz": "SHARTLAR VA TQI KALKULYATORI →",
-      "linkText_en": "TERMS & DDP CALCULATOR →",
-      "linkHref": "/services/turnkey-import-ddp/"
-    },
-    {
-      "code": ".DIGITAL // 03",
-      "tag": "IT & AI РЕШЕНИЯ",
-      "tag_uz": "IT VA AI YECHIMLAR",
-      "tag_en": "IT & AI SOLUTIONS",
-      "title": "Платформа b2b.railtech.uz и заказная разработка ПО",
-      "title_uz": "b2b.railtech.uz platformasi va buyurtma dasturiy ta'minot",
-      "title_en": "b2b.railtech.uz Platform & Custom Software Engineering",
-      "description": "Собственная IT-экосистема: B2B-портал для регулярных закупок, NLP-парсер спецификаций Smart Match AI (точность 92%+) и разработка заказных ERP/WMS систем для транспортных и складских комплексов.",
-      "description_uz": "Xususiy IT-ekotizim: muntazam xaridlar uchun B2B-portal, Smart Match AI spetsifikatsiyalar NLP-tahlilchisi (92%+ aniqlik) va transport-ombor majmualari uchun maxsus ERP/WMS tizimlarini ishlab chiqish.",
-      "description_en": "Proprietary IT ecosystem: B2B procurement portal, Smart Match AI specification parser (92%+ accuracy), and custom ERP/WMS development for transport and logistics operators.",
-      "metrics": [
-        {
-          "label": "ПРОДУКТЫ:",
-          "label_uz": "MAHSULOTLAR:",
-          "label_en": "PRODUCTS:",
-          "value": "b2b.railtech.uz / Smart Match",
-          "value_uz": "b2b.railtech.uz / Smart Match",
-          "value_en": "b2b.railtech.uz / Smart Match"
-        },
-        {
-          "label": "СТЕК:",
-          "label_uz": "STEK:",
-          "label_en": "STACK:",
-          "value": "Astro / React / Python / 1C",
-          "value_uz": "Astro / React / Python / 1C",
-          "value_en": "Astro / React / Python / 1C"
-        }
-      ],
-      "linkText": "ДЕМО SMART MATCH И IT-УСЛУГИ →",
-      "linkText_uz": "SMART MATCH DEMO VA IT-XIZMATLAR →",
-      "linkText_en": "SMART MATCH DEMO & IT SERVICES →",
-      "linkHref": "/services/custom-software/"
-    },
-    {
-      "code": ".PROJECTS // 04",
-      "tag": "ЛОКАЛИЗАЦИЯ & АРТ",
-      "tag_uz": "LOKALIZATSIYA VA SAN'AT",
-      "tag_en": "LOCALIZATION & ART",
-      "title": "Спецпроекты, трансфер технологий и Арт-лаборатория",
-      "title_uz": "Maxsus loyihalar, texnologiyalar transferi va Art-laboratoriya",
-      "title_en": "Special Projects, Tech Transfer & Art Lab",
-      "description": "Трансфер передовых инженерных технологий на производственные базы Узбекистана, полигонные испытания + кураторская поддержка современной индустриальной живописи и архитектурной графики.",
-      "description_uz": "O'zbekiston ishlab chiqarish bazalariga ilg'or muhandislik texnologiyalari transferi, sinov poligonlarida tekshirish hamda zamonaviy sanoat rassomchiligi va me'moriy grafikani qo'llab-quvvatlash.",
-      "description_en": "Transfer of advanced engineering technologies to manufacturing hubs in Uzbekistan, testbed certification, and curatorial patronage of contemporary industrial painting and architectural graphics.",
-      "metrics": [
-        {
-          "label": "ИНЖИНИРИНГ:",
-          "label_uz": "INJINIRING:",
-          "label_en": "ENGINEERING:",
-          "value": "Трансфер и испытания",
-          "value_uz": "Transfer va sinovlar",
-          "value_en": "Transfer & Testing"
-        },
-        {
-          "label": "КУЛЬТУРА:",
-          "label_uz": "MADANIYAT:",
-          "label_en": "CULTURE:",
-          "value": "RailTech Art Lab",
-          "value_uz": "RailTech Art Lab",
-          "value_en": "RailTech Art Lab"
-        }
-      ],
-      "linkText": "СПЕЦПРОЕКТЫ И АРТ-ЛАБОРАТОРИЯ →",
-      "linkText_uz": "MAXSUS LOYIHALAR VA ART-LABORATORIYA →",
-      "linkText_en": "SPECIAL PROJECTS & ART LAB →",
-      "linkHref": "/projects/"
     }
   ],
   "showcaseSectionBadge": "ВИТРИНА СКЛАДА",

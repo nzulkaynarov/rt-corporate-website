@@ -221,24 +221,24 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
       </div>
     </div>
 
-    <!-- CTA Section -->
+    <!-- CTA Section from CMS -->
     <div class="hud-glass-card p-8 font-mono flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="space-y-2 max-w-2xl">
         <div class="text-sm font-bold text-[#0A0A0A] flex items-center space-x-2">
           <span class="w-3 h-3 bg-[#0A0A0A] inline-block"></span>
           <span>
             <I18nText
-              ru="НУЖНА ИНЖЕНЕРНАЯ КОНСУЛЬТАЦИЯ ПО ВАШЕМУ ПРОЕКТУ?"
-              uz="LOYIHANGIZ BO'YICHA MUHANDISLIK KONSALTINGI KERAKMI?"
-              en="NEED ENGINEERING CONSULTING FOR YOUR PROJECT?"
+              ru={bPage.ctaTitle || "НУЖНА ИНЖЕНЕРНАЯ КОНСУЛЬТАЦИЯ ПО ВАШЕМУ ПРОЕКТУ?"}
+              uz={bPage.ctaTitle_uz || "LOYIHANGIZ BO'YICHA MUHANDISLIK KONSALTINGI KERAKMI?"}
+              en={bPage.ctaTitle_en || "NEED ENGINEERING CONSULTING FOR YOUR PROJECT?"}
             />
           </span>
         </div>
         <p class="text-xs text-[#4A5056] font-sans leading-relaxed">
           <I18nText
-            ru="Инженеры ООО «RailTech» помогут подобрать номенклатуру по чертежам, согласовать технические требования с ГАЖК «УТЙ» и рассчитать Landed Cost DDP Ташкент."
-            uz="«RailTech» MChJ muhandislari chizmalar bo'yicha nomenklaturani tanlash, «O'TY» AJ bilan texnik talablarni muvofiqlashtirish va Landed Cost DDP Toshkentni hisoblashda yordam beradilar."
-            en="RailTech LLC engineers will assist in cross-referencing drawings, harmonizing technical specifications with UTY rail authorities, and modeling Landed Cost DDP Tashkent."
+            ru={bPage.ctaSubtitle || "Инженеры ООО «RailTech» помогут подобрать номенклатуру по чертежам, согласовать технические требования с ГАЖК «УТЙ» и рассчитать Landed Cost DDP Ташкент."}
+            uz={bPage.ctaSubtitle_uz || "«RailTech» MChJ muhandislari chizmalar bo'yicha nomenklaturani tanlash, «O'TY» AJ bilan texnik talablarni muvofiqlashtirish va Landed Cost DDP Toshkentni hisoblashda yordam beradilar."}
+            en={bPage.ctaSubtitle_en || "RailTech LLC engineers will assist in cross-referencing drawings, harmonizing technical specifications with UTY rail authorities, and modeling Landed Cost DDP Tashkent."}
           />
         </p>
       </div>
@@ -250,9 +250,9 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
         class="hud-btn px-8 py-3.5 text-xs font-bold whitespace-nowrap cursor-pointer"
       >
         <I18nText
-          ru="[ ЗАДАТЬ ВОПРОС ИНЖЕНЕРУ ]"
-          uz="[ MUHANDISGA SAVOL BERISH ]"
-          en="[ ASK AN ENGINEER ]"
+          ru={bPage.ctaButton || "[ ЗАДАТЬ ВОПРОС ИНЖЕНЕРУ ]"}
+          uz={bPage.ctaButton_uz || "[ MUHANDISGA SAVOL BERISH ]"}
+          en={bPage.ctaButton_en || "[ ASK AN ENGINEER ]"}
         />
       </button>
     </div>

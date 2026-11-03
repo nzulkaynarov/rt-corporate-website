@@ -1,0 +1,121 @@
+{
+  "privacy": {
+    "badgeLaw": "ЗРУ-547 ОТ 02.07.2019",
+    "badgeLaw_uz": "O'RQ-547 (02.07.2019)",
+    "badgeLaw_en": "LAW NO. ZRU-547 (02.07.2019)",
+    "badgeCountry": "РЕСПУБЛИКА УЗБЕКИСТАН",
+    "badgeCountry_uz": "O'ZBEKISTON RESPUBLIKASI",
+    "badgeCountry_en": "REPUBLIC OF UZBEKISTAN",
+    "badgeEdition": "ВЕРСИЯ: 2026.1",
+    "badgeEdition_uz": "TAHRIR: 2026.1",
+    "badgeEdition_en": "EDITION: 2026.1",
+    "title": "ПОЛИТИКА ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ",
+    "title_uz": "SHAXSIY MA'LUMOTLARNI QAYTA ISHLASH SIYOSATI",
+    "title_en": "PERSONAL DATA PROCESSING & PRIVACY POLICY",
+    "subtitle": "Регулирует сбор, систематизацию, хранение и защиту информации пользователей порталов railtech.uz и b2b.railtech.uz.",
+    "subtitle_uz": "railtech.uz va b2b.railtech.uz portallari foydalanuvchilari ma'lumotlarini to'plash, tizimlashtirish, saqlash va himoya qilishni tartibga soladi.",
+    "subtitle_en": "Governs collection, systematization, storage, and protection of user data across railtech.uz and b2b.railtech.uz portals.",
+    "sections": [
+      {
+        "num": "1",
+        "title": "1. ОБЩИЕ ПОЛОЖЕНИЯ И ПРАВОВЫЕ ОСНОВАНИЯ",
+        "title_uz": "1. UMUMIY QOIDALAR VA HUQUQIY ASOSLAR",
+        "title_en": "1. GENERAL PROVISIONS & LEGAL GROUNDS",
+        "content": "Настоящая Политика разработана в строгом соответствии с Законом Республики Узбекистан от 2 июля 2019 года № ЗРУ-547 «О персональных данных». Оператором базы персональных данных выступает ООО «RailTech» (юридический адрес: г. Ташкент, ТПК Index, Офис B2-2097, ИНН: 308912445). Политика определяет порядок взаимодействия с субъектами персональных данных при использовании публичного веб-сайта railtech.uz и закрытого оптового B2B-портала b2b.railtech.uz.",
+        "content_uz": "Ushbu Siyosat O'zbekiston Respublikasining 2019-yil 2-iyuldagi «Shaxsga doir ma'lumotlar to'g'risida»gi O'RQ-547-son Qonuniga muvofiq ishlab chiqilgan. Shaxsiy ma'lumotlar bazasi operatori «RailTech» MChJ (yuridik manzil: Toshkent sh., Index SICHM, B2-2097 ofis, STIR: 308912445) hisoblanadi. Siyosat railtech.uz ommaviy veb-sayti va b2b.railtech.uz yopiq ulgurji B2B portalidan foydalanishda shaxslar bilan o'zaro hamkorlik tartibini belgilaydi.",
+        "content_en": "This Policy has been established in strict accordance with the Law of the Republic of Uzbekistan No. ZRU-547 'On Personal Data' dated July 2, 2019. The personal database operator is RailTech LLC (legal address: Tashkent, Index Complex, Office B2-2097, TIN: 308912445). This Policy establishes data management protocols across railtech.uz and b2b.railtech.uz portals."
+      },
+      {
+        "num": "2",
+        "title": "2. КАТЕГОРИИ СОБИРАЕМЫХ ДАННЫХ",
+        "title_uz": "2. TO'PLANADIGAN MA'LUMOTLAR TOIFALARI",
+        "title_en": "2. CATEGORIES OF COLLECTED DATA",
+        "content": "Оператор обрабатывает следующие категории данных, предоставляемых субъектами добровольно либо собираемых автоматически: идентификационные данные представителей (ФИО, должность), реквизиты организации (наименование, ИНН, ОКЭД, адреса, банковские реквизиты), связующие контакты (телефон, корпоративный email), файлы спецификаций и чертежей (.xlsx, .pdf, .dwg), служебные сетевые IP-адреса и сессионные cookies.",
+        "content_uz": "Operator quyidagi toifadagi ma'lumotlarni qayta ishlaydi: vakillarning identifikatsiya ma'lumotlari (F.I.SH., lavozimi), tashkilot rekvizitlari (nomi, STIR, IFUT, yuridik manzil, bank hisob raqamlari), aloqa vositalari (telefon, korporativ elektron pochta), spetsifikatsiya fayllari (.xlsx, .pdf), tarmoq IP-manzillari va sessiya cookie-fayllari.",
+        "content_en": "The Operator processes data voluntarily submitted or collected automatically: representative identification details (full name, title), corporate requisites (legal name, TIN, NACE code, addresses, banking details), contact channels (telephone, corporate email), technical specification files (.xlsx, .pdf, .dwg), IP telemetry and session cookies."
+      },
+      {
+        "num": "3",
+        "title": "3. ЦЕЛИ ОБРАБОТКИ И ПРОЦЕДУРА KYC",
+        "title_uz": "3. QAYTA ISHLASH MAQSADLARI VA KYC JARAYONI",
+        "title_en": "3. PROCESSING PURPOSES & KYC PROTOCOL",
+        "content": "Сбор данных осуществляется в целях: проведения обязательной юридической верификации контрагента (KYC) перед предоставлением оптовых прейскурантов; формирования официальных коммерческих предложений и расчетов Landed Cost DDP Ташкент; исполнения договоров поставки и складских отгрузок; регистрации электронных счетов-фактур (ЭСФ) в государственных системах Didox и Soliq с НДС 12%.",
+        "content_uz": "Ma'lumotlar quyidagi maqsadlarda qayta ishlanadi: ulgurji narxlar berishdan oldin kontragentni majburiy yuridik tekshirish (KYC); tijorat takliflari va Landed Cost DDP Toshkent hisob-kitoblarini shakllantirish; yetkazib berish shartnomalarini bajarish; 12% QQS bilan Didox va Soliq davlat axborot tizimlarida elektron hisob-fakturalarni (EHF) ro'yxatdan o'tkazish.",
+        "content_en": "Data processing serves: mandatory corporate KYC validation prior to wholesale catalog release; issuance of formal commercial quotations and Landed Cost DDP Tashkent calculations; delivery fulfillment from Index B2-2097 hub; electronic fiscal invoicing (ESF) via Didox / Soliq systems with 12% VAT."
+      },
+      {
+        "num": "4",
+        "title": "4. СРОКИ И ЛОКАЛИЗАЦИЯ ХРАНЕНИЯ ДАННЫХ",
+        "title_uz": "4. SAQLASH MUDDATLARI VA MA'LUMOTLARNI LOKALIZATSIYA QILISH",
+        "title_en": "4. RETENTION PERIODS & DATA LOCALIZATION",
+        "content": "В соответствии со статьей 27-1 Закона № ЗРУ-547 серверные мощности и базы данных персональных данных граждан Узбекистана локализованы на территории Республики Узбекистан. Данные заключенных договоров, спецификаций и ЭСФ хранятся в течение 5 лет с момента завершения сделки. Данные предварительных заявок хранятся 3 года либо до момента отзыва согласия.",
+        "content_uz": "O'RQ-547-son Qonunning 27-1-moddasiga muvofiq, O'zbekiston fuqarolarining shaxsiy ma'lumotlari bazalari O'zbekiston Respublikasi hududida joylashtirilgan. Shartnomalar va EHF bo'yicha ma'lumotlar bitim yakunlanganidan keyin 5 yil davomida saqlanadi. Dastlabki arizalar ma'lumotlari 3 yil yoki rozilik qaytarib olingunga qadar saqlanadi.",
+        "content_en": "Pursuant to Article 27-1 of Law No. ZRU-547, all database infrastructure storing personal data of Uzbek citizens is physically localized within the Republic of Uzbekistan. Contractual and fiscal invoice records are retained for 5 years. Preliminary RFQ records are kept for 3 years or until consent revocation."
+      },
+      {
+        "num": "5",
+        "title": "5. ПРАВА СУБЪЕКТОВ И КОНТАКТЫ ОПЕРАТОРА",
+        "title_uz": "5. SUBYEKTLARNING HUQUQLARI VA OPERATOR ALOQA VOSITALARI",
+        "title_en": "5. SUBJECT RIGHTS & PRIVACY CONTACTS",
+        "content": "Субъект персональных данных имеет право требовать уточнения, блокирования или уничтожения своих данных. Официальные запросы направляются уполномоченному лицу по защите данных ООО «RailTech» по адресу: privacy@railtech.uz или почтой: 100140, г. Ташкент, ТПК Index, Блок B2-2097.",
+        "content_uz": "Shaxsiy ma'lumotlar subyekti o'z ma'lumotlarini aniqlashtirish, bloklash yoki yo'q qilishni talab qilish huquqiga ega. Rasmiy murojaatlar «RailTech» MChJ ma'lumotlarni himoya qilish xizmatiga yuboriladi: privacy@railtech.uz yoki pochta orqali: 100140, Toshkent sh., Index SICHM, B2-2097.",
+        "content_en": "Data subjects hold statutory rights to inspect, rectify, restrict, or erase their personal records. Official inquiries must be directed to RailTech LLC Data Protection Officer via email: privacy@railtech.uz or post: 100140, Tashkent, Index Complex, Block B2-2097."
+      }
+    ]
+  },
+  "terms": {
+    "badgeService": "РЕГЛАМЕНТ СЕРВИСА B2B",
+    "badgeService_uz": "B2B XIZMATI REGLAMENTI",
+    "badgeService_en": "B2B SERVICE RULES",
+    "badgeOffer": "ЮРИДИЧЕСКИЙ ДОГОВОР-ОФЕРТА",
+    "badgeOffer_uz": "YURIDIK OFERTA-SHARTNOMA",
+    "badgeOffer_en": "LEGAL OFFER AGREEMENT",
+    "badgeEdition": "РЕДАКЦИЯ: 2026.1",
+    "badgeEdition_uz": "TAHRIR: 2026.1",
+    "badgeEdition_en": "EDITION: 2026.1",
+    "title": "УСЛОВИЯ ИСПОЛЬЗОВАНИЯ ПОРТАЛА RAILTECH",
+    "title_uz": "RAILTECH PORTALIDAN FOYDALANISH SHARTLARI",
+    "title_en": "RAILTECH PORTAL TERMS OF USE",
+    "subtitle": "Правила доступа юридических лиц к информационным ресурсам и коммерческим сервисам railtech.uz и b2b.railtech.uz.",
+    "subtitle_uz": "Yuridik shaxslarning railtech.uz va b2b.railtech.uz axborot resurslari hamda tijorat xizmatlariga kirish qoidalari.",
+    "subtitle_en": "Terms governing corporate access to technical resources and commercial tools across railtech.uz and b2b.railtech.uz.",
+    "sections": [
+      {
+        "num": "1",
+        "title": "1. СТАТУС СЕРВИСА И СТОРОНЫ СОГЛАШЕНИЯ",
+        "title_uz": "1. XIZMAT MAQOMI VA SHARTNOMA TOMONLARI",
+        "title_en": "1. SERVICE STATUS & PARTIES",
+        "content": "Настоящие Условия регулируют использование корпоративного сайта railtech.uz и защищенного оптового портала b2b.railtech.uz, администрируемых ООО «RailTech» (ИНН 308912445, плательщик НДС 12%). Сервисы предназначены исключительно для юридических лиц и индивидуальных предпринимателей.",
+        "content_uz": "Ushbu Shartlar «RailTech» MChJ (STIR 308912445, 12% QQS to'lovchisi) tomonidan boshqariladigan railtech.uz korporativ veb-sayti va b2b.railtech.uz himoyalangan ulgurji portalidan foydalanishni tartibga soladi. Xizmatlar faqat yuridik shaxslar va yakka tartibdagi tadbirkorlar uchun mo'ljallangan.",
+        "content_en": "These Terms govern the use of railtech.uz and b2b.railtech.uz portals administered by RailTech LLC (TIN 308912445, 12% VAT accredited). Services are intended exclusively for corporate entities and registered entrepreneurs."
+      },
+      {
+        "num": "2",
+        "title": "2. СТАТУСЫ ДОСТУПА И ВЕРИФИКАЦИЯ KYC",
+        "title_uz": "2. KIRISH MAQOMLARI VA KYC TEKSHIRUVI",
+        "title_en": "2. ACCESS TIERS & KYC VERIFICATION",
+        "content": "Портал предусматривает два уровня доступа: «Гость» — открытый просмотр номенклатурных справочников, ГОСТов и отправка предварительных заявок; «Клиент» — закрытый кабинет на b2b.railtech.uz с доступом к реальным остаткам склада Index B2-2097, оптовым ценам и генерации спецификаций после прохождения проверки KYC (ИНН, свидетельство о регистрации, карточка предприятия).",
+        "content_uz": "Portalda ikkita kirish darajasi mavjud: «Mehmon» — nomenklatura kataloglari, GOSTlarni ko'rish va dastlabki arizalar yuborish; «Mijoz» — KYC tekshiruvidan (STIR, ro'yxatdan o'tganlik guvohnomasi) o'tgandan so'ng Index B2-2097 ombor qoldiqlari, ulgurji narxlar va b2b.railtech.uz yopiq kabinetiga to'liq kirish huquqi.",
+        "content_en": "The portal provides two tiers: 'Guest' — open inspection of technical datasheets and quote submission; 'Client' — authenticated b2b.railtech.uz portal access with real-time stock balances, wholesale pricing, and automated contract drafting following corporate KYC validation."
+      },
+      {
+        "num": "3",
+        "title": "3. УСЛОВИЯ ПОСТАВОК И ФОРМУЛА LANDED COST DDP",
+        "title_uz": "3. YETKAZIB BERISH SHARTLARI VA LANDED COST DDP FORMULASI",
+        "title_en": "3. DELIVERY TERMS & LANDED COST DDP FORMULA",
+        "content": "Все контрактные поставки осуществляются на базисе DDP Ташкент (Инкотермс 2020) с отгрузкой со склада Index B2-2097. Конечная стоимость в сумах фиксируется на дату заключения договора и включает: заводскую стоимость, международную логистику, таможенную пошлину, сертификацию и НДС 12%. Покупатель защищен от валютных колебаний.",
+        "content_uz": "Barcha shartnomaviy yetkazib berishlar Index B2-2097 omboridan yuklash bilan DDP Toshkent (Incoterms 2020) bazisida amalga oshiriladi. So'mdagi yakuniy qiymat shartnoma imzolangan sanada qat'iy belgilanadi va quyidagilarni o'z ichiga oladi: zavod narxi, xalqaro logistika, bojxona to'lovlari, sertifikatlashtirish va 12% QQS.",
+        "content_en": "All contract deliveries operate under DDP Tashkent terms (Incoterms 2020) dispatched from Index B2-2097 terminal. The final price in UZS is locked upon contract execution, covering factory invoice, international freight, customs clearance, inspection, and 12% VAT."
+      },
+      {
+        "num": "4",
+        "title": "4. ИНТЕЛЛЕКТУАЛЬНЫЕ ПРАВА И АРБИТРАЖ",
+        "title_uz": "4. INTELLEKTUAL MULK VA HAKAMLIK SUDI",
+        "title_en": "4. INTELLECTUAL PROPERTY & DISPUTE RESOLUTION",
+        "content": "Все текстовые материалы, технические схемы, алгоритмы Smart Match AI и программный код защищены законодательством Республики Узбекистан об интеллектуальной собственности. Споры разрешаются путем обязательных досудебных переговоров (срок ответа 15 дней), а при недостижении согласия — в Ташкентском межрайонном экономическом суде.",
+        "content_uz": "Barcha matnlar, texnik chizmalar, Smart Match AI algoritmlari va dasturiy kodlar O'zbekiston Respublikasining intellektual mulk to'g'risidagi qonunchiligi bilan himoyalangan. Nizolar majburiy sudgacha muzokaralar yo'li bilan (15 kunlik javob muddati), kelishuvga erishilmagan taqdirda esa Toshkent tumanlararo iqtisodiy sudida hal qilinadi.",
+        "content_en": "All technical copy, engineering schematics, Smart Match AI algorithms, and codebase are protected by copyright laws of Uzbekistan. Disputes are subject to mandatory 15-day amicable negotiation; unresolved claims are adjudicated by the Tashkent Interdistrict Economic Court."
+      }
+    ]
+  }
+}

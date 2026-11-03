@@ -15,7 +15,45 @@
     "ctaSubtitle_en": "Send us your bill of materials or technical drawings. Our engineers will source equivalents or arrange direct DDP Tashkent delivery.",
     "ctaButton": "ЗАПРОСИТЬ ПОДБОР / КП ↗",
     "ctaButton_uz": "TANLASH / TIJORAT TAKLIFINI SO'RASH ↗",
-    "ctaButton_en": "REQUEST SOURCING / QUOTE ↗"
+    "ctaButton_en": "REQUEST SOURCING / QUOTE ↗",
+    "warehouseCards": [
+      {
+        "code": "SKLAD // 01",
+        "label": "ЛОКАЦИЯ СКЛАДА:",
+        "label_uz": "OMBOR JOYI:",
+        "label_en": "FACILITY LOCATION:",
+        "value": "Ташкент, ТПК Index B2-2097",
+        "value_uz": "Toshkent, Index SICHM B2-2097",
+        "value_en": "Tashkent, Index Complex B2-2097"
+      },
+      {
+        "code": "SKLAD // 02",
+        "label": "ЛОГИСТИЧЕСКИЙ ДОСТУП:",
+        "label_uz": "LOGISTIKA YO'LLARI:",
+        "label_en": "LOGISTICS ACCESS:",
+        "value": "КПП №3 (ТПК Index)",
+        "value_uz": "KPP №3 (Index SICHM)",
+        "value_en": "Gate #3 (Index Complex)"
+      },
+      {
+        "code": "SKLAD // 03",
+        "label": "СКОРОСТЬ ОТГРУЗКИ:",
+        "label_uz": "YUKLASH TEZLIGI:",
+        "label_en": "DISPATCH LEAD TIME:",
+        "value": "От 24 часов",
+        "value_uz": "24 soatdan boshlab",
+        "value_en": "From 24 hours"
+      },
+      {
+        "code": "SKLAD // 04",
+        "label": "ДОКУМЕНТООБОРОТ:",
+        "label_uz": "HUJJAT AYLANISHI:",
+        "label_en": "FISCAL E-INVOICING:",
+        "value": "ЭСФ Didox / Soliq (12% НДС)",
+        "value_uz": "EHF Didox / Soliq (12% QQS)",
+        "value_en": "Electronic Invoicing (12% VAT)"
+      }
+    ]
   },
   "servicesPage": {
     "code": "PORTAL // SECTION 03",
@@ -51,7 +89,59 @@
     "ctaSubtitle_en": "Engage RailTech's engineering and project management team to deliver turnkey solutions across Uzbekistan and Central Asia.",
     "ctaButton": "ОБСУДИТЬ ПРОЕКТ ↗",
     "ctaButton_uz": "LOYIHANI MUHOKAMA QILISH ↗",
-    "ctaButton_en": "DISCUSS PROJECT ↗"
+    "ctaButton_en": "DISCUSS PROJECT ↗",
+    "directions": [
+      {
+        "n": "01",
+        "title": "ТРАНСФЕР ТЕХНОЛОГИЙ И ЛОКАЛИЗАЦИЯ",
+        "title_uz": "TEXNOLOGIYALAR TRANSFERI VA LOKALIZATSIYA",
+        "title_en": "TECHNOLOGY TRANSFER & LOCALIZATION",
+        "text": "Адаптация конструкторской документации машиностроительных заводов под стандарты и регламенты Узбекистана.",
+        "text_uz": "Mashinasozlik korxonalari konstruktorlik hujjatlarini O'zbekiston standartlari va reglamentlariga moslashtirish.",
+        "text_en": "Adapting engineering documentation from machinery builders to national standards and regulations of Uzbekistan."
+      },
+      {
+        "n": "02",
+        "title": "ИСПЫТАНИЯ И СЕРТИФИКАЦИЯ",
+        "title_uz": "SINOVLAR VA SERTIFIKATSIYA",
+        "title_en": "TESTING & CERTIFICATION",
+        "text": "Организация опытной эксплуатации новых типов оборудования на промышленных полигонах с инструментальной фиксацией параметров.",
+        "text_uz": "Sanoat poligonlarida yangi uskuna turlarini tajriba sinovlaridan o'tkazish va parametrlarni asbobiy qayd etish.",
+        "text_en": "Coordinating in-service operational trials of advanced industrial assemblies on testing beds with instrumentation."
+      },
+      {
+        "n": "03",
+        "title": "RAILTECH ART LAB (КУРАТОРСКАЯ ПРОГРАММА)",
+        "title_uz": "RAILTECH ART LAB (KURATORLIK DASTURI)",
+        "title_en": "RAILTECH ART LAB (CURATORIAL PROGRAM)",
+        "text": "Исследование индустриальной эстетики, коллекционирование современной живописи, архитектурной графики и проведение тематических экспозиций в Ташкенте.",
+        "text_uz": "Sanoat estetikasini o'rganish, zamonaviy rangtasvir va me'moriy grafikani to'plash hamda Toshkentda ko'rgazmalar o'tkazish.",
+        "text_en": "Exploring industrial aesthetics, curating contemporary painting and architectural graphics, and organizing public exhibitions in Tashkent."
+      }
+    ],
+    "artLab": {
+      "badge": "МАНИФЕСТ RAILTECH ART LAB",
+      "badge_uz": "RAILTECH ART LAB MANIFESTI",
+      "badge_en": "RAILTECH ART LAB MANIFESTO",
+      "location": "КУРАТОРСКАЯ РЕЗИДЕНЦИЯ В КОМПЛЕКСЕ INDEX",
+      "location_uz": "INDEX MAJMUASIDAGI KURATORLIK REZIDENSIYASI",
+      "location_en": "CURATORIAL RESIDENCY AT INDEX COMPLEX",
+      "p1": "Железная дорога — это не просто логистическая артерия, но и величайшая визуальная метафора индустриального века. Геометрия параллельных рельсов, строгие контуры стрелочных переводов, массивная текстура литой стали и мерный ритм колесных пар сформировали визуальный язык конструктивизма и модернизма XX века.",
+      "p1_uz": "Temir yo'l shunchaki logistika arteriyasi emas, balki sanoat asrining eng buyuk vizual metaforasidir. Parallel relslar geometriyasi, strelka o'tkazgichlarining qat'iy konturlari, quyma po'latning ulkan teksturasi va g'ildirak juftlarining bir maromdagi ritmi XX asr konstruktivizmi va modernizmining vizual tilini shakllantirdi.",
+      "p1_en": "The railway is more than a logistical artery; it is the definitive visual metaphor of the industrial era. The geometry of parallel tracks, the severe contours of turnout switches, the massive textures of cast steel, and the cadence of rolling wheelsets established the visual vocabulary of 20th-century constructivism and modernism.",
+      "p2": "RailTech Art Lab объединяет художников, архитекторов и инженеров Центральной Азии. Мы предоставляем выставочные площади в пространстве нашего складского хаба, организуем пленэры на действующих депо и формируем постоянную коллекцию монументальной живописи.",
+      "p2_uz": "RailTech Art Lab Markaziy Osiyo rassomlari, me'morlari va muhandislarini birlashtiradi. Biz ombor xabimiz maydonida ko'rgazma maydonlarini taqdim etamiz, faoliyatdagi depolarda plenerlar tashkil qilamiz va monumental rangtasvirning doimiy kolleksiyasini shakllantiramiz.",
+      "p2_en": "RailTech Art Lab unites artists, architects, and engineers across Central Asia. We provide exhibition space within our Tashkent terminal, arrange on-site plein-airs at active locomotive depots, and assemble a permanent collection of monumental industrial art.",
+      "vendorTitle": "ДЛЯ ВЕНДОРОВ И ХУДОЖНИКОВ:",
+      "vendorTitle_uz": "ISHLAB CHIQARUVCHILAR VA RASSOMLAR UCHUN:",
+      "vendorTitle_en": "FOR VENDORS & ARTISTS:",
+      "vendorDesc": "Если вы представляете зарубежный завод и заинтересованы в испытаниях на полигонах Узбекистана, либо являетесь автором индустриального искусства — свяжитесь с кураторской группой RailTech.",
+      "vendorDesc_uz": "Agar siz xorijiy zavod vakili bo'lsangiz va O'zbekiston poligonlaridagi sinovlarga qiziqsangiz, yoki sanoat san'ati muallifi bo'lsangiz — RailTech kuratorlik guruhi bilan bog'laning.",
+      "vendorDesc_en": "If you represent an international manufacturer interested in testbed operations in Uzbekistan, or are an artist working with industrial themes, get in touch with the RailTech curatorial team.",
+      "buttonText": "Предложить проект",
+      "buttonText_uz": "Loyiha taklif qilish",
+      "buttonText_en": "Submit a proposal"
+    }
   },
   "blogPage": {
     "code": "PORTAL // SECTION 05",

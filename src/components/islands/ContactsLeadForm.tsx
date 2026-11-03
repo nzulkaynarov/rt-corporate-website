@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { Lang } from '../../i18n/ui';
+import globalData from '../../data/cms/global.json';
 
 export const ContactsLeadForm: React.FC = () => {
   const [lang, setLang] = useState<Lang>('ru');
@@ -83,8 +84,9 @@ export const ContactsLeadForm: React.FC = () => {
     fileName ? `Fayl: ${fileName}` : null,
   ].filter(Boolean).join('\n');
 
-  const tgShareUrl = `https://t.me/railtech_uz?text=${encodeURIComponent(formattedMsg)}`;
-  const mailShareUrl = `mailto:supply@railtech.uz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(formattedMsg)}`;
+  const baseTg = globalData.telegramUrl || 'https://t.me/railtech_uz';
+  const tgShareUrl = `${baseTg}?text=${encodeURIComponent(formattedMsg)}`;
+  const mailShareUrl = `mailto:${globalData.emailSupply || globalData.emailGeneral || 'supply@railtech.uz'}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(formattedMsg)}`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -116,14 +118,16 @@ export const ContactsLeadForm: React.FC = () => {
       };
 
       const workerEndpoint =
+        globalData.telegramWebhook ||
         import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ||
         import.meta.env.PUBLIC_LEAD_WORKER_URL ||
-        import.meta.env.PUBLIC_WEBHOOK_URL;
+        import.meta.env.PUBLIC_WEBHOOK_URL ||
+        '';
       let sent = false;
 
-      if (workerEndpoint && workerEndpoint.startsWith('http')) {
+      if (workerEndpoint && workerEndpoint.trim().startsWith('http')) {
         try {
-          const res = await fetch(workerEndpoint, {
+          const res = await fetch(workerEndpoint.trim(), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
@@ -134,34 +138,10 @@ export const ContactsLeadForm: React.FC = () => {
         }
       }
 
-      const botToken =
-        import.meta.env.PUBLIC_TG_BOT_TOKEN ||
-        import.meta.env.PUBLIC_TELEGRAM_BOT_TOKEN;
-      const chatId =
-        import.meta.env.PUBLIC_TG_CHAT_ID ||
-        import.meta.env.PUBLIC_TELEGRAM_CHAT_ID;
-
-      if (!sent && botToken && chatId) {
-        try {
-          const tgUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-          const tgRes = await fetch(tgUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              chat_id: chatId,
-              text: formattedMsg,
-              parse_mode: 'HTML',
-            }),
-          });
-          if (tgRes.ok) sent = true;
-        } catch (tgErr) {
-          console.warn('[ContactsForm] Telegram Bot API fallback failed:', tgErr);
-        }
-      }
-
+      // Never show a fake success: if the lead was not delivered, surface the error
+      // so the user can resend via Telegram / phone buttons below the form.
       if (!sent) {
-        console.info('[RailTech Contacts Lead] Processed locally. Payload:', payload);
-        await new Promise((r) => setTimeout(r, 600));
+        throw new Error('Lead webhook is not configured or returned an error');
       }
 
       setSubmitted(true);

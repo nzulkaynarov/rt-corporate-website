@@ -160,14 +160,14 @@ import globalData from '../data/cms/global.json';
   </div>
 
   <script define:vars={{
-    requisitesPayload: `ООО «RailTech»
+    requisitesPayload: `${globalData.companyName}
 ИНН: ${globalData.inn} (${contactsData.bankDetails.vatCode})
 Р/С: ${contactsData.bankDetails.account}
 Банк: ${contactsData.bankDetails.bank}
 МФО: ${contactsData.bankDetails.mfo}
-ОКЭД: 46.69.0
-Юр. адрес: 100140, Республика Узбекистан, ${globalData.address}
-ЭСФ: Didox / Soliq / Factura.uz
+ОКЭД: ${globalData.oked}
+Юр. адрес: ${globalData.postalCode}, Республика Узбекистан, ${globalData.address}
+ЭСФ: ${globalData.esfOperators}
 Телефон: ${globalData.phone}
 Email: ${globalData.emailGeneral}`
   }}>

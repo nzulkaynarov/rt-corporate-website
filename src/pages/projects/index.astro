@@ -20,35 +20,51 @@ for (const p of projectItems) {
 }
 const categories = [...categoryMap.values()];
 
-const directions = [
+const rawDirections = pPage.directions || [
   {
     n: '01',
-    title: { ru: 'ТРАНСФЕР ТЕХНОЛОГИЙ И ЛОКАЛИЗАЦИЯ', uz: 'TEXNOLOGIYALAR TRANSFERI VA LOKALIZATSIYA', en: 'TECHNOLOGY TRANSFER & LOCALIZATION' },
-    text: {
-      ru: 'Адаптация конструкторской документации машиностроительных заводов под стандарты и регламенты Узбекистана.',
-      uz: "Mashinasozlik korxonalari konstruktorlik hujjatlarini O'zbekiston standartlari va reglamentlariga moslashtirish.",
-      en: 'Adapting engineering documentation from machinery builders to national standards and regulations of Uzbekistan.',
-    },
+    title: 'ТРАНСФЕР ТЕХНОЛОГИЙ И ЛОКАЛИЗАЦИЯ',
+    title_uz: 'TEXNOLOGIYALAR TRANSFERI VA LOKALIZATSIYA',
+    title_en: 'TECHNOLOGY TRANSFER & LOCALIZATION',
+    text: 'Адаптация конструкторской документации машиностроительных заводов под стандарты и регламенты Узбекистана.',
+    text_uz: "Mashinasozlik korxonalari konstruktorlik hujjatlarini O'zbekiston standartlari va reglamentlariga moslashtirish.",
+    text_en: 'Adapting engineering documentation from machinery builders to national standards and regulations of Uzbekistan.',
   },
   {
     n: '02',
-    title: { ru: 'ИСПЫТАНИЯ И СЕРТИФИКАЦИЯ', uz: 'SINOVLAR VA SERTIFIKATSIYA', en: 'TESTING & CERTIFICATION' },
-    text: {
-      ru: 'Организация опытной эксплуатации новых типов оборудования на промышленных полигонах с инструментальной фиксацией параметров.',
-      uz: "Sanoat poligonlarida yangi uskuna turlarini tajriba sinovlaridan o'tkazish va parametrlarni asbobiy qayd etish.",
-      en: 'Coordinating in-service operational trials of advanced industrial assemblies on testing beds with instrumentation.',
-    },
+    title: 'ИСПЫТАНИЯ И СЕРТИФИКАЦИЯ',
+    title_uz: 'SINOVLAR VA SERTIFIKATSIYA',
+    title_en: 'TESTING & CERTIFICATION',
+    text: 'Организация опытной эксплуатации новых типов оборудования на промышленных полигонах с инструментальной фиксацией параметров.',
+    text_uz: "Sanoat poligonlarida yangi uskuna turlarini tajriba sinovlaridan o'tkazish va parametrlarni asbobiy qayd etish.",
+    text_en: 'Coordinating in-service operational trials of advanced industrial assemblies on testing beds with instrumentation.',
   },
   {
     n: '03',
-    title: { ru: 'RAILTECH ART LAB (КУРАТОРСКАЯ ПРОГРАММА)', uz: 'RAILTECH ART LAB (KURATORLIK DASTURI)', en: 'RAILTECH ART LAB (CURATORIAL PROGRAM)' },
-    text: {
-      ru: 'Исследование индустриальной эстетики, коллекционирование современной живописи, архитектурной графики и проведение тематических экспозиций в Ташкенте.',
-      uz: "Sanoat estetikasini o'rganish, zamonaviy rangtasvir va me'moriy grafikani to'plash hamda Toshkentda ko'rgazmalar o'tkazish.",
-      en: 'Exploring industrial aesthetics, curating contemporary painting and architectural graphics, and organizing public exhibitions in Tashkent.',
-    },
+    title: 'RAILTECH ART LAB (КУРАТОРСКАЯ ПРОГРАММА)',
+    title_uz: 'RAILTECH ART LAB (KURATORLIK DASTURI)',
+    title_en: 'RAILTECH ART LAB (CURATORIAL PROGRAM)',
+    text: 'Исследование индустриальной эстетики, коллекционирование современной живописи, архитектурной графики и проведение тематических экспозиций в Ташкенте.',
+    text_uz: "Sanoat estetikasini o'rganish, zamonaviy rangtasvir va me'moriy grafikani to'plash hamda Toshkentda ko'rgazmalar o'tkazish.",
+    text_en: 'Exploring industrial aesthetics, curating contemporary painting and architectural graphics, and organizing public exhibitions in Tashkent.',
   },
 ];
+
+const directions = rawDirections.map((d: any) => ({
+  n: d.n,
+  title: {
+    ru: d.title?.ru || d.title || '',
+    uz: d.title?.uz || d.title_uz || d.title || '',
+    en: d.title?.en || d.title_en || d.title || '',
+  },
+  text: {
+    ru: d.text?.ru || d.text || '',
+    uz: d.text?.uz || d.text_uz || d.text || '',
+    en: d.text?.en || d.text_en || d.text || '',
+  },
+}));
+
+const artLab = pPage.artLab || {};
 ---
 
 <BaseLayout
@@ -137,37 +153,37 @@ const directions = [
     <!-- Art Lab manifesto -->
     <section class="hud-glass-card p-6 lg:p-8 gap-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#0A0A0A]/15 pb-3">
-        <span class="hud-callout"><i></i><I18nText ru="МАНИФЕСТ RAILTECH ART LAB" uz="RAILTECH ART LAB MANIFESTI" en="RAILTECH ART LAB MANIFESTO" /></span>
+        <span class="hud-callout"><i></i><I18nText ru={artLab.badge || "МАНИФЕСТ RAILTECH ART LAB"} uz={artLab.badge_uz || "RAILTECH ART LAB MANIFESTI"} en={artLab.badge_en || "RAILTECH ART LAB MANIFESTO"} /></span>
         <span class="font-mono text-[11px] text-[#4A5056]">
-          <I18nText ru="КУРАТОРСКАЯ РЕЗИДЕНЦИЯ В КОМПЛЕКСЕ INDEX" uz="INDEX MAJMUASIDAGI KURATORLIK REZIDENSIYASI" en="CURATORIAL RESIDENCY AT INDEX COMPLEX" />
+          <I18nText ru={artLab.location || "КУРАТОРСКАЯ РЕЗИДЕНЦИЯ В КОМПЛЕКСЕ INDEX"} uz={artLab.location_uz || "INDEX MAJMUASIDAGI KURATORLIK REZIDENSIYASI"} en={artLab.location_en || "CURATORIAL RESIDENCY AT INDEX COMPLEX"} />
         </span>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-[#0A0A0A] leading-relaxed">
         <div class="space-y-3">
           <I18nText
             as="p"
-            ru="Железная дорога — это не просто логистическая артерия, но и величайшая визуальная метафора индустриального века. Геометрия параллельных рельсов, строгие контуры стрелочных переводов, массивная текстура литой стали и мерный ритм колесных пар сформировали визуальный язык конструктивизма и модернизма XX века."
-            uz="Temir yo'l shunchaki logistika arteriyasi emas, balki sanoat asrining eng buyuk vizual metaforasidir. Parallel relslar geometriyasi, strelka o'tkazgichlarining qat'iy konturlari, quyma po'latning ulkan teksturasi va g'ildirak juftlarining bir maromdagi ritmi XX asr konstruktivizmi va modernizmining vizual tilini shakllantirdi."
-            en="The railway is more than a logistical artery; it is the definitive visual metaphor of the industrial era. The geometry of parallel tracks, the severe contours of turnout switches, the massive textures of cast steel, and the cadence of rolling wheelsets established the visual vocabulary of 20th-century constructivism and modernism."
+            ru={artLab.p1 || "Железная дорога — это не просто логистическая артерия, но и величайшая визуальная метафора индустриального века. Геометрия параллельных рельсов, строгие контуры стрелочных переводов, массивная текстура литой стали и мерный ритм колесных пар сформировали визуальный язык конструктивизма и модернизма XX века."}
+            uz={artLab.p1_uz || "Temir yo'l shunchaki logistika arteriyasi emas, balki sanoat asrining eng buyuk vizual metaforasidir. Parallel relslar geometriyasi, strelka o'tkazgichlarining qat'iy konturlari, quyma po'latning ulkan teksturasi va g'ildirak juftlarining bir maromdagi ritmi XX asr konstruktivizmi va modernizmining vizual tilini shakllantirdi."}
+            en={artLab.p1_en || "The railway is more than a logistical artery; it is the definitive visual metaphor of the industrial era. The geometry of parallel tracks, the severe contours of turnout switches, the massive textures of cast steel, and the cadence of rolling wheelsets established the visual vocabulary of 20th-century constructivism and modernism."}
           />
           <I18nText
             as="p"
-            ru="RailTech Art Lab объединяет художников, архитекторов и инженеров Центральной Азии. Мы предоставляем выставочные площади в пространстве нашего складского хаба, организуем пленэры на действующих депо и формируем постоянную коллекцию монументальной живописи."
-            uz="RailTech Art Lab Markaziy Osiyo rassomlari, me'morlari va muhandislarini birlashtiradi. Biz ombor xabimiz maydonida ko'rgazma maydonlarini taqdim etamiz, faoliyatdagi depolarda plenerlar tashkil qilamiz va monumental rangtasvirning doimiy kolleksiyasini shakllantiramiz."
-            en="RailTech Art Lab unites artists, architects, and engineers across Central Asia. We provide exhibition space within our Tashkent terminal, arrange on-site plein-airs at active locomotive depots, and assemble a permanent collection of monumental industrial art."
+            ru={artLab.p2 || "RailTech Art Lab объединяет художников, архитекторов и инженеров Центральной Азии. Мы предоставляем выставочные площади в пространстве нашего складского хаба, организуем пленэры на действующих депо и формируем постоянную коллекцию монументальной живописи."}
+            uz={artLab.p2_uz || "RailTech Art Lab Markaziy Osiyo rassomlari, me'morlari va muhandislarini birlashtiradi. Biz ombor xabimiz maydonida ko'rgazma maydonlarini taqdim etamiz, faoliyatdagi depolarda plenerlar tashkil qilamiz va monumental rangtasvirning doimiy kolleksiyasini shakllantiramiz."}
+            en={artLab.p2_en || "RailTech Art Lab unites artists, architects, and engineers across Central Asia. We provide exhibition space within our Tashkent terminal, arrange on-site plein-airs at active locomotive depots, and assemble a permanent collection of monumental industrial art."}
           />
         </div>
         <div class="border border-[#0A0A0A] p-5 font-mono text-xs flex flex-col justify-between gap-4">
           <div class="space-y-2">
             <div class="font-bold text-[#0A0A0A]">
-              <I18nText ru="ДЛЯ ВЕНДОРОВ И ХУДОЖНИКОВ:" uz="ISHLAB CHIQARUVCHILAR VA RASSOMLAR UCHUN:" en="FOR VENDORS & ARTISTS:" />
+              <I18nText ru={artLab.vendorTitle || "ДЛЯ ВЕНДОРОВ И ХУДОЖНИКОВ:"} uz={artLab.vendorTitle_uz || "ISHLAB CHIQARUVCHILAR VA RASSOMLAR UCHUN:"} en={artLab.vendorTitle_en || "FOR VENDORS & ARTISTS:"} />
             </div>
             <I18nText
               as="p"
               class="text-[11px] text-[#4A5056] leading-relaxed"
-              ru="Если вы представляете зарубежный завод и заинтересованы в испытаниях на полигонах Узбекистана, либо являетесь автором индустриального искусства — свяжитесь с кураторской группой RailTech."
-              uz="Agar siz xorijiy zavod vakili bo'lsangiz va O'zbekiston poligonlaridagi sinovlarga qiziqsangiz, yoki sanoat san'ati muallifi bo'lsangiz — RailTech kuratorlik guruhi bilan bog'laning."
-              en="If you represent an international manufacturer interested in testbed operations in Uzbekistan, or are an artist working with industrial themes, get in touch with the RailTech curatorial team."
+              ru={artLab.vendorDesc || "Если вы представляете зарубежный завод и заинтересованы в испытаниях на полигонах Узбекистана, либо являетесь автором индустриального искусства — свяжитесь с кураторской группой RailTech."}
+              uz={artLab.vendorDesc_uz || "Agar siz xorijiy zavod vakili bo'lsangiz va O'zbekiston poligonlaridagi sinovlarga qiziqsangiz, yoki sanoat san'ati muallifi bo'lsangiz — RailTech kuratorlik guruhi bilan bog'laning."}
+              en={artLab.vendorDesc_en || "If you represent an international manufacturer interested in testbed operations in Uzbekistan, or are an artist working with industrial themes, get in touch with the RailTech curatorial team."}
             />
           </div>
           <button
@@ -177,7 +193,7 @@ const directions = [
             data-lead-subject="Запрос сотрудничества по спецпроектам / Art Lab"
             class="hud-btn w-full justify-center"
           >
-            <I18nText ru="Предложить проект" uz="Loyiha taklif qilish" en="Submit a proposal" />
+            <I18nText ru={artLab.buttonText || "Предложить проект"} uz={artLab.buttonText_uz || "Loyiha taklif qilish"} en={artLab.buttonText_en || "Submit a proposal"} />
           </button>
         </div>
       </div>

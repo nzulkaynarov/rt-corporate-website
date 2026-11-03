@@ -53,34 +53,18 @@ const cPage = pagesData.catalogPage;
       lead={{ ru: cPage.subtitle, uz: cPage.subtitle_uz, en: cPage.subtitle_en }}
     />
 
-    <!-- Warehouse specs banner -->
+    <!-- Warehouse specs banner from CMS -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8 font-mono text-xs">
-      <div class="hud-glass-card p-3">
-        <div class="text-[#4A5056] text-[10px]">
-          <I18nText ru="ЛОКАЦИЯ СКЛАДА:" uz="OMBOR JOYI:" en="FACILITY LOCATION:" />
+      {(cPage.warehouseCards || []).map((card: any) => (
+        <div class="hud-glass-card p-3">
+          <div class="text-[#4A5056] text-[10px]">
+            <I18nText ru={card.label} uz={card.label_uz} en={card.label_en} />
+          </div>
+          <div class="font-bold text-[#0A0A0A]">
+            <I18nText ru={card.value} uz={card.value_uz} en={card.value_en} />
+          </div>
         </div>
-        <div class="font-bold text-[#0A0A0A]">Ташкент, ТПК Index B2-2097</div>
-      </div>
-      <div class="hud-glass-card p-3">
-        <div class="text-[#4A5056] text-[10px]">
-          <I18nText ru="ЛОГИСТИЧЕСКИЙ ДОСТУП:" uz="LOGISTIKA YO'LLARI:" en="LOGISTICS ACCESS:" />
-        </div>
-        <div class="font-bold text-[#0A0A0A]">КПП №3 (ТПК Index)</div>
-      </div>
-      <div class="hud-glass-card p-3">
-        <div class="text-[#4A5056] text-[10px]">
-          <I18nText ru="СКОРОСТЬ ОТГРУЗКИ:" uz="YUKLASH TEZLIGI:" en="DISPATCH LEAD TIME:" />
-        </div>
-        <div class="font-bold text-[#0A0A0A]">
-          <I18nText ru="От 24 часов" uz="24 soatdan boshlab" en="From 24 hours" />
-        </div>
-      </div>
-      <div class="hud-glass-card p-3">
-        <div class="text-[#4A5056] text-[10px]">
-          <I18nText ru="ДОКУМЕНТООБОРОТ:" uz="HUJJAT AYLANISHI:" en="FISCAL E-INVOICING:" />
-        </div>
-        <div class="font-bold text-[#0A0A0A]">ЭСФ Didox / Soliq (12% НДС)</div>
-      </div>
+      ))}
     </div>
 
     <!-- Interactive Filter Table Island -->
