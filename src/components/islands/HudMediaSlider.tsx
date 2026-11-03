@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { withBase } from '../../utils/url';
 import { useLang } from '../../utils/useLang';
+import { localeHref, makeT, tField, type Lang } from '../../i18n';
+import islandsUi from '../../data/cms/ui/islands.json';
 
-type Lang = 'ru' | 'uz' | 'en';
+const t = makeT([islandsUi]);
 
 export interface HudSlide {
   image: string;
@@ -20,17 +22,10 @@ export interface HudSlide {
 interface Props {
   slides: HudSlide[];
   intervalMs?: number;
+  lang: Lang;
 }
 
 const GLYPHS = '#%&@$/\\<>01_=+*';
-
-function pick(slide: HudSlide, field: 'title' | 'description', lang: Lang): string {
-  if (lang !== 'ru') {
-    const v = (slide as any)[`${field}_${lang}`];
-    if (v && String(v).trim()) return v;
-  }
-  return (slide as any)[field] || '';
-}
 
 /** Scrambles a string into its final value over ~250ms (HUD "decode" effect). */
 function useDecode(target: string, trigger: number): string {
@@ -64,10 +59,10 @@ function useDecode(target: string, trigger: number): string {
 const pad = (n: number) => String(n).padStart(2, '0');
 const pad4 = (n: number) => String(Math.floor(n)).padStart(4, '0');
 
-export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500 }) => {
+export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500, lang: propLang }) => {
   const [active, setActive] = useState(0);
   const [tick, setTick] = useState(0); // re-triggers animations
-  const lang = useLang();
+  const lang = useLang(propLang);
   const [paused, setPaused] = useState(false);
   const [isRecalibrating, setIsRecalibrating] = useState(false);
   const [coords, setCoords] = useState<{ x: number; y: number }>({ x: 340, y: 180 });
@@ -168,19 +163,20 @@ export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500 }) =
     }
   };
 
-  const indexLabel = useDecode(`SLIDE // ${pad(active + 1)} OF ${pad(count)}`, tick);
+  const indexLabel = useDecode(t(lang, 'slider.indexLabel', { current: pad(active + 1), total: pad(count) }), tick);
 
   if (!count) return null;
   const slide = slides[active];
-  const title = pick(slide, 'title', lang);
-  const desc = pick(slide, 'description', lang);
-  const more = lang === 'uz' ? 'Batafsil' : lang === 'en' ? 'Learn more' : 'Подробнее';
+  const title: string = tField(slide, 'title', lang) || '';
+  const desc: string = tField(slide, 'description', lang) || '';
+  const more = t(lang, 'slider.more');
+  const slideHref = slide.href || slide.link;
 
   const scanStatusText = isRecalibrating
-    ? 'HUD_SCAN: RECALIBRATING...'
+    ? t(lang, 'hud.scanRecalibrating')
     : paused
-    ? 'HUD_SCAN: HOLD'
-    : 'HUD_SCAN: ACTIVE';
+    ? t(lang, 'slider.scanHold')
+    : t(lang, 'slider.scanActive');
 
   return (
     <div
@@ -197,7 +193,7 @@ export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500 }) =
       onTouchEnd={handleTouchEnd}
       role="region"
       aria-roledescription="carousel"
-      aria-label="RailTech HUD media slider"
+      aria-label={t(lang, 'slider.regionAria')}
     >
       {/* Callouts above the frame (responsive and truncated) */}
       <div className="flex items-center justify-between mb-2 sm:mb-3 min-h-[16px] text-xs">
@@ -269,7 +265,7 @@ export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500 }) =
               X: {pad4(coords.x)} // Y: {pad4(coords.y)}
             </span>
             <span className="border border-white/40 px-1 py-0.5 bg-black/30">
-              {slide.tag || 'RT.MEDIA'}
+              {slide.tag || t(lang, 'slider.tagFallback')}
             </span>
           </div>
 
@@ -301,12 +297,12 @@ export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500 }) =
                 {desc}
               </p>
             )}
-            {(slide.href || slide.link) && (
+            {slideHref && (
               <a
-                href={withBase(slide.href || slide.link)}
+                href={localeHref(slideHref, lang)}
                 className="inline-flex items-center gap-1 mt-1.5 font-mono text-[10px] sm:text-[11px] font-bold text-[#0A0A0A] hover:underline underline-offset-4"
               >
-                {more} ↗
+                {more} <span aria-hidden="true">↗</span>
               </a>
             )}
           </div>
@@ -320,7 +316,7 @@ export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500 }) =
           type="button"
           onClick={() => go(active - 1)}
           className="min-w-[32px] min-h-[32px] sm:min-w-[28px] sm:min-h-[28px] flex items-center justify-center px-1.5 py-1 hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer"
-          aria-label="Previous slide"
+          aria-label={t(lang, 'slider.prevAria')}
           id="hud-slider-prev"
         >
           ←
@@ -331,7 +327,7 @@ export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500 }) =
             type="button"
             onClick={() => go(i)}
             id={`hud-slider-dot-${i + 1}`}
-            aria-label={`Slide ${i + 1}`}
+            aria-label={`${pad(i + 1)} — ${t(lang, 'slider.dotAria', { n: i + 1 })}`}
             aria-current={i === active}
             className={`min-h-[32px] sm:min-h-[28px] px-2 py-1 transition-colors cursor-pointer text-xs ${
               i === active
@@ -339,14 +335,14 @@ export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500 }) =
                 : 'text-[#0A0A0A] hover:bg-[#0A0A0A]/10'
             }`}
           >
-            {i === active ? '■' : '□'} {pad(i + 1)}
+            <span aria-hidden="true">{i === active ? '■' : '□'} </span>{pad(i + 1)}
           </button>
         ))}
         <button
           type="button"
           onClick={() => go(active + 1)}
           className="min-w-[32px] min-h-[32px] sm:min-w-[28px] sm:min-h-[28px] flex items-center justify-center px-1.5 py-1 hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer"
-          aria-label="Next slide"
+          aria-label={t(lang, 'slider.nextAria')}
           id="hud-slider-next"
         >
           →
@@ -357,9 +353,9 @@ export const HudMediaSlider: React.FC<Props> = ({ slides, intervalMs = 6500 }) =
       {/* Micro-telemetry status below slider */}
       <div className="mt-1 flex items-center justify-between text-[10px] text-[#4A5056] font-mono">
         <span className="hud-callout text-[9px]">
-          <i></i>OPTICAL_FEED // OK
+          <i></i>{t(lang, 'slider.feedOk')}
         </span>
-        <span className="hidden sm:inline">SWIPE / ARROWS: NAVIGATE</span>
+        <span className="hidden sm:inline">{t(lang, 'slider.navHint')}</span>
       </div>
     </div>
   );

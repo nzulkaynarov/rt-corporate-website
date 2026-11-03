@@ -1,26 +1,31 @@
 ---
+import { telHref } from '../utils/url';
 import globalData from '../data/cms/global.json';
+import { LANGS, LANG_META, localeHref, alternateHrefs, pick } from '../i18n';
+import { t } from '../i18n/ui';
 
-const pathname = Astro.url.pathname;
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const lang = Astro.locals.lang;
+const tr = (key: string) => t(lang, key);
+const L = (ru?: string, uz?: string, en?: string) => pick(lang, ru || '', uz, en);
+interface Props {
+  /** Language-switcher targets; defaults to the same page in each language. */
+  alternates?: Record<'ru' | 'uz' | 'en', string>;
+}
+const route = Astro.url.pathname;
+const alternates = Astro.props.alternates ?? alternateHrefs(route);
+const homeHref = localeHref('/', lang);
+const topBar: Record<string, string> = (globalData as any).topBar || {};
 
-const rawNavItems = globalData.navigation || [
-  { index: '01', path: '/catalog/', label: 'КАТАЛОГ', label_uz: 'KATALOG', label_en: 'CATALOG' },
-  { index: '02', path: '/services/', label: 'УСЛУГИ', label_uz: 'XIZMATLAR', label_en: 'SERVICES' },
-  { index: '03', path: '/projects/', label: 'ПРОЕКТЫ', label_uz: 'LOYIHALAR', label_en: 'PROJECTS' },
-  { index: '04', path: '/blog/', label: 'БЛОГ', label_uz: 'BLOG', label_en: 'BLOG' },
-  { index: '05', path: '/about', label: 'О КОМПАНИИ', label_uz: 'KOMPANIYA HAQIDA', label_en: 'ABOUT US' },
-  { index: '06', path: '/contacts', label: 'КОНТАКТЫ', label_uz: 'ALOQA', label_en: 'CONTACTS' },
-];
-
-const navItems = rawNavItems.map((item) => ({
-  href: `${base}${item.path}`,
-  label_ru: item.label,
-  label_uz: item.label_uz || item.label,
-  label_en: item.label_en || item.label,
-  index: item.index,
-  match: (p: string) => p.startsWith(`${base}${item.path.replace(/\/$/, '')}`),
-}));
+const navItems = (globalData.navigation || []).map((item: any) => {
+  const href = localeHref(item.path, lang);
+  return {
+    href,
+    index: item.index,
+    label: L(item.label, item.label_uz, item.label_en),
+    match: (p: string) => p.replace(/\/?$/, '/').startsWith(href),
+  };
+});
+const phoneHref = telHref(globalData.phone);
 ---
 
 <header class="border-b border-[#0A0A0A] bg-[#D4D8DC] sticky top-0 z-40 select-none">
@@ -31,38 +36,30 @@ const navItems = rawNavItems.map((item) => ({
       <div class="flex items-center space-x-2 sm:space-x-3 truncate">
         <span class="inline-flex items-center gap-1.5 font-bold text-[#0A0A0A] flex-none">
           <span class="w-2 h-2 bg-emerald-600 inline-block animate-pulse"></span>
-          <span>{globalData.topBar?.telemetryStatus || '[ ● ONLINE ]'}</span>
+          <span>{topBar.telemetryStatus}</span>
         </span>
         <span class="text-[#0A0A0A]/30">|</span>
         <span class="truncate font-bold text-[#0A0A0A]">
-          {globalData.companyName}
+          {L(globalData.companyName, (globalData as any).companyName_uz, (globalData as any).companyName_en)}
         </span>
         <!-- Extra telemetry visible only on desktop -->
         <span class="hidden md:inline text-[#0A0A0A]/30">|</span>
         <span class="hidden md:inline">
-          <span class="rt-lang rt-lang-ru">ИНН:</span>
-          <span class="rt-lang rt-lang-uz">STIR:</span>
-          <span class="rt-lang rt-lang-en">TIN:</span> {globalData.inn}
+          {tr('header.tin')} {globalData.inn}
         </span>
         <span class="hidden lg:inline text-[#0A0A0A]/30">|</span>
         <span class="hidden lg:inline border border-[#0A0A0A] px-1.5 bg-[#D4D8DC] text-[#0A0A0A] font-semibold text-[10px]">
-          <span class="rt-lang rt-lang-ru">{globalData.topBar?.vatBadge || 'НДС 12% ВКЛЮЧЕН'}</span>
-          <span class="rt-lang rt-lang-uz">{globalData.topBar?.vatBadge_uz || '12% QQS BILAN'}</span>
-          <span class="rt-lang rt-lang-en">{globalData.topBar?.vatBadge_en || '12% VAT INCLUDED'}</span>
+          {L(topBar.vatBadge, topBar.vatBadge_uz, topBar.vatBadge_en)}
         </span>
       </div>
 
       <!-- Right: Phone & B2B Portal on desktop (hidden on mobile < 768px) -->
       <div class="hidden md:flex items-center space-x-3 flex-none text-[11px]">
         <a
-          href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`}
+          href={phoneHref}
           class="hover:text-[#0A0A0A] transition-colors font-bold text-[#0A0A0A] flex items-center space-x-1"
         >
-          <span>
-            <span class="rt-lang rt-lang-ru">ТЕЛ:</span>
-            <span class="rt-lang rt-lang-uz">TEL:</span>
-            <span class="rt-lang rt-lang-en">TEL:</span>
-          </span>
+          <span>{tr('header.tel')}</span>
           <span>{globalData.phone}</span>
         </a>
         {globalData.b2bPortalUrl && (
@@ -72,7 +69,7 @@ const navItems = rawNavItems.map((item) => ({
             rel="noopener noreferrer"
             class="hidden sm:inline-block border border-[#0A0A0A] px-2 py-0.5 bg-[#0A0A0A] text-white hover:bg-transparent hover:text-[#0A0A0A] transition-colors font-bold text-[10px]"
           >
-            PORTAL ↗
+            {tr('header.portal')}
           </a>
         )}
       </div>
@@ -82,29 +79,28 @@ const navItems = rawNavItems.map((item) => ({
   <!-- 2. Main Navigation Row -->
   <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-2.5">
     <!-- Brand / Logo (Always takes user to home /) -->
-    <a href={`${base}/`} class="flex items-center space-x-2 sm:space-x-3 group flex-none shrink-0" aria-label="RailTech Главная">
+    <a href={homeHref} class="flex items-center space-x-2 sm:space-x-3 group flex-none shrink-0" aria-label={tr('header.homeAria')}>
       <div class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2 py-1.5 sm:px-2.5 sm:py-1.5 font-mono font-bold tracking-widest text-xs sm:text-sm group-hover:bg-transparent group-hover:text-[#0A0A0A] transition-colors">
         RAILTECH
       </div>
       <div class="hidden sm:flex flex-col">
         <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-[#4A5056] leading-none">
-          {globalData.topBar?.industryBadge || 'ENGINEERING & LOGISTICS'}
+          {L(topBar.industryBadge, topBar.industryBadge_uz, topBar.industryBadge_en)}
         </span>
         <span class="text-xs font-bold text-[#0A0A0A] leading-tight">
-          <span class="rt-lang rt-lang-ru">{globalData.topBar?.geoBadge || 'УЗБЕКИСТАН • B2B / B2G'}</span>
-          <span class="rt-lang rt-lang-uz">{globalData.topBar?.geoBadge_uz || "O'ZBEKISTON • B2B / B2G"}</span>
-          <span class="rt-lang rt-lang-en">{globalData.topBar?.geoBadge_en || 'UZBEKISTAN • B2B / B2G'}</span>
+          {L(topBar.geoBadge, topBar.geoBadge_uz, topBar.geoBadge_en)}
         </span>
       </div>
     </a>
 
     <!-- Desktop Navigation Links (Visible on >= 1024px) -->
-    <nav class="hidden lg:flex items-center space-x-1 font-mono text-[11px] font-semibold tracking-wider">
+    <nav class="hidden lg:flex items-center space-x-1 font-mono text-[11px] font-semibold tracking-wider" aria-label={tr('header.mainNavAria')}>
       {navItems.map((item) => {
-        const isActive = item.match(pathname);
+        const isActive = item.match(route);
         return (
           <a
             href={item.href}
+            aria-current={isActive ? 'page' : undefined}
             class={`px-2.5 py-1.5 border transition-colors ${
               isActive
                 ? 'bg-[#0A0A0A] text-white border-[#0A0A0A]'
@@ -112,9 +108,7 @@ const navItems = rawNavItems.map((item) => ({
             }`}
           >
             <span class="text-[#4A5056] group-hover:text-white mr-1 text-[9px]">{item.index}.</span>
-            <span class="rt-lang rt-lang-ru">{item.label_ru}</span>
-            <span class="rt-lang rt-lang-uz">{item.label_uz}</span>
-            <span class="rt-lang rt-lang-en">{item.label_en}</span>
+            <span>{item.label}</span>
           </a>
         );
       })}
@@ -122,50 +116,38 @@ const navItems = rawNavItems.map((item) => ({
 
     <!-- Right Controls: Language Switcher + RFQ Button + Mobile Menu Trigger -->
     <div class="flex items-center space-x-2 shrink-0 flex-none">
-      <!-- Brutalist Language Switcher [ RU | UZ | EN ] -->
-      <div
+      <!-- Brutalist Language Switcher [ RU | UZ | EN ] — links to the same page in another language -->
+      <nav
         class="rt-lang-switcher border border-[#0A0A0A] bg-[#C8CDD2] p-0.5 inline-flex items-center font-mono text-[10px] sm:text-[11px] font-bold shrink-0"
-        role="group"
-        aria-label="Language selector"
+        aria-label={tr('header.langAria')}
       >
-        <button
-          type="button"
-          data-lang-btn="ru"
-          class="px-1.5 sm:px-2 py-1 min-h-[32px] sm:min-h-0 transition-colors cursor-pointer text-[#0A0A0A] hover:bg-[#0A0A0A]/10"
-          aria-label="Русский язык"
-        >
-          RU
-        </button>
-        <span class="text-[#0A0A0A]/30">|</span>
-        <button
-          type="button"
-          data-lang-btn="uz"
-          class="px-1.5 sm:px-2 py-1 min-h-[32px] sm:min-h-0 transition-colors cursor-pointer text-[#0A0A0A] hover:bg-[#0A0A0A]/10"
-          aria-label="O'zbek tili"
-        >
-          UZ
-        </button>
-        <span class="text-[#0A0A0A]/30">|</span>
-        <button
-          type="button"
-          data-lang-btn="en"
-          class="px-1.5 sm:px-2 py-1 min-h-[32px] sm:min-h-0 transition-colors cursor-pointer text-[#0A0A0A] hover:bg-[#0A0A0A]/10"
-          aria-label="English language"
-        >
-          EN
-        </button>
-      </div>
+        {LANGS.map((code, i) => (
+          <>
+            {i > 0 && <span class="text-[#0A0A0A]/30" aria-hidden="true">|</span>}
+            <a
+              href={alternates[code]}
+              hreflang={LANG_META[code].hreflang}
+              lang={LANG_META[code].hreflang}
+              title={LANG_META[code].name}
+              aria-current={code === lang ? 'true' : undefined}
+              class={`px-1.5 sm:px-2 py-1 min-h-[32px] sm:min-h-0 inline-flex items-center transition-colors ${
+                code === lang ? 'bg-[#0A0A0A] text-white' : 'text-[#0A0A0A] hover:bg-[#0A0A0A]/10'
+              }`}
+            >
+              {LANG_META[code].short}
+            </a>
+          </>
+        ))}
+      </nav>
 
       <!-- Quick Lead Request Button (hidden on narrow screens to protect spacing) -->
       <button
         type="button"
         data-lead-modal
-        data-lead-subject="Запрос коммерческого предложения / спецификации с сайта"
+        data-lead-subject={t(lang, 'lead.subject.header')}
         class="hidden sm:inline-block border border-[#0A0A0A] bg-[#0A0A0A] text-white font-mono text-[11px] font-bold px-3 py-1.5 tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer whitespace-nowrap"
       >
-        <span class="rt-lang rt-lang-ru">[ ЗАПРОС КП ↗ ]</span>
-        <span class="rt-lang rt-lang-uz">[ SO'ROV ↗ ]</span>
-        <span class="rt-lang rt-lang-en">[ RFQ ↗ ]</span>
+        {tr('header.rfq')}
       </button>
 
       <!-- Tactical Mobile Menu Trigger (Zone >= 44x44px for touch) -->
@@ -174,7 +156,7 @@ const navItems = rawNavItems.map((item) => ({
         type="button"
         aria-expanded="false"
         aria-controls="mobile-menu"
-        aria-label="Открыть мобильное меню"
+        aria-label={tr('header.menuOpenAria')}
         class="lg:hidden shrink-0 flex-none min-w-[44px] min-h-[44px] px-2.5 py-1.5 border border-[#0A0A0A] bg-white/60 hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer flex items-center justify-center font-mono text-xs font-bold gap-1.5 whitespace-nowrap"
       >
         <svg class="w-4 h-4 flex-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square">
@@ -182,11 +164,7 @@ const navItems = rawNavItems.map((item) => ({
           <line x1="3" y1="12" x2="21" y2="12"></line>
           <line x1="3" y1="18" x2="21" y2="18"></line>
         </svg>
-        <span class="text-[11px] tracking-wider font-mono">
-          <span class="rt-lang rt-lang-ru">МЕНЮ</span>
-          <span class="rt-lang rt-lang-uz">MENYU</span>
-          <span class="rt-lang rt-lang-en">MENU</span>
-        </span>
+        <span class="text-[11px] tracking-wider font-mono">{tr('header.menu')}</span>
       </button>
     </div>
   </div>
@@ -198,7 +176,7 @@ const navItems = rawNavItems.map((item) => ({
     style="overscroll-behavior: contain;"
     role="dialog"
     aria-modal="true"
-    aria-label="Навигация по сайту"
+    aria-label={tr('header.menuDialogAria')}
   >
     <div class="w-full max-w-xl mx-auto flex flex-col justify-between h-full">
       <div>
@@ -206,31 +184,26 @@ const navItems = rawNavItems.map((item) => ({
         <div class="flex items-center justify-between pb-4 border-b border-[#0A0A0A]/20 mb-6">
           <div class="flex items-center space-x-2 font-mono text-xs font-bold text-[#0A0A0A]">
             <span class="w-2.5 h-2.5 bg-[#0A0A0A] inline-block"></span>
-            <span>
-              <span class="rt-lang rt-lang-ru">СИСТЕМНОЕ МЕНЮ // HUD</span>
-              <span class="rt-lang rt-lang-uz">TIZIM MENYUSI // HUD</span>
-              <span class="rt-lang rt-lang-en">SYSTEM MENU // HUD</span>
-            </span>
+            <span>{tr('header.menuTitle')}</span>
           </div>
           <button
             id="mobile-nav-close"
             type="button"
-            aria-label="Закрыть меню"
+            aria-label={tr('header.menuCloseAria')}
             class="min-w-[44px] min-h-[44px] border border-[#0A0A0A] bg-white/40 hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer flex items-center justify-center font-mono text-xs font-bold px-3"
           >
-            <span class="rt-lang rt-lang-ru">✕ ЗАКРЫТЬ</span>
-            <span class="rt-lang rt-lang-uz">✕ YOPISH</span>
-            <span class="rt-lang rt-lang-en">✕ CLOSE</span>
+            {tr('header.close')}
           </button>
         </div>
 
         <!-- 6 Main Universal Sections -->
-        <nav class="flex flex-col space-y-2 font-mono" aria-label="Мобильная навигация">
+        <nav class="flex flex-col space-y-2 font-mono" aria-label={tr('header.mobileNavAria')}>
           {navItems.map((item) => {
-            const isActive = item.match(pathname);
+            const isActive = item.match(route);
             return (
               <a
                 href={item.href}
+                aria-current={isActive ? 'page' : undefined}
                 class={`p-3.5 border transition-all flex items-center justify-between min-h-[48px] ${
                   isActive
                     ? 'bg-[#0A0A0A] text-white border-[#0A0A0A] font-bold'
@@ -239,9 +212,7 @@ const navItems = rawNavItems.map((item) => ({
               >
                 <span class="flex items-center gap-2 text-sm">
                   <span class="opacity-60">{item.index}.</span>
-                  <span class="rt-lang rt-lang-ru">{item.label_ru}</span>
-                  <span class="rt-lang rt-lang-uz">{item.label_uz}</span>
-                  <span class="rt-lang rt-lang-en">{item.label_en}</span>
+                  <span>{item.label}</span>
                 </span>
                 <span class="text-sm font-bold">→</span>
               </a>
@@ -255,28 +226,22 @@ const navItems = rawNavItems.map((item) => ({
         <button
           type="button"
           data-lead-modal
-          data-lead-subject="Запрос консультации из мобильного меню"
+          data-lead-subject={t(lang, 'lead.subject.mobileMenu')}
           class="hud-btn w-full min-h-[48px] text-xs font-bold cursor-pointer"
         >
-          <span>
-            <span class="rt-lang rt-lang-ru">[ ОСТАВИТЬ ЗАЯВКУ ↗ ]</span>
-            <span class="rt-lang rt-lang-uz">[ SO'ROV YUBORISH ↗ ]</span>
-            <span class="rt-lang rt-lang-en">[ SUBMIT REQUEST ↗ ]</span>
-          </span>
+          <span>{tr('header.submitRequest')}</span>
         </button>
 
         <div class="grid grid-cols-2 gap-2">
           <a
-            href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`}
+            href={phoneHref}
             class="min-h-[44px] border border-[#0A0A0A] bg-white/40 flex items-center justify-center gap-1.5 font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors"
           >
             <span>[ TEL ]</span>
-            <span class="rt-lang rt-lang-ru">ПОЗВОНИТЬ</span>
-            <span class="rt-lang rt-lang-uz">QO'NG'IROQ</span>
-            <span class="rt-lang rt-lang-en">CALL</span>
+            <span>{tr('header.call')}</span>
           </a>
           <a
-            href="https://t.me/railtech_uz"
+            href={globalData.telegramUrl}
             target="_blank"
             rel="noopener noreferrer"
             class="min-h-[44px] border border-[#0A0A0A] bg-white/40 flex items-center justify-center gap-1.5 font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors"
@@ -287,7 +252,7 @@ const navItems = rawNavItems.map((item) => ({
         </div>
 
         <div class="text-[10px] text-[#4A5056] text-center pt-2">
-          {globalData.address}
+          {L(globalData.address, (globalData as any).address_uz, (globalData as any).address_en)}
         </div>
       </div>
     </div>
@@ -296,68 +261,6 @@ const navItems = rawNavItems.map((item) => ({
 
 <script is:inline>
   (function() {
-    function getStoredLang() {
-      try {
-        var param = new URLSearchParams(window.location.search).get('lang');
-        if (param === 'ru' || param === 'uz' || param === 'en') return param;
-        var stored = localStorage.getItem('rt_lang');
-        if (stored === 'ru' || stored === 'uz' || stored === 'en') return stored;
-      } catch (e) {}
-      return 'ru';
-    }
-
-    function syncSwitcherButtons(activeLang) {
-      document.querySelectorAll('[data-lang-btn]').forEach(function(btn) {
-        var lang = btn.getAttribute('data-lang-btn');
-        if (lang === activeLang) {
-          btn.classList.remove('text-[#0A0A0A]');
-          btn.classList.add('bg-[#0A0A0A]', 'text-white', 'font-bold');
-          btn.setAttribute('aria-current', 'true');
-        } else {
-          btn.classList.remove('bg-[#0A0A0A]', 'text-white', 'font-bold');
-          btn.classList.add('text-[#0A0A0A]');
-          btn.removeAttribute('aria-current');
-        }
-      });
-    }
-
-    function updateDataLangElements(lang) {
-      document.querySelectorAll('[data-lang-ru]').forEach(function(el) {
-        var val = el.getAttribute('data-lang-' + lang) || el.getAttribute('data-lang-ru');
-        if (val) el.textContent = val;
-      });
-
-      document.querySelectorAll('[data-i18n-placeholder-ru]').forEach(function(el) {
-        var val = el.getAttribute('data-i18n-placeholder-' + lang) || el.getAttribute('data-i18n-placeholder-ru');
-        if (val) el.setAttribute('placeholder', val);
-      });
-    }
-
-    function applyLanguage(lang) {
-      document.documentElement.lang = lang;
-      try {
-        localStorage.setItem('rt_lang', lang);
-      } catch (e) {}
-      syncSwitcherButtons(lang);
-      updateDataLangElements(lang);
-      window.dispatchEvent(new CustomEvent('rt-lang-change', { detail: lang }));
-    }
-
-    // Initialize
-    var currentLang = getStoredLang();
-    applyLanguage(currentLang);
-
-    // Event listeners for language buttons
-    document.addEventListener('click', function(e) {
-      var btn = e.target.closest('[data-lang-btn]');
-      if (!btn) return;
-      e.preventDefault();
-      var targetLang = btn.getAttribute('data-lang-btn');
-      if (targetLang && (targetLang === 'ru' || targetLang === 'uz' || targetLang === 'en')) {
-        applyLanguage(targetLang);
-      }
-    });
-
     // Mobile menu drawer toggle
     var toggle = document.getElementById('mobile-nav-toggle');
     var closeBtn = document.getElementById('mobile-nav-close');

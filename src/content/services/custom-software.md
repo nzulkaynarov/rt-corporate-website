@@ -64,6 +64,18 @@ benefits:
     value: "Серверы в Ташкенте (ЗРУ-547)"
     value_uz: "Toshkentdagi serverlar (O'RQ-547)"
     value_en: "Tashkent servers (Law ZRU-547)"
+body_uz: |
+  ### Sanoat ta'minotini raqamli transformatsiya qilish
+
+  RailTech Digital xaridlar, logistika va texnik nazorat bo'limlaridagi qo'l mehnatini bartaraf etishga mo'ljallangan ilg'or dasturiy mahsulotlarni ishlab chiqadi.
+
+  O'z ishlanmalarimiz — `b2b.railtech.uz` platformasi va **Smart Match AI** algoritmi — buyurtmachilarning tuzilmagan so'rovlarini qayta ishlashni avtomatlashtiradi: tizim PDF, skanlar va Excel jadvallarini o'qiydi hamda erkin ifodalarni rasmiy GOST va TIF TN kodlari bilan xatosiz moslashtiradi.
+body_en: |
+  ### Digital transformation of industrial procurement
+
+  RailTech Digital builds advanced software that removes routine manual work from procurement, logistics and technical inspection departments.
+
+  Our in-house products — the `b2b.railtech.uz` platform and the **Smart Match AI** algorithm — automate the processing of unstructured customer requests: the system reads PDFs, scans and Excel sheets and accurately matches free-form wording to official GOST standards and HS (TN VED) codes.
 ---
 
 ### Цифровая трансформация промышленного снабжения

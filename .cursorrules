@@ -13,20 +13,17 @@ Stack: Astro 4 (SSG) + React 18 + Three.js + Tailwind CSS + TypeScript.
 6. Absolutely no emojis, playful gradient buttons, or neon glows.
 
 # Architecture & Page Routing
-1. The project is strictly MULTI-PAGE. Never convert pages into single-page anchors.
-2. Pages:
-   - `/` (Home institutional hub)
-   - `/catalog/` (Equipment catalog with filter island)
-   - `/catalog/[slug]` (Dynamic technical datasheets with Schema.org Product)
-   - `/contract` (Turnkey VED import DDP Tashkent)
-   - `/digital` (RailTech Digital & Smart Match AI)
-   - `/projects` (Special projects, localization, Art Lab)
-   - `/about` (Legal entity status, warehouse Index B2-2097)
-   - `/contacts` (Phone +998 90 118-90-00, route directions, RFQ form)
-   - `/admin` (Decap CMS)
+1. The project is strictly MULTI-PAGE and MULTI-LANGUAGE: every page exists at /… (ru), /uz/…, /en/… — files in `src/pages/[...lang]/`.
+2. Routes, i18n and anti-hardcode rules: see AGENTS.md §2 (single source of truth). Never hardcode human-readable text, never use localStorage/?lang= for language.
+3. `/admin` — Sveltia CMS (`public/admin/config.yml`, version pinned in `src/pages/admin.astro`).
 
 # Media & Product Cards
 - Product cards must prioritize real technical photos and engineering blueprints (`ProductMediaGallery.tsx`). 3D CAD is an optional secondary tab, never an automatic replacement for real photography.
 
 # Build & Quality Assurance
 - Always run `npm run build` after making modifications to verify 0 errors across all static routes.
+
+# Content (catalog, services, projects, blog, page texts)
+- Follow docs/content/ (README, STYLE_GUIDE, GLOSSARY, SEO) and templates in docs/content/templates/.
+- Every text in RU + UZ (Latin) + EN; never invent facts; run `npm run check:content -- --strict` and `npm run build`; open a PR, never push to main.
+

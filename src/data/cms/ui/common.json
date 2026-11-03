@@ -1,0 +1,137 @@
+{
+  "title": "Общие: шапка, меню, навигация",
+  "strings": [
+    {
+      "key": "nav.home",
+      "ru": "ГЛАВНАЯ",
+      "uz": "BOSH SAHIFA",
+      "en": "HOME"
+    },
+    {
+      "key": "header.tin",
+      "ru": "ИНН:",
+      "uz": "STIR:",
+      "en": "TIN:"
+    },
+    {
+      "key": "header.tel",
+      "ru": "ТЕЛ:",
+      "uz": "TEL:",
+      "en": "TEL:"
+    },
+    {
+      "key": "header.portal",
+      "ru": "PORTAL ↗",
+      "uz": "PORTAL ↗",
+      "en": "PORTAL ↗"
+    },
+    {
+      "key": "header.homeAria",
+      "ru": "RailTech — главная страница",
+      "uz": "RailTech — bosh sahifa",
+      "en": "RailTech — home page"
+    },
+    {
+      "key": "header.langAria",
+      "ru": "Выбор языка",
+      "uz": "Tilni tanlash",
+      "en": "Language selector"
+    },
+    {
+      "key": "header.rfq",
+      "ru": "[ ЗАПРОС КП ↗ ]",
+      "uz": "[ SO'ROV ↗ ]",
+      "en": "[ RFQ ↗ ]"
+    },
+    {
+      "key": "header.menu",
+      "ru": "МЕНЮ",
+      "uz": "MENYU",
+      "en": "MENU"
+    },
+    {
+      "key": "header.menuOpenAria",
+      "ru": "Открыть меню",
+      "uz": "Menyuni ochish",
+      "en": "Open menu"
+    },
+    {
+      "key": "header.menuCloseAria",
+      "ru": "Закрыть меню",
+      "uz": "Menyuni yopish",
+      "en": "Close menu"
+    },
+    {
+      "key": "header.menuDialogAria",
+      "ru": "Навигация по сайту",
+      "uz": "Sayt bo'ylab navigatsiya",
+      "en": "Site navigation"
+    },
+    {
+      "key": "header.menuTitle",
+      "ru": "СИСТЕМНОЕ МЕНЮ // HUD",
+      "uz": "TIZIM MENYUSI // HUD",
+      "en": "SYSTEM MENU // HUD"
+    },
+    {
+      "key": "header.close",
+      "ru": "✕ ЗАКРЫТЬ",
+      "uz": "✕ YOPISH",
+      "en": "✕ CLOSE"
+    },
+    {
+      "key": "header.mobileNavAria",
+      "ru": "Мобильная навигация",
+      "uz": "Mobil navigatsiya",
+      "en": "Mobile navigation"
+    },
+    {
+      "key": "header.submitRequest",
+      "ru": "[ ОСТАВИТЬ ЗАЯВКУ ↗ ]",
+      "uz": "[ SO'ROV YUBORISH ↗ ]",
+      "en": "[ SUBMIT REQUEST ↗ ]"
+    },
+    {
+      "key": "header.call",
+      "ru": "ПОЗВОНИТЬ",
+      "uz": "QO'NG'IROQ",
+      "en": "CALL"
+    },
+    {
+      "key": "header.mainNavAria",
+      "ru": "Основная навигация",
+      "uz": "Asosiy navigatsiya",
+      "en": "Main navigation"
+    },
+    {
+      "key": "breadcrumb.aria",
+      "ru": "Навигационная цепочка",
+      "uz": "Navigatsiya zanjiri",
+      "en": "Breadcrumb"
+    },
+    {
+      "key": "lead.subject.header",
+      "ru": "Запрос коммерческого предложения / спецификации с сайта",
+      "uz": "Saytdan tijorat taklifi / spetsifikatsiya so'rovi",
+      "en": "Request for quotation / specification"
+    },
+    {
+      "key": "lead.subject.mobileMenu",
+      "ru": "Запрос консультации из мобильного меню",
+      "uz": "Mobil menyudan maslahat so'rovi",
+      "en": "Consultation request from the mobile menu"
+    },
+    {
+      "key": "legacyRedirect.note",
+      "ru": "Перенаправление…",
+      "uz": "Yo'naltirilmoqda…",
+      "en": "Redirecting…"
+    },
+    {
+      "key": "common.open",
+      "ru": "Открыть",
+      "uz": "Ochish",
+      "en": "Open"
+    }
+  ]
+}

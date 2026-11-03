@@ -2,6 +2,12 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { withBase } from '../../utils/url';
 import { HudSmartImage } from './HudSmartImage';
 import { useLang } from '../../utils/useLang';
+import { stockLabel } from '../../utils/stock';
+import { makeT, pick, type Lang } from '../../i18n';
+import islandsUi from '../../data/cms/ui/islands.json';
+import catalogUi from '../../data/cms/ui/catalog.json';
+
+const t = makeT([islandsUi, catalogUi]);
 
 interface Props {
   sku: string;
@@ -20,6 +26,9 @@ interface Props {
   image?: string;
   images?: string[];
   gallery?: string[];
+  /** Optional stock-status key; used for the badge when no localized `status_*` is given. */
+  statusKey?: 'in_stock' | 'reserved' | 'on_order';
+  lang: Lang;
 }
 
 const pad4 = (n: number) => String(Math.floor(n)).padStart(4, '0');
@@ -30,17 +39,19 @@ export const ProductMediaGallery: React.FC<Props> = ({
   title,
   title_uz,
   title_en,
-  category = 'Оборудование',
+  category,
   category_uz,
   category_en,
-  status = 'В наличии',
+  status,
   status_uz,
   status_en,
+  statusKey,
   image,
   images = [],
   gallery = [],
+  lang: propLang,
 }) => {
-  const lang = useLang();
+  const lang = useLang(propLang);
   const [activeIdx, setActiveIdx] = useState(0);
   const [isScanning, setIsScanning] = useState(false);
   const [coords, setCoords] = useState<{ x: number; y: number }>({ x: 260, y: 150 });
@@ -49,10 +60,11 @@ export const ProductMediaGallery: React.FC<Props> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
 
-  const curTitle = lang === 'uz' ? title_uz || title : lang === 'en' ? title_en || title : title;
-  const curCategory =
-    lang === 'uz' ? category_uz || category : lang === 'en' ? category_en || category : category;
-  const curStatus = lang === 'uz' ? status_uz || status : lang === 'en' ? status_en || status : status;
+  const curTitle = pick(lang, title, title_uz, title_en);
+  const curCategory = pick(lang, category || t(lang, 'islands.defaultCategory'), category_uz, category_en);
+
+  // Status badge: shared rule (src/utils/stock.ts) — same label as the product page and catalog table.
+  const curStatus = stockLabel({ status, status_uz, status_en, statusKey }, lang, t);
 
   // Build clean photo list from image, images, and legacy gallery
   const allImages = useMemo(() => {
@@ -144,10 +156,10 @@ export const ProductMediaGallery: React.FC<Props> = ({
       <div className="flex items-center justify-between text-[11px] text-[#4A5056] border-b border-[#0A0A0A]/20 pb-2">
         <span className="flex items-center gap-1.5 font-bold text-[#0A0A0A]">
           <span className="w-2 h-2 bg-emerald-600 inline-block animate-pulse"></span>
-          ITEM // {sku}
+          {t(lang, 'gallery.itemCode', { sku })}
         </span>
         <span className="truncate max-w-[45%] uppercase text-right">
-          CAT // {curCategory}
+          {t(lang, 'gallery.categoryCode', { category: curCategory })}
         </span>
       </div>
 
@@ -170,6 +182,7 @@ export const ProductMediaGallery: React.FC<Props> = ({
             alt={curTitle}
             sku={sku}
             category={curCategory}
+            lang={lang}
             aspect="aspect-[16/10] w-full h-full"
             loading="eager"
             objectFit="cover"
@@ -203,7 +216,7 @@ export const ProductMediaGallery: React.FC<Props> = ({
               X: {pad4(coords.x)} // Y: {pad4(coords.y)}
             </span>
             <span className="border border-white/40 px-1 py-0.5 bg-black/40">
-              {isScanning ? 'HUD_SCAN: RECALIBRATING...' : 'STATUS // ONLINE'}
+              {isScanning ? t(lang, 'hud.scanRecalibrating') : t(lang, 'gallery.statusOnline')}
             </span>
           </div>
 
@@ -217,7 +230,7 @@ export const ProductMediaGallery: React.FC<Props> = ({
           {/* Bottom Stamp Plate */}
           <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between pointer-events-none">
             <span className="border border-[#0A0A0A] px-2 py-0.5 bg-[#D4D8DC]/90 text-[10px] font-bold text-[#0A0A0A] backdrop-blur-sm">
-              INDEX B2-2097 // UZ
+              {t(lang, 'gallery.locationStamp')}
             </span>
             <span className="border border-[#0A0A0A] px-2 py-0.5 bg-[#0A0A0A] text-[10px] font-bold text-white">
               {curStatus.toUpperCase()}
@@ -231,24 +244,24 @@ export const ProductMediaGallery: React.FC<Props> = ({
         <div className="flex flex-col space-y-2 pt-1">
           <div className="flex items-center justify-between text-xs font-mono text-[#4A5056] border-b border-[#0A0A0A]/15 pb-1">
             <span className="font-bold text-[#0A0A0A] tracking-wider">
-              FRAME // {pad2(safeIdx + 1)} OF {pad2(allImages.length)}
+              {t(lang, 'gallery.frameCounter', { current: pad2(safeIdx + 1), total: pad2(allImages.length) })}
             </span>
             <div className="flex items-center gap-1.5">
               <button
                 type="button"
                 onClick={handlePrev}
                 className="px-2 py-0.5 border border-[#0A0A0A]/40 hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer text-[11px]"
-                aria-label="Previous image"
+                aria-label={`${t(lang, 'gallery.prev')} — ${t(lang, 'gallery.prevAria')}`}
               >
-                &lt; {lang === 'uz' ? 'OLDINGI' : lang === 'en' ? 'PREV' : 'ПРЕД'}
+                <span aria-hidden="true">&lt; </span>{t(lang, 'gallery.prev')}
               </button>
               <button
                 type="button"
                 onClick={handleNext}
                 className="px-2 py-0.5 border border-[#0A0A0A]/40 hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer text-[11px]"
-                aria-label="Next image"
+                aria-label={`${t(lang, 'gallery.next')} — ${t(lang, 'gallery.nextAria')}`}
               >
-                {lang === 'uz' ? 'KEYINGI' : lang === 'en' ? 'NEXT' : 'СЛЕД'} &gt;
+                {t(lang, 'gallery.next')}<span aria-hidden="true"> &gt;</span>
               </button>
             </div>
           </div>
@@ -264,11 +277,11 @@ export const ProductMediaGallery: React.FC<Props> = ({
                     ? 'border-2 border-[#0A0A0A] bg-white ring-1 ring-[#0A0A0A]'
                     : 'border-[#0A0A0A]/30 bg-[#C8CDD2] opacity-75 hover:opacity-100'
                 }`}
-                title={`View ${i + 1}`}
+                title={t(lang, 'gallery.thumbTitle', { n: i + 1 })}
               >
                 <img
                   src={withBase(imgUrl)}
-                  alt={`${sku} frame ${i + 1}`}
+                  alt={t(lang, 'gallery.thumbAlt', { title: curTitle, n: i + 1 })}
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
@@ -282,14 +295,14 @@ export const ProductMediaGallery: React.FC<Props> = ({
       <div className="hud-glass-card p-3 flex flex-wrap items-center justify-between text-xs gap-2">
         <div className="flex items-center space-x-2">
           <span className="font-bold text-[#0A0A0A]">
-            {lang === 'uz' ? 'YUKLASH: ' : lang === 'en' ? 'DISPATCH: ' : 'ОТГРУЗКА: '}
+            {t(lang, 'gallery.dispatchLabel')}
           </span>
           <span className="text-[#4A5056]">
-            {lang === 'uz' ? 'Index B2-2097 omboridan' : lang === 'en' ? 'Direct from Index B2-2097' : 'Со склада Index B2-2097'}
+            {t(lang, 'gallery.dispatchValue')}
           </span>
         </div>
         <div className="font-bold text-[#0A0A0A]">
-          12% {lang === 'uz' ? 'QQS kiritilgan' : lang === 'en' ? 'VAT included' : 'НДС включен'}
+          {t(lang, 'gallery.vat')}
         </div>
       </div>
     </div>

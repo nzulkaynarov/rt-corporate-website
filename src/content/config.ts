@@ -19,6 +19,16 @@ const documentSchema = z.object({
   type: z.string().optional(), // например "PDF • 1.4 MB"
 });
 
+/** Optional per-entry SEO overrides (fallback: title + site suffix, summary/subtitle/specs). */
+const seoFields = {
+  seoTitle: z.string().optional(),
+  seoTitle_uz: z.string().optional(),
+  seoTitle_en: z.string().optional(),
+  seoDescription: z.string().optional(),
+  seoDescription_uz: z.string().optional(),
+  seoDescription_en: z.string().optional(),
+};
+
 const catalogCollection = defineCollection({
   type: 'content',
   schema: z.object({
@@ -41,7 +51,7 @@ const catalogCollection = defineCollection({
     gallery: z.array(z.string()).optional(),
     images: z.array(z.string()).optional(),
     documents: z.array(documentSchema).optional(),
-    warehouse: z.string().default('Ташкент, Index B2-2097'),
+    warehouse: z.string().optional(), // empty → pages.json catalogPage.defaultWarehouse
     warehouse_uz: z.string().optional(),
     warehouse_en: z.string().optional(),
     status: z.enum(['В наличии', 'Резерв', 'Под заказ']).default('В наличии'),
@@ -54,16 +64,17 @@ const catalogCollection = defineCollection({
     dimensions: z.string().optional(),
     weight: z.string().optional(),
     material: z.string().optional(),
-    warranty: z.string().optional().default('12 месяцев с момента ввода в эксплуатацию'),
+    warranty: z.string().optional(), // empty → pages.json catalogPage.defaultWarranty
     warranty_uz: z.string().optional(),
     warranty_en: z.string().optional(),
-    priceNote: z.string().optional().default('Цена по запросу (с НДС 12%)'),
+    priceNote: z.string().optional(), // empty → pages.json catalogPage.defaultPriceNote
     priceNote_uz: z.string().optional(),
     priceNote_en: z.string().optional(),
     image: z.string().optional(),
     order: z.number().default(1),
     body_uz: z.string().optional(),
     body_en: z.string().optional(),
+    ...seoFields,
   }),
 });
 
@@ -103,6 +114,7 @@ const servicesCollection = defineCollection({
     order: z.number().default(1),
     body_uz: z.string().optional(),
     body_en: z.string().optional(),
+    ...seoFields,
   }),
 });
 
@@ -137,6 +149,7 @@ const projectsCollection = defineCollection({
     order: z.number().default(1),
     body_uz: z.string().optional(),
     body_en: z.string().optional(),
+    ...seoFields,
   }),
 });
 
@@ -153,8 +166,8 @@ const blogCollection = defineCollection({
     summary: z.string(),
     summary_uz: z.string().optional(),
     summary_en: z.string().optional(),
-    author: z.string().default('Инженерный отдел ООО «RailTech»'),
-    readTime: z.string().default('4 мин'),
+    author: z.string().optional(), // empty → pages.json blogPage.defaultAuthor
+    readTime: z.string().optional(),
     readTime_uz: z.string().optional(),
     readTime_en: z.string().optional(),
     image: z.string().optional(),
@@ -164,6 +177,7 @@ const blogCollection = defineCollection({
     tags_en: z.array(z.string()).optional(),
     body_uz: z.string().optional(),
     body_en: z.string().optional(),
+    ...seoFields,
   }),
 });
 

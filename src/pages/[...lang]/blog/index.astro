@@ -1,0 +1,355 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { withBase } from '../../../utils/url';
+import I18nText from '../../../components/I18nText.astro';
+import HudPageHeader from '../../../components/hud/HudPageHeader.astro';
+import pagesData from '../../../data/cms/pages.json';
+import { langStaticPaths, localeHref, pick, tField, type Lang } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { pageSeo, absoluteUrl, plainText } from '../../../utils/seo';
+import { navLabel, navLabels } from '../../../utils/nav';
+
+export const getStaticPaths = langStaticPaths;
+
+const lang = Astro.locals.lang;
+const tr = (key: string, vars?: Record<string, string | number>) => t(lang, key, vars);
+const seo = pageSeo('blog', lang);
+
+const allPosts = await getCollection('blog');
+allPosts.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
+
+const bPage = pagesData.blogPage;
+type Post = (typeof allPosts)[number];
+
+/** Post author; the site-wide default (pages.json blogPage.defaultAuthor) is shown in the page language. */
+const authorOf = (post: Post, l: Lang) =>
+  post.data.author && post.data.author !== bPage.defaultAuthor
+    ? post.data.author
+    : pick(l, bPage.defaultAuthor, bPage.defaultAuthor_uz, bPage.defaultAuthor_en);
+/** Read time from the CMS, or estimated from the body (~180 words per minute). */
+const readTimeOf = (post: Post) => {
+  const cms = tField(post.data, 'readTime', lang);
+  if (cms) return cms as string;
+  const body = (lang === 'uz' && post.data.body_uz) || (lang === 'en' && post.data.body_en) || post.body;
+  const words = plainText(body).split(' ').filter(Boolean).length;
+  return tr('blog.readTimeMinutes', { n: Math.max(1, Math.round(words / 180)) });
+};
+const tagsOf = (post: Post) => pick<string[]>(lang, post.data.tags, post.data.tags_uz, post.data.tags_en);
+const postHref = (post: Post) => localeHref(`/blog/${post.slug}/`, lang);
+
+// Filter categories are derived from the posts themselves (RU value is the filter key).
+const categoryMap = new Map<string, { ru: string; uz?: string; en?: string }>();
+for (const post of allPosts) {
+  const ru = post.data.category;
+  if (!categoryMap.has(ru)) categoryMap.set(ru, { ru, uz: post.data.category_uz, en: post.data.category_en });
+}
+const categories = [{ key: 'all', label: tr('blog.filter.all') }].concat(
+  [...categoryMap.values()].map((c) => ({ key: c.ru, label: pick(lang, c.ru, c.uz, c.en) })),
+);
+
+const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
+---
+
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  breadcrumbs={[{ name: navLabel('/blog/', lang), path: '/blog/' }]}
+  jsonLd={{
+    '@type': 'Blog',
+    '@id': `${absoluteUrl(localeHref('/blog/', lang), Astro.site)}#blog`,
+    name: pick(lang, bPage.title, bPage.title_uz, bPage.title_en),
+    description: seo.description,
+    url: absoluteUrl(localeHref('/blog/', lang), Astro.site),
+    inLanguage: lang,
+    publisher: { '@id': `${absoluteUrl('/', Astro.site)}#organization` },
+    blogPost: allPosts.map((post) => ({
+      '@type': 'BlogPosting',
+      headline: tField(post.data, 'title', lang),
+      datePublished: post.data.publishDate,
+      url: absoluteUrl(postHref(post), Astro.site),
+    })),
+  }}
+>
+  <div class="max-w-7xl mx-auto px-4 py-6 font-sans">
+    <HudPageHeader
+      code={bPage.code}
+      crumb={navLabels('/blog/')}
+      title={{ ru: bPage.title, uz: bPage.title_uz, en: bPage.title_en }}
+      lead={{ ru: bPage.subtitle, uz: bPage.subtitle_uz, en: bPage.subtitle_en }}
+    />
+
+    <!-- Featured Post Hero (if exists) -->
+    {featuredPost && (
+      <div class="hud-glass-card p-6 lg:p-8 mb-10 font-mono">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[#0A0A0A] pb-3 mb-4 text-xs">
+          <div class="flex items-center space-x-2">
+            <span class="bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">
+              <I18nText ru={bPage.featuredBadge} uz={bPage.featuredBadge_uz} en={bPage.featuredBadge_en} />
+            </span>
+            <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#D4D8DC] text-[#0A0A0A]">
+              <I18nText ru={featuredPost.data.category} uz={featuredPost.data.category_uz} en={featuredPost.data.category_en} />
+            </span>
+          </div>
+          <div class="text-[#4A5056]">
+            {featuredPost.data.publishDate} // {readTimeOf(featuredPost)}
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-8 space-y-3 font-sans">
+            {featuredPost.data.image && (
+              <div class="mb-4 border border-[#0A0A0A] overflow-hidden bg-[#D4D8DC]">
+                <img
+                  src={withBase(featuredPost.data.image)}
+                  alt={tField(featuredPost.data, 'title', lang)}
+                  class="w-full h-48 sm:h-64 object-cover"
+                />
+              </div>
+            )}
+            <h2 class="text-2xl sm:text-3xl font-bold text-[#0A0A0A] leading-tight hover:underline">
+              <a href={postHref(featuredPost)}>
+                <I18nText ru={featuredPost.data.title} uz={featuredPost.data.title_uz} en={featuredPost.data.title_en} />
+              </a>
+            </h2>
+            <p class="text-sm text-[#4A5056] leading-relaxed">
+              <I18nText ru={featuredPost.data.summary} uz={featuredPost.data.summary_uz} en={featuredPost.data.summary_en} />
+            </p>
+            <div class="flex flex-wrap gap-1.5 pt-2 font-mono text-[11px]">
+              {tagsOf(featuredPost).map((tag) => (
+                <span class="border border-[#0A0A0A]/40 bg-[#D4D8DC] px-2 py-0.5 text-[#0A0A0A]">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 flex flex-col justify-end space-y-3">
+            <div class="border border-[#0A0A0A]/30 p-3 bg-[#D4D8DC] text-[11px] text-[#4A5056] font-mono">
+              <div>
+                <I18nText k="blog.author" /> <span class="font-bold text-[#0A0A0A]">{authorOf(featuredPost, lang)}</span>
+              </div>
+              <div>
+                <I18nText k="blog.reviewer" /> <span class="text-emerald-800 font-bold"><I18nText ru={bPage.reviewer} uz={bPage.reviewer_uz} en={bPage.reviewer_en} /></span>
+              </div>
+            </div>
+            <a
+              href={postHref(featuredPost)}
+              class="w-full hud-btn py-3 text-center text-xs font-bold font-mono tracking-wider cursor-pointer"
+            >
+              <I18nText k="blog.readFeatured" />
+            </a>
+          </div>
+        </div>
+      </div>
+    )}
+
+    <!-- Filter & Search Toolbar (Vanilla CAD UI) -->
+    <div class="hud-glass-card p-4 mb-8 font-mono">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <!-- Category Buttons -->
+        <div class="flex flex-wrap gap-1.5 text-xs" id="category-filters" role="group" aria-label={tr('blog.filter.aria')}>
+          {categories.map((cat, idx) => (
+            <button
+              type="button"
+              data-cat-filter={cat.key}
+              class={`px-3 py-1.5 border border-[#0A0A0A] transition-colors cursor-pointer ${
+                idx === 0
+                  ? 'bg-[#0A0A0A] text-white active-cat-btn'
+                  : 'bg-[#C8CDD2] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
+        <!-- Search Input -->
+        <div class="flex items-center space-x-2 text-xs">
+          <span class="text-[#4A5056] text-[11px] uppercase">
+            <I18nText k="blog.search.label" />
+          </span>
+          <input
+            id="blog-search-input"
+            type="text"
+            placeholder={tr('blog.search.placeholder')}
+            aria-label={tr('blog.search.placeholder')}
+            class="bg-[#C8CDD2] border border-[#0A0A0A] px-3 py-1.5 text-xs focus:outline-none focus:bg-white w-64"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Articles Grid -->
+    <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+      {allPosts.map((post, idx) => (
+        <article
+          data-category={post.data.category}
+          data-search={`${tField(post.data, 'title', lang)} ${tField(post.data, 'summary', lang)} ${tagsOf(post).join(' ')} ${tField(post.data, 'category', lang)}`.toLowerCase()}
+          class="blog-card hud-glass-card p-5 flex flex-col justify-between group font-mono"
+        >
+          <div>
+            <!-- Card Header -->
+            <div class="flex items-center justify-between border-b border-[#0A0A0A]/20 pb-2 mb-3 text-xs">
+              <span class="hud-card-index"><b>0{idx + 1}</b> // {post.data.publishDate}</span>
+              <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#C8CDD2] text-[#0A0A0A] font-bold text-[10px]">
+                <I18nText ru={post.data.category} uz={post.data.category_uz} en={post.data.category_en} />
+              </span>
+            </div>
+
+            {post.data.image && (
+              <div class="mb-3 border border-[#0A0A0A] overflow-hidden bg-[#C8CDD2]">
+                <img
+                  src={withBase(post.data.image)}
+                  alt={tField(post.data, 'title', lang)}
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-36 object-cover"
+                />
+              </div>
+            )}
+
+            <!-- Title -->
+            <h3 class="font-sans font-bold text-lg text-[#0A0A0A] mb-2.5 leading-snug group-hover:underline">
+              <a href={postHref(post)}>
+                <I18nText ru={post.data.title} uz={post.data.title_uz} en={post.data.title_en} />
+              </a>
+            </h3>
+
+            <!-- Summary -->
+            <p class="font-sans text-xs text-[#4A5056] leading-relaxed mb-4 line-clamp-3">
+              <I18nText ru={post.data.summary} uz={post.data.summary_uz} en={post.data.summary_en} />
+            </p>
+
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-1 mb-4 text-[10px]">
+              {tagsOf(post).map((tag) => (
+                <span class="border border-[#0A0A0A]/30 bg-[#C8CDD2]/60 px-1.5 py-0.5 text-[#0A0A0A]">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Card Footer -->
+          <div class="pt-3 border-t border-[#0A0A0A]/20 flex items-center justify-between text-xs">
+            <span class="text-[#4A5056] text-[11px]">
+              {readTimeOf(post)}
+            </span>
+            <a
+              href={postHref(post)}
+              class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-3 py-1 text-center font-bold group-hover:bg-transparent group-hover:text-[#0A0A0A] transition-colors"
+            >
+              <I18nText k="blog.read" />
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Empty State -->
+    <div id="blog-empty-state" class="hidden border-2 border-dashed border-[#0A0A0A] p-12 text-center font-mono my-8">
+      <div class="text-sm font-bold text-[#0A0A0A] mb-1">
+        <I18nText k="blog.empty.title" />
+      </div>
+      <div class="text-xs text-[#4A5056]">
+        <I18nText k="blog.empty.text" />
+      </div>
+    </div>
+
+    <!-- CTA Section from CMS -->
+    <div class="hud-glass-card p-8 font-mono flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 max-w-2xl">
+        <div class="text-sm font-bold text-[#0A0A0A] flex items-center space-x-2">
+          <span class="w-3 h-3 bg-[#0A0A0A] inline-block"></span>
+          <span>
+            <I18nText
+              ru={bPage.ctaTitle}
+              uz={bPage.ctaTitle_uz}
+              en={bPage.ctaTitle_en}
+            />
+          </span>
+        </div>
+        <p class="text-xs text-[#4A5056] font-sans leading-relaxed">
+          <I18nText
+            ru={bPage.ctaSubtitle}
+            uz={bPage.ctaSubtitle_uz}
+            en={bPage.ctaSubtitle_en}
+          />
+        </p>
+      </div>
+
+      <button
+        type="button"
+        data-lead-modal
+        data-lead-subject={t(lang, 'lead.subject.blogConsultation')}
+        class="hud-btn px-8 py-3.5 text-xs font-bold whitespace-nowrap cursor-pointer"
+      >
+        <I18nText
+          ru={bPage.ctaButton}
+          uz={bPage.ctaButton_uz}
+          en={bPage.ctaButton_en}
+        />
+      </button>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('[data-cat-filter]');
+  const searchInput = document.getElementById('blog-search-input') as HTMLInputElement | null;
+  const cards = document.querySelectorAll<HTMLElement>('.blog-card');
+  const emptyState = document.getElementById('blog-empty-state');
+
+  let activeCategory = 'all';
+  let searchQuery = '';
+
+  function applyFilters() {
+    let visibleCount = 0;
+    const q = searchQuery.toLowerCase().trim();
+
+    cards.forEach((card) => {
+      const cat = card.getAttribute('data-category') || '';
+      const text = card.getAttribute('data-search') || '';
+
+      const matchCat = activeCategory === 'all' || cat === activeCategory;
+      const matchQuery = !q || text.includes(q);
+
+      if (matchCat && matchQuery) {
+        card.style.display = '';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (emptyState) {
+      if (visibleCount === 0) {
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+      }
+    }
+  }
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach((b) => {
+        b.classList.remove('bg-[#0A0A0A]', 'text-white', 'active-cat-btn');
+        b.classList.add('bg-[#C8CDD2]', 'text-[#0A0A0A]');
+      });
+      btn.classList.add('bg-[#0A0A0A]', 'text-white', 'active-cat-btn');
+      btn.classList.remove('bg-[#C8CDD2]', 'text-[#0A0A0A]');
+
+      activeCategory = btn.getAttribute('data-cat-filter') || 'all';
+      applyFilters();
+    });
+  });
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = (e.target as HTMLInputElement).value;
+      applyFilters();
+    });
+  }
+</script>

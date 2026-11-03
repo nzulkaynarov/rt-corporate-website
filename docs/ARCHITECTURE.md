@@ -5,15 +5,16 @@
 ```mermaid
 flowchart TD
     subgraph SSG_LAYER["Astro 4 SSG (Static Site Generation)"]
-        HOME["/ (index.astro)"]
-        CATALOG["/catalog/ (index.astro) & [slug].astro"]
-        SERVICES["/services/ (index.astro) & [slug].astro"]
-        PROJECTS["/projects/ (index.astro) & [slug].astro"]
-        BLOG["/blog/ (index.astro) & [slug].astro"]
-        ABOUT["/about.astro"]
-        CONTACTS["/contacts.astro"]
-        PRIVACY["/privacy.astro"]
-        TERMS["/terms.astro"]
+        MW["middleware.ts → Astro.locals.lang (ru | uz | en from URL)"]
+        HOME["[...lang]/index.astro → / · /uz/ · /en/"]
+        CATALOG["[...lang]/catalog/ index & [slug]"]
+        SERVICES["[...lang]/services/ index & [slug]"]
+        PROJECTS["[...lang]/projects/ index & [slug]"]
+        BLOG["[...lang]/blog/ index & [slug]"]
+        ABOUT["[...lang]/about.astro"]
+        CONTACTS["[...lang]/contacts.astro"]
+        PRIVACY["[...lang]/privacy.astro"]
+        TERMS["[...lang]/terms.astro"]
         ADMIN["/admin.astro (Sveltia CMS)"]
     end
 
@@ -22,7 +23,8 @@ flowchart TD
         SRV_MD["src/content/services/*.md"]
         PRJ_MD["src/content/projects/*.md"]
         BLG_MD["src/content/blog/*.md"]
-        CMS_JSON["src/data/cms/{global,home,about,contacts,pages,legal}.json"]
+        CMS_JSON["src/data/cms/{global,home,about,contacts,pages,legal,seo}.json"]
+        UI_JSON["src/data/cms/ui/*.json (interface strings RU/UZ/EN)"]
     end
 
     subgraph ISLANDS_LAYER["React 18 Interactive Islands (src/components/islands/)"]
@@ -57,18 +59,23 @@ rt-corporate-website/
 ├── public/
 │   ├── admin/                     # Sveltia CMS config.yml and index.html
 │   ├── images/                    # Product photos, factory blueprints, art assets
-│   └── robots.txt, sitemap.xml    # SEO & domain routing
+│   └── images/, og-cover.png      # Static assets (robots.txt & sitemap are generated)
 ├── src/
 │   ├── components/
 │   │   ├── Header.astro           # Swiss CAD header with dynamic navigation from CMS
 │   │   ├── Footer.astro           # Institutional legal dossier, GPS & logistics details from CMS
-│   │   ├── I18nText.astro         # Trilingual CAD switcher component (RU / UZ / EN)
+│   │   ├── I18nText.astro         # Renders the page language: <I18nText k="key"/> or ru/uz/en props
 │   │   ├── hud/                   # Brutalist HUD frame components
 │   │   └── islands/               # React 18 interactive client islands
 │   ├── content/                   # Typed Markdown content collections (catalog, services, projects, blog)
-│   ├── data/cms/                  # CMS JSON storage (global, home, about, contacts, pages, legal)
+│   ├── data/cms/                  # CMS JSON storage (global, home, about, contacts, pages, legal, seo)
+│   │   └── ui/                    # Interface dictionaries (CMS «Интерфейс»)
+│   ├── i18n/                      # Lang type, localeHref, langStaticPaths, t() dictionaries
+│   ├── middleware.ts              # Resolves page language from the URL
 │   ├── layouts/BaseLayout.astro   # Root HTML document, meta tags, Schema.org rich graph
-│   ├── pages/                     # Multi-page physical URLs + dynamic datasheets
+│   ├── pages/[...lang]/           # All public pages × 3 languages (ru: /, uz: /uz/, en: /en/)
+│   ├── pages/robots.txt.ts        # Generated robots.txt (correct sitemap URL for any domain)
+│   ├── utils/seo.ts, nav.ts       # pageSeo/entrySeo/absoluteUrl, menu labels for breadcrumbs
 │   └── styles/global.css          # Tailwind CSS & CAD utilities
 ├── AGENTS.md                      # AI agent primary instructions
 └── astro.config.mjs               # Astro configuration (@astrojs/react, @astrojs/sitemap)

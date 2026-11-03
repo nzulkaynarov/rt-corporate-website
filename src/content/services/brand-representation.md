@@ -64,6 +64,18 @@ benefits:
     value: "ЖД, металлургия, горнодобыча"
     value_uz: "Temir yo'l, metallurgiya, tog'-kon"
     value_en: "Rail, metallurgy, heavy mining"
+body_uz: |
+  ### Xorijiy ishlab chiqaruvchilar va O'zbekiston sanoati o'rtasidagi strategik ko'prik
+
+  «RailTech» MChJ transport va sanoat uskunalarini ishlab chiqaruvchi yetakchi zavodlarning ishonchli rasmiy hamkori va texnik vakili hisoblanadi.
+
+  Ombor xabining temir yo'l magistraliga to'g'ridan-to'g'ri ulanganligi, O'zbekistonning barcha elektron xarid tizimlarida akkreditatsiyamiz va benuqson ishchanlik obro'yimiz tufayli biz vendorlar savdosini samarali kengaytirish va ularning investitsiyalarini ishonchli himoya qilishni ta'minlaymiz.
+body_en: |
+  ### A strategic bridge between foreign manufacturers and Uzbek industry
+
+  RailTech LLC acts as a reliable official partner and technical representative of leading manufacturers of transport and industrial equipment.
+
+  With a warehouse hub directly connected to the main railway line, accreditation on all electronic procurement systems of Uzbekistan and a spotless business reputation, we help vendors scale their sales efficiently and keep their investments protected.
 ---
 
 ### Стратегический мост между зарубежными производителями и промышленностью Узбекистана

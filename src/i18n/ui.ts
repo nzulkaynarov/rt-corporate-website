@@ -1,13 +1,19 @@
 /**
- * Language types and UI localization definitions for RailTech Portal
+ * Server-side (Astro) access to ALL interface dictionaries in src/data/cms/ui/*.json.
+ * React islands must NOT import this file (it would bundle every dictionary) —
+ * they import only their own JSON and call makeT([thatJson]).
  */
+import { makeT, type UiFile } from './dictionary';
+import type { Lang } from './index';
 
-export type Lang = 'ru' | 'uz' | 'en';
+const modules = import.meta.glob<{ default: UiFile }>('../data/cms/ui/*.json', { eager: true });
 
-export const LANGUAGES: { code: Lang; label: string }[] = [
-  { code: 'ru', label: 'РУС' },
-  { code: 'uz', label: "O'ZB" },
-  { code: 'en', label: 'ENG' },
-];
+export const t = makeT(Object.values(modules).map((m) => m.default));
 
-export const DEFAULT_LANG: Lang = 'ru';
+/** Convenience for Astro files: const tr = translator(lang); tr('catalog.sku') */
+export function translator(lang: Lang) {
+  return (key: string, vars?: Record<string, string | number>) => t(lang, key, vars);
+}
+
+export type { Lang } from './index';
+export { LANGS, DEFAULT_LANG } from './index';

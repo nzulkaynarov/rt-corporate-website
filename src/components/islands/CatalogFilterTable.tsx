@@ -2,6 +2,10 @@ import React, { useState, useMemo } from 'react';
 import { HudSmartImage } from './HudSmartImage';
 import { withBase } from '../../utils/url';
 import { useLang } from '../../utils/useLang';
+import { stockLabel } from '../../utils/stock';
+import { localeHref, makeT, pick, tField, type Lang } from '../../i18n';
+import islandsUi from '../../data/cms/ui/islands.json';
+import catalogUi from '../../data/cms/ui/catalog.json';
 
 export interface CatalogItemAttribute {
   label: string;
@@ -25,6 +29,8 @@ export interface CatalogItemProps {
   subsystem_uz?: string;
   subsystem_en?: string;
   warehouse?: string;
+  gost?: string;
+  tnved?: string;
   status?: string;
   status_uz?: string;
   status_en?: string;
@@ -39,18 +45,18 @@ export interface CatalogItemProps {
 
 interface Props {
   items: CatalogItemProps[];
+  lang: Lang;
 }
 
-export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
-  const lang = useLang();
+const t = makeT([islandsUi, catalogUi]);
+export const CatalogFilterTable: React.FC<Props> = (props) => {
+  const { items } = props;
+  const lang = useLang(props.lang);
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
 
-  const base =
-    typeof window !== 'undefined' && window.location.pathname.startsWith('/rt-corporate-website')
-      ? '/rt-corporate-website'
-      : (import.meta.env.BASE_URL?.replace(/\/$/, '') || '');
+  const productHref = (item: CatalogItemProps) => localeHref(`/catalog/${item.slug}/`, lang);
 
   // Extract unique categories (RU key is unique identifier)
   const categories = useMemo(() => {
@@ -65,53 +71,22 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
   const getCategoryLabel = (catRu: string) => {
     const sample = items.find((it) => (it.category || it.subsystem) === catRu);
     if (!sample) return catRu;
-    if (lang === 'uz' && (sample.category_uz || sample.subsystem_uz)) {
-      return sample.category_uz || sample.subsystem_uz || catRu;
-    }
-    if (lang === 'en' && (sample.category_en || sample.subsystem_en)) {
-      return sample.category_en || sample.subsystem_en || catRu;
-    }
-    return catRu;
+    return pick(lang, catRu, sample.category_uz || sample.subsystem_uz, sample.category_en || sample.subsystem_en);
   };
 
-  const getItemTitle = (item: CatalogItemProps) => {
-    if (lang === 'uz' && item.title_uz) return item.title_uz;
-    if (lang === 'en' && item.title_en) return item.title_en;
-    return item.title;
-  };
+  const getItemTitle = (item: CatalogItemProps): string => tField(item, 'title', lang);
 
-  const getItemCategory = (item: CatalogItemProps) => {
-    const cat = item.category || item.subsystem || 'Оборудование';
-    if (lang === 'uz') return item.category_uz || item.subsystem_uz || cat;
-    if (lang === 'en') return item.category_en || item.subsystem_en || cat;
-    return cat;
-  };
+  const getItemCategory = (item: CatalogItemProps): string =>
+    pick(
+      lang,
+      item.category || item.subsystem || t(lang, 'islands.defaultCategory'),
+      item.category_uz || item.subsystem_uz,
+      item.category_en || item.subsystem_en,
+    );
 
-  const getItemSpecs = (item: CatalogItemProps) => {
-    if (lang === 'uz' && item.specs_uz) return item.specs_uz;
-    if (lang === 'en' && item.specs_en) return item.specs_en;
-    return item.specs || '';
-  };
+  const getItemSpecs = (item: CatalogItemProps): string => tField(item, 'specs', lang) || '';
 
-  const getItemStatus = (item: CatalogItemProps) => {
-    if (lang === 'uz') {
-      if (item.status_uz) return item.status_uz;
-      return item.statusKey === 'in_stock'
-        ? 'Mavjud'
-        : item.statusKey === 'reserved'
-        ? 'Zaxirada'
-        : 'Buyurtma asosida';
-    }
-    if (lang === 'en') {
-      if (item.status_en) return item.status_en;
-      return item.statusKey === 'in_stock'
-        ? 'In Stock'
-        : item.statusKey === 'reserved'
-        ? 'Reserved'
-        : 'On Order';
-    }
-    return item.status || 'В наличии';
-  };
+  const getItemStatus = (item: CatalogItemProps): string => stockLabel(item, lang, t);
 
   const filteredItems = useMemo(() => {
     return items.filter((item) => {
@@ -132,13 +107,8 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
   }, [items, selectedCategory, searchQuery]);
 
   const handleOpenModal = (item: CatalogItemProps) => {
-    const title = getItemTitle(item);
-    const subject =
-      lang === 'uz'
-        ? `Tijorat taklifi / hisob so'rovi: ${title} (${item.sku})`
-        : lang === 'en'
-        ? `Quotation / Invoice Request: ${title} (${item.sku})`
-        : `Запрос счета/КП на позицию: ${title} (${item.sku})`;
+    // Subject in the visitor's language (the lead message also states the site language).
+    const subject = t(lang, 'lead.subject.catalogTableItem', { title: tField(item, 'title', lang), sku: item.sku });
 
     window.dispatchEvent(
       new CustomEvent('open-lead-modal', {
@@ -162,7 +132,7 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                 : 'bg-white/40 text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white'
             }`}
           >
-            {lang === 'uz' ? 'Barcha tovarlar' : lang === 'en' ? 'All items' : 'Все позиции'} ({items.length})
+            {t(lang, 'catalogTable.allItems', { count: items.length })}
           </button>
           {categories.map((catRu) => {
             const count = items.filter((it) => (it.category || it.subsystem) === catRu).length;
@@ -193,13 +163,7 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={
-                lang === 'uz'
-                  ? 'Nom, SKU yoki parametrlar bo‘yicha qidiruv...'
-                  : lang === 'en'
-                  ? 'Search by title, SKU or specification...'
-                  : 'Поиск по наименованию, артикулу или параметрам...'
-              }
+              placeholder={t(lang, 'catalogTable.searchPlaceholder')}
               className="w-full border border-[#0A0A0A] bg-white/60 px-3 py-2 font-mono text-xs placeholder:text-[#4A5056] focus:outline-none focus:bg-white"
             />
             {searchQuery && (
@@ -207,9 +171,9 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                 type="button"
                 onClick={() => setSearchQuery('')}
                 className="absolute right-2.5 top-2.5 text-xs text-[#0A0A0A] font-mono hover:font-bold cursor-pointer"
-                aria-label="Очистить поиск"
+                aria-label={t(lang, 'catalogTable.clearSearchAria')}
               >
-                ✕
+                <span aria-hidden="true">✕</span>
               </button>
             )}
           </div>
@@ -217,12 +181,12 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
           {/* Results Counter and View Mode Toggle (Grid vs Table) */}
           <div className="flex items-center justify-between sm:justify-end gap-3 text-xs">
             <span className="text-[#4A5056]">
-              {lang === 'uz' ? 'Topildi:' : lang === 'en' ? 'Found:' : 'Найдено:'}{' '}
+              {t(lang, 'catalogTable.found')}{' '}
               <b className="text-[#0A0A0A]">{filteredItems.length}</b>
             </span>
 
             {/* View Mode Toggle Switcher */}
-            <div className="inline-flex border border-[#0A0A0A] bg-[#C8CDD2] p-0.5" role="group" aria-label="View switch">
+            <div className="inline-flex border border-[#0A0A0A] bg-[#C8CDD2] p-0.5" role="group" aria-label={t(lang, 'catalogTable.viewSwitchAria')}>
               <button
                 type="button"
                 onClick={() => setViewMode('grid')}
@@ -231,10 +195,10 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                     ? 'bg-[#0A0A0A] text-white'
                     : 'text-[#0A0A0A] hover:bg-white/40'
                 }`}
-                title="Сетка карточек с фото"
+                title={t(lang, 'catalogTable.gridTitle')}
               >
-                <span>⊞</span>
-                <span>{lang === 'uz' ? 'KATAKLAR' : lang === 'en' ? 'GRID' : 'ПЛИТКА'}</span>
+                <span aria-hidden="true">⊞</span>
+                <span>{t(lang, 'catalogTable.gridLabel')}</span>
               </button>
               <button
                 type="button"
@@ -244,10 +208,10 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                     ? 'bg-[#0A0A0A] text-white'
                     : 'text-[#0A0A0A] hover:bg-white/40'
                 }`}
-                title="Инженерная таблица"
+                title={t(lang, 'catalogTable.tableTitle')}
               >
-                <span>≡</span>
-                <span>{lang === 'uz' ? 'JADVAL' : lang === 'en' ? 'TABLE' : 'ТАБЛИЦА'}</span>
+                <span aria-hidden="true">≡</span>
+                <span>{t(lang, 'catalogTable.tableLabel')}</span>
               </button>
             </div>
           </div>
@@ -298,6 +262,7 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                       alt={title}
                       sku={item.sku}
                       category={category}
+                      lang={lang}
                       aspect="w-full h-full"
                       objectFit="cover"
                       loading="lazy"
@@ -306,7 +271,7 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
 
                   {/* Title */}
                   <h3 className="font-sans font-bold text-base text-[#0A0A0A] leading-snug mb-1">
-                    <a href={`${base}/catalog/${item.slug}`} className="hover:underline">
+                    <a href={productHref(item)} className="hover:underline">
                       {title}
                     </a>
                   </h3>
@@ -314,15 +279,15 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                   {/* Category and Key Attributes */}
                   <div className="text-[11px] font-mono text-[#4A5056] space-y-1.5 mt-2">
                     <div className="flex justify-between items-center text-[10px] text-[#4A5056] border-b border-[#0A0A0A]/10 pb-1">
-                      <span>{lang === 'uz' ? 'KATEGORIYA:' : lang === 'en' ? 'CATEGORY:' : 'КАТЕГОРИЯ:'}</span>
+                      <span>{t(lang, 'catalogTable.categoryLabel')}</span>
                       <span className="font-bold text-[#0A0A0A] uppercase truncate max-w-[55%]">{category}</span>
                     </div>
 
                     {/* First 3 Dynamic Attributes */}
                     {itemAttrs.length > 0 ? (
                       itemAttrs.slice(0, 3).map((attr, i) => {
-                        const lbl = lang === 'uz' ? attr.label_uz || attr.label : lang === 'en' ? attr.label_en || attr.label : attr.label;
-                        const val = lang === 'uz' ? attr.value_uz || attr.value : lang === 'en' ? attr.value_en || attr.value : attr.value;
+                        const lbl = tField(attr, 'label', lang);
+                        const val = tField(attr, 'value', lang);
                         return (
                           <div key={i} className="flex justify-between text-[11px] gap-2">
                             <span className="text-[#4A5056] truncate max-w-[50%]">{lbl}:</span>
@@ -341,7 +306,7 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                     {/* Price if available */}
                     {item.price && (
                       <div className="flex justify-between text-xs pt-1 font-bold text-[#0A0A0A]">
-                        <span>{lang === 'uz' ? 'Narx:' : lang === 'en' ? 'Price:' : 'Цена:'}</span>
+                        <span>{t(lang, 'catalogTable.priceLabel')}</span>
                         <span>{item.price}</span>
                       </div>
                     )}
@@ -351,17 +316,17 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                 {/* Bottom Action Buttons */}
                 <div className="pt-3 border-t border-[#0A0A0A]/15 mt-auto flex items-center gap-2 font-mono text-xs">
                   <a
-                    href={`${base}/catalog/${item.slug}`}
+                    href={productHref(item)}
                     className="flex-1 min-h-[44px] border border-[#0A0A0A] flex items-center justify-center text-center hover:bg-[#0A0A0A] hover:text-white transition-colors font-bold"
                   >
-                    {lang === 'uz' ? 'Batafsil →' : lang === 'en' ? 'Details →' : 'Подробнее →'}
+                    {t(lang, 'catalogTable.details')}
                   </a>
                   <button
                     type="button"
                     onClick={() => handleOpenModal(item)}
                     className="flex-1 min-h-[44px] border border-[#0A0A0A] bg-[#0A0A0A] text-white flex items-center justify-center text-center font-bold hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
                   >
-                    {lang === 'uz' ? 'So‘rov ↗' : lang === 'en' ? 'Request ↗' : 'Запросить ↗'}
+                    {t(lang, 'catalogTable.requestCard')}
                   </button>
                 </div>
               </div>
@@ -377,20 +342,20 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
             <thead>
               <tr className="border-b border-[#0A0A0A] bg-[#0A0A0A] text-white">
                 <th className="p-2.5 font-semibold w-16">
-                  {lang === 'uz' ? 'Foto' : lang === 'en' ? 'Photo' : 'Фото'}
+                  {t(lang, 'catalogTable.th.photo')}
                 </th>
-                <th className="p-2.5 font-semibold">SKU</th>
+                <th className="p-2.5 font-semibold">{t(lang, 'catalogTable.th.sku')}</th>
                 <th className="p-2.5 font-semibold">
-                  {lang === 'uz' ? 'Nomi va parametrlari' : lang === 'en' ? 'Product & Specs' : 'Наименование и параметры'}
-                </th>
-                <th className="p-2.5 font-semibold">
-                  {lang === 'uz' ? 'Kategoriya' : lang === 'en' ? 'Category' : 'Категория'}
+                  {t(lang, 'catalogTable.th.title')}
                 </th>
                 <th className="p-2.5 font-semibold">
-                  {lang === 'uz' ? 'Holat' : lang === 'en' ? 'Status' : 'Статус'}
+                  {t(lang, 'catalogTable.th.category')}
+                </th>
+                <th className="p-2.5 font-semibold">
+                  {t(lang, 'catalogTable.th.status')}
                 </th>
                 <th className="p-2.5 font-semibold text-right">
-                  {lang === 'uz' ? 'Harakat' : lang === 'en' ? 'Action' : 'Действие'}
+                  {t(lang, 'catalogTable.th.action')}
                 </th>
               </tr>
             </thead>
@@ -412,7 +377,7 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                   <tr key={item.sku} className="hover:bg-white/40 transition-colors group">
                     {/* 48x36px Photo Thumbnail */}
                     <td className="p-2.5">
-                      <a href={`${base}/catalog/${item.slug}`} className="block w-[48px] h-[36px] border border-[#0A0A0A]/30 overflow-hidden bg-[#C8CDD2]">
+                      <a href={productHref(item)} className="block w-[48px] h-[36px] border border-[#0A0A0A]/30 overflow-hidden bg-[#C8CDD2]">
                         <img
                           src={item.image || withBase(`/images/catalog/${item.sku.toLowerCase()}.jpg`)}
                           alt={title}
@@ -427,13 +392,13 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                       </a>
                     </td>
                     <td className="p-2.5 font-bold text-[#0A0A0A] whitespace-nowrap">
-                      <a href={`${base}/catalog/${item.slug}`} className="underline group-hover:no-underline">
+                      <a href={productHref(item)} className="underline group-hover:no-underline">
                         {item.sku}
                       </a>
                     </td>
                     <td className="p-2.5 max-w-sm">
                       <a
-                        href={`${base}/catalog/${item.slug}`}
+                        href={productHref(item)}
                         className="font-sans font-bold text-xs text-[#0A0A0A] block group-hover:underline line-clamp-1"
                       >
                         {title}
@@ -449,17 +414,17 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
                     <td className="p-2.5 text-right whitespace-nowrap">
                       <div className="flex items-center justify-end space-x-2">
                         <a
-                          href={`${base}/catalog/${item.slug}`}
+                          href={productHref(item)}
                           className="border border-[#0A0A0A] px-2 py-1 text-[11px] hover:bg-[#0A0A0A] hover:text-white transition-colors"
                         >
-                          {lang === 'uz' ? 'Batafsil →' : lang === 'en' ? 'Details →' : 'Подробнее →'}
+                          {t(lang, 'catalogTable.details')}
                         </a>
                         <button
                           type="button"
                           onClick={() => handleOpenModal(item)}
                           className="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-2.5 py-1 text-[11px] hover:bg-transparent hover:text-[#0A0A0A] transition-colors font-bold cursor-pointer"
                         >
-                          {lang === 'uz' ? 'So‘rov ↗' : lang === 'en' ? 'RFQ ↗' : 'Запросить ↗'}
+                          {t(lang, 'catalogTable.requestRow')}
                         </button>
                       </div>
                     </td>
@@ -475,14 +440,10 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
       {filteredItems.length === 0 && (
         <div className="hud-glass-card p-8 text-center font-mono text-xs space-y-2">
           <div className="text-base font-bold text-[#0A0A0A]">
-            {lang === 'uz' ? 'Hech narsa topilmadi' : lang === 'en' ? 'No items found' : 'Позиции не найдены'}
+            {t(lang, 'catalogTable.emptyTitle')}
           </div>
           <p className="text-[#4A5056] max-w-md mx-auto">
-            {lang === 'uz'
-              ? 'Qidiruv so‘zini o‘zgartirib ko‘ring yoki barcha tovarlar filtrini tanlang.'
-              : lang === 'en'
-              ? 'Try modifying your search query or reset the category filter.'
-              : 'Попробуйте изменить поисковый запрос или сбросить фильтр категорий.'}
+            {t(lang, 'catalogTable.emptyText')}
           </p>
           <button
             type="button"
@@ -492,7 +453,7 @@ export const CatalogFilterTable: React.FC<Props> = ({ items }) => {
             }}
             className="hud-btn mt-3 text-xs"
           >
-            {lang === 'uz' ? 'Filtrni tozalash' : lang === 'en' ? 'Reset filters' : 'Сбросить фильтры'}
+            {t(lang, 'catalogTable.reset')}
           </button>
         </div>
       )}

@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import type { Lang } from '../../i18n/ui';
-import globalData from '../../data/cms/global.json';
+import React, { useState } from 'react';
+import { makeT, type Lang } from '../../i18n';
+import { useLang } from '../../utils/useLang';
+import formsUi from '../../data/cms/ui/forms.json';
+import { buildLeadMessage, fileToBase64, leadContacts, MAX_LEAD_FILE_BYTES, sendLead } from './LeadModal';
 
-export const ContactsLeadForm: React.FC = () => {
-  const [lang, setLang] = useState<Lang>('ru');
+const t = makeT([formsUi]);
+
+interface ContactsLeadFormProps {
+  lang: Lang;
+}
+
+export const ContactsLeadForm: React.FC<ContactsLeadFormProps> = (props) => {
+  const lang = useLang(props.lang);
   const [name, setName] = useState('');
   const [company, setCompany] = useState('');
   const [inn, setInn] = useState('');
   const [phone, setPhone] = useState('+998 ');
-  const [subject, setSubject] = useState('Запрос счета и консультации со страницы Контакты');
+  const [subject, setSubject] = useState(() => t(lang, 'form.contacts.defaultSubject'));
   const [message, setMessage] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState('');
@@ -16,43 +24,11 @@ export const ContactsLeadForm: React.FC = () => {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
-  useEffect(() => {
-    const cur = (document.documentElement.lang as Lang) || 
-      ((typeof localStorage !== 'undefined' ? localStorage.getItem('rt_lang') : null) as Lang) || 
-      'ru';
-    if (cur === 'ru' || cur === 'uz' || cur === 'en') {
-      setLang(cur);
-      if (cur === 'uz') {
-        setSubject('Aloqa sahifasidan hisob va konsultatsiya so\'rovi');
-      } else if (cur === 'en') {
-        setSubject('Inquiry for Invoice and Consultation from Contacts Page');
-      }
-    }
-
-    const handleLang = (e: Event) => {
-      const customEvent = e as CustomEvent<Lang>;
-      if (customEvent.detail && (customEvent.detail === 'ru' || customEvent.detail === 'uz' || customEvent.detail === 'en')) {
-        const l = customEvent.detail;
-        setLang(l);
-        if (l === 'uz') {
-          setSubject('Aloqa sahifasidan hisob va konsultatsiya so\'rovi');
-        } else if (l === 'en') {
-          setSubject('Inquiry for Invoice and Consultation from Contacts Page');
-        } else {
-          setSubject('Запрос счета и консультации со страницы Контакты');
-        }
-      }
-    };
-
-    window.addEventListener('rt-lang-change', handleLang);
-    return () => window.removeEventListener('rt-lang-change', handleLang);
-  }, []);
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
     if (selected) {
-      if (selected.size > 25 * 1024 * 1024) {
-        alert(lang === 'uz' ? 'Fayl hajmi 25 MB dan oshmasligi kerak' : lang === 'en' ? 'File size must not exceed 25 MB' : 'Размер файла не должен превышать 25 МБ');
+      if (selected.size > MAX_LEAD_FILE_BYTES) {
+        alert(t(lang, 'form.fileTooLarge'));
         return;
       }
       setFile(selected);
@@ -60,33 +36,19 @@ export const ContactsLeadForm: React.FC = () => {
     }
   };
 
-  const fileToBase64 = (f: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const result = reader.result as string;
-        const base64 = result.includes(',') ? result.split(',')[1] : result;
-        resolve(base64);
-      };
-      reader.onerror = (err) => reject(err);
-      reader.readAsDataURL(f);
-    });
-  };
+  const formattedMsg = buildLeadMessage('lead.message.titleContacts', {
+    subject,
+    lang,
+    name,
+    company,
+    inn,
+    phone,
+    message,
+    fileName,
+  });
 
-  const formattedMsg = [
-    '🛠 ZAIAVKA S SAYTA RAILTECH.UZ (CONTACTS)',
-    `Mavzu / Тема: ${subject}`,
-    `Aloqa / Контакт: ${name || '-'}`,
-    `Tashkilot / Организация: ${company || '-'}`,
-    `STIR / ИНН: ${inn || '-'}`,
-    `Telefon / Телефон: ${phone || '-'}`,
-    `Xabar / Сообщение: ${message || '-'}`,
-    fileName ? `Fayl: ${fileName}` : null,
-  ].filter(Boolean).join('\n');
-
-  const baseTg = globalData.telegramUrl || 'https://t.me/railtech_uz';
-  const tgShareUrl = `${baseTg}?text=${encodeURIComponent(formattedMsg)}`;
-  const mailShareUrl = `mailto:${globalData.emailSupply || globalData.emailGeneral || 'supply@railtech.uz'}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(formattedMsg)}`;
+  const tgShareUrl = `${leadContacts.telegramUrl}?text=${encodeURIComponent(formattedMsg)}`;
+  const mailShareUrl = `mailto:${leadContacts.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(formattedMsg)}`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,7 +63,7 @@ export const ContactsLeadForm: React.FC = () => {
         fileSizeStr = `${(file.size / 1024).toFixed(1)} KB`;
       }
 
-      const payload = {
+      const sent = await sendLead({
         name,
         company,
         inn,
@@ -115,28 +77,7 @@ export const ContactsLeadForm: React.FC = () => {
         source: 'railtech-contacts-page',
         timestamp: new Date().toISOString(),
         locale: lang,
-      };
-
-      const workerEndpoint =
-        globalData.telegramWebhook ||
-        import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ||
-        import.meta.env.PUBLIC_LEAD_WORKER_URL ||
-        import.meta.env.PUBLIC_WEBHOOK_URL ||
-        '';
-      let sent = false;
-
-      if (workerEndpoint && workerEndpoint.trim().startsWith('http')) {
-        try {
-          const res = await fetch(workerEndpoint.trim(), {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-          });
-          if (res.ok) sent = true;
-        } catch (netErr) {
-          console.warn('[ContactsForm] Worker fetch failed:', netErr);
-        }
-      }
+      });
 
       // Never show a fake success: if the lead was not delivered, surface the error
       // so the user can resend via Telegram / phone buttons below the form.
@@ -157,13 +98,7 @@ export const ContactsLeadForm: React.FC = () => {
       }, 4000);
     } catch (err: any) {
       console.error('[ContactsForm] Error:', err);
-      setErrorMsg(
-        lang === 'uz'
-          ? 'Yuborishda xatolik yuz berdi. Iltimos, Telegram orqali yuboring yoki bizga qo\'ng\'iroq qiling.'
-          : lang === 'en'
-          ? 'Error occurred while sending. Please use Telegram button or contact us by phone.'
-          : 'Произошла ошибка при отправке. Пожалуйста, используйте кнопку отправки в Telegram или позвоните нам.'
-      );
+      setErrorMsg(t(lang, 'form.contacts.errorMessage'));
     } finally {
       setIsSending(false);
     }
@@ -173,14 +108,10 @@ export const ContactsLeadForm: React.FC = () => {
     return (
       <div className="hud-glass-card p-6 font-mono text-center space-y-3">
         <div className="inline-block bg-[#0A0A0A] text-white px-4 py-1.5 font-bold uppercase text-xs">
-          {lang === 'uz' ? '✓ SO\'ROV MUVAFFAQIYATLI YUBORILDI' : lang === 'en' ? '✓ INQUIRY SUCCESSFULLY TRANSMITTED' : '✓ ЗАЯВКА УСПЕШНО ОТПРАВЛЕНА'}
+          {t(lang, 'form.contacts.successBadge')}
         </div>
         <p className="text-xs text-[#4A5056] font-sans">
-          {lang === 'uz'
-            ? 'Ta\'minot bo\'limi muhandisi spetsifikatsiyangizni o\'rganib, 60 daqiqa ichida siz bilan bog\'lanadi.'
-            : lang === 'en'
-            ? 'A procurement engineer will review your specification and get back to you within 60 minutes.'
-            : 'Инженер отдела снабжения обработает вашу спецификацию и свяжется с вами в течение 60 минут.'}
+          {t(lang, 'form.contacts.successMessage')}
         </p>
       </div>
     );
@@ -190,10 +121,10 @@ export const ContactsLeadForm: React.FC = () => {
     <div className="hud-glass-card p-6 font-mono">
       <div className="border-b border-[#0A0A0A] pb-2 mb-4">
         <span className="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider block">
-          {lang === 'uz' ? 'TEZKOR SO\'ROV FORMASI' : lang === 'en' ? 'DIRECT PROCUREMENT INQUIRY FORM' : 'ФОРМА ОПЕРАТИВНОГО ЗАПРОСА'}
+          {t(lang, 'form.contacts.title')}
         </span>
         <span className="text-[11px] text-[#4A5056]">
-          {lang === 'uz' ? 'Navbatchi ta\'minot muhandisiga to\'g\'ridan-to\'g\'ri yuborish' : lang === 'en' ? 'Direct dispatch to on-duty supply engineer' : 'Прямая отправка дежурному инженеру поставок'}
+          {t(lang, 'form.contacts.subtitle')}
         </span>
       </div>
 
@@ -206,7 +137,7 @@ export const ContactsLeadForm: React.FC = () => {
       <form onSubmit={handleSubmit} className="space-y-3">
         <div>
           <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-            {lang === 'uz' ? 'MUROJAAT MAVZUSI' : lang === 'en' ? 'INQUIRY SUBJECT' : 'ТЕМА ОБРАЩЕНИЯ'}
+            {t(lang, 'form.contacts.subjectLabel')}
           </label>
           <input
             type="text"
@@ -220,20 +151,20 @@ export const ContactsLeadForm: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div>
             <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-              {lang === 'uz' ? 'MAS\'UL SHAXS (F.I.SH.)' : lang === 'en' ? 'CONTACT PERSON' : 'КОНТАКТНОЕ ЛИЦО'}
+              {t(lang, 'form.contacts.nameLabel')}
             </label>
             <input
               type="text"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder={lang === 'uz' ? 'F.I.Sh. / Lavozim' : lang === 'en' ? 'Full Name / Title' : 'ФИО / Должность'}
+              placeholder={t(lang, 'form.contacts.namePlaceholder')}
               className="w-full bg-[#DCE0E4] border border-[#0A0A0A] px-3 py-1.5 text-xs focus:outline-none focus:bg-white"
             />
           </div>
           <div>
             <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-              {lang === 'uz' ? 'TELEFON RAQAMI' : lang === 'en' ? 'PHONE NUMBER' : 'ТЕЛЕФОН'}
+              {t(lang, 'form.contacts.phoneLabel')}
             </label>
             <input
               type="tel"
@@ -248,26 +179,26 @@ export const ContactsLeadForm: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div>
             <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-              {lang === 'uz' ? 'TASHKILOT NOMI' : lang === 'en' ? 'COMPANY NAME' : 'ОРГАНИЗАЦИЯ'}
+              {t(lang, 'form.contacts.companyLabel')}
             </label>
             <input
               type="text"
               required
               value={company}
               onChange={(e) => setCompany(e.target.value)}
-              placeholder={lang === 'uz' ? 'Kompaniya yoki zavod' : lang === 'en' ? 'Enterprise / Plant' : 'Завод / Депо / Предприятие'}
+              placeholder={t(lang, 'form.contacts.companyPlaceholder')}
               className="w-full bg-[#DCE0E4] border border-[#0A0A0A] px-3 py-1.5 text-xs focus:outline-none focus:bg-white"
             />
           </div>
           <div>
             <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-              {lang === 'uz' ? 'STIR (INN, EHF UCHUN)' : lang === 'en' ? 'TAX ID / INN' : 'ИНН (ДЛЯ ЭСФ С НДС)'}
+              {t(lang, 'form.contacts.innLabel')}
             </label>
             <input
               type="text"
               value={inn}
               onChange={(e) => setInn(e.target.value)}
-              placeholder="308912445"
+              placeholder={t(lang, 'form.contacts.innPlaceholder')}
               className="w-full bg-[#DCE0E4] border border-[#0A0A0A] px-3 py-1.5 text-xs focus:outline-none focus:bg-white font-mono"
             />
           </div>
@@ -275,24 +206,24 @@ export const ContactsLeadForm: React.FC = () => {
 
         <div>
           <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-            {lang === 'uz' ? 'TALAB QILINGAN DETALLAR / IZOH' : lang === 'en' ? 'REQUIRED SPARES / SPECIFICATIONS' : 'НЕОБХОДИМАЯ НОМЕНКЛАТУРА / КОММЕНТАРИЙ'}
+            {t(lang, 'form.contacts.messageLabel')}
           </label>
           <textarea
             rows={3}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder={lang === 'uz' ? 'Artikullar, miqdori va yetkazib berish shartlari...' : lang === 'en' ? 'Enter part numbers, quantities and delivery terms...' : 'Укажите артикулы, требуемое количество и базис поставки...'}
+            placeholder={t(lang, 'form.contacts.messagePlaceholder')}
             className="w-full bg-[#DCE0E4] border border-[#0A0A0A] px-3 py-1.5 text-xs focus:outline-none focus:bg-white"
           />
         </div>
 
         <div>
           <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-            {lang === 'uz' ? 'FAYL / SPETSIFIKATSIYA BIRIKTIRISH (25 MB GACHA)' : lang === 'en' ? 'ATTACH SPECIFICATION FILE (UP TO 25 MB)' : 'ПРИКРЕПИТЬ СПЕЦИФИКАЦИЮ (ДО 25 МБ)'}
+            {t(lang, 'form.contacts.fileLabel')}
           </label>
           <div className="flex items-center space-x-2">
             <label className="border border-[#0A0A0A] bg-white hover:bg-[#0A0A0A] hover:text-white px-3 py-1 text-xs cursor-pointer transition-colors">
-              <span>{lang === 'uz' ? 'Faylni tanlash' : lang === 'en' ? 'Choose File' : 'Обзор...'}</span>
+              <span>{t(lang, 'form.contacts.fileButton')}</span>
               <input
                 type="file"
                 onChange={handleFileChange}
@@ -301,7 +232,7 @@ export const ContactsLeadForm: React.FC = () => {
               />
             </label>
             <span className="text-[11px] text-[#4A5056] truncate max-w-[200px]">
-              {fileName || (lang === 'uz' ? 'Fayl tanlanmagan' : lang === 'en' ? 'No file chosen' : 'Файл не выбран')}
+              {fileName || t(lang, 'form.contacts.fileNone')}
             </span>
           </div>
         </div>
@@ -312,9 +243,7 @@ export const ContactsLeadForm: React.FC = () => {
             disabled={isSending}
             className="w-full border border-[#0A0A0A] bg-[#0A0A0A] text-white py-2 text-xs font-bold uppercase tracking-wider hover:bg-transparent hover:text-[#0A0A0A] transition-colors disabled:opacity-50 cursor-pointer"
           >
-            {isSending
-              ? (lang === 'uz' ? 'Yuborilmoqda...' : lang === 'en' ? 'Transmitting...' : 'ОТПРАВКА...')
-              : (lang === 'uz' ? '[ SO\'ROVNI YUBORISH ]' : lang === 'en' ? '[ SUBMIT INQUIRY ]' : '[ ОТПРАВИТЬ ЗАЯВКУ ]')}
+            {isSending ? t(lang, 'form.contacts.sending') : t(lang, 'form.contacts.submit')}
           </button>
         </div>
 
@@ -325,16 +254,18 @@ export const ContactsLeadForm: React.FC = () => {
             rel="noopener noreferrer"
             className="flex-1 text-center border border-[#0A0A0A]/40 bg-[#C8CDD2] py-1.5 hover:bg-[#0A0A0A] hover:text-white transition-colors"
           >
-            ↗ Telegram Bot
+            {t(lang, 'form.contacts.telegramLink')}
           </a>
           <a
             href={mailShareUrl}
             className="flex-1 text-center border border-[#0A0A0A]/40 bg-[#C8CDD2] py-1.5 hover:bg-[#0A0A0A] hover:text-white transition-colors"
           >
-            ✉ Email Direct
+            {t(lang, 'form.contacts.emailLink')}
           </a>
         </div>
       </form>
     </div>
   );
 };
+
+export default ContactsLeadForm;

@@ -1,25 +1,109 @@
 import React, { useState, useEffect } from 'react';
-import type { Locale } from '../../store/modeStore';
-import { UI_STRINGS } from '../../store/modeStore';
+import { LANG_META, localeHref, makeT, tField, type Lang } from '../../i18n';
+import { telHref } from '../../utils/url';
 import { useLang } from '../../utils/useLang';
-import { withBase } from '../../utils/url';
 import globalData from '../../data/cms/global.json';
+import pagesData from '../../data/cms/pages.json';
+import formsUi from '../../data/cms/ui/forms.json';
+
+const t = makeT([formsUi]);
+const lm = pagesData.leadModal;
+
+/* ------------------------------------------------------------------ */
+/* Shared lead-delivery helpers (also used by ContactsLeadForm)        */
+/* ------------------------------------------------------------------ */
+
+/** Direct contact channels from the CMS (global.json). */
+export const leadContacts = {
+  phone: globalData.phone,
+  telHref: telHref(globalData.phone),
+  email: globalData.emailSupply || globalData.emailGeneral,
+  telegramUrl: globalData.telegramUrl,
+};
+
+/** Lead webhook: CMS value first, then build-time env overrides. */
+export const leadWebhookUrl: string = (
+  globalData.telegramWebhook ||
+  import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ||
+  import.meta.env.PUBLIC_LEAD_WORKER_URL ||
+  import.meta.env.PUBLIC_WEBHOOK_URL ||
+  ''
+).trim();
+
+export const MAX_LEAD_FILE_BYTES = 25 * 1024 * 1024;
+
+export interface LeadMessageFields {
+  subject: string;
+  name: string;
+  company: string;
+  inn: string;
+  phone: string;
+  message: string;
+  fileName?: string;
+  lang?: Lang;
+}
+
+/**
+ * Plain-text lead for Telegram / e-mail sharing. Row labels are Russian (read by the sales team);
+ * the subject is in the visitor's language, so the site language is added as its own row.
+ */
+export function buildLeadMessage(titleKey: string, f: LeadMessageFields): string {
+  const row = (key: string, value: string) => `${t('ru', key)}: ${value || '-'}`;
+  return [
+    t('ru', titleKey),
+    row('lead.message.subject', f.subject),
+    f.lang ? row('lead.message.language', LANG_META[f.lang].name) : null,
+    row('lead.message.contact', f.name),
+    row('lead.message.company', f.company),
+    row('lead.message.inn', f.inn),
+    row('lead.message.phone', f.phone),
+    row('lead.message.message', f.message),
+    f.fileName ? row('lead.message.file', f.fileName) : null,
+  ]
+    .filter(Boolean)
+    .join('\n');
+}
+
+export function fileToBase64(f: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result as string;
+      resolve(result.includes(',') ? result.split(',')[1] : result);
+    };
+    reader.onerror = (err) => reject(err);
+    reader.readAsDataURL(f);
+  });
+}
+
+/** POSTs the lead to the webhook. Resolves true only when it was actually delivered. */
+export async function sendLead(payload: Record<string, unknown>): Promise<boolean> {
+  if (!leadWebhookUrl.startsWith('http')) return false;
+  try {
+    const res = await fetch(leadWebhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    return res.ok;
+  } catch (err) {
+    console.warn('[Lead] Webhook dispatch notice:', err);
+    return false;
+  }
+}
+
+/* ------------------------------------------------------------------ */
 
 interface LeadModalProps {
   isOpen: boolean;
   onClose: () => void;
   initialSubject?: string;
-  locale?: Locale;
+  lang: Lang;
 }
 
-export const LeadModal: React.FC<LeadModalProps> = ({
-  isOpen,
-  onClose,
-  initialSubject = '',
-  locale: propLocale,
-}) => {
-  const reactiveLang = useLang();
-  const activeLang: Locale = (propLocale || reactiveLang || 'ru') as Locale;
+export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose, initialSubject = '', lang: propLang }) => {
+  const lang = useLang(propLang);
+  const L = (field: string) => tField(lm, field, lang) as string;
 
   const [name, setName] = useState('');
   const [company, setCompany] = useState('');
@@ -53,55 +137,21 @@ export const LeadModal: React.FC<LeadModalProps> = ({
     };
   }, [isOpen, onClose]);
 
-  const t = UI_STRINGS[activeLang]?.modal || UI_STRINGS.ru.modal;
-
   if (!isOpen) return null;
+
+  const defaultSubject = t(lang, 'lead.subject.siteDefault');
+  const activeSubject = subject || initialSubject || defaultSubject;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
     if (selected) {
-      if (selected.size > 25 * 1024 * 1024) {
-        alert(
-          activeLang === 'uz'
-            ? 'Fayl hajmi 25 MB dan oshmasligi kerak'
-            : activeLang === 'en'
-            ? 'File size must be under 25 MB'
-            : 'Размер файла не должен превышать 25 МБ'
-        );
+      if (selected.size > MAX_LEAD_FILE_BYTES) {
+        alert(t(lang, 'form.fileTooLarge'));
         return;
       }
       setFile(selected);
       setFileName(selected.name);
     }
-  };
-
-  const fileToBase64 = (f: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const result = reader.result as string;
-        const base64 = result.includes(',') ? result.split(',')[1] : result;
-        resolve(base64);
-      };
-      reader.onerror = (err) => reject(err);
-      reader.readAsDataURL(f);
-    });
-  };
-
-  // Build formatted text for Telegram / Email fallback
-  const getFormattedMessage = () => {
-    return [
-      '🛠 ЗАЯВКА С САЙТА RAILTECH.UZ',
-      `Тема: ${subject || initialSubject || 'Запрос КП / Счета'}`,
-      `Контакт: ${name || '-'}`,
-      `Организация: ${company || '-'}`,
-      `ИНН: ${inn || '-'}`,
-      `Телефон: ${phone || '-'}`,
-      `Сообщение: ${comment || '-'}`,
-      fileName ? `Файл: ${fileName}` : null,
-    ]
-      .filter(Boolean)
-      .join('\n');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -117,8 +167,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({
         fileSizeStr = `${(file.size / 1024).toFixed(1)} KB`;
       }
 
-      const activeSubject = subject || initialSubject || 'Запрос КП / Счета с сайта';
-      const payload = {
+      const sent = await sendLead({
         name,
         company,
         inn,
@@ -126,38 +175,15 @@ export const LeadModal: React.FC<LeadModalProps> = ({
         subject: activeSubject,
         message: comment,
         comment,
-        locale: activeLang,
+        locale: lang,
         fileName: file ? file.name : '',
         fileSize: fileSizeStr,
         fileBase64,
         timestamp: new Date().toISOString(),
-      };
+      });
 
-      const webhookUrl =
-        globalData.telegramWebhook ||
-        import.meta.env.PUBLIC_LEAD_WEBHOOK_URL ||
-        import.meta.env.PUBLIC_LEAD_WORKER_URL ||
-        import.meta.env.PUBLIC_WEBHOOK_URL ||
-        '';
-
-      let sent = false;
-
-      // 1. Send via Secure Webhook (Cloudflare Worker / CMS Endpoint)
-      if (webhookUrl && webhookUrl.trim().startsWith('http')) {
-        try {
-          const res = await fetch(webhookUrl.trim(), {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-          });
-          if (res.ok) sent = true;
-        } catch (webhookErr) {
-          console.warn('[LeadModal] Webhook dispatch notice:', webhookErr);
-        }
-      }
-
-      // 2. Never show a fake success: if the lead was not delivered, ask the user
-      //    to use the direct channels (Telegram / Email / Phone) shown at the top of the modal.
+      // Never show a fake success: if the lead was not delivered, ask the user
+      // to use the direct channels (Telegram / Email / Phone) shown at the top of the modal.
       if (!sent) {
         throw new Error('Lead webhook is not configured or returned an error');
       }
@@ -176,21 +202,24 @@ export const LeadModal: React.FC<LeadModalProps> = ({
       }, 3000);
     } catch (err: any) {
       console.error('[LeadModal] Dispatch error:', err);
-      setErrorMsg(
-        t.errorMessage ||
-          `Произошла ошибка при отправке. Пожалуйста, свяжитесь с нами напрямую: ${globalData.phone}`
-      );
+      setErrorMsg(t(lang, 'form.lead.errorMessage', { phone: leadContacts.phone }));
     } finally {
       setIsSending(false);
     }
   };
 
-  const formattedMsg = getFormattedMessage();
-  const baseTg = globalData.telegramUrl || 'https://t.me/railtech_uz';
-  const tgShareUrl = `${baseTg}?text=${encodeURIComponent(formattedMsg)}`;
-  const mailShareUrl = `mailto:${globalData.emailSupply || globalData.emailGeneral || 'supply@railtech.uz'}?subject=${encodeURIComponent(
-    subject || initialSubject || 'Запрос с сайта RailTech'
-  )}&body=${encodeURIComponent(formattedMsg)}`;
+  const formattedMsg = buildLeadMessage('lead.message.title', {
+    subject: activeSubject,
+    lang,
+    name,
+    company,
+    inn,
+    phone,
+    message: comment,
+    fileName,
+  });
+  const tgShareUrl = `${leadContacts.telegramUrl}?text=${encodeURIComponent(formattedMsg)}`;
+  const mailShareUrl = `mailto:${leadContacts.email}?subject=${encodeURIComponent(activeSubject)}&body=${encodeURIComponent(formattedMsg)}`;
 
   return (
     <div
@@ -205,26 +234,24 @@ export const LeadModal: React.FC<LeadModalProps> = ({
           <div>
             <div className="flex items-center space-x-2">
               <span className="w-2.5 h-2.5 bg-[#0A0A0A] inline-block animate-pulse"></span>
-              <span className="font-bold uppercase tracking-tight text-xs">
-                {t.badge || 'ЗАПРОС КП / СЧЕТА С НДС 12%'}
-              </span>
+              <span className="font-bold uppercase tracking-tight text-xs">{L('badge')}</span>
             </div>
-            <div className="text-[10px] text-[#4A5056]">{t.locationMeta || 'ТАШКЕНТ // СКЛАД INDEX B2-2097'}</div>
+            <div className="text-[10px] text-[#4A5056]">{L('locationMeta')}</div>
           </div>
           <button
             onClick={onClose}
             type="button"
-            aria-label="Закрыть модальное окно"
+            aria-label={t(lang, 'form.lead.closeAria')}
             className="w-7 h-7 border border-[#0A0A0A] flex items-center justify-center hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer"
           >
-            ✕
+            <span aria-hidden="true">✕</span>
           </button>
         </div>
 
-        {/* 3 Branded Quick-Contact Buttons (Task 4) */}
+        {/* 3 Branded Quick-Contact Buttons */}
         <div className="mb-4">
           <div className="text-[10px] uppercase text-[#4A5056] mb-1.5 font-bold tracking-wider">
-            {activeLang === 'uz' ? 'TEZKOR ALOQA KANALLARI:' : activeLang === 'en' ? 'DIRECT CONTACT CHANNELS:' : 'КАНАЛЫ БЫСТРОЙ СВЯЗИ:'}
+            {L('quickChannels')}
           </div>
           <div className="grid grid-cols-3 gap-2">
             {/* Telegram */}
@@ -234,10 +261,10 @@ export const LeadModal: React.FC<LeadModalProps> = ({
               rel="noopener noreferrer"
               className="h-[42px] flex items-center justify-center gap-1.5 px-2 border border-[#0A0A0A]/25 hover:bg-[#0A0A0A] hover:text-white transition-colors text-xs font-mono font-bold whitespace-nowrap bg-white/50"
             >
-              <svg className="w-4 h-4 shrink-0 fill-current" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 shrink-0 fill-current" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
               </svg>
-              <span>Telegram</span>
+              <span>{t(lang, 'form.channel.telegram')}</span>
             </a>
 
             {/* Email */}
@@ -245,22 +272,22 @@ export const LeadModal: React.FC<LeadModalProps> = ({
               href={mailShareUrl}
               className="h-[42px] flex items-center justify-center gap-1.5 px-2 border border-[#0A0A0A]/25 hover:bg-[#0A0A0A] hover:text-white transition-colors text-xs font-mono font-bold whitespace-nowrap bg-white/50"
             >
-              <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <rect x="2" y="4" width="20" height="16" rx="0" />
                 <path d="m22 7-10 7L2 7" />
               </svg>
-              <span>Email</span>
+              <span>{t(lang, 'form.channel.email')}</span>
             </a>
 
             {/* Phone */}
             <a
-              href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`}
+              href={leadContacts.telHref}
               className="h-[42px] flex items-center justify-center gap-1.5 px-2 border border-[#0A0A0A]/25 hover:bg-[#0A0A0A] hover:text-white transition-colors text-xs font-mono font-bold whitespace-nowrap bg-white/50"
             >
-              <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
               </svg>
-              <span>{activeLang === 'uz' ? "Qo'ng'iroq" : activeLang === 'en' ? 'Call' : 'Звонок'}</span>
+              <span>{t(lang, 'form.channel.call')}</span>
             </a>
           </div>
         </div>
@@ -268,23 +295,20 @@ export const LeadModal: React.FC<LeadModalProps> = ({
         {submitted ? (
           <div className="py-8 text-center space-y-4">
             <div className="inline-block bg-[#0A0A0A] text-white px-4 py-1.5 font-bold uppercase text-xs">
-              {t.successBadge || '✓ ЗАЯВКА УСПЕШНО ЗАРЕГИСТРИРОВАНА'}
+              {t(lang, 'form.lead.successBadge')}
             </div>
-            <p className="text-[#4A5056] font-sans text-sm leading-relaxed">
-              {t.successMessage ||
-                'Дежурный инженер отдела поставок свяжется с вами в течение 60 минут с готовым расчетом сметы.'}
-            </p>
+            <p className="text-[#4A5056] font-sans text-sm leading-relaxed">{t(lang, 'form.lead.successMessage')}</p>
             <div className="border border-[#0A0A0A] bg-[#C8CDD2] p-3 text-[11px] text-[#0A0A0A] space-y-1">
               <div>
-                Прямая линия снабжения:{' '}
-                <a href={`tel:${globalData.phone.replace(/[\s-]/g, '')}`} className="font-bold underline">
-                  {globalData.phone}
+                {t(lang, 'form.lead.successPhone')}{' '}
+                <a href={leadContacts.telHref} className="font-bold underline">
+                  {leadContacts.phone}
                 </a>
               </div>
               <div>
-                Официальная почта:{' '}
-                <a href={`mailto:${globalData.emailSupply || globalData.emailGeneral}`} className="font-bold underline">
-                  {globalData.emailSupply || globalData.emailGeneral}
+                {t(lang, 'form.lead.successEmail')}{' '}
+                <a href={`mailto:${leadContacts.email}`} className="font-bold underline">
+                  {leadContacts.email}
                 </a>
               </div>
             </div>
@@ -292,49 +316,41 @@ export const LeadModal: React.FC<LeadModalProps> = ({
         ) : (
           <form onSubmit={handleSubmit} className="space-y-3">
             {errorMsg && (
-              <div className="border border-[#0A0A0A] bg-red-100 text-red-900 p-2.5 text-xs font-mono">
-                {errorMsg}
-              </div>
+              <div className="border border-[#0A0A0A] bg-red-100 text-red-900 p-2.5 text-xs font-mono">{errorMsg}</div>
             )}
 
             <div>
-              <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-                {activeLang === 'uz' ? "SO'ROV MAVZUSI" : activeLang === 'en' ? 'REQUEST SUBJECT' : 'ТЕМА ЗАПРОСА'}
-              </label>
+              <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">{L('subjectLabel')}</label>
               <input
                 type="text"
                 required
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                placeholder="Запрос КП / Счета с сайта"
+                placeholder={t(lang, 'form.lead.subjectPlaceholder')}
                 className="w-full bg-[#DCE0E4] border border-[#0A0A0A] px-3 py-2 text-xs focus:outline-none focus:bg-white font-mono"
               />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-                  {t.nameLabel || 'ИМЯ / ДОЛЖНОСТЬ'}
-                </label>
+                <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">{L('nameLabel')}</label>
                 <input
                   type="text"
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder={t.namePlaceholder || 'Имя Фамилия'}
+                  placeholder={t(lang, 'form.lead.namePlaceholder')}
                   className="w-full bg-[#DCE0E4] border border-[#0A0A0A] px-3 py-2 text-xs focus:outline-none focus:bg-white"
                 />
               </div>
               <div>
-                <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-                  {t.phoneLabel || 'ТЕЛЕФОН'}
-                </label>
+                <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">{L('phoneLabel')}</label>
                 <input
                   type="tel"
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  placeholder={t.phonePlaceholder || '+998 90 123-45-67'}
+                  placeholder={t(lang, 'form.lead.phonePlaceholder')}
                   className="w-full bg-[#DCE0E4] border border-[#0A0A0A] px-3 py-2 text-xs focus:outline-none focus:bg-white font-mono"
                 />
               </div>
@@ -342,56 +358,45 @@ export const LeadModal: React.FC<LeadModalProps> = ({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-                  {t.companyLabel || 'ОРГАНИЗАЦИЯ'}
-                </label>
+                <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">{L('companyLabel')}</label>
                 <input
                   type="text"
                   required
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
-                  placeholder={t.companyPlaceholder || 'ООО / АО / СП'}
+                  placeholder={t(lang, 'form.lead.companyPlaceholder')}
                   className="w-full bg-[#DCE0E4] border border-[#0A0A0A] px-3 py-2 text-xs focus:outline-none focus:bg-white"
                 />
               </div>
               <div>
-                <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-                  {t.innLabel || 'ИНН (ДЛЯ ЭСФ 12%)'}
-                </label>
+                <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">{L('innLabel')}</label>
                 <input
                   type="text"
                   value={inn}
                   onChange={(e) => setInn(e.target.value)}
-                  placeholder={t.innPlaceholder || '9 цифр ИНН'}
+                  placeholder={t(lang, 'form.lead.innPlaceholder')}
                   className="w-full bg-[#DCE0E4] border border-[#0A0A0A] px-3 py-2 text-xs focus:outline-none focus:bg-white font-mono"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-                {t.taskLabel || 'СООБЩЕНИЕ / ПЕРЕЧЕНЬ ПОЗИЦИЙ'}
-              </label>
+              <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">{L('messageLabel')}</label>
               <textarea
                 rows={3}
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                placeholder={
-                  t.taskPlaceholder ||
-                  'Укажите артикулы, количество, требования к сертификации или базис доставки...'
-                }
+                placeholder={t(lang, 'form.lead.messagePlaceholder')}
                 className="w-full bg-[#DCE0E4] border border-[#0A0A0A] px-3 py-2 text-xs focus:outline-none focus:bg-white font-sans"
               />
             </div>
 
             <div>
-              <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">
-                {t.fileLabel || 'ПРИКРЕПИТЬ СПЕЦИФИКАЦИЮ (EXCEL, PDF ДО 25 МБ)'}
-              </label>
+              <label className="block text-[10px] uppercase text-[#4A5056] mb-1 font-bold">{L('fileLabel')}</label>
               <label className="flex items-center justify-between border border-dashed border-[#0A0A0A] bg-[#DCE0E4]/60 px-3 py-2 cursor-pointer hover:bg-white transition-colors">
-                <span className="truncate text-xs">{fileName || t.fileDefault || 'Выберите файл ведомости...'}</span>
+                <span className="truncate text-xs">{fileName || t(lang, 'form.lead.fileDefault')}</span>
                 <span className="bg-[#0A0A0A] text-white px-2 py-0.5 text-[10px] uppercase shrink-0 ml-2 font-bold">
-                  {t.fileButton || 'ОБЗОР'}
+                  {L('fileBrowse')}
                 </span>
                 <input
                   type="file"
@@ -404,41 +409,16 @@ export const LeadModal: React.FC<LeadModalProps> = ({
 
             {/* Privacy & Legal disclaimer */}
             <p className="text-[10px] text-[#4A5056] leading-tight">
-              {activeLang === 'uz' ? (
-                <>
-                  So'rov yuborish orqali siz{' '}
-                  <a href={withBase('/privacy')} target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
-                    Maxfiylik siyosati
-                  </a>{' '}
-                  va{' '}
-                  <a href={withBase('/terms')} target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
-                    Foydalanish shartlari
-                  </a>
-                  ga rozilik bildirasiz.
-                </>
-              ) : activeLang === 'en' ? (
-                <>
-                  By submitting this inquiry, you confirm agreement to our{' '}
-                  <a href={withBase('/privacy')} target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
-                    Privacy Policy
-                  </a>{' '}
-                  and{' '}
-                  <a href={withBase('/terms')} target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
-                    Terms of Service
-                  </a>.
-                </>
-              ) : (
-                <>
-                  Отправляя заявку, вы подтверждаете согласие с условиями{' '}
-                  <a href={withBase('/privacy')} target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
-                    Политики конфиденциальности
-                  </a>{' '}
-                  и{' '}
-                  <a href={withBase('/terms')} target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
-                    Условий использования
-                  </a>.
-                </>
-              )}
+              {/* Spaces live in code: the CMS trims leading/trailing whitespace on save */}
+              {t(lang, 'form.consent.before').trim()}{' '}
+              <a href={localeHref('/privacy/', lang)} target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
+                {t(lang, 'form.consent.privacy')}
+              </a>
+              {' '}{t(lang, 'form.consent.and').trim()}{' '}
+              <a href={localeHref('/terms/', lang)} target="_blank" className="text-[#0A0A0A] underline hover:no-underline">
+                {t(lang, 'form.consent.terms')}
+              </a>
+              {t(lang, 'form.consent.after')}
             </p>
 
             <div className="pt-2 flex items-center justify-end gap-2 border-t border-[#0A0A0A]/20">
@@ -448,14 +428,14 @@ export const LeadModal: React.FC<LeadModalProps> = ({
                 disabled={isSending}
                 className="px-4 py-2 border border-[#0A0A0A] hover:bg-[#0A0A0A]/10 uppercase transition-colors text-xs font-mono"
               >
-                {t.cancelButton || 'ОТМЕНА'}
+                {L('cancelBtn')}
               </button>
               <button
                 type="submit"
                 disabled={isSending}
                 className="px-5 py-2 bg-[#0A0A0A] text-white font-bold uppercase hover:opacity-90 transition-opacity disabled:opacity-50 cursor-pointer text-xs font-mono"
               >
-                {isSending ? t.sendingButton || 'ОТПРАВКА...' : t.submitButton || '[ ОТПРАВИТЬ ЗАЯВКУ ]'}
+                {isSending ? L('sendingBtn') : L('submitBtn')}
               </button>
             </div>
           </form>

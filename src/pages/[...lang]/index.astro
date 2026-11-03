@@ -1,0 +1,539 @@
+---
+import { stockLabel } from '../../utils/stock';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { HudMediaSlider } from '../../components/islands/HudMediaSlider';
+import I18nText from '../../components/I18nText.astro';
+import HudCard from '../../components/hud/HudCard.astro';
+import HudStepDivider from '../../components/hud/HudStepDivider.astro';
+import homeData from '../../data/cms/home.json';
+import { withBase } from '../../utils/url';
+import { langStaticPaths, localeHref, pick, tField } from '../../i18n';
+import { t } from '../../i18n/ui';
+import { pageSeo } from '../../utils/seo';
+
+export const getStaticPaths = langStaticPaths;
+
+const lang = Astro.locals.lang;
+const tr = (key: string, vars?: Record<string, string | number>) => t(lang, key, vars);
+const seo = pageSeo('home', lang);
+const H = (field: string): string => tField(homeData, field, lang);
+
+const allSkus = await getCollection('catalog');
+allSkus.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
+const showcaseSkus = allSkus.slice(0, 6);
+
+const allPosts = await getCollection('blog');
+const latestPosts = allPosts
+  .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime())
+  .slice(0, 3);
+
+const allProjects = await getCollection('projects');
+allProjects.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
+const featuredProjects = allProjects.slice(0, 3);
+
+// Hero slides: images are assets (withBase), links are localized page routes.
+const heroSlides = (homeData.heroSlides || []).map((s: any) => {
+  // Routes stay language-neutral here; HudMediaSlider localizes them (single place).
+  const href = s.href || s.link;
+  return { ...s, image: withBase(s.image), href, link: href };
+});
+
+const modes = (homeData.modes || []).map((m: any) => ({
+  n: m.n,
+  label: tField(m, 'label', lang),
+  href: localeHref(m.href, lang),
+}));
+
+const skuTitle = (item: (typeof showcaseSkus)[number]) => pick(lang, item.data.title, item.data.title_uz, item.data.title_en);
+---
+
+<BaseLayout title={seo.title} description={seo.description}>
+  <!-- Screen 1: CAD 3-Column Console Hero -->
+  <section class="border-b border-[#0A0A0A] bg-[#D4D8DC] relative overflow-hidden pt-8 pb-12">
+    <!-- Isometric CAD background grid -->
+    <div class="absolute inset-0 cad-grid-bg opacity-35 pointer-events-none" aria-hidden="true"></div>
+
+    <div class="max-w-7xl mx-auto px-4 relative">
+      <!-- Top Telemetry Callout Row -->
+      <div class="flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] text-[#4A5056] pb-4 mb-6 border-b border-[#0A0A0A]/20">
+        <div class="flex items-center gap-3">
+          <span class="hud-callout"><i></i>{H('topCalloutTag')}</span>
+          <span class="hidden sm:inline text-[#0A0A0A]/30">|</span>
+          <span class="hidden sm:inline font-bold text-[#0A0A0A]">
+            {H('topCalloutStatus')}
+          </span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#C8CDD2] text-[#0A0A0A] font-bold">
+            {H('topCalloutVat')}
+          </span>
+          <span class="border border-[#0A0A0A] px-2 py-0.5 bg-[#0A0A0A] text-white font-bold">
+            {H('topCalloutHub')}
+          </span>
+        </div>
+      </div>
+
+      <!-- 3-Column Console Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <!-- 1. LEFT COLUMN: Universal Navigation by Directions -->
+        <div class="lg:col-span-3 flex flex-col justify-between hud-glass-card p-5 gap-5">
+          <div>
+            <!-- Brand & Subtitle -->
+            <div class="border-b border-[#0A0A0A]/20 pb-3 mb-4">
+              <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-[#4A5056] block mb-1">
+                {H('consoleKicker')}
+              </span>
+              <h1 class="font-sans text-2xl font-black tracking-tight text-[#0A0A0A] leading-none mb-1">
+                {H('consoleTitle')}
+              </h1>
+              <p class="font-mono text-[11px] text-[#4A5056] leading-tight">
+                {H('consoleSubtitle')}
+              </p>
+            </div>
+
+            <!-- Block Modes (2x2 Grid) -->
+            <div class="mb-5">
+              <span class="font-mono text-[10px] tracking-wider text-[#4A5056] block uppercase mb-2">
+                {H('modesLabel')}
+              </span>
+              <div class="grid grid-cols-2 gap-1.5 font-mono text-xs" id="hud-modes-grid">
+                {modes.map((m, idx) => (
+                  <button
+                    type="button"
+                    data-mode-idx={idx}
+                    data-mode-href={m.href}
+                    class={`mode-btn p-2 border border-[#0A0A0A] text-left transition-colors cursor-pointer flex items-center justify-between group ${
+                      idx === 0 ? 'bg-[#0A0A0A] text-white font-bold' : 'bg-white/40 text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white'
+                    }`}
+                  >
+                    <span>{m.n}. {m.label}</span>
+                    <span class="text-[10px] opacity-60 group-hover:opacity-100">↗</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <!-- Block Directions (CMS Editable List) -->
+            <div>
+              <span class="font-mono text-[10px] tracking-wider text-[#4A5056] block uppercase mb-2">
+                {H('directionsLabel')}
+              </span>
+              <div class="flex flex-col space-y-1 font-mono text-xs">
+                {homeData.directions.map((dir, idx) => (
+                  <a
+                    href={localeHref(dir.href, lang)}
+                    class="p-2 border border-[#0A0A0A]/20 bg-white/30 hover:bg-[#0A0A0A] hover:text-white hover:border-[#0A0A0A] transition-colors flex items-center justify-between group"
+                  >
+                    <span class="truncate">
+                      <span class="font-bold text-[#4A5056] group-hover:text-white mr-1.5">0{idx + 1} /</span>
+                      <I18nText ru={dir.label} uz={dir.label_uz} en={dir.label_en} />
+                    </span>
+                    <span class="text-[11px] font-bold group-hover:translate-x-0.5 transition-transform">→</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom CAD UI Stamp -->
+          <div class="pt-3 border-t border-[#0A0A0A]/20 flex items-center justify-between font-mono text-[10px] text-[#4A5056]">
+            <span>{H('consoleStamp')}</span>
+            <span class="inline-block w-2 h-2 bg-emerald-600"></span>
+          </div>
+        </div>
+
+        <!-- 2. CENTER COLUMN: Interactive HUD Photo Multi-Slider -->
+        <div class="lg:col-span-6 flex flex-col">
+          <HudMediaSlider client:load slides={heroSlides} intervalMs={6500} lang={lang} />
+        </div>
+
+        <!-- 3. RIGHT COLUMN: Corporate Passport & CTA -->
+        <div class="lg:col-span-3 flex flex-col justify-between gap-3">
+          <div>
+            <span class="font-mono text-[10px] tracking-wider text-[#4A5056] uppercase block mb-2">
+              {H('passportLabel')}
+            </span>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3">
+              {homeData.passport.map((p, idx) => (
+                <div class="hud-glass-card p-4">
+                  <div class="hud-card-index mb-1">
+                    <b>0{idx + 1}</b> // <I18nText ru={p.label} uz={p.label_uz} en={p.label_en} />
+                  </div>
+                  <div class="font-sans font-bold text-sm text-[#0A0A0A] leading-snug">
+                    <I18nText ru={p.value} uz={p.value_uz} en={p.value_en} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Direct RFQ Action Button -->
+          <div class="pt-2">
+            <button
+              type="button"
+              data-lead-modal
+              data-lead-subject={t(lang, 'lead.subject.homeConsole')}
+              class="hud-btn w-full py-4 text-xs font-bold cursor-pointer min-h-[44px]"
+            >
+              <span>{H('ctaLead')}</span>
+              <span>↗</span>
+            </button>
+            <div class="mt-2 text-center font-mono text-[10px] text-[#4A5056]">
+              {H('topCalloutSla')}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step Divider -->
+      <HudStepDivider label={H('gatewaysDivider')} class="mt-12 mb-8" />
+
+      <!-- 4. BOTTOM ROW: 4 Gateway Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {homeData.gatewayCards.map((g, idx) => (
+          <HudCard
+            index={`00${idx + 1}`}
+            title={{ ru: g.title, uz: g.title_uz, en: g.title_en }}
+            text={{ ru: g.text, uz: g.text_uz, en: g.text_en }}
+            image={g.image}
+            href={g.href}
+            aspect="aspect-[16/10]"
+            cta={{ ru: tr('home.gateway.cta') }}
+            headingLevel="h2"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Showcase Section: Top Warehouse SKUs -->
+  <section class="border-b border-[#0A0A0A] bg-[#C8CDD2] py-16 relative">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="hud-section-head">
+        <div>
+          <span class="hud-callout mb-1"><i></i><I18nText ru={homeData.showcaseSectionBadge} uz={homeData.showcaseSectionBadge_uz} en={homeData.showcaseSectionBadge_en} /></span>
+          <I18nText as="h2" class="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-[#0A0A0A]" ru={homeData.showcaseSectionTitle} uz={homeData.showcaseSectionTitle_uz} en={homeData.showcaseSectionTitle_en} />
+        </div>
+        <a
+          href={localeHref('/catalog/', lang)}
+          class="font-mono text-xs font-bold text-[#0A0A0A] hover:underline flex items-center gap-1.5 min-h-[44px]"
+        >
+          <span>{H('showcaseAllLink')}</span>
+          <span>→</span>
+        </a>
+      </div>
+
+      <!-- Mobile High-Density Engineering List (< 768px) -->
+      <div class="md:hidden space-y-2">
+        {showcaseSkus.map((item) => (
+          <div class="hud-glass-card !flex-row items-center justify-between p-3 gap-3 font-mono text-xs">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-14 h-11 flex-none border border-[#0A0A0A]/40 overflow-hidden bg-[#D4D8DC] relative">
+                <img
+                  src={withBase(item.data.image || '/images/hero/warehouse.jpg')}
+                  alt={skuTitle(item)}
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5 text-[10px] text-[#4A5056] leading-none mb-1">
+                  <span class="font-bold text-[#0A0A0A]">{item.data.sku}</span>
+                  <span>•</span>
+                  <span class="text-emerald-800 font-semibold truncate">
+                    {stockLabel(item.data, lang, t)}
+                  </span>
+                </div>
+                <a href={localeHref(`/catalog/${item.slug}/`, lang)} class="font-sans font-bold text-xs text-[#0A0A0A] hover:underline line-clamp-1 block leading-tight">
+                  <I18nText ru={item.data.title} uz={item.data.title_uz} en={item.data.title_en} />
+                </a>
+                {item.data.specs && (
+                  <div class="text-[10px] text-[#4A5056] truncate mt-0.5 font-mono">
+                    <I18nText ru={item.data.specs} uz={item.data.specs_uz} en={item.data.specs_en} />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div class="flex items-center gap-1.5 flex-none">
+              <a
+                href={localeHref(`/catalog/${item.slug}/`, lang)}
+                class="px-2 py-1.5 border border-[#0A0A0A] bg-white text-[11px] font-bold text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors flex items-center justify-center min-h-[34px]"
+                aria-label={tr('home.showcase.passportAria', { sku: item.data.sku })}
+              >
+                →
+              </a>
+              <button
+                type="button"
+                data-lead-modal
+                data-lead-subject={t(lang, 'lead.subject.homeSku', { title: tField(item.data, 'title', lang), sku: item.data.sku })}
+                class="px-2 py-1.5 border border-[#0A0A0A] bg-[#0A0A0A] text-white text-[10px] font-bold hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer min-h-[34px] whitespace-nowrap"
+              >
+                <I18nText k="home.showcase.rfqShort" />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Desktop/Tablet Grid View (>= 768px) -->
+      <div class="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {showcaseSkus.map((item) => (
+          <div class="hud-glass-card p-5 gap-3">
+            <div class="flex items-center justify-between border-b border-[#0A0A0A]/15 pb-2 font-mono text-xs">
+              <span class="font-bold text-[#0A0A0A]">{item.data.sku}</span>
+              <span class="px-2 py-0.5 text-[10px] font-bold border border-[#0A0A0A] bg-white/60">
+                {stockLabel(item.data, lang, t)}
+              </span>
+            </div>
+
+            <div class="hud-card-media aspect-[16/10]">
+              <img
+                src={withBase(item.data.image || '/images/hero/warehouse.jpg')}
+                alt={skuTitle(item)}
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover"
+                onerror={`this.onerror=null; this.src='${withBase('/images/hero/warehouse.jpg')}';`}
+              />
+            </div>
+
+            <h3 class="font-sans font-bold text-base text-[#0A0A0A] leading-snug">
+              <a href={localeHref(`/catalog/${item.slug}/`, lang)} class="hover:underline">
+                <I18nText ru={item.data.title} uz={item.data.title_uz} en={item.data.title_en} />
+              </a>
+            </h3>
+
+            <div class="space-y-1.5 font-mono text-xs text-[#4A5056] my-2">
+              {item.data.category && (
+                <div class="flex justify-between">
+                  <span><I18nText k="home.showcase.category" /></span>
+                  <span class="font-bold text-[#0A0A0A] truncate max-w-[170px]">
+                    <I18nText ru={item.data.category} uz={item.data.category_uz} en={item.data.category_en} />
+                  </span>
+                </div>
+              )}
+              {item.data.specs && (
+                <div class="flex justify-between">
+                  <span><I18nText k="home.showcase.specs" /></span>
+                  <span class="text-[#0A0A0A] text-right truncate max-w-[170px]">
+                    <I18nText ru={item.data.specs} uz={item.data.specs_uz} en={item.data.specs_en} />
+                  </span>
+                </div>
+              )}
+              {item.data.attributes && item.data.attributes.slice(0, 2).map((attr) => (
+                <div class="flex justify-between">
+                  <span><I18nText ru={attr.label} uz={attr.label_uz} en={attr.label_en} />:</span>
+                  <span class="font-bold text-[#0A0A0A] truncate max-w-[170px]">
+                    <I18nText ru={attr.value} uz={attr.value_uz} en={attr.value_en} />
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div class="pt-3 border-t border-[#0A0A0A]/15 mt-auto flex items-center gap-2 font-mono text-xs">
+              <a
+                href={localeHref(`/catalog/${item.slug}/`, lang)}
+                class="flex-1 border border-[#0A0A0A] py-1.5 text-center hover:bg-[#0A0A0A] hover:text-white transition-colors"
+              >
+                <I18nText k="home.showcase.passport" />
+              </a>
+              <button
+                type="button"
+                data-lead-modal
+                data-lead-subject={t(lang, 'lead.subject.homeSku', { title: tField(item.data, 'title', lang), sku: item.data.sku })}
+                class="flex-1 border border-[#0A0A0A] bg-[#0A0A0A] text-white py-1.5 text-center font-bold hover:bg-transparent hover:text-[#0A0A0A] transition-colors cursor-pointer"
+              >
+                <I18nText k="home.showcase.rfq" />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Delivered Projects & Case Studies -->
+  <section class="border-b border-[#0A0A0A] bg-[#D4D8DC] py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="hud-section-head">
+        <div>
+          <span class="hud-callout mb-1"><i></i><I18nText ru={homeData.projectsSectionBadge} uz={homeData.projectsSectionBadge_uz} en={homeData.projectsSectionBadge_en} /></span>
+          <I18nText as="h2" class="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-[#0A0A0A]" ru={homeData.projectsSectionTitle} uz={homeData.projectsSectionTitle_uz} en={homeData.projectsSectionTitle_en} />
+        </div>
+        <a
+          href={localeHref('/projects/', lang)}
+          class="font-mono text-xs font-bold text-[#0A0A0A] hover:underline flex items-center gap-1.5 min-h-[44px]"
+        >
+          <span><I18nText k="home.projects.all" /></span>
+        </a>
+      </div>
+
+      <!-- Mobile Projects Feed (< 768px) -->
+      <div class="md:hidden space-y-2.5">
+        {featuredProjects.map((prj) => (
+          <a
+            href={localeHref(`/projects/${prj.slug}/`, lang)}
+            class="hud-glass-card p-4 block hover:bg-white/50 transition-colors font-mono"
+          >
+            <div class="flex items-center justify-between text-[10px] text-[#4A5056] mb-1.5">
+              <div class="flex items-center gap-2">
+                <span class="bg-[#0A0A0A] text-white px-1.5 py-0.5 font-bold">
+                  {prj.data.code}
+                </span>
+                <span class="text-[#0A0A0A] font-bold">
+                  <I18nText ru={prj.data.category || prj.data.tag} uz={prj.data.category_uz || prj.data.tag_uz} en={prj.data.category_en || prj.data.tag_en} />
+                </span>
+              </div>
+              <span class="text-xs text-[#0A0A0A] font-bold">→</span>
+            </div>
+            <h3 class="font-sans font-bold text-sm text-[#0A0A0A] leading-snug line-clamp-2 mb-1">
+              <I18nText ru={prj.data.title} uz={prj.data.title_uz} en={prj.data.title_en} />
+            </h3>
+            {prj.data.subtitle && (
+              <p class="font-sans text-xs text-[#4A5056] line-clamp-2 leading-relaxed">
+                <I18nText ru={prj.data.subtitle} uz={prj.data.subtitle_uz} en={prj.data.subtitle_en} />
+              </p>
+            )}
+          </a>
+        ))}
+      </div>
+
+      <!-- Desktop/Tablet Grid View (>= 768px) -->
+      <div class="hidden md:grid md:grid-cols-3 gap-6">
+        {featuredProjects.map((prj) => (
+          <HudCard
+            index={prj.data.code}
+            tag={{ ru: prj.data.category || prj.data.tag, uz: prj.data.category_uz || prj.data.tag_uz, en: prj.data.category_en || prj.data.tag_en }}
+            title={{ ru: prj.data.title, uz: prj.data.title_uz, en: prj.data.title_en }}
+            text={{ ru: prj.data.subtitle, uz: prj.data.subtitle_uz, en: prj.data.subtitle_en }}
+            image={prj.data.image}
+            href={`/projects/${prj.slug}/`}
+            cta={{ ru: tr('home.projects.cta') }}
+            headingLevel="h3"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Engineering Blog & News (Knowledge Base) -->
+  <section class="border-b border-[#0A0A0A] bg-[#C8CDD2] py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="hud-section-head">
+        <div>
+          <span class="hud-callout mb-1"><i></i><I18nText ru={homeData.blogBadge} uz={homeData.blogBadge_uz} en={homeData.blogBadge_en} /></span>
+          <I18nText as="h2" class="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-[#0A0A0A]" ru={homeData.blogTitle} uz={homeData.blogTitle_uz} en={homeData.blogTitle_en} />
+        </div>
+        <a
+          href={localeHref('/blog/', lang)}
+          class="font-mono text-xs font-bold text-[#0A0A0A] hover:underline"
+        >
+          <I18nText k="home.blog.all" />
+        </a>
+      </div>
+
+      <!-- Mobile Editorial Feed (< 768px) -->
+      <div class="md:hidden space-y-2.5">
+        {latestPosts.map((post) => (
+          <a
+            href={localeHref(`/blog/${post.slug}/`, lang)}
+            class="hud-glass-card p-4 block hover:bg-white/50 transition-colors font-mono"
+          >
+            <div class="flex items-center justify-between text-[10px] text-[#4A5056] mb-1.5">
+              <div class="flex items-center gap-2">
+                <span class="bg-[#0A0A0A] text-white px-1.5 py-0.5 font-bold">
+                  <I18nText ru={post.data.category} uz={post.data.category_uz} en={post.data.category_en} />
+                </span>
+                <span>{post.data.publishDate}</span>
+              </div>
+              <span class="text-xs text-[#0A0A0A] font-bold">→</span>
+            </div>
+            <h3 class="font-sans font-bold text-sm text-[#0A0A0A] leading-snug line-clamp-2 mb-1">
+              <I18nText ru={post.data.title} uz={post.data.title_uz} en={post.data.title_en} />
+            </h3>
+            <p class="font-sans text-xs text-[#4A5056] line-clamp-2 leading-relaxed">
+              <I18nText ru={post.data.summary} uz={post.data.summary_uz} en={post.data.summary_en} />
+            </p>
+          </a>
+        ))}
+      </div>
+
+      <!-- Desktop/Tablet Grid View (>= 768px) -->
+      <div class="hidden md:grid md:grid-cols-3 gap-6">
+        {latestPosts.map((post) => (
+          <HudCard
+            index={post.data.publishDate}
+            tag={{ ru: post.data.category, uz: post.data.category_uz, en: post.data.category_en }}
+            title={{ ru: post.data.title, uz: post.data.title_uz, en: post.data.title_en }}
+            text={{ ru: post.data.summary, uz: post.data.summary_uz, en: post.data.summary_en }}
+            image={post.data.image}
+            href={`/blog/${post.slug}/`}
+            cta={{ ru: tr('home.blog.cta') }}
+            headingLevel="h3"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Institutional Guarantees (Trust Matrix) -->
+  <section class="bg-[#C8CDD2] py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="hud-section-head">
+        <div>
+          <span class="hud-callout mb-1"><i></i><I18nText ru={homeData.trustSectionBadge} uz={homeData.trustSectionBadge_uz} en={homeData.trustSectionBadge_en} /></span>
+          <I18nText as="h2" class="font-sans text-2xl sm:text-3xl font-bold tracking-tight text-[#0A0A0A]" ru={homeData.trustSectionTitle} uz={homeData.trustSectionTitle_uz} en={homeData.trustSectionTitle_en} />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 font-mono text-xs">
+        {homeData.trustItems.map((item) => (
+          <div class="hud-glass-card p-5 gap-2">
+            <div class="font-bold text-sm text-[#0A0A0A] border-b border-[#0A0A0A]/15 pb-2">
+              <I18nText ru={item.code} uz={item.code_uz} en={item.code_en} />
+            </div>
+            <p class="text-[#4A5056] leading-relaxed mt-1 font-sans text-xs">
+              <I18nText ru={item.text} uz={item.text_uz} en={item.text_en} />
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    // Console left column <-> HudMediaSlider bi-directional interaction
+    (function() {
+      var modeButtons = document.querySelectorAll('#hud-modes-grid .mode-btn');
+      if (!modeButtons.length) return;
+
+      modeButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var isCurrentActive = btn.classList.contains('bg-[#0A0A0A]');
+          var href = btn.getAttribute('data-mode-href');
+          if (isCurrentActive && href) {
+            window.location.href = href;
+            return;
+          }
+          var idx = parseInt(btn.getAttribute('data-mode-idx') || '0', 10);
+          window.dispatchEvent(new CustomEvent('hud-slide-go', { detail: idx }));
+        });
+      });
+
+      window.addEventListener('hud-slide-changed', function(e) {
+        var activeIdx = e.detail;
+        modeButtons.forEach(function(btn, i) {
+          if (i === activeIdx) {
+            btn.className = 'mode-btn p-2 border border-[#0A0A0A] text-left transition-colors cursor-pointer flex items-center justify-between group bg-[#0A0A0A] text-white font-bold';
+          } else {
+            btn.className = 'mode-btn p-2 border border-[#0A0A0A] text-left transition-colors cursor-pointer flex items-center justify-between group bg-white/40 text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white';
+          }
+        });
+      });
+    })();
+  </script>
+</BaseLayout>

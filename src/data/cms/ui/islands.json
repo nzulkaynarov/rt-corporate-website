@@ -1,0 +1,359 @@
+{
+  "title": "Интерактивные блоки: фильтр, галерея, слайдер",
+  "strings": [
+    {
+      "key": "lead.subject.catalogTableItem",
+      "ru": "Запрос счета/КП на позицию: {title} ({sku})",
+      "uz": "Pozitsiya bo'yicha hisob/tijorat taklifi so'rovi: {title} ({sku})",
+      "en": "Invoice / quotation request for item: {title} ({sku})"
+    },
+    {
+      "key": "islands.defaultCategory",
+      "ru": "Оборудование",
+      "uz": "Uskunalar",
+      "en": "Equipment"
+    },
+    {
+      "key": "hud.scanRecalibrating",
+      "ru": "HUD_SCAN: RECALIBRATING...",
+      "uz": "HUD_SCAN: RECALIBRATING...",
+      "en": "HUD_SCAN: RECALIBRATING..."
+    },
+    {
+      "key": "catalogTable.allItems",
+      "ru": "Все позиции ({count})",
+      "uz": "Barcha tovarlar ({count})",
+      "en": "All items ({count})"
+    },
+    {
+      "key": "catalogTable.searchPlaceholder",
+      "ru": "Поиск по наименованию, артикулу или параметрам...",
+      "uz": "Nom, SKU yoki parametrlar bo'yicha qidiruv...",
+      "en": "Search by title, SKU or specification..."
+    },
+    {
+      "key": "catalogTable.clearSearchAria",
+      "ru": "Очистить поиск",
+      "uz": "Qidiruvni tozalash",
+      "en": "Clear search"
+    },
+    {
+      "key": "catalogTable.found",
+      "ru": "Найдено:",
+      "uz": "Topildi:",
+      "en": "Found:"
+    },
+    {
+      "key": "catalogTable.viewSwitchAria",
+      "ru": "Режим отображения",
+      "uz": "Ko'rinish rejimi",
+      "en": "View switch"
+    },
+    {
+      "key": "catalogTable.gridTitle",
+      "ru": "Сетка карточек с фото",
+      "uz": "Fotosuratli kartochkalar",
+      "en": "Photo card grid"
+    },
+    {
+      "key": "catalogTable.gridLabel",
+      "ru": "ПЛИТКА",
+      "uz": "KATAKLAR",
+      "en": "GRID"
+    },
+    {
+      "key": "catalogTable.tableTitle",
+      "ru": "Инженерная таблица",
+      "uz": "Muhandislik jadvali",
+      "en": "Engineering table"
+    },
+    {
+      "key": "catalogTable.tableLabel",
+      "ru": "ТАБЛИЦА",
+      "uz": "JADVAL",
+      "en": "TABLE"
+    },
+    {
+      "key": "catalogTable.categoryLabel",
+      "ru": "КАТЕГОРИЯ:",
+      "uz": "KATEGORIYA:",
+      "en": "CATEGORY:"
+    },
+    {
+      "key": "catalogTable.priceLabel",
+      "ru": "Цена:",
+      "uz": "Narx:",
+      "en": "Price:"
+    },
+    {
+      "key": "catalogTable.details",
+      "ru": "Подробнее →",
+      "uz": "Batafsil →",
+      "en": "Details →"
+    },
+    {
+      "key": "catalogTable.requestCard",
+      "ru": "Запросить ↗",
+      "uz": "So'rov ↗",
+      "en": "Request ↗"
+    },
+    {
+      "key": "catalogTable.requestRow",
+      "ru": "Запросить ↗",
+      "uz": "So'rov ↗",
+      "en": "RFQ ↗"
+    },
+    {
+      "key": "catalogTable.th.photo",
+      "ru": "Фото",
+      "uz": "Foto",
+      "en": "Photo"
+    },
+    {
+      "key": "catalogTable.th.sku",
+      "ru": "SKU",
+      "uz": "SKU",
+      "en": "SKU"
+    },
+    {
+      "key": "catalogTable.th.title",
+      "ru": "Наименование и параметры",
+      "uz": "Nomi va parametrlari",
+      "en": "Product & Specs"
+    },
+    {
+      "key": "catalogTable.th.category",
+      "ru": "Категория",
+      "uz": "Kategoriya",
+      "en": "Category"
+    },
+    {
+      "key": "catalogTable.th.status",
+      "ru": "Статус",
+      "uz": "Holat",
+      "en": "Status"
+    },
+    {
+      "key": "catalogTable.th.action",
+      "ru": "Действие",
+      "uz": "Harakat",
+      "en": "Action"
+    },
+    {
+      "key": "catalogTable.emptyTitle",
+      "ru": "Позиции не найдены",
+      "uz": "Hech narsa topilmadi",
+      "en": "No items found"
+    },
+    {
+      "key": "catalogTable.emptyText",
+      "ru": "Попробуйте изменить поисковый запрос или сбросить фильтр категорий.",
+      "uz": "Qidiruv so'zini o'zgartirib ko'ring yoki barcha tovarlar filtrini tanlang.",
+      "en": "Try modifying your search query or reset the category filter."
+    },
+    {
+      "key": "catalogTable.reset",
+      "ru": "Сбросить фильтры",
+      "uz": "Filtrni tozalash",
+      "en": "Reset filters"
+    },
+    {
+      "key": "gallery.itemCode",
+      "ru": "ITEM // {sku}",
+      "uz": "ITEM // {sku}",
+      "en": "ITEM // {sku}"
+    },
+    {
+      "key": "gallery.categoryCode",
+      "ru": "CAT // {category}",
+      "uz": "CAT // {category}",
+      "en": "CAT // {category}"
+    },
+    {
+      "key": "gallery.statusOnline",
+      "ru": "STATUS // ONLINE",
+      "uz": "STATUS // ONLINE",
+      "en": "STATUS // ONLINE"
+    },
+    {
+      "key": "gallery.locationStamp",
+      "ru": "INDEX B2-2097 // UZ",
+      "uz": "INDEX B2-2097 // UZ",
+      "en": "INDEX B2-2097 // UZ"
+    },
+    {
+      "key": "gallery.frameCounter",
+      "ru": "FRAME // {current} OF {total}",
+      "uz": "FRAME // {current} OF {total}",
+      "en": "FRAME // {current} OF {total}"
+    },
+    {
+      "key": "gallery.prev",
+      "ru": "ПРЕД",
+      "uz": "OLDINGI",
+      "en": "PREV"
+    },
+    {
+      "key": "gallery.next",
+      "ru": "СЛЕД",
+      "uz": "KEYINGI",
+      "en": "NEXT"
+    },
+    {
+      "key": "gallery.prevAria",
+      "ru": "Предыдущее фото",
+      "uz": "Oldingi rasm",
+      "en": "Previous image"
+    },
+    {
+      "key": "gallery.nextAria",
+      "ru": "Следующее фото",
+      "uz": "Keyingi rasm",
+      "en": "Next image"
+    },
+    {
+      "key": "gallery.thumbTitle",
+      "ru": "Фото {n}",
+      "uz": "Rasm {n}",
+      "en": "View {n}"
+    },
+    {
+      "key": "gallery.thumbAlt",
+      "ru": "{title} — фото {n}",
+      "uz": "{title} — rasm {n}",
+      "en": "{title} — photo {n}"
+    },
+    {
+      "key": "gallery.dispatchLabel",
+      "ru": "ОТГРУЗКА:",
+      "uz": "YUKLASH:",
+      "en": "DISPATCH:"
+    },
+    {
+      "key": "gallery.dispatchValue",
+      "ru": "Со склада Index B2-2097",
+      "uz": "Index B2-2097 omboridan",
+      "en": "Direct from Index B2-2097"
+    },
+    {
+      "key": "gallery.vat",
+      "ru": "12% НДС включен",
+      "uz": "12% QQS kiritilgan",
+      "en": "12% VAT included"
+    },
+    {
+      "key": "slider.regionAria",
+      "ru": "Слайдер RailTech",
+      "uz": "RailTech slayderi",
+      "en": "RailTech HUD media slider"
+    },
+    {
+      "key": "slider.indexLabel",
+      "ru": "SLIDE // {current} OF {total}",
+      "uz": "SLIDE // {current} OF {total}",
+      "en": "SLIDE // {current} OF {total}"
+    },
+    {
+      "key": "slider.scanHold",
+      "ru": "HUD_SCAN: HOLD",
+      "uz": "HUD_SCAN: HOLD",
+      "en": "HUD_SCAN: HOLD"
+    },
+    {
+      "key": "slider.scanActive",
+      "ru": "HUD_SCAN: ACTIVE",
+      "uz": "HUD_SCAN: ACTIVE",
+      "en": "HUD_SCAN: ACTIVE"
+    },
+    {
+      "key": "slider.tagFallback",
+      "ru": "RT.MEDIA",
+      "uz": "RT.MEDIA",
+      "en": "RT.MEDIA"
+    },
+    {
+      "key": "slider.more",
+      "ru": "Подробнее",
+      "uz": "Batafsil",
+      "en": "Learn more"
+    },
+    {
+      "key": "slider.prevAria",
+      "ru": "Предыдущий слайд",
+      "uz": "Oldingi slayd",
+      "en": "Previous slide"
+    },
+    {
+      "key": "slider.nextAria",
+      "ru": "Следующий слайд",
+      "uz": "Keyingi slayd",
+      "en": "Next slide"
+    },
+    {
+      "key": "slider.dotAria",
+      "ru": "Слайд {n}",
+      "uz": "Slayd {n}",
+      "en": "Slide {n}"
+    },
+    {
+      "key": "slider.feedOk",
+      "ru": "OPTICAL_FEED // OK",
+      "uz": "OPTICAL_FEED // OK",
+      "en": "OPTICAL_FEED // OK"
+    },
+    {
+      "key": "slider.navHint",
+      "ru": "SWIPE / ARROWS: NAVIGATE",
+      "uz": "SWIPE / ARROWS: NAVIGATE",
+      "en": "SWIPE / ARROWS: NAVIGATE"
+    },
+    {
+      "key": "hudImage.altFallback",
+      "ru": "Промышленное оборудование RailTech",
+      "uz": "RailTech sanoat uskunalari",
+      "en": "Industrial equipment blueprint"
+    },
+    {
+      "key": "hudImage.idFallback",
+      "ru": "RT-ITEM",
+      "uz": "RT-ITEM",
+      "en": "RT-ITEM"
+    },
+    {
+      "key": "hudImage.categoryFallback",
+      "ru": "PRECISION HARDWARE",
+      "uz": "PRECISION HARDWARE",
+      "en": "PRECISION HARDWARE"
+    },
+    {
+      "key": "hudImage.feedReady",
+      "ru": "OPTICAL_FEED // READY",
+      "uz": "OPTICAL_FEED // READY",
+      "en": "OPTICAL_FEED // READY"
+    },
+    {
+      "key": "hudImage.scale",
+      "ru": "CAD.1:1",
+      "uz": "CAD.1:1",
+      "en": "CAD.1:1"
+    },
+    {
+      "key": "hudImage.location",
+      "ru": "INDEX B2-2097",
+      "uz": "INDEX B2-2097",
+      "en": "INDEX B2-2097"
+    },
+    {
+      "key": "hudImage.qc",
+      "ru": "QC: PASS 100%",
+      "uz": "QC: PASS 100%",
+      "en": "QC: PASS 100%"
+    },
+    {
+      "key": "hudImage.loading",
+      "ru": "LOADING_FEED // ...",
+      "uz": "LOADING_FEED // ...",
+      "en": "LOADING_FEED // ..."
+    }
+  ]
+}

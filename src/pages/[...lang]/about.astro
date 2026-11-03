@@ -1,0 +1,179 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FaqAccordion from '../../components/FaqAccordion.astro';
+import I18nText from '../../components/I18nText.astro';
+import HudPageHeader from '../../components/hud/HudPageHeader.astro';
+import aboutData from '../../data/cms/about.json';
+import globalData from '../../data/cms/global.json';
+import { langStaticPaths, tField } from '../../i18n';
+import { t } from '../../i18n/ui';
+import { pageSeo, plainText } from '../../utils/seo';
+import { navLabel, navLabels } from '../../utils/nav';
+
+export const getStaticPaths = langStaticPaths;
+
+const lang = Astro.locals.lang;
+const tr = (key: string, vars?: Record<string, string | number>) => t(lang, key, vars);
+const seo = pageSeo('about', lang);
+const g = globalData as Record<string, any>;
+const A = (field: string): string => tField(aboutData, field, lang);
+const tri = (obj: Record<string, any>, field: string) => ({ ru: obj[field], uz: obj[`${field}_uz`], en: obj[`${field}_en`] });
+
+const faqItems = aboutData.faq || [];
+
+const dossier = [
+  { label: 'about.dossier.fullName', value: tField(g, 'fullName', lang) },
+  { label: 'about.dossier.shortName', value: g.shortName },
+  { label: 'about.dossier.tin', value: g.inn },
+  { label: 'about.dossier.vat', value: `${A('vatStatus')} (${tField(g, 'legalStatus', lang)})`, accent: true },
+  { label: 'about.dossier.oked', value: `${g.oked} — ${tField(g, 'okedName', lang)}` },
+  { label: 'about.dossier.address', value: `${g.postalCode}, ${tr('company.country')}, ${tField(g, 'address', lang)}` },
+  { label: 'about.dossier.esf', value: g.esfOperators },
+  { label: 'about.dossier.domains', value: g.officialDomains },
+];
+---
+
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  breadcrumbs={[{ name: navLabel('/about/', lang), path: '/about/' }]}
+  jsonLd={[
+    {
+      '@type': 'AboutPage',
+      name: plainText(A('pageTitle')),
+      description: seo.description,
+      inLanguage: lang,
+    },
+    {
+      '@type': 'FAQPage',
+      inLanguage: lang,
+      mainEntity: faqItems.map((item) => ({
+        '@type': 'Question',
+        name: plainText(tField(item, 'q', lang)),
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: plainText(tField(item, 'a', lang)),
+        },
+      })),
+    },
+  ]}
+>
+  <div class="max-w-7xl mx-auto px-4 py-6 font-sans">
+    <HudPageHeader
+      code={A('badge')}
+      crumb={navLabels('/about/')}
+      title={tri(aboutData, 'pageTitle')}
+      lead={tri(aboutData, 'pageSubtitle')}
+    />
+
+    <!-- Mission Banner -->
+    <div class="hud-glass-card p-6 lg:p-8 font-mono mb-10">
+      <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A]/20 pb-2 mb-3">
+        <I18nText ru={aboutData.mission.title} uz={aboutData.mission.title_uz} en={aboutData.mission.title_en} />
+      </div>
+      <p class="font-sans text-sm text-[#0A0A0A] leading-relaxed">
+        <I18nText ru={aboutData.mission.text} uz={aboutData.mission.text_uz} en={aboutData.mission.text_en} />
+      </p>
+    </div>
+
+    <!-- Advantages Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-14">
+      {aboutData.advantages.map((adv) => (
+        <div class="hud-glass-card p-6 flex flex-col justify-between font-mono">
+          <div>
+            <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A]/20 pb-2 mb-3">
+              <I18nText ru={adv.code} uz={adv.code_uz} en={adv.code_en} />
+            </div>
+            <h3 class="font-sans text-base font-bold text-[#0A0A0A] mb-2">
+              <I18nText ru={adv.title} uz={adv.title_uz} en={adv.title_en} />
+            </h3>
+            <p class="text-xs text-[#4A5056] font-sans leading-relaxed mb-4">
+              <I18nText ru={adv.description} uz={adv.description_uz} en={adv.description_en} />
+            </p>
+            <div class="space-y-1.5 text-[11px] text-[#0A0A0A] bg-white/40 p-3 border border-[#0A0A0A]/20">
+              {adv.items.map((it, idx) => {
+                const itUz = adv.items_uz && adv.items_uz[idx];
+                const itEn = adv.items_en && adv.items_en[idx];
+                return (
+                  <div><span aria-hidden="true">•</span> <I18nText ru={it} uz={itUz} en={itEn} /></div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Directions of Activity -->
+    <div class="hud-glass-card p-6 lg:p-8 font-mono mb-14">
+      <div class="border-b border-[#0A0A0A] pb-3 mb-6">
+        <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2 inline-block">
+          {A('directionsBadge')}
+        </span>
+        <span class="font-bold text-base text-[#0A0A0A]">
+          {A('directionsTitle')}
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-sans text-xs">
+        {aboutData.directions.map((dir, idx) => (
+          <div class="border border-[#0A0A0A] bg-[#C8CDD2]/60 p-4 flex flex-col justify-between">
+            <div>
+              <div class="font-mono text-[10px] text-[#4A5056] mb-1">
+                {tr('about.directionIndex', { n: String(idx + 1).padStart(2, '0') })}
+              </div>
+              <div class="font-bold text-[#0A0A0A] mb-2">
+                <I18nText ru={dir.title} uz={dir.title_uz} en={dir.title_en} />
+              </div>
+              <p class="text-[#4A5056] leading-relaxed">
+                <I18nText ru={dir.desc} uz={dir.desc_uz} en={dir.desc_en} />
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Official Dossier & Legal Requisites Table -->
+    <div class="hud-glass-card p-8 font-mono mb-14">
+      <div class="border-b border-[#0A0A0A] pb-3 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div class="flex items-center space-x-2">
+          <span class="w-3 h-3 bg-[#0A0A0A] inline-block"></span>
+          <span class="font-bold text-sm text-[#0A0A0A] uppercase tracking-wider">
+            {A('dossierTitle')}
+          </span>
+        </div>
+        <button
+          type="button"
+          data-lead-modal
+          data-lead-subject={t(lang, 'lead.subject.aboutCompanyCard')}
+          class="hud-btn px-3 py-1.5 text-xs font-bold cursor-pointer"
+        >
+          {tr('about.dossier.download')}
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-xs">
+        {dossier.map((row) => (
+          <div class="border-b border-[#0A0A0A]/20 pb-2">
+            <span class="text-[#4A5056] block text-[11px]">
+              {tr(row.label)}
+            </span>
+            <span class={row.accent ? 'font-bold text-emerald-800' : 'font-bold text-[#0A0A0A]'}>{row.value}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- FAQ Accordion Module -->
+    <div class="mb-14">
+      <FaqAccordion
+        badge={tri(aboutData, 'faqBadge')}
+        title={tri(aboutData, 'faqTitle')}
+        subtitle={tri(aboutData, 'faqSubtitle')}
+        note={tri(aboutData, 'faqNote')}
+        items={faqItems}
+      />
+    </div>
+  </div>
+</BaseLayout>

@@ -1,58 +1,28 @@
 ---
+/**
+ * Renders ONE language — the page language from Astro.locals.lang (see src/middleware.ts).
+ *
+ *   <I18nText k="common.details" />                      — interface string from src/data/cms/ui/*.json
+ *   <I18nText ru={d.title} uz={d.title_uz} en={d.title_en} />  — CMS content with RU fallback
+ *
+ * Values are rendered as HTML (CMS fields may contain <br>, <b> …).
+ */
+import { pick } from '../i18n';
+import { t } from '../i18n/ui';
+
 interface Props {
-  ru: string;
+  k?: string;
+  vars?: Record<string, string | number>;
+  ru?: string;
   uz?: string;
   en?: string;
   class?: string;
   as?: 'span' | 'div' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'strong' | 'b';
 }
 
-const { ru, uz, en, class: className = '', as: Tag = 'span' } = Astro.props;
-
-const uzVal = (uz && uz.trim() !== '') ? uz : ru;
-const enVal = (en && en.trim() !== '') ? en : ru;
+const { k, vars, ru = '', uz, en, class: className, as: Tag = 'span' } = Astro.props;
+const lang = Astro.locals.lang;
+const value = k ? t(lang, k, vars) : pick(lang, ru, uz, en);
 ---
 
-{Tag === 'p' ? (
-  <>
-    <p class={`rt-lang rt-lang-ru ${className}`} set:html={ru} />
-    <p class={`rt-lang rt-lang-uz ${className}`} set:html={uzVal} />
-    <p class={`rt-lang rt-lang-en ${className}`} set:html={enVal} />
-  </>
-) : Tag === 'div' ? (
-  <>
-    <div class={`rt-lang rt-lang-ru ${className}`} set:html={ru} />
-    <div class={`rt-lang rt-lang-uz ${className}`} set:html={uzVal} />
-    <div class={`rt-lang rt-lang-en ${className}`} set:html={enVal} />
-  </>
-) : Tag === 'h1' ? (
-  <h1 class={className}>
-    <span class="rt-lang rt-lang-ru" set:html={ru} />
-    <span class="rt-lang rt-lang-uz" set:html={uzVal} />
-    <span class="rt-lang rt-lang-en" set:html={enVal} />
-  </h1>
-) : Tag === 'h2' ? (
-  <h2 class={className}>
-    <span class="rt-lang rt-lang-ru" set:html={ru} />
-    <span class="rt-lang rt-lang-uz" set:html={uzVal} />
-    <span class="rt-lang rt-lang-en" set:html={enVal} />
-  </h2>
-) : Tag === 'h3' ? (
-  <h3 class={className}>
-    <span class="rt-lang rt-lang-ru" set:html={ru} />
-    <span class="rt-lang rt-lang-uz" set:html={uzVal} />
-    <span class="rt-lang rt-lang-en" set:html={enVal} />
-  </h3>
-) : Tag === 'h4' ? (
-  <h4 class={className}>
-    <span class="rt-lang rt-lang-ru" set:html={ru} />
-    <span class="rt-lang rt-lang-uz" set:html={uzVal} />
-    <span class="rt-lang rt-lang-en" set:html={enVal} />
-  </h4>
-) : (
-  <Tag class={`rt-i18n-wrap inline ${className}`}>
-    <span class="rt-lang rt-lang-ru" set:html={ru} />
-    <span class="rt-lang rt-lang-uz" set:html={uzVal} />
-    <span class="rt-lang rt-lang-en" set:html={enVal} />
-  </Tag>
-)}
+<Tag class={className || undefined} set:html={value} />

@@ -1,0 +1,116 @@
+{
+  "siteName": "RailTech",
+  "siteName_uz": "RailTech",
+  "siteName_en": "RailTech",
+  "titleSuffix": "| RailTech",
+  "defaultImage": "/og-cover.png",
+  "organizationDescription": "Поставщик железнодорожных комплектующих и промышленного оборудования в Узбекистане: склад в Ташкенте, импорт под ключ DDP, B2B-платформа и IT-разработка.",
+  "organizationDescription_uz": "O'zbekistonda temir yo'l butlovchi qismlari va sanoat uskunalari yetkazib beruvchisi: Toshkentdagi ombor, DDP import, B2B platforma va IT ishlanmalar.",
+  "organizationDescription_en": "Supplier of railway components and industrial equipment in Uzbekistan: Tashkent warehouse, turnkey DDP import, B2B platform and custom software.",
+  "knowsAbout": [
+    "Запчасти для подвижного состава",
+    "Системы СЦБ",
+    "Верхнее строение пути",
+    "Импорт оборудования под ключ DDP",
+    "B2B-платформы и IT-разработка"
+  ],
+  "knowsAbout_uz": [
+    "Harakatlanuvchi tarkib ehtiyot qismlari",
+    "SMB tizimlari",
+    "Yo'lning ustki qurilmasi",
+    "DDP sharti bilan uskunalar importi",
+    "B2B platformalar va IT ishlanmalar"
+  ],
+  "knowsAbout_en": [
+    "Rolling stock spare parts",
+    "Railway signalling",
+    "Track superstructure",
+    "Turnkey DDP equipment import",
+    "B2B platforms and software development"
+  ],
+  "catalogDescription": "{title} ({sku}): {specs}. В наличии на складе в Ташкенте — паспорт, сертификаты, счёт с НДС 12%.",
+  "catalogDescription_uz": "{title} ({sku}): {specs}. Toshkentdagi omborda mavjud — pasport, sertifikatlar, 12% QQS bilan hisob.",
+  "catalogDescription_en": "{title} ({sku}): {specs}. Stocked in Tashkent — manufacturer passport, certificates, 12% VAT invoice.",
+  "pages": {
+    "home": {
+      "title": "RailTech — ЖД комплектующие и оборудование в Ташкенте",
+      "description": "Поставка запчастей для подвижного состава, СЦБ и пути со склада в Ташкенте. Импорт оборудования под ключ (DDP), счёт с НДС 12%, B2B-платформа и IT-разработка.",
+      "title_uz": "RailTech — Toshkentda temir yo'l butlovchi qismlari",
+      "description_uz": "Harakatlanuvchi tarkib, SMB va yo'l uchun ehtiyot qismlar Toshkentdagi ombordan. Uskunalarni kalit topshirish sharti bilan import (DDP), 12% QQS, B2B platforma.",
+      "title_en": "RailTech — Railway Parts & Equipment Supplier in Tashkent",
+      "description_en": "Rolling stock, signalling and track components from our Tashkent warehouse. Turnkey DDP import to Uzbekistan, 12% VAT invoicing, B2B platform and software."
+    },
+    "catalog": {
+      "title": "Каталог ЖД запчастей и оборудования — склад в Ташкенте",
+      "description": "Колёсные пары, тележки, автосцепки, тормозные колодки, приводы СЦБ и путевой инструмент в наличии в Ташкенте. Паспорта, сертификаты, счёт с НДС 12%.",
+      "title_uz": "Temir yo'l ehtiyot qismlari katalogi — Toshkent ombori",
+      "description_uz": "G'ildirak juftliklari, aravachalar, avtoulagichlar, tormoz kolodkalari, SMB yuritmalari va yo'l asboblari Toshkentda mavjud. Pasport, sertifikat, 12% QQS.",
+      "title_en": "Railway Parts Catalog — In Stock in Tashkent | RailTech",
+      "description_en": "Wheelsets, bogies, couplers, brake blocks, point machines and track tools in stock in Tashkent. Manufacturer passports, certificates, 12% VAT invoices."
+    },
+    "services": {
+      "title": "Импорт оборудования под ключ, сорсинг и IT — RailTech",
+      "description": "Контрактные поставки ВЭД под ключ с доставкой DDP Ташкент, поиск оборудования под заказ, представительство брендов и разработка B2B-платформ в Узбекистане.",
+      "title_uz": "Xizmatlar: DDP import, sorsing va IT — RailTech",
+      "description_uz": "Uskunalarni kalit topshirish sharti bilan import (DDP Toshkent), buyurtma asosida uskuna izlash, brendlar vakolatxonasi va B2B platformalar ishlab chiqish.",
+      "title_en": "Turnkey DDP Import, Sourcing & IT Services | RailTech",
+      "description_en": "Turnkey import of industrial equipment with DDP Tashkent delivery, sourcing on request, brand representation and custom B2B software development in Uzbekistan."
+    },
+    "projects": {
+      "title": "Проекты RailTech: поставки, IT-платформы и спецпроекты",
+      "description": "Реализованные проекты RailTech: комплексные поставки узлов подвижного состава, локализация производства, B2B-платформа b2b.railtech.uz и арт-проекты.",
+      "title_uz": "RailTech loyihalari: yetkazib berish, IT va maxsus loyihalar",
+      "description_uz": "RailTech loyihalari: harakatlanuvchi tarkib qismlarini kompleks yetkazib berish, ishlab chiqarishni mahalliylashtirish, b2b.railtech.uz platformasi.",
+      "title_en": "RailTech Projects: Supply, Software & Special Projects",
+      "description_en": "Case studies: integrated rolling stock component supply, production localization, the b2b.railtech.uz platform and industrial art projects in Uzbekistan."
+    },
+    "blog": {
+      "title": "Блог RailTech: поставки ЖД оборудования, ВЭД, цифровизация",
+      "description": "Статьи инженеров RailTech: складская программа в Ташкенте, расчёт Landed Cost при импорте с НДС 12%, таможенное оформление и цифровые инструменты снабжения.",
+      "title_uz": "RailTech blogi: temir yo'l uskunalari, TIF, raqamlashtirish",
+      "description_uz": "RailTech muhandislari maqolalari: Toshkentdagi ombor, 12% QQS bilan import Landed Cost hisobi, bojxona rasmiylashtiruvi va ta'minotning raqamli vositalari.",
+      "title_en": "RailTech Blog: Railway Supply, Import & Digital Procurement",
+      "description_en": "Engineering articles on our Tashkent warehouse programme, landed cost of imports with 12% VAT, customs clearance in Uzbekistan and digital procurement tools."
+    },
+    "about": {
+      "title": "О компании RailTech — поставщик ЖД оборудования, Ташкент",
+      "description": "ООО «RailTech» — юрлицо в Узбекистане: поставки промышленного и железнодорожного оборудования, ВЭД под ключ и IT-разработка. Реквизиты и направления работы.",
+      "title_uz": "RailTech haqida — temir yo'l uskunalari yetkazib beruvchisi",
+      "description_uz": "«RailTech» MChJ — O'zbekistondagi yuridik shaxs: sanoat va temir yo'l uskunalarini yetkazib berish, kalit topshirish TIF va IT ishlanmalar. Rekvizitlar.",
+      "title_en": "About RailTech — Railway Equipment Supplier in Tashkent",
+      "description_en": "RailTech LLC is a registered company in Uzbekistan supplying industrial and railway equipment, turnkey import services and custom software. Company details."
+    },
+    "contacts": {
+      "title": "Контакты RailTech — офис и склад в Ташкенте (ТПК Index)",
+      "description": "Телефон, e-mail, адрес офиса и склада RailTech в Ташкенте, схема проезда, график отгрузок и банковские реквизиты для договора и счёта с НДС 12%.",
+      "title_uz": "RailTech kontaktlari — Toshkentdagi ofis va ombor",
+      "description_uz": "RailTech telefoni, e-mail, Toshkentdagi ofis va ombor manzili, yo'l sxemasi, yuklash jadvali hamda shartnoma va 12% QQS hisobi uchun bank rekvizitlari.",
+      "title_en": "Contact RailTech — Office & Warehouse in Tashkent",
+      "description_en": "Phone, email, office and warehouse address in Tashkent, directions, dispatch hours and bank details for contracts and 12% VAT invoices."
+    },
+    "privacy": {
+      "title": "Политика конфиденциальности — RailTech",
+      "description": "Порядок обработки и защиты персональных данных пользователей сайта railtech.uz в соответствии с Законом РУз «О персональных данных» (ЗРУ-547).",
+      "title_uz": "Maxfiylik siyosati — RailTech",
+      "description_uz": "railtech.uz foydalanuvchilarining shaxsiy ma'lumotlarini «Shaxsga doir ma'lumotlar to'g'risida»gi O'zbekiston Qonuniga muvofiq qayta ishlash tartibi.",
+      "title_en": "Privacy Policy — RailTech",
+      "description_en": "How RailTech collects, processes and protects personal data of railtech.uz users under the Law of the Republic of Uzbekistan on Personal Data (No. 547)."
+    },
+    "terms": {
+      "title": "Условия использования сайта и сервисов — RailTech",
+      "description": "Условия использования сайта railtech.uz и B2B-платформы b2b.railtech.uz: порядок запроса коммерческих предложений, оформления заказов и ответственность сторон.",
+      "title_uz": "Sayt va xizmatlardan foydalanish shartlari — RailTech",
+      "description_uz": "railtech.uz sayti va b2b.railtech.uz platformasidan foydalanish shartlari: tijorat taklifini so'rash, buyurtma berish tartibi va tomonlarning javobgarligi.",
+      "title_en": "Terms of Use — RailTech",
+      "description_en": "Terms of use for railtech.uz and the b2b.railtech.uz B2B platform: requesting quotations, placing orders and liability of the parties."
+    },
+    "notFound": {
+      "title": "Страница не найдена (404) — RailTech",
+      "description": "Запрошенная страница не найдена. Перейдите в каталог, услуги или на главную страницу RailTech.",
+      "title_uz": "Sahifa topilmadi (404) — RailTech",
+      "description_uz": "So'ralgan sahifa topilmadi. Katalog, xizmatlar yoki RailTech bosh sahifasiga o'ting.",
+      "title_en": "Page Not Found (404) — RailTech",
+      "description_en": "The requested page was not found. Go to the RailTech catalog, services or home page."
+    }
+  }
+}

@@ -1,66 +1,55 @@
 ---
-import aboutData from '../data/cms/about.json';
+/**
+ * FAQ accordion (<details>/<summary>). All texts come from the CMS via props —
+ * the page also builds the matching schema.org FAQPage from the same items.
+ */
 import I18nText from './I18nText.astro';
 
-interface Props {
-  titleRu?: string;
-  titleUz?: string;
-  titleEn?: string;
-  subtitleRu?: string;
-  subtitleUz?: string;
-  subtitleEn?: string;
-  badgeRu?: string;
-  badgeUz?: string;
-  badgeEn?: string;
-}
-
-const {
-  titleRu = 'ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ (FAQ)',
-  titleUz = "KO'P SO'RALADIGAN SAVOLLAR (FAQ)",
-  titleEn = 'FREQUENTLY ASKED QUESTIONS (FAQ)',
-  subtitleRu = 'Регламент поставок, юридические гарантии, сертификация и доступ к платформе b2b.railtech.uz',
-  subtitleUz = "Yetkazib berish reglamenti, huquqiy kafolatlar, sertifikatsiya va b2b.railtech.uz platformasiga kirish",
-  subtitleEn = 'Supply regulations, legal guarantees, certification, and b2b.railtech.uz platform access',
-  badgeRu = 'РЕГЛАМЕНТ & ОТВЕТЫ',
-  badgeUz = 'REGLAMENT VA JAVOBLAR',
-  badgeEn = 'REGULATIONS & ANSWERS',
-} = Astro.props;
-
-const faqList = (aboutData.faq as Array<{
+interface I18n { ru: string; uz?: string; en?: string }
+export interface FaqItem {
   q: string;
   q_uz?: string;
   q_en?: string;
   a: string;
   a_uz?: string;
   a_en?: string;
-}>) || [];
+}
+interface Props {
+  badge: I18n;
+  title: I18n;
+  subtitle?: I18n;
+  note?: I18n;
+  items: FaqItem[];
+}
+
+const { badge, title, subtitle, note, items = [] } = Astro.props;
 ---
 
 <div class="hud-glass-card p-6 lg:p-8 font-mono">
   <div class="border-b border-[#0A0A0A] pb-3 mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
     <div>
       <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2 inline-block">
-        <I18nText ru={badgeRu} uz={badgeUz} en={badgeEn} />
+        <I18nText ru={badge.ru} uz={badge.uz} en={badge.en} />
       </span>
       <h2 class="text-xl sm:text-2xl font-bold text-[#0A0A0A] inline-block align-middle font-sans">
-        <I18nText ru={titleRu} uz={titleUz} en={titleEn} />
+        <I18nText ru={title.ru} uz={title.uz} en={title.en} />
       </h2>
     </div>
-    <div class="text-xs text-[#4A5056]">
-      <I18nText
-        ru="ОФИЦИАЛЬНЫЙ РЕГЛАМЕНТ ООО «RAILTECH»"
-        uz="«RAILTECH» MCHJ RASMIY REGLAMENTI"
-        en="OFFICIAL RAILTECH LLC REGULATIONS"
-      />
-    </div>
+    {note && (
+      <div class="text-xs text-[#4A5056]">
+        <I18nText ru={note.ru} uz={note.uz} en={note.en} />
+      </div>
+    )}
   </div>
 
-  <p class="text-xs text-[#4A5056] font-sans leading-relaxed mb-6 max-w-3xl">
-    <I18nText ru={subtitleRu} uz={subtitleUz} en={subtitleEn} />
-  </p>
+  {subtitle && (
+    <p class="text-xs text-[#4A5056] font-sans leading-relaxed mb-6 max-w-3xl">
+      <I18nText ru={subtitle.ru} uz={subtitle.uz} en={subtitle.en} />
+    </p>
+  )}
 
   <div class="divide-y divide-[#0A0A0A]/30 border border-[#0A0A0A]">
-    {faqList.map((item, idx) => (
+    {items.map((item, idx) => (
       <details class="group bg-[#C8CDD2]/60 open:bg-white transition-colors">
         <summary class="p-4 cursor-pointer list-none flex items-center justify-between gap-4 font-sans text-sm font-bold text-[#0A0A0A] hover:bg-[#C8CDD2] select-none">
           <div class="flex items-center space-x-3">
@@ -71,7 +60,7 @@ const faqList = (aboutData.faq as Array<{
               <I18nText ru={item.q} uz={item.q_uz} en={item.q_en} />
             </span>
           </div>
-          <span class="font-mono text-base font-bold text-[#0A0A0A] transition-transform duration-200 group-open:rotate-45 shrink-0">
+          <span class="font-mono text-base font-bold text-[#0A0A0A] transition-transform duration-200 group-open:rotate-45 shrink-0" aria-hidden="true">
             +
           </span>
         </summary>

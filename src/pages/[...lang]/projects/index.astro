@@ -1,0 +1,208 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import I18nText from '../../../components/I18nText.astro';
+import HudCard from '../../../components/hud/HudCard.astro';
+import HudPageHeader from '../../../components/hud/HudPageHeader.astro';
+import HudStepDivider from '../../../components/hud/HudStepDivider.astro';
+import pagesData from '../../../data/cms/pages.json';
+import { langStaticPaths, localeHref, pick, tField } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { pageSeo, absoluteUrl } from '../../../utils/seo';
+import { navLabel, navLabels } from '../../../utils/nav';
+
+export const getStaticPaths = langStaticPaths;
+
+const lang = Astro.locals.lang;
+const tr = (key: string) => t(lang, key);
+const seo = pageSeo('projects', lang);
+
+const projectItems = await getCollection('projects');
+projectItems.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
+
+const pPage = pagesData.projectsPage;
+
+// Unique categories derived from CMS content (RU value is the filter key).
+// Entries without a category fall back to pages.json projectsPage.defaultCategory.
+const categoryOf = (d: (typeof projectItems)[number]['data']) =>
+  d.category
+    ? { ru: d.category, uz: d.category_uz, en: d.category_en }
+    : { ru: pPage.defaultCategory, uz: pPage.defaultCategory_uz, en: pPage.defaultCategory_en };
+const categoryMap = new Map<string, { ru: string; uz?: string; en?: string }>();
+for (const p of projectItems) {
+  const c = categoryOf(p.data);
+  if (!categoryMap.has(c.ru)) categoryMap.set(c.ru, c);
+}
+const categories = [...categoryMap.values()];
+
+const directions = pPage.directions || [];
+const artLab = pPage.artLab;
+---
+
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  breadcrumbs={[{ name: navLabel('/projects/', lang), path: '/projects/' }]}
+  jsonLd={{
+    '@type': 'CollectionPage',
+    name: pick(lang, pPage.title, pPage.title_uz, pPage.title_en),
+    description: seo.description,
+    inLanguage: lang,
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: projectItems.map((prj, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: tField(prj.data, 'title', lang),
+        url: absoluteUrl(localeHref(`/projects/${prj.slug}/`, lang), Astro.site),
+      })),
+    },
+  }}
+>
+  <div class="max-w-7xl mx-auto px-4 pb-16 font-sans">
+    <HudPageHeader
+      code={pPage.code}
+      crumb={navLabels('/projects/')}
+      title={{
+        ru: pPage.title,
+        uz: pPage.title_uz,
+        en: pPage.title_en,
+      }}
+      lead={{
+        ru: pPage.subtitle,
+        uz: pPage.subtitle_uz,
+        en: pPage.subtitle_en,
+      }}
+    />
+
+    {projectItems.length > 6 && (
+      <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-3 mb-8 flex flex-row flex-wrap items-center gap-2 font-mono text-[11px]" role="group" aria-label={tr('projects.filter.aria')}>
+        <span class="text-[#4A5056] uppercase tracking-widest mr-2"><I18nText k="projects.filter.label" /></span>
+        <button type="button" id="prj-filter-all" data-filter="all" class="prj-filter px-3 py-1.5 border border-[#0A0A0A] bg-[#0A0A0A] text-white cursor-pointer font-bold">
+          <I18nText k="projects.filter.all" />
+        </button>
+        {categories.map((c, i) => (
+          <button type="button" id={`prj-filter-${i + 1}`} data-filter={c.ru} class="prj-filter px-3 py-1.5 border border-[#0A0A0A] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer font-bold">
+            <I18nText ru={c.ru} uz={c.uz} en={c.en} />
+          </button>
+        ))}
+      </div>
+    )}
+
+    <div id="prj-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {projectItems.map((prj) => (
+        <div class="prj-item flex" data-category={categoryOf(prj.data).ru}>
+          <HudCard
+            class="w-full"
+            index={prj.data.code}
+            tag={{ ru: prj.data.category || prj.data.tag, uz: prj.data.category_uz || prj.data.tag_uz, en: prj.data.category_en || prj.data.tag_en }}
+            title={{ ru: prj.data.title, uz: prj.data.title_uz, en: prj.data.title_en }}
+            text={{ ru: prj.data.subtitle, uz: prj.data.subtitle_uz, en: prj.data.subtitle_en }}
+            image={prj.data.image}
+            href={`/projects/${prj.slug}/`}
+            cta={{ ru: tr('projects.card.cta') }}
+            headingLevel="h2"
+          >
+            <div class="flex flex-wrap gap-1.5 font-mono text-[10px]">
+              {prj.data.metrics.map((m, idx) => (
+                <span class="border border-[#0A0A0A]/40 px-1.5 py-0.5 text-[#0A0A0A]">
+                  <I18nText ru={m} uz={prj.data.metrics_uz?.[idx]} en={prj.data.metrics_en?.[idx]} />
+                </span>
+              ))}
+            </div>
+          </HudCard>
+        </div>
+      ))}
+    </div>
+
+    <HudStepDivider label={pPage.directionsDivider} class="my-12" />
+
+    <!-- Strategic directions -->
+    <section class="hud-glass-card p-6 lg:p-8 gap-4">
+      <div class="hud-section-head font-mono text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A]/15 pb-2">
+        <I18nText as="h2" ru={pPage.directionsTitle} uz={pPage.directionsTitle_uz} en={pPage.directionsTitle_en} />
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs mt-2">
+        {directions.map((d) => (
+          <div class="flex items-start gap-3">
+            <span class="font-mono bg-[#0A0A0A] text-white px-2 py-0.5 font-bold">{d.n}</span>
+            <div>
+              <span class="font-mono font-bold text-[#0A0A0A] block mb-1"><I18nText ru={d.title} uz={d.title_uz} en={d.title_en} /></span>
+              <span class="text-[#4A5056] leading-relaxed"><I18nText ru={d.text} uz={d.text_uz} en={d.text_en} /></span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <HudStepDivider label={pPage.artLabDivider} class="my-12" />
+
+    <!-- Art Lab manifesto -->
+    <section class="hud-glass-card p-6 lg:p-8 gap-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#0A0A0A]/15 pb-3">
+        <span class="hud-callout"><i></i><I18nText ru={artLab.badge} uz={artLab.badge_uz} en={artLab.badge_en} /></span>
+        <span class="font-mono text-[11px] text-[#4A5056]">
+          <I18nText ru={artLab.location} uz={artLab.location_uz} en={artLab.location_en} />
+        </span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-[#0A0A0A] leading-relaxed">
+        <div class="space-y-3">
+          <I18nText
+            as="p"
+            ru={artLab.p1}
+            uz={artLab.p1_uz}
+            en={artLab.p1_en}
+          />
+          <I18nText
+            as="p"
+            ru={artLab.p2}
+            uz={artLab.p2_uz}
+            en={artLab.p2_en}
+          />
+        </div>
+        <div class="border border-[#0A0A0A] p-5 font-mono text-xs flex flex-col justify-between gap-4">
+          <div class="space-y-2">
+            <div class="font-bold text-[#0A0A0A]">
+              <I18nText ru={artLab.vendorTitle} uz={artLab.vendorTitle_uz} en={artLab.vendorTitle_en} />
+            </div>
+            <I18nText
+              as="p"
+              class="text-[11px] text-[#4A5056] leading-relaxed"
+              ru={artLab.vendorDesc}
+              uz={artLab.vendorDesc_uz}
+              en={artLab.vendorDesc_en}
+            />
+          </div>
+          <button
+            type="button"
+            id="prj-proposal-btn"
+            data-lead-modal
+            data-lead-subject={t(lang, 'lead.subject.projectsArtLab')}
+            class="hud-btn w-full justify-center"
+          >
+            <I18nText ru={artLab.buttonText} uz={artLab.buttonText_uz} en={artLab.buttonText_en} />
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const btns = document.querySelectorAll<HTMLButtonElement>('.prj-filter');
+  const items = document.querySelectorAll<HTMLElement>('.prj-item');
+  btns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter || 'all';
+      btns.forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle('bg-[#0A0A0A]', on);
+        b.classList.toggle('text-white', on);
+        b.classList.toggle('text-[#0A0A0A]', !on);
+      });
+      items.forEach((it) => {
+        it.style.display = f === 'all' || it.dataset.category === f ? '' : 'none';
+      });
+    });
+  });
+</script>

@@ -1,10 +1,10 @@
 ---
 code: "SRV.01"
 title: "Контрактные поставки ВЭД под ключ (DDP Ташкент)"
-title_uz: "Kalit topshirish shartnomaviy TQI ta'minoti (DDP Toshkent)"
+title_uz: "Kalit topshirish shartnomaviy TIF ta'minoti (DDP Toshkent)"
 title_en: "Turnkey Contractual DDP Supplies (Tashkent)"
 category: "ВЭД и Логистика"
-category_uz: "TQI va Logistika"
+category_uz: "TIF va Logistika"
 category_en: "Foreign Trade & Logistics"
 summary: "Комплексный импорт промышленного оборудования, сырья и комплектующих. Фиксация конечной стоимости в сумах с НДС 12%, таможенная очистка без задержек и прямые контракты с 86+ заводами-производителями."
 summary_uz: "Sanoat uskunalari, xomashyo va butlovchi qismlarni kompleks import qilish. 12% QQS bilan so'mda qat'iy narx, kechikishlarsiz bojxona rasmiylashtiruvi va 86+ ishlab chiqaruvchi zavodlar bilan to'g'ridan-to'g'ri shartnomalar."
@@ -64,6 +64,26 @@ benefits:
     value: "Регулярные сборные и целые поезда"
     value_uz: "Muntazam yig'ma va yaxlit poyezdlar"
     value_en: "Scheduled block and intermodal trains"
+body_uz: |
+  ### Tashqi iqtisodiy faoliyatni xavfsiz tashkil etish
+
+  «RailTech» MChJ loyiha ta'minotining barcha bosqichlarini o'z zimmasiga oladi: ishlab chiqaruvchi zavodni malakaviy tanlashdan tortib tayyor mahsulotni Toshkentdagi omborda buyurtmachiga topshirishgacha.
+
+  Biz quyidagilarni bajaramiz:
+  - Tashqi savdo operatsiyalarining yagona elektron axborot tizimida (YEAIS TSO) tashqi savdo bitimi pasportini ishlab chiqish va kelishish.
+  - Mahsulotni kirish sifat nazorati va GOST / TR TS / O'zDSt bo'yicha sertifikatlash.
+  - To'liq bojxona rasmiylashtiruvi va barcha yig'imlarni O'zbekiston davlat byudjetiga to'lash.
+  - 12% QQSni kafolatli hisobga olish uchun yopuvchi buxgalteriya hujjatlarining to'liq to'plamini shakllantirish.
+body_en: |
+  ### Risk-free foreign trade operations
+
+  RailTech LLC handles every stage of project procurement: from qualifying the manufacturer to handing over the finished goods to the customer at our Tashkent warehouse.
+
+  We take care of:
+  - Preparing and registering the foreign trade contract passport in the Unified Electronic Information System for Foreign Trade Operations.
+  - Incoming quality control and certification under GOST / TR CU / O'zDSt.
+  - Full customs clearance and payment of all duties to the state budget of Uzbekistan.
+  - A complete set of closing accounting documents so you can reliably offset 12% VAT.
 ---
 
 ### Организация внешнеэкономической деятельности без рисков

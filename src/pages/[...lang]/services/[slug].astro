@@ -1,0 +1,271 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import I18nText from '../../../components/I18nText.astro';
+import HudPageHeader from '../../../components/hud/HudPageHeader.astro';
+import { ProductMediaGallery } from '../../../components/islands/ProductMediaGallery';
+import { withBase, telHref } from '../../../utils/url';
+import { marked } from 'marked';
+import globalData from '../../../data/cms/global.json';
+import pagesData from '../../../data/cms/pages.json';
+import { expandLangs, localeHref, tField } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { entrySeo, absoluteUrl } from '../../../utils/seo';
+import { navLabel, navLabels } from '../../../utils/nav';
+
+export async function getStaticPaths() {
+  const serviceEntries = await getCollection('services');
+  const paths = serviceEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+  return expandLangs(paths);
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const lang = Astro.locals.lang;
+const tr = (key: string, vars?: Record<string, string | number>) => t(lang, key, vars);
+const L = (obj: Record<string, any>, field: string) => tField(obj, field, lang) as string;
+
+const data = entry.data;
+const detail = pagesData.servicesPage.detail;
+const serviceRoute = `/services/${entry.slug}/`;
+const serviceUrl = absoluteUrl(localeHref(serviceRoute, lang), Astro.site);
+const orgId = `${absoluteUrl('/', Astro.site)}#organization`;
+const title = L(data, 'title');
+
+// Markdown body: translated body_uz / body_en when present, otherwise the RU body.
+const localizedBody = lang === 'uz' ? data.body_uz : lang === 'en' ? data.body_en : undefined;
+const bodyHtml = localizedBody ? await marked.parse(localizedBody) : '';
+
+const seo = entrySeo(data, lang, { descriptionFields: ['summary'], body: localizedBody || entry.body });
+
+const serviceJsonLd = {
+  '@type': 'Service',
+  '@id': `${serviceUrl}#service`,
+  name: title,
+  serviceType: L(data, 'category'),
+  description: seo.description,
+  url: serviceUrl,
+  ...(data.image ? { image: absoluteUrl(withBase(data.image), Astro.site) } : {}),
+  provider: { '@id': orgId },
+  areaServed: { '@type': 'Country', name: globalData.countryCode },
+};
+
+const ctaLabel = data.ctaLabel ? L(data, 'ctaLabel') : L(detail, 'defaultCtaLabel');
+const phoneHref = telHref(globalData.phone);
+---
+
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  image={data.image}
+  breadcrumbs={[
+    { name: navLabel('/services/', lang), path: '/services/' },
+    { name: title, path: serviceRoute },
+  ]}
+  jsonLd={serviceJsonLd}
+>
+  <div class="max-w-7xl mx-auto px-4 pb-16 font-sans">
+    <HudPageHeader
+      code={tr('services.detail.code', { code: data.code })}
+      parent={{ href: '/services/', label: navLabels('/services/') }}
+      crumb={{ ru: data.code, uz: data.code, en: data.code }}
+      title={{ ru: data.title, uz: data.title_uz, en: data.title_en }}
+      lead={{ ru: data.summary, uz: data.summary_uz, en: data.summary_en }}
+    />
+
+    <!-- Status Badges Bar -->
+    <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-8">
+      <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A] font-bold border border-[#0A0A0A]">
+        {data.code}
+      </span>
+      <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
+        <I18nText ru={data.category} uz={data.category_uz} en={data.category_en} />
+      </span>
+      <span class="hud-glass-card px-2.5 py-1 text-emerald-900 font-bold bg-emerald-100/50">
+        <I18nText ru={detail.activeBadge} uz={detail.activeBadge_uz} en={detail.activeBadge_en} />
+      </span>
+      <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
+        <I18nText ru={detail.vatBadge} uz={detail.vatBadge_uz} en={detail.vatBadge_en} />
+      </span>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Left Column: Steps & Content -->
+      <div class="lg:col-span-7 flex flex-col space-y-8">
+        <!-- 4 Steps of Service Execution -->
+        <div class="hud-glass-card p-6">
+          <div class="border-b border-[#0A0A0A]/20 pb-2 mb-5 flex justify-between items-center font-mono text-xs">
+            <span class="font-bold text-[#0A0A0A] tracking-wider uppercase">
+              <I18nText ru={detail.stepsTitle} uz={detail.stepsTitle_uz} en={detail.stepsTitle_en} />
+            </span>
+            <span class="text-[#4A5056]">{tr('services.detail.stagesCount', { count: data.steps.length })}</span>
+          </div>
+
+          <div class="space-y-4">
+            {data.steps.map((st, idx) => (
+              <div class="flex items-start gap-3.5 p-3.5 bg-white/40 border border-[#0A0A0A]/15">
+                <span class="font-mono bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold flex-none mt-0.5">
+                  0{idx + 1}
+                </span>
+                <div>
+                  <h3 class="font-sans font-bold text-sm text-[#0A0A0A] mb-1">
+                    <I18nText ru={st.title} uz={st.title_uz} en={st.title_en} />
+                  </h3>
+                  <p class="text-xs text-[#4A5056] leading-relaxed">
+                    <I18nText ru={st.text} uz={st.text_uz} en={st.text_en} />
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Markdown Body -->
+        <div class="hud-glass-card p-6">
+          <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 font-mono text-xs font-bold text-[#0A0A0A] uppercase tracking-wider">
+            <I18nText ru={detail.bodyTitle} uz={detail.bodyTitle_uz} en={detail.bodyTitle_en} />
+          </div>
+          <div class="prose prose-sm text-[#0A0A0A] max-w-none leading-relaxed">
+            {bodyHtml ? <div set:html={bodyHtml} /> : <Content />}
+          </div>
+        </div>
+
+        <!-- Downloadable Documentation & Service Agreements -->
+        {data.documents && data.documents.length > 0 && (
+          <div class="hud-glass-card p-6">
+            <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 flex justify-between items-center font-mono text-xs">
+              <span class="font-bold text-[#0A0A0A] tracking-wider uppercase flex items-center gap-2">
+                <span class="w-2 h-2 bg-[#0A0A0A] inline-block"></span>
+                <I18nText ru={detail.documentsTitle} uz={detail.documentsTitle_uz} en={detail.documentsTitle_en} />
+              </span>
+              <span class="text-[#4A5056]">{tr('docs.filesCount', { count: data.documents.length })}</span>
+            </div>
+            <div class="space-y-2.5 font-mono text-xs">
+              {data.documents.map((doc) => {
+                const fileUrl = doc.file.startsWith('http') ? doc.file : withBase(doc.file);
+                return (
+                  <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 border border-[#0A0A0A]/20 bg-white/40 hover:bg-white/80 transition-colors gap-2">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                      <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-1.5 py-0.5 text-[10px] font-bold">DOC</span>
+                      <div class="min-w-0">
+                        <div class="font-bold text-[#0A0A0A] truncate">
+                          <I18nText ru={doc.title} uz={doc.title_uz} en={doc.title_en} />
+                        </div>
+                        <div class="text-[10px] text-[#4A5056] uppercase tracking-wider">
+                          {doc.type || tr('docs.typeFallback')}
+                        </div>
+                      </div>
+                    </div>
+                    <a
+                      href={fileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="hud-btn hud-btn--ghost text-[11px] py-1.5 px-3 self-start sm:self-auto text-center shrink-0"
+                    >
+                      <I18nText k="docs.download" />
+                    </a>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <!-- Right Column: Media Frame, Benefits & Order Box -->
+      <div class="lg:col-span-5 flex flex-col space-y-6">
+        <ProductMediaGallery
+          client:load
+          lang={lang}
+          sku={data.code}
+          title={data.title}
+          title_uz={data.title_uz}
+          title_en={data.title_en}
+          category={data.category}
+          category_uz={data.category_uz}
+          category_en={data.category_en}
+          image={data.image}
+          images={data.images}
+        />
+
+        <!-- Key Benefits & Facts -->
+        <div class="hud-glass-card p-6 font-mono text-xs">
+          <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 font-bold text-[#0A0A0A] uppercase tracking-wider">
+            <I18nText ru={detail.benefitsTitle} uz={detail.benefitsTitle_uz} en={detail.benefitsTitle_en} />
+          </div>
+
+          <table class="w-full border-collapse">
+            <tbody class="divide-y divide-[#0A0A0A]/15">
+              {data.benefits.map((b) => (
+                <tr class="hover:bg-white/30 transition-colors">
+                  <td class="py-2.5 pr-2 text-[#4A5056] w-2/5">
+                    <I18nText ru={b.label} uz={b.label_uz} en={b.label_en} />
+                  </td>
+                  <td class="py-2.5 font-bold text-[#0A0A0A]">
+                    <I18nText ru={b.value} uz={b.value_uz} en={b.value_en} />
+                  </td>
+                </tr>
+              ))}
+              <tr class="hover:bg-white/30 transition-colors">
+                <td class="py-2.5 pr-2 text-[#4A5056]">
+                  <I18nText k="services.detail.contract" />
+                </td>
+                <td class="py-2.5 font-bold text-[#0A0A0A]">
+                  <I18nText ru={detail.contractValue} uz={detail.contractValue_uz} en={detail.contractValue_en} />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Commercial Action Card -->
+        <div class="hud-glass-card p-6 font-mono gap-4">
+          <div class="border-b border-[#0A0A0A]/20 pb-2">
+            <span class="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider block">
+              <I18nText ru={detail.orderTitle} uz={detail.orderTitle_uz} en={detail.orderTitle_en} />
+            </span>
+            <span class="text-[11px] text-[#4A5056]">
+              <I18nText ru={detail.orderNote} uz={detail.orderNote_uz} en={detail.orderNote_en} />
+            </span>
+          </div>
+
+          <div class="space-y-2 text-xs">
+            <div class="flex justify-between text-[#4A5056]">
+              <span><I18nText k="services.detail.settlement" /></span>
+              <span class="font-bold text-[#0A0A0A]"><I18nText ru={detail.currencyValue} uz={detail.currencyValue_uz} en={detail.currencyValue_en} /></span>
+            </div>
+            <div class="flex justify-between text-[#4A5056]">
+              <span><I18nText k="services.detail.taxation" /></span>
+              <span class="font-bold text-[#0A0A0A]"><I18nText ru={detail.taxationValue} uz={detail.taxationValue_uz} en={detail.taxationValue_en} /></span>
+            </div>
+            <div class="flex justify-between text-[#4A5056]">
+              <span><I18nText k="services.detail.directLine" /></span>
+              <a href={phoneHref} class="font-bold text-[#0A0A0A] hover:underline">{globalData.phone}</a>
+            </div>
+          </div>
+
+          <div class="pt-2 flex flex-col gap-2">
+            <button
+              type="button"
+              data-lead-modal
+              data-lead-subject={t(lang, 'lead.subject.serviceInquiry', { title: tField(data, 'title', lang), code: data.code })}
+              class="hud-btn w-full cursor-pointer"
+            >
+              <I18nText ru={ctaLabel} />
+            </button>
+            <a
+              href={localeHref('/services/', lang)}
+              class="hud-btn hud-btn--ghost w-full text-center"
+            >
+              <I18nText k="services.detail.back" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,232 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import I18nText from '../../../components/I18nText.astro';
+import HudPageHeader from '../../../components/hud/HudPageHeader.astro';
+import HudStepDivider from '../../../components/hud/HudStepDivider.astro';
+
+import { withBase } from '../../../utils/url';
+import pagesData from '../../../data/cms/pages.json';
+import { langStaticPaths, localeHref, pick, tField } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { pageSeo, absoluteUrl } from '../../../utils/seo';
+import { navLabel, navLabels } from '../../../utils/nav';
+
+export const getStaticPaths = langStaticPaths;
+
+const lang = Astro.locals.lang;
+const tr = (key: string, vars?: Record<string, string | number>) => t(lang, key, vars);
+const seo = pageSeo('services', lang);
+
+const allServices = await getCollection('services');
+allServices.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
+
+const sPage = pagesData.servicesPage;
+
+// Unique categories for filtering (only if > 6 services)
+const categoryMap = new Map<string, { ru: string; uz?: string; en?: string }>();
+for (const s of allServices) {
+  const ru = s.data.category;
+  if (!categoryMap.has(ru)) {
+    categoryMap.set(ru, { ru, uz: s.data.category_uz, en: s.data.category_en });
+  }
+}
+const categories = [...categoryMap.values()];
+---
+
+<BaseLayout
+  title={seo.title}
+  description={seo.description}
+  breadcrumbs={[{ name: navLabel('/services/', lang), path: '/services/' }]}
+  jsonLd={{
+    '@type': 'CollectionPage',
+    name: pick(lang, sPage.title, sPage.title_uz, sPage.title_en),
+    description: seo.description,
+    inLanguage: lang,
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: allServices.map((srv, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: tField(srv.data, 'title', lang),
+        url: absoluteUrl(localeHref(`/services/${srv.slug}/`, lang), Astro.site),
+      })),
+    },
+  }}
+>
+  <div class="max-w-7xl mx-auto px-4 pb-16 font-sans">
+    <HudPageHeader
+      code={sPage.code}
+      crumb={navLabels('/services/')}
+      title={{
+        ru: sPage.title,
+        uz: sPage.title_uz,
+        en: sPage.title_en,
+      }}
+      lead={{
+        ru: sPage.subtitle,
+        uz: sPage.subtitle_uz,
+        en: sPage.subtitle_en,
+      }}
+    />
+
+    {allServices.length > 6 && (
+      <div class="border-2 border-[#0A0A0A] bg-[#D4D8DC] p-3 mb-8 flex flex-row flex-wrap items-center gap-2 font-mono text-[11px]" role="group" aria-label={tr('services.filter.aria')}>
+        <span class="text-[#4A5056] uppercase tracking-widest mr-2"><I18nText k="services.filter.label" /></span>
+        <button type="button" id="srv-filter-all" data-filter="all" class="srv-filter px-3 py-1.5 border border-[#0A0A0A] bg-[#0A0A0A] text-white cursor-pointer font-bold">
+          <I18nText k="services.filter.all" />
+        </button>
+        {categories.map((c, i) => (
+          <button type="button" id={`srv-filter-${i + 1}`} data-filter={c.ru} class="srv-filter px-3 py-1.5 border border-[#0A0A0A] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer font-bold">
+            <I18nText ru={c.ru} uz={c.uz} en={c.en} />
+          </button>
+        ))}
+      </div>
+    )}
+
+    <!-- Services Grid (2x2 Matrix) -->
+    <div id="srv-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+      {allServices.map((srv, idx) => {
+        const photoUrl = withBase(srv.data.image || '/images/hero/logistics.jpg');
+        const detailHref = localeHref(`/services/${srv.slug}/`, lang);
+        const firstSteps = (srv.data.steps || []).slice(0, 3);
+        const cardIndex = `0${idx + 1} //`;
+
+        return (
+          <div class="srv-item hud-glass-card p-6 flex flex-col justify-between gap-5 relative group" data-category={srv.data.category}>
+            {/* Target Reticle Corner Brackets */}
+            <span class="hud-target-corner hud-tc-tl" aria-hidden="true">┌</span>
+            <span class="hud-target-corner hud-tc-tr" aria-hidden="true">┐</span>
+            <span class="hud-target-corner hud-tc-bl" aria-hidden="true">└</span>
+            <span class="hud-target-corner hud-tc-br" aria-hidden="true">┘</span>
+
+            <div class="flex flex-col gap-4">
+              {/* Header: Index + Category Badge */}
+              <div class="flex items-center justify-between border-b border-[#0A0A0A]/15 pb-2 font-mono text-xs">
+                <span class="hud-card-index"><b>{cardIndex}</b> {srv.data.code}</span>
+                <span class="border border-[#0A0A0A] bg-white/70 px-2 py-0.5 text-[10px] font-bold text-[#0A0A0A]">
+                  <I18nText ru={srv.data.category} uz={srv.data.category_uz} en={srv.data.category_en} />
+                </span>
+              </div>
+
+              {/* Real Photo in frame with corners */}
+              <div class="hud-card-media aspect-[16/10] overflow-hidden border border-[#0A0A0A]/20 relative">
+                <img
+                  src={photoUrl}
+                  alt={tField(srv.data, 'title', lang)}
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  onerror={`this.onerror=null; this.src='${withBase('/images/hero/warehouse.jpg')}';`}
+                />
+                <span class="absolute top-1.5 left-1.5 font-mono text-[9px] tracking-widest text-white/90 mix-blend-difference bg-black/40 px-1 py-0.5">
+                  {tr('services.card.mediaCode', { code: srv.data.code })}
+                </span>
+              </div>
+
+              {/* Title & Summary */}
+              <div>
+                <h2 class="font-sans font-bold text-lg sm:text-xl text-[#0A0A0A] leading-snug mb-2">
+                  <a href={detailHref} class="hover:underline">
+                    <I18nText ru={srv.data.title} uz={srv.data.title_uz} en={srv.data.title_en} />
+                  </a>
+                </h2>
+                <p class="text-xs sm:text-[13px] text-[#4A5056] leading-relaxed line-clamp-3">
+                  <I18nText ru={srv.data.summary} uz={srv.data.summary_uz} en={srv.data.summary_en} />
+                </p>
+              </div>
+
+              {/* Key Steps / What's Included */}
+              {firstSteps.length > 0 && (
+                <div class="pt-3 border-t border-[#0A0A0A]/15 space-y-1.5 font-mono text-xs">
+                  <span class="text-[10px] text-[#4A5056] uppercase tracking-wider block font-bold mb-1">
+                    <I18nText k="services.card.deliverables" />
+                  </span>
+                  {firstSteps.map((step, sIdx) => (
+                    <div class="flex items-start gap-2 text-[11px] text-[#0A0A0A]">
+                      <span class="text-[#4A5056] font-bold flex-none">0{sIdx + 1}.</span>
+                      <span class="truncate">
+                        <I18nText ru={step.title} uz={step.title_uz} en={step.title_en} />
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Bottom Actions in one line: details link and quotation request */}
+            <div class="pt-4 border-t border-[#0A0A0A]/20 flex items-center justify-between gap-3 font-mono text-xs">
+              <a
+                href={detailHref}
+                class="border border-[#0A0A0A] px-3 py-2 bg-white/40 hover:bg-[#0A0A0A] hover:text-white transition-colors font-bold flex items-center gap-1.5 min-h-[44px]"
+              >
+                <span><I18nText k="services.card.details" /></span>
+                <span>→</span>
+              </a>
+              <button
+                type="button"
+                data-lead-modal
+                data-lead-subject={t(lang, 'lead.subject.serviceQuote', { title: tField(srv.data, 'title', lang) })}
+                class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-3.5 py-2 hover:bg-white hover:text-[#0A0A0A] transition-colors font-bold cursor-pointer flex items-center gap-1.5 min-h-[44px]"
+              >
+                <span><I18nText k="services.card.requestQuote" /></span>
+                <span>↗</span>
+              </button>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <HudStepDivider label={sPage.dividerLabel} class="my-12" />
+
+    <!-- Consultation / RFQ Banner -->
+    <div class="hud-glass-card p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 max-w-2xl">
+        <span class="hud-callout"><i></i>{sPage.ctaBadge}</span>
+        <h3 class="font-sans text-xl font-bold text-[#0A0A0A]">
+          <I18nText ru={sPage.ctaTitle} uz={sPage.ctaTitle_uz} en={sPage.ctaTitle_en} />
+        </h3>
+        <p class="text-xs text-[#4A5056] leading-relaxed font-sans">
+          <I18nText ru={sPage.ctaSubtitle} uz={sPage.ctaSubtitle_uz} en={sPage.ctaSubtitle_en} />
+        </p>
+      </div>
+      <button
+        type="button"
+        data-lead-modal
+        data-lead-subject={t(lang, 'lead.subject.servicesConsultation')}
+        class="hud-btn whitespace-nowrap cursor-pointer"
+      >
+        <span>[ <I18nText ru={sPage.ctaButton} uz={sPage.ctaButton_uz} en={sPage.ctaButton_en} /> ]</span>
+      </button>
+    </div>
+  </div>
+
+  <script is:inline>
+    // Services category filtering
+    (function() {
+      var buttons = document.querySelectorAll('.srv-filter');
+      var items = document.querySelectorAll('.srv-item');
+      if (!buttons.length || !items.length) return;
+
+      buttons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var target = btn.getAttribute('data-filter');
+          buttons.forEach(function(b) {
+            b.className = 'srv-filter px-3 py-1.5 border border-[#0A0A0A] text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-colors cursor-pointer font-bold';
+          });
+          btn.className = 'srv-filter px-3 py-1.5 border border-[#0A0A0A] bg-[#0A0A0A] text-white cursor-pointer font-bold';
+
+          items.forEach(function(item) {
+            var cat = item.getAttribute('data-category');
+            if (target === 'all' || cat === target) {
+              item.style.display = 'flex';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+    })();
+  </script>
+</BaseLayout>
