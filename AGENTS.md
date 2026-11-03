@@ -57,6 +57,7 @@ Every page exists once per language, each with its own URL, `<html lang>`, title
 * **Client Islands:** React 18 (`client:load` for critical interactive elements like calculators and lead modals, `client:visible` for below-the-fold components).
 * **3D Graphics:** Three.js with `GLTFLoader`. Models are kept in `public/models/{modelType}.glb`. Product cards must use real photos and blueprints by default, with 3D as an optional tab.
 * **Styling:** Tailwind CSS with custom fonts and CAD styling utilities.
+* **Images:** originals (JPG/PNG) live in `public/images/**` (CMS uploads in `public/images/uploads`). `scripts/optimize-images.mjs` (prebuild) generates WebP variants `<name>.w480|w800|w1200.webp` (git-ignored). Render every raster `<img>` with `responsiveImage(src, SIZES.x)` / `webpSrcSet(src)` from `src/utils/images.ts` — original stays as `src` fallback, WebP goes to `srcset`; postbuild `check-build` fails if a srcset file is missing. In `astro dev` originals are served.
 * **Content Management:** Astro Content Collections (`src/content/config.ts`) + Sveltia CMS (`public/admin/config.yml`). Sveltia rejects the whole config if any field — including the single `field:` of a `list` widget — has no `name`; `scripts/validate-cms-config.mjs` (run in `prebuild`) enforces this.
 * **Lead Capturing:** Cloudflare Worker webhook (`cloudflare-worker/telegram-webhook.js`) forwarding Base64 files and specs directly to Telegram.
 * **CI/CD:** GitHub Actions (`.github/workflows/deploy.yml`) deploying static build to GitHub Pages upon push to `main`.

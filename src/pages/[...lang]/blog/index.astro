@@ -1,7 +1,7 @@
 ---
+import { responsiveImage, SIZES } from '../../../utils/images';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { withBase } from '../../../utils/url';
 import I18nText from '../../../components/I18nText.astro';
 import HudPageHeader from '../../../components/hud/HudPageHeader.astro';
 import pagesData from '../../../data/cms/pages.json';
@@ -101,7 +101,7 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
             {featuredPost.data.image && (
               <div class="mb-4 border border-[#0A0A0A] overflow-hidden bg-[#D4D8DC]">
                 <img
-                  src={withBase(featuredPost.data.image)}
+                  {...responsiveImage(featuredPost.data.image, SIZES.wide)}
                   alt={tField(featuredPost.data, 'title', lang)}
                   class="w-full h-48 sm:h-64 object-cover"
                 />
@@ -200,7 +200,7 @@ const featuredPost = allPosts.find((p) => p.data.featured) || allPosts[0];
             {post.data.image && (
               <div class="mb-3 border border-[#0A0A0A] overflow-hidden bg-[#C8CDD2]">
                 <img
-                  src={withBase(post.data.image)}
+                  {...responsiveImage(post.data.image, SIZES.card)}
                   alt={tField(post.data, 'title', lang)}
                   loading="lazy"
                   decoding="async"

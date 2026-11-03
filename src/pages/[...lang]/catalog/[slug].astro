@@ -1,4 +1,5 @@
 ---
+import { responsiveImage, SIZES } from '../../../utils/images';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { ProductMediaGallery } from '../../../components/islands/ProductMediaGallery';
@@ -8,7 +9,7 @@ import { withBase, telHref } from '../../../utils/url';
 import { marked } from 'marked';
 import globalData from '../../../data/cms/global.json';
 import pagesData from '../../../data/cms/pages.json';
-import { expandLangs, localeHref, pick, tField, type Lang } from '../../../i18n';
+import { expandLangs, localeHref, pick, tField } from '../../../i18n';
 import { t } from '../../../i18n/ui';
 import { entrySeo, siteSeo, absoluteUrl } from '../../../utils/seo';
 import { navLabel, navLabels } from '../../../utils/nav';
@@ -439,7 +440,7 @@ const catalogHref = localeHref('/catalog/', lang);
                 <div>
                   <div class="hud-card-media aspect-[16/10] mb-3">
                     <img
-                      src={withBase(item.data.image || `/images/catalog/${item.data.sku.toLowerCase()}.jpg`)}
+                      {...responsiveImage(item.data.image || `/images/catalog/${item.data.sku.toLowerCase()}.jpg`, SIZES.card)}
                       alt={tr('catalog.detail.imageAlt', { title: itemTitle, sku: item.data.sku })}
                       class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       loading="lazy"
