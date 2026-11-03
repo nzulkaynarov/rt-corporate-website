@@ -111,7 +111,7 @@ const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630' widt
       <text x='322' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#0A0A0A'>${C.items}</text>
 
       <rect x='465' y='0' width='145' height='55' fill='#0A0A0A' stroke='#0A0A0A' stroke-width='1.5'/>
-      <text x='477' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#D4D8DC'>ПРОИЗВОДИТЕЛЕЙ</text>
+      <text x='477' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#D4D8DC'>ПРОИЗВОДИТЕЛЕЙ В КАТАЛОГЕ</text>
       <text x='477' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#FFFFFF'>${C.manufacturers}</text>
     </g>
   </g>

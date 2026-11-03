@@ -6,7 +6,8 @@ import globalData from '../data/cms/global.json';
  *
  *   items         — catalog entries (src/content/catalog)
  *   categories    — distinct catalog categories
- *   manufacturers — distinct `manufacturer` values in the catalog + names in global.json → manufacturers
+ *   manufacturers — distinct makers of catalog products (`manufacturer` field) + names in global.json → manufacturers
+ *   partnerManufacturers — makers RailTech works with as dealer / direct supplier (global.json → manufacturers only)
  *   years, partners — not derivable from the catalog: global.json → metrics (editable in /admin)
  *
  * In any CMS text rendered through <I18nText> write a placeholder:
@@ -19,6 +20,7 @@ export interface Counters {
   items: number;
   categories: number;
   manufacturers: number;
+  partnerManufacturers: number;
   years: string;
   partners: string;
 }
@@ -31,15 +33,17 @@ export function getCounters(): Promise<Counters> {
 
 async function compute(): Promise<Counters> {
   const entries = await getCollection('catalog');
-  const makers = new Set<string>();
+  const partners = new Set<string>();
+  for (const m of (globalData as any).manufacturers || []) if (m?.name) partners.add(String(m.name).trim());
+  const makers = new Set<string>(partners);
   for (const e of entries) if (e.data.manufacturer) makers.add(e.data.manufacturer.trim());
-  for (const m of (globalData as any).manufacturers || []) if (m?.name) makers.add(String(m.name).trim());
   const categories = new Set(entries.map((e) => e.data.category || e.data.subsystem).filter(Boolean));
   const metrics = (globalData as any).metrics || {};
   return {
     items: entries.length,
     categories: categories.size,
     manufacturers: makers.size,
+    partnerManufacturers: partners.size,
     years: metrics.years || '',
     partners: metrics.partners || '',
   };
@@ -57,7 +61,7 @@ function plural(n: number, forms: string[]): string {
   return forms[0] || '';
 }
 
-const PLACEHOLDER = /\{(items|categories|manufacturers|years|partners)((?:\|[^|{}]+)*)\}/g;
+const PLACEHOLDER = /\{(items|categories|manufacturers|partnerManufacturers|years|partners)((?:\|[^|{}]+)*)\}/g;
 
 /** Replaces counter placeholders in a text; texts without placeholders are returned unchanged. */
 export function fillCounters(text: string, c: Counters): string {

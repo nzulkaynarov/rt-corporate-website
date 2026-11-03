@@ -520,7 +520,7 @@ collections:
             name: "metrics"
             widget: "object"
             required: false
-            hint: "Число позиций, категорий и производителей сайт считает сам по каталогу. В текстах — плейсхолдеры {items}, {manufacturers}, {categories}, {years}, {partners}; со склонением: {items|позиция|позиции|позиций}."
+            hint: "Число позиций, категорий и производителей сайт считает сам по каталогу. В текстах — плейсхолдеры {items}, {manufacturers} (производители продукции в каталоге), {partnerManufacturers} (с кем работаем — таблица производителей), {categories}, {years}, {partners}; со склонением: {items|позиция|позиции|позиций}."
             fields:
               - { label: "Лет на рынке", name: "years", widget: "string", required: false }
               - { label: "Партнеры", name: "partners", widget: "string", required: false }
