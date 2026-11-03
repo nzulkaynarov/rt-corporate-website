@@ -86,7 +86,7 @@ function trilingual(file, obj, field, where = field, { optional = false } = {}) 
       v.forEach((item, i) => checkText(file, `${where}_${l}[${i}]`, item, l));
       continue;
     }
-    if (CYR.test(ru) && String(v).trim() === String(ru).trim()) err(file, `${where}_${l}: identical to RU (not translated)`);
+    if (/[а-яё]/.test(String(ru).replace(/«[^»]*»/g, ' ')) && String(v).trim() === String(ru).trim()) err(file, `${where}_${l}: identical to RU (not translated)`);
     checkText(file, `${where}_${l}`, v, l);
   }
 }

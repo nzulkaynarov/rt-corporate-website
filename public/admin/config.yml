@@ -16,8 +16,8 @@ collections:
     create: true
     slug: "{{sku}}"
     fields:
-      - { label: "⚙️ Код SKU (Артикул)", name: "sku", widget: "string", hint: "Уникальный идентификатор позиции (напр. RT-RS-118)" }
-      - { label: "⚙️ Категория изделия", name: "category", widget: "string", required: false, hint: "Любая категория (напр. Подвижной состав, Спецтехника, Инструмент)" }
+      - { label: "⚙️ Код SKU (Артикул)", name: "sku", widget: "string", hint: "Уникальный идентификатор: RT-SAF-NNN (устройства безопасности) или RT-TST-NNN (сервисная аппаратура)" }
+      - { label: "⚙️ Категория изделия", name: "category", widget: "string", required: false, hint: "Категория каталога, напр. «Локомотивные устройства безопасности» или «Сервисная и испытательная аппаратура»" }
       - { label: "⚙️ Категория (UZ)", name: "category_uz", widget: "string", required: false }
       - { label: "⚙️ Категория (EN)", name: "category_en", widget: "string", required: false }
       - { label: "⚙️ ГОСТ / Стандарт", name: "gost", widget: "string", required: false, hint: "ГОСТ или ТУ (напр. ГОСТ 9246-2013)" }
@@ -28,7 +28,7 @@ collections:
       - { label: "⚙️ Базис склада (EN)", name: "warehouse_en", widget: "string", default: "Tashkent, Index B2-2097", required: false }
       - { label: "⚙️ Статус наличия (RU)", name: "status", widget: "select", options: ["В наличии", "Резерв", "Под заказ"], default: "В наличии", required: false }
       - { label: "⚙️ Ключ статуса для фильтра", name: "statusKey", widget: "select", options: ["in_stock", "reserved", "on_order"], default: "in_stock", required: false }
-      - { label: "⚙️ Фотография изделия (главная)", name: "image", widget: "image", required: false, hint: "Реальное фото узла на складе Index" }
+      - { label: "⚙️ Фотография изделия (главная)", name: "image", widget: "image", required: false, hint: "Реальное фото изделия (JPG/PNG, ≥ 1200 px). WebP создаются автоматически" }
       - label: "⚙️ Дополнительные фото товара (Галерея ракурсов)"
         name: "images"
         widget: "list"
@@ -476,6 +476,8 @@ collections:
           - { label: "⚙️ To'liq firma nomi (UZ)", name: "fullName_uz", widget: "string", required: false }
           - { label: "⚙️ Full Legal Name (EN)", name: "fullName_en", widget: "string", required: false }
           - { label: "⚙️ Сокращенное наименование", name: "shortName", widget: "string", required: false }
+          - { label: '⚙️ Сокращённое наименование [UZ]', name: shortName_uz, widget: string, required: false }
+          - { label: '⚙️ Сокращённое наименование [EN]', name: shortName_en, widget: string, required: false }
           - { label: "⚙️ ИНН предприятия", name: "inn", widget: "string" }
           - { label: "⚙️ ИНН / Код плательщика НДС (taxId)", name: "taxId", widget: "string", required: false }
           - { label: "⚙️ Номер плательщика НДС (vatNumber)", name: "vatNumber", widget: "string", required: false }
@@ -483,6 +485,7 @@ collections:
           - { label: "⚙️ Название ОКЭД (RU)", name: "okedName", widget: "string", required: false }
           - { label: "⚙️ IFUT nomi (UZ)", name: "okedName_uz", widget: "string", required: false }
           - { label: "⚙️ OKED Name (EN)", name: "okedName_en", widget: "string", required: false }
+          - { label: '⚙️ ОКПО', name: okpo, widget: string, required: false }
           - { label: "⚙️ Почтовый индекс", name: "postalCode", widget: "string", required: false }
           - { label: "⚙️ Город [RU]", name: "city", widget: "string", required: false }
           - { label: "⚙️ Shahar [UZ]", name: "city_uz", widget: "string", required: false }
@@ -509,6 +512,9 @@ collections:
           - { label: "🇷🇺 [RU] Адрес склада и офиса", name: "address", widget: "string" }
           - { label: "🇺🇿 [UZ] Ombor va ofis manzili", name: "address_uz", widget: "string", required: false }
           - { label: "🇬🇧 [EN] Warehouse and office address", name: "address_en", widget: "string", required: false }
+          - { label: '⚙️ Адрес офиса [RU]', name: officeAddress, widget: string, required: false }
+          - { label: '⚙️ Ofis manzili [UZ]', name: officeAddress_uz, widget: string, required: false }
+          - { label: '⚙️ Office address [EN]', name: officeAddress_en, widget: string, required: false }
           - { label: "🇷🇺 [RU] Полный складской адрес (КПП)", name: "warehouseAddress", widget: "string", required: false }
           - { label: "🇺🇿 [UZ] To'liq ombor manzili (KPP)", name: "warehouseAddress_uz", widget: "string", required: false }
           - { label: "🇬🇧 [EN] Full Warehouse Address (Gate)", name: "warehouseAddress_en", widget: "string", required: false }

@@ -117,6 +117,11 @@ for (const rel of files) {
     if (!href.startsWith(`${BASE}/`) && href !== BASE) continue;
     const p = href.slice(BASE.length).split(/[?#]/)[0] || '/';
     if (/\.[a-z0-9]{2,5}$/i.test(p) || p.startsWith('/admin/') || p.startsWith('/_astro/')) continue; // files / CMS
+    // The target page must exist in dist/ (catches links to removed or misspelled entries).
+    const target = path.join(DIST, decodeURI(p), p.endsWith('/') ? 'index.html' : '');
+    if (!fs.existsSync(target) && !fs.existsSync(`${target}.html`) && !fs.existsSync(path.join(target, 'index.html'))) {
+      err(`broken internal link (no such page): ${href}`);
+    }
     const linkSeg = p.split('/')[1];
     const linkLang = LANGS.includes(linkSeg) && linkSeg !== 'ru' ? linkSeg : 'ru';
     if (linkLang !== lang) err(`link to another language: ${href}`);

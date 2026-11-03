@@ -81,6 +81,9 @@
 | Датчик угла поворота (ДПС) | burilish burchagi datchigi (DPS) | angle-of-rotation sensor (DPS) | — | Обозначения изделий не переводятся: ДПС-01, БС-ДПС |
 | Блок связи с ДПС (БС-ДПС) | DPS bilan aloqa bloki (BS-DPS) | DPS interface unit (BS-DPS) | — | |
 | Стенд для проверки | tekshirish stendi | test bench | — | |
+| Блок КОН (контроль несанкционированного отключения ЭПК) | КОН bloki | КОН unit | — | |
+| ЭПК (электропневматический клапан автостопа) | EPK (avtostop elektropnevmatik klapani) | EPK (autostop electro-pneumatic valve) | — | |
+| Гибкий вал | egiluvchan val | flexible shaft | — | |
 | Официальный дилер и представитель | rasmiy diler va vakil | official dealer and representative | — | Только для НПО САУТ (свидетельство № 1 от 26.02.2026) |
 | ООО «НПО САУТ» | «НПО САУТ» MChJ | NPO SAUT LLC | — | В UZ допускается кириллическое название в кавычках, как в официальных новостях |
 | Локализация производства | ishlab chiqarishni mahalliylashtirish | production localization | — | |

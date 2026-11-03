@@ -3,15 +3,15 @@
   "strings": [
     {
       "key": "lead.subject.blogConsultation",
-      "ru": "Запрос инженерной консультации со страницы Блога",
-      "uz": "Blog sahifasidan muhandislik maslahati so'rovi",
-      "en": "Engineering consultation request from the blog"
+      "ru": "Запрос со страницы новостей и материалов",
+      "uz": "Yangiliklar va materiallar sahifasidan so'rov",
+      "en": "Request from the news & articles page"
     },
     {
       "key": "lead.subject.blogArticle",
-      "ru": "Запрос расчета по материалу: {title}",
-      "uz": "Maqola bo'yicha hisob-kitob so'rovi: {title}",
-      "en": "Quote request based on the article: {title}"
+      "ru": "Запрос по публикации: {title}",
+      "uz": "Nashr bo'yicha so'rov: {title}",
+      "en": "Request about the publication: {title}"
     },
     {
       "key": "blog.author",
@@ -21,9 +21,9 @@
     },
     {
       "key": "blog.reviewer",
-      "ru": "РЕЦЕНЗИЯ:",
-      "uz": "TAQRIZ:",
-      "en": "REVIEW:"
+      "ru": "РЕДАКЦИЯ:",
+      "uz": "TAHRIRIYAT:",
+      "en": "EDITED BY:"
     },
     {
       "key": "blog.date",
@@ -75,9 +75,9 @@
     },
     {
       "key": "blog.search.placeholder",
-      "ru": "Поиск по темам, ГОСТ, тегам...",
-      "uz": "Mavzular, GOST, teglar bo'yicha qidiruv...",
-      "en": "Search by topic, GOST, tags..."
+      "ru": "Поиск по новостям и темам…",
+      "uz": "Yangiliklar va mavzular bo'yicha qidiruv…",
+      "en": "Search news and topics…"
     },
     {
       "key": "blog.empty.title",
@@ -99,15 +99,15 @@
     },
     {
       "key": "blog.article.requestQuote",
-      "ru": "[ ЗАПРОСИТЬ РАСЧЕТ КП ]",
-      "uz": "[ TIJORAT TAKLIFINI SO'RASH ]",
-      "en": "[ REQUEST RFQ ESTIMATE ]"
+      "ru": "[ ЗАДАТЬ ВОПРОС / ЗАПРОСИТЬ КП ]",
+      "uz": "[ SAVOL BERISH / TIJORAT TAKLIFI ]",
+      "en": "[ ASK A QUESTION / REQUEST A QUOTE ]"
     },
     {
       "key": "blog.article.back",
-      "ru": "← ВЕРНУТЬСЯ В РАЗДЕЛ БЛОГА",
-      "uz": "← BLOG BO'LIMIGA QAYTISH",
-      "en": "← BACK TO BLOG ARCHIVE"
+      "ru": "← ВСЕ НОВОСТИ И МАТЕРИАЛЫ",
+      "uz": "← BARCHA YANGILIKLAR VA MATERIALLAR",
+      "en": "← ALL NEWS & ARTICLES"
     }
   ]
 }
