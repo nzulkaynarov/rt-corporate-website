@@ -1,5 +1,6 @@
 ---
 import { responsiveImage, SIZES } from '../../../utils/images';
+import ProductPlaceholder from '../../../components/ProductPlaceholder.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { ProductMediaGallery } from '../../../components/islands/ProductMediaGallery';
@@ -75,7 +76,7 @@ const priceNote = L(data, 'priceNote') || L(cPage, 'defaultPriceNote');
 const localizedBody = lang === 'uz' ? data.body_uz : lang === 'en' ? data.body_en : undefined;
 const bodyHtml = localizedBody ? await marked.parse(localizedBody) : '';
 
-const mainImageUrl = data.image || `/images/catalog/${data.sku.toLowerCase()}.jpg`;
+const mainImageUrl: string | undefined = data.image || undefined; // no photo yet → placeholder, default OG image
 const seo = entrySeo(data, lang, {
   titleExtra: `(${data.sku})`,
   descriptionTemplate: siteSeo(lang).catalogDescription,
@@ -94,7 +95,7 @@ const productJsonLd = {
   '@id': `${productUrl}#product`,
   name: title,
   description: seo.description,
-  image: absoluteUrl(withBase(mainImageUrl), Astro.site),
+  ...(mainImageUrl ? { image: absoluteUrl(withBase(mainImageUrl), Astro.site) } : {}),
   url: productUrl,
   sku: data.sku,
   mpn: data.sku,
@@ -439,13 +440,17 @@ const catalogHref = localeHref('/catalog/', lang);
               >
                 <div>
                   <div class="hud-card-media aspect-[16/10] mb-3">
-                    <img
-                      {...responsiveImage(item.data.image || `/images/catalog/${item.data.sku.toLowerCase()}.jpg`, SIZES.card)}
-                      alt={tr('catalog.detail.imageAlt', { title: itemTitle, sku: item.data.sku })}
-                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                      decoding="async"
-                    />
+                    {item.data.image ? (
+                      <img
+                        {...responsiveImage(item.data.image, SIZES.card)}
+                        alt={tr('catalog.detail.imageAlt', { title: itemTitle, sku: item.data.sku })}
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : (
+                      <ProductPlaceholder sku={item.data.sku} />
+                    )}
                   </div>
                   <div class="flex items-center justify-between text-[11px] text-[#4A5056] mb-1">
                     <span class="font-bold text-[#0A0A0A]">{item.data.sku}</span>

@@ -1,0 +1,11 @@
+{
+  "title": "Фото и медиа",
+  "strings": [
+    {
+      "key": "media.photoPending",
+      "ru": "Фото готовится",
+      "uz": "Surat tayyorlanmoqda",
+      "en": "Photo coming soon"
+    }
+  ]
+}

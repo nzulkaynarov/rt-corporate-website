@@ -80,9 +80,7 @@ export const ProductMediaGallery: React.FC<Props> = ({
       }
     });
 
-    if (uniqueList.length === 0) {
-      uniqueList.push(`/images/catalog/${sku.toLowerCase()}.jpg`);
-    }
+    // No photos yet → empty list; HudSmartImage renders the blueprint placeholder with the SKU.
     return uniqueList;
   }, [image, images, gallery, sku]);
 

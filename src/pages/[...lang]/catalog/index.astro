@@ -44,7 +44,7 @@ const items = catalogEntries.map((entry) => ({
   specs: entry.data.specs,
   specs_uz: entry.data.specs_uz,
   specs_en: entry.data.specs_en,
-  image: withBase(entry.data.image || `/images/catalog/${entry.data.sku.toLowerCase()}.jpg`),
+  image: entry.data.image ? withBase(entry.data.image) : undefined, // no photo → blueprint placeholder
 }));
 const cPage = pagesData.catalogPage;
 ---

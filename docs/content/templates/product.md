@@ -1,18 +1,18 @@
 ---
 # ШАБЛОН ТОВАРА → копировать в src/content/catalog/<sku-в-нижнем-регистре>.md
 # Все строки с TODO заменить; необязательные поля без данных — удалить целиком.
-sku: "TODO: RT-RS-120"                      # RT-<RS|SCB|TRK|ELC|KIP>-<NNN>, уникальный
+sku: "TODO: RT-SAF-006"                     # RT-<SAF|TST>-<NNN>, уникальный
 image: "/images/catalog/TODO.jpg"           # реальное фото; нет фото — удалить строку
 images:                                     # доп. ракурсы (необязательно)
   - "/images/catalog/TODO-2.jpg"
-title: "TODO: Колесная пара РУ1Ш-957-Г"      # официальное наименование + модель
+title: "TODO: Датчик угла поворота ДПС-У-0.1"  # официальное наименование + модель/обозначение
 title_uz: "TODO"
 title_en: "TODO"
-category: "TODO: Подвижной состав"           # одна из категорий каталога (см. GLOSSARY: Ж/д техника)
-category_uz: "TODO: Harakatlanuvchi tarkib"
-category_en: "TODO: Rolling Stock"
-gost: "TODO: ГОСТ 4835-2013"                 # необязательно
-tnved: "TODO: 8607 19 100 0"                 # необязательно, формат XXXX XX XXX X
+category: "TODO: Локомотивные устройства безопасности"   # категория каталога (GLOSSARY: Электроника)
+category_uz: "TODO: Lokomotiv xavfsizlik qurilmalari"
+category_en: "TODO: Locomotive safety equipment"
+gost: "TODO: ТУ / ГОСТ"                      # необязательно: только реальный ГОСТ/ТУ
+tnved: "TODO: XXXX XX XXX X"                 # необязательно: только подтверждённый код
 status: "В наличии"                          # В наличии | Резерв | Под заказ
 statusKey: "in_stock"                        # in_stock | reserved | on_order — строго соответствует status
 specs: "TODO: ключевые параметры одной строкой"
@@ -20,10 +20,10 @@ specs_uz: "TODO"
 specs_en: "TODO"
 # warehouse / warranty / priceNote (+ _uz/_en) — только если отличаются от стандартных (pages.json → catalogPage)
 attributes:                                  # таблица характеристик, 3–10 строк
-  - label: "TODO: Нагрузка на ось"
+  - label: "TODO: Обозначение"
     label_uz: "TODO"
     label_en: "TODO"
-    value: "TODO: 23,5 тс"
+    value: "TODO: ПЮЯИ.468179.001"
     value_uz: "TODO"
     value_en: "TODO"
 documents:                                   # только реальные файлы (public/docs/… или https://…)
@@ -42,7 +42,7 @@ body_en: |
 
 ### Назначение
 
-TODO: что это, для какого подвижного состава / объекта, где применяется.
+TODO: что это, в какой системе безопасности / на каком подвижном составе применяется.
 
 ### Конструкция и комплектность
 

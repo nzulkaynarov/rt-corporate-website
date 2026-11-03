@@ -58,7 +58,11 @@ function checkText(file, where, value, lang) {
   if (typeof value !== 'string') return;
   if (PLACEHOLDER.test(value)) err(file, `${where}: placeholder text (${value.match(PLACEHOLDER)[0]})`);
   if (lang && lang !== 'ru') {
-    if (CYR.test(value)) err(file, `${where}: Cyrillic letters in a ${lang.toUpperCase()} field ("${value.slice(0, 60)}…")`);
+    // Product / organisation designations stay in the original: upper-case Cyrillic codes
+    // (ДПС-01, БС-ДПС, СГМА.468179.001-01, САУТ-ЦМ/НСП) and «НПО САУТ»-style names are allowed.
+    // Lower-case Cyrillic words mean untranslated text.
+    const rest = value.replace(/«[^»]*»/g, (m) => (/[а-яё]/.test(m) ? m : ' ')).replace(/[А-ЯЁ0-9][А-ЯЁ0-9.\-\/]*/g, ' ');
+    if (/[а-яё]/.test(rest)) err(file, `${where}: Cyrillic words in a ${lang.toUpperCase()} field ("${value.slice(0, 60)}…") — translate them (upper-case designations like ДПС-01 are allowed)`);
     for (const f of forbidden) if (f.re.test(value)) err(file, `${where}: forbidden term "${f.variant}" — use the glossary term (${f.use})`);
     if (lang === 'uz' && /[ʻʼ’‘]/.test(value)) warn(file, `${where}: use the plain apostrophe ' in Uzbek (o', g', ma'lumot), not ʻ ’ ‘`);
   }

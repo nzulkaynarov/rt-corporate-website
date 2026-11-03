@@ -1,5 +1,6 @@
 ---
 import { responsiveImage, SIZES } from '../../utils/images';
+import ProductPlaceholder from '../../components/ProductPlaceholder.astro';
 import { stockLabel } from '../../utils/stock';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
@@ -232,13 +233,17 @@ const skuTitle = (item: (typeof showcaseSkus)[number]) => pick(lang, item.data.t
           <div class="hud-glass-card !flex-row items-center justify-between p-3 gap-3 font-mono text-xs">
             <div class="flex items-center gap-3 min-w-0">
               <div class="w-14 h-11 flex-none border border-[#0A0A0A]/40 overflow-hidden bg-[#D4D8DC] relative">
-                <img
-                  {...responsiveImage(item.data.image || '/images/hero/warehouse.jpg', SIZES.thumb)}
-                  alt={skuTitle(item)}
-                  loading="lazy"
-                  decoding="async"
-                  class="w-full h-full object-cover"
-                />
+                {item.data.image ? (
+                  <img
+                    {...responsiveImage(item.data.image, SIZES.thumb)}
+                    alt={skuTitle(item)}
+                    loading="lazy"
+                    decoding="async"
+                    class="w-full h-full object-cover"
+                  />
+                ) : (
+                  <ProductPlaceholder sku={item.data.sku} compact />
+                )}
               </div>
               <div class="min-w-0">
                 <div class="flex items-center gap-1.5 text-[10px] text-[#4A5056] leading-none mb-1">
@@ -292,14 +297,17 @@ const skuTitle = (item: (typeof showcaseSkus)[number]) => pick(lang, item.data.t
             </div>
 
             <div class="hud-card-media aspect-[16/10]">
-              <img
-                {...responsiveImage(item.data.image || '/images/hero/warehouse.jpg', SIZES.card)}
-                alt={skuTitle(item)}
-                loading="lazy"
-                decoding="async"
-                class="w-full h-full object-cover"
-                onerror={`this.onerror=null;this.removeAttribute('srcset');this.src='${withBase('/images/hero/warehouse.jpg')}';`}
-              />
+              {item.data.image ? (
+                <img
+                  {...responsiveImage(item.data.image, SIZES.card)}
+                  alt={skuTitle(item)}
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-full object-cover"
+                />
+              ) : (
+                <ProductPlaceholder sku={item.data.sku} />
+              )}
             </div>
 
             <h3 class="font-sans font-bold text-base text-[#0A0A0A] leading-snug">

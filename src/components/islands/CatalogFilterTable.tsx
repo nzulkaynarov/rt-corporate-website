@@ -259,7 +259,7 @@ export const CatalogFilterTable: React.FC<Props> = (props) => {
                   {/* Photo with Smart Fallback */}
                   <div className="hud-card-media aspect-[16/10] my-3 border border-[#0A0A0A]/15 overflow-hidden">
                     <HudSmartImage
-                      src={item.image || withBase(`/images/catalog/${item.sku.toLowerCase()}.jpg`)}
+                      src={item.image || undefined}
                       alt={title}
                       sku={item.sku}
                       category={category}
@@ -379,9 +379,10 @@ export const CatalogFilterTable: React.FC<Props> = (props) => {
                     {/* 48x36px Photo Thumbnail */}
                     <td className="p-2.5">
                       <a href={productHref(item)} className="block w-[48px] h-[36px] border border-[#0A0A0A]/30 overflow-hidden bg-[#C8CDD2]">
+                        {item.image ? (
                         <img
-                          src={item.image || withBase(`/images/catalog/${item.sku.toLowerCase()}.jpg`)}
-                          srcSet={webpSrcSet(item.image || `/images/catalog/${item.sku.toLowerCase()}.jpg`)}
+                          src={item.image}
+                          srcSet={webpSrcSet(item.image)}
                           sizes={SIZES.thumb}
                           alt={title}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-200"
@@ -393,6 +394,11 @@ export const CatalogFilterTable: React.FC<Props> = (props) => {
                             t.src = withBase('/images/hero/warehouse.jpg');
                           }}
                         />
+                        ) : (
+                          <span className="w-full h-full flex items-center justify-center font-mono text-[7px] font-bold text-[#0A0A0A] cad-grid-bg" aria-hidden="true">
+                            {item.sku}
+                          </span>
+                        )}
                       </a>
                     </td>
                     <td className="p-2.5 font-bold text-[#0A0A0A] whitespace-nowrap">

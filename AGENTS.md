@@ -78,11 +78,13 @@ Every page exists once per language, each with its own URL, `<html lang>`, title
 
 ## 5. Domain Knowledge Quick Reference
 
-* **Legal Entity:** ООО «RailTech» (RailTech LLC), Tashkent, Uzbekistan.
-* **Tax ID / INN:** `308912445` (12% VAT accredited).
-* **Warehouse Hub:** Tashkent, Yangihayot district, Trade-Production Complex Index, Block B2, Section 2097.
-* **Key Strategic Partners** *(orientation only — do not name partners or clients in site content unless they already appear on the site or the brief explicitly allows it)*: НПО САУТ (locomotive safety automation), Tashkent State Transport University (TGTU), GAJK «O'zbekiston temir yo'llari» (UTY).
-* **Customs Delivery Terms:** DDP Tashkent (prices fixed in Uzbek Sums, 100% compliant tax invoice with 12% VAT).
+Single source for company facts is `src/data/cms/global.json` / `contacts.json`; this is only orientation.
+
+* **Legal Entity:** ООО «RAILTECH» (RailTech LLC), Tashkent, Uzbekistan, since 2021. ИНН `308346339`, ОКПО `30664447`. Legal address: г. Ташкент, Ц-1, 47/33; office: ТПК Index, офис B2-2097.
+* **Profile:** electronics and train-safety systems for railways and industry; «надёжный мост между международными производителями и предприятиями Узбекистана». Directions: Поставки, Инжиниринг, Локализация, Представительство.
+* **Official dealer & representative of ООО «НПО САУТ» in Uzbekistan** (certificate № 1 of 26.02.2026, valid to 31.12.2026). Direct supplies of ADZ NAGANO, GERSYS, Siemens Mobility, РАТЕП-ИННОВАЦИЯ products (no dealer status claimed for them).
+* **Digital:** Cabinet `cabinet.railtech.uz` (web + Telegram Mini App) for clients and partners.
+* **Commercial terms:** prices are not published on the site; quotes incl. 12% VAT; DDP / CIP; warranty 12 months from delivery.
 
 ---
 
