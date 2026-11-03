@@ -1,10 +1,10 @@
 ---
 code: "SRV.01"
 title: "Контрактные поставки ВЭД под ключ (DDP Ташкент)"
-title_uz: "Kalit topshirish shartnomaviy TQI ta'minoti (DDP Toshkent)"
+title_uz: "Kalit topshirish shartnomaviy TIF ta'minoti (DDP Toshkent)"
 title_en: "Turnkey Contractual DDP Supplies (Tashkent)"
 category: "ВЭД и Логистика"
-category_uz: "TQI va Logistika"
+category_uz: "TIF va Logistika"
 category_en: "Foreign Trade & Logistics"
 summary: "Комплексный импорт промышленного оборудования, сырья и комплектующих. Фиксация конечной стоимости в сумах с НДС 12%, таможенная очистка без задержек и прямые контракты с 86+ заводами-производителями."
 summary_uz: "Sanoat uskunalari, xomashyo va butlovchi qismlarni kompleks import qilish. 12% QQS bilan so'mda qat'iy narx, kechikishlarsiz bojxona rasmiylashtiruvi va 86+ ishlab chiqaruvchi zavodlar bilan to'g'ridan-to'g'ri shartnomalar."

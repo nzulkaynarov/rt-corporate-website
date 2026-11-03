@@ -19,3 +19,10 @@ Architecture: Astro 4 (SSG) + React 18 + Three.js + Tailwind CSS + TypeScript.
 - **Product Media**: Real photos and blueprints take precedence over 3D models.
 - **Content Collections**: Stored in `src/content/` (`catalog`, `services`, `projects`, `blog`). Schema is typed in `src/content/config.ts`; CMS schema in `public/admin/config.yml` must match it.
 - **Global Leads**: Triggered via `data-lead-modal data-lead-subject="..."` or `window.dispatchEvent(new CustomEvent('open-lead-modal', { detail: { subject } }))`.
+
+## Content Work (products, services, projects, blog, page texts)
+- Rules: `docs/content/README.md` (workflow), `STYLE_GUIDE.md` (facts policy — never invent prices, stock, certificates, clients, numbers), `GLOSSARY.md` (RU/UZ/EN terms), `SEO.md`.
+- Use the project skills: `add-product`, `add-service`, `add-project`, `write-blog-post`, `translate-content`, `edit-site-texts`, then `content-qa` and `content-pr`. For a whole brief, delegate to the `content-writer` subagent; review with `content-reviewer`.
+- Every text field in RU + `_uz` (Latin) + `_en`; `npm run check:content -- --strict` and `npm run build` must pass before a PR.
+- Content branches `content/<type>-<slug>`, PR into `main`; never push to `main` directly (merge = deploy).
+

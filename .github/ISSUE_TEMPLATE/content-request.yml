@@ -1,0 +1,57 @@
+name: Новый контент для сайта
+description: Бриф для ИИ-агента или редактора — товар, услуга, проект, статья или правка текстов (RU / UZ / EN).
+title: "[content] "
+labels: ["content"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Заполните бриф. Агент подготовит материал на трёх языках по правилам `docs/content/` и откроет PR на проверку.
+        **Всё, что не указано здесь, агент не будет выдумывать** — цены, наличие, сертификаты, клиентов, цифры.
+  - type: dropdown
+    id: type
+    attributes:
+      label: Тип контента
+      options:
+        - Товар каталога
+        - Услуга
+        - Проект / кейс
+        - Статья блога / новость
+        - Правка текстов страниц / SEO / подписей
+        - Перевод существующего контента
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: Что публикуем
+      description: Наименование, модель, SKU (если есть), тема статьи, какую страницу правим.
+    validations:
+      required: true
+  - type: textarea
+    id: facts
+    attributes:
+      label: Факты и характеристики
+      description: Параметры, ГОСТ/ТУ, код ТН ВЭД, наличие (В наличии / Резерв / Под заказ), цена с НДС, сроки, цифры проекта, клиент (с разрешением на упоминание).
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Источники
+      description: Паспорт завода, КП, договор, ссылки на официальные документы. Можно приложить файлы.
+  - type: textarea
+    id: media
+    attributes:
+      label: Фото и документы
+      description: Приложите реальные фото (JPG/PNG) и PDF (паспорт, сертификат). Без фото позиция будет опубликована с заглушкой.
+  - type: textarea
+    id: seo
+    attributes:
+      label: Ключевые запросы (необязательно)
+      description: Как ищут клиенты на русском / узбекском / английском.
+  - type: textarea
+    id: notes
+    attributes:
+      label: Особые указания
+      description: Срок публикации, на что сделать акцент, что не упоминать.

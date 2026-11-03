@@ -260,7 +260,7 @@
       "orderTitle_uz": "O'XSHASH LOYIHANI BUYURTMA QILISH",
       "orderTitle_en": "ORDER A SIMILAR PROJECT",
       "orderNote": "Реализация под ключ: ВЭД, инженерная адаптация, поставка со склада в Ташкенте и техническое сопровождение.",
-      "orderNote_uz": "Kalit ostida amalga oshirish: TQI, muhandislik adaptatsiyasi, Toshkent omboridan yetkazib berish va texnik ko'mak.",
+      "orderNote_uz": "Kalit ostida amalga oshirish: TIF, muhandislik adaptatsiyasi, Toshkent omboridan yetkazib berish va texnik ko'mak.",
       "orderNote_en": "Turnkey implementation: foreign trade, engineering adaptation, Tashkent warehouse delivery, and ongoing technical support.",
       "settlementValue": "DDP Ташкент (12% НДС)",
       "settlementValue_uz": "DDP Toshkent (12% QQS)",
@@ -302,7 +302,7 @@
     "detail": {
       "frameBottom": "RAILTECH ENGINEERING DISPATCH",
       "sidebarTitle": "КОММЕРЧЕСКИЙ ОТДЕЛ // ВЭД",
-      "sidebarTitle_uz": "TIJORAT BO'LIMI // TQI",
+      "sidebarTitle_uz": "TIJORAT BO'LIMI // TIF",
       "sidebarTitle_en": "COMMERCIAL DESK // TRADE",
       "sidebarNote": "Расчет спецификации по теме публикации",
       "sidebarNote_uz": "Maqola mavzusi bo'yicha hisob-kitob",

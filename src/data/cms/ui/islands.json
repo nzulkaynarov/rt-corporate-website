@@ -28,7 +28,7 @@
     {
       "key": "catalogTable.searchPlaceholder",
       "ru": "Поиск по наименованию, артикулу или параметрам...",
-      "uz": "Nom, SKU yoki parametrlar bo‘yicha qidiruv...",
+      "uz": "Nom, SKU yoki parametrlar bo'yicha qidiruv...",
       "en": "Search by title, SKU or specification..."
     },
     {
@@ -46,7 +46,7 @@
     {
       "key": "catalogTable.viewSwitchAria",
       "ru": "Режим отображения",
-      "uz": "Ko‘rinish rejimi",
+      "uz": "Ko'rinish rejimi",
       "en": "View switch"
     },
     {
@@ -94,13 +94,13 @@
     {
       "key": "catalogTable.requestCard",
       "ru": "Запросить ↗",
-      "uz": "So‘rov ↗",
+      "uz": "So'rov ↗",
       "en": "Request ↗"
     },
     {
       "key": "catalogTable.requestRow",
       "ru": "Запросить ↗",
-      "uz": "So‘rov ↗",
+      "uz": "So'rov ↗",
       "en": "RFQ ↗"
     },
     {
@@ -148,7 +148,7 @@
     {
       "key": "catalogTable.emptyText",
       "ru": "Попробуйте изменить поисковый запрос или сбросить фильтр категорий.",
-      "uz": "Qidiruv so‘zini o‘zgartirib ko‘ring yoki barcha tovarlar filtrini tanlang.",
+      "uz": "Qidiruv so'zini o'zgartirib ko'ring yoki barcha tovarlar filtrini tanlang.",
       "en": "Try modifying your search query or reset the category filter."
     },
     {

@@ -113,7 +113,7 @@
   ],
   "footer": {
     "companyDesc": "Многопрофильный оператор промышленных поставок, контрактного ВЭД под ключ, инженерного сорсинга и заказного цифрового ПО в Узбекистане.",
-    "companyDesc_uz": "O'zbekistonda sanoat ta'minoti, kalit topshirish shartnomaviy TQI, muhandislik sorsingi va buyurtma dasturiy ta'minotning ko'p tarmoqli operatori.",
+    "companyDesc_uz": "O'zbekistonda sanoat ta'minoti, kalit topshirish shartnomaviy TIF, muhandislik sorsingi va buyurtma dasturiy ta'minotning ko'p tarmoqli operatori.",
     "companyDesc_en": "Multi-sector operator for industrial supply, turnkey DDP import, engineering sourcing, and enterprise software engineering in Uzbekistan.",
     "vatValue": "12% (ПЛАТЕЛЬЩИК)",
     "vatValue_uz": "12% (TO'LOVCHI)",
@@ -139,7 +139,7 @@
         "label_uz": "Kompaniya xizmatlari",
         "label_en": "Corporate services",
         "badge": "ВЭД / IT / Сорсинг",
-        "badge_uz": "TQI / IT / Sorsing",
+        "badge_uz": "TIF / IT / Sorsing",
         "badge_en": "DDP / IT / Sourcing"
       },
       {

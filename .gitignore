@@ -41,3 +41,6 @@ pnpm-debug.log*
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Claude Code personal overrides (project settings in .claude/settings.json are shared)
+.claude/settings.local.json

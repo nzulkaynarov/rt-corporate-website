@@ -6,7 +6,7 @@
   "pageTitle_uz": "«RAILTECH» MCHJ INSTITUTSIONAL PROFILI",
   "pageTitle_en": "INSTITUTIONAL PROFILE OF RAILTECH LLC",
   "pageSubtitle": "ООО «RailTech» — специализированный оператор железнодорожного снабжения, контрактного ВЭД и цифровых технологий. Мы обеспечиваем бесперебойные поставки комплектующих подвижного состава и систем СЦБ для предприятий горно-металлургического сектора, железнодорожных операторов и промышленных гигантов Центральной Азии.",
-  "pageSubtitle_uz": "«RailTech» MChJ — temir yo'l ta'minoti, shartnomaviy TQI va raqamli texnologiyalarning ixtisoslashtirilgan operatori. Biz Markaziy Osiyoning tog'-kon metallurgiya sektori, temir yo'l operatorlari va yirik sanoat korxonalari uchun harakatlanuvchi tarkib butlovchilari va STSB tizimlarining uzluksiz yetkazib berilishini kafolatlaymiz.",
+  "pageSubtitle_uz": "«RailTech» MChJ — temir yo'l ta'minoti, shartnomaviy TIF va raqamli texnologiyalarning ixtisoslashtirilgan operatori. Biz Markaziy Osiyoning tog'-kon metallurgiya sektori, temir yo'l operatorlari va yirik sanoat korxonalari uchun harakatlanuvchi tarkib butlovchilari va STSB tizimlarining uzluksiz yetkazib berilishini kafolatlaymiz.",
   "pageSubtitle_en": "RailTech LLC is a specialized operator of railway procurement, turnkey import management, and digital B2B technologies. We ensure seamless deliveries of rolling stock assemblies and signaling systems for mining, metallurgical operations, rail operators, and heavy industry across Central Asia.",
   "mission": {
     "title": "МИССИЯ И СТРАТЕГИЧЕСКИЙ ВЕКТОР",
@@ -71,13 +71,13 @@
     },
     {
       "code": "[03] ИНЖЕНЕРНЫЙ КОНСАЛТИНГ И ВЭД ПОД КЛЮЧ",
-      "code_uz": "[03] MUHANDISLIK KONSALTINGI VA KALIT TOPSHIRISH TQI",
+      "code_uz": "[03] MUHANDISLIK KONSALTINGI VA KALIT TOPSHIRISH TIF",
       "code_en": "[03] ENGINEERING CONSULTING & TURNKEY IMPORT",
       "title": "Комплексный консалтинг и логистика DDP",
       "title_uz": "Kompleks konsalting va DDP logistikasi",
       "title_en": "Comprehensive Consulting & DDP Logistics",
       "description": "Помощь в подборе взаимозаменяемых аналогов по ГОСТ и чертежам, расчет оптимальных таможенных кодов ТН ВЭД, фиксация цен в сумах с НДС 12%.",
-      "description_uz": "GOST va chizmalar bo'yicha muqobil detallarni tanlashda muhandislik yordami, TQI TH kodlarini to'g'ri tanlash, 12% QQS bilan so'mda qat'iy narxlar.",
+      "description_uz": "GOST va chizmalar bo'yicha muqobil detallarni tanlashda muhandislik yordami, TIF TH kodlarini to'g'ri tanlash, 12% QQS bilan so'mda qat'iy narxlar.",
       "description_en": "Engineering assistance in cross-matching GOST-compliant analogs, classification of HS codes (TN VED), and complete price locking in Uzbek Sums inclusive of 12% VAT.",
       "items": [
         "Поставка на базисе DDP Ташкент",

@@ -22,3 +22,8 @@ Stack: Astro 4 (SSG) + React 18 + Three.js + Tailwind CSS + TypeScript.
 
 # Build & Quality Assurance
 - Always run `npm run build` after making modifications to verify 0 errors across all static routes.
+
+# Content (catalog, services, projects, blog, page texts)
+- Follow docs/content/ (README, STYLE_GUIDE, GLOSSARY, SEO) and templates in docs/content/templates/.
+- Every text in RU + UZ (Latin) + EN; never invent facts; run `npm run check:content -- --strict` and `npm run build`; open a PR, never push to main.
+

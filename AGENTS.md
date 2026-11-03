@@ -68,7 +68,10 @@ Every page exists once per language, each with its own URL, `<html lang>`, title
 * **Install dependencies:** `npm install`
 * **Local development:** `npx astro dev --port 4321`
 * **Static production build:** `npm run build` (MANDATORY: Must exit with 0 errors before committing).
+* **Content quality gate:** `npm run check:content` (add `-- --strict` before a content PR; `-- --files <paths>` for specific files).
+* **CMS schema only:** `npm run check:cms` · **SEO/i18n audit of dist/:** `npm run check:build`
 * **Check Git status:** `git status`
+* **Never** push to `main` or force-push: all changes go through a pull request (`.github/pull_request_template.md`); merging to `main` deploys the site.
 
 ---
 
@@ -77,5 +80,35 @@ Every page exists once per language, each with its own URL, `<html lang>`, title
 * **Legal Entity:** ООО «RailTech» (RailTech LLC), Tashkent, Uzbekistan.
 * **Tax ID / INN:** `308912445` (12% VAT accredited).
 * **Warehouse Hub:** Tashkent, Yangihayot district, Trade-Production Complex Index, Block B2, Section 2097.
-* **Key Strategic Partners:** НПО САУТ (locomotive safety automation), Tashkent State Transport University (TGTU), GAJK «O'zbekiston temir yo'llari» (UTY).
+* **Key Strategic Partners** *(orientation only — do not name partners or clients in site content unless they already appear on the site or the brief explicitly allows it)*: НПО САУТ (locomotive safety automation), Tashkent State Transport University (TGTU), GAJK «O'zbekiston temir yo'llari» (UTY).
 * **Customs Delivery Terms:** DDP Tashkent (prices fixed in Uzbek Sums, 100% compliant tax invoice with 12% VAT).
+
+---
+
+## 6. Content Agents (catalog, services, projects, blog, page texts)
+
+The site is replenished by AI agents working from briefs (GitHub issue form «Новый контент» or a chat message).
+The full rulebook is **`docs/content/`** — read it before writing anything:
+
+| File | Purpose |
+|---|---|
+| `docs/content/README.md` | Where content lives, the 3-language model, the mandatory workflow, what agents must never do |
+| `docs/content/STYLE_GUIDE.md` | Voice, **facts policy (never invent prices, stock, certificates, clients, numbers)**, formats, translation rules |
+| `docs/content/GLOSSARY.md` | Mandatory RU / UZ (Latin) / EN terminology; forbidden variants are enforced by `check:content` |
+| `docs/content/SEO.md` | Titles, descriptions, slugs, internal links |
+| `docs/content/templates/*.md` | Front-matter templates for product / service / project / blog post (`TODO` markers fail the check) |
+
+**Workflow:** brief → branch `content/<type>-<slug>` → RU draft from template → UZ + EN translations →
+SEO → real media → `npm run check:content -- --strict` + `npm run build` → PR with sources and open questions → human review → merge = publish.
+
+**Scope:** content agents change only `src/content/**`, `src/data/cms/**`, `public/images/**`, `public/docs/**`
+and `docs/content/GLOSSARY.md`. Code, configs and scripts are out of scope for content tasks.
+
+**Claude Code** ships this as project tooling in `.claude/`:
+* skills: `add-product`, `add-service`, `add-project`, `write-blog-post`, `translate-content`, `edit-site-texts`, `content-qa`, `content-pr`;
+* subagents: `content-writer` (does the task end-to-end), `content-translator`, `content-reviewer` (independent read-only QA);
+* `settings.json`: safe commands pre-approved, pushes to `main` / force-push / `rm -rf` denied, and a PostToolUse hook that runs
+  `check-content` on every edited content file so problems surface immediately.
+
+Other agents (Cursor, Copilot, Codex…) follow the same `docs/content/` rules and run the same npm checks; the PR workflow
+`.github/workflows/pr-check.yml` enforces `check:content` and `build` on every pull request.

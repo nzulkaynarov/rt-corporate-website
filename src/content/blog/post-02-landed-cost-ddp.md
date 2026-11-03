@@ -4,7 +4,7 @@ title_uz: "DDP Toshkent Landed Cost hisob-kitobi: 12% QQS bilan temir yo'l uskun
 title_en: "Landed Cost DDP Tashkent Calculation: Transparent Economics of Railway Equipment Import with 12% VAT"
 publishDate: "2026-03-05"
 category: "ВЭД и Таможня"
-category_uz: "VQD va Bojxona"
+category_uz: "TIF va Bojxona"
 category_en: "Foreign Trade & Customs"
 summary: "Методология расчета конечной себестоимости поставок промышленного оборудования в Узбекистан: от заводской отпускной цены EXW до склада грузополучателя с учетом пошлин, сборов и налога на добавленную стоимость."
 summary_uz: "O'zbekistonga sanoat uskunalarini yetkazib berishning yakuniy tannarxini hisoblash metodologiyasi: zavod narxidan tortib bojlar, yig'imlar va qo'shilgan qiymat solig'ini hisobga olgan holda omborgacha."
