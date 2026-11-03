@@ -26,12 +26,6 @@
       "en": "VAT:"
     },
     {
-      "key": "footer.oked",
-      "ru": "ОКЭД:",
-      "uz": "IFUT:",
-      "en": "NACE:"
-    },
-    {
       "key": "footer.esf",
       "ru": "ЭСФ:",
       "uz": "EHF:",
@@ -57,9 +51,9 @@
     },
     {
       "key": "footer.termsShort",
-      "ru": "Условия сервиса",
+      "ru": "Условия использования",
       "uz": "Foydalanish shartlari",
-      "en": "Terms"
+      "en": "Terms of Use"
     },
     {
       "key": "footer.admin",
@@ -68,16 +62,10 @@
       "en": "Admin panel"
     },
     {
-      "key": "footer.gps",
-      "ru": "GPS:",
-      "uz": "GPS:",
-      "en": "GPS:"
-    },
-    {
       "key": "footer.phone",
-      "ru": "Прямая линия снабжения:",
-      "uz": "To'g'ridan-to'g'ri ta'minot:",
-      "en": "Direct supply line:"
+      "ru": "Телефон:",
+      "uz": "Telefon:",
+      "en": "Phone:"
     },
     {
       "key": "footer.email",
@@ -90,6 +78,12 @@
       "ru": "[ ОСТАВИТЬ ЗАЯВКУ ↗ ]",
       "uz": "[ ARIZA QOLDIRISH ↗ ]",
       "en": "[ SUBMIT REQUEST ↗ ]"
+    },
+    {
+      "key": "footer.office",
+      "ru": "ОФИС:",
+      "uz": "OFIS:",
+      "en": "OFFICE:"
     }
   ]
 }

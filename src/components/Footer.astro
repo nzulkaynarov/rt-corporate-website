@@ -3,6 +3,7 @@ import globalData from '../data/cms/global.json';
 import { localeHref, tField } from '../i18n';
 import { t } from '../i18n/ui';
 import { withBase, telHref } from '../utils/url';
+import { fillCounters, getCounters } from '../utils/counters';
 
 const lang = Astro.locals.lang;
 const tr = (key: string) => t(lang, key);
@@ -12,11 +13,12 @@ const F = (field: string): string => tField(footer, field, lang);
 
 const companyName: string = tField(g, 'companyName', lang);
 const address: string = tField(g, 'address', lang);
+const counters = await getCounters();
 const links = (footer.links || []).map((link: any) => ({
   href: localeHref(link.path, lang),
   index: link.index,
   label: tField(link, 'label', lang),
-  badge: tField(link, 'badge', lang),
+  badge: fillCounters(tField(link, 'badge', lang), counters),
 }));
 const hubText = F('hubText').replace('{address}', address);
 const phoneHref = telHref(g.phone);
@@ -41,11 +43,6 @@ const phoneHref = telHref(g.phone);
           <span>{tr('footer.tin')}</span>
           <span class="font-bold"> {g.inn}</span>
         </div>
-        <div>
-          <span>{tr('footer.vat')} <span class="font-bold">{F('vatValue')}</span></span>
-        </div>
-        <div>{tr('footer.oked')} {g.oked}</div>
-        <div>{tr('footer.esf')} {g.esfOperators}</div>
       </div>
       <div class="pt-1 flex flex-wrap gap-2 text-[10px]">
         <a href={localeHref('/privacy/', lang)} class="text-[#4A5056] hover:text-[#0A0A0A] underline">
@@ -96,7 +93,7 @@ const phoneHref = telHref(g.phone);
         <span>{hubText}</span>
       </p>
       <div class="border border-[#0A0A0A]/30 p-2.5 bg-[#D4D8DC] text-[11px] space-y-1">
-        <div>{tr('footer.gps')} {g.gps}</div>
+        <div>{tr('footer.office')} {tField(g, 'officeAddress', lang)}</div>
         <div>
           <span>{F('hubAccess')}</span>
         </div>

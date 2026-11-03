@@ -3,9 +3,9 @@
   "strings": [
     {
       "key": "lead.subject.homeConsole",
-      "ru": "Запрос общего КП и прайс-листа с главной консоли",
-      "uz": "Bosh sahifadan umumiy tijorat taklifi va narxlar ro'yxati so'rovi",
-      "en": "General quotation and price list request"
+      "ru": "Запрос КП с главной страницы",
+      "uz": "Bosh sahifadan tijorat taklifi so'rovi",
+      "en": "Quotation request from the home page"
     },
     {
       "key": "lead.subject.homeSku",

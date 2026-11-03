@@ -78,11 +78,13 @@ Every page exists once per language, each with its own URL, `<html lang>`, title
 
 ## 5. Domain Knowledge Quick Reference
 
-* **Legal Entity:** ООО «RailTech» (RailTech LLC), Tashkent, Uzbekistan.
-* **Tax ID / INN:** `308912445` (12% VAT accredited).
-* **Warehouse Hub:** Tashkent, Yangihayot district, Trade-Production Complex Index, Block B2, Section 2097.
-* **Key Strategic Partners** *(orientation only — do not name partners or clients in site content unless they already appear on the site or the brief explicitly allows it)*: НПО САУТ (locomotive safety automation), Tashkent State Transport University (TGTU), GAJK «O'zbekiston temir yo'llari» (UTY).
-* **Customs Delivery Terms:** DDP Tashkent (prices fixed in Uzbek Sums, 100% compliant tax invoice with 12% VAT).
+Single source for company facts is `src/data/cms/global.json` / `contacts.json`; this is only orientation.
+
+* **Legal Entity:** ООО «RAILTECH» (RailTech LLC), Tashkent, Uzbekistan, since 2021. ИНН `308346339`, ОКПО `30664447`. Legal address: г. Ташкент, Ц-1, 47/33; office: г. Ташкент, ул. Абдуллы Каххара, 46 (only from `global.json` → `officeAddress`). OKED, VAT code, postal code and map coordinates are intentionally not published.
+* **Profile:** supplies equipment and services to the railway and large industrial companies of Uzbekistan and represents international manufacturers in the region; «надёжный мост между международными производителями и предприятиями Узбекистана», RailTech = единая точка ответственности (заявка → КП → сертификация → договор → таможня → доставка до склада). Directions: Поставки, Инжиниринг, Локализация, Представительство. Catalog focus: railway electronics for locomotives and EMUs used in Uzbekistan.
+* **Manufacturers:** the model is «официальный дилер и прямой поставщик ряда производителей» — list with status per manufacturer in `global.json` → `manufacturers` (rendered on /about/). Today: official dealer & representative of ООО «НПО САУТ» (certificate № 1 of 26.02.2026, valid to 31.12.2026) — the only dealer status; direct supplies of ADZ NAGANO, GERSYS, Siemens Mobility, РАТЕП-ИННОВАЦИЯ products. НПО САУТ is one partner, not the company's identity; claim dealer status only where a dealer document exists.
+* **Digital:** Cabinet `cabinet.railtech.uz` (web + Telegram Mini App) for clients and partners.
+* **Commercial terms:** prices are not published on the site; quotes incl. 12% VAT; DDP / CIP; warranty 12 months from delivery.
 
 ---
 

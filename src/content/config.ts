@@ -40,6 +40,8 @@ const catalogCollection = defineCollection({
     category: z.string().optional(),
     category_uz: z.string().optional(),
     category_en: z.string().optional(),
+    /** Manufacturer / brand as published (e.g. «ООО «НПО САУТ»», «ADZ NAGANO GmbH»); empty → not shown. */
+    manufacturer: z.string().optional(),
     /** Legacy alias of category kept for existing entries. */
     subsystem: z.string().optional(),
     subsystem_uz: z.string().optional(),

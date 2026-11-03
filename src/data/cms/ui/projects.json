@@ -3,9 +3,9 @@
   "strings": [
     {
       "key": "lead.subject.projectsArtLab",
-      "ru": "Запрос сотрудничества по спецпроектам / Art Lab",
-      "uz": "Maxsus loyihalar / Art Lab bo'yicha hamkorlik so'rovi",
-      "en": "Collaboration request: special projects / Art Lab"
+      "ru": "Запрос сотрудничества по проектам RailTech",
+      "uz": "RailTech loyihalari bo'yicha hamkorlik so'rovi",
+      "en": "Collaboration request: RailTech projects"
     },
     {
       "key": "lead.subject.projectSimilar",
@@ -51,15 +51,15 @@
     },
     {
       "key": "projects.detail.statusCompleted",
-      "ru": "STATUS // COMPLETED",
-      "uz": "STATUS // COMPLETED",
-      "en": "STATUS // COMPLETED"
+      "ru": "STATUS // 2026",
+      "uz": "STATUS // 2026",
+      "en": "STATUS // 2026"
     },
     {
       "key": "projects.detail.statusShort",
-      "ru": "COMPLETED",
-      "uz": "COMPLETED",
-      "en": "COMPLETED"
+      "ru": "2026",
+      "uz": "2026",
+      "en": "2026"
     },
     {
       "key": "projects.detail.metric",
@@ -81,9 +81,9 @@
     },
     {
       "key": "projects.detail.leadTime",
-      "ru": "Сроки подготовки сметы:",
-      "uz": "Smeta tayyorlash muddati:",
-      "en": "Proposal preparation time:"
+      "ru": "Ответ на запрос:",
+      "uz": "So'rovga javob:",
+      "en": "Response to a request:"
     },
     {
       "key": "projects.detail.directLine",

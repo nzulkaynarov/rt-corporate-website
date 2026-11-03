@@ -27,9 +27,9 @@
     },
     {
       "key": "catalogTable.searchPlaceholder",
-      "ru": "Поиск по наименованию, артикулу или параметрам...",
-      "uz": "Nom, SKU yoki parametrlar bo'yicha qidiruv...",
-      "en": "Search by title, SKU or specification..."
+      "ru": "Поиск: наименование, обозначение, серия локомотива…",
+      "uz": "Qidiruv: nomi, belgisi, lokomotiv seriyasi…",
+      "en": "Search: name, designation, locomotive series…"
     },
     {
       "key": "catalogTable.clearSearchAria",
@@ -177,9 +177,9 @@
     },
     {
       "key": "gallery.locationStamp",
-      "ru": "INDEX B2-2097 // UZ",
-      "uz": "INDEX B2-2097 // UZ",
-      "en": "INDEX B2-2097 // UZ"
+      "ru": "TASHKENT // UZ",
+      "uz": "TASHKENT // UZ",
+      "en": "TASHKENT // UZ"
     },
     {
       "key": "gallery.frameCounter",
@@ -231,9 +231,9 @@
     },
     {
       "key": "gallery.dispatchValue",
-      "ru": "Со склада Index B2-2097",
-      "uz": "Index B2-2097 omboridan",
-      "en": "Direct from Index B2-2097"
+      "ru": "Ташкент, склад RailTech",
+      "uz": "Toshkent, RailTech ombori",
+      "en": "Tashkent, RailTech warehouse"
     },
     {
       "key": "gallery.vat",
@@ -339,21 +339,45 @@
     },
     {
       "key": "hudImage.location",
-      "ru": "INDEX B2-2097",
-      "uz": "INDEX B2-2097",
-      "en": "INDEX B2-2097"
+      "ru": "TASHKENT // UZ",
+      "uz": "TASHKENT // UZ",
+      "en": "TASHKENT // UZ"
     },
     {
       "key": "hudImage.qc",
-      "ru": "QC: PASS 100%",
-      "uz": "QC: PASS 100%",
-      "en": "QC: PASS 100%"
+      "ru": "SPEC: ПО ЗАПРОСУ",
+      "uz": "SPEC: SO'ROV BO'YICHA",
+      "en": "SPEC: ON REQUEST"
     },
     {
       "key": "hudImage.loading",
       "ru": "LOADING_FEED // ...",
       "uz": "LOADING_FEED // ...",
       "en": "LOADING_FEED // ..."
+    },
+    {
+      "key": "catalogTable.manufacturerAll",
+      "ru": "Все производители",
+      "uz": "Barcha ishlab chiqaruvchilar",
+      "en": "All manufacturers"
+    },
+    {
+      "key": "catalogTable.manufacturerAria",
+      "ru": "Фильтр по производителю",
+      "uz": "Ishlab chiqaruvchi bo'yicha filtr",
+      "en": "Filter by manufacturer"
+    },
+    {
+      "key": "catalogTable.shown",
+      "ru": "Показано {shown} из {total}",
+      "uz": "{total} tadan {shown} tasi ko'rsatilgan",
+      "en": "Showing {shown} of {total}"
+    },
+    {
+      "key": "catalogTable.showMore",
+      "ru": "ПОКАЗАТЬ ЕЩЁ {count}",
+      "uz": "YANA {count} TASINI KO'RSATISH",
+      "en": "SHOW {count} MORE"
     }
   ]
 }

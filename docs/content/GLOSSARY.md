@@ -27,7 +27,7 @@
 | DDP Ташкент | DDP Toshkent | DDP Tashkent | — | Инкотермс не переводится |
 | Landed Cost (полная стоимость поставки) | Landed Cost (yetkazib berishning to'liq qiymati) | landed cost | — | |
 | Склад | ombor | warehouse | — | |
-| ТПК Index, блок B2-2097 | Index SICHM, B2-2097 bloki | Index Complex, Unit B2-2097 | — | Адрес — только из `global.json` |
+| ул. Абдуллы Каххара, 46 | Abdulla Qahhor ko'chasi, 46 | 46 Abdulla Qahhor Street | — | Адрес офиса — только из `global.json` (`officeAddress`) |
 | Отдел снабжения | ta'minot bo'limi | procurement desk | — | |
 | Завод-изготовитель | ishlab chiqaruvchi zavod | manufacturer | — | |
 | Сорсинг / поиск поставщика | sorsing / yetkazib beruvchini izlash | sourcing | — | |
@@ -52,11 +52,11 @@
 
 | RU | UZ | EN | Запрещено (UZ/EN) | Примечание |
 |---|---|---|---|---|
-| Подвижной состав | harakatlanuvchi tarkib | rolling stock | `harakatdagi tarkib` | Категория каталога |
-| СЦБ (сигнализация, централизация, блокировка) | SMB (signallashtirish, markazlashtirish va blokirovkalash) | railway signalling (signalling & interlocking) | `ISB` | Категория «СЦБ и автоматика» → `SMB va avtomatika` / `Signaling & Interlocking` |
-| Путевое хозяйство | yo'l xo'jaligi | track infrastructure | — | Категория каталога |
-| КИП и диагностика | O'TK va diagnostika | instrumentation & testing | — | Категория каталога |
-| Энергетика / электроснабжение | energetika | electrification & power | — | Категория каталога |
+| Подвижной состав | harakatlanuvchi tarkib | rolling stock | `harakatdagi tarkib` | |
+| СЦБ (сигнализация, централизация, блокировка) | SMB (signallashtirish, markazlashtirish va blokirovkalash) | railway signalling (signalling & interlocking) | `ISB` | «СЦБ и автоматика» → `SMB va avtomatika` / `Signaling & Interlocking` |
+| Путевое хозяйство | yo'l xo'jaligi | track infrastructure | — | |
+| КИП и диагностика | O'TK va diagnostika | instrumentation & testing | — | |
+| Энергетика / электроснабжение | energetika | electrification & power | — | |
 | Контактная сеть | kontakt tarmog'i | overhead catenary | — | |
 | Грузовой вагон | yuk vagoni | freight car | — | |
 | Локомотив | lokomotiv | locomotive | — | |
@@ -70,6 +70,26 @@
 | Дефектоскоп | defektoskop | flaw detector | — | |
 | Ультразвуковой контроль | ultratovushli nazorat | ultrasonic testing (NDT) | — | |
 | Путевой инструмент | yo'l asboblari | track tools | — | |
+
+## Электроника и системы безопасности движения
+
+| RU | UZ | EN | Запрещено (UZ/EN) | Примечание |
+|---|---|---|---|---|
+| Локомотивные устройства безопасности | lokomotiv xavfsizlik qurilmalari | locomotive safety equipment | — | Категория каталога (SKU RT-SAF-NNN) |
+| Сервисная и испытательная аппаратура | servis va sinov uskunalari | service & test equipment | — | Категория каталога (SKU RT-TST-NNN) |
+| Системы обеспечения безопасности движения поездов | poezdlar harakati xavfsizligini ta'minlash tizimlari | train safety systems | — | |
+| Датчик угла поворота (ДПС) | burilish burchagi datchigi (DPS) | angle-of-rotation sensor (DPS) | — | Обозначения изделий не переводятся: ДПС-01, БС-ДПС |
+| Блок связи с ДПС (БС-ДПС) | DPS bilan aloqa bloki (BS-DPS) | DPS interface unit (BS-DPS) | — | |
+| Стенд для проверки | tekshirish stendi | test bench | — | |
+| Блок КОН (контроль несанкционированного отключения ЭПК) | КОН bloki | КОН unit | — | |
+| ЭПК (электропневматический клапан автостопа) | EPK (avtostop elektropnevmatik klapani) | EPK (autostop electro-pneumatic valve) | — | |
+| Гибкий вал | egiluvchan val | flexible shaft | — | |
+| Официальный дилер и представитель | rasmiy diler va vakil | official dealer and representative | — | Только для производителей, с которыми есть дилерский документ (сейчас — НПО САУТ, свидетельство № 1 от 26.02.2026) |
+| ООО «НПО САУТ» | «НПО САУТ» MChJ | NPO SAUT LLC | — | В UZ допускается кириллическое название в кавычках, как в официальных новостях |
+| Локализация производства | ishlab chiqarishni mahalliylashtirish | production localization | — | |
+| Кабинет клиента и партнёра | mijoz va hamkor kabineti | client & partner cabinet | — | cabinet.railtech.uz |
+| АО «Узбекистон темир йуллари» (УТЙ) | «O'zbekiston temir yo'llari» AJ | JSC Uzbekistan Railways | — | |
+| Ташкентский государственный транспортный университет (ТГТУ) | Toshkent davlat transport universiteti (TDTU) | Tashkent State Transport University (TSTU) | — | |
 
 ## Единицы и обозначения
 

@@ -1,12 +1,13 @@
 ---
 import { responsiveImage, SIZES } from '../../../utils/images';
+import ProductPlaceholder from '../../../components/ProductPlaceholder.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { ProductMediaGallery } from '../../../components/islands/ProductMediaGallery';
 import I18nText from '../../../components/I18nText.astro';
 import HudPageHeader from '../../../components/hud/HudPageHeader.astro';
 import { withBase, telHref } from '../../../utils/url';
-import { marked } from 'marked';
+import { renderBody } from '../../../utils/markdown';
 import globalData from '../../../data/cms/global.json';
 import pagesData from '../../../data/cms/pages.json';
 import { expandLangs, localeHref, pick, tField } from '../../../i18n';
@@ -41,7 +42,6 @@ export async function getStaticPaths() {
 }
 
 const { entry, related } = Astro.props;
-const { Content } = await entry.render();
 const lang = Astro.locals.lang;
 const tr = (key: string, vars?: Record<string, string | number>) => t(lang, key, vars);
 const L = (obj: Record<string, any>, field: string) => tField(obj, field, lang) as string;
@@ -73,9 +73,9 @@ const priceNote = L(data, 'priceNote') || L(cPage, 'defaultPriceNote');
 
 // Markdown body: translated body_uz / body_en when present, otherwise the RU body.
 const localizedBody = lang === 'uz' ? data.body_uz : lang === 'en' ? data.body_en : undefined;
-const bodyHtml = localizedBody ? await marked.parse(localizedBody) : '';
+const bodyHtml = await renderBody(localizedBody || entry.body, lang); // links/images localized (src/utils/markdown.ts)
 
-const mainImageUrl = data.image || `/images/catalog/${data.sku.toLowerCase()}.jpg`;
+const mainImageUrl: string | undefined = data.image || undefined; // no photo yet → placeholder, default OG image
 const seo = entrySeo(data, lang, {
   titleExtra: `(${data.sku})`,
   descriptionTemplate: siteSeo(lang).catalogDescription,
@@ -94,13 +94,15 @@ const productJsonLd = {
   '@id': `${productUrl}#product`,
   name: title,
   description: seo.description,
-  image: absoluteUrl(withBase(mainImageUrl), Astro.site),
+  ...(mainImageUrl ? { image: absoluteUrl(withBase(mainImageUrl), Astro.site) } : {}),
   url: productUrl,
   sku: data.sku,
   mpn: data.sku,
   category: categoryName,
-  brand: { '@id': orgId },
-  manufacturer: { '@id': orgId },
+  // RailTech is the seller, not the manufacturer: brand/manufacturer only when the CMS names one.
+  ...(data.manufacturer
+    ? { brand: { '@type': 'Brand', name: data.manufacturer }, manufacturer: { '@type': 'Organization', name: data.manufacturer } }
+    : {}),
   offers: {
     '@type': 'Offer',
     url: productUrl,
@@ -146,9 +148,11 @@ const catalogHref = localeHref('/catalog/', lang);
       <span class="hud-glass-card px-2.5 py-1 text-emerald-900 font-bold bg-emerald-100/50">
         {status}
       </span>
-      <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
-        <I18nText ru={detail.vatBadge} uz={detail.vatBadge_uz} en={detail.vatBadge_en} />
-      </span>
+      {detail.vatBadge && (
+        <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
+          <I18nText ru={detail.vatBadge} uz={detail.vatBadge_uz} en={detail.vatBadge_en} />
+        </span>
+      )}
       {data.price && (
         <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A] font-bold">
           {data.price}
@@ -185,6 +189,14 @@ const catalogHref = localeHref('/catalog/', lang);
                   {categoryName}
                 </td>
               </tr>
+              {data.manufacturer && (
+                <tr class="hover:bg-white/30 transition-colors">
+                  <td class="py-2.5 pr-3 text-[#4A5056]">
+                    <I18nText k="catalog.detail.manufacturer" />
+                  </td>
+                  <td class="py-2.5 font-bold text-[#0A0A0A]">{data.manufacturer}</td>
+                </tr>
+              )}
               {data.gost && (
                 <tr class="hover:bg-white/30 transition-colors">
                   <td class="py-2.5 pr-3 text-[#4A5056]">
@@ -270,7 +282,7 @@ const catalogHref = localeHref('/catalog/', lang);
             <I18nText ru={detail.descriptionTitle} uz={detail.descriptionTitle_uz} en={detail.descriptionTitle_en} />
           </div>
           <div class="prose prose-sm text-[#0A0A0A] max-w-none leading-relaxed">
-            {bodyHtml ? <div set:html={bodyHtml} /> : <Content />}
+            <div set:html={bodyHtml} />
           </div>
         </div>
 
@@ -381,12 +393,14 @@ const catalogHref = localeHref('/catalog/', lang);
                 {status}
               </span>
             </div>
-            <div class="flex justify-between text-[#4A5056]">
-              <span><I18nText k="catalog.detail.taxation" /></span>
-              <span class="font-bold text-[#0A0A0A]">
-                <I18nText ru={detail.taxationValue} uz={detail.taxationValue_uz} en={detail.taxationValue_en} />
-              </span>
-            </div>
+            {detail.taxationValue && (
+              <div class="flex justify-between text-[#4A5056]">
+                <span><I18nText k="catalog.detail.taxation" /></span>
+                <span class="font-bold text-[#0A0A0A]">
+                  <I18nText ru={detail.taxationValue} uz={detail.taxationValue_uz} en={detail.taxationValue_en} />
+                </span>
+              </div>
+            )}
             <div class="flex justify-between text-[#4A5056]">
               <span><I18nText k="catalog.detail.salesDirect" /></span>
               <a href={phoneHref} class="font-bold text-[#0A0A0A] hover:underline">{globalData.phone}</a>
@@ -439,13 +453,17 @@ const catalogHref = localeHref('/catalog/', lang);
               >
                 <div>
                   <div class="hud-card-media aspect-[16/10] mb-3">
-                    <img
-                      {...responsiveImage(item.data.image || `/images/catalog/${item.data.sku.toLowerCase()}.jpg`, SIZES.card)}
-                      alt={tr('catalog.detail.imageAlt', { title: itemTitle, sku: item.data.sku })}
-                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                      decoding="async"
-                    />
+                    {item.data.image ? (
+                      <img
+                        {...responsiveImage(item.data.image, SIZES.card)}
+                        alt={tr('catalog.detail.imageAlt', { title: itemTitle, sku: item.data.sku })}
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : (
+                      <ProductPlaceholder sku={item.data.sku} />
+                    )}
                   </div>
                   <div class="flex items-center justify-between text-[11px] text-[#4A5056] mb-1">
                     <span class="font-bold text-[#0A0A0A]">{item.data.sku}</span>

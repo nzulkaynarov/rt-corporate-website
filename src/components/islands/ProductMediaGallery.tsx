@@ -80,9 +80,7 @@ export const ProductMediaGallery: React.FC<Props> = ({
       }
     });
 
-    if (uniqueList.length === 0) {
-      uniqueList.push(`/images/catalog/${sku.toLowerCase()}.jpg`);
-    }
+    // No photos yet → empty list; HudSmartImage renders the blueprint placeholder with the SKU.
     return uniqueList;
   }, [image, images, gallery, sku]);
 
@@ -305,9 +303,6 @@ export const ProductMediaGallery: React.FC<Props> = ({
           <span className="text-[#4A5056]">
             {t(lang, 'gallery.dispatchValue')}
           </span>
-        </div>
-        <div className="font-bold text-[#0A0A0A]">
-          {t(lang, 'gallery.vat')}
         </div>
       </div>
     </div>

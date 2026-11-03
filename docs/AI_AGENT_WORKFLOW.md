@@ -15,7 +15,7 @@ This document details the standard operating procedures (SOPs) for autonomous an
    subsystem: "СЦБ и автоматика"
    gost: "ТУ 32 ЦШ 2045-98"
    tnved: "8608 00 000 0"
-   warehouse: "Ташкент, ТПК Index B2-2097"
+   warehouse: "Ташкент"
    status: "В наличии"
    statusKey: "in_stock"
    specs: "Напряжение 24/50В, интервал бдительности 30-90 сек"

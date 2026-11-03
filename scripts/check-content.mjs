@@ -7,6 +7,7 @@
  *   npm run check:content                      # whole site
  *   node scripts/check-content.mjs --files a.md b.json   # only these files (hook / quick loop)
  *   node scripts/check-content.mjs --strict    # warnings fail too (use before opening a PR)
+ *   node scripts/check-content.mjs --ru-only   # RU-first stage: missing UZ/EN are counted, not errors
  *
  * ERRORS (exit 1): missing UZ/EN translation of a translatable field, Cyrillic in an UZ/EN
  * field, UZ/EN identical to RU, forbidden glossary variants, broken local image/file paths,
@@ -20,6 +21,13 @@ import yaml from 'js-yaml';
 
 const args = process.argv.slice(2);
 const STRICT = args.includes('--strict');
+/** RU-first stage (owner approves Russian texts, translation follows in one pass): missing UZ/EN are only counted. */
+const RU_ONLY = args.includes('--ru-only');
+const pendingTranslation = new Map(); // file → number of missing UZ/EN values
+const missingTr = (file, msg) => {
+  if (RU_ONLY) pendingTranslation.set(file, (pendingTranslation.get(file) || 0) + 1);
+  else err(file, msg);
+};
 const onlyIdx = args.indexOf('--files');
 const ONLY = onlyIdx >= 0 ? args.slice(onlyIdx + 1).filter((a) => !a.startsWith('--')).map((f) => path.relative(process.cwd(), path.resolve(f))) : null;
 
@@ -58,7 +66,11 @@ function checkText(file, where, value, lang) {
   if (typeof value !== 'string') return;
   if (PLACEHOLDER.test(value)) err(file, `${where}: placeholder text (${value.match(PLACEHOLDER)[0]})`);
   if (lang && lang !== 'ru') {
-    if (CYR.test(value)) err(file, `${where}: Cyrillic letters in a ${lang.toUpperCase()} field ("${value.slice(0, 60)}…")`);
+    // Product / organisation designations stay in the original: upper-case Cyrillic codes
+    // (ДПС-01, БС-ДПС, СГМА.468179.001-01, САУТ-ЦМ/НСП) and «НПО САУТ»-style names are allowed.
+    // Lower-case Cyrillic words mean untranslated text.
+    const rest = value.replace(/«[^»]*»/g, (m) => (/[а-яё]/.test(m) ? m : ' ')).replace(/[А-ЯЁ0-9][А-ЯЁ0-9.\-\/]*/g, ' ');
+    if (/[а-яё]/.test(rest)) err(file, `${where}: Cyrillic words in a ${lang.toUpperCase()} field ("${value.slice(0, 60)}…") — translate them (upper-case designations like ДПС-01 are allowed)`);
     for (const f of forbidden) if (f.re.test(value)) err(file, `${where}: forbidden term "${f.variant}" — use the glossary term (${f.use})`);
     if (lang === 'uz' && /[ʻʼ’‘]/.test(value)) warn(file, `${where}: use the plain apostrophe ' in Uzbek (o', g', ma'lumot), not ʻ ’ ‘`);
   }
@@ -75,14 +87,14 @@ function trilingual(file, obj, field, where = field, { optional = false } = {}) 
   checkText(file, where, Array.isArray(ru) ? ru.join(' ') : ru, 'ru');
   for (const l of LANGS) {
     const v = obj?.[`${field}_${l}`];
-    if (isEmpty(v)) { err(file, `${where}_${l}: missing ${l.toUpperCase()} translation`); continue; }
+    if (isEmpty(v)) { missingTr(file, `${where}_${l}: missing ${l.toUpperCase()} translation`); continue; }
     if (Array.isArray(ru)) {
       if (!Array.isArray(v)) { err(file, `${where}_${l}: must be a list like ${field}`); continue; }
       if (v.length !== ru.length) err(file, `${where}_${l}: ${v.length} items, RU has ${ru.length}`);
       v.forEach((item, i) => checkText(file, `${where}_${l}[${i}]`, item, l));
       continue;
     }
-    if (CYR.test(ru) && String(v).trim() === String(ru).trim()) err(file, `${where}_${l}: identical to RU (not translated)`);
+    if (/[а-яё]/.test(String(ru).replace(/«[^»]*»/g, ' ')) && String(v).trim() === String(ru).trim()) err(file, `${where}_${l}: identical to RU (not translated)`);
     checkText(file, `${where}_${l}`, v, l);
   }
 }
@@ -121,7 +133,7 @@ function checkBody(file, d, body, minRu) {
   checkText(file, 'body', body, 'ru');
   for (const l of LANGS) {
     const v = d[`body_${l}`];
-    if (isEmpty(v)) err(file, `body_${l}: missing ${l.toUpperCase()} translation of the article body`);
+    if (isEmpty(v)) missingTr(file, `body_${l}: missing ${l.toUpperCase()} translation of the article body`);
     else {
       checkText(file, `body_${l}`, v, l);
       if (ruLen && v.trim().length < ruLen * 0.5) warn(file, `body_${l} is much shorter than the RU body (${v.trim().length} vs ${ruLen} chars) — partial translation?`);
@@ -158,6 +170,7 @@ const RULES = {
     trilingual(file, d, d.category ? 'category' : 'subsystem', 'category');
     trilingual(file, d, 'specs');
     for (const f of ['warehouse', 'warranty', 'priceNote']) trilingual(file, d, f, f, { optional: true });
+    if (!isEmpty(d.price)) err(file, 'price must stay empty — prices are not published on the site (docs/content/STYLE_GUIDE.md §2)');
     trilingualList(file, d.attributes, ['label', 'value'], 'attributes');
     trilingualList(file, d.documents, ['title'], 'documents');
     if (d.status) {
@@ -231,7 +244,7 @@ function walkJson(file, node, where) {
       if (lang) checkText(file, at, v, lang);
       else if (CYR.test(v)) {
         checkText(file, at, v, 'ru');
-        for (const l of LANGS) if (isEmpty(node[`${k}_${l}`])) warn(file, `${at}_${l}: missing ${l.toUpperCase()} translation`);
+        for (const l of LANGS) if (isEmpty(node[`${k}_${l}`])) (RU_ONLY ? missingTr : warn)(file, `${at}_${l}: missing ${l.toUpperCase()} translation`);
       }
     } else walkJson(file, v, at);
   }
@@ -262,6 +275,11 @@ const outErrors = pick(errors);
 const outWarnings = pick(warnings);
 const failed = outErrors.length > 0 || (STRICT && outWarnings.length > 0);
 
+const pendingFiles = [...pendingTranslation.keys()].filter((f) => !ONLY || ONLY.includes(f));
+if (RU_ONLY && pendingFiles.length) {
+  const total = pendingFiles.reduce((n, f) => n + pendingTranslation.get(f), 0);
+  console.warn(`[check-content] --ru-only: ${total} UZ/EN value(s) await translation in ${pendingFiles.length} file(s) (not errors at this stage)`);
+}
 if (outWarnings.length) {
   console.warn(`[check-content] ${outWarnings.length} warning(s):`);
   outWarnings.forEach((w) => console.warn(`  ! ${w}`));

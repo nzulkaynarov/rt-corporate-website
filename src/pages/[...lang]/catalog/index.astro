@@ -20,32 +20,34 @@ const seo = pageSeo('catalog', lang);
 const catalogEntries = await getCollection('catalog');
 catalogEntries.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
 
-const items = catalogEntries.map((entry) => ({
-  slug: entry.slug,
-  sku: entry.data.sku,
-  title: entry.data.title,
-  title_uz: entry.data.title_uz,
-  title_en: entry.data.title_en,
-  category: entry.data.category || entry.data.subsystem,
-  category_uz: entry.data.category_uz || entry.data.subsystem_uz,
-  category_en: entry.data.category_en || entry.data.subsystem_en,
-  subsystem: entry.data.subsystem || entry.data.category,
-  subsystem_uz: entry.data.subsystem_uz || entry.data.category_uz,
-  subsystem_en: entry.data.subsystem_en || entry.data.category_en,
-  attributes: entry.data.attributes,
-  price: entry.data.price,
-  gost: entry.data.gost,
-  tnved: entry.data.tnved,
-  warehouse: entry.data.warehouse,
-  status: entry.data.status,
-  status_uz: entry.data.status_uz,
-  status_en: entry.data.status_en,
-  statusKey: entry.data.statusKey,
-  specs: entry.data.specs,
-  specs_uz: entry.data.specs_uz,
-  specs_en: entry.data.specs_en,
-  image: withBase(entry.data.image || `/images/catalog/${entry.data.sku.toLowerCase()}.jpg`),
-}));
+// Island props hold every item (filter + search run client-side), so only the fields the island reads are
+// passed and empty values are dropped — keeps the catalog page light with hundreds of items.
+const compact = <T extends Record<string, unknown>>(o: T): T =>
+  Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined && v !== null && v !== '')) as T;
+const items = catalogEntries.map((entry) => {
+  const d = entry.data;
+  return compact({
+    slug: entry.slug,
+    sku: d.sku,
+    title: d.title,
+    title_uz: d.title_uz,
+    title_en: d.title_en,
+    category: d.category || d.subsystem,
+    category_uz: d.category_uz || d.subsystem_uz,
+    category_en: d.category_en || d.subsystem_en,
+    attributes: d.attributes?.map((a) => compact({ ...a })),
+    gost: d.gost,
+    manufacturer: d.manufacturer,
+    status: d.status,
+    status_uz: d.status_uz,
+    status_en: d.status_en,
+    statusKey: d.statusKey,
+    specs: d.specs,
+    specs_uz: d.specs_uz,
+    specs_en: d.specs_en,
+    image: d.image ? withBase(d.image) : undefined, // no photo → blueprint placeholder
+  });
+});
 const cPage = pagesData.catalogPage;
 ---
 

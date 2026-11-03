@@ -1,4 +1,5 @@
 ---
+import { fillCounters, getCounters } from '../../utils/counters';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FaqAccordion from '../../components/FaqAccordion.astro';
 import I18nText from '../../components/I18nText.astro';
@@ -20,15 +21,17 @@ const A = (field: string): string => tField(aboutData, field, lang);
 const tri = (obj: Record<string, any>, field: string) => ({ ru: obj[field], uz: obj[`${field}_uz`], en: obj[`${field}_en`] });
 
 const faqItems = aboutData.faq || [];
+const counters = await getCounters();
 
-const dossier = [
+// Manufacturers and RailTech status — data: global.json → manufacturers (editable in /admin)
+const manufacturers: Record<string, string>[] = Array.isArray(g.manufacturers) ? g.manufacturers : [];
+
+const dossier: { label: string; value: string; accent?: boolean }[] = [
   { label: 'about.dossier.fullName', value: tField(g, 'fullName', lang) },
   { label: 'about.dossier.shortName', value: g.shortName },
   { label: 'about.dossier.tin', value: g.inn },
-  { label: 'about.dossier.vat', value: `${A('vatStatus')} (${tField(g, 'legalStatus', lang)})`, accent: true },
-  { label: 'about.dossier.oked', value: `${g.oked} — ${tField(g, 'okedName', lang)}` },
-  { label: 'about.dossier.address', value: `${g.postalCode}, ${tr('company.country')}, ${tField(g, 'address', lang)}` },
-  { label: 'about.dossier.esf', value: g.esfOperators },
+  { label: 'about.dossier.address', value: `${tr('company.country')}, ${tField(g, 'address', lang)}` },
+  { label: 'about.dossier.office', value: tField(g, 'officeAddress', lang) },
   { label: 'about.dossier.domains', value: g.officialDomains },
 ];
 ---
@@ -49,10 +52,10 @@ const dossier = [
       inLanguage: lang,
       mainEntity: faqItems.map((item) => ({
         '@type': 'Question',
-        name: plainText(tField(item, 'q', lang)),
+        name: plainText(fillCounters(tField(item, 'q', lang), counters)),
         acceptedAnswer: {
           '@type': 'Answer',
-          text: plainText(tField(item, 'a', lang)),
+          text: plainText(fillCounters(tField(item, 'a', lang), counters)),
         },
       })),
     },
@@ -72,7 +75,7 @@ const dossier = [
         <I18nText ru={aboutData.mission.title} uz={aboutData.mission.title_uz} en={aboutData.mission.title_en} />
       </div>
       <p class="font-sans text-sm text-[#0A0A0A] leading-relaxed">
-        <I18nText ru={aboutData.mission.text} uz={aboutData.mission.text_uz} en={aboutData.mission.text_en} />
+        <I18nText {...tri(aboutData.mission, 'text')} />
       </p>
     </div>
 
@@ -133,6 +136,45 @@ const dossier = [
         ))}
       </div>
     </div>
+
+    <!-- Manufacturers & RailTech status (global.json → manufacturers) -->
+    {manufacturers.length > 0 && (
+      <div class="hud-glass-card p-6 lg:p-8 font-mono mb-14">
+        <div class="border-b border-[#0A0A0A] pb-3 mb-4">
+          <span class="bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold mr-2 inline-block">
+            {tr('about.manufacturers.badge')}
+          </span>
+          <h2 class="inline font-bold text-base text-[#0A0A0A]">
+            {tr('about.manufacturers.title')}
+          </h2>
+        </div>
+        <p class="font-sans text-xs text-[#4A5056] leading-relaxed mb-4">
+          {tr('about.manufacturers.note', { n: counters.partnerManufacturers })}
+        </p>
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse border border-[#0A0A0A] text-xs text-left">
+            <thead>
+              <tr class="bg-[#0A0A0A] text-white">
+                <th scope="col" class="px-3 py-2 font-bold">{tr('about.manufacturers.col.name')}</th>
+                <th scope="col" class="px-3 py-2 font-bold">{tr('about.manufacturers.col.country')}</th>
+                <th scope="col" class="px-3 py-2 font-bold">{tr('about.manufacturers.col.status')}</th>
+                <th scope="col" class="px-3 py-2 font-bold">{tr('about.manufacturers.col.note')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {manufacturers.map((m) => (
+                <tr class="border-t border-[#0A0A0A]/30 bg-[#C8CDD2]/40 align-top">
+                  <th scope="row" class="px-3 py-2 font-sans font-bold text-[#0A0A0A]">{tField(m, 'name', lang)}</th>
+                  <td class="px-3 py-2 font-sans text-[#0A0A0A]">{tField(m, 'country', lang)}</td>
+                  <td class="px-3 py-2 font-bold text-[#0A0A0A]">{tField(m, 'status', lang)}</td>
+                  <td class="px-3 py-2 font-sans text-[#4A5056]">{tField(m, 'note', lang) || '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    )}
 
     <!-- Official Dossier & Legal Requisites Table -->
     <div class="hud-glass-card p-8 font-mono mb-14">

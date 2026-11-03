@@ -127,15 +127,15 @@
     },
     {
       "key": "form.lead.successMessage",
-      "ru": "Наш отдел снабжения и дежурные инженеры свяжутся с вами в течение 15 минут.",
-      "uz": "Ta'minot bo'limimiz va navbatchi muhandislarimiz 15 daqiqa ichida siz bilan bog'lanadilar.",
-      "en": "Our procurement desk and on-duty engineers will contact you within 15 minutes."
+      "ru": "Менеджер RailTech свяжется с вами в течение рабочего дня.",
+      "uz": "RailTech menejeri ish kuni davomida siz bilan bog'lanadi.",
+      "en": "A RailTech manager will contact you within one business day."
     },
     {
       "key": "form.lead.successPhone",
-      "ru": "Прямая линия снабжения:",
-      "uz": "Ta'minotning to'g'ridan-to'g'ri liniyasi:",
-      "en": "Direct supply line:"
+      "ru": "Телефон:",
+      "uz": "Telefon:",
+      "en": "Phone:"
     },
     {
       "key": "form.lead.successEmail",
@@ -187,9 +187,9 @@
     },
     {
       "key": "form.contacts.subtitle",
-      "ru": "Прямая отправка дежурному инженеру поставок",
-      "uz": "Navbatchi ta'minot muhandisiga to'g'ridan-to'g'ri yuborish",
-      "en": "Direct dispatch to on-duty supply engineer"
+      "ru": "Заявка уходит менеджеру RailTech; ответ в течение рабочего дня",
+      "uz": "So'rov RailTech menejeriga yuboriladi; javob ish kuni davomida",
+      "en": "Your request goes to a RailTech manager; reply within one business day"
     },
     {
       "key": "form.contacts.defaultSubject",
@@ -235,9 +235,9 @@
     },
     {
       "key": "form.contacts.innLabel",
-      "ru": "ИНН (ДЛЯ ЭСФ С НДС)",
-      "uz": "STIR (INN, EHF UCHUN)",
-      "en": "TAX ID / INN"
+      "ru": "ИНН ОРГАНИЗАЦИИ",
+      "uz": "TASHKILOT STIR",
+      "en": "COMPANY TAX ID (INN)"
     },
     {
       "key": "form.contacts.innPlaceholder",
@@ -301,9 +301,9 @@
     },
     {
       "key": "form.contacts.successMessage",
-      "ru": "Инженер отдела снабжения обработает вашу спецификацию и свяжется с вами в течение 60 минут.",
-      "uz": "Ta'minot bo'limi muhandisi spetsifikatsiyangizni o'rganib, 60 daqiqa ichida siz bilan bog'lanadi.",
-      "en": "A procurement engineer will review your specification and get back to you within 60 minutes."
+      "ru": "Менеджер RailTech изучит вашу спецификацию и свяжется с вами в течение рабочего дня.",
+      "uz": "RailTech menejeri spetsifikatsiyangizni o'rganib, ish kuni davomida siz bilan bog'lanadi.",
+      "en": "A RailTech manager will review your specification and get back to you within one business day."
     },
     {
       "key": "form.contacts.telegramLink",
