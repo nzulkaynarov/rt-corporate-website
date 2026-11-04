@@ -8,6 +8,7 @@ import { t } from '../../i18n/ui';
 import { MAIN_NAV, START_PATH, isActive } from '../../utils/nav';
 import { company } from '../../utils/company';
 import { withBase } from '../../utils/url';
+import stage from '../../data/content-stage.json';
 
 interface Props {
   alternates?: Record<'ru' | 'uz' | 'en', string>;
@@ -18,6 +19,8 @@ const route = getRouteFromPath(Astro.url.pathname);
 const langLinks = Astro.props.alternates || alternateHrefs(Astro.url.pathname);
 const items = MAIN_NAV.map((item) => ({ ...item, href: localeHref(item.path, lang), active: isActive(item, route) }));
 const startHref = localeHref(START_PATH, lang);
+// RU-first stage: UZ/EN pages still show Russian text, so the switcher is hidden until the translation pass.
+const showLangs = stage.ruOnly !== true;
 ---
 
 <header class="hdr">
@@ -31,11 +34,13 @@ const startHref = localeHref(START_PATH, lang);
       {items.map((item) => <a href={item.href} aria-current={item.active ? 'page' : undefined}>{tr(item.key)}</a>)}
     </nav>
 
+    {showLangs && (
     <div class="langs" role="group" aria-label={tr('nav.langAria')}>
       {LANGS.map((code) => (
         <a href={langLinks[code]} hreflang={LANG_META[code].hreflang} lang={LANG_META[code].hreflang} aria-current={code === lang ? 'true' : undefined} title={LANG_META[code].name}>{LANG_META[code].short}</a>
       ))}
     </div>
+    )}
 
     <div class="hdr__cta">
       <a class="btn btn--primary" href={startHref}>{tr('cta.start')}</a>

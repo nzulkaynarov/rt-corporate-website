@@ -1,4 +1,4 @@
-name: PR checks (content & build)
+name: PR checks (make ci)
 
 on:
   pull_request:
@@ -11,24 +11,26 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js 20
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      # Content rules (translations, glossary, media paths, placeholders) — docs/content/README.md
-      - name: Check content
-        # RU-first stage (Nov 2026): Russian texts go to the owner for approval, UZ/EN follow in one pass.
-        # Missing translations are only counted. Remove --ru-only after the translation pass.
-        run: npm run check:content -- --ru-only
+      # CMS schema, content rules (RU-first stage is read from src/data/content-stage.json),
+      # unit + data-contract tests, astro check, build and the audit of dist/
+      - name: make check
+        run: make check
 
-      # CMS schema (prebuild) + astro check + build + SEO/i18n audit of dist/ (postbuild)
-      - name: Build site
-        run: npm run build
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+
+      # Browser tests of the built site on desktop and phone (CRM is mocked)
+      - name: Browser tests
+        run: npx playwright test
+        env:
+          PW_CHROMIUM_PATH: ""
