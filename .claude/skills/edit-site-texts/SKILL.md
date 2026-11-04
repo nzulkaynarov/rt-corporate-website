@@ -1,25 +1,30 @@
 ---
 name: edit-site-texts
-description: Change texts of RailTech static pages, menus, footer, company details, SEO titles/descriptions or interface labels stored in src/data/cms/*.json and src/data/cms/ui/*.json, in all three languages, keeping the CMS schema valid. Use for edits to home/about/contacts/legal page copy, buttons, labels or page meta tags.
+description: Change RailTech site texts stored in src/data/cms/*.json (company, home, pages, partners, legal, seo) and interface labels in src/data/cms/ui/*.json — Russian only during the RU-first stage, industry-neutral, keeping keys and the CMS schema intact. Use for edits to home page blocks, section intros, contacts, legal pages, buttons, labels or page meta tags.
 ---
 
-# Изменить тексты страниц, меню, SEO или подписи интерфейса
+# Изменить тексты страниц, подписи или SEO
 
-Задача: $ARGUMENTS. Прочитай `docs/content/README.md` §1 и `STYLE_GUIDE.md`.
+Задача: $ARGUMENTS. Прочитай `docs/ARCHITECTURE.md` §3, `docs/content/README.md` §1 и `docs/content/STYLE_GUIDE.md`.
 
 | Что меняем | Файл |
 |---|---|
-| Реквизиты, телефон, адрес, меню, шапка, подвал | `src/data/cms/global.json` (реквизиты — только по прямому указанию человека) |
-| Главная / О компании / Контакты / Юр. страницы | `home.json` / `about.json` / `contacts.json` / `legal.json` |
-| Заголовки разделов, модальное окно заявки, умолчания каталога и блога | `pages.json` |
-| Title и description статических страниц, шаблон описания товара | `seo.json` (лимиты SEO.md §2) |
-| Кнопки, подписи, сообщения форм | `ui/<область>.json` → `{ "key", "ru", "uz", "en" }` |
+| Реквизиты, контакты, Telegram, ссылки Кабинета, адрес приёма заявок, цифры компании | `src/data/cms/company.json`, **только по прямому указанию владельца** |
+| Блоки главной: первый экран, мост, возможности, о компании, Кабинет, заявка | `src/data/cms/home.json` |
+| Заголовки и вводные «Услуги», «Новости», «Контакты», 404 | `src/data/cms/pages.json` |
+| Плитки партнёров | `src/data/cms/partners.json` (скил `add-partner`) |
+| Политика, условия, cookies | `src/data/cms/legal.json` |
+| title и description страниц | `src/data/cms/seo.json → pages.<key>` (title ≤ 60, description 70–160) |
+| Кнопки, подписи, сообщения формы | `src/data/cms/ui/<область>.json` → `{ "key", "ru", "uz", "en" }` |
 
 Правила:
-1. Меняй только значения. Все три языка: `field`, `field_uz`, `field_en` (в `ui/*.json` — `ru/uz/en`).
-2. **Не переименовывай и не удаляй** ключи и поля: код ссылается на них, сборка упадёт
-   (`validate-cms-config` проверяет ключи `ui/*.json`, которые использует код).
-3. Новое поле в JSON без описания в `public/admin/config.yml` будет удалено админкой при сохранении —
-   новые поля добавляй только вместе с правкой `config.yml` и кода (это уже задача разработки, не контента).
-4. Пробелы в начале/конце значений не используй — админка их обрезает.
-5. Проверка: `npm run check:cms && npm run check:content -- --strict` → `npm run build` → `content-pr`.
+1. Меняй только значения. **Не переименовывай и не удаляй** ключи и поля: код ссылается на них.
+   Новое поле добавляется через ARCHITECTURE.md, `public/admin/config.yml` и код. Это задача разработки, не текстов.
+2. **RU-first:** пока `src/data/content-stage.json → ruOnly: true`, правь только русские значения (`field`, `ru`).
+   `_uz`/`_en` и `uz`/`en` не заполняй и существующие не удаляй.
+3. **Позиционирование:** без отрасли, «ж/д», серий техники. `check-content` (правило `positioning`) это ловит.
+   Каталога и цен на сайте нет. Подписи действий одни и те же: «Начать работу», «Отправить заявку», «Войти в Кабинет».
+4. Одно обещание живёт в одном месте (STYLE_GUIDE §1). Нет псевдотерминальных подписей и КАПСА ради декора.
+5. Пробелов в начале и конце значений быть не должно: админка их обрезает.
+6. Ссылки в данных пишутся маршрутами (`/services/`, `/contacts/#request`). Тест проверяет, что ссылки главной ведут на существующие страницы.
+7. Проверка: `node scripts/check-content.mjs --files <изменённые файлы>`, затем `make check`. Дальше `content-pr`.

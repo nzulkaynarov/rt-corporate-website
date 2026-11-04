@@ -1,117 +1,138 @@
-# AGENTS.md — AI Engineering Guidelines for RailTech Portal
+# AGENTS.md — инструкция для ИИ-агентов (railtech.uz, v2 «Мост»)
 
-Welcome, AI Agent. This repository contains the official corporate B2B/B2G portal for **ООО «RailTech»** (`railtech.uz`, `b2b.railtech.uz`), registered in Tashkent, Republic of Uzbekistan.
+Для любого агента: Claude Code, Cursor, Copilot, Codex и др. Здесь правила работы с репозиторием.
+Что есть на сайте и откуда берутся данные, описано в [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md),
+как он выглядит — в [`docs/DESIGN.md`](./docs/DESIGN.md). **Сначала прочитай ARCHITECTURE.md.** Если этот файл
+расходится с ним, верен ARCHITECTURE.md.
 
----
+## 1. Что это за сайт
 
-## 1. Core Visual & Architectural Invariants (DO NOT VIOLATE)
+Сайт ООО «RailTech» (Ташкент): **о компании, о её возможностях и приглашение к работе через Кабинет**
+(`cabinet.railtech.uz`). Каталог, цены, сделки, документы есть только в Кабинете, на сайте их нет.
+Страницы: главная, услуги (4), новости (новости, статьи, проекты, статьи о партнёрах), контакты, privacy, terms, cookies, 404.
+Прежний v1 (HUD/CAD-портал, каталог, блог, проекты, «О компании», Tailwind, Cloudflare Worker) удалён.
+Он лежит в ветках `archive/legacy-v1-*`. Старые адреса перенаправляются через `src/data/legacy-redirects.json`.
 
-* **Design Philosophy:** Brutalist CAD / Technical Wireframe UI (inspired by Swiss technical graphics, Teenage Engineering, McMaster-Carr, Siemens Mobility).
-* **Color Palette:**
-  * Canvas: Matte Titanium Grey `#D4D8DC` to `#C4C9CE` with 1px coordinate grid (`rgba(10, 10, 10, 0.06)`).
-  * Ink & Borders: Deep Charcoal Black `#0A0A0A`, borders strictly `1px solid #0A0A0A` (or `border-2` for key frames).
-  * Metadata & Labels: `#4A5056`.
-  * Active & Selected States: Pure Color Inversion (`bg-[#0A0A0A] text-white`).
-* **Geometry:** `border-radius: 0px` globally (no rounded bubbles, no pills, no soft shadows).
-* **Typography:**
-  * Headings & titles: `Plus Jakarta Sans` or `Inter` (bold, tight tracking).
-  * Specifications, GOSTs, HS codes (ТН ВЭД), telemetry, prices, degrees: `JetBrains Mono` (`font-mono`).
-* **Zero Fluff:** No emojis in buttons or headers, no playful neon gradients, no generic stock corporate illustration illustrations.
+## 2. Золотые правила
 
----
+1. **Без привязки к отрасли.** RailTech работает с любыми предприятиями и организациями. В общих текстах
+   (главная, услуги, страницы, SEO, подписи, меню) не упоминаются «ж/д», серии локомотивов, отраслевые каталоги.
+   Отрасль партнёра или события называется только в фактах статьи о партнёре или новости. Это проверяют
+   правило `positioning` в `scripts/check-content.mjs` и аудит `dist/` в `scripts/check-build.mjs`.
+2. **Сейчас только русский (RU-first).** В `src/data/content-stage.json` стоит `"ruOnly": true`. Агенты пишут
+   и правят только русские поля. Поля `_uz`/`_en` и `body_uz`/`body_en` **не заполняют и не переводят**.
+   Перевод делается одним проходом, когда владелец примет русскую версию и сам поставит `ruOnly: false`.
+   Страницы UZ/EN до этого закрыты от индексации (`noindex`), их нет в sitemap.
+3. **Факты не выдумываются.** Цены, клиенты, сертификаты, цифры, сроки, наличие, отзывы берутся только из брифа
+   или проверяемого источника, который указан в PR. Нет данных: не пиши и задай вопрос в PR.
+   Дилерский статус (`status: dealer`) ставится только по документу производителя. Основание статуса
+   (номер, дата, срок документа) на сайте не публикуется, клиенту его показывают по запросу.
+4. **Без двойной работы.** Перед изменением прочитай ARCHITECTURE.md. Новое поле, страница, компонент или
+   раздел сначала описываются в ARCHITECTURE.md, в том же PR. Чего там нет, на сайте не появляется.
+5. **Тексты не пишутся в коде.** Все тексты лежат в `src/data/cms/**` и `src/content/**`.
+   Тест `tests/data.test.ts` («no text in code») падает на кириллице в `.astro`/`.ts`/`.tsx`.
+6. **Навигация одна:** `src/utils/nav.ts`. Вторую навигацию, модальные окна заявки, слайдеры не добавляем.
+7. **После изменения запусти `make check`.** Если менялся код (`src/components`, `src/pages`, `src/layouts`,
+   `src/utils`, стили), запусти ещё и `make e2e`.
+8. **Git:** работа в ветке (не `main`), PR в `main`. `main` = прод: мёрж публикует сайт.
+   Не пушь в `main`, не делай `push --force`, не мёржи свой PR.
+   Коммиты заканчиваются строками атрибуции, как в истории репозитория (`git log -3`).
 
-## 2. Multi-Page, Multi-Language Architecture (Strictly NOT a Single-Page Landing)
+## 3. Карта репозитория
 
-Every page exists once per language, each with its own URL, `<html lang>`, title/description, canonical and hreflang:
-`/…` = Russian (default, no prefix), `/uz/…` = Uzbek (Latin), `/en/…` = English. All public pages live in
-`src/pages/[...lang]/` and export `getStaticPaths` (`langStaticPaths` or `expandLangs(paths)` from `src/i18n`).
+```
+docs/ARCHITECTURE.md         страницы, модель данных, компоненты, Кабинет и CRM (единственная правда)
+docs/DESIGN.md               стиль «Мост»: токены, шрифты, компоненты, телефон, доступность
+docs/content/                правила контента: README, STYLE_GUIDE, GLOSSARY, SEO, CONTENT_PLAN, templates/
+src/content/config.ts        схема коллекций services и news
+src/content/services/*.md    4 услуги: supply, engineering (заказчикам), representation, localization (партнёрам)
+src/content/news/*.md        материалы: type = news | article | project | partner
+src/data/cms/*.json          company, home, pages, partners, legal, seo (тексты и настройки сайта)
+src/data/cms/ui/*.json       подписи интерфейса { key, ru, uz, en }
+src/data/content-stage.json  этап переводов (ruOnly)
+src/data/legacy-redirects.json  старые адреса → новые страницы
+src/pages/[...lang]/         страницы ru (/…), uz (/uz/…), en (/en/…)
+src/components/              layout/, ui/, home/, islands/LeadForm.tsx (единственный React-остров)
+src/styles/tokens.css        дизайн-токены (только через var(--…))
+src/utils/nav.ts             единственное меню сайта
+public/admin/config.yml      схема Sveltia CMS (/admin), должна совпадать с config.ts и JSON
+scripts/                     check-content, check-build, validate-cms-config, hooks/check-content-file
+tests/                       Vitest (data, i18n, lead, utils) и tests/e2e (Playwright)
+.claude/                     скилы, субагенты и настройки Claude Code
+```
 
-| Route | File | Notes |
-|---|---|---|
-| `/` | `[...lang]/index.astro` | Hub, `HudMediaSlider` island |
-| `/catalog/` | `[...lang]/catalog/index.astro` | `CatalogFilterTable` island, CollectionPage JSON-LD |
-| `/catalog/<slug>/` | `[...lang]/catalog/[slug].astro` | Datasheet, `Product` JSON-LD, `ProductMediaGallery` |
-| `/services/`, `/services/<slug>/` | `[...lang]/services/…` | `Service` JSON-LD |
-| `/projects/`, `/projects/<slug>/` | `[...lang]/projects/…` | Case studies |
-| `/blog/`, `/blog/<slug>/` | `[...lang]/blog/…` | `BlogPosting` JSON-LD |
-| `/about/` | `[...lang]/about.astro` | `FAQPage` JSON-LD |
-| `/contacts/` | `[...lang]/contacts.astro` | `ContactsLeadForm` island |
-| `/privacy/`, `/terms/` | `[...lang]/privacy.astro`, `terms.astro` | Texts in `legal.json` |
-| `/404.html` | `404.astro` | Trilingual, noindex |
-| `/admin/` | `admin.astro` | Sveltia CMS (version pinned) |
-| `/contract/`, `/digital/` | legacy redirects | noindex, excluded from sitemap |
+## 4. Команды
 
-### i18n & content rules (enforced by `npm run build`)
-* **Language comes from the URL.** `src/middleware.ts` sets `Astro.locals.lang`; React islands receive a required `lang` prop. Never use localStorage, `?lang=` or CSS-hidden translations.
-* **No human-readable text in code.** Interface labels → `src/data/cms/ui/<area>.json` (`<I18nText k="area.key" />`, `t(lang, key)`; islands use `makeT([json])`). Business content → `src/data/cms/*.json` or `src/content/**` with the `field` / `field_uz` / `field_en` pattern (`<I18nText ru uz en />`, `tField`). Both are editable in `/admin`.
-* **Links:** pages → `localeHref('/route/', lang)`; static files → `withBase()`.
-* **SEO:** every page passes `title`/`description` from `pageSeo()` (texts in `src/data/cms/seo.json`) or `entrySeo()` (optional `seoTitle`/`seoDescription` fields on entries) to `BaseLayout`, plus `breadcrumbs` and page-specific `jsonLd`. BaseLayout renders canonical, hreflang, Open Graph, Organization/WebSite/BreadcrumbList JSON-LD.
-* **CMS schema:** every field present in the data must be declared in `public/admin/config.yml`, and every field (incl. a list's single `field:`) must have a `name` — otherwise Sveltia refuses to load or silently drops data on save. `scripts/validate-cms-config.mjs` (prebuild) enforces both.
-* **Build gate:** `scripts/check-build.mjs` (postbuild) fails on cross-language links, leftover `rt-lang` markup, wrong `<html lang>`, missing title/description/canonical/hreflang, ≠1 `<h1>`, `<img>` without alt; warns on long meta texts, duplicate titles and untranslated pages.
-
----
-
-## 3. Technology Stack & Rules
-
-* **Framework:** Astro 4.16.x (Static Site Generation / SSG).
-* **Client Islands:** React 18 (`client:load` for critical interactive elements like calculators and lead modals, `client:visible` for below-the-fold components).
-* **3D Graphics:** Three.js with `GLTFLoader`. Models are kept in `public/models/{modelType}.glb`. Product cards must use real photos and blueprints by default, with 3D as an optional tab.
-* **Styling:** Tailwind CSS with custom fonts and CAD styling utilities.
-* **Images:** originals (JPG/PNG) live in `public/images/**` (CMS uploads in `public/images/uploads`). `scripts/optimize-images.mjs` (prebuild) generates WebP variants `<name>.w480|w800|w1200.webp` (git-ignored). Render every raster `<img>` with `responsiveImage(src, SIZES.x)` / `webpSrcSet(src)` from `src/utils/images.ts` — original stays as `src` fallback, WebP goes to `srcset`; postbuild `check-build` fails if a srcset file is missing. In `astro dev` originals are served.
-* **Content Management:** Astro Content Collections (`src/content/config.ts`) + Sveltia CMS (`public/admin/config.yml`). Sveltia rejects the whole config if any field — including the single `field:` of a `list` widget — has no `name`; `scripts/validate-cms-config.mjs` (run in `prebuild`) enforces this.
-* **Lead Capturing:** Cloudflare Worker webhook (`cloudflare-worker/telegram-webhook.js`) forwarding Base64 files and specs directly to Telegram.
-* **CI/CD:** GitHub Actions (`.github/workflows/deploy.yml`) deploying static build to GitHub Pages upon push to `main`.
-
----
-
-## 4. Operational Commands for Agents
-
-* **Install dependencies:** `npm install`
-* **Local development:** `npx astro dev --port 4321`
-* **Static production build:** `npm run build` (MANDATORY: Must exit with 0 errors before committing).
-* **Content quality gate:** `npm run check:content` (add `-- --strict` before a content PR; `-- --files <paths>` for specific files).
-* **CMS schema only:** `npm run check:cms` · **SEO/i18n audit of dist/:** `npm run check:build`
-* **Check Git status:** `git status`
-* **Never** push to `main` or force-push: all changes go through a pull request (`.github/pull_request_template.md`); merging to `main` deploys the site.
-
----
-
-## 5. Domain Knowledge Quick Reference
-
-Single source for company facts is `src/data/cms/global.json` / `contacts.json`; this is only orientation.
-
-* **Legal Entity:** ООО «RAILTECH» (RailTech LLC), Tashkent, Uzbekistan, since 2021. ИНН `308346339`, ОКПО `30664447`. Legal address: г. Ташкент, Ц-1, 47/33; office: г. Ташкент, ул. Абдуллы Каххара, 46 (only from `global.json` → `officeAddress`). OKED, VAT code, postal code and map coordinates are intentionally not published.
-* **Profile:** supplies equipment and services to the railway and large industrial companies of Uzbekistan and represents international manufacturers in the region; «надёжный мост между международными производителями и предприятиями Узбекистана», RailTech = единая точка ответственности (заявка → КП → сертификация → договор → таможня → доставка до склада). Directions: Поставки, Инжиниринг, Локализация, Представительство. Catalog focus: railway electronics for locomotives and EMUs used in Uzbekistan.
-* **Manufacturers:** the model is «официальный дилер и прямой поставщик ряда производителей» — list with status per manufacturer in `global.json` → `manufacturers` (rendered on /about/). Today: official dealer & representative of ООО «НПО САУТ» (certificate № 1 of 26.02.2026, valid to 31.12.2026) — the only dealer status; direct supplies of ADZ NAGANO, GERSYS, Siemens Mobility, РАТЕП-ИННОВАЦИЯ products. НПО САУТ is one partner, not the company's identity; claim dealer status only where a dealer document exists.
-* **Digital:** Cabinet `cabinet.railtech.uz` (web + Telegram Mini App) for clients and partners.
-* **Commercial terms:** prices are not published on the site; quotes incl. 12% VAT; DDP / CIP; warranty 12 months from delivery.
-
----
-
-## 6. Content Agents (catalog, services, projects, blog, page texts)
-
-The site is replenished by AI agents working from briefs (GitHub issue form «Новый контент» or a chat message).
-The full rulebook is **`docs/content/`** — read it before writing anything:
-
-| File | Purpose |
+| Команда | Что делает |
 |---|---|
-| `docs/content/README.md` | Where content lives, the 3-language model, the mandatory workflow, what agents must never do |
-| `docs/content/STYLE_GUIDE.md` | Voice, **facts policy (never invent prices, stock, certificates, clients, numbers)**, formats, translation rules |
-| `docs/content/GLOSSARY.md` | Mandatory RU / UZ (Latin) / EN terminology; forbidden variants are enforced by `check:content` |
-| `docs/content/SEO.md` | Titles, descriptions, slugs, internal links |
-| `docs/content/templates/*.md` | Front-matter templates for product / service / project / blog post (`TODO` markers fail the check) |
+| `make install` | `npm ci` |
+| `make dev` | локальный сервер `http://localhost:4321/rt-corporate-website/` |
+| `make cms` | схема CMS против данных |
+| `make content` | правила контента (этап, глоссарий, позиционирование, ссылки, медиа) |
+| `node scripts/check-content.mjs --files <файлы>` | те же правила только для указанных файлов |
+| `make test` | Vitest: данные, i18n, SEO, форма заявки, навигация |
+| `make build` | `astro check`, сборка и аудит `dist/` |
+| `make check` | cms + content + test + build: всё, кроме браузерных тестов |
+| `make e2e` | сборка и Playwright (компьютер и телефон) |
+| `make ci` | всё, как в GitHub Actions |
 
-**Workflow:** brief → branch `content/<type>-<slug>` → RU draft from template → UZ + EN translations →
-SEO → real media → `npm run check:content -- --strict` + `npm run build` → PR with sources and open questions → human review → merge = publish.
+После любой правки файла в `src/content/**` или `src/data/cms/**` хук Claude Code сам запускает проверку
+этого файла (`scripts/hooks/check-content-file.mjs`).
 
-**Scope:** content agents change only `src/content/**`, `src/data/cms/**`, `public/images/**`, `public/docs/**`
-and `docs/content/GLOSSARY.md`. Code, configs and scripts are out of scope for content tasks.
+## 5. Типовые задачи
 
-**Claude Code** ships this as project tooling in `.claude/`:
-* skills: `add-product`, `add-service`, `add-project`, `write-blog-post`, `translate-content`, `edit-site-texts`, `content-qa`, `content-pr`;
-* subagents: `content-writer` (does the task end-to-end), `content-translator`, `content-reviewer` (independent read-only QA);
-* `settings.json`: safe commands pre-approved, pushes to `main` / force-push / `rm -rf` denied, and a PostToolUse hook that runs
-  `check-content` on every edited content file so problems surface immediately.
+### Новость, статья или проект → скил `write-news`
+1. Проверь дубли: `grep -ril "<тема>" src/content/news/`.
+2. Скопируй `docs/content/templates/news.md` в `src/content/news/<slug>.md`. Slug: латиница, дефисы, не меняется после публикации.
+3. Заполни `type` (`news` | `article` | `project`), `date`, `title`, `summary` (70–300 знаков), `partners` (id из `partners.json`, если материал о партнёре).
+   `cover` необязателен: без него показывается плашка «Фото готовится».
+4. Тело на русском, разделы с `###`. Внизу раздел `### Источники` со ссылками.
+5. `node scripts/check-content.mjs --files src/content/news/<slug>.md`, потом `make check`.
 
-Other agents (Cursor, Copilot, Codex…) follow the same `docs/content/` rules and run the same npm checks; the PR workflow
-`.github/workflows/pr-check.yml` enforces `check:content` and `build` on every pull request.
+### Партнёр → скил `add-partner`
+1. Добавь строку в `src/data/cms/partners.json`: `id` (латиница, навсегда), `name`, `country`,
+   `status` (`dealer` только при документе производителя, иначе `direct`), `article`, `order`.
+2. Создай статью `src/content/news/<article>.md` с `type: partner` и `partners: [<id>]` по шаблону
+   `docs/content/templates/partner-article.md`. Тест `tests/data.test.ts` проверяет, что плитка ведёт на эту статью.
+3. Отрасль партнёра описывается здесь, в фактах о нём. В общих текстах её нет.
+
+### Изменить услугу → скил `add-service`
+Услуг ровно четыре (`supply`, `engineering`, `representation`, `localization`), тест это проверяет.
+Новую услугу добавляем только после правки ARCHITECTURE.md владельцем. Правка идёт в `src/content/services/<slug>.md` по
+`docs/content/templates/service.md`. Тексты должны быть без привязки к отрасли.
+
+### Тексты страниц, подписи, SEO → скил `edit-site-texts`
+Меняй только значения в `src/data/cms/{company,home,pages,legal,seo}.json` и `ui/*.json`. Ключи не переименовывай.
+Новое поле добавляется сразу в ARCHITECTURE.md, `public/admin/config.yml` и код. Это задача разработки.
+Реквизиты, цифры и адреса в `company.json` меняются только по прямому указанию владельца.
+
+### Код
+Сначала опиши изменение в ARCHITECTURE.md. Стили берутся только из токенов DESIGN.md. Тексты лежат в CMS JSON.
+Проверка: `make check && make e2e`.
+
+## 6. Чего не делать никогда
+
+- Возвращать на сайт каталог, цены, SKU, корзину, наличие. Это Кабинет.
+- Писать «ж/д», серии локомотивов и отрасль в общих текстах, SEO, меню, подписях.
+- Заполнять или переводить `_uz`/`_en`, пока `ruOnly: true`. Менять `content-stage.json`: это решает владелец.
+- Выдумывать факты, клиентов, цифры, сертификаты. Публиковать номер или дату дилерского документа.
+- Писать тексты в `.astro`/`.ts`/`.tsx`. Добавлять вторую навигацию, модальное окно заявки, HUD-декор,
+  псевдотерминальные подписи, аналитику и cookie (без решения владельца и правки `/cookies/`).
+- Переименовывать опубликованные slug и `id` партнёров. Если пришлось, добавь строку в `legacy-redirects.json`.
+- Пушить в `main`, делать `--force`, `git reset --hard`, мёржить свои PR. Коммитить `dist/`, `.env`.
+- Ссылаться на удалённое: `global.json`, `catalog`, `blog`, `projects`, `about`, Tailwind, `rounded-none`.
+
+## 7. Документы для контента
+
+| Файл | О чём |
+|---|---|
+| `docs/content/README.md` | где что лежит, процесс, что агенту нельзя |
+| `docs/content/STYLE_GUIDE.md` | голос, позиционирование, факты, форматы |
+| `docs/content/GLOSSARY.md` | термины RU/UZ/EN; колонку «Запрещено» читает `check-content` |
+| `docs/content/SEO.md` | title, description, slug, внутренние ссылки, RU-first |
+| `docs/content/CONTENT_PLAN.md` | текущий план |
+| `docs/content/templates/` | `news.md`, `partner-article.md`, `service.md` |
+
+Claude Code: скилы `write-news`, `add-partner`, `add-service`, `edit-site-texts`, `translate-content`
+(только после одобрения RU), `content-qa`, `content-pr`. Субагенты: `content-writer`, `content-reviewer`,
+`content-translator` (тоже только после одобрения RU).
