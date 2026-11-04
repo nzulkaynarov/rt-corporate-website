@@ -1,8 +1,8 @@
 ---
 # Шаблон материала раздела «Новости»: новость, статья или проект.
 # Копия → src/content/news/<slug>.md (slug: латиница, дефисы, 2–6 слов; после публикации не меняется).
-# Схема: src/content/config.ts → news. Этап RU-first: заполняются только русские поля,
-# title_uz / title_en / summary_uz / body_uz / body_en и другие _uz/_en НЕ добавляем.
+# Схема: src/content/config.ts → news. Новости пока только на русском (news в ruOnlySections,
+# src/data/content-stage.json): title_uz / title_en / summary_uz / body_uz / body_en и другие _uz/_en НЕ добавляем.
 # Статья о партнёре (type: partner) пишется по шаблону partner-article.md.
 # Строки-комментарии (#) удалите перед публикацией.
 

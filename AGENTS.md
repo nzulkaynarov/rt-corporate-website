@@ -19,10 +19,14 @@
    (главная, услуги, страницы, SEO, подписи, меню) не упоминаются «ж/д», серии локомотивов, отраслевые каталоги.
    Отрасль партнёра или события называется только в фактах статьи о партнёре или новости. Это проверяют
    правило `positioning` в `scripts/check-content.mjs` и аудит `dist/` в `scripts/check-build.mjs`.
-2. **Сейчас только русский (RU-first).** В `src/data/content-stage.json` стоит `"ruOnly": true`. Агенты пишут
-   и правят только русские поля. Поля `_uz`/`_en` и `body_uz`/`body_en` **не заполняют и не переводят**.
-   Перевод делается одним проходом, когда владелец примет русскую версию и сам поставит `ruOnly: false`.
-   Страницы UZ/EN до этого закрыты от индексации (`noindex`), их нет в sitemap.
+2. **Три языка, кроме новостей.** Владелец принял русскую версию: в `src/data/content-stage.json` стоят
+   `"ruOnly": false` и `"ruOnlySections": ["news"]`. Любой новый или изменённый текст вне новостей пишется
+   **в том же изменении** на RU (источник), UZ (латиница) и EN: `_uz`/`_en`, `body_uz`/`body_en`, `uz`/`en`
+   в `ui/*.json`, по GLOSSARY.md. Пропущенный перевод там `check-content` считает ошибкой.
+   Разделы из `ruOnlySections` (сейчас только `news`, то есть `src/content/news`) пока только по-русски: их
+   `_uz`/`_en` не заполняются, на `/uz/` и `/en/` контент показывается на русском (интерфейс вокруг переведён),
+   эти страницы `noindex`, их нет в sitemap, русская страница объявляет только hreflang `ru` и `x-default`.
+   Когда новости переведут, владелец сам уберёт `news` из `ruOnlySections`.
 3. **Факты не выдумываются.** Цены, клиенты, сертификаты, цифры, сроки, наличие, отзывы берутся только из брифа
    или проверяемого источника, который указан в PR. Нет данных: не пиши и задай вопрос в PR.
    Дилерский статус (`status: dealer`) ставится только по документу производителя. Основание статуса
@@ -49,7 +53,7 @@ src/content/services/*.md    4 услуги: supply, engineering (заказчи
 src/content/news/*.md        материалы: type = news | article | project | partner
 src/data/cms/*.json          company, home, pages, partners, legal, seo (тексты и настройки сайта)
 src/data/cms/ui/*.json       подписи интерфейса { key, ru, uz, en }
-src/data/content-stage.json  этап переводов (ruOnly)
+src/data/content-stage.json  этап переводов (ruOnly, ruOnlySections; правит только владелец)
 src/data/legacy-redirects.json  старые адреса → новые страницы
 src/pages/[...lang]/         страницы ru (/…), uz (/uz/…), en (/en/…)
 src/components/              layout/, ui/, home/, islands/LeadForm.tsx (единственный React-остров)
@@ -114,7 +118,9 @@ tests/                       Vitest (data, i18n, lead, utils) и tests/e2e (Play
 
 - Возвращать на сайт каталог, цены, SKU, корзину, наличие. Это Кабинет.
 - Писать «ж/д», серии локомотивов и отрасль в общих текстах, SEO, меню, подписях.
-- Заполнять или переводить `_uz`/`_en`, пока `ruOnly: true`. Менять `content-stage.json`: это решает владелец.
+- Менять текст вне новостей только на одном языке: RU, UZ и EN правятся в одном изменении.
+- Заполнять или переводить `_uz`/`_en` разделов из `ruOnlySections` (сейчас новости). Менять `content-stage.json`:
+  это решает владелец.
 - Выдумывать факты, клиентов, цифры, сертификаты. Публиковать номер или дату дилерского документа.
 - Писать тексты в `.astro`/`.ts`/`.tsx`. Добавлять вторую навигацию, модальное окно заявки, HUD-декор,
   псевдотерминальные подписи, аналитику и cookie (без решения владельца и правки `/cookies/`).
@@ -129,10 +135,10 @@ tests/                       Vitest (data, i18n, lead, utils) и tests/e2e (Play
 | `docs/content/README.md` | где что лежит, процесс, что агенту нельзя |
 | `docs/content/STYLE_GUIDE.md` | голос, позиционирование, факты, форматы |
 | `docs/content/GLOSSARY.md` | термины RU/UZ/EN; колонку «Запрещено» читает `check-content` |
-| `docs/content/SEO.md` | title, description, slug, внутренние ссылки, RU-first |
+| `docs/content/SEO.md` | title, description, slug, внутренние ссылки, языки и индексация |
 | `docs/content/CONTENT_PLAN.md` | текущий план |
 | `docs/content/templates/` | `news.md`, `partner-article.md`, `service.md` |
 
 Claude Code: скилы `write-news`, `add-partner`, `add-service`, `edit-site-texts`, `translate-content`
-(только после одобрения RU), `content-qa`, `content-pr`. Субагенты: `content-writer`, `content-reviewer`,
-`content-translator` (тоже только после одобрения RU).
+(не при `ruOnly: true`; разделы из `ruOnlySections` пропускает), `content-qa`, `content-pr`. Субагенты:
+`content-writer`, `content-reviewer`, `content-translator` (те же правила, что у `translate-content`).

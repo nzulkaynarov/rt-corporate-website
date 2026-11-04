@@ -30,8 +30,10 @@
 1. **Без привязки к отрасли.** RailTech работает с любыми предприятиями. В общих текстах нет «ж/д», серий
    локомотивов, отраслевых каталогов. Отрасль упоминается только в фактах статьи о партнёре или новости.
    Это проверяют `check-content` и `check-build`.
-2. **Только русский (RU-first).** В `src/data/content-stage.json` стоит `ruOnly: true`. Не заполняй и не переводи
-   `_uz`/`_en`/`body_uz`/`body_en`. Перевод начинается после того, как владелец одобрит RU и переключит `ruOnly`.
+2. **Три языка (кроме новостей).** RU одобрен, в `src/data/content-stage.json` стоят `ruOnly: false` и
+   `ruOnlySections: ["news"]`. Новый или изменённый текст вне новостей пишется сразу на RU, UZ (латиница) и EN
+   (`_uz`/`_en`, `body_uz`/`body_en`, `uz`/`en` в ui) по GLOSSARY.md; пропуски `check-content` считает ошибками.
+   Новости (`src/content/news`) пока только по-русски: их `_uz`/`_en` не заполняй. `content-stage.json` меняет владелец.
 3. **Факты не выдумываются**: цены, клиенты, сертификаты, цифры. `dealer` ставится только по документу
    производителя. Основание статуса на сайте не публикуется.
 4. **ARCHITECTURE.md первым.** Новое поле, страница или компонент сначала описываются там, в том же PR.
@@ -44,5 +46,5 @@
 ## Контент
 - Регламент в `docs/content/README.md`, там же STYLE_GUIDE, GLOSSARY, SEO, CONTENT_PLAN и шаблоны в `templates/`.
 - Скилы: `write-news`, `add-partner`, `add-service`, `edit-site-texts`, затем `content-qa` и `content-pr`.
-  `translate-content` запускается только после одобрения RU.
-- Субагенты: `content-writer` выполняет бриф целиком, `content-reviewer` проверяет, `content-translator` переводит после одобрения RU.
+  `translate-content` переводит UZ/EN (не при `ruOnly: true`; разделы из `ruOnlySections` пропускает).
+- Субагенты: `content-writer` выполняет бриф целиком, `content-reviewer` проверяет, `content-translator` переводит UZ/EN (кроме разделов из `ruOnlySections`).

@@ -3,6 +3,8 @@
   "titleSuffix": "| RailTech",
   "defaultImage": "/og-cover.png",
   "organizationDescription": "ООО «RailTech» (Ташкент, с 2021 года) поставляет оборудование и услуги предприятиям Узбекистана и представляет интересы международных производителей: поставки, инжиниринг, представительство, локализация.",
+  "organizationDescription_uz": "«RailTech» MChJ (Toshkent, 2021-yildan beri) O'zbekiston korxonalariga uskunalar va xizmatlar yetkazib beradi hamda xalqaro ishlab chiqaruvchilar manfaatlarini ifodalaydi: yetkazib berish, injiniring, vakillik, mahalliylashtirish.",
+  "organizationDescription_en": "RailTech LLC (Tashkent, since 2021) supplies equipment and services to enterprises in Uzbekistan and represents the interests of international manufacturers: supply, engineering, representation, localization.",
   "knowsAbout": [
     "Поставки промышленного оборудования в Узбекистан",
     "Представительство международных производителей в Узбекистане",
@@ -11,38 +13,86 @@
     "Сертификация оборудования для рынка Узбекистана",
     "Таможенное оформление и доставка на условиях DDP и CIP"
   ],
+  "knowsAbout_uz": [
+    "O'zbekistonga sanoat uskunalarini yetkazib berish",
+    "O'zbekistonda xalqaro ishlab chiqaruvchilar vakilligi",
+    "O'zbekistonda ishlab chiqarishni mahalliylashtirish",
+    "Injiniring va pilot loyihalar",
+    "O'zbekiston bozori uchun uskunalarni sertifikatlash",
+    "Bojxona rasmiylashtiruvi hamda DDP va CIP shartlarida yetkazib berish"
+  ],
+  "knowsAbout_en": [
+    "Industrial equipment supply to Uzbekistan",
+    "Representation of international manufacturers in Uzbekistan",
+    "Production localization in Uzbekistan",
+    "Engineering and pilot projects",
+    "Equipment certification for the Uzbek market",
+    "Customs clearance and delivery on DDP and CIP terms"
+  ],
   "pages": {
     "home": {
       "title": "RailTech — поставки и представительство в Узбекистане",
-      "description": "RailTech — мост между международными производителями и предприятиями Узбекистана: поставки оборудования до склада, инжиниринг, представительство, локализация."
+      "title_uz": "RailTech — O'zbekistonda yetkazib berish va vakillik",
+      "title_en": "RailTech — supply and representation in Uzbekistan",
+      "description": "RailTech — мост между международными производителями и предприятиями Узбекистана: поставки оборудования до склада, инжиниринг, представительство, локализация.",
+      "description_uz": "RailTech — xalqaro ishlab chiqaruvchilar va O'zbekiston korxonalari o'rtasidagi ko'prik: omborgacha yetkazib berish, injiniring, vakillik, mahalliylashtirish.",
+      "description_en": "RailTech bridges international manufacturers and enterprises in Uzbekistan: equipment supply to your warehouse, engineering, representation, localization."
     },
     "services": {
       "title": "Услуги RailTech в Узбекистане: поставки и представительство",
-      "description": "Поставки оборудования и комплектующих до склада, инжиниринг, представительство международных производителей и локализация в Узбекистане."
+      "title_uz": "RailTech xizmatlari: yetkazib berish va vakillik",
+      "title_en": "RailTech services in Uzbekistan: supply and representation",
+      "description": "Поставки оборудования и комплектующих до склада, инжиниринг, представительство международных производителей и локализация в Узбекистане.",
+      "description_uz": "Uskunalarni omborgacha yetkazib berish, injiniring, xalqaro ishlab chiqaruvchilar vakilligi va O'zbekistonda ishlab chiqarishni mahalliylashtirish.",
+      "description_en": "Equipment and component supply to your warehouse, engineering, representation of international manufacturers and production localization in Uzbekistan."
     },
     "news": {
       "title": "Новости, статьи и проекты RailTech",
-      "description": "События компании RailTech, проекты с партнёрами и материалы о производителях, с которыми мы работаем в Узбекистане."
+      "title_uz": "RailTech yangiliklari, maqolalari va loyihalari",
+      "title_en": "RailTech news, articles and projects",
+      "description": "События компании RailTech, проекты с партнёрами и материалы о производителях, с которыми мы работаем в Узбекистане.",
+      "description_uz": "RailTech kompaniyasi voqealari, hamkorlar bilan loyihalar va O'zbekistonda biz ishlaydigan ishlab chiqaruvchilar haqida materiallar.",
+      "description_en": "RailTech company events, projects with partners and articles about the manufacturers we work with in Uzbekistan."
     },
     "contacts": {
       "title": "Контакты и реквизиты RailTech, Ташкент",
-      "description": "Офис RailTech: Ташкент, ул. Абдуллы Каххара, 46. Телефон +998 90 118-90-00, info@railtech.uz, Telegram, реквизиты и форма заявки."
+      "title_uz": "RailTech kontaktlari va rekvizitlari, Toshkent",
+      "title_en": "RailTech contacts and company details, Tashkent",
+      "description": "Офис RailTech: Ташкент, ул. Абдуллы Каххара, 46. Телефон +998 90 118-90-00, info@railtech.uz, Telegram, реквизиты и форма заявки.",
+      "description_uz": "RailTech ofisi: Toshkent, Abdulla Qahhor ko'chasi, 46. Telefon +998 90 118-90-00, info@railtech.uz, Telegram, rekvizitlar va ariza shakli.",
+      "description_en": "RailTech office: 46 Abdulla Qahhor Street, Tashkent. Phone +998 90 118-90-00, info@railtech.uz, Telegram, company details and request form."
     },
     "privacy": {
       "title": "Политика обработки персональных данных | RailTech",
-      "description": "Как ООО «RailTech» обрабатывает и защищает персональные данные пользователей сайта railtech.uz и Кабинета по Закону РУз «О персональных данных»."
+      "title_uz": "Shaxsga doir ma'lumotlarga ishlov berish siyosati | RailTech",
+      "title_en": "Personal data processing policy | RailTech",
+      "description": "Как ООО «RailTech» обрабатывает и защищает персональные данные пользователей сайта railtech.uz и Кабинета по Закону РУз «О персональных данных».",
+      "description_uz": "«RailTech» MChJ railtech.uz va Kabinet foydalanuvchilarining shaxsga doir ma'lumotlariga O'RQ-547-son Qonunga muvofiq qanday ishlov beradi va himoya qiladi.",
+      "description_en": "How RailTech LLC processes and protects the personal data of railtech.uz and Cabinet users under the Law of the Republic of Uzbekistan “On Personal Data”."
     },
     "terms": {
       "title": "Условия использования сайта и сервисов | RailTech",
-      "description": "Правила использования сайта railtech.uz, Кабинета клиента и партнёра и Telegram-бота RailTech. Информация на сайте не является публичной офертой."
+      "title_uz": "Sayt va xizmatlardan foydalanish shartlari | RailTech",
+      "title_en": "Terms of use for the website and services | RailTech",
+      "description": "Правила использования сайта railtech.uz, Кабинета клиента и партнёра и Telegram-бота RailTech. Информация на сайте не является публичной офертой.",
+      "description_uz": "railtech.uz sayti, mijoz va hamkor Kabineti hamda RailTech Telegram-botidan foydalanish qoidalari. Saytdagi ma'lumotlar ommaviy oferta hisoblanmaydi.",
+      "description_en": "Rules for using the railtech.uz website, the Client & Partner Cabinet and the RailTech Telegram bot. Information on the website is not a public offer."
     },
     "cookies": {
       "title": "Cookies и хранение данных в браузере | RailTech",
-      "description": "Сайт railtech.uz не устанавливает cookie и не использует аналитику. Какие технические данные сохраняет Кабинет и как ими управлять."
+      "title_uz": "Cookie-fayllar va brauzerda ma'lumotlarni saqlash | RailTech",
+      "title_en": "Cookies and browser data storage | RailTech",
+      "description": "Сайт railtech.uz не устанавливает cookie и не использует аналитику. Какие технические данные сохраняет Кабинет и как ими управлять.",
+      "description_uz": "railtech.uz sayti cookie o'rnatmaydi va analitikadan foydalanmaydi. Kabinet qanday texnik ma'lumotlarni saqlaydi va ularni qanday boshqarish mumkin.",
+      "description_en": "The railtech.uz website sets no cookies and uses no analytics. Learn which technical data the Cabinet stores and how to manage it."
     },
     "notFound": {
       "title": "Страница не найдена | RailTech",
-      "description": "Такой страницы нет на сайте RailTech. Перейдите на главную, в раздел услуг или напишите нам."
+      "title_uz": "Sahifa topilmadi | RailTech",
+      "title_en": "Page not found | RailTech",
+      "description": "Такой страницы нет на сайте RailTech. Перейдите на главную, в раздел услуг или напишите нам.",
+      "description_uz": "RailTech saytida bunday sahifa yo'q. Bosh sahifaga yoki xizmatlar bo'limiga o'ting yoxud bizga yozing.",
+      "description_en": "This page does not exist on the RailTech website. Go to the home page or the services section, or write to us."
     }
   }
 }

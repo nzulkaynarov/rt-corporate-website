@@ -2,7 +2,7 @@
 # Шаблон услуги. Услуг ровно четыре: supply, engineering (customers), representation, localization (partners).
 # Новая услуга — только после правки docs/ARCHITECTURE.md владельцем (тест tests/data.test.ts проверяет список).
 # Файл: src/content/services/<slug>.md. Схема: src/content/config.ts → services.
-# Этап RU-first: только русские поля, без _uz / _en / body_uz / body_en.
+# Три языка: у каждого текстового поля в том же изменении пишутся <поле>_uz (латиница) и <поле>_en, тело — body_uz / body_en (GLOSSARY.md).
 # Тексты без привязки к отрасли (правило positioning в scripts/check-content.mjs).
 
 audience: "customers"     # customers — заказчикам, partners — партнёрам

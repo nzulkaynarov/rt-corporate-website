@@ -4,86 +4,86 @@
     {
       "key": "contacts.office",
       "ru": "Офис",
-      "uz": "",
-      "en": ""
+      "uz": "Ofis",
+      "en": "Office"
     },
     {
       "key": "contacts.legal",
       "ru": "Юридический адрес",
-      "uz": "",
-      "en": ""
+      "uz": "Yuridik manzil",
+      "en": "Legal address"
     },
     {
       "key": "contacts.phone",
       "ru": "Телефон",
-      "uz": "",
-      "en": ""
+      "uz": "Telefon",
+      "en": "Phone"
     },
     {
       "key": "contacts.email",
       "ru": "E-mail",
-      "uz": "",
-      "en": ""
+      "uz": "E-mail",
+      "en": "Email"
     },
     {
       "key": "contacts.telegram",
       "ru": "Telegram",
-      "uz": "",
-      "en": ""
+      "uz": "Telegram",
+      "en": "Telegram"
     },
     {
       "key": "contacts.cabinet",
       "ru": "Кабинет",
-      "uz": "",
-      "en": ""
+      "uz": "Kabinet",
+      "en": "Cabinet"
     },
     {
       "key": "contacts.map",
       "ru": "Открыть на карте",
-      "uz": "",
-      "en": ""
+      "uz": "Xaritada ochish",
+      "en": "View on map"
     },
     {
       "key": "contacts.requisites",
       "ru": "Реквизиты",
-      "uz": "",
-      "en": ""
+      "uz": "Rekvizitlar",
+      "en": "Company details"
     },
     {
       "key": "contacts.fullName",
       "ru": "Полное наименование",
-      "uz": "",
-      "en": ""
+      "uz": "To'liq nomi",
+      "en": "Full legal name"
     },
     {
       "key": "contacts.inn",
       "ru": "ИНН",
-      "uz": "",
-      "en": ""
+      "uz": "STIR",
+      "en": "TIN"
     },
     {
       "key": "contacts.bank",
       "ru": "Банк",
-      "uz": "",
-      "en": ""
+      "uz": "Bank",
+      "en": "Bank"
     },
     {
       "key": "contacts.mfo",
       "ru": "МФО",
-      "uz": "",
-      "en": ""
+      "uz": "MFO",
+      "en": "Bank code (MFO)"
     },
     {
       "key": "contacts.account",
       "ru": "Расчётный счёт",
-      "uz": "",
-      "en": ""
+      "uz": "Hisob-kitob raqami",
+      "en": "Bank account"
     },
     {
       "key": "contacts.channels",
       "ru": "Связаться",
-      "uz": "",
-      "en": ""
+      "uz": "Bog'lanish",
+      "en": "Get in touch"
     }
   ]
 }

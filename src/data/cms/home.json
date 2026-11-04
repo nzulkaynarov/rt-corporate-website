@@ -1,101 +1,264 @@
 {
   "hero": {
     "eyebrow": "Ташкент · с 2021 года",
+    "eyebrow_uz": "Toshkent · 2021-yildan beri",
+    "eyebrow_en": "Tashkent · since 2021",
     "title": "Надёжный мост между производителем и заказчиком",
+    "title_uz": "Ishlab chiqaruvchi va buyurtmachi o'rtasidagi ishonchli ko'prik",
+    "title_en": "A reliable bridge between manufacturers and customers",
     "lead": "Поставляем оборудование и услуги предприятиям Узбекистана и представляем интересы международных производителей в регионе.",
+    "lead_uz": "O'zbekiston korxonalariga uskunalar va xizmatlar yetkazib beramiz hamda mintaqada xalqaro ishlab chiqaruvchilar manfaatlarini ifodalaymiz.",
+    "lead_en": "We supply equipment and services to enterprises in Uzbekistan and represent the interests of international manufacturers in the region.",
     "entries": [
       {
         "title": "Я закупаю",
+        "title_uz": "Men xarid qilaman",
+        "title_en": "I'm a buyer",
         "text": "Оборудование и комплектующие международных производителей с доставкой до вашего склада",
+        "text_uz": "Xalqaro ishlab chiqaruvchilarning uskunalari va butlovchi qismlari omboringizgacha yetkazib beriladi",
+        "text_en": "Equipment and components from international manufacturers, delivered to your warehouse",
         "link": "/services/supply/"
       },
       {
         "title": "Я производитель",
+        "title_uz": "Men ishlab chiqaruvchiman",
+        "title_en": "I'm a manufacturer",
         "text": "Выход на рынок Узбекистана без собственного офиса",
+        "text_uz": "O'z ofisingizni ochmasdan O'zbekiston bozoriga chiqish",
+        "text_en": "Enter the Uzbek market without opening your own office",
         "link": "/services/representation/"
       }
     ]
   },
   "bridge": {
     "eyebrow": "Наш подход",
+    "eyebrow_uz": "Bizning yondashuv",
+    "eyebrow_en": "Our approach",
     "title": "Обе стороны сделки теряют время на одних и тех же этапах. Мы берём их на себя",
+    "title_uz": "Bitimning ikkala tomoni ham bir xil bosqichlarda vaqt yo'qotadi. Bu bosqichlarni biz o'z zimmamizga olamiz",
+    "title_en": "Both sides of a deal lose time at the same stages. We take those stages off their hands",
     "customerTitle": "Заказчик в Узбекистане",
+    "customerTitle_uz": "O'zbekistondagi buyurtmachi",
+    "customerTitle_en": "Customer in Uzbekistan",
     "customerNote": "предприятия, организации, инженерные проекты",
+    "customerNote_uz": "korxonalar, tashkilotlar, muhandislik loyihalari",
+    "customerNote_en": "enterprises, organizations, engineering projects",
     "railtechTitle": "RailTech",
     "railtechNote": "единая точка ответственности",
+    "railtechNote_uz": "yagona mas'uliyat nuqtasi",
+    "railtechNote_en": "single point of responsibility",
     "partnerTitle": "Международный партнёр",
+    "partnerTitle_uz": "Xalqaro hamkor",
+    "partnerTitle_en": "International partner",
     "partnerNote": "заводы-изготовители, поставщики товаров и услуг",
+    "partnerNote_uz": "ishlab chiqaruvchi zavodlar, tovar va xizmat yetkazib beruvchilar",
+    "partnerNote_en": "manufacturing plants, suppliers of goods and services",
     "rows": [
       {
         "stage": "Запрос",
+        "stage_uz": "So'rov",
+        "stage_en": "Request",
         "customer": "Заявки в разных форматах, долгий поиск поставщика",
+        "customer_uz": "Arizalar turli formatlarda, yetkazib beruvchini izlash uzoq davom etadi",
+        "customer_en": "Requests come in different formats, and finding a supplier takes a long time",
         "railtech": "Принимаем заявку в любом виде — бот, письмо, Excel или Кабинет — и раскладываем её по позициям",
-        "partner": "Неполные запросы без спецификаций"
+        "railtech_uz": "Arizani istalgan ko'rinishda qabul qilamiz — bot, xat, Excel yoki Kabinet orqali — va uni pozitsiyalarga ajratamiz",
+        "railtech_en": "We accept a request in any form — bot, email, Excel or the Cabinet — and break it down into line items",
+        "partner": "Неполные запросы без спецификаций",
+        "partner_uz": "Spetsifikatsiyasiz, to'liq bo'lmagan so'rovlar",
+        "partner_en": "Incomplete requests without specifications"
       },
       {
         "stage": "Цена",
+        "stage_uz": "Narx",
+        "stage_en": "Price",
         "customer": "Итоговая стоимость с пошлинами и логистикой неизвестна",
+        "customer_uz": "Boj to'lovlari va logistikani hisobga olgan yakuniy qiymat noma'lum",
+        "customer_en": "The final cost including duties and logistics is unknown",
         "railtech": "Считаем полную стоимость до склада: логистика, пошлины и налоги — сразу в КП",
-        "partner": "Нет понимания местных налогов и требований"
+        "railtech_uz": "Omborgacha to'liq qiymatni hisoblaymiz: logistika, boj to'lovlari va soliqlar — darhol tijorat taklifida",
+        "railtech_en": "We calculate the full landed cost to your warehouse: logistics, duties and taxes go straight into the quotation",
+        "partner": "Нет понимания местных налогов и требований",
+        "partner_uz": "Mahalliy soliqlar va talablar haqida aniq tasavvur yo'q",
+        "partner_en": "No clear view of local taxes and requirements"
       },
       {
         "stage": "Документы",
+        "stage_uz": "Hujjatlar",
+        "stage_en": "Documents",
         "customer": "Сложно проверить сертификаты и паспорта качества",
+        "customer_uz": "Sertifikatlar va sifat pasportlarini tekshirish qiyin",
+        "customer_en": "Certificates and quality documentation are hard to verify",
         "railtech": "Сертификация, договор и полный пакет документов для рынка Узбекистана",
-        "partner": "Нормативы и сертификация требуют локальной экспертизы"
+        "railtech_uz": "Sertifikatlash, shartnoma va O'zbekiston bozori uchun to'liq hujjatlar to'plami",
+        "railtech_en": "Certification, the contract and a complete document package for the Uzbek market",
+        "partner": "Нормативы и сертификация требуют локальной экспертизы",
+        "partner_uz": "Me'yorlar va sertifikatlash mahalliy ekspertizani talab qiladi",
+        "partner_en": "Regulations and certification require local expertise"
       },
       {
         "stage": "Исполнение",
+        "stage_uz": "Ijro",
+        "stage_en": "Fulfillment",
         "customer": "Статус заказа непрозрачен, документы теряются в переписке",
+        "customer_uz": "Buyurtma holati noaniq, hujjatlar yozishmalarda yo'qolib ketadi",
+        "customer_en": "Order status is unclear, and documents get lost in correspondence",
         "railtech": "Таможня и доставка до склада, сделка по стадиям в Кабинете",
-        "partner": "Таможня и доставка до склада клиента вне контроля"
+        "railtech_uz": "Bojxona va omborgacha yetkazib berish, bitim Kabinetda bosqichma-bosqich olib boriladi",
+        "railtech_en": "Customs and delivery to the warehouse, with the deal tracked stage by stage in the Cabinet",
+        "partner": "Таможня и доставка до склада клиента вне контроля",
+        "partner_uz": "Bojxona va mijoz omborigacha yetkazib berish nazoratdan tashqarida",
+        "partner_en": "Customs and delivery to the client's warehouse are beyond their control"
       }
     ]
   },
   "directions": {
     "eyebrow": "Возможности",
-    "title": "Четыре направления — для заказчиков и для партнёров"
+    "eyebrow_uz": "Imkoniyatlar",
+    "eyebrow_en": "Capabilities",
+    "title": "Четыре направления — для заказчиков и для партнёров",
+    "title_uz": "To'rt yo'nalish — buyurtmachilar va hamkorlar uchun",
+    "title_en": "Four service areas — for customers and for partners"
   },
   "about": {
     "eyebrow": "О компании",
+    "eyebrow_uz": "Kompaniya haqida",
+    "eyebrow_en": "About us",
     "title": "ООО «RailTech» — Ташкент, с 2021 года",
+    "title_uz": "«RailTech» MChJ — Toshkent, 2021-yildan beri",
+    "title_en": "RailTech LLC — Tashkent, since 2021",
     "text": "Наши заказчики — промышленные компании, предприятия транспорта и инфраструктуры, инженерные проекты. Международных производителей представляем в Узбекистане и помогаем им локализовать производство.",
-    "mission": "Наша задача — быть единой точкой ответственности между заказчиком и международным партнёром: заявка, КП, документы и поставка в одном месте."
+    "text_uz": "Bizning buyurtmachilarimiz — sanoat kompaniyalari, transport va infratuzilma korxonalari, muhandislik loyihalari. O'zbekistonda xalqaro ishlab chiqaruvchilarning vakili sifatida ishlaymiz va ularga ishlab chiqarishni mahalliylashtirishda yordam beramiz.",
+    "text_en": "Our customers are industrial companies, transport and infrastructure enterprises, and engineering projects. We represent international manufacturers in Uzbekistan and help them localize production.",
+    "mission": "Наша задача — быть единой точкой ответственности между заказчиком и международным партнёром: заявка, КП, документы и поставка в одном месте.",
+    "mission_uz": "Bizning vazifamiz — buyurtmachi va xalqaro hamkor o'rtasida yagona mas'uliyat nuqtasi bo'lish: ariza, tijorat taklifi, hujjatlar va yetkazib berish bir joyda.",
+    "mission_en": "Our job is to be the single point of responsibility between the customer and the international partner: request, quotation, documents and delivery in one place."
   },
   "partners": {
     "eyebrow": "Производители",
+    "eyebrow_uz": "Ishlab chiqaruvchilar",
+    "eyebrow_en": "Manufacturers",
     "title": "С кем мы работаем",
-    "note": "Нажмите на производителя, чтобы узнать о нём больше. Перечень пополняется."
+    "title_uz": "Kimlar bilan ishlaymiz",
+    "title_en": "Who we work with",
+    "note": "Нажмите на производителя, чтобы узнать о нём больше. Перечень пополняется.",
+    "note_uz": "Batafsil ma'lumot olish uchun ishlab chiqaruvchini tanlang. Ro'yxat to'ldirib boriladi.",
+    "note_en": "Select a manufacturer to learn more. The list keeps growing."
   },
   "cabinet": {
     "eyebrow": "Кабинет RailTech",
+    "eyebrow_uz": "RailTech Kabineti",
+    "eyebrow_en": "RailTech Cabinet",
     "title": "Вся сделка — в одном окне",
+    "title_uz": "Butun bitim — bitta oynada",
+    "title_en": "The whole deal in one workspace",
     "text": "Запросы, коммерческие предложения, договоры, счета и акты — в Кабинете в браузере и в Telegram. Документы и сертификаты хранятся в сделке, вопрос менеджеру — там же.",
+    "text_uz": "So'rovlar, tijorat takliflari, shartnomalar, hisoblar va dalolatnomalar — brauzerda va Telegramda ishlaydigan Kabinetda. Hujjatlar va sertifikatlar bitim ichida saqlanadi, menejerga savolni ham shu yerda berasiz.",
+    "text_en": "Requests, quotations, contracts, invoices and acceptance acts — all in the Cabinet, in your browser and in Telegram. Documents and certificates are stored with the deal, and you can ask your manager a question right there.",
     "facts": [
-      { "value": "24/7", "label": "приём заявок и ответы на трёх языках" },
-      { "value": "Часы", "label": "до первого КП вместо дней" },
-      { "value": "1 окно", "label": "для всех документов сделки" }
+      {
+        "value": "24/7",
+        "label": "приём заявок и ответы на трёх языках",
+        "label_uz": "arizalarni qabul qilish va uch tilda javob berish",
+        "label_en": "request intake and replies in three languages"
+      },
+      {
+        "value": "Часы",
+        "value_uz": "Bir necha soat",
+        "value_en": "Hours",
+        "label": "до первого КП вместо дней",
+        "label_uz": "birinchi tijorat taklifigacha — kunlar emas",
+        "label_en": "to the first quotation, not days"
+      },
+      {
+        "value": "1 окно",
+        "value_uz": "Bitta oyna",
+        "value_en": "1 workspace",
+        "label": "для всех документов сделки",
+        "label_uz": "bitimning barcha hujjatlari uchun",
+        "label_en": "for all deal documents"
+      }
     ],
     "demo": {
       "title": "Сделка D-48",
+      "title_uz": "Bitim D-48",
+      "title_en": "Deal D-48",
       "note": "Пример",
-      "stages": ["Запрос", "КП принято", "Договор", "Оплата", "Поставка и акт"],
+      "note_uz": "Namuna",
+      "note_en": "Example",
+      "stages": [
+        "Запрос",
+        "КП принято",
+        "Договор",
+        "Оплата",
+        "Поставка и акт"
+      ],
+      "stages_uz": [
+        "So'rov",
+        "Taklif qabul qilindi",
+        "Shartnoma",
+        "To'lov",
+        "Yetkazib berish va dalolatnoma"
+      ],
+      "stages_en": [
+        "Request",
+        "Quotation accepted",
+        "Contract",
+        "Payment",
+        "Delivery and acceptance act"
+      ],
       "current": 2,
       "rows": [
-        { "label": "КП-2026-0048 · версия 1", "status": "Принято", "tone": "ok" },
-        { "label": "Договор D-2026-0048", "status": "Ждёт вашего согласования", "tone": "wait" },
-        { "label": "Счёт S-2026-0130", "status": "К оплате", "tone": "neutral" }
+        {
+          "label": "КП-2026-0048 · версия 1",
+          "label_uz": "Tijorat taklifi KP-2026-0048 · 1-versiya",
+          "label_en": "Quotation KP-2026-0048 · version 1",
+          "status": "Принято",
+          "status_uz": "Qabul qilindi",
+          "status_en": "Accepted",
+          "tone": "ok"
+        },
+        {
+          "label": "Договор D-2026-0048",
+          "label_uz": "Shartnoma D-2026-0048",
+          "label_en": "Contract D-2026-0048",
+          "status": "Ждёт вашего согласования",
+          "status_uz": "Tasdig'ingizni kutmoqda",
+          "status_en": "Awaiting your approval",
+          "tone": "wait"
+        },
+        {
+          "label": "Счёт S-2026-0130",
+          "label_uz": "Hisob S-2026-0130",
+          "label_en": "Invoice S-2026-0130",
+          "status": "К оплате",
+          "status_uz": "To'lanishi kerak",
+          "status_en": "Due for payment",
+          "tone": "neutral"
+        }
       ],
-      "footnote": "Документы, сертификаты и переписка с менеджером — внутри сделки"
+      "footnote": "Документы, сертификаты и переписка с менеджером — внутри сделки",
+      "footnote_uz": "Hujjatlar, sertifikatlar va menejer bilan yozishmalar — bitim ichida",
+      "footnote_en": "Documents, certificates and messages with your manager stay inside the deal"
     }
   },
   "news": {
     "eyebrow": "Новости",
-    "title": "События и проекты"
+    "eyebrow_uz": "Yangiliklar",
+    "eyebrow_en": "News",
+    "title": "События и проекты",
+    "title_uz": "Voqealar va loyihalar",
+    "title_en": "Events and projects"
   },
   "invite": {
     "eyebrow": "Начнём работу",
+    "eyebrow_uz": "Ishni boshlaymiz",
+    "eyebrow_en": "Let's get started",
     "title": "Расскажите, что нужно поставить или обсудить",
-    "text": "Менеджер свяжется с вами в течение рабочего дня и пришлёт приглашение в Кабинет. Дальше вся сделка — там."
+    "title_uz": "Nimani yetkazib berish yoki muhokama qilish kerakligini ayting",
+    "title_en": "Tell us what you need supplied or want to discuss",
+    "text": "Менеджер свяжется с вами в течение рабочего дня и пришлёт приглашение в Кабинет. Дальше вся сделка — там.",
+    "text_uz": "Menejer ish kuni davomida siz bilan bog'lanadi va Kabinetga taklifnoma yuboradi. Keyin butun bitim o'sha yerda olib boriladi.",
+    "text_en": "A manager will contact you within one business day and send you an invitation to the Cabinet. From then on, the whole deal runs there."
   }
 }

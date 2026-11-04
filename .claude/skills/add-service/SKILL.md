@@ -1,6 +1,6 @@
 ---
 name: add-service
-description: Update one of the four RailTech service pages (supply, engineering for customers; representation, localization for partners) in src/content/services — lead, highlights, steps, benefits, requirements, FAQ and SEO — in Russian only during the RU-first stage, industry-neutral, then validate. Use when asked to rewrite or extend a service.
+description: Update one of the four RailTech service pages (supply, engineering for customers; representation, localization for partners) in src/content/services — lead, highlights, steps, benefits, requirements, FAQ and SEO — in Russian, Uzbek and English, industry-neutral, then validate. Use when asked to rewrite or extend a service.
 ---
 
 # Обновить услугу
@@ -19,7 +19,8 @@ description: Update one of the four RailTech service pages (supply, engineering 
    если они уже есть в другом поле (STYLE_GUIDE §1).
 4. **Факты.** Сроки, условия, документы пишутся только подтверждённые (бриф, `company.json`, опубликованные факты).
 5. **Ссылки.** 1–3 ссылки маршрутами на проекты или статьи в `/news/…`, которые подтверждают услугу.
-6. **RU-first.** Пока `src/data/content-stage.json → ruOnly: true`, правь только русские поля. Существующие `_uz`/`_en`
-   не удаляй и не дописывай.
+6. **Три языка.** Услуги переведены (`src/data/content-stage.json → ruOnly: false`). Каждое новое или изменённое поле
+   правь в том же изменении на RU, UZ (латиница) и EN: `<поле>_uz`/`<поле>_en`, тело `body_uz`/`body_en`, у списков
+   (`highlights`, `steps`, `faq` и др.) у каждого элемента, по GLOSSARY.md и STYLE_GUIDE §6. Пропуск — ошибка `check-content`.
 7. **Проверка.** `node scripts/check-content.mjs --files src/content/services/<slug>.md`, затем `make check`.
    Дальше `content-qa` → `content-pr`.

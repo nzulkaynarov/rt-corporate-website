@@ -1,27 +1,61 @@
 {
   "services": {
     "eyebrow": "Услуги",
+    "eyebrow_uz": "Xizmatlar",
+    "eyebrow_en": "Services",
     "title": "Что RailTech делает для заказчиков и партнёров",
+    "title_uz": "RailTech buyurtmachilar va hamkorlar uchun nima qiladi",
+    "title_en": "What RailTech does for customers and partners",
     "lead": "Поставляем оборудование и услуги предприятиям Узбекистана и помогаем международным производителям работать на рынке страны. Каждая сделка ведётся в Кабинете — от заявки до акта.",
+    "lead_uz": "O'zbekiston korxonalariga uskunalar va xizmatlar yetkazib beramiz hamda xalqaro ishlab chiqaruvchilarga mamlakat bozorida ishlashda yordam beramiz. Har bir bitim Kabinetda olib boriladi — arizadan dalolatnomagacha.",
+    "lead_en": "We supply equipment and services to enterprises in Uzbekistan and help international manufacturers do business in the country. Every deal is managed in the Cabinet — from request to acceptance act.",
     "customersTitle": "Заказчикам",
+    "customersTitle_uz": "Buyurtmachilarga",
+    "customersTitle_en": "For customers",
     "customersText": "Предприятиям и организациям Узбекистана, которым нужно оборудование, комплектующие и инженерная поддержка.",
+    "customersText_uz": "Uskunalar, butlovchi qismlar va muhandislik yordamiga ehtiyoji bor O'zbekiston korxonalari va tashkilotlariga.",
+    "customersText_en": "Enterprises and organizations in Uzbekistan that need equipment, components and engineering support.",
     "partnersTitle": "Партнёрам",
-    "partnersText": "Международным производителям и поставщикам, которые хотят работать в Узбекистане без собственного офиса."
+    "partnersTitle_uz": "Hamkorlarga",
+    "partnersTitle_en": "For partners",
+    "partnersText": "Международным производителям и поставщикам, которые хотят работать в Узбекистане без собственного офиса.",
+    "partnersText_uz": "O'z ofisini ochmasdan O'zbekistonda ishlashni istagan xalqaro ishlab chiqaruvchilar va yetkazib beruvchilarga.",
+    "partnersText_en": "International manufacturers and suppliers who want to do business in Uzbekistan without their own office."
   },
   "news": {
     "eyebrow": "Новости",
+    "eyebrow_uz": "Yangiliklar",
+    "eyebrow_en": "News",
     "title": "Новости, статьи и проекты RailTech",
-    "lead": "События компании, проекты с партнёрами и материалы о производителях, с которыми мы работаем."
+    "title_uz": "RailTech yangiliklari, maqolalari va loyihalari",
+    "title_en": "RailTech news, articles and projects",
+    "lead": "События компании, проекты с партнёрами и материалы о производителях, с которыми мы работаем.",
+    "lead_uz": "Kompaniya voqealari, hamkorlar bilan loyihalar va biz ishlaydigan ishlab chiqaruvchilar haqidagi materiallar.",
+    "lead_en": "Company events, projects with partners and articles about the manufacturers we work with."
   },
   "contacts": {
     "eyebrow": "Контакты",
+    "eyebrow_uz": "Kontaktlar",
+    "eyebrow_en": "Contacts",
     "title": "Контакты и реквизиты",
+    "title_uz": "Kontaktlar va rekvizitlar",
+    "title_en": "Contacts and company details",
     "lead": "Напишите, позвоните или отправьте заявку. Клиенты и партнёры работают с нами в Кабинете.",
+    "lead_uz": "Yozing, qo'ng'iroq qiling yoki ariza yuboring. Mijozlar va hamkorlar biz bilan Kabinetda ishlaydi.",
+    "lead_en": "Email us, call or send a request. Clients and partners work with us in the Cabinet.",
     "formTitle": "Отправить заявку",
-    "formText": "Менеджер свяжется с вами и пришлёт приглашение в Кабинет."
+    "formTitle_uz": "Ariza yuborish",
+    "formTitle_en": "Send request",
+    "formText": "Менеджер свяжется с вами и пришлёт приглашение в Кабинет.",
+    "formText_uz": "Menejer siz bilan bog'lanadi va Kabinetga taklifnoma yuboradi.",
+    "formText_en": "A manager will contact you and send you an invitation to the Cabinet."
   },
   "notFound": {
     "title": "Страница не найдена",
-    "text": "Возможно, ссылка устарела: сайт обновился в ноябре 2026 года. Начните с главной или напишите нам."
+    "title_uz": "Sahifa topilmadi",
+    "title_en": "Page not found",
+    "text": "Возможно, ссылка устарела: сайт обновился в ноябре 2026 года. Начните с главной или напишите нам.",
+    "text_uz": "Ehtimol, havola eskirgan: sayt 2026-yil noyabrida yangilandi. Bosh sahifadan boshlang yoki bizga yozing.",
+    "text_en": "The link may be outdated: the site was updated in November 2026. Start from the home page or contact us."
   }
 }

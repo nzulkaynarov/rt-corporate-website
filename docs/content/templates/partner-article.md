@@ -2,7 +2,8 @@
 # Шаблон статьи о партнёре: на неё ведёт плитка партнёра на главной.
 # Копия → src/content/news/partner-<id>.md. Сначала добавьте строку в src/data/cms/partners.json
 # (поле article = имя этого файла без .md). Скил add-partner.
-# Этап RU-first: только русские поля, без _uz / _en / body_uz / body_en.
+# Статья лежит в news: пока news в ruOnlySections, только русские поля, без _uz / _en / body_uz / body_en.
+# Плитка в partners.json — сразу на трёх языках (name_uz/_en, country_uz/_en).
 
 type: "partner"
 date: "YYYY-MM-DD"

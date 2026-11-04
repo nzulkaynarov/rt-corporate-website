@@ -27,7 +27,7 @@
   "bank": {
     "name": "АИКБ «IPAK YO'LI BANK», Мирзо-Улугбекский филиал",
     "name_uz": "«IPAK YO'LI BANK», Mirzo Ulug'bek filiali",
-    "name_en": "IPAK YO'LI BANK, Mirzo-Ulugbek branch",
+    "name_en": "IPAK YO'LI BANK, Mirzo Ulugbek branch",
     "mfo": "00421",
     "account": "20208000205374302001"
   },
@@ -38,9 +38,29 @@
   },
   "leadEndpoint": "https://crm.railtech.uz/api/v1/leads/web",
   "metrics": [
-    { "value": "5+", "label": "лет работаем на рынке Узбекистана", "label_uz": "", "label_en": "" },
-    { "value": "30+", "label": "компаний, с которыми уже поработали", "label_uz": "", "label_en": "" },
-    { "value": "10+", "label": "производителей, с которыми есть опыт работы", "label_uz": "", "label_en": "" },
-    { "value": "250+", "label": "позиций оборудования в опыте поставок", "label_uz": "", "label_en": "" }
+    {
+      "value": "5+",
+      "label": "лет работаем на рынке Узбекистана",
+      "label_uz": "yil O'zbekiston bozorida ishlab kelmoqdamiz",
+      "label_en": "years in the Uzbek market"
+    },
+    {
+      "value": "30+",
+      "label": "компаний, с которыми уже поработали",
+      "label_uz": "kompaniya bilan ishlaganmiz",
+      "label_en": "companies we have worked with"
+    },
+    {
+      "value": "10+",
+      "label": "производителей, с которыми есть опыт работы",
+      "label_uz": "ishlab chiqaruvchi bilan ishlash tajribamiz bor",
+      "label_en": "manufacturers we have experience working with"
+    },
+    {
+      "value": "250+",
+      "label": "позиций оборудования в опыте поставок",
+      "label_uz": "nomdagi uskunani yetkazib berganmiz",
+      "label_en": "equipment items in our supply track record"
+    }
   ]
 }

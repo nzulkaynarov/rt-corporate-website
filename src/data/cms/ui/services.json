@@ -4,68 +4,68 @@
     {
       "key": "services.audience.customers",
       "ru": "Заказчикам",
-      "uz": "",
-      "en": ""
+      "uz": "Buyurtmachilarga",
+      "en": "For customers"
     },
     {
       "key": "services.audience.partners",
       "ru": "Партнёрам",
-      "uz": "",
-      "en": ""
+      "uz": "Hamkorlarga",
+      "en": "For partners"
     },
     {
       "key": "services.highlights",
       "ru": "Коротко",
-      "uz": "",
-      "en": ""
+      "uz": "Qisqacha",
+      "en": "At a glance"
     },
     {
       "key": "services.steps",
       "ru": "Как работаем",
-      "uz": "",
-      "en": ""
+      "uz": "Qanday ishlaymiz",
+      "en": "How we work"
     },
     {
       "key": "services.benefits.customers",
       "ru": "Что вы получаете",
-      "uz": "",
-      "en": ""
+      "uz": "Siz uchun foydasi",
+      "en": "What you get"
     },
     {
       "key": "services.benefits.partners",
       "ru": "Что получает партнёр",
-      "uz": "",
-      "en": ""
+      "uz": "Hamkor uchun foydasi",
+      "en": "What the partner gets"
     },
     {
       "key": "services.requirements",
       "ru": "Что нужно от партнёра",
-      "uz": "",
-      "en": ""
+      "uz": "Hamkordan nima talab qilinadi",
+      "en": "What we need from the partner"
     },
     {
       "key": "services.faq",
       "ru": "Частые вопросы",
-      "uz": "",
-      "en": ""
+      "uz": "Ko'p beriladigan savollar",
+      "en": "Frequently asked questions"
     },
     {
       "key": "services.other",
       "ru": "Другие услуги",
-      "uz": "",
-      "en": ""
+      "uz": "Boshqa xizmatlar",
+      "en": "Other services"
     },
     {
       "key": "services.cta.title",
       "ru": "Готовы обсудить задачу?",
-      "uz": "",
-      "en": ""
+      "uz": "Vazifangizni muhokama qilishga tayyormisiz?",
+      "en": "Ready to discuss your needs?"
     },
     {
       "key": "services.cta.text",
       "ru": "Опишите задачу — менеджер свяжется с вами и пришлёт приглашение в Кабинет.",
-      "uz": "",
-      "en": ""
+      "uz": "Vazifani tasvirlab bering — menejer siz bilan bog'lanadi va Kabinetga taklifnoma yuboradi.",
+      "en": "Tell us what you need, and a manager will contact you and send you an invitation to the Cabinet."
     }
   ]
 }

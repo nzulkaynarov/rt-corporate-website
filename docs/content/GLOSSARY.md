@@ -1,8 +1,9 @@
 # Глоссарий RU / UZ / EN
 
-Обязательная терминология сайта. На этапе RU-first (`src/data/content-stage.json → ruOnly: true`) глоссарий нужен,
-чтобы русские тексты называли одно и то же одинаково. Переводы UZ/EN из таблиц используются в проходе перевода
-после одобрения RU. Если термина нет, посмотрите, как он уже употреблён на сайте (`grep -ri "<термин>" src/content src/data`),
+Обязательная терминология сайта. Глоссарий нужен, чтобы тексты на всех языках называли одно и то же одинаково.
+Переводы UZ/EN из таблиц обязательны для любого нового или изменённого текста вне новостей (он пишется сразу на трёх
+языках) и для прохода перевода; новости пока только на русском (`src/data/content-stage.json → ruOnlySections`).
+Если термина нет, посмотрите, как он уже употреблён на сайте (`grep -ri "<термин>" src/content src/data`),
 и добавьте строку в том же PR.
 
 - Узбекский пишется **латиницей**, апостроф обычный `'` (U+0027): `o'`, `g'`, `ma'lumot`. Не используйте `ʻ ’ ‘` и кириллицу в `_uz`.
@@ -16,7 +17,7 @@
 | RU | UZ | EN | Запрещено (UZ/EN) | Примечание |
 |---|---|---|---|---|
 | ООО «RailTech» | «RailTech» MChJ | RailTech LLC | `OOO RailTech` | Бренд всегда `RailTech`, без перевода |
-| Кабинет клиента и партнёра | mijoz va hamkor kabineti | client & partner cabinet | — | cabinet.railtech.uz; в тексте можно просто «Кабинет» / kabinet / Cabinet |
+| Кабинет клиента и партнёра | mijoz va hamkor Kabineti | Client & Partner Cabinet | — | cabinet.railtech.uz; название продукта, всегда с заглавной: «Кабинет» / Kabinet (Kabinetda, Kabinetga, RailTech Kabineti, hamkor Kabineti) / Cabinet (RailTech Cabinet, partner Cabinet) |
 | Войти в Кабинет | Kabinetga kirish | Sign in to the Cabinet | — | Подпись кнопки; проверить |
 | Начать работу | Ishni boshlash | Get started | — | Подпись кнопки, ведёт к форме заявки; проверить |
 | Заявка | ariza | request | — | Форма на сайте → CRM |
@@ -89,6 +90,43 @@
 | ООО «НПО САУТ» | «НПО САУТ» MChJ | NPO SAUT LLC | — | В UZ допустимо кириллическое название в «ёлочках» |
 | АО «Узбекистон темир йуллари» (УТЙ) | «O'zbekiston temir yo'llari» AJ | JSC Uzbekistan Railways | — | |
 | Ташкентский государственный транспортный университет (ТГТУ) | Toshkent davlat transport universiteti (TDTU) | Tashkent State Transport University (TSTU) | — | |
+
+## Переводческий проход 2026-11-04 (на проверку носителю)
+
+Термины, которые переводчики применили при первом переводе сайта. Пока носитель языка их не подтвердил, используем их
+единообразно; после проверки строку переносим в нужный раздел и убираем пометку.
+
+| RU | UZ | EN | Запрещено (UZ/EN) | Примечание |
+|---|---|---|---|---|
+| сделка | bitim | deal | — | на проверку носителю |
+| комплектующие | butlovchi qismlar | components | — | на проверку носителю |
+| реквизиты | rekvizitlar | company details | — | на проверку носителю |
+| приглашение в Кабинет | Kabinetga taklifnoma | invitation to the Cabinet | — | на проверку носителю |
+| счёт (документ) | hisob | invoice | — | на проверку носителю |
+| персональные данные | shaxsga doir ma'lumotlar | personal data | — | на проверку носителю |
+| позиции заявки | pozitsiyalar | line items | — | на проверку носителю |
+| дилерское / партнёрское соглашение | diler / hamkorlik shartnomasi | dealer / partnership agreement | — | на проверку носителю |
+| совместное предприятие (СП) | qo'shma korxona (QK) | joint venture (JV) | — | на проверку носителю |
+| специальная экономическая зона (СЭЗ) | maxsus iqtisodiy zona (MIZ) | special economic zone (SEZ) | — | на проверку носителю |
+| подтверждение местного происхождения | mahalliy kelib chiqishni tasdiqlash | confirmation of local origin | — | на проверку носителю |
+| декларация о соответствии | muvofiqlik deklaratsiyasi | declaration of conformity | — | на проверку носителю |
+| пилотный проект / опытная эксплуатация | pilot loyiha / tajriba-sinov ekspluatatsiyasi | pilot project / trial operation | — | на проверку носителю |
+| техническое задание | texnik topshiriq | terms of reference | — | на проверку носителю |
+| обозначение изделия | belgilanish | part designation | — | на проверку носителю |
+| шильдик | zavod yorlig'i (shildik) | nameplate | — | на проверку носителю |
+| контрактное производство | kontrakt asosida ishlab chiqarish | contract manufacturing | — | на проверку носителю |
+| протоколы испытаний | sinov bayonnomalari | test reports | — | на проверку носителю |
+| промышленная кооперация | sanoat kooperatsiyasi | industrial cooperation | — | на проверку носителю |
+| ЭЦП (электронная цифровая подпись) | ERI (elektron raqamli imzo) | EDS (electronic digital signature) | — | на проверку носителю |
+| хранилище браузера | brauzer xotirasi | browser storage | — | на проверку носителю |
+| расчётный счёт | hisob-kitob raqami | bank account | — | на проверку носителю |
+| МФО банка | MFO | bank code (MFO) | — | на проверку носителю |
+| Исполнение (стадия сделки) | Ijro | Fulfillment | — | Стадия после договора: оплата, поставка, акт. Не путать с «исполнением изделия»; на проверку носителю |
+| исполнение изделия (вариант, модификация) | mahsulot modifikatsiyasi | product version | `mahsulot ijrosi` | на проверку носителю |
+| пошлины | boj to'lovlari | duties | `bojlar` | на проверку носителю |
+| одно окно (интерфейс Кабинета: всё на одном экране) | bitta oyna | one workspace | — | Метафора интерфейса: «Вся сделка — в одном окне», «1 окно»; на проверку носителю |
+| одно окно (единая точка обращения) | yagona darcha | one-stop shop | — | «Одно окно для технических вопросов», Кабинет как одно окно для клиента и партнёра; на проверку носителю |
+| ООО «РАТЕП-ИННОВАЦИЯ» | «RATEP-INNOVATSIYA» MChJ | RATEP-INNOVATSIYA LLC | — | В UZ латиницей; на проверку носителю |
 
 ## Единицы и обозначения
 

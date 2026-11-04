@@ -4,128 +4,128 @@
     {
       "key": "common.more",
       "ru": "Подробнее",
-      "uz": "",
-      "en": ""
+      "uz": "Batafsil",
+      "en": "Learn more"
     },
     {
       "key": "common.allNews",
       "ru": "Все материалы",
-      "uz": "",
-      "en": ""
+      "uz": "Barcha materiallar",
+      "en": "All posts"
     },
     {
       "key": "partner.status.dealer",
       "ru": "Официальный дилер",
-      "uz": "",
-      "en": ""
+      "uz": "Rasmiy diler",
+      "en": "Official dealer"
     },
     {
       "key": "partner.status.direct",
       "ru": "Прямые поставки",
-      "uz": "",
-      "en": ""
+      "uz": "To'g'ridan-to'g'ri yetkazib berish",
+      "en": "Direct supply"
     },
     {
       "key": "partner.tilesAria",
       "ru": "Производители, с которыми работает RailTech",
-      "uz": "",
-      "en": ""
+      "uz": "RailTech hamkorlik qiladigan ishlab chiqaruvchilar",
+      "en": "Manufacturers RailTech works with"
     },
     {
       "key": "home.hero.orbitPause",
       "ru": "Остановить анимацию",
-      "uz": "",
-      "en": ""
+      "uz": "Animatsiyani to'xtatish",
+      "en": "Pause animation"
     },
     {
       "key": "home.hero.orbitPlay",
       "ru": "Запустить анимацию",
-      "uz": "",
-      "en": ""
+      "uz": "Animatsiyani ishga tushirish",
+      "en": "Play animation"
     },
     {
       "key": "home.bridge.more",
       "ru": "Что теряет каждая сторона",
-      "uz": "",
-      "en": ""
+      "uz": "Har bir tomon nimani yo'qotadi",
+      "en": "What each side loses"
     },
     {
       "key": "home.bridge.customer",
       "ru": "Заказчик",
-      "uz": "",
-      "en": ""
+      "uz": "Buyurtmachi",
+      "en": "Customer"
     },
     {
       "key": "home.bridge.partner",
       "ru": "Партнёр",
-      "uz": "",
-      "en": ""
+      "uz": "Hamkor",
+      "en": "Partner"
     },
     {
       "key": "home.directions.customers",
       "ru": "Заказчикам",
-      "uz": "",
-      "en": ""
+      "uz": "Buyurtmachilarga",
+      "en": "For customers"
     },
     {
       "key": "home.directions.partners",
       "ru": "Партнёрам",
-      "uz": "",
-      "en": ""
+      "uz": "Hamkorlarga",
+      "en": "For partners"
     },
     {
       "key": "home.about.office",
       "ru": "Офис",
-      "uz": "",
-      "en": ""
+      "uz": "Ofis",
+      "en": "Office"
     },
     {
       "key": "home.about.inn",
       "ru": "ИНН",
-      "uz": "",
-      "en": ""
+      "uz": "STIR",
+      "en": "TIN"
     },
     {
       "key": "home.about.requisites",
       "ru": "Реквизиты",
-      "uz": "",
-      "en": ""
+      "uz": "Rekvizitlar",
+      "en": "Company details"
     },
     {
       "key": "home.cabinet.demoAria",
       "ru": "Пример сделки в Кабинете по стадиям",
-      "uz": "",
-      "en": ""
+      "uz": "Kabinetdagi bitimning bosqichma-bosqich namunasi",
+      "en": "Sample deal in the Cabinet, stage by stage"
     },
     {
       "key": "home.invite.telegram",
       "ru": "Telegram",
-      "uz": "",
-      "en": ""
+      "uz": "Telegram",
+      "en": "Telegram"
     },
     {
       "key": "home.invite.phone",
       "ru": "Телефон",
-      "uz": "",
-      "en": ""
+      "uz": "Telefon",
+      "en": "Phone"
     },
     {
       "key": "home.invite.email",
       "ru": "E-mail",
-      "uz": "",
-      "en": ""
+      "uz": "E-mail",
+      "en": "Email"
     },
     {
       "key": "home.invite.office",
       "ru": "Офис",
-      "uz": "",
-      "en": ""
+      "uz": "Ofis",
+      "en": "Office"
     },
     {
       "key": "home.invite.telegramLink",
       "ru": "Написать в Telegram",
-      "uz": "",
-      "en": ""
+      "uz": "Telegram orqali yozish",
+      "en": "Message us on Telegram"
     }
   ]
 }

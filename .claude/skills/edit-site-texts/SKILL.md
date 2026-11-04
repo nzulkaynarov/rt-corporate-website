@@ -1,6 +1,6 @@
 ---
 name: edit-site-texts
-description: Change RailTech site texts stored in src/data/cms/*.json (company, home, pages, partners, legal, seo) and interface labels in src/data/cms/ui/*.json — Russian only during the RU-first stage, industry-neutral, keeping keys and the CMS schema intact. Use for edits to home page blocks, section intros, contacts, legal pages, buttons, labels or page meta tags.
+description: Change RailTech site texts stored in src/data/cms/*.json (company, home, pages, partners, legal, seo) and interface labels in src/data/cms/ui/*.json — in Russian, Uzbek and English, industry-neutral, keeping keys and the CMS schema intact. Use for edits to home page blocks, section intros, contacts, legal pages, buttons, labels or page meta tags.
 ---
 
 # Изменить тексты страниц, подписи или SEO
@@ -20,8 +20,9 @@ description: Change RailTech site texts stored in src/data/cms/*.json (company, 
 Правила:
 1. Меняй только значения. **Не переименовывай и не удаляй** ключи и поля: код ссылается на них.
    Новое поле добавляется через ARCHITECTURE.md, `public/admin/config.yml` и код. Это задача разработки, не текстов.
-2. **RU-first:** пока `src/data/content-stage.json → ruOnly: true`, правь только русские значения (`field`, `ru`).
-   `_uz`/`_en` и `uz`/`en` не заполняй и существующие не удаляй.
+2. **Три языка:** RU одобрен (`src/data/content-stage.json → ruOnly: false`). Каждое новое или изменённое значение
+   правь в том же изменении на RU, UZ (латиница) и EN: `field` + `field_uz`/`field_en`, в `ui/*.json` — `ru`, `uz`, `en`,
+   по GLOSSARY.md. Пропущенный перевод `check-content` считает ошибкой.
 3. **Позиционирование:** без отрасли, «ж/д», серий техники. `check-content` (правило `positioning`) это ловит.
    Каталога и цен на сайте нет. Подписи действий одни и те же: «Начать работу», «Отправить заявку», «Войти в Кабинет».
 4. Одно обещание живёт в одном месте (STYLE_GUIDE §1). Нет псевдотерминальных подписей и КАПСА ради декора.

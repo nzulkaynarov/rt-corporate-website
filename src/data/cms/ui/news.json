@@ -4,122 +4,122 @@
     {
       "key": "news.type.all",
       "ru": "Все",
-      "uz": "",
-      "en": ""
+      "uz": "Hammasi",
+      "en": "All"
     },
     {
       "key": "news.type.news",
       "ru": "Новости",
-      "uz": "",
-      "en": ""
+      "uz": "Yangiliklar",
+      "en": "News"
     },
     {
       "key": "news.type.article",
       "ru": "Статьи",
-      "uz": "",
-      "en": ""
+      "uz": "Maqolalar",
+      "en": "Articles"
     },
     {
       "key": "news.type.project",
       "ru": "Проекты",
-      "uz": "",
-      "en": ""
+      "uz": "Loyihalar",
+      "en": "Projects"
     },
     {
       "key": "news.type.partner",
       "ru": "Партнёры",
-      "uz": "",
-      "en": ""
+      "uz": "Hamkorlar",
+      "en": "Partners"
     },
     {
       "key": "news.filterAria",
       "ru": "Тип материала",
-      "uz": "",
-      "en": ""
+      "uz": "Material turi",
+      "en": "Content type"
     },
     {
       "key": "news.back",
       "ru": "Все материалы",
-      "uz": "",
-      "en": ""
+      "uz": "Barcha materiallar",
+      "en": "All posts"
     },
     {
       "key": "news.partnerMaterials",
       "ru": "Материалы о партнёре",
-      "uz": "",
-      "en": ""
+      "uz": "Hamkor haqidagi materiallar",
+      "en": "Posts about this partner"
     },
     {
       "key": "news.partnerStatus",
       "ru": "Статус RailTech",
-      "uz": "",
-      "en": ""
+      "uz": "RailTech maqomi",
+      "en": "RailTech status"
     },
     {
       "key": "news.empty",
       "ru": "В этом разделе пока нет материалов.",
-      "uz": "",
-      "en": ""
+      "uz": "Bu bo'limda hozircha materiallar yo'q.",
+      "en": "There are no posts in this section yet."
     },
     {
       "key": "news.related",
       "ru": "Ещё материалы",
-      "uz": "",
-      "en": ""
+      "uz": "Boshqa materiallar",
+      "en": "More posts"
     },
     {
       "key": "news.partnerCountry",
       "ru": "Страна",
-      "uz": "",
-      "en": ""
+      "uz": "Mamlakat",
+      "en": "Country"
     },
     {
       "key": "news.gallery.title",
       "ru": "Фотографии",
-      "uz": "",
-      "en": ""
+      "uz": "Fotosuratlar",
+      "en": "Photos"
     },
     {
       "key": "news.gallery.open",
       "ru": "Открыть фото {n} из {total}",
-      "uz": "",
-      "en": ""
+      "uz": "Fotosuratni ochish: {n} / {total}",
+      "en": "Open photo {n} of {total}"
     },
     {
       "key": "news.gallery.close",
       "ru": "Закрыть",
-      "uz": "",
-      "en": ""
+      "uz": "Yopish",
+      "en": "Close"
     },
     {
       "key": "news.gallery.prev",
       "ru": "Предыдущее фото",
-      "uz": "",
-      "en": ""
+      "uz": "Oldingi fotosurat",
+      "en": "Previous photo"
     },
     {
       "key": "news.gallery.next",
       "ru": "Следующее фото",
-      "uz": "",
-      "en": ""
+      "uz": "Keyingi fotosurat",
+      "en": "Next photo"
     },
     {
       "key": "news.gallery.counter",
       "ru": "{n} из {total}",
-      "uz": "",
-      "en": ""
+      "uz": "{n} / {total}",
+      "en": "{n} of {total}"
     },
     {
       "key": "prose.footnotes",
       "ru": "Сноски",
-      "uz": "",
-      "en": ""
+      "uz": "Izohlar",
+      "en": "Footnotes"
     },
     {
       "key": "prose.footnoteBack",
       "ru": "Вернуться к тексту, сноска {n}",
-      "uz": "",
-      "en": ""
+      "uz": "Matnga qaytish, {n}-izoh",
+      "en": "Back to text, footnote {n}"
     }
   ]
 }
