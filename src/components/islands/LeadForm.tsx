@@ -111,7 +111,7 @@ export default function LeadForm(props: Props) {
     <ul className="lf__alt">
       {telegramUrl && (
         <li>
-          <a href={telegramUrl} rel="noopener">Telegram</a>
+          <a href={telegramUrl} rel="noopener">{tr('form.alt.telegram')}</a>
         </li>
       )}
       {phone && (

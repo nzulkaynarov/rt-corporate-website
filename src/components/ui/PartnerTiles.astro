@@ -32,7 +32,7 @@ const partners = [...partnersData.partners]
   {partners.map((p) => (
     <li>
       {p.href ? (
-        <a class:list={['tile', { 'tile--dealer': p.statusKey === 'dealer' }]} href={p.href}>
+        <a class:list={['tile', 'lift', { 'tile--dealer': p.statusKey === 'dealer' }]} href={p.href}>
           <b>{p.label}</b>
           <span class="tile__country">{p.country}</span>
           <span class="tile__status">{p.status}</span>
@@ -55,7 +55,7 @@ const partners = [...partnersData.partners]
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 14px;
   }
   .tile {

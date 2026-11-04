@@ -32,13 +32,39 @@
   --r-lg: 10px;
   --r-pill: 999px;
 
+  /* Fluid scale: one value per role, grows smoothly from phone (≈390 px) to large monitors (≥1920 px, the cap).
+     Laptop ≈1440 px: 49 / 42 / 34 / 18.5. Montserrat 800 is wide and heavy, so headings stay moderate. */
+  --fs-hero: clamp(30px, 16px + 2.3vw, 60px);
+  --fs-h1: clamp(28px, 15px + 1.9vw, 48px);
+  --fs-h2: clamp(24px, 14px + 1.4vw, 40px);
+  --fs-lead: clamp(16px, 13.5px + 0.35vw, 20px);
+  --section-y: clamp(48px, 28px + 4vw, 112px);
+
   --wrap: 1240px;
-  --gutter: 40px;
+  --gutter: clamp(16px, 4vw, 56px);
+  --hdr-h: 76px;
   --shadow-lift: 0 14px 30px -20px rgba(45, 62, 80, 0.45);
+
+  /* Motion: short, soft, one easing for the whole site. Off under prefers-reduced-motion (global.css). */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.18s;
+  --dur: 0.32s;
+  --dur-reveal: 0.7s;
 }
 
+/* Large monitors: wider content column instead of a narrow strip in the middle. */
+@media (min-width: 1680px) {
+  :root {
+    --wrap: 1400px;
+  }
+}
+@media (min-width: 2200px) {
+  :root {
+    --wrap: 1560px;
+  }
+}
 @media (max-width: 760px) {
   :root {
-    --gutter: 16px;
+    --hdr-h: 64px;
   }
 }

@@ -97,7 +97,7 @@ describe('no text in code', () => {
         if (d.isDirectory()) walk(p);
         else if (/\.(astro|tsx?)$/.test(d.name)) files.push(p);
       });
-    ['src/components', 'src/pages', 'src/layouts', 'src/utils'].forEach(walk);
+    ['src/components', 'src/pages', 'src/layouts', 'src/utils', 'src/i18n', 'src/scripts'].forEach(walk);
     const offenders = files.filter((f) => {
       const code = fs
         .readFileSync(f, 'utf8')

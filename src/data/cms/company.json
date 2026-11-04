@@ -1,5 +1,8 @@
 {
   "brandName": "RailTech",
+  "logo": "/brand/rt-mark.svg",
+  "logoPlaceholder": "/brand/rt-mark-outline.svg",
+  "siteDomain": "railtech.uz",
   "companyName": "ООО «RailTech»",
   "companyName_uz": "«RailTech» MChJ",
   "companyName_en": "RailTech LLC",

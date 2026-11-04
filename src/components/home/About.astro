@@ -46,7 +46,7 @@ const a = home.about as Record<string, string>;
     gap: 18px;
   }
   h2 {
-    font-size: 40px;
+    font-size: var(--fs-h2);
     font-weight: 700;
   }
   .about__facts {
@@ -92,9 +92,6 @@ const a = home.about as Record<string, string>;
     }
   }
   @media (max-width: 760px) {
-    h2 {
-      font-size: 28px;
-    }
     .about__txt {
       gap: 12px;
     }

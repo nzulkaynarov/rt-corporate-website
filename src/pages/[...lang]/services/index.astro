@@ -39,7 +39,7 @@ const crumbs = [{ name: t(lang, 'nav.services'), path: '/services/' }];
         </div>
         <div class="grp__cards">
           {g.items.map((s) => (
-            <a class="scard" href={localeHref(`/services/${s.slug}/`, lang)}>
+            <a class="scard lift" href={localeHref(`/services/${s.slug}/`, lang)}>
               <b>{tField(s.data, 'title', lang)}</b>
               <span>{tField(s.data, 'summary', lang)}</span>
               <i>{t(lang, 'common.more')} →</i>
@@ -68,7 +68,7 @@ const crumbs = [{ name: t(lang, 'nav.services'), path: '/services/' }];
     gap: 12px;
   }
   h2 {
-    font-size: 36px;
+    font-size: var(--fs-h2);
     font-weight: 700;
   }
   .grp__cards {
@@ -113,9 +113,6 @@ const crumbs = [{ name: t(lang, 'nav.services'), path: '/services/' }];
     }
   }
   @media (max-width: 760px) {
-    h2 {
-      font-size: 26px;
-    }
     .grp__cards {
       grid-template-columns: minmax(0, 1fr);
       gap: 12px;

@@ -71,7 +71,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" v
   <rect x="72" y="${262 + title.length * 64 - 30}" width="64" height="4" fill="${C.accent}"/>
   <text x="72" y="${262 + title.length * 64 + 16}" font-family="${font}" font-size="20" font-weight="600" fill="${C.muted}">${esc(services.join(' · '))}</text>
 
-  <text x="72" y="580" font-family="${font}" font-size="20" font-weight="600" fill="${C.muted}">railtech.uz · ${esc(company.city)} · ${esc(company.phone)}</text>
+  <text x="72" y="580" font-family="${font}" font-size="20" font-weight="600" fill="${C.muted}">${esc(company.siteDomain)} · ${esc(company.city)} · ${esc(company.phone)}</text>
 </svg>`;
 
 await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toFile(path.join(root, 'public', 'og-cover.png'));

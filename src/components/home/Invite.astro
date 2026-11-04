@@ -41,7 +41,7 @@ const tg = telegramUrl();
     gap: 20px;
   }
   h2 {
-    font-size: 44px;
+    font-size: var(--fs-h2);
     font-weight: 800;
   }
   .contacts {
@@ -71,9 +71,6 @@ const tg = telegramUrl();
     }
   }
   @media (max-width: 760px) {
-    h2 {
-      font-size: 28px;
-    }
     .invite__txt {
       gap: 12px;
     }

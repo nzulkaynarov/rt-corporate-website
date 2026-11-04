@@ -307,6 +307,15 @@ collections:
     - label: Бренд
       name: brandName
       widget: string
+    - label: Логотип (знак, SVG или PNG — шапка, футер, первый экран, поисковики)
+      name: logo
+      widget: image
+    - label: Заглушка фото (материал без обложки)
+      name: logoPlaceholder
+      widget: image
+    - label: Домен сайта (подпись на картинке для соцсетей)
+      name: siteDomain
+      widget: string
     - label: Краткое наименование [RU]
       name: companyName
       widget: string
@@ -803,9 +812,17 @@ collections:
         widget: list
         required: false
         fields:
-        - label: Значение
+        - label: Значение [RU]
           name: value
           widget: string
+        - label: Значение [UZ]
+          name: value_uz
+          widget: string
+          required: false
+        - label: Значение [EN]
+          name: value_en
+          widget: string
+          required: false
         - label: Подпись [RU]
           name: label
           widget: string

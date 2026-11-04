@@ -36,7 +36,7 @@ const crumbs = [
 ];
 const pageUrl = absoluteUrl(localeHref(`/services/${entry.slug}/`, lang), Astro.site);
 const jsonLd: Record<string, unknown>[] = [
-  { '@type': 'Service', name: title, description: seo.description, url: pageUrl, areaServed: 'UZ', provider: { '@id': `${absoluteUrl('/', Astro.site)}#organization` } },
+  { '@type': 'Service', name: title, serviceType: title, description: seo.description, url: pageUrl, areaServed: 'UZ', provider: { '@id': `${absoluteUrl('/', Astro.site)}#organization` } },
 ];
 if (faq.length) {
   jsonLd.push({ '@type': 'FAQPage', mainEntity: faq.map((f: { q: string; a: string }) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
@@ -142,11 +142,11 @@ const benefitsKey = d.audience === 'partners' ? 'services.benefits.partners' : '
     gap: 22px;
   }
   h1 {
-    font-size: 52px;
+    font-size: var(--fs-h1);
     font-weight: 800;
   }
   .hero__lead {
-    font-size: 19px;
+    font-size: var(--fs-lead);
     color: var(--c-muted);
     max-width: 660px;
   }
@@ -274,12 +274,6 @@ const benefitsKey = d.audience === 'partners' ? 'services.benefits.partners' : '
   @media (max-width: 760px) {
     .hero {
       padding-block: 20px 44px;
-    }
-    h1 {
-      font-size: 34px;
-    }
-    .hero__lead {
-      font-size: 17px;
     }
     .flow {
       grid-template-columns: minmax(0, 1fr);

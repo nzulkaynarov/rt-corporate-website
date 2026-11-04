@@ -9,7 +9,7 @@ import { expandLangs, localeHref, tField } from '../../../i18n';
 import { t } from '../../../i18n/ui';
 import { formatDate } from '../../../utils/format';
 import { renderBody } from '../../../utils/markdown';
-import { entrySeo, absoluteUrl } from '../../../utils/seo';
+import { entrySeo, absoluteUrl, siteSeo } from '../../../utils/seo';
 import { withBase } from '../../../utils/url';
 
 export async function getStaticPaths() {
@@ -44,9 +44,11 @@ const jsonLd = {
   headline: title,
   description: seo.description,
   datePublished: d.date,
+  dateModified: d.date,
   inLanguage: lang,
   url,
-  ...(d.cover ? { image: absoluteUrl(withBase(d.cover), Astro.site) } : {}),
+  // Google requires an image for Article rich results: the cover, otherwise the site's social preview.
+  image: absoluteUrl(withBase(d.cover || siteSeo(lang).defaultImage), Astro.site),
   author: { '@id': `${absoluteUrl('/', Astro.site)}#organization` },
   publisher: { '@id': `${absoluteUrl('/', Astro.site)}#organization` },
 };
@@ -108,11 +110,11 @@ const jsonLd = {
     font-weight: 600;
   }
   h1 {
-    font-size: 46px;
+    font-size: var(--fs-h1);
     font-weight: 800;
   }
   .art__summary {
-    font-size: 19px;
+    font-size: var(--fs-lead);
     color: var(--c-muted);
   }
   .art__partner {
@@ -168,12 +170,6 @@ const jsonLd = {
   @media (max-width: 760px) {
     .art {
       padding-block: 20px 48px;
-    }
-    h1 {
-      font-size: 30px;
-    }
-    .art__summary {
-      font-size: 17px;
     }
     .rel {
       grid-template-columns: minmax(0, 1fr);

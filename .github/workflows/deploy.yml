@@ -33,6 +33,15 @@ jobs:
       - name: Unit tests
         run: npx vitest run
 
+      # Social preview (public/og-cover.png) is redrawn from the CMS data (title, services, contacts), so an edit in
+      # /admin also updates the picture in messengers. The script draws text with system fonts → Montserrat from apt.
+      # If this step fails, the site is published with the committed picture.
+      - name: Social preview from CMS data
+        continue-on-error: true
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends fonts-montserrat
+          npm run og
+
       - name: Build static site with Astro (includes CMS schema check and dist audit)
         run: npm run build
 

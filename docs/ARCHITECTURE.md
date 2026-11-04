@@ -69,10 +69,13 @@ src/components/ui/                  Button, Section, SectionHead, Breadcrumbs, F
 src/components/home/                Hero, Bridge, Directions, About, CabinetBlock, LatestNews, Invite
 src/components/islands/LeadForm.tsx единственный React-остров: форма заявки → CRM
 src/styles/tokens.css, global.css   дизайн-токены и базовые стили (docs/DESIGN.md)
+src/scripts/motion.ts               движение на всех страницах: плавная прокрутка колесом (Lenis), появление блоков
+                                    при прокрутке, тень шапки; подключается в BaseLayout (DESIGN.md → «Движение»)
 ```
 
 Правила: один компонент — одна задача; стили компонента — в его `<style>` через токены `var(--…)`, без литеральных цветов;
 никакой декоративной «телеметрии» и псевдотерминальных подписей; иконки — inline SVG с `aria-hidden`.
+Движение только прогрессивное: без JavaScript и при «уменьшить движение» в системе весь контент виден сразу и без анимаций.
 
 ## 5. Заявки и Кабинет (интеграция с платформой)
 

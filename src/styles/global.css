@@ -9,6 +9,36 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  /* Space for the scrollbar is always reserved: short and long pages have the same width, nothing shifts sideways. */
+  scrollbar-gutter: stable;
+  /* Anchors (#request, #requisites) stop below the sticky header. */
+  scroll-padding-top: calc(var(--hdr-h) + 16px);
+}
+
+/* Page-to-page navigation: the browser cross-fades the pages instead of a white flash (Chrome/Edge 126+, Safari 18.2+;
+   other browsers simply load the page). The header has its own name, so it stays in place. */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.22s;
+  animation-timing-function: var(--ease-out);
+}
+::view-transition-group(site-header) {
+  animation: none;
+}
+
+/* Smooth wheel scrolling (src/scripts/motion.ts, Lenis). Native scrolling stays on touch screens. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 body {
@@ -17,6 +47,12 @@ body {
   color: var(--c-ink);
   font: 400 17px/1.6 var(--f-body);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+@media (min-width: 1920px) {
+  body {
+    font-size: 18px;
+  }
 }
 
 h1,
@@ -97,7 +133,7 @@ a:hover {
 
 /* Sections */
 .section {
-  padding-block: 96px;
+  padding-block: var(--section-y);
 }
 .section--soft {
   background: var(--c-soft);
@@ -105,6 +141,12 @@ a:hover {
 .section--ink {
   background: var(--c-ink);
   color: var(--c-on-ink);
+}
+/* Two sections of the same background in a row read as one block: no double gap between them
+   (service pages skip optional sections, so the white/soft alternation is not always kept). */
+.section--soft + .section--soft,
+.section:not(.section--soft, .section--ink) + .section:not(.section--soft, .section--ink) {
+  padding-top: 0;
 }
 
 /* Buttons */
@@ -121,7 +163,11 @@ a:hover {
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease, border-color var(--dur-fast) ease,
+    transform var(--dur-fast) var(--ease-out);
+}
+.btn:active {
+  transform: translateY(1px);
 }
 .btn--primary {
   background: var(--c-ink);
@@ -171,6 +217,9 @@ a:hover {
 .prose > * + * {
   margin-top: 1em;
 }
+.prose > :first-child {
+  margin-top: 0;
+}
 .prose h2,
 .prose h3 {
   margin-top: 1.8em;
@@ -208,12 +257,35 @@ a:hover {
   vertical-align: top;
 }
 
+/* Cards that lift on hover (entries, services, news, partners). */
+.lift {
+  transition: border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+@media (hover: hover) {
+  .lift:hover {
+    transform: translateY(-3px);
+  }
+}
+
+/* Scroll reveal (src/scripts/motion.ts): blocks of each section rise in once when they come into view.
+   html.rv is set by an inline script in <head>; without JavaScript nothing is hidden. */
+.rv .section > .wrap > *,
+.rv [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out);
+  transition-delay: calc(var(--rv-i, 0) * 70ms);
+}
+.rv .section > .wrap > .is-in,
+.rv [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
 @media (max-width: 760px) {
   body {
     font-size: 16px;
-  }
-  .section {
-    padding-block: 48px;
   }
 }
 
@@ -221,10 +293,18 @@ a:hover {
   html {
     scroll-behavior: auto;
   }
+  @view-transition {
+    navigation: none;
+  }
   *,
   *::before,
   *::after {
     transition: none !important;
     animation: none !important;
+  }
+  .rv .section > .wrap > *,
+  .rv [data-reveal] {
+    opacity: 1;
+    transform: none;
   }
 }

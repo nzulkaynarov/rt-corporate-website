@@ -24,7 +24,7 @@ const d = home.directions as Record<string, string>;
         <div class="dirs__group">
           <h3>{g.label}</h3>
           {g.items.map((s) => (
-            <a class="dcard" href={localeHref(`/services/${s.slug}/`, lang)}>
+            <a class="dcard lift" href={localeHref(`/services/${s.slug}/`, lang)}>
               <b>{tField(s.data, 'title', lang)}</b>
               <span>{tField(s.data, 'summary', lang)}</span>
               <i>{t(lang, 'common.more')} →</i>

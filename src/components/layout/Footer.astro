@@ -16,7 +16,7 @@ const tg = telegramUrl();
   <div class="wrap ftr__in">
     <div class="ftr__brand">
       <a class="ftr__logo" href={localeHref('/', lang)} aria-label={tr('nav.homeAria')}>
-        <span><img src={withBase('/brand/rt-mark.svg')} alt="" width="24" height="24" /></span>
+        <span><img src={withBase(company.logo)} alt="" width="24" height="24" /></span>
         {company.brandName}
       </a>
       <p>{tr('footer.tagline')}</p>

@@ -48,11 +48,11 @@ const crumbs = [{ name: tField(data, 'title', lang) as string, path: `/${page}/`
     margin-bottom: 24px;
   }
   h1 {
-    font-size: 44px;
+    font-size: var(--fs-h1);
     font-weight: 800;
   }
   .lead {
-    font-size: 19px;
+    font-size: var(--fs-lead);
     color: var(--c-muted);
   }
   .edition {
@@ -63,13 +63,5 @@ const crumbs = [{ name: tField(data, 'title', lang) as string, path: `/${page}/`
   }
   .prose h2 {
     font-size: 21px;
-  }
-  @media (max-width: 760px) {
-    h1 {
-      font-size: 30px;
-    }
-    .lead {
-      font-size: 17px;
-    }
   }
 </style>

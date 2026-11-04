@@ -17,10 +17,11 @@ export type Lang = 'ru' | 'uz' | 'en';
 export const LANGS: readonly Lang[] = ['ru', 'uz', 'en'] as const;
 export const DEFAULT_LANG: Lang = 'ru';
 
-export const LANG_META: Record<Lang, { short: string; name: string; hreflang: string; ogLocale: string }> = {
-  ru: { short: 'RU', name: 'Русский', hreflang: 'ru', ogLocale: 'ru_RU' },
-  uz: { short: 'UZ', name: "O'zbekcha", hreflang: 'uz', ogLocale: 'uz_UZ' },
-  en: { short: 'EN', name: 'English', hreflang: 'en', ogLocale: 'en_US' },
+/** Technical codes only; the switcher's visible names are interface strings `lang.<code>.short` / `lang.<code>.name`. */
+export const LANG_META: Record<Lang, { hreflang: string; ogLocale: string }> = {
+  ru: { hreflang: 'ru', ogLocale: 'ru_RU' },
+  uz: { hreflang: 'uz', ogLocale: 'uz_UZ' },
+  en: { hreflang: 'en', ogLocale: 'en_US' },
 };
 
 export function isLang(value: unknown): value is Lang {

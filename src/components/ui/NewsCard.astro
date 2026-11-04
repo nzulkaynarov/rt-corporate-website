@@ -5,6 +5,7 @@ import { localeHref, tField } from '../../i18n';
 import { t } from '../../i18n/ui';
 import { formatDate } from '../../utils/format';
 import { withBase } from '../../utils/url';
+import { company } from '../../utils/company';
 
 interface Props {
   entry: CollectionEntry<'news'>;
@@ -21,7 +22,7 @@ const Heading = headingLevel === 2 ? 'h2' : 'h3';
     <img class="ncard__img" src={withBase(d.cover)} alt={tField(d, 'coverAlt', lang)} loading="lazy" width="640" height="400" />
   ) : (
     <div class="ncard__img ncard__img--empty" aria-hidden="true">
-      <img src={withBase('/brand/rt-mark-outline.svg')} alt="" width="56" height="56" />
+      <img src={withBase(company.logoPlaceholder)} alt="" width="56" height="56" />
     </div>
   )}
   <div class="ncard__meta">
@@ -40,8 +41,20 @@ const Heading = headingLevel === 2 ? 'h2' : 'h3';
     color: var(--c-ink);
     height: 100%;
   }
+  .ncard__title {
+    transition: color var(--dur-fast) ease;
+  }
   .ncard:hover .ncard__title {
     color: var(--c-brand-ink);
+  }
+  .ncard__img {
+    transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+  }
+  @media (hover: hover) {
+    .ncard:hover .ncard__img {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lift);
+    }
   }
   .ncard__img {
     width: 100%;

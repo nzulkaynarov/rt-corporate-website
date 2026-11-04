@@ -26,7 +26,7 @@ const showLangs = stage.ruOnly !== true;
 <header class="hdr">
   <div class="wrap hdr__in">
     <a class="brand" href={localeHref('/', lang)} aria-label={tr('nav.homeAria')}>
-      <img src={withBase('/brand/rt-mark.svg')} alt="" width="38" height="38" />
+      <img src={withBase(company.logo)} alt="" width="38" height="38" />
       <span>{company.brandName}</span>
     </a>
 
@@ -37,7 +37,7 @@ const showLangs = stage.ruOnly !== true;
     {showLangs && (
     <div class="langs" role="group" aria-label={tr('nav.langAria')}>
       {LANGS.map((code) => (
-        <a href={langLinks[code]} hreflang={LANG_META[code].hreflang} lang={LANG_META[code].hreflang} aria-current={code === lang ? 'true' : undefined} title={LANG_META[code].name}>{LANG_META[code].short}</a>
+        <a href={langLinks[code]} hreflang={LANG_META[code].hreflang} lang={LANG_META[code].hreflang} aria-current={code === lang ? 'true' : undefined} title={tr(`lang.${code}.name`)}>{tr(`lang.${code}.short`)}</a>
       ))}
     </div>
     )}
@@ -72,14 +72,22 @@ const showLangs = stage.ruOnly !== true;
   .hdr {
     border-bottom: 1px solid var(--c-line);
     background: var(--c-bg);
-    position: relative;
+    position: sticky;
+    top: 0;
     z-index: 20;
+    /* Stays in place during page-to-page transitions (global.css, @view-transition). */
+    view-transition-name: site-header;
+    transition: box-shadow var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out);
+  }
+  .hdr:global(.hdr--scrolled) {
+    border-bottom-color: transparent;
+    box-shadow: 0 10px 24px -18px rgba(45, 62, 80, 0.5);
   }
   .hdr__in {
     display: flex;
     align-items: center;
     gap: 16px 28px;
-    min-height: 76px;
+    min-height: var(--hdr-h);
   }
   .brand {
     display: flex;
@@ -108,12 +116,31 @@ const showLangs = stage.ruOnly !== true;
     font-weight: 500;
     padding-block: 6px;
   }
+  .nav a {
+    position: relative;
+    transition: color var(--dur-fast) ease;
+  }
+  .nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--c-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur) var(--ease-out);
+  }
   .nav a:hover {
     color: var(--c-brand-ink);
   }
+  .nav a:hover::after,
+  .nav a[aria-current='page']::after {
+    transform: scaleX(1);
+  }
   .nav a[aria-current='page'] {
     color: var(--c-brand-ink);
-    box-shadow: inset 0 -2px 0 var(--c-accent);
   }
   .langs {
     display: flex;

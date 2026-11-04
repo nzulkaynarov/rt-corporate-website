@@ -134,8 +134,38 @@
       "en": ""
     },
     {
-      "key": "legal.edition",
-      "ru": "Редакция",
+      "key": "lang.ru.short",
+      "ru": "RU",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "lang.ru.name",
+      "ru": "Русский",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "lang.uz.short",
+      "ru": "UZ",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "lang.uz.name",
+      "ru": "O'zbekcha",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "lang.en.short",
+      "ru": "EN",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "lang.en.name",
+      "ru": "English",
       "uz": "",
       "en": ""
     }

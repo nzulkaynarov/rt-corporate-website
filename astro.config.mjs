@@ -22,6 +22,8 @@ export default defineConfig({
   site: isCustomDomain ? 'https://railtech.uz' : 'https://nzulkaynarov.github.io',
   base,
   output: 'static',
+  // The dev-server toolbar (black pill at the bottom) is off: owner reviews the site in dev mode.
+  devToolbar: { enabled: false },
   integrations: [
     react(),
     sitemap({

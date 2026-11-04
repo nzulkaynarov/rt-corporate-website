@@ -14,12 +14,6 @@
       "en": ""
     },
     {
-      "key": "common.photoPending",
-      "ru": "Фото готовится",
-      "uz": "",
-      "en": ""
-    },
-    {
       "key": "partner.status.dealer",
       "ru": "Официальный дилер",
       "uz": "",
@@ -34,6 +28,18 @@
     {
       "key": "partner.tilesAria",
       "ru": "Производители, с которыми работает RailTech",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "home.hero.orbitPause",
+      "ru": "Остановить анимацию",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "home.hero.orbitPlay",
+      "ru": "Запустить анимацию",
       "uz": "",
       "en": ""
     },

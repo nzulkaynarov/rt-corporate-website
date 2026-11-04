@@ -20,7 +20,7 @@ const stages: string[] = pick(lang, demo.stages || [], demo.stages_uz, demo.stag
       <p class="cab__lead">{tField(c, 'text', lang)}</p>
       <dl class="facts">
         {(c.facts || []).map((f: any) => (
-          <div><dt>{tField(f, 'label', lang)}</dt><dd>{f.value}</dd></div>
+          <div><dt>{tField(f, 'label', lang)}</dt><dd>{tField(f, 'value', lang)}</dd></div>
         ))}
       </dl>
       <div class="btn-row">
@@ -59,7 +59,7 @@ const stages: string[] = pick(lang, demo.stages || [], demo.stages_uz, demo.stag
     color: var(--c-brand-mid);
   }
   h2 {
-    font-size: 40px;
+    font-size: var(--fs-h2);
     font-weight: 700;
     color: var(--c-on-ink);
   }
@@ -178,9 +178,6 @@ const stages: string[] = pick(lang, demo.stages || [], demo.stages_uz, demo.stag
     }
   }
   @media (max-width: 760px) {
-    h2 {
-      font-size: 28px;
-    }
     .cab__txt {
       gap: 14px;
     }
