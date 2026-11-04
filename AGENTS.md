@@ -3,7 +3,7 @@
 Для любого агента: Claude Code, Cursor, Copilot, Codex и др. Здесь правила работы с репозиторием.
 Что есть на сайте и откуда берутся данные, описано в [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md),
 как он выглядит — в [`docs/DESIGN.md`](./docs/DESIGN.md). **Сначала прочитай ARCHITECTURE.md.** Если этот файл
-расходится с ним, верен ARCHITECTURE.md.
+расходится с ним, верен ARCHITECTURE.md. Текущее состояние работ и решения владельца: [`docs/STATUS.md`](./docs/STATUS.md).
 
 ## 1. Что это за сайт
 

@@ -59,6 +59,7 @@ GitHub Pages. Пуш в `main` (мёрж PR) запускает `.github/workflo
 
 ## Документация
 
+- [`docs/STATUS.md`](./docs/STATUS.md): состояние работ, решения владельца, следующие шаги, живой запуск
 - [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md): что есть на сайте и откуда данные
 - [`docs/DESIGN.md`](./docs/DESIGN.md): как это выглядит
 - [`docs/content/`](./docs/content/README.md): как писать и публиковать материалы
