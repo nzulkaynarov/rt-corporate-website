@@ -1,267 +1,101 @@
 {
-  "consoleTitle": "RailTech",
-  "consoleSubtitle": "Поставки ж/д электроники и представительство производителей",
-  "consoleSubtitle_uz": "",
-  "consoleSubtitle_en": "",
-  "consoleKicker": "SYSTEM CONSOLE",
-  "consoleKicker_uz": "SYSTEM CONSOLE",
-  "consoleKicker_en": "SYSTEM CONSOLE",
-  "consoleStamp": "RT // CAD.UI 026",
-  "consoleStamp_uz": "RT // CAD.UI 026",
-  "consoleStamp_en": "RT // CAD.UI 026",
-  "topCalloutTag": "RT_CONSOLE // SYS.ACTIVE",
-  "topCalloutStatus": "ПОСТАВКИ · ИНЖИНИРИНГ · ЛОКАЛИЗАЦИЯ · ПРЕДСТАВИТЕЛЬСТВО",
-  "topCalloutStatus_uz": "",
-  "topCalloutStatus_en": "",
-  "topCalloutVat": "",
-  "topCalloutVat_uz": "",
-  "topCalloutVat_en": "",
-  "topCalloutHub": "TASHKENT, A. QAHHOR 46",
-  "topCalloutSla": "Ответ в течение рабочего дня",
-  "topCalloutSla_uz": "Ish kuni davomida javob beramiz",
-  "topCalloutSla_en": "Response within one business day",
-  "modesLabel": "// MODES",
-  "modesLabel_uz": "// MODES",
-  "modesLabel_en": "// MODES",
-  "directionsLabel": "// НАПРАВЛЕНИЯ",
-  "directionsLabel_uz": "// YO'NALISHLAR",
-  "directionsLabel_en": "// DIRECTIONS",
-  "modes": [
-    {
-      "n": "01",
-      "label": "КАТАЛОГ",
-      "label_uz": "KATALOG",
-      "label_en": "CATALOG",
-      "href": "/catalog/"
-    },
-    {
-      "n": "02",
-      "label": "УСЛУГИ",
-      "label_uz": "XIZMATLAR",
-      "label_en": "SERVICES",
-      "href": "/services/"
-    },
-    {
-      "n": "03",
-      "label": "ПРОЕКТЫ",
-      "label_uz": "LOYIHALAR",
-      "label_en": "PROJECTS",
-      "href": "/projects/"
-    },
-    {
-      "n": "04",
-      "label": "БЛОГ",
-      "label_uz": "BLOG",
-      "label_en": "BLOG",
-      "href": "/blog/"
+  "hero": {
+    "eyebrow": "Ташкент · с 2021 года",
+    "title": "Надёжный мост между производителем и заказчиком",
+    "lead": "Поставляем оборудование и услуги предприятиям Узбекистана и представляем интересы международных производителей в регионе.",
+    "entries": [
+      {
+        "title": "Я закупаю",
+        "text": "Оборудование и комплектующие международных производителей с доставкой до вашего склада",
+        "link": "/services/supply/"
+      },
+      {
+        "title": "Я производитель",
+        "text": "Выход на рынок Узбекистана без собственного офиса",
+        "link": "/services/representation/"
+      }
+    ]
+  },
+  "bridge": {
+    "eyebrow": "Наш подход",
+    "title": "Обе стороны сделки теряют время на одних и тех же этапах. Мы берём их на себя",
+    "customerTitle": "Заказчик в Узбекистане",
+    "customerNote": "предприятия, организации, инженерные проекты",
+    "railtechTitle": "RailTech",
+    "railtechNote": "единая точка ответственности",
+    "partnerTitle": "Международный партнёр",
+    "partnerNote": "заводы-изготовители, поставщики товаров и услуг",
+    "rows": [
+      {
+        "stage": "Запрос",
+        "customer": "Заявки в разных форматах, долгий поиск поставщика",
+        "railtech": "Принимаем заявку в любом виде — бот, письмо, Excel или Кабинет — и раскладываем её по позициям",
+        "partner": "Неполные запросы без спецификаций"
+      },
+      {
+        "stage": "Цена",
+        "customer": "Итоговая стоимость с пошлинами и логистикой неизвестна",
+        "railtech": "Считаем полную стоимость до склада: логистика, пошлины и налоги — сразу в КП",
+        "partner": "Нет понимания местных налогов и требований"
+      },
+      {
+        "stage": "Документы",
+        "customer": "Сложно проверить сертификаты и паспорта качества",
+        "railtech": "Сертификация, договор и полный пакет документов для рынка Узбекистана",
+        "partner": "Нормативы и сертификация требуют локальной экспертизы"
+      },
+      {
+        "stage": "Исполнение",
+        "customer": "Статус заказа непрозрачен, документы теряются в переписке",
+        "railtech": "Таможня и доставка до склада, сделка по стадиям в Кабинете",
+        "partner": "Таможня и доставка до склада клиента вне контроля"
+      }
+    ]
+  },
+  "directions": {
+    "eyebrow": "Возможности",
+    "title": "Четыре направления — для заказчиков и для партнёров"
+  },
+  "about": {
+    "eyebrow": "О компании",
+    "title": "ООО «RailTech» — Ташкент, с 2021 года",
+    "text": "Поставляем оборудование и услуги предприятиям Узбекистана и представляем интересы международных производителей в регионе. Наши заказчики — промышленные компании, предприятия транспорта и инфраструктуры, инженерные проекты.",
+    "mission": "Наша миссия — надёжный мост между заказчиком и международным партнёром: быстрая обработка заявки и исчерпывающая информация на каждом этапе сделки."
+  },
+  "partners": {
+    "eyebrow": "Производители",
+    "title": "С кем мы работаем",
+    "note": "Нажмите на производителя, чтобы узнать о нём больше. Перечень пополняется."
+  },
+  "cabinet": {
+    "eyebrow": "Кабинет RailTech",
+    "title": "Вся сделка — в одном окне",
+    "text": "Запросы, коммерческие предложения, договоры, счета и акты — в Кабинете в браузере и в Telegram. Документы и сертификаты хранятся в сделке, вопрос менеджеру — там же.",
+    "facts": [
+      { "value": "24/7", "label": "приём заявок и ответы на трёх языках" },
+      { "value": "Часы", "label": "до первого КП вместо дней" },
+      { "value": "1 окно", "label": "для всех документов сделки" }
+    ],
+    "demo": {
+      "title": "Сделка D-48",
+      "note": "Пример",
+      "stages": ["Запрос", "КП принято", "Договор", "Оплата", "Поставка и акт"],
+      "current": 2,
+      "rows": [
+        { "label": "КП-2026-0048 · версия 1", "status": "Принято", "tone": "ok" },
+        { "label": "Договор D-2026-0048", "status": "Ждёт вашего согласования", "tone": "wait" },
+        { "label": "Счёт S-2026-0130", "status": "К оплате", "tone": "neutral" }
+      ],
+      "footnote": "Документы, сертификаты и переписка с менеджером — внутри сделки"
     }
-  ],
-  "projectsSectionBadge": "ПРОЕКТЫ И ПАРТНЁРСТВА",
-  "projectsSectionBadge_uz": "LOYIHALAR VA HAMKORLIK",
-  "projectsSectionBadge_en": "PROJECTS & PARTNERSHIPS",
-  "projectsSectionTitle": "ПРОЕКТЫ RAILTECH",
-  "projectsSectionTitle_uz": "RAILTECH LOYIHALARI",
-  "projectsSectionTitle_en": "RAILTECH PROJECTS",
-  "projectsSectionSubtitle": "ПРЕДСТАВИТЕЛЬСТВО ПРОИЗВОДИТЕЛЕЙ, ОТРАСЛЕВОЕ ОБРАЗОВАНИЕ И ЦИФРОВАЯ ПЛАТФОРМА",
-  "projectsSectionSubtitle_uz": "",
-  "projectsSectionSubtitle_en": "",
-  "heroSlides": [
-    {
-      "image": "/images/hero/warehouse.jpg",
-      "tag": "CATALOG // RAIL ELECTRONICS",
-      "link": "/catalog/",
-      "title": "Ж/д электроника для локомотивов и электропоездов",
-      "title_uz": "",
-      "title_en": "",
-      "description": "Системы безопасности и бортовая электроника, датчики и преобразователи, электроаппаратура и электрические машины для UzTE16M, ТЭП70БС, O'zbekiston, 3ЭС5К, ВЛ80/ВЛ60, ЭР9Е, ТЭ10М, ЧМЭ3 и ТЭМ2. Цена — по запросу КП.",
-      "description_uz": "",
-      "description_en": ""
-    },
-    {
-      "image": "/images/hero/engineering-art.jpg",
-      "tag": "PARTNERS // MANUFACTURERS",
-      "link": "/about/",
-      "title": "Официальный дилер и прямой поставщик производителей",
-      "title_uz": "",
-      "title_en": "",
-      "description": "Официальный дилер и представитель ООО «НПО САУТ» в Республике Узбекистан; прямые поставки продукции ADZ NAGANO, GERSYS, Siemens Mobility, РАТЕП-ИННОВАЦИЯ и других производителей. Партнёр выходит на рынок Узбекистана без собственного офиса.",
-      "description_uz": "",
-      "description_en": ""
-    },
-    {
-      "image": "/images/hero/logistics.jpg",
-      "tag": "SERVICES // DDP · CIP",
-      "link": "/services/",
-      "title": "Единая точка ответственности за поставку",
-      "title_uz": "Yetkazib berish uchun yagona mas'ul tomon",
-      "title_en": "A single point of responsibility for supply",
-      "description": "Заявка, расчёт и КП, сертификация, договор и документы, таможня, доставка до склада. Условия DDP и CIP.",
-      "description_uz": "So'rov, hisob-kitob va tijorat taklifi, sertifikatlash, shartnoma va hujjatlar, bojxona, omborgacha yetkazib berish. DDP va CIP shartlari.",
-      "description_en": "Request, calculation and quotation, certification, contract and documents, customs, delivery to the warehouse. DDP and CIP terms."
-    },
-    {
-      "image": "/images/hero/software.jpg",
-      "tag": "PLATFORM // CABINET",
-      "link": "/projects/",
-      "title": "Кабинет RailTech: сделка от запроса до акта",
-      "title_uz": "RailTech kabineti: so'rovdan dalolatnomagacha bitim",
-      "title_en": "RailTech Cabinet: a deal from request to acceptance",
-      "description": "Запросы, КП, договоры, счета и акты в одном окне для клиента и партнёра — в вебе и в Telegram Mini App. Часы до первого КП вместо дней.",
-      "description_uz": "So'rovlar, tijorat takliflari, shartnomalar, hisoblar va dalolatnomalar mijoz va hamkor uchun bitta oynada — vebda va Telegram Mini App'da. Birinchi tijorat taklifigacha kunlar emas, soatlar.",
-      "description_en": "Requests, quotations, contracts, invoices and acceptance reports in one window for clients and partners, on the web and in a Telegram Mini App. Hours to the first quotation instead of days."
-    }
-  ],
-  "directions": [
-    {
-      "label": "Поставки",
-      "label_uz": "Yetkazib berish",
-      "label_en": "Supply",
-      "href": "/services/supply/"
-    },
-    {
-      "label": "Инжиниринг",
-      "label_uz": "Injiniring",
-      "label_en": "Engineering",
-      "href": "/services/engineering/"
-    },
-    {
-      "label": "Локализация",
-      "label_uz": "Lokalizatsiya",
-      "label_en": "Localization",
-      "href": "/services/localization/"
-    },
-    {
-      "label": "Представительство",
-      "label_uz": "Vakillik",
-      "label_en": "Representation",
-      "href": "/services/representation/"
-    }
-  ],
-  "passport": [
-    {
-      "label": "Модель работы",
-      "label_uz": "",
-      "label_en": "",
-      "value": "Единая точка ответственности между производителем и заказчиком",
-      "value_uz": "",
-      "value_en": ""
-    },
-    {
-      "label": "Локация",
-      "label_uz": "Joylashuv",
-      "label_en": "Location",
-      "value": "Ташкент, ул. Абдуллы Каххара, 46",
-      "value_uz": "Toshkent, Abdulla Qahhor ko'chasi, 46",
-      "value_en": "46 Abdulla Qahhor Street, Tashkent"
-    },
-    {
-      "label": "Масштаб",
-      "label_uz": "Ko'lam",
-      "label_en": "Scale",
-      "value": "{years} лет · {partners} партнёров · {items|позиция|позиции|позиций} продукции {manufacturers|производителя|производителей|производителей}",
-      "value_uz": "",
-      "value_en": ""
-    }
-  ],
-  "passportLabel": "// ПАСПОРТ КОМПАНИИ",
-  "passportLabel_uz": "// KOMPANIYA PASPORTI",
-  "passportLabel_en": "// COMPANY PASSPORT",
-  "ctaLead": "Запросить КП",
-  "ctaLead_uz": "Tijorat taklifini so'rash",
-  "ctaLead_en": "Request a quotation",
-  "gatewaysDivider": "CHANNELS // 04 GATEWAYS",
-  "gatewaysDivider_uz": "CHANNELS // 04 GATEWAYS",
-  "gatewaysDivider_en": "CHANNELS // 04 GATEWAYS",
-  "gatewayCards": [
-    {
-      "title": "Каталог оборудования",
-      "title_uz": "Uskunalar katalogi",
-      "title_en": "Equipment catalog",
-      "image": "/images/hero/warehouse.jpg",
-      "href": "/catalog/",
-      "text": "Ж/д электроника для локомотивов и электропоездов: системы безопасности, датчики и преобразователи, электроаппаратура, электрические машины. Цена — по запросу КП.",
-      "text_uz": "",
-      "text_en": ""
-    },
-    {
-      "title": "Услуги: 4 направления",
-      "title_uz": "Xizmatlar: 4 yo'nalish",
-      "title_en": "Services: 4 directions",
-      "image": "/images/hero/logistics.jpg",
-      "href": "/services/",
-      "text": "Поставки, инжиниринг, локализация и представительство международных производителей.",
-      "text_uz": "Yetkazib berish, injiniring, lokalizatsiya va xalqaro ishlab chiqaruvchilar vakilligi.",
-      "text_en": "Supply, engineering, localization and representation of international manufacturers."
-    },
-    {
-      "title": "Проекты",
-      "title_uz": "Loyihalar",
-      "title_en": "Projects",
-      "image": "/images/hero/engineering-art.jpg",
-      "href": "/projects/",
-      "text": "Представительство производителя в Узбекистане, учебная аудитория в ТГТУ, цифровая платформа и Кабинет RailTech.",
-      "text_uz": "",
-      "text_en": ""
-    },
-    {
-      "title": "Блог и новости",
-      "title_uz": "Blog va yangiliklar",
-      "title_en": "Blog & news",
-      "image": "/images/hero/software.jpg",
-      "href": "/blog/",
-      "text": "Новости компании, отраслевые события и материалы о ж/д электронике и поставках оборудования.",
-      "text_uz": "",
-      "text_en": ""
-    }
-  ],
-  "showcaseSectionBadge": "КАТАЛОГ",
-  "showcaseSectionBadge_uz": "KATALOG",
-  "showcaseSectionBadge_en": "CATALOG",
-  "showcaseSectionTitle": "ОБОРУДОВАНИЕ В КАТАЛОГЕ RAILTECH",
-  "showcaseSectionTitle_uz": "RAILTECH KATALOGIDAGI USKUNALAR",
-  "showcaseSectionTitle_en": "EQUIPMENT IN THE RAILTECH CATALOG",
-  "showcaseAllLink": "СМОТРЕТЬ ВЕСЬ КАТАЛОГ",
-  "showcaseAllLink_uz": "BARCHA KATALOGNI KO'RISH",
-  "showcaseAllLink_en": "VIEW FULL CATALOG",
-  "blogBadge": "РАЗДЕЛ 04 // НОВОСТИ И МАТЕРИАЛЫ",
-  "blogBadge_uz": "BO'LIM 04 // YANGILIKLAR VA MATERIALLAR",
-  "blogBadge_en": "SECTION 04 // NEWS & ARTICLES",
-  "blogTitle": "Новости RailTech и отрасли",
-  "blogTitle_uz": "RailTech va soha yangiliklari",
-  "blogTitle_en": "RailTech & Industry News",
-  "blogSubtitle": "Новости компании, отраслевые события и материалы о ж/д электронике и поставках оборудования",
-  "blogSubtitle_uz": "",
-  "blogSubtitle_en": "",
-  "trustSectionBadge": "УСЛОВИЯ РАБОТЫ",
-  "trustSectionBadge_uz": "ISH SHARTLARI",
-  "trustSectionBadge_en": "HOW WE WORK",
-  "trustSectionTitle": "ДОКУМЕНТЫ И ГАРАНТИИ ДЛЯ ЗАКАЗЧИКОВ",
-  "trustSectionTitle_uz": "BUYURTMACHILAR UCHUN HUJJATLAR VA KAFOLATLAR",
-  "trustSectionTitle_en": "DOCUMENTS & GUARANTEES FOR CUSTOMERS",
-  "trustItems": [
-    {
-      "code": "[01] ГАРАНТИЯ",
-      "code_uz": "",
-      "code_en": "",
-      "text": "На позиции в наличии — 12 месяцев с момента поставки; на позиции под заказ — по условиям изготовителя, срок указывается в КП.",
-      "text_uz": "",
-      "text_en": ""
-    },
-    {
-      "code": "[02] DDP И CIP",
-      "code_uz": "",
-      "code_en": "",
-      "text": "Поставки под заказ включают международную логистику, таможенное оформление и доставку до Ташкента. Базис — DDP или CIP по договору.",
-      "text_uz": "Buyurtma asosidagi yetkazib berish xalqaro logistika, bojxona rasmiylashtiruvi va Toshkentgacha yetkazishni o'z ichiga oladi. Bazis — shartnoma bo'yicha DDP yoki CIP.",
-      "text_en": "On-order supplies include international logistics, customs clearance and delivery to Tashkent. Terms: DDP or CIP under the contract."
-    },
-    {
-      "code": "[03] ОДНО ОКНО ДЛЯ ДОКУМЕНТОВ",
-      "code_uz": "",
-      "code_en": "",
-      "text": "Договор, счета, акты и сертификаты хранятся в сделке в Кабинете cabinet.railtech.uz; вопрос менеджеру — там же.",
-      "text_uz": "Shartnoma, hisoblar, dalolatnomalar va sertifikatlar cabinet.railtech.uz kabinetidagi bitimda saqlanadi; menejerga savol ham shu yerda.",
-      "text_en": "Contracts, invoices, acceptance reports and certificates are stored in the deal in the cabinet.railtech.uz Cabinet, where you can also message your manager."
-    }
-  ]
+  },
+  "news": {
+    "eyebrow": "Новости",
+    "title": "События и проекты"
+  },
+  "invite": {
+    "eyebrow": "Начнём работу",
+    "title": "Расскажите, что нужно поставить или обсудить",
+    "text": "Менеджер свяжется с вами в течение рабочего дня и пришлёт приглашение в Кабинет. Дальше вся сделка — там."
+  }
 }

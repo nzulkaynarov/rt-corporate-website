@@ -1,0 +1,80 @@
+---
+/** Three latest materials (featured first). Phones: a horizontal swipe row. */
+import { getCollection } from 'astro:content';
+import { localeHref, tField } from '../../i18n';
+import { t } from '../../i18n/ui';
+import home from '../../data/cms/home.json';
+import NewsCard from '../ui/NewsCard.astro';
+
+const lang = Astro.locals.lang;
+const n = home.news as Record<string, string>;
+const items = (await getCollection('news'))
+  .sort((a, b) => b.data.date.localeCompare(a.data.date))
+  .slice(0, 3);
+---
+
+{items.length > 0 && (
+  <section class="section" aria-labelledby="news-title">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <p class="eyebrow">{tField(n, 'eyebrow', lang)}</p>
+          <h2 id="news-title">{tField(n, 'title', lang)}</h2>
+        </div>
+        <a href={localeHref('/news/', lang)}>{t(lang, 'common.allNews')} →</a>
+      </div>
+      <ul class="row">
+        {items.map((entry) => <li><NewsCard entry={entry} /></li>)}
+      </ul>
+    </div>
+  </section>
+)}
+
+<style>
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+  }
+  .head > div {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  h2 {
+    font-size: 40px;
+    font-weight: 700;
+  }
+  .row {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+  @media (max-width: 760px) {
+    h2 {
+      font-size: 28px;
+    }
+    .head {
+      margin-bottom: 20px;
+    }
+    .row {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 14px;
+      margin-inline: calc(var(--gutter) * -1);
+      padding-inline: var(--gutter);
+      padding-bottom: 6px;
+    }
+    .row li {
+      flex: 0 0 78%;
+      scroll-snap-align: start;
+    }
+  }
+</style>

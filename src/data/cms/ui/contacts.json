@@ -1,0 +1,89 @@
+{
+  "title": "Контакты и реквизиты",
+  "strings": [
+    {
+      "key": "contacts.office",
+      "ru": "Офис",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "contacts.legal",
+      "ru": "Юридический адрес",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "contacts.phone",
+      "ru": "Телефон",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "contacts.email",
+      "ru": "E-mail",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "contacts.telegram",
+      "ru": "Telegram",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "contacts.cabinet",
+      "ru": "Кабинет",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "contacts.map",
+      "ru": "Открыть на карте",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "contacts.requisites",
+      "ru": "Реквизиты",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "contacts.fullName",
+      "ru": "Полное наименование",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "contacts.inn",
+      "ru": "ИНН",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "contacts.bank",
+      "ru": "Банк",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "contacts.mfo",
+      "ru": "МФО",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "contacts.account",
+      "ru": "Расчётный счёт",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "contacts.channels",
+      "ru": "Связаться",
+      "uz": "",
+      "en": ""
+    }
+  ]
+}

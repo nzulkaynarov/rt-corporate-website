@@ -1,119 +1,48 @@
 {
   "siteName": "RailTech",
-  "siteName_uz": "RailTech",
-  "siteName_en": "RailTech",
   "titleSuffix": "| RailTech",
   "defaultImage": "/og-cover.png",
-  "organizationDescription": "Поставки ж/д электроники, оборудования и услуг железной дороге и промышленным предприятиям Узбекистана; представительство международных производителей в регионе.",
-  "organizationDescription_uz": "",
-  "organizationDescription_en": "",
+  "organizationDescription": "ООО «RailTech» (Ташкент, с 2021 года) поставляет оборудование и услуги предприятиям Узбекистана и представляет интересы международных производителей: поставки, инжиниринг, представительство, локализация.",
   "knowsAbout": [
-    "Системы обеспечения безопасности движения поездов",
-    "Локомотивные устройства безопасности",
-    "Сервисная и испытательная аппаратура",
-    "Поставка ж/д комплектующих и промышленного оборудования",
-    "Локализация производства",
-    "Представительство международных производителей в Узбекистане"
+    "Поставки промышленного оборудования в Узбекистан",
+    "Представительство международных производителей в Узбекистане",
+    "Локализация производства в Узбекистане",
+    "Инжиниринг и пилотные проекты",
+    "Сертификация оборудования для рынка Узбекистана",
+    "Таможенное оформление и доставка на условиях DDP и CIP"
   ],
-  "knowsAbout_uz": [
-    "Poezdlar harakati xavfsizligini ta'minlash tizimlari",
-    "Lokomotiv xavfsizlik qurilmalari",
-    "Servis va sinov uskunalari",
-    "Temir yo'l butlovchi qismlari va sanoat uskunalarini yetkazib berish",
-    "Ishlab chiqarishni mahalliylashtirish",
-    "O'zbekistonda xalqaro ishlab chiqaruvchilar vakilligi"
-  ],
-  "knowsAbout_en": [
-    "Train safety systems",
-    "Locomotive safety equipment",
-    "Service & test equipment",
-    "Supply of railway components and industrial equipment",
-    "Production localization",
-    "Representation of international manufacturers in Uzbekistan"
-  ],
-  "catalogDescription": "{title} ({sku}): {specs}. Поставка RailTech в Ташкенте, гарантия 12 месяцев, цена по запросу КП.",
-  "catalogDescription_uz": "{title} ({sku}): {specs}. RailTech yetkazib berishi, Toshkent, 12 oylik kafolat, narx so'rov bo'yicha.",
-  "catalogDescription_en": "{title} ({sku}): {specs}. Supplied by RailTech in Tashkent, 12-month warranty, price on request.",
   "pages": {
     "home": {
-      "title": "RailTech — поставки ж/д электроники и оборудования, Ташкент",
-      "title_uz": "",
-      "title_en": "",
-      "description": "Поставки ж/д электроники и оборудования для локомотивов и промышленности Узбекистана, представительство международных производителей. Цены — по запросу КП.",
-      "description_uz": "",
-      "description_en": ""
-    },
-    "catalog": {
-      "title": "Каталог ж/д электроники для локомотивов | RailTech",
-      "title_uz": "",
-      "title_en": "",
-      "description": "Системы безопасности, бортовая электроника, датчики, электроаппаратура и электрические машины для UzTE16M, ТЭП70БС, 3ЭС5К, ВЛ80. Цена по запросу КП.",
-      "description_uz": "",
-      "description_en": ""
+      "title": "RailTech — поставки и представительство в Узбекистане",
+      "description": "RailTech — мост между международными производителями и предприятиями Узбекистана: поставки оборудования до склада, инжиниринг, представительство, локализация."
     },
     "services": {
-      "title": "Услуги: поставки, инжиниринг, локализация | RailTech",
-      "description": "Четыре направления RailTech: поставки ж/д комплектующих и оборудования, инжиниринг и пилотные проекты, локализация по нормативам РУз, представительство.",
-      "title_uz": "Yetkazib berish, injiniring, lokalizatsiya | RailTech",
-      "description_uz": "RailTechning to'rt yo'nalishi: temir yo'l butlovchi qismlari va uskunalarini yetkazib berish, injiniring, O'zR normativlari bo'yicha lokalizatsiya, vakillik.",
-      "title_en": "Supply, Engineering, Localization Services | RailTech",
-      "description_en": "Four RailTech directions: supply of railway components and equipment, engineering and pilot projects, localization to Uzbek rules, representation."
+      "title": "Услуги RailTech: поставки, инжиниринг, представительство",
+      "description": "Поставки оборудования и комплектующих до склада, инжиниринг, представительство международных производителей и локализация в Узбекистане."
     },
-    "projects": {
-      "title": "Проекты RailTech: представительство, ТГТУ, платформа",
-      "title_uz": "",
-      "title_en": "",
-      "description": "Кейсы RailTech: представительство международного производителя в Узбекистане (НПО САУТ), учебная аудитория в ТГТУ, цифровая платформа и Кабинет.",
-      "description_uz": "",
-      "description_en": ""
-    },
-    "blog": {
-      "title": "Блог RailTech: новости, ж/д электроника и поставки",
-      "title_uz": "",
-      "title_en": "",
-      "description": "Новости RailTech и отрасли: события с производителями-партнёрами, конференция и учебная аудитория в ТГТУ, запуск сайта и Кабинета, материалы о ж/д электронике.",
-      "description_uz": "",
-      "description_en": ""
-    },
-    "about": {
-      "title": "О RailTech — представительство производителей в Узбекистане",
-      "title_uz": "",
-      "title_en": "",
-      "description": "ООО «RailTech», Ташкент, с 2021 года: поставки ж/д оборудования, официальный дилер и прямой поставщик производителей в Узбекистане. Перечень, реквизиты, FAQ.",
-      "description_uz": "",
-      "description_en": ""
+    "news": {
+      "title": "Новости, статьи и проекты RailTech",
+      "description": "События компании RailTech, проекты с партнёрами и материалы о производителях, с которыми мы работаем в Узбекистане."
     },
     "contacts": {
-      "title": "Контакты RailTech — офис в Ташкенте, ул. А. Каххара",
-      "description": "Телефон +998 90 118-90-00, info@railtech.uz, офис на ул. Абдуллы Каххара, 46, юридический адрес и банковские реквизиты ООО «RailTech» для договора и счёта.",
-      "title_uz": "RailTech kontaktlari — Toshkentdagi ofis, A. Qahhor ko'chasi",
-      "description_uz": "Telefon +998 90 118-90-00, info@railtech.uz, Abdulla Qahhor ko'chasi, 46 dagi ofis, «RailTech» MChJ yuridik manzili va shartnoma uchun bank rekvizitlari.",
-      "title_en": "Contact RailTech — Office in Tashkent, Abdulla Qahhor St.",
-      "description_en": "Phone +998 90 118-90-00, info@railtech.uz, office at 46 Abdulla Qahhor Street, legal address and bank details of RailTech LLC for contracts and invoices."
+      "title": "Контакты и реквизиты RailTech, Ташкент",
+      "description": "Офис RailTech: Ташкент, ул. Абдуллы Каххара, 46. Телефон +998 90 118-90-00, info@railtech.uz, Telegram, реквизиты и форма заявки."
     },
     "privacy": {
-      "title": "Политика конфиденциальности — RailTech",
-      "description": "Порядок обработки и защиты персональных данных пользователей сайта railtech.uz в соответствии с Законом РУз «О персональных данных» (ЗРУ-547).",
-      "title_uz": "Maxfiylik siyosati — RailTech",
-      "description_uz": "railtech.uz foydalanuvchilarining shaxsiy ma'lumotlarini «Shaxsga doir ma'lumotlar to'g'risida»gi O'zbekiston Qonuniga muvofiq qayta ishlash tartibi.",
-      "title_en": "Privacy Policy — RailTech",
-      "description_en": "How RailTech collects, processes and protects personal data of railtech.uz users under the Law of the Republic of Uzbekistan on Personal Data (No. 547)."
+      "title": "Политика обработки персональных данных | RailTech",
+      "description": "Как ООО «RailTech» обрабатывает и защищает персональные данные пользователей сайта railtech.uz и Кабинета по Закону РУз «О персональных данных»."
     },
     "terms": {
-      "title": "Условия использования сайта и сервисов — RailTech",
-      "description": "Условия использования сайта railtech.uz и Кабинета cabinet.railtech.uz: порядок запроса коммерческих предложений, оформления сделок и ответственность сторон.",
-      "title_uz": "Sayt va xizmatlardan foydalanish shartlari — RailTech",
-      "description_uz": "railtech.uz sayti va cabinet.railtech.uz kabinetidan foydalanish shartlari: tijorat taklifini so'rash, bitimlarni rasmiylashtirish tartibi va javobgarlik.",
-      "title_en": "Terms of Use — RailTech",
-      "description_en": "Terms of use for railtech.uz and the cabinet.railtech.uz Cabinet: requesting quotations, processing deals and liability of the parties."
+      "title": "Условия использования сайта и сервисов | RailTech",
+      "description": "Правила использования сайта railtech.uz, Кабинета клиента и партнёра и Telegram-бота RailTech. Информация на сайте не является публичной офертой."
+    },
+    "cookies": {
+      "title": "Cookies и хранение данных в браузере | RailTech",
+      "description": "Сайт railtech.uz не устанавливает cookie и не использует аналитику. Какие технические данные сохраняет Кабинет и как ими управлять."
     },
     "notFound": {
-      "title": "Страница не найдена (404) — RailTech",
-      "description": "Запрошенная страница не найдена. Перейдите в каталог, услуги или на главную страницу RailTech.",
-      "title_uz": "Sahifa topilmadi (404) — RailTech",
-      "description_uz": "So'ralgan sahifa topilmadi. Katalog, xizmatlar yoki RailTech bosh sahifasiga o'ting.",
-      "title_en": "Page Not Found (404) — RailTech",
-      "description_en": "The requested page was not found. Go to the RailTech catalog, services or home page."
+      "title": "Страница не найдена | RailTech",
+      "description": "Такой страницы нет на сайте RailTech. Перейдите на главную, в раздел услуг или напишите нам."
     }
   }
 }

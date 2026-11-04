@@ -1,109 +1,84 @@
 ---
 /**
- * Served by GitHub Pages for ANY missing URL (/…, /uz/…, /en/…), so the message and
- * the «go home» links are shown in all three languages at once (each block has its own lang).
+ * GitHub Pages serves this page for ANY missing URL (/…, /uz/…, /en/…): the message and the links are
+ * shown in all three languages (each block has its own lang). Texts: pages.json → notFound.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import I18nText from '../components/I18nText.astro';
-import globalData from '../data/cms/global.json';
+import pages from '../data/cms/pages.json';
 import { LANGS, LANG_META, localeHref, tField } from '../i18n';
 import { t } from '../i18n/ui';
 import { pageSeo } from '../utils/seo';
 
 const seo = pageSeo('notFound', 'ru');
-// No per-language twin of the 404 page: the switcher leads to each language's home page.
 const homeLinks = { ru: localeHref('/', 'ru'), uz: localeHref('/', 'uz'), en: localeHref('/', 'en') };
-const tr = (key: string) => t('ru', key);
+const nf = pages.notFound as Record<string, string>;
 const blocks = LANGS.map((code) => ({
   code,
   hreflang: LANG_META[code].hreflang,
-  message: t(code, 'notFound.message', { company: tField(globalData, 'companyName', code) }),
-  homeHref: localeHref('/', code),
-  homeLabel: t(code, 'notFound.home'),
+  title: tField(nf, 'title', code),
+  text: tField(nf, 'text', code),
+  home: localeHref('/', code),
+  homeLabel: t(code, 'nav.home'),
+  services: localeHref('/services/', code),
+  servicesLabel: t(code, 'nav.services'),
+  contacts: localeHref('/contacts/', code),
+  contactsLabel: t(code, 'nav.contacts'),
 }));
+const [first, ...rest] = blocks;
+const uniqueRest = rest.filter((b) => b.title !== first.title);
 ---
 
 <BaseLayout title={seo.title} description={seo.description} noindex langLinks={homeLinks}>
-  <div class="min-h-[75vh] flex items-center justify-center px-4 py-12 font-sans">
-    <div class="w-full max-w-2xl hud-glass-card p-6 sm:p-10 relative">
-      <!-- Target Corner Brackets -->
-      <span class="hud-target-corner hud-tc-tl" aria-hidden="true">┌</span>
-      <span class="hud-target-corner hud-tc-tr" aria-hidden="true">┐</span>
-      <span class="hud-target-corner hud-tc-bl" aria-hidden="true">└</span>
-      <span class="hud-target-corner hud-tc-br" aria-hidden="true">┘</span>
-
-      <!-- Header Telemetry Strip -->
-      <div class="flex flex-wrap items-center justify-between gap-2 border-b-2 border-[#0A0A0A] pb-3 mb-6 font-mono text-xs">
-        <div class="flex items-center space-x-2">
-          <span class="w-2.5 h-2.5 bg-red-600 animate-pulse"></span>
-          <span class="font-bold text-red-600">{tr('notFound.alert')}</span>
-        </div>
-        <div class="text-[#4A5056] text-[11px]">
-          {tr('notFound.routeStatus')}
-        </div>
-      </div>
-
-      <!-- Main Display Frame -->
-      <div class="hud-viewport-frame font-mono mb-6">
-        <span class="hud-vf-outline" aria-hidden="true"></span>
-        <div class="hud-viewport-inner p-6 sm:p-8 bg-[#0A0A0A] text-white">
-          <div class="text-[11px] text-[#D4D8DC]/60 mb-2 tracking-widest">
-            {tr('notFound.consoleNode')}
-          </div>
-          <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight mb-3">
-            {tr('notFound.heading')}
-          </h1>
-          <div class="text-xs text-red-400 font-bold mb-4 tracking-wider">
-            {tr('notFound.errorLine')}
-          </div>
-
-          <div class="border-t border-white/20 pt-4 text-xs font-sans text-[#D4D8DC] space-y-2 leading-relaxed">
-            {blocks.map((b) => (
-              <p lang={b.hreflang}>{b.message}</p>
-            ))}
-          </div>
-
-          <div class="mt-5 pt-3 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] text-[#D4D8DC]/70 font-mono">
-            <div>{tr('notFound.strip.status')} <span class="text-white font-bold">404</span></div>
-            <div>{tr('notFound.strip.protocol')} <span class="text-white">TLS 1.3</span></div>
-            <div>{tr('notFound.strip.zone')} <span class="text-white">TASHKENT</span></div>
-            <div>{tr('notFound.strip.vat')} <span class="text-white">{tr('notFound.strip.vatValue')}</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Navigation: «go home» in every language -->
-      <div class="space-y-3 font-mono text-xs">
-        <div class="text-[#4A5056] text-[11px] font-bold">
-          <I18nText k="notFound.actions" />
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          {blocks.map((b, i) => (
-            <a
-              href={b.homeHref}
-              lang={b.hreflang}
-              hreflang={b.hreflang}
-              class={i === 0
-                ? 'border-2 border-[#0A0A0A] bg-[#0A0A0A] text-white p-3 text-center font-bold hover:bg-transparent hover:text-[#0A0A0A] transition-colors flex items-center justify-center min-h-[44px]'
-                : 'border-2 border-[#0A0A0A] bg-white text-[#0A0A0A] p-3 text-center font-bold hover:bg-[#0A0A0A] hover:text-white transition-colors flex items-center justify-center min-h-[44px]'}
-            >
-              {b.homeLabel}
-            </a>
-          ))}
-        </div>
-
-        <div class="pt-3 text-center">
-          <button
-            type="button"
-            data-lead-modal
-            data-lead-subject={t('ru', 'lead.subject.notFound')}
-            class="text-[#4A5056] hover:text-[#0A0A0A] underline text-xs cursor-pointer"
-          >
-            <I18nText k="notFound.report" />
-          </button>
-        </div>
+  <section class="wrap nf">
+    <div lang={first.hreflang} class="nf__main">
+      <p class="nf__code" aria-hidden="true">404</p>
+      <h1>{first.title}</h1>
+      <p class="muted">{first.text}</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href={first.home}>{first.homeLabel}</a>
+        <a class="btn btn--outline" href={first.services}>{first.servicesLabel}</a>
+        <a class="btn btn--outline" href={first.contacts}>{first.contactsLabel}</a>
       </div>
     </div>
-  </div>
+    {uniqueRest.map((b) => (
+      <div lang={b.hreflang} class="nf__alt">
+        <p><b>{b.title}.</b> {b.text}</p>
+        <a href={b.home}>{b.homeLabel} →</a>
+      </div>
+    ))}
+  </section>
 </BaseLayout>
+
+<style>
+  .nf {
+    padding-block: 72px 96px;
+    display: grid;
+    gap: 28px;
+    max-width: 860px;
+  }
+  .nf__main {
+    display: grid;
+    gap: 18px;
+  }
+  .nf__code {
+    font: 800 96px/1 var(--f-display);
+    color: var(--c-brand-mid);
+  }
+  h1 {
+    font-size: 40px;
+    font-weight: 800;
+  }
+  .nf__alt {
+    border-top: 1px solid var(--c-line);
+    padding-top: 16px;
+    color: var(--c-muted);
+  }
+  @media (max-width: 760px) {
+    .nf__code {
+      font-size: 64px;
+    }
+    h1 {
+      font-size: 28px;
+    }
+  }
+</style>

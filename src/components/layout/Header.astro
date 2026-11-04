@@ -1,0 +1,198 @@
+---
+/**
+ * Site header: logo, the one menu (src/utils/nav.ts), language switch, «Начать работу» and «Войти в Кабинет».
+ * Phones: the menu folds into a <details> panel (works without JavaScript).
+ */
+import { LANGS, LANG_META, alternateHrefs, getRouteFromPath, localeHref } from '../../i18n';
+import { t } from '../../i18n/ui';
+import { MAIN_NAV, START_PATH, isActive } from '../../utils/nav';
+import { company } from '../../utils/company';
+import { withBase } from '../../utils/url';
+
+interface Props {
+  alternates?: Record<'ru' | 'uz' | 'en', string>;
+}
+const lang = Astro.locals.lang;
+const tr = (key: string) => t(lang, key);
+const route = getRouteFromPath(Astro.url.pathname);
+const langLinks = Astro.props.alternates || alternateHrefs(Astro.url.pathname);
+const items = MAIN_NAV.map((item) => ({ ...item, href: localeHref(item.path, lang), active: isActive(item, route) }));
+const startHref = localeHref(START_PATH, lang);
+---
+
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a class="brand" href={localeHref('/', lang)} aria-label={tr('nav.homeAria')}>
+      <img src={withBase('/brand/rt-mark.svg')} alt="" width="38" height="38" />
+      <span>{company.brandName}</span>
+    </a>
+
+    <nav class="nav" aria-label={tr('nav.mainAria')}>
+      {items.map((item) => <a href={item.href} aria-current={item.active ? 'page' : undefined}>{tr(item.key)}</a>)}
+    </nav>
+
+    <div class="langs" role="group" aria-label={tr('nav.langAria')}>
+      {LANGS.map((code) => (
+        <a href={langLinks[code]} hreflang={LANG_META[code].hreflang} lang={LANG_META[code].hreflang} aria-current={code === lang ? 'true' : undefined} title={LANG_META[code].name}>{LANG_META[code].short}</a>
+      ))}
+    </div>
+
+    <div class="hdr__cta">
+      <a class="btn btn--primary" href={startHref}>{tr('cta.start')}</a>
+      <a class="btn btn--outline" href={company.cabinet.loginUrl}>
+        {tr('cta.cabinet')}
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 10L10 4M5 4h5v5"></path></svg>
+      </a>
+    </div>
+
+    <details class="mmenu">
+      <summary>
+        <span>{tr('nav.menu')}</span>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14"></path></svg>
+      </summary>
+      <div class="mmenu__panel">
+        <nav aria-label={tr('nav.mainAria')}>
+          {items.map((item) => <a href={item.href} aria-current={item.active ? 'page' : undefined}>{tr(item.key)}</a>)}
+        </nav>
+        <div class="mmenu__cta">
+          <a class="btn btn--primary" href={startHref}>{tr('cta.start')}</a>
+          <a class="btn btn--outline" href={company.cabinet.loginUrl}>{tr('cta.cabinet')}</a>
+        </div>
+      </div>
+    </details>
+  </div>
+</header>
+
+<style>
+  .hdr {
+    border-bottom: 1px solid var(--c-line);
+    background: var(--c-bg);
+    position: relative;
+    z-index: 20;
+  }
+  .hdr__in {
+    display: flex;
+    align-items: center;
+    gap: 16px 28px;
+    min-height: 76px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--c-ink);
+    margin-right: auto;
+  }
+  .brand img {
+    width: 38px;
+    height: 38px;
+  }
+  .brand span {
+    font: 700 22px/1 var(--f-display);
+    letter-spacing: 0.01em;
+  }
+  .nav {
+    display: flex;
+    gap: 28px;
+  }
+  .nav a,
+  .mmenu nav a {
+    color: var(--c-ink);
+    text-decoration: none;
+    font-weight: 500;
+    padding-block: 6px;
+  }
+  .nav a:hover {
+    color: var(--c-brand-ink);
+  }
+  .nav a[aria-current='page'] {
+    color: var(--c-brand-ink);
+    box-shadow: inset 0 -2px 0 var(--c-accent);
+  }
+  .langs {
+    display: flex;
+    gap: 2px;
+    font: 600 13px/1 var(--f-body);
+  }
+  .langs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0 8px;
+    border-radius: 4px;
+    color: var(--c-muted);
+    text-decoration: none;
+  }
+  .langs a[aria-current='true'] {
+    background: var(--c-brand-soft);
+    color: var(--c-ink);
+  }
+  .hdr__cta {
+    display: flex;
+    gap: 10px;
+  }
+  .mmenu {
+    display: none;
+  }
+  .mmenu summary {
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1.5px solid var(--c-ink);
+    border-radius: var(--r-sm);
+    font: 600 15px/1 var(--f-display);
+    cursor: pointer;
+  }
+  .mmenu summary::-webkit-details-marker {
+    display: none;
+  }
+  .mmenu__panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: var(--c-bg);
+    border-bottom: 1px solid var(--c-line);
+    box-shadow: var(--shadow-lift);
+    padding: 12px var(--gutter) 20px;
+    display: grid;
+    gap: 16px;
+  }
+  .mmenu__panel nav {
+    display: grid;
+  }
+  .mmenu__panel nav a {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--c-line);
+    font-size: 17px;
+  }
+  .mmenu__cta {
+    display: grid;
+    gap: 10px;
+  }
+
+  @media (max-width: 1080px) {
+    .nav,
+    .hdr__cta {
+      display: none;
+    }
+    .mmenu {
+      display: block;
+    }
+  }
+  @media (max-width: 420px) {
+    .brand span {
+      font-size: 19px;
+    }
+    .hdr__in {
+      gap: 10px;
+    }
+    .langs a {
+      padding: 0 6px;
+    }
+  }
+</style>

@@ -1,0 +1,58 @@
+{
+  "partners": [
+    {
+      "id": "npo-saut",
+      "name": "ООО «НПО САУТ»",
+      "name_uz": "«НПО САУТ» MChJ",
+      "name_en": "NPO SAUT LLC",
+      "country": "Россия",
+      "country_uz": "Rossiya",
+      "country_en": "Russia",
+      "status": "dealer",
+      "article": "partner-npo-saut",
+      "order": 1
+    },
+    {
+      "id": "adz-nagano",
+      "name": "ADZ NAGANO GmbH",
+      "country": "Германия",
+      "country_uz": "Germaniya",
+      "country_en": "Germany",
+      "status": "direct",
+      "article": "partner-adz-nagano",
+      "order": 2
+    },
+    {
+      "id": "gersys",
+      "name": "GERSYS GmbH",
+      "country": "Германия",
+      "country_uz": "Germaniya",
+      "country_en": "Germany",
+      "status": "direct",
+      "article": "partner-gersys",
+      "order": 3
+    },
+    {
+      "id": "siemens-mobility",
+      "name": "Siemens Mobility GmbH",
+      "country": "Германия",
+      "country_uz": "Germaniya",
+      "country_en": "Germany",
+      "status": "direct",
+      "article": "partner-siemens-mobility",
+      "order": 4
+    },
+    {
+      "id": "ratep-innovatsiya",
+      "name": "ООО «РАТЕП-ИННОВАЦИЯ»",
+      "name_uz": "«РАТЕП-ИННОВАЦИЯ» MChJ",
+      "name_en": "RATEP-INNOVATSIYA LLC",
+      "country": "Россия",
+      "country_uz": "Rossiya",
+      "country_en": "Russia",
+      "status": "direct",
+      "article": "partner-ratep-innovatsiya",
+      "order": 5
+    }
+  ]
+}

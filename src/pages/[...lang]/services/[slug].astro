@@ -1,274 +1,308 @@
 ---
+import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import I18nText from '../../../components/I18nText.astro';
-import HudPageHeader from '../../../components/hud/HudPageHeader.astro';
-import { ProductMediaGallery } from '../../../components/islands/ProductMediaGallery';
-import { withBase, telHref } from '../../../utils/url';
-import { renderBody } from '../../../utils/markdown';
-import globalData from '../../../data/cms/global.json';
-import pagesData from '../../../data/cms/pages.json';
+import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
+import SectionHead from '../../../components/ui/SectionHead.astro';
+import Faq from '../../../components/ui/Faq.astro';
+import CtaBand from '../../../components/ui/CtaBand.astro';
 import { expandLangs, localeHref, tField } from '../../../i18n';
 import { t } from '../../../i18n/ui';
+import { company } from '../../../utils/company';
+import { START_PATH } from '../../../utils/nav';
 import { entrySeo, absoluteUrl } from '../../../utils/seo';
-import { navLabel, navLabels } from '../../../utils/nav';
+import { renderBody } from '../../../utils/markdown';
 
 export async function getStaticPaths() {
-  const serviceEntries = await getCollection('services');
-  const paths = serviceEntries.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
-  return expandLangs(paths);
+  const entries = await getCollection('services');
+  return expandLangs(entries.map((entry) => ({ params: { slug: entry.slug }, props: { entry } })));
 }
-
-const { entry } = Astro.props;
+interface Props {
+  entry: CollectionEntry<'services'>;
+}
 const lang = Astro.locals.lang;
-const tr = (key: string, vars?: Record<string, string | number>) => t(lang, key, vars);
+const { entry } = Astro.props;
+const d = entry.data as Record<string, any>;
 const L = (obj: Record<string, any>, field: string) => tField(obj, field, lang) as string;
-
-const data = entry.data;
-const detail = pagesData.servicesPage.detail;
-const serviceRoute = `/services/${entry.slug}/`;
-const serviceUrl = absoluteUrl(localeHref(serviceRoute, lang), Astro.site);
-const orgId = `${absoluteUrl('/', Astro.site)}#organization`;
-const title = L(data, 'title');
-
-// Markdown body: translated body_uz / body_en when present, otherwise the RU body.
-const localizedBody = lang === 'uz' ? data.body_uz : lang === 'en' ? data.body_en : undefined;
-const bodyHtml = await renderBody(localizedBody || entry.body, lang); // links/images localized (src/utils/markdown.ts)
-
-const seo = entrySeo(data, lang, { descriptionFields: ['summary'], body: localizedBody || entry.body });
-
-const serviceJsonLd = {
-  '@type': 'Service',
-  '@id': `${serviceUrl}#service`,
-  name: title,
-  serviceType: L(data, 'category'),
-  description: seo.description,
-  url: serviceUrl,
-  ...(data.image ? { image: absoluteUrl(withBase(data.image), Astro.site) } : {}),
-  provider: { '@id': orgId },
-  areaServed: { '@type': 'Country', name: globalData.countryCode },
-};
-
-const ctaLabel = data.ctaLabel ? L(data, 'ctaLabel') : L(detail, 'defaultCtaLabel');
-const phoneHref = telHref(globalData.phone);
+const localizedBody = lang === 'uz' ? d.body_uz : lang === 'en' ? d.body_en : undefined;
+const bodyHtml = await renderBody(localizedBody || entry.body, lang);
+const seo = entrySeo(d, lang, entry.body);
+const title = L(d, 'title');
+const audienceLabel = t(lang, `services.audience.${d.audience}`);
+const faq = (d.faq || []).map((f: Record<string, string>) => ({ q: L(f, 'q'), a: L(f, 'a') }));
+const others = (await getCollection('services')).filter((s) => s.slug !== entry.slug).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+const crumbs = [
+  { name: t(lang, 'nav.services'), path: '/services/' },
+  { name: title, path: `/services/${entry.slug}/` },
+];
+const pageUrl = absoluteUrl(localeHref(`/services/${entry.slug}/`, lang), Astro.site);
+const jsonLd: Record<string, unknown>[] = [
+  { '@type': 'Service', name: title, description: seo.description, url: pageUrl, areaServed: 'UZ', provider: { '@id': `${absoluteUrl('/', Astro.site)}#organization` } },
+];
+if (faq.length) {
+  jsonLd.push({ '@type': 'FAQPage', mainEntity: faq.map((f: { q: string; a: string }) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
+}
+const benefitsKey = d.audience === 'partners' ? 'services.benefits.partners' : 'services.benefits.customers';
 ---
 
-<BaseLayout
-  title={seo.title}
-  description={seo.description}
-  image={data.image}
-  breadcrumbs={[
-    { name: navLabel('/services/', lang), path: '/services/' },
-    { name: title, path: serviceRoute },
-  ]}
-  jsonLd={serviceJsonLd}
->
-  <div class="max-w-7xl mx-auto px-4 pb-16 font-sans">
-    <HudPageHeader
-      code={tr('services.detail.code', { code: data.code })}
-      parent={{ href: '/services/', label: navLabels('/services/') }}
-      crumb={{ ru: data.code, uz: data.code, en: data.code }}
-      title={{ ru: data.title, uz: data.title_uz, en: data.title_en }}
-      lead={{ ru: data.summary, uz: data.summary_uz, en: data.summary_en }}
-    />
+<BaseLayout title={seo.title} description={seo.description} breadcrumbs={crumbs} jsonLd={jsonLd}>
+  <div class="wrap"><Breadcrumbs items={crumbs} /></div>
 
-    <!-- Status Badges Bar -->
-    <div class="flex flex-wrap items-center gap-2 font-mono text-xs mb-8">
-      <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A] font-bold border border-[#0A0A0A]">
-        {data.code}
-      </span>
-      <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
-        <I18nText ru={data.category} uz={data.category_uz} en={data.category_en} />
-      </span>
-      <span class="hud-glass-card px-2.5 py-1 text-emerald-900 font-bold bg-emerald-100/50">
-        <I18nText ru={detail.activeBadge} uz={detail.activeBadge_uz} en={detail.activeBadge_en} />
-      </span>
-      {detail.vatBadge && (
-        <span class="hud-glass-card px-2.5 py-1 text-[#0A0A0A]">
-          <I18nText ru={detail.vatBadge} uz={detail.vatBadge_uz} en={detail.vatBadge_en} />
-        </span>
-      )}
-    </div>
-
-    <!-- Main Content Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      <!-- Left Column: Steps & Content -->
-      <div class="lg:col-span-7 flex flex-col space-y-8">
-        <!-- 4 Steps of Service Execution -->
-        <div class="hud-glass-card p-6">
-          <div class="border-b border-[#0A0A0A]/20 pb-2 mb-5 flex justify-between items-center font-mono text-xs">
-            <span class="font-bold text-[#0A0A0A] tracking-wider uppercase">
-              <I18nText ru={detail.stepsTitle} uz={detail.stepsTitle_uz} en={detail.stepsTitle_en} />
-            </span>
-            <span class="text-[#4A5056]">{tr('services.detail.stagesCount', { count: data.steps.length })}</span>
-          </div>
-
-          <div class="space-y-4">
-            {data.steps.map((st, idx) => (
-              <div class="flex items-start gap-3.5 p-3.5 bg-white/40 border border-[#0A0A0A]/15">
-                <span class="font-mono bg-[#0A0A0A] text-white px-2 py-0.5 text-xs font-bold flex-none mt-0.5">
-                  0{idx + 1}
-                </span>
-                <div>
-                  <h3 class="font-sans font-bold text-sm text-[#0A0A0A] mb-1">
-                    <I18nText ru={st.title} uz={st.title_uz} en={st.title_en} />
-                  </h3>
-                  <p class="text-xs text-[#4A5056] leading-relaxed">
-                    <I18nText ru={st.text} uz={st.text_uz} en={st.text_en} />
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <!-- Markdown Body -->
-        <div class="hud-glass-card p-6">
-          <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 font-mono text-xs font-bold text-[#0A0A0A] uppercase tracking-wider">
-            <I18nText ru={detail.bodyTitle} uz={detail.bodyTitle_uz} en={detail.bodyTitle_en} />
-          </div>
-          <div class="prose prose-sm text-[#0A0A0A] max-w-none leading-relaxed">
-            <div set:html={bodyHtml} />
-          </div>
-        </div>
-
-        <!-- Downloadable Documentation & Service Agreements -->
-        {data.documents && data.documents.length > 0 && (
-          <div class="hud-glass-card p-6">
-            <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 flex justify-between items-center font-mono text-xs">
-              <span class="font-bold text-[#0A0A0A] tracking-wider uppercase flex items-center gap-2">
-                <span class="w-2 h-2 bg-[#0A0A0A] inline-block"></span>
-                <I18nText ru={detail.documentsTitle} uz={detail.documentsTitle_uz} en={detail.documentsTitle_en} />
-              </span>
-              <span class="text-[#4A5056]">{tr('docs.filesCount', { count: data.documents.length })}</span>
-            </div>
-            <div class="space-y-2.5 font-mono text-xs">
-              {data.documents.map((doc) => {
-                const fileUrl = doc.file.startsWith('http') ? doc.file : withBase(doc.file);
-                return (
-                  <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 border border-[#0A0A0A]/20 bg-white/40 hover:bg-white/80 transition-colors gap-2">
-                    <div class="flex items-center gap-2.5 min-w-0">
-                      <span class="border border-[#0A0A0A] bg-[#0A0A0A] text-white px-1.5 py-0.5 text-[10px] font-bold">DOC</span>
-                      <div class="min-w-0">
-                        <div class="font-bold text-[#0A0A0A] truncate">
-                          <I18nText ru={doc.title} uz={doc.title_uz} en={doc.title_en} />
-                        </div>
-                        <div class="text-[10px] text-[#4A5056] uppercase tracking-wider">
-                          {doc.type || tr('docs.typeFallback')}
-                        </div>
-                      </div>
-                    </div>
-                    <a
-                      href={fileUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="hud-btn hud-btn--ghost text-[11px] py-1.5 px-3 self-start sm:self-auto text-center shrink-0"
-                    >
-                      <I18nText k="docs.download" />
-                    </a>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-      </div>
-
-      <!-- Right Column: Media Frame, Benefits & Order Box -->
-      <div class="lg:col-span-5 flex flex-col space-y-6">
-        <ProductMediaGallery
-          client:load
-          lang={lang}
-          sku={data.code}
-          title={data.title}
-          title_uz={data.title_uz}
-          title_en={data.title_en}
-          category={data.category}
-          category_uz={data.category_uz}
-          category_en={data.category_en}
-          image={data.image}
-          images={data.images}
-        />
-
-        <!-- Key Benefits & Facts -->
-        <div class="hud-glass-card p-6 font-mono text-xs">
-          <div class="border-b border-[#0A0A0A]/20 pb-2 mb-4 font-bold text-[#0A0A0A] uppercase tracking-wider">
-            <I18nText ru={detail.benefitsTitle} uz={detail.benefitsTitle_uz} en={detail.benefitsTitle_en} />
-          </div>
-
-          <table class="w-full border-collapse">
-            <tbody class="divide-y divide-[#0A0A0A]/15">
-              {data.benefits.map((b) => (
-                <tr class="hover:bg-white/30 transition-colors">
-                  <td class="py-2.5 pr-2 text-[#4A5056] w-2/5">
-                    <I18nText ru={b.label} uz={b.label_uz} en={b.label_en} />
-                  </td>
-                  <td class="py-2.5 font-bold text-[#0A0A0A]">
-                    <I18nText ru={b.value} uz={b.value_uz} en={b.value_en} />
-                  </td>
-                </tr>
-              ))}
-              <tr class="hover:bg-white/30 transition-colors">
-                <td class="py-2.5 pr-2 text-[#4A5056]">
-                  <I18nText k="services.detail.contract" />
-                </td>
-                <td class="py-2.5 font-bold text-[#0A0A0A]">
-                  <I18nText ru={detail.contractValue} uz={detail.contractValue_uz} en={detail.contractValue_en} />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Commercial Action Card -->
-        <div class="hud-glass-card p-6 font-mono gap-4">
-          <div class="border-b border-[#0A0A0A]/20 pb-2">
-            <span class="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider block">
-              <I18nText ru={detail.orderTitle} uz={detail.orderTitle_uz} en={detail.orderTitle_en} />
-            </span>
-            <span class="text-[11px] text-[#4A5056]">
-              <I18nText ru={detail.orderNote} uz={detail.orderNote_uz} en={detail.orderNote_en} />
-            </span>
-          </div>
-
-          <div class="space-y-2 text-xs">
-            <div class="flex justify-between text-[#4A5056]">
-              <span><I18nText k="services.detail.settlement" /></span>
-              <span class="font-bold text-[#0A0A0A]"><I18nText ru={detail.currencyValue} uz={detail.currencyValue_uz} en={detail.currencyValue_en} /></span>
-            </div>
-            {detail.taxationValue && (
-              <div class="flex justify-between text-[#4A5056]">
-                <span><I18nText k="services.detail.taxation" /></span>
-                <span class="font-bold text-[#0A0A0A]"><I18nText ru={detail.taxationValue} uz={detail.taxationValue_uz} en={detail.taxationValue_en} /></span>
-              </div>
-            )}
-            <div class="flex justify-between text-[#4A5056]">
-              <span><I18nText k="services.detail.directLine" /></span>
-              <a href={phoneHref} class="font-bold text-[#0A0A0A] hover:underline">{globalData.phone}</a>
-            </div>
-          </div>
-
-          <div class="pt-2 flex flex-col gap-2">
-            <button
-              type="button"
-              data-lead-modal
-              data-lead-subject={t(lang, 'lead.subject.serviceInquiry', { title: tField(data, 'title', lang), code: data.code })}
-              class="hud-btn w-full cursor-pointer"
-            >
-              <I18nText ru={ctaLabel} />
-            </button>
-            <a
-              href={localeHref('/services/', lang)}
-              class="hud-btn hud-btn--ghost w-full text-center"
-            >
-              <I18nText k="services.detail.back" />
-            </a>
-          </div>
-        </div>
+  <section class="wrap hero" aria-labelledby="svc-title">
+    <div class="hero__txt">
+      <p class="eyebrow">{t(lang, 'nav.services')} · {audienceLabel}</p>
+      <h1 id="svc-title">{title}</h1>
+      <p class="hero__lead">{L(d, 'lead')}</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href={localeHref(START_PATH, lang)}>{t(lang, 'cta.request')}</a>
+        <a class="btn btn--outline" href={company.cabinet.loginUrl}>{t(lang, 'cta.cabinet')}</a>
       </div>
     </div>
-  </div>
+    {d.highlights?.length > 0 && (
+      <aside class="brief" aria-labelledby="brief-title">
+        <h2 id="brief-title">{t(lang, 'services.highlights')}</h2>
+        <dl>
+          {d.highlights.map((h: any) => (
+            <div><dt>{L(h, 'label')}</dt><dd>{L(h, 'value')}</dd></div>
+          ))}
+        </dl>
+      </aside>
+    )}
+  </section>
+
+  {bodyHtml && (
+    <section class="section section--soft">
+      <div class="wrap"><div class="prose" set:html={bodyHtml} /></div>
+    </section>
+  )}
+
+  {d.steps?.length > 0 && (
+    <section class="section" aria-labelledby="steps-title">
+      <div class="wrap">
+        <SectionHead id="steps-title" title={t(lang, 'services.steps')} />
+        <ol class="flow">
+          {d.steps.map((s: any, i: number) => (
+            <li><em>{String(i + 1).padStart(2, '0')}</em><b>{L(s, 'title')}</b><span>{L(s, 'text')}</span></li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )}
+
+  {d.benefits?.length > 0 && (
+    <section class="section section--soft" aria-labelledby="ben-title">
+      <div class="wrap">
+        <SectionHead id="ben-title" title={t(lang, benefitsKey)} />
+        <ul class="gets">
+          {d.benefits.map((b: any) => <li><b>{L(b, 'title')}</b><span>{L(b, 'text')}</span></li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {d.requirements?.length > 0 && (
+    <section class="section" aria-labelledby="req-title">
+      <div class="wrap">
+        <SectionHead id="req-title" title={t(lang, 'services.requirements')} />
+        <ul class="req">
+          {d.requirements.map((r: any) => <li><b>{L(r, 'title')}</b><span>{L(r, 'text')}</span></li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {faq.length > 0 && (
+    <section class="section section--soft" aria-labelledby="faq-title">
+      <div class="wrap two">
+        <div>
+          <SectionHead id="faq-title" title={t(lang, 'services.faq')} />
+          <nav class="others" aria-label={t(lang, 'services.other')}>
+            <p class="eyebrow">{t(lang, 'services.other')}</p>
+            <ul>{others.map((s) => <li><a href={localeHref(`/services/${s.slug}/`, lang)}>{tField(s.data, 'title', lang)}</a></li>)}</ul>
+          </nav>
+        </div>
+        <Faq items={faq} />
+      </div>
+    </section>
+  )}
+
+  <CtaBand title={t(lang, 'services.cta.title')} text={t(lang, 'services.cta.text')} />
 </BaseLayout>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+    gap: 56px;
+    align-items: start;
+    padding-block: 28px 80px;
+  }
+  .hero__txt {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  h1 {
+    font-size: 52px;
+    font-weight: 800;
+  }
+  .hero__lead {
+    font-size: 19px;
+    color: var(--c-muted);
+    max-width: 660px;
+  }
+  .brief {
+    border: 1px solid var(--c-line);
+    border-top: 3px solid var(--c-accent);
+    border-radius: var(--r-md);
+    padding: 22px 24px;
+  }
+  .brief h2 {
+    font: 600 14px/1.2 var(--f-body);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+    margin-bottom: 4px;
+  }
+  .brief dl {
+    margin: 0;
+  }
+  .brief div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--c-line);
+  }
+  .brief div:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+  .brief dt {
+    font: 700 16px/1.3 var(--f-display);
+  }
+  .brief dd {
+    margin: 0;
+    font-size: 15px;
+    color: var(--c-muted);
+  }
+  .flow {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    border-top: 2px solid var(--c-ink);
+  }
+  .flow li {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 22px 20px 0 0;
+  }
+  .flow em {
+    font: 800 15px/1 var(--f-display);
+    font-style: normal;
+    color: var(--c-accent-ink);
+  }
+  .flow b {
+    font: 700 19px/1.2 var(--f-display);
+  }
+  .flow span {
+    font-size: 15px;
+    color: var(--c-muted);
+  }
+  .gets,
+  .req {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 28px;
+  }
+  .gets li,
+  .req li {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--c-line);
+  }
+  .gets b,
+  .req b {
+    font: 700 20px/1.25 var(--f-display);
+  }
+  .gets span,
+  .req span {
+    color: var(--c-muted);
+    font-size: 16px;
+  }
+  .req li {
+    border-top: 3px solid var(--c-brand-mid);
+  }
+  .two {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 64px;
+    align-items: start;
+  }
+  .others {
+    display: grid;
+    gap: 10px;
+  }
+  .others ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .others a {
+    font-weight: 600;
+  }
+  @media (max-width: 1080px) {
+    .hero,
+    .two {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 28px;
+    }
+    .flow {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      row-gap: 24px;
+    }
+  }
+  @media (max-width: 760px) {
+    .hero {
+      padding-block: 20px 44px;
+    }
+    h1 {
+      font-size: 34px;
+    }
+    .hero__lead {
+      font-size: 17px;
+    }
+    .flow {
+      grid-template-columns: minmax(0, 1fr);
+      border-top: 0;
+    }
+    .flow li {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 2px 10px;
+      padding: 12px 0;
+      border-top: 1px solid var(--c-line);
+    }
+    .flow em {
+      grid-row: span 2;
+      padding-top: 3px;
+    }
+    .gets,
+    .req {
+      gap: 16px;
+    }
+    .gets b,
+    .req b {
+      font-size: 17px;
+    }
+  }
+</style>

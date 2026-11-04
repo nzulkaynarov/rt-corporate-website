@@ -1,89 +1,143 @@
 {
-  "title": "Подвал сайта (footer)",
+  "title": "Шапка, меню и футер",
   "strings": [
     {
-      "key": "lead.subject.footer",
-      "ru": "Запрос спецификации с сайта",
-      "uz": "Saytdan spetsifikatsiya so'rovi",
-      "en": "Specification request"
+      "key": "skip.toMain",
+      "ru": "Перейти к содержимому",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "footer.requisites",
-      "ru": "РЕКВИЗИТЫ ПРЕДПРИЯТИЯ:",
-      "uz": "KORXONA REKVIZITLARI:",
-      "en": "COMPANY REQUISITES:"
+      "key": "nav.home",
+      "ru": "Главная",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "footer.tin",
-      "ru": "ИНН:",
-      "uz": "STIR (INN):",
-      "en": "TIN / INN:"
+      "key": "nav.services",
+      "ru": "Услуги",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "footer.vat",
-      "ru": "НДС:",
-      "uz": "QQS:",
-      "en": "VAT:"
+      "key": "nav.news",
+      "ru": "Новости",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "footer.esf",
-      "ru": "ЭСФ:",
-      "uz": "EHF:",
-      "en": "ESF:"
+      "key": "nav.contacts",
+      "ru": "Контакты",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "nav.cabinet",
+      "ru": "Кабинет",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "nav.menu",
+      "ru": "Меню",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "nav.mainAria",
+      "ru": "Основное меню",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "nav.langAria",
+      "ru": "Язык сайта",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "nav.homeAria",
+      "ru": "RailTech — на главную",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "cta.start",
+      "ru": "Начать работу",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "cta.cabinet",
+      "ru": "Войти в Кабинет",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "cta.request",
+      "ru": "Отправить заявку",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "footer.sections",
+      "ru": "Разделы",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "footer.documents",
+      "ru": "Документы",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "footer.contacts",
+      "ru": "Контакты",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "footer.tagline",
+      "ru": "Надёжный мост между международными производителями и предприятиями Узбекистана.",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "footer.inn",
+      "ru": "ИНН",
+      "uz": "",
+      "en": ""
     },
     {
       "key": "footer.privacy",
       "ru": "Политика конфиденциальности",
-      "uz": "Maxfiylik siyosati",
-      "en": "Privacy Policy"
+      "uz": "",
+      "en": ""
     },
     {
       "key": "footer.terms",
       "ru": "Условия использования",
-      "uz": "Foydalanish shartlari",
-      "en": "Terms of Service"
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "footer.privacyShort",
-      "ru": "Конфиденциальность",
-      "uz": "Maxfiylik",
-      "en": "Privacy"
+      "key": "footer.cookies",
+      "ru": "Cookies",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "footer.termsShort",
-      "ru": "Условия использования",
-      "uz": "Foydalanish shartlari",
-      "en": "Terms of Use"
+      "key": "breadcrumbs.aria",
+      "ru": "Навигационная цепочка",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "footer.admin",
-      "ru": "Панель управления",
-      "uz": "Boshqaruv paneli",
-      "en": "Admin panel"
-    },
-    {
-      "key": "footer.phone",
-      "ru": "Телефон:",
-      "uz": "Telefon:",
-      "en": "Phone:"
-    },
-    {
-      "key": "footer.email",
-      "ru": "Электронная почта:",
-      "uz": "Elektron pochta:",
-      "en": "Email address:"
-    },
-    {
-      "key": "footer.submitRequest",
-      "ru": "[ ОСТАВИТЬ ЗАЯВКУ ↗ ]",
-      "uz": "[ ARIZA QOLDIRISH ↗ ]",
-      "en": "[ SUBMIT REQUEST ↗ ]"
-    },
-    {
-      "key": "footer.office",
-      "ru": "ОФИС:",
-      "uz": "OFIS:",
-      "en": "OFFICE:"
+      "key": "legal.edition",
+      "ru": "Редакция",
+      "uz": "",
+      "en": ""
     }
   ]
 }

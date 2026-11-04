@@ -1,0 +1,43 @@
+{
+  "brandName": "RailTech",
+  "companyName": "ООО «RailTech»",
+  "companyName_uz": "«RailTech» MChJ",
+  "companyName_en": "RailTech LLC",
+  "fullName": "Общество с ограниченной ответственностью «RailTech»",
+  "fullName_uz": "«RailTech» mas'uliyati cheklangan jamiyati",
+  "fullName_en": "RailTech Limited Liability Company",
+  "foundedYear": "2021",
+  "inn": "308346339",
+  "city": "Ташкент",
+  "city_uz": "Toshkent",
+  "city_en": "Tashkent",
+  "countryCode": "UZ",
+  "legalAddress": "г. Ташкент, Ц-1, 47/33",
+  "legalAddress_uz": "Toshkent sh., Ts-1, 47/33",
+  "legalAddress_en": "Ts-1, 47/33, Tashkent",
+  "officeAddress": "г. Ташкент, ул. Абдуллы Каххара, 46",
+  "officeAddress_uz": "Toshkent sh., Abdulla Qahhor ko'chasi, 46",
+  "officeAddress_en": "46 Abdulla Qahhor Street, Tashkent",
+  "phone": "+998 90 118-90-00",
+  "email": "info@railtech.uz",
+  "telegramBot": "railtech_test_bot",
+  "bank": {
+    "name": "АИКБ «IPAK YO'LI BANK», Мирзо-Улугбекский филиал",
+    "name_uz": "«IPAK YO'LI BANK», Mirzo Ulug'bek filiali",
+    "name_en": "IPAK YO'LI BANK, Mirzo-Ulugbek branch",
+    "mfo": "00421",
+    "account": "20208000205374302001"
+  },
+  "cabinet": {
+    "url": "https://cabinet.railtech.uz",
+    "loginUrl": "https://cabinet.railtech.uz/login",
+    "newClientUrl": "https://cabinet.railtech.uz/new-client"
+  },
+  "leadEndpoint": "https://crm.railtech.uz/api/v1/leads/web",
+  "metrics": [
+    { "value": "5+", "label": "лет на рынке", "label_uz": "", "label_en": "" },
+    { "value": "30+", "label": "активных партнёров", "label_uz": "", "label_en": "" },
+    { "value": "10+", "label": "производителей", "label_uz": "", "label_en": "" },
+    { "value": "250+", "label": "позиций оборудования", "label_uz": "", "label_en": "" }
+  ]
+}

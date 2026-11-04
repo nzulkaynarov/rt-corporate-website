@@ -1,0 +1,77 @@
+{
+  "title": "Новости",
+  "strings": [
+    {
+      "key": "news.type.all",
+      "ru": "Все",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "news.type.news",
+      "ru": "Новости",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "news.type.article",
+      "ru": "Статьи",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "news.type.project",
+      "ru": "Проекты",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "news.type.partner",
+      "ru": "Партнёры",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "news.filterAria",
+      "ru": "Тип материала",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "news.back",
+      "ru": "Все материалы",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "news.partnerMaterials",
+      "ru": "Материалы о партнёре",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "news.partnerStatus",
+      "ru": "Статус RailTech",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "news.empty",
+      "ru": "В этом разделе пока нет материалов.",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "news.related",
+      "ru": "Ещё материалы",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "news.partnerCountry",
+      "ru": "Страна",
+      "uz": "",
+      "en": ""
+    }
+  ]
+}

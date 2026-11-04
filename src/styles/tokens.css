@@ -1,0 +1,44 @@
+/* Design tokens of railtech.uz — style «Мост». The only place colours, fonts and radii are defined.
+   Documented in docs/DESIGN.md; components use var(--…) only (no literal colours). */
+:root {
+  --c-bg: #ffffff;
+  --c-soft: #f4f7f9;
+  --c-ink: #2d3e50;
+  --c-ink-deep: #1f2e3d;
+  --c-muted: #5a6876;
+  --c-line: #dde5ea;
+  --c-line-strong: #c9d5dc;
+  --c-brand: #35819b;
+  --c-brand-ink: #2a6f86;
+  --c-brand-ink-hover: #1f5568;
+  --c-brand-soft: #e3f0f4;
+  --c-brand-mid: #a7ced9;
+  --c-accent: #e8833a;
+  --c-accent-soft: #fbe9dc;
+  --c-accent-ink: #8a4a17;
+  --c-ok-soft: #e2f2ea;
+  --c-ok-ink: #1e6b47;
+  --c-danger-ink: #a0312f;
+  --c-on-ink: #ffffff;
+  --c-on-ink-muted: #b9c6d1;
+  --c-on-ink-soft: #d6e0e8;
+  --c-ink-line: #3e5165;
+
+  --f-display: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  --f-body: 'Golos Text', 'Segoe UI', Arial, sans-serif;
+
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 10px;
+  --r-pill: 999px;
+
+  --wrap: 1240px;
+  --gutter: 40px;
+  --shadow-lift: 0 14px 30px -20px rgba(45, 62, 80, 0.45);
+}
+
+@media (max-width: 760px) {
+  :root {
+    --gutter: 16px;
+  }
+}

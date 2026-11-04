@@ -1,0 +1,44 @@
+---
+/** Visible breadcrumbs (schema.org BreadcrumbList is emitted by BaseLayout from the same items). */
+import { localeHref } from '../../i18n';
+import { t } from '../../i18n/ui';
+
+interface Props {
+  items: { name: string; path: string }[];
+}
+const lang = Astro.locals.lang;
+const { items } = Astro.props;
+const all = [{ name: t(lang, 'nav.home'), path: '/' }, ...items];
+---
+
+<nav class="crumbs" aria-label={t(lang, 'breadcrumbs.aria')}>
+  <ol>
+    {all.map((c, i) => (
+      <li>{i < all.length - 1 ? <a href={localeHref(c.path, lang)}>{c.name}</a> : <span aria-current="page">{c.name}</span>}</li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .crumbs ol {
+    list-style: none;
+    margin: 0;
+    padding: 28px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--c-muted);
+  }
+  .crumbs li + li::before {
+    content: '/';
+    margin-right: 6px;
+    color: var(--c-line-strong);
+  }
+  .crumbs a {
+    color: var(--c-muted);
+  }
+  .crumbs [aria-current] {
+    color: var(--c-ink);
+  }
+</style>

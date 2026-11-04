@@ -1,0 +1,1 @@
+{ "ruOnly": true, "_comment": "RU-first stage: missing UZ/EN translations are counted, not errors. Set to false after the translation pass (docs/ARCHITECTURE.md §3)." }

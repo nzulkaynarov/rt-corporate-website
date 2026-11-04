@@ -1,0 +1,125 @@
+---
+/**
+ * Manufacturer tiles (src/data/cms/partners.json). A tile links to the partner article in «Новости»
+ * when that article exists; the basis of a dealer status is not shown (given to clients on request).
+ * On phones the tiles become a horizontal swipe row.
+ */
+import { getCollection } from 'astro:content';
+import { localeHref, tField } from '../../i18n';
+import { t } from '../../i18n/ui';
+import partnersData from '../../data/cms/partners.json';
+
+interface Props {
+  /** Ids to show (default: all). */
+  ids?: string[];
+}
+const lang = Astro.locals.lang;
+const news = new Set<string>((await getCollection('news')).map((e) => e.slug));
+const partners = [...partnersData.partners]
+  .filter((p) => !Astro.props.ids || Astro.props.ids.includes(p.id))
+  .sort((a, b) => (a.order ?? 99) - (b.order ?? 99))
+  .map((p) => ({
+    ...p,
+    label: tField(p, 'name', lang),
+    country: tField(p, 'country', lang),
+    statusKey: p.status,
+    status: t(lang, `partner.status.${p.status}`),
+    href: p.article && news.has(p.article) ? localeHref(`/news/${p.article}/`, lang) : '',
+  }));
+---
+
+<ul class="tiles" aria-label={t(lang, 'partner.tilesAria')}>
+  {partners.map((p) => (
+    <li>
+      {p.href ? (
+        <a class:list={['tile', { 'tile--dealer': p.statusKey === 'dealer' }]} href={p.href}>
+          <b>{p.label}</b>
+          <span class="tile__country">{p.country}</span>
+          <span class="tile__status">{p.status}</span>
+          <svg class="tile__arrow" width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 9h12M10 4l5 5-5 5"></path></svg>
+        </a>
+      ) : (
+        <div class:list={['tile', { 'tile--dealer': p.statusKey === 'dealer' }]}>
+          <b>{p.label}</b>
+          <span class="tile__country">{p.country}</span>
+          <span class="tile__status">{p.status}</span>
+        </div>
+      )}
+    </li>
+  ))}
+</ul>
+
+<style>
+  .tiles {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    height: 100%;
+    padding: 18px 20px 18px;
+    border: 1px solid var(--c-line);
+    border-radius: var(--r-md);
+    background: var(--c-bg);
+    color: var(--c-ink);
+    text-decoration: none;
+  }
+  a.tile:hover {
+    border-color: var(--c-brand-mid);
+    box-shadow: var(--shadow-lift);
+    color: var(--c-ink);
+  }
+  .tile b {
+    font: 700 16px/1.3 var(--f-display);
+    padding-right: 22px;
+  }
+  .tile__country {
+    font-size: 14px;
+    color: var(--c-muted);
+  }
+  .tile__status {
+    margin-top: 8px;
+    align-self: flex-start;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--r-pill);
+    background: var(--c-soft);
+  }
+  .tile--dealer {
+    background: var(--c-brand-soft);
+    border-color: var(--c-brand-mid);
+  }
+  .tile--dealer .tile__status {
+    background: var(--c-bg);
+    color: var(--c-brand-ink-hover);
+  }
+  .tile__arrow {
+    position: absolute;
+    right: 16px;
+    top: 20px;
+    color: var(--c-brand-ink);
+  }
+  @media (max-width: 760px) {
+    .tiles {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 10px;
+      margin-inline: calc(var(--gutter) * -1);
+      padding-inline: var(--gutter);
+      padding-bottom: 6px;
+    }
+    .tiles li {
+      flex: 0 0 72%;
+      scroll-snap-align: start;
+    }
+  }
+</style>

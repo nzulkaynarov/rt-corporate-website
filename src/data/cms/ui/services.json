@@ -1,107 +1,77 @@
 {
-  "title": "Услуги",
+  "title": "Страницы услуг",
   "strings": [
     {
-      "key": "lead.subject.serviceQuote",
-      "ru": "Запрос расчета по услуге: {title}",
-      "uz": "Xizmat bo'yicha hisob-kitob so'rovi: {title}",
-      "en": "Quote request for the service: {title}"
+      "key": "services.audience.customers",
+      "ru": "Заказчикам",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "lead.subject.servicesConsultation",
-      "ru": "Запрос консультации по услугам компании",
-      "uz": "Kompaniya xizmatlari bo'yicha maslahat so'rovi",
-      "en": "Consultation request about our services"
+      "key": "services.audience.partners",
+      "ru": "Партнёрам",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "lead.subject.serviceInquiry",
-      "ru": "Заявка на услугу: {title} ({code})",
-      "uz": "Xizmatga ariza: {title} ({code})",
-      "en": "Service request: {title} ({code})"
+      "key": "services.highlights",
+      "ru": "Коротко",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "services.filter.aria",
-      "ru": "Фильтр услуг по направлению",
-      "uz": "Xizmatlarni yo'nalish bo'yicha filtrlash",
-      "en": "Services category filter"
+      "key": "services.steps",
+      "ru": "Как работаем",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "services.filter.label",
-      "ru": "НАПРАВЛЕНИЕ:",
-      "uz": "YO'NALISH:",
-      "en": "CATEGORY:"
+      "key": "services.benefits.customers",
+      "ru": "Что вы получаете",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "services.filter.all",
-      "ru": "Все услуги",
-      "uz": "Barcha xizmatlar",
-      "en": "All services"
+      "key": "services.benefits.partners",
+      "ru": "Что получает партнёр",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "services.card.mediaCode",
-      "ru": "SERVICE // {code}",
-      "uz": "SERVICE // {code}",
-      "en": "SERVICE // {code}"
+      "key": "services.requirements",
+      "ru": "Что нужно от партнёра",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "services.card.deliverables",
-      "ru": "// ЧТО ВХОДИТ В УСЛУГУ:",
-      "uz": "// XIZMATGA NIMALAR KIRADI:",
-      "en": "// DELIVERABLES & STAGES:"
+      "key": "services.faq",
+      "ru": "Частые вопросы",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "services.card.details",
-      "ru": "Подробнее",
-      "uz": "Batafsil",
-      "en": "Details"
+      "key": "services.related",
+      "ru": "Материалы по теме",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "services.card.requestQuote",
-      "ru": "Заказать расчет",
-      "uz": "Hisobni buyurtma qilish",
-      "en": "Request quotation"
+      "key": "services.other",
+      "ru": "Другие услуги",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "services.detail.code",
-      "ru": "SRV // {code}",
-      "uz": "SRV // {code}",
-      "en": "SRV // {code}"
+      "key": "services.cta.title",
+      "ru": "Готовы обсудить задачу?",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "services.detail.stagesCount",
-      "ru": "{count} STAGES",
-      "uz": "{count} STAGES",
-      "en": "{count} STAGES"
-    },
-    {
-      "key": "services.detail.contract",
-      "ru": "Договор / ЭСФ:",
-      "uz": "Shartnoma / EHF:",
-      "en": "Contract / Invoice:"
-    },
-    {
-      "key": "services.detail.settlement",
-      "ru": "Базис расчетов:",
-      "uz": "Hisob-kitob asosi:",
-      "en": "Settlement currency:"
-    },
-    {
-      "key": "services.detail.taxation",
-      "ru": "Налогообложение:",
-      "uz": "Soliqqa tortish:",
-      "en": "Taxation:"
-    },
-    {
-      "key": "services.detail.directLine",
-      "ru": "Прямая линия:",
-      "uz": "To'g'ridan-to'g'ri aloqa:",
-      "en": "Direct line:"
-    },
-    {
-      "key": "services.detail.back",
-      "ru": "← ВСЕ УСЛУГИ КОМПАНИИ",
-      "uz": "← BARCHA XIZMATLAR",
-      "en": "← ALL SERVICES"
+      "key": "services.cta.text",
+      "ru": "Опишите, что нужно, — менеджер свяжется в течение рабочего дня.",
+      "uz": "",
+      "en": ""
     }
   ]
 }

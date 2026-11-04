@@ -1,0 +1,132 @@
+---
+/** Site footer: tagline, menu, documents (service pages), contacts, legal line with INN. */
+import { localeHref, tField } from '../../i18n';
+import { t } from '../../i18n/ui';
+import { MAIN_NAV, LEGAL_NAV } from '../../utils/nav';
+import { company, mailHref, telHref, telegramUrl } from '../../utils/company';
+import { withBase } from '../../utils/url';
+
+const lang = Astro.locals.lang;
+const tr = (key: string) => t(lang, key);
+const year = new Date().getFullYear();
+const tg = telegramUrl();
+---
+
+<footer class="ftr">
+  <div class="wrap ftr__in">
+    <div class="ftr__brand">
+      <a class="ftr__logo" href={localeHref('/', lang)} aria-label={tr('nav.homeAria')}>
+        <span><img src={withBase('/brand/rt-mark.svg')} alt="" width="24" height="24" /></span>
+        {company.brandName}
+      </a>
+      <p>{tr('footer.tagline')}</p>
+    </div>
+    <div>
+      <h2>{tr('footer.sections')}</h2>
+      <ul>
+        {MAIN_NAV.map((item) => <li><a href={localeHref(item.path, lang)}>{tr(item.key)}</a></li>)}
+        <li><a href={company.cabinet.loginUrl}>{tr('nav.cabinet')}</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>{tr('footer.documents')}</h2>
+      <ul>
+        {LEGAL_NAV.map((item) => <li><a href={localeHref(item.path, lang)}>{tr(item.key)}</a></li>)}
+      </ul>
+    </div>
+    <div class="ftr__contacts">
+      <h2>{tr('footer.contacts')}</h2>
+      <ul>
+        <li>{tField(company, 'officeAddress', lang)}</li>
+        <li><a href={telHref()}>{company.phone}</a></li>
+        <li><a href={mailHref()}>{company.email}</a></li>
+        {tg && <li><a href={tg} rel="noopener">{tr('contacts.telegram')}</a></li>}
+      </ul>
+    </div>
+  </div>
+  <div class="wrap ftr__bot">
+    <span>© {year} {tField(company, 'companyName', lang)} · {tr('footer.inn')} {company.inn}</span>
+  </div>
+</footer>
+
+<style>
+  .ftr {
+    background: var(--c-ink-deep);
+    color: var(--c-on-ink-soft);
+    font-size: 15px;
+  }
+  .ftr__in {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+    gap: 40px;
+    padding-block: 64px 40px;
+  }
+  .ftr h2 {
+    font: 600 13px/1.2 var(--f-body);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-brand-mid);
+    margin-bottom: 14px;
+  }
+  .ftr a {
+    color: var(--c-on-ink);
+    text-decoration: none;
+  }
+  .ftr a:hover {
+    color: var(--c-brand-mid);
+  }
+  .ftr ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .ftr__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font: 700 20px/1 var(--f-display);
+    margin-bottom: 16px;
+  }
+  .ftr__logo span {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--c-bg);
+    display: grid;
+    place-items: center;
+  }
+  .ftr__brand p {
+    color: var(--c-on-ink-muted);
+    max-width: 340px;
+  }
+  .ftr__bot {
+    border-top: 1px solid var(--c-ink-line);
+    padding-block: 22px;
+    font-size: 14px;
+    color: var(--c-on-ink-muted);
+  }
+  @media (max-width: 1080px) {
+    .ftr__in {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 760px) {
+    .ftr__in {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px 20px;
+      padding-block: 40px 28px;
+    }
+    .ftr__brand p {
+      display: none;
+    }
+    .ftr__brand,
+    .ftr__contacts {
+      grid-column: 1 / -1;
+    }
+    .ftr__logo {
+      margin-bottom: 0;
+    }
+  }
+</style>
