@@ -1,23 +1,49 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
 const isCustomDomain = Boolean(process.env.CUSTOM_DOMAIN);
 const base = isCustomDomain ? '/' : '/rt-corporate-website';
 
-/** Service pages that must not appear in the sitemap (CMS panel, legacy redirects). */
-const SITEMAP_EXCLUDE = ['/admin/', '/contract/', '/digital/'];
+import legacy from './src/data/legacy-redirects.json' with { type: 'json' };
+import stage from './src/data/content-stage.json' with { type: 'json' };
+
+/** Not in the sitemap: CMS panel, v1 → v2 redirect pages (src/pages/[...legacy].astro), untranslated UZ/EN pages
+ * (whole site while ruOnly, or sections listed in ruOnlySections — same rule as src/utils/stage.ts). */
+const LEGACY = Object.keys(legacy.redirects);
+const isExcluded = (pathname) => {
+  const noBase = pathname.replace(/^\/rt-corporate-website/, '') || '/';
+  const lang = (noBase.match(/^\/(uz|en)\//) || [])[1];
+  const route = lang ? noBase.slice(lang.length + 1) : noBase;
+  // UZ/EN pages that still show Russian text → kept out of the sitemap (and noindex in BaseLayout).
+  const ruOnlyRoute = stage.ruOnly === true || (stage.ruOnlySections || []).includes(route.split('/')[1] || '');
+  return route === '/admin/' || LEGACY.includes(route) || (ruOnlyRoute && Boolean(lang));
+};
 
 export default defineConfig({
   site: isCustomDomain ? 'https://railtech.uz' : 'https://nzulkaynarov.github.io',
   base,
   output: 'static',
+  // The dev-server toolbar (black pill at the bottom) is off: owner reviews the site in dev mode.
+  devToolbar: { enabled: false },
+  vite: {
+    plugins: [
+      {
+        // @fontsource ships `font-display: swap`: the first frame of every page is drawn with the fallback font and
+        // the header menu jumps when Montserrat arrives. `optional` + preload (BaseLayout) uses the font from the first
+        // frame; if it is not ready in ~100 ms the page keeps the fallback (no jump) and the next page has the font.
+        name: 'railtech-font-display-optional',
+        enforce: 'pre',
+        transform(code, id) {
+          if (id.includes('@fontsource') && id.endsWith('.css')) return code.replace(/font-display:\s*swap/g, 'font-display: optional');
+        },
+      },
+    ],
+  },
   integrations: [
-    tailwind({ applyBaseStyles: false }),
     react(),
     sitemap({
-      filter: (page) => !SITEMAP_EXCLUDE.some((path) => new URL(page).pathname.endsWith(path)),
+      filter: (page) => !isExcluded(new URL(page).pathname),
       // ru has no URL prefix; /uz/… and /en/… are linked as hreflang alternates
       i18n: {
         defaultLocale: 'ru',

@@ -1,0 +1,87 @@
+---
+/** Invitation with the lead form and direct contacts. */
+import { tField } from '../../i18n';
+import { t } from '../../i18n/ui';
+import home from '../../data/cms/home.json';
+import { company, mailHref, telHref, telegramUrl } from '../../utils/company';
+import LeadFormBlock from '../ui/LeadFormBlock.astro';
+
+const lang = Astro.locals.lang;
+const v = home.invite as Record<string, string>;
+const tg = telegramUrl();
+---
+
+<section class="section section--soft" id="request" aria-labelledby="invite-title">
+  <div class="wrap invite">
+    <div class="invite__txt">
+      <p class="eyebrow">{tField(v, 'eyebrow', lang)}</p>
+      <h2 id="invite-title">{tField(v, 'title', lang)}</h2>
+      <p class="muted">{tField(v, 'text', lang)}</p>
+      <ul class="contacts">
+        {tg && <li><span>{t(lang, 'home.invite.telegram')}</span><a href={tg} rel="noopener">{t(lang, 'home.invite.telegramLink')}</a></li>}
+        <li><span>{t(lang, 'home.invite.phone')}</span><a href={telHref()}>{company.phone}</a></li>
+        <li><span>{t(lang, 'home.invite.email')}</span><a href={mailHref()}>{company.email}</a></li>
+        <li class="contacts__office"><span>{t(lang, 'home.invite.office')}</span><b>{tField(company, 'officeAddress', lang)}</b></li>
+      </ul>
+    </div>
+    <LeadFormBlock idPrefix="home-lead" />
+  </div>
+</section>
+
+<style>
+  .invite {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 64px;
+    align-items: start;
+  }
+  .invite__txt {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  h2 {
+    font-size: var(--fs-h2);
+    font-weight: 800;
+  }
+  .contacts {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0 0;
+    display: grid;
+    gap: 10px;
+  }
+  .contacts li {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+  .contacts span {
+    min-width: 92px;
+    color: var(--c-muted);
+    font-size: 14px;
+  }
+  .contacts b {
+    font-weight: 500;
+  }
+  @media (max-width: 1080px) {
+    .invite {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 28px;
+    }
+  }
+  @media (max-width: 760px) {
+    .invite__txt {
+      gap: 12px;
+    }
+    .contacts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+    }
+    .contacts span,
+    .contacts__office {
+      display: none !important;
+    }
+  }
+</style>

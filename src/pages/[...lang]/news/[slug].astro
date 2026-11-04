@@ -1,0 +1,237 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
+import Lightbox from '../../../components/ui/Lightbox.astro';
+import NewsCard from '../../../components/ui/NewsCard.astro';
+import CtaBand from '../../../components/ui/CtaBand.astro';
+import partnersData from '../../../data/cms/partners.json';
+import { expandLangs, localeHref, tField } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { formatDate } from '../../../utils/format';
+import { renderBody } from '../../../utils/markdown';
+import { entrySeo, absoluteUrl, siteSeo } from '../../../utils/seo';
+import { withBase } from '../../../utils/url';
+import { contentLang } from '../../../utils/stage';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('news');
+  return expandLangs(entries.map((entry) => ({ params: { slug: entry.slug }, props: { entry } })));
+}
+interface Props {
+  entry: CollectionEntry<'news'>;
+}
+const lang = Astro.locals.lang;
+// Content language: RU while news is not translated (src/data/content-stage.json → ruOnlySections); UI stays in `lang`.
+const cl = contentLang(lang, 'news');
+const { entry } = Astro.props;
+const d = entry.data as Record<string, any>;
+const title = tField(d, 'title', cl) as string;
+const localizedBody = cl === 'uz' ? d.body_uz : cl === 'en' ? d.body_en : undefined;
+const bodyHtml = await renderBody(localizedBody || entry.body, lang);
+const seo = entrySeo(d, cl, entry.body);
+const gallery: { image: string; alt: string }[] = (d.gallery || []).map((g: Record<string, string>) => ({ image: g.image, alt: tField(g, 'alt', cl) || '' }));
+
+const all = (await getCollection('news')).filter((e) => e.slug !== entry.slug).sort((a, b) => b.data.date.localeCompare(a.data.date));
+const partner = d.type === 'partner' ? partnersData.partners.find((p) => (d.partners || []).includes(p.id)) : undefined;
+const related = partner
+  ? all.filter((e) => (e.data.partners || []).includes(partner.id))
+  : all.filter((e) => (e.data.partners || []).some((id: string) => (d.partners || []).includes(id))).concat(all).filter((e, i, arr) => arr.indexOf(e) === i).slice(0, 3);
+const relatedTitle = partner ? t(lang, 'news.partnerMaterials') : t(lang, 'news.related');
+
+const crumbs = [
+  { name: t(lang, 'nav.news'), path: '/news/' },
+  { name: title, path: `/news/${entry.slug}/` },
+];
+const url = absoluteUrl(localeHref(`/news/${entry.slug}/`, lang), Astro.site);
+const jsonLd = {
+  '@type': d.type === 'news' ? 'NewsArticle' : 'Article',
+  headline: title,
+  description: seo.description,
+  datePublished: d.date,
+  dateModified: d.date,
+  inLanguage: cl,
+  url,
+  // Google requires an image for Article rich results: the cover, otherwise the site's social preview.
+  image: absoluteUrl(withBase(d.cover || siteSeo(lang).defaultImage), Astro.site),
+  author: { '@id': `${absoluteUrl('/', Astro.site)}#organization` },
+  publisher: { '@id': `${absoluteUrl('/', Astro.site)}#organization` },
+};
+---
+
+<BaseLayout title={seo.title} description={seo.description} breadcrumbs={crumbs} jsonLd={jsonLd} ogType="article" image={d.cover}>
+  <div class="wrap"><Breadcrumbs items={crumbs} /></div>
+
+  <article class="wrap art" data-lightbox lang={cl !== lang ? cl : undefined}>
+    <header class="art__head">
+      <p class="art__meta"><b>{t(lang, `news.type.${d.type}`)}</b><time datetime={d.date}>{formatDate(d.date, lang)}</time></p>
+      <h1>{title}</h1>
+      <p class="art__summary">{tField(d, 'summary', cl)}</p>
+      {partner && (
+        <dl class="art__partner">
+          <div><dt class="visually-hidden">{t(lang, 'news.partnerStatus')}</dt><dd class:list={['pill', { 'pill--dealer': partner.status === 'dealer' }]}>{t(lang, `partner.status.${partner.status}`)}</dd></div>
+          <div><dt class="visually-hidden">{t(lang, 'news.partnerCountry')}</dt><dd>{tField(partner, 'country', lang)}</dd></div>
+        </dl>
+      )}
+    </header>
+    {d.cover && <img class="art__cover" src={withBase(d.cover)} alt={tField(d, 'coverAlt', cl)} width="1200" height="675" />}
+    <div class="prose" set:html={bodyHtml} />
+    {gallery.length > 0 && (
+      <section class="gallery" aria-labelledby="gallery-title">
+        <h2 id="gallery-title">{t(lang, 'news.gallery.title')}</h2>
+        <ul>
+          {gallery.map((g, i) => (
+            <li>
+              <button type="button" data-lightbox-item aria-label={t(lang, 'news.gallery.open', { n: i + 1, total: gallery.length })}>
+                <img src={withBase(g.image)} alt={g.alt} loading="lazy" decoding="async" width="480" height="320" />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </article>
+  <Lightbox />
+
+  {related.length > 0 && (
+    <section class="section section--soft" aria-labelledby="rel-title">
+      <div class="wrap">
+        <div class="rel-head">
+          <h2 id="rel-title">{relatedTitle}</h2>
+          <a href={localeHref('/news/', lang)}>{t(lang, 'news.back')} →</a>
+        </div>
+        <ul class="rel">{related.slice(0, 3).map((e) => <li><NewsCard entry={e} /></li>)}</ul>
+      </div>
+    </section>
+  )}
+
+  <CtaBand title={t(lang, 'services.cta.title')} text={t(lang, 'services.cta.text')} />
+</BaseLayout>
+
+<style>
+  .art {
+    padding-block: 28px 80px;
+  }
+  .art__head {
+    max-width: 860px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 36px;
+  }
+  .art__meta {
+    display: flex;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--c-muted);
+  }
+  .art__meta b {
+    color: var(--c-brand-ink);
+    font-weight: 600;
+  }
+  h1 {
+    font-size: var(--fs-h1);
+    font-weight: 800;
+  }
+  .art__summary {
+    font-size: var(--fs-lead);
+    color: var(--c-muted);
+  }
+  .art__partner {
+    margin: 0;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .art__partner dd {
+    margin: 0;
+    color: var(--c-muted);
+  }
+  .pill {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: var(--r-pill);
+    font-size: 14px;
+    font-weight: 600;
+    background: var(--c-soft);
+    color: var(--c-ink) !important;
+  }
+  .pill--dealer {
+    background: var(--c-brand-soft);
+    color: var(--c-brand-ink-hover) !important;
+  }
+  .art__cover {
+    width: 100%;
+    max-width: 960px;
+    border-radius: var(--r-md);
+    margin-bottom: 36px;
+  }
+  .gallery {
+    max-width: 960px;
+    margin-top: 48px;
+  }
+  .gallery h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .gallery ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .gallery button {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: var(--r-md);
+    overflow: hidden;
+    background: var(--c-brand-soft);
+  }
+  .gallery img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    transition: transform var(--dur) var(--ease-out);
+  }
+  .gallery button:hover img {
+    transform: scale(1.04);
+  }
+  .rel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .rel-head h2 {
+    font-size: 30px;
+    font-weight: 700;
+  }
+  .rel {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+  @media (max-width: 760px) {
+    .art {
+      padding-block: 20px 48px;
+    }
+    .rel {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .rel-head h2 {
+      font-size: 24px;
+    }
+  }
+</style>

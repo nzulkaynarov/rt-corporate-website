@@ -1,0 +1,67 @@
+---
+/** Privacy / terms / cookies page from src/data/cms/legal.json. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from './ui/Breadcrumbs.astro';
+import legal from '../data/cms/legal.json';
+import { tField } from '../i18n';
+import { company, mailHref } from '../utils/company';
+import { pageSeo } from '../utils/seo';
+
+interface Props {
+  page: 'privacy' | 'terms' | 'cookies';
+}
+const lang = Astro.locals.lang;
+const { page } = Astro.props;
+const data = legal[page] as Record<string, any>;
+const seo = pageSeo(page, lang);
+const crumbs = [{ name: tField(data, 'title', lang) as string, path: `/${page}/` }];
+---
+
+<BaseLayout title={seo.title} description={seo.description} breadcrumbs={crumbs}>
+  <div class="wrap"><Breadcrumbs items={crumbs} /></div>
+  <article class="wrap legal">
+    <header>
+      <h1>{tField(data, 'title', lang)}</h1>
+      <p class="lead">{tField(data, 'lead', lang)}</p>
+      <p class="muted edition">{tField(data, 'edition', lang)}</p>
+    </header>
+    <div class="prose">
+      {(data.sections || []).map((s: any) => (
+        <section>
+          <h2>{tField(s, 'title', lang)}</h2>
+          <p>{tField(s, 'content', lang)}</p>
+        </section>
+      ))}
+      <p class="muted"><a href={mailHref()}>{company.email}</a></p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .legal {
+    padding-block: 28px 96px;
+  }
+  header {
+    max-width: 860px;
+    display: grid;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: var(--fs-h1);
+    font-weight: 800;
+  }
+  .lead {
+    font-size: var(--fs-lead);
+    color: var(--c-muted);
+  }
+  .edition {
+    font-size: 14px;
+  }
+  .prose section + section {
+    margin-top: 0.5em;
+  }
+  .prose h2 {
+    font-size: 21px;
+  }
+</style>

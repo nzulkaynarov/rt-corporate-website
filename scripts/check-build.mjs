@@ -4,16 +4,27 @@ import path from 'node:path';
 /**
  * Post-build SEO / i18n audit of dist/ (runs automatically after `npm run build`).
  *
- * Errors (fail the build): leftovers of the old client-side language switcher, wrong <html lang>,
- * internal links on /uz/ and /en/ pages that lead to another language, missing title /
- * description / canonical / hreflang, canonical not pointing to the page itself,
- * not exactly one <h1>, <img> without alt, srcset pointing to a missing WebP variant.
- * Warnings: title > 60 / description outside 50–160 chars, duplicate titles, pages whose
- * visible text is still mostly in another language (untranslated CMS fields).
+ * Errors (fail the build): wrong <html lang>, internal links to another language or to a missing page,
+ * missing title / description / canonical / hreflang, canonical not pointing to the page itself,
+ * not exactly one <h1>, <img> without alt, srcset pointing to a missing file, decorative «HUD telemetry»
+ * strings, industry-specific positioning outside /news/ (docs/ARCHITECTURE.md §1), missing skip link /
+ * <main id="main"> / «Войти в Кабинет» link, redirect pages (v1 URLs) pointing to a missing page.
+ * Warnings: title > 60 / description outside 50–160 chars, duplicate titles, untranslated UZ/EN pages
+ * (counted for the whole site while src/data/content-stage.json has "ruOnly": true, and for the sections listed in
+ * "ruOnlySections" — those pages show Russian on /uz/ and /en/ and are noindex).
  */
 const DIST = 'dist';
 const LANGS = ['ru', 'uz', 'en'];
-const SKIP = [/^admin\//, /^404\.html$/, /^contract\//, /^digital\//];
+const SKIP = [/^admin\//, /^404\.html$/];
+const STAGE = fs.existsSync('src/data/content-stage.json') ? JSON.parse(fs.readFileSync('src/data/content-stage.json', 'utf8')) : {};
+const RU_ONLY = STAGE.ruOnly === true;
+const RU_ONLY_SECTIONS = STAGE.ruOnlySections || [];
+/** Same rule as src/utils/stage.ts: the route's content is still Russian in every language. */
+const ruOnlyRoute = (route) => RU_ONLY || RU_ONLY_SECTIONS.includes(route.split('/')[1] || '');
+const HUD = /RT_CONSOLE|HUD_SCAN|OPTICAL_FEED|SYS\.ACTIVE|GATEWAYS|NODE:\s*TASHKENT|STATUS:\s*PRODUCTION|CAD\.UI/;
+const POSITIONING = /UzTE16M|ТЭП70|3ЭС5К|\bВЛ[68]0|ЭР9Е|ТЭ10М|ЧМЭ3|ТЭМ2|локомотив|подвижн\S* состав|ж\/д электроник|rail electronics/i;
+let untranslated = 0;
+let redirects = 0;
 
 const errors = [];
 const warnings = [];
@@ -63,11 +74,30 @@ for (const rel of files) {
   const route = `/${rel.replace(/index\.html$/, '')}`;
   const seg = route.split('/')[1];
   const lang = LANGS.includes(seg) && seg !== 'ru' ? seg : 'ru';
+  const bare = lang === 'ru' ? route : route.slice(lang.length + 1); // route without the language prefix
   const page = `${BASE}${route}`;
   const err = (msg) => errors.push(`${page}: ${msg}`);
   const warn = (msg) => warnings.push(`${page}: ${msg}`);
 
-  if (/rt-lang-(ru|uz|en)|data-lang-ru|data-lang-btn/.test(html)) err('leftover client-side language switcher markup (rt-lang / data-lang)');
+  const refresh = html.match(/<meta[^>]+http-equiv="refresh"[^>]+content="0;url=([^"]+)"/i);
+  if (refresh) {
+    redirects += 1;
+    const target = refresh[1].slice(BASE.length).split(/[?#]/)[0] || '/';
+    const file = path.join(DIST, decodeURI(target), target.endsWith('/') ? 'index.html' : '');
+    if (!fs.existsSync(file) && !fs.existsSync(`${file}.html`)) err(`redirect target does not exist: ${refresh[1]}`);
+    if (!/name="robots" content="noindex/.test(html)) err('redirect page must be noindex');
+    continue;
+  }
+  const noindex = /<meta[^>]+name="robots"[^>]+content="noindex/i.test(html);
+  if (HUD.test(html)) err(`decorative HUD/telemetry text: «${html.match(HUD)[0]}» (docs/DESIGN.md)`);
+  if (lang === 'ru' && !route.startsWith('/news/')) {
+    const visible = html.replace(/<(script|style)\b[\s\S]*?<\/\1>/gi, ' ').replace(/<[^>]+>/g, ' ');
+    const hit = visible.match(POSITIONING);
+    if (hit) err(`industry-specific positioning «${hit[0]}» outside /news/ (docs/ARCHITECTURE.md §1)`);
+  }
+  if (!/<main\b[^>]*id="main"/.test(html)) err('missing <main id="main">');
+  if (!/class="skip-link"/.test(html)) err('missing skip link');
+  if (!/href="https:\/\/cabinet\.railtech\.uz\/login"/.test(html)) err('missing «Войти в Кабинет» link (company.json → cabinet.loginUrl)');
 
   const htmlLang = attr(html.match(/<html[^>]*>/i)?.[0] || '', 'lang');
   if (htmlLang !== lang) err(`<html lang="${htmlLang}"> but URL language is "${lang}"`);
@@ -76,20 +106,26 @@ for (const rel of files) {
   if (!title) err('missing <title>');
   else {
     if (title.length > 60) warn(`title is ${title.length} chars (>60): "${title}"`);
-    if (!titles.has(title)) titles.set(title, []);
-    titles.get(title).push(page);
+    if (!noindex) {
+      if (!titles.has(title)) titles.set(title, []);
+      titles.get(title).push(page);
+    }
   }
 
   const description = attr(html.match(/<meta[^>]+name="description"[^>]*>/i)?.[0] || '', 'content');
   if (!description) err('missing meta description');
   else if (description.length > 160 || description.length < 50) warn(`description is ${description.length} chars (50–160 recommended)`);
 
-  const canonical = attr(html.match(/<link[^>]+rel="canonical"[^>]*>/i)?.[0] || '', 'href');
-  if (!canonical) err('missing canonical');
-  else if (new URL(canonical).pathname !== page) err(`canonical points to ${new URL(canonical).pathname}`);
-
-  const hreflangs = [...html.matchAll(/<link[^>]+rel="alternate"[^>]+hreflang="([^"]+)"/gi)].map((m) => m[1]);
-  for (const h of [...LANGS, 'x-default']) if (!hreflangs.includes(h)) err(`missing hreflang="${h}"`);
+  if (!noindex) {
+    const canonical = attr(html.match(/<link[^>]+rel="canonical"[^>]*>/i)?.[0] || '', 'href');
+    if (!canonical) err('missing canonical');
+    else if (new URL(canonical).pathname !== page) err(`canonical points to ${new URL(canonical).pathname}`);
+    const hreflangs = [...html.matchAll(/<link[^>]+rel="alternate"[^>]+hreflang="([^"]+)"/gi)].map((m) => m[1]);
+    for (const h of [...(ruOnlyRoute(bare) ? ['ru'] : LANGS), 'x-default']) if (!hreflangs.includes(h)) err(`missing hreflang="${h}"`);
+    if (ruOnlyRoute(bare) && lang !== 'ru') err('page of a Russian-only section must be noindex in UZ/EN (src/data/content-stage.json)');
+  } else if (ruOnlyRoute(bare) && lang !== 'ru') {
+    untranslated += 1;
+  }
 
   const h1 = (html.match(/<h1[\s>]/gi) || []).length;
   if (h1 !== 1) err(`${h1} <h1> elements (expected exactly 1)`);
@@ -135,7 +171,7 @@ for (const rel of files) {
     const letters = text.match(/\p{L}/gu) || [];
     const cyr = text.match(/\p{Script=Cyrillic}/gu) || [];
     const share = letters.length ? cyr.length / letters.length : 0;
-    if (share > 0.15) warn(`${Math.round(share * 100)}% of the text is Cyrillic — untranslated ${lang.toUpperCase()} content in the CMS?`);
+    if (share > 0.15 && !ruOnlyRoute(bare)) warn(`${Math.round(share * 100)}% of the text is Cyrillic — untranslated ${lang.toUpperCase()} content in the CMS?`);
   }
 }
 
@@ -152,4 +188,5 @@ if (errors.length) {
   for (const e of errors) console.error('  - ' + e);
   process.exit(1);
 }
-console.log(`[check-build] ${files.length} pages OK (${LANGS.join('/')}), ${warnings.length} warning(s)`);
+if (untranslated) console.warn(`[check-build] ${untranslated} UZ/EN page(s) of Russian-only sections are noindex until translated (src/data/content-stage.json)`);
+console.log(`[check-build] ${files.length - redirects} pages + ${redirects} redirects OK (${LANGS.join('/')}), ${warnings.length} warning(s)`);

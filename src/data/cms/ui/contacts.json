@@ -1,0 +1,89 @@
+{
+  "title": "Контакты и реквизиты",
+  "strings": [
+    {
+      "key": "contacts.office",
+      "ru": "Офис",
+      "uz": "Ofis",
+      "en": "Office"
+    },
+    {
+      "key": "contacts.legal",
+      "ru": "Юридический адрес",
+      "uz": "Yuridik manzil",
+      "en": "Legal address"
+    },
+    {
+      "key": "contacts.phone",
+      "ru": "Телефон",
+      "uz": "Telefon",
+      "en": "Phone"
+    },
+    {
+      "key": "contacts.email",
+      "ru": "E-mail",
+      "uz": "E-mail",
+      "en": "Email"
+    },
+    {
+      "key": "contacts.telegram",
+      "ru": "Telegram",
+      "uz": "Telegram",
+      "en": "Telegram"
+    },
+    {
+      "key": "contacts.cabinet",
+      "ru": "Кабинет",
+      "uz": "Kabinet",
+      "en": "Cabinet"
+    },
+    {
+      "key": "contacts.map",
+      "ru": "Открыть на карте",
+      "uz": "Xaritada ochish",
+      "en": "View on map"
+    },
+    {
+      "key": "contacts.requisites",
+      "ru": "Реквизиты",
+      "uz": "Rekvizitlar",
+      "en": "Company details"
+    },
+    {
+      "key": "contacts.fullName",
+      "ru": "Полное наименование",
+      "uz": "To'liq nomi",
+      "en": "Full legal name"
+    },
+    {
+      "key": "contacts.inn",
+      "ru": "ИНН",
+      "uz": "STIR",
+      "en": "TIN"
+    },
+    {
+      "key": "contacts.bank",
+      "ru": "Банк",
+      "uz": "Bank",
+      "en": "Bank"
+    },
+    {
+      "key": "contacts.mfo",
+      "ru": "МФО",
+      "uz": "MFO",
+      "en": "Bank code (MFO)"
+    },
+    {
+      "key": "contacts.account",
+      "ru": "Расчётный счёт",
+      "uz": "Hisob-kitob raqami",
+      "en": "Bank account"
+    },
+    {
+      "key": "contacts.channels",
+      "ru": "Связаться",
+      "uz": "Bog'lanish",
+      "en": "Get in touch"
+    }
+  ]
+}

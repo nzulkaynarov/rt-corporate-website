@@ -1,53 +1,57 @@
 ---
+/**
+ * Page shell: <head> (SEO, canonical, hreflang, Open Graph, JSON-LD), skip link, Header, <main>, Footer.
+ * Fonts are self-hosted (@fontsource) — the site makes no third-party requests and sets no cookies.
+ */
+import '@fontsource/montserrat/600.css';
+import '@fontsource/montserrat/700.css';
+import '@fontsource/montserrat/800.css';
+import '@fontsource/golos-text/400.css';
+import '@fontsource/golos-text/500.css';
+import '@fontsource/golos-text/600.css';
 import '../styles/global.css';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { GlobalLeadManager } from '../components/islands/GlobalLeadManager';
-import globalData from '../data/cms/global.json';
+// Every face used on screen is preloaded (src/utils/fonts.ts), so text never jumps when a font arrives.
+import { PRELOAD_FONTS } from '../utils/fonts';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import { company, telegramUrl } from '../utils/company';
 import { withBase } from '../utils/url';
-import { LANGS, LANG_META, DEFAULT_LANG, alternateHrefs, localeHref, pick } from '../i18n';
+import { LANG_META, DEFAULT_LANG, alternateHrefs, getRouteFromPath, localeHref, tField } from '../i18n';
 import { t } from '../i18n/ui';
 import { pageSeo, siteSeo, absoluteUrl } from '../utils/seo';
+import { routeLangs } from '../utils/stage';
 
 interface Crumb {
   /** Already localized label */
   name: string;
-  /** Site route, e.g. '/catalog/' (localized automatically) */
+  /** Site route, e.g. '/services/' (localized automatically) */
   path: string;
 }
 
 interface Props {
-  /** Localized <title>. Use pageSeo()/entrySeo() from src/utils/seo.ts — never hardcode. */
+  /** Localized <title>: use pageSeo()/entrySeo() from src/utils/seo.ts — never hardcode. */
   title?: string;
   description?: string;
   /** Social preview image (asset path or absolute URL) */
   image?: string;
-  ogType?: 'website' | 'article' | 'product';
+  ogType?: 'website' | 'article';
   noindex?: boolean;
-  /** Breadcrumb trail after «Home» → rendered as schema.org BreadcrumbList */
+  /** Breadcrumb trail after «Главная» → schema.org BreadcrumbList */
   breadcrumbs?: Crumb[];
-  /** Extra page-specific schema.org nodes (Product, Article, Service, FAQPage…) */
+  /** Extra schema.org nodes (Article, Service, FAQPage…) */
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
-  /** Override the language-switcher targets (e.g. the 404 page has no per-language twin). */
+  /** Override language-switcher targets (404 has no per-language twin). */
   langLinks?: Record<'ru' | 'uz' | 'en', string>;
 }
 
 const lang = Astro.locals.lang;
 const site = siteSeo(lang);
 const fallback = pageSeo('home', lang);
-const {
-  title = fallback.title,
-  description = fallback.description,
-  image,
-  ogType = 'website',
-  noindex = false,
-  breadcrumbs = [],
-  jsonLd,
-  langLinks,
-} = Astro.props;
-
-const g = globalData as Record<string, any>;
-const L = (field: string) => pick(lang, g[field] ?? '', g[`${field}_uz`], g[`${field}_en`]);
+const { title = fallback.title, description = fallback.description, image, ogType = 'website', noindex: noindexProp = false, breadcrumbs = [], jsonLd, langLinks } = Astro.props;
+// Translation stage (src/utils/stage.ts): a page whose content is still Russian in UZ/EN is kept out of search there,
+// and the RU page does not announce untranslated alternates.
+const hreflangs = routeLangs(getRouteFromPath(Astro.url.pathname));
+const noindex = noindexProp || !hreflangs.includes(lang);
 
 const siteUrl = Astro.site;
 const alternates = alternateHrefs(Astro.url.pathname);
@@ -56,40 +60,35 @@ const homeUrl = absoluteUrl(localeHref('/', lang), siteUrl);
 const orgId = `${absoluteUrl('/', siteUrl)}#organization`;
 const ogImageUrl = absoluteUrl(withBase(image || site.defaultImage), siteUrl);
 const isPng = /\.png($|\?)/i.test(ogImageUrl);
+const tg = telegramUrl();
 
-const sameAs = [g.telegramUrl, g.b2bPortalUrl].filter(Boolean);
 const graph: Record<string, unknown>[] = [
   {
     '@type': 'Organization',
     '@id': orgId,
-    name: g.brandName || g.companyName,
-    legalName: L('fullName') || L('companyName'),
+    name: company.brandName,
+    legalName: tField(company, 'fullName', lang),
     description: site.organizationDescription,
     url: absoluteUrl('/', siteUrl),
-    telephone: g.phone,
-    email: g.emailGeneral,
-    taxID: g.inn || g.taxId,
+    logo: absoluteUrl(withBase(company.logo), siteUrl),
+    telephone: company.phone,
+    email: company.email,
+    taxID: company.inn,
+    foundingDate: company.foundedYear,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: L('address'),
-      addressLocality: L('city'),
-      addressRegion: L('region'),
-      addressCountry: g.countryCode || 'UZ',
+      streetAddress: tField(company, 'legalAddress', lang),
+      addressLocality: tField(company, 'city', lang),
+      addressCountry: company.countryCode,
     },
-    ...(g.officeAddress
-      ? { location: { '@type': 'Place', name: 'Office', address: { '@type': 'PostalAddress', streetAddress: L('officeAddress'), addressLocality: L('city'), addressCountry: g.countryCode || 'UZ' } } }
-      : {}),
-    ...(sameAs.length ? { sameAs } : {}),
+    location: {
+      '@type': 'Place',
+      address: { '@type': 'PostalAddress', streetAddress: tField(company, 'officeAddress', lang), addressLocality: tField(company, 'city', lang), addressCountry: company.countryCode },
+    },
+    ...(tg ? { sameAs: [tg.split('?')[0]] } : {}),
     knowsAbout: site.knowsAbout,
   },
-  {
-    '@type': 'WebSite',
-    '@id': `${homeUrl}#website`,
-    url: homeUrl,
-    name: site.siteName,
-    inLanguage: LANG_META[lang].hreflang,
-    publisher: { '@id': orgId },
-  },
+  { '@type': 'WebSite', '@id': `${homeUrl}#website`, url: homeUrl, name: site.siteName, inLanguage: LANG_META[lang].hreflang, publisher: { '@id': orgId } },
 ];
 if (breadcrumbs.length) {
   graph.push({
@@ -111,24 +110,21 @@ if (jsonLd) graph.push(...(Array.isArray(jsonLd) ? jsonLd : [jsonLd]));
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    {PRELOAD_FONTS.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
     <meta name="description" content={description} />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
     {!noindex && (
       <>
         <link rel="canonical" href={canonicalURL} />
-        {LANGS.map((code) => (
-          <link rel="alternate" hreflang={LANG_META[code].hreflang} href={absoluteUrl(alternates[code], siteUrl)} />
-        ))}
+        {hreflangs.map((code) => <link rel="alternate" hreflang={LANG_META[code].hreflang} href={absoluteUrl(alternates[code], siteUrl)} />)}
         <link rel="alternate" hreflang="x-default" href={absoluteUrl(alternates[DEFAULT_LANG], siteUrl)} />
       </>
     )}
-
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <link rel="sitemap" href={withBase('/sitemap-index.xml')} />
+    <meta name="theme-color" content="#2d3e50" />
 
-
-    <!-- Open Graph & Social -->
-    <meta property="og:type" content={ogType === 'product' ? 'website' : ogType} />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     {!noindex && <meta property="og:url" content={canonicalURL} />}
@@ -138,69 +134,28 @@ if (jsonLd) graph.push(...(Array.isArray(jsonLd) ? jsonLd : [jsonLd]));
     {isPng && <meta property="og:image:height" content="630" />}
     <meta property="og:site_name" content={site.siteName} />
     <meta property="og:locale" content={LANG_META[lang].ogLocale} />
-    {LANGS.filter((code) => code !== lang).map((code) => (
-      <meta property="og:locale:alternate" content={LANG_META[code].ogLocale} />
-    ))}
+    {hreflangs.filter((code) => code !== lang).map((code) => <meta property="og:locale:alternate" content={LANG_META[code].ogLocale} />)}
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImageUrl} />
-
-    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
 
     <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })} />
 
-    <!-- Legacy ?lang=uz|en links (old language switcher) → real language URL -->
+    <!-- Legacy ?lang=uz|en links (v1 language switcher) → real language URL -->
     <script is:inline define:vars={{ alternates }}>
       try {
         var legacy = new URLSearchParams(window.location.search).get('lang');
-        if (legacy && alternates[legacy] && window.location.pathname !== alternates[legacy]) {
-          window.location.replace(alternates[legacy] + window.location.hash);
-        }
+        if (legacy && alternates[legacy] && window.location.pathname !== alternates[legacy]) window.location.replace(alternates[legacy] + window.location.hash);
       } catch (e) {}
     </script>
   </head>
-  <body class="bg-[#D4D8DC] text-[#0A0A0A] font-sans antialiased min-h-screen flex flex-col selection:bg-[#0A0A0A] selection:text-white">
+  <body>
+    <a class="skip-link" href="#main">{t(lang, 'skip.toMain')}</a>
     <Header alternates={langLinks} />
-    <main class="flex-grow">
+    <main id="main" tabindex="-1">
       <slot />
     </main>
     <Footer />
-    <GlobalLeadManager client:load lang={lang} />
-
-    <script is:inline>
-      // Self-drawing step dividers on scroll
-      (function() {
-        if (typeof window === 'undefined') return;
-        var initDividers = function() {
-          var dividers = document.querySelectorAll('.hud-step-divider-container');
-          if (!dividers.length) return;
-          if ('IntersectionObserver' in window) {
-            var obs = new IntersectionObserver(function(entries) {
-              entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add('is-drawn');
-                  obs.unobserve(entry.target);
-                }
-              });
-            }, { threshold: 0.1 });
-            dividers.forEach(function(el) { obs.observe(el); });
-          } else {
-            dividers.forEach(function(el) { el.classList.add('is-drawn'); });
-          }
-        };
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', initDividers);
-        } else {
-          initDividers();
-        }
-      })();
+    <script>
+      import '../scripts/motion.ts';
     </script>
   </body>
 </html>

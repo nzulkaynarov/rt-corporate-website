@@ -22,10 +22,16 @@ import yaml from 'js-yaml';
 const args = process.argv.slice(2);
 const STRICT = args.includes('--strict');
 /** RU-first stage (owner approves Russian texts, translation follows in one pass): missing UZ/EN are only counted. */
-const RU_ONLY = args.includes('--ru-only');
+const STAGE_FILE = 'src/data/content-stage.json';
+const STAGE = fs.existsSync(STAGE_FILE) ? JSON.parse(fs.readFileSync(STAGE_FILE, 'utf8')) : {};
+/** RU-first stage: on with --ru-only or while src/data/content-stage.json has "ruOnly": true (one switch for CI, hook and make). */
+const RU_ONLY = args.includes('--ru-only') || STAGE.ruOnly === true;
+/** Sections still in Russian on /uz/ and /en/ (e.g. ["news"]): their UZ/EN values are counted, not required. */
+const RU_ONLY_SECTIONS = new Set(STAGE.ruOnlySections || []);
+const ruOnlyFile = (file) => [...RU_ONLY_SECTIONS].some((s) => file.split(path.sep).join('/').startsWith(`src/content/${s}/`));
 const pendingTranslation = new Map(); // file → number of missing UZ/EN values
 const missingTr = (file, msg) => {
-  if (RU_ONLY) pendingTranslation.set(file, (pendingTranslation.get(file) || 0) + 1);
+  if (RU_ONLY || ruOnlyFile(file)) pendingTranslation.set(file, (pendingTranslation.get(file) || 0) + 1);
   else err(file, msg);
 };
 const onlyIdx = args.indexOf('--files');
@@ -117,7 +123,11 @@ function checkMedia(file, d) {
     if (p && p.startsWith('/') && !publicPathExists(p)) err(file, `${key}: file public${p} does not exist`);
   }
   for (const key of ['images', 'gallery']) {
-    (d[key] || []).forEach((p, i) => { if (p && p.startsWith('/') && !publicPathExists(p)) err(file, `${key}[${i}]: file public${p} does not exist`); });
+    (d[key] || []).forEach((item, i) => {
+      const p = typeof item === 'string' ? item : item?.image;
+      if (p && p.startsWith('/') && !publicPathExists(p)) err(file, `${key}[${i}]: file public${p} does not exist`);
+      if (item && typeof item === 'object' && !item.alt) warn(file, `${key}[${i}]: no photo description (alt)`);
+    });
   }
   (d.documents || []).forEach((doc, i) => {
     if (!doc.file) return err(file, `documents[${i}].file is required`);
@@ -145,7 +155,6 @@ function checkBody(file, d, body, minRu) {
 // Collections
 // ---------------------------------------------------------------------------
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const STATUS_TO_KEY = { 'в наличии': 'in_stock', 'резерв': 'reserved', 'под заказ': 'on_order' }; // mirrors src/utils/stock.ts
 
 function readMd(file) {
   const raw = fs.readFileSync(file, 'utf8');
@@ -154,62 +163,62 @@ function readMd(file) {
   return { data: yaml.load(m[1]) || {}, body: m[2] || '' };
 }
 
-const seen = { sku: new Map(), code: new Map() };
+// Positioning guard (docs/ARCHITECTURE.md §1): general texts must not narrow RailTech to one industry.
+// Applies to services and CMS JSON; news / partner articles may state facts about a partner or an event.
+const POSITIONING = [
+  /UzTE16M/i, /ТЭП70/i, /3ЭС5К/i, /\bВЛ[68]0/i, /ЭР9Е/i, /ТЭ10М/i, /ЧМЭ3/i, /ТЭМ2/i, /O['`’]z-(Y|ELR)\b/i,
+  /локомотив/i, /подвижн\S* состав/i, /\bж\/д\b/i, /железнодорожн/i, /\brail(way)? electronics\b/i,
+];
+function checkPositioning(file, where, value) {
+  if (typeof value !== 'string') return;
+  const hit = POSITIONING.find((re) => re.test(value));
+  if (hit) err(file, `${where}: «${value.match(hit)[0]}» narrows the company to one industry — keep general texts industry-neutral (docs/ARCHITECTURE.md §1)`);
+}
+function walkStrings(node, where, fn) {
+  if (typeof node === 'string') return fn(where, node);
+  if (Array.isArray(node)) return node.forEach((v, i) => walkStrings(v, `${where}[${i}]`, fn));
+  if (node && typeof node === 'object') for (const [k, v] of Object.entries(node)) walkStrings(v, where ? `${where}.${k}` : k, fn);
+}
+
+// Dealer-status basis (owner decision, docs/STATUS.md §2.4): the manufacturer's document is shown to a customer on
+// request only — its number, date, term, appendix and the issuer's registration numbers are never published.
+const STATUS_BASIS = [/свидетельств\S*\s*№/i, /\bОГРН\b/, /Приложени\S*\s*№/i, /guvohnoma/i, /certificate\s+No\.?\s*\d/i, /действует до \d/i];
+function checkStatusBasis(file, where, value) {
+  if (typeof value !== 'string') return;
+  const hit = STATUS_BASIS.find((re) => re.test(value));
+  if (hit) err(file, `${where}: «${value.match(hit)[0]}» — the basis of a dealer status is not published (docs/STATUS.md §2.4)`);
+}
+
+const PARTNERS_FILE = 'src/data/cms/partners.json';
+const partnerIds = new Set(fs.existsSync(PARTNERS_FILE) ? (JSON.parse(fs.readFileSync(PARTNERS_FILE, 'utf8')).partners || []).map((p) => p.id) : []);
+const NEWS_TYPES = ['news', 'article', 'project', 'partner'];
 
 const RULES = {
-  catalog(file, d, body) {
-    const slug = path.basename(file, '.md');
-    if (!d.sku) err(file, 'sku is required');
-    else {
-      if (!/^RT-[A-Z]+-\d{3}$/.test(d.sku)) warn(file, `sku "${d.sku}" does not match RT-<GROUP>-<NNN>`);
-      if (slug !== d.sku.toLowerCase()) err(file, `file name must be ${d.sku.toLowerCase()}.md (sku in lower case)`);
-      if (seen.sku.has(d.sku)) err(file, `duplicate sku ${d.sku} (also in ${seen.sku.get(d.sku)})`);
-      seen.sku.set(d.sku, file);
-    }
-    trilingual(file, d, 'title');
-    trilingual(file, d, d.category ? 'category' : 'subsystem', 'category');
-    trilingual(file, d, 'specs');
-    for (const f of ['warehouse', 'warranty', 'priceNote']) trilingual(file, d, f, f, { optional: true });
-    if (!isEmpty(d.price)) err(file, 'price must stay empty — prices are not published on the site (docs/content/STYLE_GUIDE.md §2)');
-    trilingualList(file, d.attributes, ['label', 'value'], 'attributes');
-    trilingualList(file, d.documents, ['title'], 'documents');
-    if (d.status) {
-      const key = STATUS_TO_KEY[String(d.status).trim().toLowerCase()];
-      if (!key) err(file, `status "${d.status}" must be one of: В наличии, Резерв, Под заказ`);
-      else if (d.statusKey && d.statusKey !== key) err(file, `statusKey "${d.statusKey}" contradicts status "${d.status}" (expected ${key})`);
-    }
-    if (!d.image) warn(file, 'no main photo (image) — the catalog shows a generic placeholder');
-    checkBody(file, d, body, 150);
-  },
   services(file, d, body) {
-    if (!d.code) err(file, 'code is required (e.g. SRV.05)');
-    else if (seen.code.has(`s:${d.code}`)) err(file, `duplicate code ${d.code}`);
-    seen.code.set(`s:${d.code}`, file);
-    ['title', 'category', 'summary'].forEach((f) => trilingual(file, d, f));
-    trilingual(file, d, 'ctaLabel', 'ctaLabel', { optional: true });
+    if (!['customers', 'partners'].includes(d.audience)) err(file, 'audience must be "customers" or "partners"');
+    ['title', 'summary', 'lead'].forEach((f) => trilingual(file, d, f));
+    trilingualList(file, d.highlights, ['label', 'value'], 'highlights');
     trilingualList(file, d.steps, ['title', 'text'], 'steps');
-    trilingualList(file, d.benefits, ['label', 'value'], 'benefits');
-    trilingualList(file, d.documents, ['title'], 'documents');
-    checkBody(file, d, body, 300);
+    trilingualList(file, d.benefits, ['title', 'text'], 'benefits');
+    trilingualList(file, d.requirements, ['title', 'text'], 'requirements');
+    trilingualList(file, d.faq, ['q', 'a'], 'faq');
+    if (!d.steps?.length) warn(file, 'no steps («Как работаем»)');
+    if (body.trim()) checkBody(file, d, body, 0);
+    walkStrings({ ...d, body }, '', (where, v) => !/_(uz|en)$/.test(where.split('.').pop()) && checkPositioning(file, where, v));
   },
-  projects(file, d, body) {
-    if (!d.code) err(file, 'code is required (e.g. LAB 06)');
-    else if (seen.code.has(`p:${d.code}`)) err(file, `duplicate code ${d.code}`);
-    seen.code.set(`p:${d.code}`, file);
-    ['tag', 'title', 'subtitle', 'metrics'].forEach((f) => trilingual(file, d, f));
-    trilingual(file, d, 'category', 'category', { optional: true });
-    trilingualList(file, d.documents, ['title'], 'documents');
-    if (d.year && !/^\d{4}$/.test(String(d.year))) err(file, `year "${d.year}" must be YYYY`);
-    checkBody(file, d, body, 300);
-  },
-  blog(file, d, body) {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(String(d.publishDate || '')) || Number.isNaN(Date.parse(d.publishDate))) err(file, `publishDate "${d.publishDate}" must be YYYY-MM-DD`);
-    else if (Date.parse(d.publishDate) > Date.now() + 864e5) warn(file, `publishDate ${d.publishDate} is in the future`);
-    ['title', 'category', 'summary'].forEach((f) => trilingual(file, d, f));
-    trilingual(file, d, 'readTime', 'readTime', { optional: true });
-    trilingual(file, d, 'tags', 'tags', { optional: true });
+  news(file, d, body) {
+    if (!NEWS_TYPES.includes(d.type)) err(file, `type must be one of ${NEWS_TYPES.join(', ')}`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(String(d.date || '')) || Number.isNaN(Date.parse(d.date))) err(file, `date "${d.date}" must be YYYY-MM-DD`);
+    else if (Date.parse(d.date) > Date.now() + 864e5) warn(file, `date ${d.date} is in the future`);
+    ['title', 'summary'].forEach((f) => trilingual(file, d, f));
+    trilingual(file, d, 'coverAlt', 'coverAlt', { optional: true });
+    (d.partners || []).forEach((id) => { if (!partnerIds.has(id)) err(file, `partners: unknown partner id "${id}" (see ${PARTNERS_FILE})`); });
+    if (d.type === 'partner' && !(d.partners || []).length) err(file, 'a partner article must list its partner id in partners');
     if (d.summary && (d.summary.length < 70 || d.summary.length > 300)) warn(file, `summary is ${d.summary.length} chars (70–300; it is the meta description fallback)`);
-    checkBody(file, d, body, 1200);
+    if (d.cover && d.cover.startsWith('/') && !publicPathExists(d.cover)) err(file, `cover: file public${d.cover} does not exist`);
+    if (!d.cover) warn(file, 'no cover photo — a neutral plate is shown');
+    checkBody(file, d, body, 600);
+    walkStrings({ ...d, body }, '', (where, v) => checkStatusBasis(file, where, v));
   },
 };
 
@@ -252,7 +261,15 @@ function walkJson(file, node, where) {
 const CMS = 'src/data/cms';
 for (const name of fs.readdirSync(CMS).filter((n) => n.endsWith('.json'))) {
   const file = path.join(CMS, name);
-  try { walkJson(file, JSON.parse(fs.readFileSync(file, 'utf8')), ''); } catch (e) { err(file, e.message); }
+  let data;
+  try { data = JSON.parse(fs.readFileSync(file, 'utf8')); } catch (e) { err(file, e.message); continue; }
+  walkJson(file, data, '');
+  if (name !== 'legal.json') walkStrings(data, '', (where, v) => checkPositioning(file, where, v));
+}
+// Partner tiles must point to an existing partner article.
+for (const p of fs.existsSync(PARTNERS_FILE) ? JSON.parse(fs.readFileSync(PARTNERS_FILE, 'utf8')).partners || [] : []) {
+  if (!['dealer', 'direct'].includes(p.status)) err(PARTNERS_FILE, `${p.id}: status must be "dealer" or "direct"`);
+  if (p.article && !fs.existsSync(`src/content/news/${p.article}.md`)) warn(PARTNERS_FILE, `${p.id}: article src/content/news/${p.article}.md does not exist yet — the tile is not clickable`);
 }
 const UI = path.join(CMS, 'ui');
 for (const name of fs.existsSync(UI) ? fs.readdirSync(UI).filter((n) => n.endsWith('.json')) : []) {
@@ -260,10 +277,12 @@ for (const name of fs.existsSync(UI) ? fs.readdirSync(UI).filter((n) => n.endsWi
   let data;
   try { data = JSON.parse(fs.readFileSync(file, 'utf8')); } catch (e) { err(file, e.message); continue; }
   for (const s of data.strings || []) {
-    const ruOnly = /^lead\.message\./.test(s.key); // internal Telegram/e-mail labels for the sales team
+    // internal Telegram/e-mail labels for the sales team; language names are endonyms (empty UZ/EN = the RU value)
+    const ruOnly = /^(lead\.message|lang)\./.test(s.key);
     checkText(file, s.key, s.ru, 'ru');
+    checkPositioning(file, s.key, s.ru);
     for (const l of LANGS) {
-      if (isEmpty(s[l])) { if (!ruOnly && CYR.test(s.ru || '')) warn(file, `${s.key}: missing ${l.toUpperCase()}`); }
+      if (isEmpty(s[l])) { if (!ruOnly && CYR.test(s.ru || '')) (RU_ONLY ? missingTr : warn)(file, `${s.key}: missing ${l.toUpperCase()}`); }
       else checkText(file, `${s.key}.${l}`, s[l], l);
     }
   }
@@ -276,9 +295,9 @@ const outWarnings = pick(warnings);
 const failed = outErrors.length > 0 || (STRICT && outWarnings.length > 0);
 
 const pendingFiles = [...pendingTranslation.keys()].filter((f) => !ONLY || ONLY.includes(f));
-if (RU_ONLY && pendingFiles.length) {
+if (pendingFiles.length) {
   const total = pendingFiles.reduce((n, f) => n + pendingTranslation.get(f), 0);
-  console.warn(`[check-content] --ru-only: ${total} UZ/EN value(s) await translation in ${pendingFiles.length} file(s) (not errors at this stage)`);
+  console.warn(`[check-content] RU-first: ${total} UZ/EN value(s) await translation in ${pendingFiles.length} file(s) (not errors at this stage: src/data/content-stage.json)`);
 }
 if (outWarnings.length) {
   console.warn(`[check-content] ${outWarnings.length} warning(s):`);

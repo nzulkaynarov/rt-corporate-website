@@ -1,0 +1,114 @@
+---
+/** «Возможности»: the four services grouped by audience (data: collection `services`). */
+import { getCollection } from 'astro:content';
+import { localeHref, tField } from '../../i18n';
+import { t } from '../../i18n/ui';
+import home from '../../data/cms/home.json';
+import SectionHead from '../ui/SectionHead.astro';
+
+const lang = Astro.locals.lang;
+const services = (await getCollection('services')).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+const groups = (['customers', 'partners'] as const).map((audience) => ({
+  audience,
+  label: t(lang, `home.directions.${audience}`),
+  items: services.filter((s) => s.data.audience === audience),
+}));
+const d = home.directions as Record<string, string>;
+---
+
+<section class="section" id="directions" aria-labelledby="dirs-title">
+  <div class="wrap">
+    <SectionHead id="dirs-title" eyebrow={tField(d, 'eyebrow', lang)} title={tField(d, 'title', lang)} />
+    <div class="dirs">
+      {groups.map((g) => (
+        <div class="dirs__group">
+          <h3>{g.label}</h3>
+          {g.items.map((s) => (
+            <a class="dcard lift" href={localeHref(`/services/${s.slug}/`, lang)}>
+              <b>{tField(s.data, 'title', lang)}</b>
+              <span>{tField(s.data, 'summary', lang)}</span>
+              <i>{t(lang, 'common.more')} →</i>
+            </a>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .dirs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+  }
+  .dirs__group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  h3 {
+    font: 600 14px/1.2 var(--f-body);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+  .dcard {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 28px;
+    border: 1px solid var(--c-line);
+    border-radius: var(--r-md);
+    background: var(--c-bg);
+    text-decoration: none;
+    color: var(--c-ink);
+    min-height: 190px;
+  }
+  .dcard:hover {
+    border-color: var(--c-brand-mid);
+    box-shadow: var(--shadow-lift);
+    color: var(--c-ink);
+  }
+  .dcard b {
+    font: 700 22px/1.2 var(--f-display);
+  }
+  .dcard span {
+    color: var(--c-muted);
+    font-size: 16px;
+  }
+  .dcard i {
+    font-style: normal;
+    margin-top: auto;
+    color: var(--c-brand-ink);
+    font-weight: 600;
+    font-size: 15px;
+  }
+  @media (max-width: 760px) {
+    .dirs {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 20px;
+    }
+    .dirs__group {
+      gap: 8px;
+    }
+    .dcard {
+      min-height: 0;
+      padding: 14px 16px;
+      gap: 4px;
+    }
+    .dcard b {
+      font-size: 18px;
+    }
+    .dcard span {
+      font-size: 14px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .dcard i {
+      display: none;
+    }
+  }
+</style>

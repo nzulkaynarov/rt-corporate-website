@@ -1,1408 +1,1911 @@
+# Sveltia CMS schema for railtech.uz — must match src/content/config.ts and src/data/cms/*.json
+# (checked by scripts/validate-cms-config.mjs). See docs/ARCHITECTURE.md §3.
+# [RU] fields are required; [UZ]/[EN] may stay empty during the RU-first stage (the site shows RU).
 backend:
   name: github
   repo: nzulkaynarov/rt-corporate-website
   branch: main
-
-media_folder: "public/images/uploads"
-public_folder: "/images/uploads"
-
+media_folder: public/images/uploads
+public_folder: /images/uploads
+locale: ru
 collections:
-  # --------------------------------------------------------------------------
-  # 1. CATALOG COLLECTION (/catalog)
-  # --------------------------------------------------------------------------
-  - name: "catalog"
-    label: "1. Каталог продукции (/catalog)"
-    folder: "src/content/catalog"
-    create: true
-    slug: "{{sku}}"
+- name: services
+  label: 1. Услуги
+  label_singular: Услуга
+  folder: src/content/services
+  create: true
+  slug: '{{slug}}'
+  summary: '{{title}}'
+  sortable_fields:
+  - order
+  - title
+  fields:
+  - label: Для кого
+    name: audience
+    widget: select
+    options:
+    - label: Заказчикам
+      value: customers
+    - label: Партнёрам
+      value: partners
+  - label: Порядок
+    name: order
+    widget: number
+    value_type: int
+    default: 1
+  - label: Название [RU]
+    name: title
+    widget: string
+  - label: Название [UZ]
+    name: title_uz
+    widget: string
+    required: false
+  - label: Название [EN]
+    name: title_en
+    widget: string
+    required: false
+  - label: Кратко (для карточек и поиска) [RU]
+    name: summary
+    widget: text
+  - label: Кратко (для карточек и поиска) [UZ]
+    name: summary_uz
+    widget: text
+    required: false
+  - label: Кратко (для карточек и поиска) [EN]
+    name: summary_en
+    widget: text
+    required: false
+  - label: Вводный абзац [RU]
+    name: lead
+    widget: text
+  - label: Вводный абзац [UZ]
+    name: lead_uz
+    widget: text
+    required: false
+  - label: Вводный абзац [EN]
+    name: lead_en
+    widget: text
+    required: false
+  - label: Коротко (метка → значение)
+    name: highlights
+    widget: list
+    required: false
     fields:
-      - { label: "⚙️ Код SKU (Артикул)", name: "sku", widget: "string", hint: "Уникальный идентификатор: RT-SAF-NNN (устройства безопасности) или RT-TST-NNN (сервисная аппаратура)" }
-      - { label: "⚙️ Категория изделия", name: "category", widget: "string", required: false, hint: "Категория каталога, напр. «Локомотивные устройства безопасности» или «Сервисная и испытательная аппаратура»" }
-      - { label: "⚙️ Категория (UZ)", name: "category_uz", widget: "string", required: false }
-      - { label: "⚙️ Категория (EN)", name: "category_en", widget: "string", required: false }
-      - { label: "⚙️ Производитель", name: "manufacturer", widget: "string", required: false, hint: "Как в документах производителя, напр. ООО «НПО САУТ», ADZ NAGANO GmbH. Пусто — не показывается и не попадает в фильтр." }
-      - { label: "⚙️ ГОСТ / Стандарт", name: "gost", widget: "string", required: false, hint: "ГОСТ или ТУ (напр. ГОСТ 9246-2013)" }
-      - { label: "⚙️ Код ТН ВЭД (HS Code)", name: "tnved", widget: "string", required: false, hint: "Таможенный код ТН ВЭД РУз (напр. 8607 12 000 0)" }
-      - { label: "⚙️ Цена — НЕ ЗАПОЛНЯТЬ", name: "price", widget: "string", required: false, hint: "Цены на сайте не публикуются: оставьте пустым, сайт покажет «Цена по запросу». Заполненное поле не пройдёт проверку." }
-      - { label: "⚙️ Базис склада", name: "warehouse", widget: "string", default: "Ташкент", required: false }
-      - { label: "⚙️ Базис склада (UZ)", name: "warehouse_uz", widget: "string", default: "Toshkent", required: false }
-      - { label: "⚙️ Базис склада (EN)", name: "warehouse_en", widget: "string", default: "Tashkent", required: false }
-      - { label: "⚙️ Статус наличия (RU)", name: "status", widget: "select", options: ["В наличии", "Резерв", "Под заказ"], default: "В наличии", required: false }
-      - { label: "⚙️ Ключ статуса для фильтра", name: "statusKey", widget: "select", options: ["in_stock", "reserved", "on_order"], default: "in_stock", required: false }
-      - { label: "⚙️ Фотография изделия (главная)", name: "image", widget: "image", required: false, hint: "Реальное фото изделия (JPG/PNG, ≥ 1200 px). WebP создаются автоматически" }
-      - label: "⚙️ Дополнительные фото товара (Галерея ракурсов)"
-        name: "images"
-        widget: "list"
-        required: false
-        field: { label: "Фотография", name: "image", widget: "image" }
-      - label: "⚙️ Документы и ссылки для скачивания"
-        name: "documents"
-        widget: "list"
-        required: false
-        fields:
-          - { label: "🇷🇺 Название документа", name: "title", widget: "string" }
-          - { label: "🇺🇿 Hujjat nomi (UZ)", name: "title_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Document title (EN)", name: "title_en", widget: "string", required: false }
-          - { label: "Файл или ссылка (URL)", name: "file", widget: "file", hint: "Загрузите файл (PDF, DOCX) или вставьте внешнюю ссылку" }
-          - { label: "Тип и размер (напр. PDF • 1.4 MB)", name: "type", widget: "string", required: false }
-      - { label: "⚙️ Габаритные размеры (мм)", name: "dimensions", widget: "string", required: false }
-      - { label: "⚙️ Масса / вес", name: "weight", widget: "string", required: false }
-      - { label: "⚙️ Материал / марка стали", name: "material", widget: "string", required: false }
-      - { label: "⚙️ Порядковый номер сортировки", name: "order", widget: "number", default: 1, required: false }
-
-      # --- ХАРАКТЕРИСТИКИ ТОВАРА (АТРИБУТЫ) ---
-      - label: "⚙️ Характеристики товара (Атрибуты: Параметр -> Значение)"
-        name: "attributes"
-        widget: "list"
-        required: false
-        fields:
-          - { label: "Параметр [RU]", name: "label", widget: "string" }
-          - { label: "Parametr [UZ]", name: "label_uz", widget: "string", required: false }
-          - { label: "Parameter [EN]", name: "label_en", widget: "string", required: false }
-          - { label: "Значение [RU]", name: "value", widget: "string" }
-          - { label: "Qiymat [UZ]", name: "value_uz", widget: "string", required: false }
-          - { label: "Value [EN]", name: "value_en", widget: "string", required: false }
-
-      # --- 🇷🇺 ОСНОВНОЙ ТЕКСТ (RU) ---
-      - { label: "🇷🇺 [RU] Наименование изделия", name: "title", widget: "string", hint: "Официальное наименование по паспорту завода" }
-      - { label: "🇷🇺 [RU] Подсистема (Категория)", name: "subsystem", widget: "string", required: false }
-      - { label: "🇷🇺 [RU] Технические параметры (specs)", name: "specs", widget: "string", required: false, hint: "Краткая инженерная характеристика для таблицы" }
-      - { label: "🇷🇺 [RU] Гарантийный срок", name: "warranty", widget: "string", default: "12 месяцев с момента ввода в эксплуатацию", required: false }
-      - { label: "🇷🇺 [RU] Условия ценообразования", name: "priceNote", widget: "string", default: "Цена по запросу (с НДС 12%)", required: false }
-      - { label: "🇷🇺 [RU] Подробное описание и регламент (Markdown)", name: "body", widget: "markdown" }
-
-      # --- 🇺🇿 ПЕРЕВОД НА УЗБЕКСКИЙ (UZ) ---
-      - { label: "🇺🇿 [UZ] Mahsulot nomi (title_uz)", name: "title_uz", widget: "string", required: false }
-      - { label: "🇺🇿 [UZ] Tizim (subsystem_uz)", name: "subsystem_uz", widget: "string", required: false }
-      - { label: "🇺🇿 [UZ] Holat (status_uz)", name: "status_uz", widget: "string", required: false }
-      - { label: "🇺🇿 [UZ] Texnik parametrlar (specs_uz)", name: "specs_uz", widget: "string", required: false }
-      - { label: "🇺🇿 [UZ] Kafolat (warranty_uz)", name: "warranty_uz", widget: "string", required: false }
-      - { label: "🇺🇿 [UZ] Narx izohi (priceNote_uz)", name: "priceNote_uz", widget: "string", required: false }
-      - { label: "🇺🇿 [UZ] To'liq tavsif (body_uz - Markdown)", name: "body_uz", widget: "markdown", required: false }
-
-      # --- 🇬🇧 ПЕРЕВОД НА АНГЛИЙСКИЙ (EN) ---
-      - { label: "🇬🇧 [EN] Product Title (title_en)", name: "title_en", widget: "string", required: false }
-      - { label: "🇬🇧 [EN] Subsystem (subsystem_en)", name: "subsystem_en", widget: "string", required: false }
-      - { label: "🇬🇧 [EN] Stock Status (status_en)", name: "status_en", widget: "string", required: false }
-      - { label: "🇬🇧 [EN] Technical Parameters (specs_en)", name: "specs_en", widget: "string", required: false }
-      - { label: "🇬🇧 [EN] Warranty (warranty_en)", name: "warranty_en", widget: "string", required: false }
-      - { label: "🇬🇧 [EN] Price Note (priceNote_en)", name: "priceNote_en", widget: "string", required: false }
-      - { label: "🇬🇧 [EN] Full Description (body_en - Markdown)", name: "body_en", widget: "markdown", required: false }
-
-      # --- 🔎 SEO (необязательно: если пусто — title + « | RailTech» и краткое описание записи) ---
-      - { label: "🔎 SEO Title [RU] (до 60 символов)", name: "seoTitle", widget: "string", required: false, hint: "Заголовок вкладки и сниппета Google/Яндекс. Пусто — сформируется автоматически." }
-      - { label: "🔎 SEO Title [UZ]", name: "seoTitle_uz", widget: "string", required: false }
-      - { label: "🔎 SEO Title [EN]", name: "seoTitle_en", widget: "string", required: false }
-      - { label: "🔎 Meta Description [RU] (70–160 символов)", name: "seoDescription", widget: "text", required: false, hint: "Текст сниппета в поиске. Пусто — возьмётся краткое описание." }
-      - { label: "🔎 Meta Description [UZ]", name: "seoDescription_uz", widget: "text", required: false }
-      - { label: "🔎 Meta Description [EN]", name: "seoDescription_en", widget: "text", required: false }
-
-  # --------------------------------------------------------------------------
-  # 2. SERVICES COLLECTION (/services)
-  # --------------------------------------------------------------------------
-  - name: "services"
-    label: "2. Каталог услуг (/services)"
-    folder: "src/content/services"
-    create: true
-    slug: "{{slug}}"
+    - label: Метка [RU]
+      name: label
+      widget: string
+    - label: Метка [UZ]
+      name: label_uz
+      widget: string
+      required: false
+    - label: Метка [EN]
+      name: label_en
+      widget: string
+      required: false
+    - label: Значение [RU]
+      name: value
+      widget: string
+    - label: Значение [UZ]
+      name: value_uz
+      widget: string
+      required: false
+    - label: Значение [EN]
+      name: value_en
+      widget: string
+      required: false
+  - label: Как работаем (по порядку)
+    name: steps
+    widget: list
+    required: false
+    fields: &id001
+    - label: Заголовок [RU]
+      name: title
+      widget: string
+    - label: Заголовок [UZ]
+      name: title_uz
+      widget: string
+      required: false
+    - label: Заголовок [EN]
+      name: title_en
+      widget: string
+      required: false
+    - label: Текст [RU]
+      name: text
+      widget: text
+    - label: Текст [UZ]
+      name: text_uz
+      widget: text
+      required: false
+    - label: Текст [EN]
+      name: text_en
+      widget: text
+      required: false
+  - label: Что получает клиент или партнёр
+    name: benefits
+    widget: list
+    required: false
+    fields: *id001
+  - label: Что нужно от партнёра (необязательно)
+    name: requirements
+    widget: list
+    required: false
+    fields: *id001
+  - label: Частые вопросы
+    name: faq
+    widget: list
+    required: false
     fields:
-      - { label: "⚙️ Код услуги (напр. SRV.01)", name: "code", widget: "string" }
-      - { label: "⚙️ Категория услуги", name: "category", widget: "string" }
-      - { label: "⚙️ Категория (UZ)", name: "category_uz", widget: "string", required: false }
-      - { label: "⚙️ Категория (EN)", name: "category_en", widget: "string", required: false }
-      - { label: "⚙️ Изображение услуги", name: "image", widget: "image", required: false }
-      - label: "⚙️ Дополнительные фото услуги"
-        name: "images"
-        widget: "list"
-        required: false
-        field: { label: "Фотография", name: "image", widget: "image" }
-      - label: "⚙️ Документы и файлы регламентов"
-        name: "documents"
-        widget: "list"
-        required: false
-        fields:
-          - { label: "🇷🇺 Название документа", name: "title", widget: "string" }
-          - { label: "🇺🇿 Hujjat nomi (UZ)", name: "title_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Document title (EN)", name: "title_en", widget: "string", required: false }
-          - { label: "Файл или ссылка (URL)", name: "file", widget: "file" }
-          - { label: "Тип и размер (напр. PDF • 1.4 MB)", name: "type", widget: "string", required: false }
-      - { label: "⚙️ Порядок отображения", name: "order", widget: "number", default: 1, required: false }
-
-      # --- 🇷🇺 ОСНОВНОЙ ТЕКСТ (RU) ---
-      - { label: "🇷🇺 [RU] Название услуги", name: "title", widget: "string" }
-      - { label: "🇷🇺 [RU] Краткий анонс / лид", name: "summary", widget: "text" }
-      - { label: "🇷🇺 [RU] Текст кнопки действия (CTA)", name: "ctaLabel", widget: "string", required: false }
-
-      # --- 🇺🇿 ПЕРЕВОД (UZ) ---
-      - { label: "🇺🇿 [UZ] Xizmat nomi (title_uz)", name: "title_uz", widget: "string", required: false }
-      - { label: "🇺🇿 [UZ] Qisqa tavsif (summary_uz)", name: "summary_uz", widget: "text", required: false }
-      - { label: "🇺🇿 [UZ] Tugma matni (ctaLabel_uz)", name: "ctaLabel_uz", widget: "string", required: false }
-
-      # --- 🇬🇧 ПЕРЕВОД (EN) ---
-      - { label: "🇬🇧 [EN] Service Title (title_en)", name: "title_en", widget: "string", required: false }
-      - { label: "🇬🇧 [EN] Summary (summary_en)", name: "summary_en", widget: "text", required: false }
-      - { label: "🇬🇧 [EN] CTA Label (ctaLabel_en)", name: "ctaLabel_en", widget: "string", required: false }
-
-      # --- ЭТАПЫ РАБОТ ---
-      - label: "⚙️ Этапы выполнения работ (Шаги 1..4)"
-        name: "steps"
-        widget: "list"
-        required: false
-        fields:
-          - { label: "🇷🇺 Название шага", name: "title", widget: "string" }
-          - { label: "🇺🇿 Qadam nomi (title_uz)", name: "title_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Step title (title_en)", name: "title_en", widget: "string", required: false }
-          - { label: "🇷🇺 Описание шага", name: "text", widget: "text" }
-          - { label: "🇺🇿 Qadam tavsifi (text_uz)", name: "text_uz", widget: "text", required: false }
-          - { label: "🇬🇧 Step text (text_en)", name: "text_en", widget: "text", required: false }
-
-      # --- ПРЕИМУЩЕСТВА И ХАРАКТЕРИСТИКИ ---
-      - label: "⚙️ Преимущества и параметры услуги"
-        name: "benefits"
-        widget: "list"
-        required: false
-        fields:
-          - { label: "Параметр [RU]", name: "label", widget: "string" }
-          - { label: "Parametr [UZ]", name: "label_uz", widget: "string", required: false }
-          - { label: "Parameter [EN]", name: "label_en", widget: "string", required: false }
-          - { label: "Значение [RU]", name: "value", widget: "string" }
-          - { label: "Qiymat [UZ]", name: "value_uz", widget: "string", required: false }
-          - { label: "Value [EN]", name: "value_en", widget: "string", required: false }
-
-      # --- ПОДРОБНЫЙ МАТЕРИАЛ (MARKDOWN) ---
-      - { label: "🇷🇺 [RU] Подробный регламент (Markdown)", name: "body", widget: "markdown" }
-      - { label: "🇺🇿 [UZ] To'liq reglament (body_uz)", name: "body_uz", widget: "markdown", required: false }
-      - { label: "🇬🇧 [EN] Full documentation (body_en)", name: "body_en", widget: "markdown", required: false }
-
-      # --- 🔎 SEO (необязательно: если пусто — title + « | RailTech» и краткое описание записи) ---
-      - { label: "🔎 SEO Title [RU] (до 60 символов)", name: "seoTitle", widget: "string", required: false, hint: "Заголовок вкладки и сниппета Google/Яндекс. Пусто — сформируется автоматически." }
-      - { label: "🔎 SEO Title [UZ]", name: "seoTitle_uz", widget: "string", required: false }
-      - { label: "🔎 SEO Title [EN]", name: "seoTitle_en", widget: "string", required: false }
-      - { label: "🔎 Meta Description [RU] (70–160 символов)", name: "seoDescription", widget: "text", required: false, hint: "Текст сниппета в поиске. Пусто — возьмётся краткое описание." }
-      - { label: "🔎 Meta Description [UZ]", name: "seoDescription_uz", widget: "text", required: false }
-      - { label: "🔎 Meta Description [EN]", name: "seoDescription_en", widget: "text", required: false }
-
-  # --------------------------------------------------------------------------
-  # 3. PROJECTS COLLECTION (/projects)
-  # --------------------------------------------------------------------------
-  - name: "projects"
-    label: "3. Проекты и Кейсы (/projects)"
-    folder: "src/content/projects"
-    create: true
-    slug: "{{slug}}"
+    - label: Вопрос [RU]
+      name: q
+      widget: string
+    - label: Вопрос [UZ]
+      name: q_uz
+      widget: string
+      required: false
+    - label: Вопрос [EN]
+      name: q_en
+      widget: string
+      required: false
+    - label: Ответ [RU]
+      name: a
+      widget: text
+    - label: Ответ [UZ]
+      name: a_uz
+      widget: text
+      required: false
+    - label: Ответ [EN]
+      name: a_en
+      widget: text
+      required: false
+  - &id002
+    label: 'Текст [RU]: подзаголовки ###, цитата, списки, таблица, фото с подписью, сноска текст[^1] + [^1]: пояснение'
+    name: body
+    widget: markdown
+    required: false
+    buttons: [bold, italic, link, heading-three, heading-four, quote, bulleted-list, numbered-list]
+    editor_components: [image]
+  - &id003
+    label: Текст [UZ]
+    name: body_uz
+    widget: markdown
+    required: false
+    buttons: [bold, italic, link, heading-three, heading-four, quote, bulleted-list, numbered-list]
+    editor_components: [image]
+  - &id004
+    label: Текст [EN]
+    name: body_en
+    widget: markdown
+    required: false
+    buttons: [bold, italic, link, heading-three, heading-four, quote, bulleted-list, numbered-list]
+    editor_components: [image]
+  - &id005
+    label: 'SEO: заголовок (≤ 60 знаков, пусто = название) [RU]'
+    name: seoTitle
+    widget: string
+    required: false
+  - &id006
+    label: 'SEO: заголовок (≤ 60 знаков, пусто = название) [UZ]'
+    name: seoTitle_uz
+    widget: string
+    required: false
+  - &id007
+    label: 'SEO: заголовок (≤ 60 знаков, пусто = название) [EN]'
+    name: seoTitle_en
+    widget: string
+    required: false
+  - &id008
+    label: 'SEO: описание (70–160 знаков, пусто = краткое описание) [RU]'
+    name: seoDescription
+    widget: text
+    required: false
+  - &id009
+    label: 'SEO: описание (70–160 знаков, пусто = краткое описание) [UZ]'
+    name: seoDescription_uz
+    widget: text
+    required: false
+  - &id010
+    label: 'SEO: описание (70–160 знаков, пусто = краткое описание) [EN]'
+    name: seoDescription_en
+    widget: text
+    required: false
+- name: news
+  label: 2. Новости, статьи, проекты, партнёры
+  label_singular: Материал
+  folder: src/content/news
+  create: true
+  slug: '{{slug}}'
+  summary: '{{date}} · {{title}}'
+  sortable_fields:
+  - date
+  - title
+  fields:
+  - label: Тип
+    name: type
+    widget: select
+    options:
+    - label: Новость
+      value: news
+    - label: Статья
+      value: article
+    - label: Проект
+      value: project
+    - label: О партнёре
+      value: partner
+  - label: Дата
+    name: date
+    widget: datetime
+    format: YYYY-MM-DD
+    date_format: DD.MM.YYYY
+    time_format: false
+  - label: Заголовок [RU]
+    name: title
+    widget: string
+  - label: Заголовок [UZ]
+    name: title_uz
+    widget: string
+    required: false
+  - label: Заголовок [EN]
+    name: title_en
+    widget: string
+    required: false
+  - label: Кратко (70–300 знаков) [RU]
+    name: summary
+    widget: text
+  - label: Кратко (70–300 знаков) [UZ]
+    name: summary_uz
+    widget: text
+    required: false
+  - label: Кратко (70–300 знаков) [EN]
+    name: summary_en
+    widget: text
+    required: false
+  - label: Обложка (своё фото или с разрешения)
+    name: cover
+    widget: image
+    required: false
+  - label: Описание обложки [RU]
+    name: coverAlt
+    widget: string
+    required: false
+  - label: Описание обложки [UZ]
+    name: coverAlt_uz
+    widget: string
+    required: false
+  - label: Описание обложки [EN]
+    name: coverAlt_en
+    widget: string
+    required: false
+  - label: Галерея (фото под текстом, открываются на весь экран)
+    name: gallery
+    widget: list
+    required: false
+    summary: '{{fields.alt}}'
     fields:
-      - { label: "⚙️ Код проекта (напр. LAB 01)", name: "code", widget: "string" }
-      - { label: "⚙️ Категория проекта (RU)", name: "category", widget: "string", required: false }
-      - { label: "⚙️ Loyiha kategoriyasi (UZ)", name: "category_uz", widget: "string", required: false }
-      - { label: "⚙️ Project Category (EN)", name: "category_en", widget: "string", required: false }
-      - { label: "⚙️ Год реализации", name: "year", widget: "string", required: false, default: "2025" }
-      - { label: "⚙️ Изображение проекта (главное)", name: "image", widget: "image", required: false }
-      - label: "⚙️ Галерея фотографий проекта"
-        name: "images"
-        widget: "list"
-        required: false
-        field: { label: "Фотография", name: "image", widget: "image" }
-      - label: "⚙️ Документы и материалы кейса"
-        name: "documents"
-        widget: "list"
-        required: false
-        fields:
-          - { label: "🇷🇺 Название документа", name: "title", widget: "string" }
-          - { label: "🇺🇿 Hujjat nomi (UZ)", name: "title_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Document title (EN)", name: "title_en", widget: "string", required: false }
-          - { label: "Файл или ссылка (URL)", name: "file", widget: "file" }
-          - { label: "Тип и размер (напр. PDF • 1.4 MB)", name: "type", widget: "string", required: false }
-      - { label: "⚙️ Порядок отображения", name: "order", widget: "number", default: 1, required: false }
-
-      # --- 🇷🇺 ОСНОВНОЙ ТЕКСТ (RU) ---
-      - { label: "🇷🇺 [RU] Тег проекта", name: "tag", widget: "string" }
-      - { label: "🇷🇺 [RU] Название проекта", name: "title", widget: "string" }
-      - { label: "🇷🇺 [RU] Подзаголовок", name: "subtitle", widget: "string" }
-      - label: "🇷🇺 [RU] Метрики проекта"
-        name: "metrics"
-        widget: "list"
-        field: { label: "Метрика", name: "item", widget: "string" }
-      - { label: "🇷🇺 [RU] Описание проекта (Markdown)", name: "body", widget: "markdown" }
-
-      # --- 🇺🇿 ПЕРЕВОД НА УЗБЕКСКИЙ (UZ) ---
-      - { label: "🇺🇿 [UZ] Loyiha tegi (tag_uz)", name: "tag_uz", widget: "string", required: false }
-      - { label: "🇺🇿 [UZ] Loyiha nomi (title_uz)", name: "title_uz", widget: "string", required: false }
-      - { label: "🇺🇿 [UZ] Qisqa tavsif (subtitle_uz)", name: "subtitle_uz", widget: "string", required: false }
-      - label: "🇺🇿 [UZ] Loyiha metrikalari (metrics_uz)"
-        name: "metrics_uz"
-        widget: "list"
-        required: false
-        field: { label: "Metrika", name: "item", widget: "string" }
-      - { label: "🇺🇿 [UZ] To'liq tavsif (body_uz - Markdown)", name: "body_uz", widget: "markdown", required: false }
-
-      # --- 🇬🇧 ПЕРЕВОД НА АНГЛИЙСКИЙ (EN) ---
-      - { label: "🇬🇧 [EN] Project Tag (tag_en)", name: "tag_en", widget: "string", required: false }
-      - { label: "🇬🇧 [EN] Project Name (title_en)", name: "title_en", widget: "string", required: false }
-      - { label: "🇬🇧 [EN] Subtitle (subtitle_en)", name: "subtitle_en", widget: "string", required: false }
-      - label: "🇬🇧 [EN] Project Metrics (metrics_en)"
-        name: "metrics_en"
-        widget: "list"
-        required: false
-        field: { label: "Metric", name: "item", widget: "string" }
-      - { label: "🇬🇧 [EN] Full Description (body_en - Markdown)", name: "body_en", widget: "markdown", required: false }
-
-      # --- 🔎 SEO (необязательно: если пусто — title + « | RailTech» и краткое описание записи) ---
-      - { label: "🔎 SEO Title [RU] (до 60 символов)", name: "seoTitle", widget: "string", required: false, hint: "Заголовок вкладки и сниппета Google/Яндекс. Пусто — сформируется автоматически." }
-      - { label: "🔎 SEO Title [UZ]", name: "seoTitle_uz", widget: "string", required: false }
-      - { label: "🔎 SEO Title [EN]", name: "seoTitle_en", widget: "string", required: false }
-      - { label: "🔎 Meta Description [RU] (70–160 символов)", name: "seoDescription", widget: "text", required: false, hint: "Текст сниппета в поиске. Пусто — возьмётся краткое описание." }
-      - { label: "🔎 Meta Description [UZ]", name: "seoDescription_uz", widget: "text", required: false }
-      - { label: "🔎 Meta Description [EN]", name: "seoDescription_en", widget: "text", required: false }
-
-  # --------------------------------------------------------------------------
-  # 4. BLOG COLLECTION (/blog)
-  # --------------------------------------------------------------------------
-  - name: "blog"
-    label: "4. Блог и Новости (/blog)"
-    folder: "src/content/blog"
-    create: true
-    slug: "{{slug}}"
+    - label: Фото
+      name: image
+      widget: image
+    - label: Описание фото [RU]
+      name: alt
+      widget: string
+      required: false
+    - label: Описание фото [UZ]
+      name: alt_uz
+      widget: string
+      required: false
+    - label: Описание фото [EN]
+      name: alt_en
+      widget: string
+      required: false
+  - label: Партнёры, о которых материал
+    name: partners
+    widget: relation
+    required: false
+    collection: site
+    file: partners
+    search_fields:
+    - partners.*.name
+    value_field: partners.*.id
+    display_fields:
+    - partners.*.name
+    multiple: true
+  - label: Закрепить
+    name: featured
+    widget: boolean
+    required: false
+    default: false
+  - *id002
+  - *id003
+  - *id004
+  - *id005
+  - *id006
+  - *id007
+  - *id008
+  - *id009
+  - *id010
+- name: site
+  label: 3. Тексты сайта и настройки
+  editor:
+    preview: false
+  files:
+  - name: company
+    label: 'Компания: реквизиты, контакты, Кабинет, цифры'
+    file: src/data/cms/company.json
     fields:
-      - { label: "⚙️ Дата публикации (ГГГГ-ММ-ДД)", name: "publishDate", widget: "string" }
-      - { label: "⚙️ Изображение обложки", name: "image", widget: "image", required: false }
-      - { label: "⚙️ Выделенная статья (Featured)", name: "featured", widget: "boolean", default: false, required: false }
-      - { label: "⚙️ Автор", name: "author", widget: "string", default: "Инженерный отдел ООО «RailTech»", required: false }
-
-      # --- 🇷🇺 ОСНОВНОЙ ТЕКСТ (RU) ---
-      - { label: "🇷🇺 [RU] Заголовок статьи", name: "title", widget: "string" }
-      - { label: "🇷🇺 [RU] Категория", name: "category", widget: "select", options: ["Поставки и Склад", "ВЭД и Таможня", "Digital & ПО", "Спецпроекты и Арт", "Новости компании"] }
-      - { label: "🇷🇺 [RU] Краткий анонс / лид", name: "summary", widget: "text" }
-      - { label: "🇷🇺 [RU] Время чтения", name: "readTime", widget: "string", default: "4 мин", required: false }
-      - label: "🇷🇺 [RU] Теги"
-        name: "tags"
-        widget: "list"
+    - label: Бренд
+      name: brandName
+      widget: string
+    - label: Логотип (знак, SVG или PNG — шапка, футер, первый экран, поисковики)
+      name: logo
+      widget: image
+    - label: Заглушка фото (материал без обложки)
+      name: logoPlaceholder
+      widget: image
+    - label: Домен сайта (подпись на картинке для соцсетей)
+      name: siteDomain
+      widget: string
+    - label: Краткое наименование [RU]
+      name: companyName
+      widget: string
+    - label: Краткое наименование [UZ]
+      name: companyName_uz
+      widget: string
+      required: false
+    - label: Краткое наименование [EN]
+      name: companyName_en
+      widget: string
+      required: false
+    - label: Полное наименование [RU]
+      name: fullName
+      widget: string
+    - label: Полное наименование [UZ]
+      name: fullName_uz
+      widget: string
+      required: false
+    - label: Полное наименование [EN]
+      name: fullName_en
+      widget: string
+      required: false
+    - label: Год основания
+      name: foundedYear
+      widget: string
+    - label: ИНН
+      name: inn
+      widget: string
+    - label: Город [RU]
+      name: city
+      widget: string
+    - label: Город [UZ]
+      name: city_uz
+      widget: string
+      required: false
+    - label: Город [EN]
+      name: city_en
+      widget: string
+      required: false
+    - label: Код страны
+      name: countryCode
+      widget: string
+    - label: Юридический адрес [RU]
+      name: legalAddress
+      widget: string
+    - label: Юридический адрес [UZ]
+      name: legalAddress_uz
+      widget: string
+      required: false
+    - label: Юридический адрес [EN]
+      name: legalAddress_en
+      widget: string
+      required: false
+    - label: Адрес офиса [RU]
+      name: officeAddress
+      widget: string
+    - label: Адрес офиса [UZ]
+      name: officeAddress_uz
+      widget: string
+      required: false
+    - label: Адрес офиса [EN]
+      name: officeAddress_en
+      widget: string
+      required: false
+    - label: Телефон
+      name: phone
+      widget: string
+    - label: E-mail
+      name: email
+      widget: string
+    - label: Telegram-бот (имя без @)
+      name: telegramBot
+      widget: string
+      hint: 'Ссылка на сайте: t.me/<имя>?start=web'
+    - label: Банк
+      name: bank
+      widget: object
+      fields:
+      - label: Банк и филиал [RU]
+        name: name
+        widget: string
+      - label: Банк и филиал [UZ]
+        name: name_uz
+        widget: string
         required: false
-        field: { label: "Тег", name: "item", widget: "string" }
-      - { label: "🇷🇺 [RU] Текст статьи (Markdown)", name: "body", widget: "markdown" }
-
-      # --- 🇺🇿 ПЕРЕВОД НА УЗБЕКСКИЙ (UZ) ---
-      - { label: "🇺🇿 [UZ] Maqola sarlavhasi (title_uz)", name: "title_uz", widget: "string", required: false }
-      - { label: "🇺🇿 [UZ] Kategoriya (category_uz)", name: "category_uz", widget: "string", required: false }
-      - { label: "🇺🇿 [UZ] Qisqacha annotatsiya (summary_uz)", name: "summary_uz", widget: "text", required: false }
-      - { label: "🇺🇿 [UZ] O'qish vaqti (readTime_uz)", name: "readTime_uz", widget: "string", default: "4 daq", required: false }
-      - label: "🇺🇿 [UZ] Teglar (tags_uz)"
-        name: "tags_uz"
-        widget: "list"
+      - label: Банк и филиал [EN]
+        name: name_en
+        widget: string
         required: false
-        field: { label: "Teg", name: "item", widget: "string" }
-      - { label: "🇺🇿 [UZ] Maqola matni (body_uz - Markdown)", name: "body_uz", widget: "markdown", required: false }
-
-      # --- 🇬🇧 ПЕРЕВОД НА АНГЛИЙСКИЙ (EN) ---
-      - { label: "🇬🇧 [EN] Article Title (title_en)", name: "title_en", widget: "string", required: false }
-      - { label: "🇬🇧 [EN] Category (category_en)", name: "category_en", widget: "string", required: false }
-      - { label: "🇬🇧 [EN] Article Summary / Lead (summary_en)", name: "summary_en", widget: "text", required: false }
-      - { label: "🇬🇧 [EN] Reading Time (readTime_en)", name: "readTime_en", widget: "string", default: "4 min", required: false }
-      - label: "🇬🇧 [EN] Tags (tags_en)"
-        name: "tags_en"
-        widget: "list"
+      - label: МФО
+        name: mfo
+        widget: string
+      - label: Расчётный счёт
+        name: account
+        widget: string
+    - label: Кабинет
+      name: cabinet
+      widget: object
+      fields:
+      - label: Адрес Кабинета
+        name: url
+        widget: string
+      - label: Страница входа
+        name: loginUrl
+        widget: string
+      - label: Страница «Я новый клиент»
+        name: newClientUrl
+        widget: string
+    - label: Адрес приёма заявок (CRM)
+      name: leadEndpoint
+      widget: string
+      hint: POST заявки и GET …/token; см. docs/ARCHITECTURE.md §5
+    - label: Цифры на главной
+      name: metrics
+      widget: list
+      required: false
+      fields:
+      - label: Значение
+        name: value
+        widget: string
+      - label: Подпись [RU]
+        name: label
+        widget: string
+      - label: Подпись [UZ]
+        name: label_uz
+        widget: string
         required: false
-        field: { label: "Tag", name: "item", widget: "string" }
-      - { label: "🇬🇧 [EN] Article Body (body_en - Markdown)", name: "body_en", widget: "markdown", required: false }
-
-      # --- 🔎 SEO (необязательно: если пусто — title + « | RailTech» и краткое описание записи) ---
-      - { label: "🔎 SEO Title [RU] (до 60 символов)", name: "seoTitle", widget: "string", required: false, hint: "Заголовок вкладки и сниппета Google/Яндекс. Пусто — сформируется автоматически." }
-      - { label: "🔎 SEO Title [UZ]", name: "seoTitle_uz", widget: "string", required: false }
-      - { label: "🔎 SEO Title [EN]", name: "seoTitle_en", widget: "string", required: false }
-      - { label: "🔎 Meta Description [RU] (70–160 символов)", name: "seoDescription", widget: "text", required: false, hint: "Текст сниппета в поиске. Пусто — возьмётся краткое описание." }
-      - { label: "🔎 Meta Description [UZ]", name: "seoDescription_uz", widget: "text", required: false }
-      - { label: "🔎 Meta Description [EN]", name: "seoDescription_en", widget: "text", required: false }
-
-  # --------------------------------------------------------------------------
-  # 5. SITE SETTINGS & STATIC PAGES (CMS FILES)
-  # --------------------------------------------------------------------------
-  - name: "site_settings"
-    label: "5. Настройки сайта и разделов"
-    files:
-      # --- SEO: META-ТЕГИ СТРАНИЦ ---
-      - name: "seo"
-        label: "🔎 SEO: заголовки и описания страниц"
-        file: "src/data/cms/seo.json"
-        fields:
-          - { label: "Название сайта [RU]", name: "siteName", widget: "string" }
-          - { label: "Sayt nomi [UZ]", name: "siteName_uz", widget: "string", required: false }
-          - { label: "Site name [EN]", name: "siteName_en", widget: "string", required: false }
-          - { label: "Суффикс заголовка записей", name: "titleSuffix", widget: "string", required: false, hint: "Добавляется к названию товара/статьи, если в записи не задан SEO Title (напр. « | RailTech»)" }
-          - { label: "Картинка для соцсетей по умолчанию (1200×630 PNG/JPG)", name: "defaultImage", widget: "image", required: false }
-          - { label: "Описание организации [RU] (schema.org)", name: "organizationDescription", widget: "text" }
-          - { label: "Tashkilot tavsifi [UZ]", name: "organizationDescription_uz", widget: "text", required: false }
-          - { label: "Organization description [EN]", name: "organizationDescription_en", widget: "text", required: false }
-          - label: "Компетенции [RU] (schema.org knowsAbout)"
-            name: "knowsAbout"
-            widget: "list"
-            required: false
-            field: { label: "Тема", name: "item", widget: "string" }
-          - label: "Kompetensiyalar [UZ]"
-            name: "knowsAbout_uz"
-            widget: "list"
-            required: false
-            field: { label: "Тема", name: "item", widget: "string" }
-          - label: "Expertise [EN]"
-            name: "knowsAbout_en"
-            widget: "list"
-            required: false
-            field: { label: "Тема", name: "item", widget: "string" }
-          - { label: 'Шаблон описания товара [RU]', name: catalogDescription, widget: text, required: false, hint: 'Используется, если у товара не заполнено SEO-описание. Подстановки: {title} {sku} {specs} {category}' }
-          - { label: 'Шаблон описания товара [UZ]', name: catalogDescription_uz, widget: text, required: false }
-          - { label: 'Шаблон описания товара [EN]', name: catalogDescription_en, widget: text, required: false }
-          - label: "Страницы"
-            name: "pages"
-            widget: "object"
-            fields:
-              - label: "Главная (/)"
-                name: "home"
-                widget: "object"
-                collapsed: true
-                fields:
-                  - { label: "Title [RU] (до 60 символов)", name: "title", widget: "string" }
-                  - { label: "Title [UZ]", name: "title_uz", widget: "string", required: false }
-                  - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-                  - { label: "Description [RU] (70–160 символов)", name: "description", widget: "text" }
-                  - { label: "Description [UZ]", name: "description_uz", widget: "text", required: false }
-                  - { label: "Description [EN]", name: "description_en", widget: "text", required: false }
-              - label: "Каталог (/catalog/)"
-                name: "catalog"
-                widget: "object"
-                collapsed: true
-                fields:
-                  - { label: "Title [RU] (до 60 символов)", name: "title", widget: "string" }
-                  - { label: "Title [UZ]", name: "title_uz", widget: "string", required: false }
-                  - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-                  - { label: "Description [RU] (70–160 символов)", name: "description", widget: "text" }
-                  - { label: "Description [UZ]", name: "description_uz", widget: "text", required: false }
-                  - { label: "Description [EN]", name: "description_en", widget: "text", required: false }
-              - label: "Услуги (/services/)"
-                name: "services"
-                widget: "object"
-                collapsed: true
-                fields:
-                  - { label: "Title [RU] (до 60 символов)", name: "title", widget: "string" }
-                  - { label: "Title [UZ]", name: "title_uz", widget: "string", required: false }
-                  - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-                  - { label: "Description [RU] (70–160 символов)", name: "description", widget: "text" }
-                  - { label: "Description [UZ]", name: "description_uz", widget: "text", required: false }
-                  - { label: "Description [EN]", name: "description_en", widget: "text", required: false }
-              - label: "Проекты (/projects/)"
-                name: "projects"
-                widget: "object"
-                collapsed: true
-                fields:
-                  - { label: "Title [RU] (до 60 символов)", name: "title", widget: "string" }
-                  - { label: "Title [UZ]", name: "title_uz", widget: "string", required: false }
-                  - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-                  - { label: "Description [RU] (70–160 символов)", name: "description", widget: "text" }
-                  - { label: "Description [UZ]", name: "description_uz", widget: "text", required: false }
-                  - { label: "Description [EN]", name: "description_en", widget: "text", required: false }
-              - label: "Блог (/blog/)"
-                name: "blog"
-                widget: "object"
-                collapsed: true
-                fields:
-                  - { label: "Title [RU] (до 60 символов)", name: "title", widget: "string" }
-                  - { label: "Title [UZ]", name: "title_uz", widget: "string", required: false }
-                  - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-                  - { label: "Description [RU] (70–160 символов)", name: "description", widget: "text" }
-                  - { label: "Description [UZ]", name: "description_uz", widget: "text", required: false }
-                  - { label: "Description [EN]", name: "description_en", widget: "text", required: false }
-              - label: "О компании (/about/)"
-                name: "about"
-                widget: "object"
-                collapsed: true
-                fields:
-                  - { label: "Title [RU] (до 60 символов)", name: "title", widget: "string" }
-                  - { label: "Title [UZ]", name: "title_uz", widget: "string", required: false }
-                  - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-                  - { label: "Description [RU] (70–160 символов)", name: "description", widget: "text" }
-                  - { label: "Description [UZ]", name: "description_uz", widget: "text", required: false }
-                  - { label: "Description [EN]", name: "description_en", widget: "text", required: false }
-              - label: "Контакты (/contacts/)"
-                name: "contacts"
-                widget: "object"
-                collapsed: true
-                fields:
-                  - { label: "Title [RU] (до 60 символов)", name: "title", widget: "string" }
-                  - { label: "Title [UZ]", name: "title_uz", widget: "string", required: false }
-                  - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-                  - { label: "Description [RU] (70–160 символов)", name: "description", widget: "text" }
-                  - { label: "Description [UZ]", name: "description_uz", widget: "text", required: false }
-                  - { label: "Description [EN]", name: "description_en", widget: "text", required: false }
-              - label: "Политика конфиденциальности"
-                name: "privacy"
-                widget: "object"
-                collapsed: true
-                fields:
-                  - { label: "Title [RU] (до 60 символов)", name: "title", widget: "string" }
-                  - { label: "Title [UZ]", name: "title_uz", widget: "string", required: false }
-                  - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-                  - { label: "Description [RU] (70–160 символов)", name: "description", widget: "text" }
-                  - { label: "Description [UZ]", name: "description_uz", widget: "text", required: false }
-                  - { label: "Description [EN]", name: "description_en", widget: "text", required: false }
-              - label: "Условия использования"
-                name: "terms"
-                widget: "object"
-                collapsed: true
-                fields:
-                  - { label: "Title [RU] (до 60 символов)", name: "title", widget: "string" }
-                  - { label: "Title [UZ]", name: "title_uz", widget: "string", required: false }
-                  - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-                  - { label: "Description [RU] (70–160 символов)", name: "description", widget: "text" }
-                  - { label: "Description [UZ]", name: "description_uz", widget: "text", required: false }
-                  - { label: "Description [EN]", name: "description_en", widget: "text", required: false }
-              - label: "Страница 404"
-                name: "notFound"
-                widget: "object"
-                collapsed: true
-                fields:
-                  - { label: "Title [RU] (до 60 символов)", name: "title", widget: "string" }
-                  - { label: "Title [UZ]", name: "title_uz", widget: "string", required: false }
-                  - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-                  - { label: "Description [RU] (70–160 символов)", name: "description", widget: "text" }
-                  - { label: "Description [UZ]", name: "description_uz", widget: "text", required: false }
-                  - { label: "Description [EN]", name: "description_en", widget: "text", required: false }
-
-      # --- GLOBAL SETTINGS ---
-      - name: "global"
-        label: "Глобальные реквизиты, шапка и контакты"
-        file: "src/data/cms/global.json"
-        fields:
-          - { label: "⚙️ Краткое наименование компании", name: "companyName", widget: "string" }
-          - { label: "⚙️ Краткое наименование [UZ]", name: "companyName_uz", widget: "string", required: false }
-          - { label: "⚙️ Short company name [EN]", name: "companyName_en", widget: "string", required: false }
-          - { label: "⚙️ Бренд (для поиска и schema.org)", name: "brandName", widget: "string", required: false, hint: "Напр. RailTech" }
-          - { label: "⚙️ Полное наименование (RU)", name: "fullName", widget: "string", required: false }
-          - { label: "⚙️ To'liq firma nomi (UZ)", name: "fullName_uz", widget: "string", required: false }
-          - { label: "⚙️ Full Legal Name (EN)", name: "fullName_en", widget: "string", required: false }
-          - { label: "⚙️ Сокращенное наименование", name: "shortName", widget: "string", required: false }
-          - { label: '⚙️ Сокращённое наименование [UZ]', name: shortName_uz, widget: string, required: false }
-          - { label: '⚙️ Сокращённое наименование [EN]', name: shortName_en, widget: string, required: false }
-          - { label: "⚙️ ИНН предприятия", name: "inn", widget: "string" }
-          - { label: "⚙️ ИНН / Код плательщика НДС (taxId)", name: "taxId", widget: "string", required: false }
-          - { label: '⚙️ ОКПО', name: okpo, widget: string, required: false }
-          - { label: "⚙️ Город [RU]", name: "city", widget: "string", required: false }
-          - { label: "⚙️ Shahar [UZ]", name: "city_uz", widget: "string", required: false }
-          - { label: "⚙️ City [EN]", name: "city_en", widget: "string", required: false }
-          - { label: "⚙️ Регион [RU]", name: "region", widget: "string", required: false }
-          - { label: "⚙️ Hudud [UZ]", name: "region_uz", widget: "string", required: false }
-          - { label: "⚙️ Region [EN]", name: "region_en", widget: "string", required: false }
-          - { label: "⚙️ Код страны (ISO)", name: "countryCode", widget: "string", required: false, default: "UZ" }
-          - { label: "⚙️ Операторы ЭСФ", name: "esfOperators", widget: "string", required: false }
-          - { label: "⚙️ Официальные домены", name: "officialDomains", widget: "string", required: false }
-          - { label: "⚙️ Основной телефон", name: "phone", widget: "string" }
-          - { label: "⚙️ Общий Email", name: "emailGeneral", widget: "string" }
-          - { label: "⚙️ Email снабжения", name: "emailSupply", widget: "string", required: false }
-          - { label: "⚙️ Email юротдела", name: "emailLegal", widget: "string", required: false }
-          - { label: "⚙️ Email по персональным данным", name: "emailPrivacy", widget: "string", required: false }
-          - { label: "⚙️ Telegram URL", name: "telegramUrl", widget: "string", required: false }
-          - { label: "⚙️ Telegram Канал (@...)", name: "telegramChannel", widget: "string", required: false }
-          - { label: "⚙️ URL вебхука для заявок (Cloudflare Worker)", name: "telegramWebhook", widget: "string", required: false }
-          - { label: "⚙️ Ссылка на B2B портал", name: "b2bPortalUrl", widget: "string", required: false }
-          - { label: "⚙️ Год копирайта в подвале", name: "copyrightYear", widget: "string", required: false }
-          - { label: "🇷🇺 [RU] Юридический статус", name: "legalStatus", widget: "string" }
-          - { label: "🇺🇿 [UZ] Yuridik maqom", name: "legalStatus_uz", widget: "string", required: false }
-          - { label: "🇬🇧 [EN] Legal status", name: "legalStatus_en", widget: "string", required: false }
-          - { label: "🇷🇺 [RU] Адрес склада и офиса", name: "address", widget: "string" }
-          - { label: "🇺🇿 [UZ] Ombor va ofis manzili", name: "address_uz", widget: "string", required: false }
-          - { label: "🇬🇧 [EN] Warehouse and office address", name: "address_en", widget: "string", required: false }
-          - { label: '⚙️ Адрес офиса [RU]', name: officeAddress, widget: string, required: false }
-          - { label: '⚙️ Ofis manzili [UZ]', name: officeAddress_uz, widget: string, required: false }
-          - { label: '⚙️ Office address [EN]', name: officeAddress_en, widget: string, required: false }
-          - { label: "🇷🇺 [RU] Полный складской адрес (КПП)", name: "warehouseAddress", widget: "string", required: false }
-          - { label: "🇺🇿 [UZ] To'liq ombor manzili (KPP)", name: "warehouseAddress_uz", widget: "string", required: false }
-          - { label: "🇬🇧 [EN] Full Warehouse Address (Gate)", name: "warehouseAddress_en", widget: "string", required: false }
-          - { label: "🇷🇺 [RU] Режим работы склада", name: "warehouseSchedule", widget: "string", required: false }
-          - { label: "🇺🇿 [UZ] Ombor ish tartibi", name: "warehouseSchedule_uz", widget: "string", required: false }
-          - { label: "🇬🇧 [EN] Warehouse Schedule", name: "warehouseSchedule_en", widget: "string", required: false }
-          - label: "⚙️ Ключевые метрики"
-            name: "metrics"
-            widget: "object"
-            required: false
-            hint: "Число позиций, категорий и производителей сайт считает сам по каталогу. В текстах — плейсхолдеры {items}, {manufacturers} (производители продукции в каталоге), {partnerManufacturers} (с кем работаем — таблица производителей), {categories}, {years}, {partners}; со склонением: {items|позиция|позиции|позиций}."
-            fields:
-              - { label: "Лет на рынке", name: "years", widget: "string", required: false }
-              - { label: "Партнеры", name: "partners", widget: "string", required: false }
-              - { label: "Точность Smart Match", name: "smartMatch", widget: "string", required: false }
-          - label: "⚙️ Производители и статус RailTech (страница «О компании»)"
-            name: "manufacturers"
-            widget: "list"
-            required: false
-            hint: "Статус «Официальный дилер и представитель» — только при наличии дилерского документа производителя (в примечании — номер и срок документа)."
-            fields:
-              - { label: "Производитель (как в документах)", name: "name", widget: "string" }
-              - { label: "Страна [RU]", name: "country", widget: "string", required: false }
-              - { label: "Mamlakat [UZ]", name: "country_uz", widget: "string", required: false }
-              - { label: "Country [EN]", name: "country_en", widget: "string", required: false }
-              - { label: "Статус RailTech [RU]", name: "status", widget: "select", options: ["Официальный дилер и представитель", "Прямые поставки"] }
-              - { label: "RailTech maqomi [UZ]", name: "status_uz", widget: "string", required: false }
-              - { label: "RailTech status [EN]", name: "status_en", widget: "string", required: false }
-              - { label: "Документ / примечание [RU]", name: "note", widget: "string", required: false }
-              - { label: "Hujjat / izoh [UZ]", name: "note_uz", widget: "string", required: false }
-              - { label: "Document / note [EN]", name: "note_en", widget: "string", required: false }
-          - label: "⚙️ Верхняя панель телеметрии (topBar)"
-            name: "topBar"
-            widget: "object"
-            required: false
-            fields:
-              - { label: "Статус телеметрии", name: "telemetryStatus", widget: "string", required: false }
-              - { label: "Бейдж НДС [RU]", name: "vatBadge", widget: "string", required: false }
-              - { label: "QQS nishoni [UZ]", name: "vatBadge_uz", widget: "string", required: false }
-              - { label: "VAT badge [EN]", name: "vatBadge_en", widget: "string", required: false }
-              - { label: "Отраслевой бейдж", name: "industryBadge", widget: "string", required: false }
-              - { label: "Гео-бейдж [RU]", name: "geoBadge", widget: "string", required: false }
-              - { label: "Geo-nishon [UZ]", name: "geoBadge_uz", widget: "string", required: false }
-              - { label: "Geo badge [EN]", name: "geoBadge_en", widget: "string", required: false }
-          - label: "⚙️ Главное меню навигации (navigation)"
-            name: "navigation"
-            widget: "list"
-            required: false
-            fields:
-              - { label: "Индекс (01..06)", name: "index", widget: "string" }
-              - { label: "Путь (URL)", name: "path", widget: "string" }
-              - { label: "Название [RU]", name: "label", widget: "string" }
-              - { label: "Nomi [UZ]", name: "label_uz", widget: "string", required: false }
-              - { label: "Label [EN]", name: "label_en", widget: "string", required: false }
-          - label: "⚙️ Настройки подвала (footer)"
-            name: "footer"
-            widget: "object"
-            required: false
-            fields:
-              - { label: "Описание компании в подвале [RU]", name: "companyDesc", widget: "text", required: false }
-              - { label: "Kompaniya tavsifi [UZ]", name: "companyDesc_uz", widget: "text", required: false }
-              - { label: "Company description [EN]", name: "companyDesc_en", widget: "text", required: false }
-              - { label: 'Значение — vatValue [RU]', name: vatValue, widget: string, required: false }
-              - { label: 'Значение — vatValue [UZ]', name: vatValue_uz, widget: string, required: false }
-              - { label: 'Значение — vatValue [EN]', name: vatValue_en, widget: string, required: false }
-              - { label: 'Заголовок — sectionsTitle [RU]', name: sectionsTitle, widget: string, required: false }
-              - { label: 'Заголовок — sectionsTitle [UZ]', name: sectionsTitle_uz, widget: string, required: false }
-              - { label: 'Заголовок — sectionsTitle [EN]', name: sectionsTitle_en, widget: string, required: false }
-              - label: 'Ссылки разделов в подвале (links)'
-                name: links
-                widget: list
-                required: false
-                fields:
-                  - { label: 'Номер (index)', name: index, widget: string, required: false }
-                  - { label: 'Путь страницы (напр. /catalog/)', name: path, widget: string, required: false }
-                  - { label: 'Подпись — label [RU]', name: label, widget: string, required: false }
-                  - { label: 'Подпись — label [UZ]', name: label_uz, widget: string, required: false }
-                  - { label: 'Подпись — label [EN]', name: label_en, widget: string, required: false }
-                  - { label: 'Бейдж — badge [RU]', name: badge, widget: string, required: false }
-                  - { label: 'Бейдж — badge [UZ]', name: badge_uz, widget: string, required: false }
-                  - { label: 'Бейдж — badge [EN]', name: badge_en, widget: string, required: false }
-              - { label: 'Заголовок — hubTitle [RU]', name: hubTitle, widget: string, required: false }
-              - { label: 'Заголовок — hubTitle [UZ]', name: hubTitle_uz, widget: string, required: false }
-              - { label: 'Заголовок — hubTitle [EN]', name: hubTitle_en, widget: string, required: false }
-              - { label: 'Текст — hubText [RU]', name: hubText, widget: text, required: false }
-              - { label: 'Текст — hubText [UZ]', name: hubText_uz, widget: text, required: false }
-              - { label: 'Текст — hubText [EN]', name: hubText_en, widget: text, required: false }
-              - { label: 'hubAccess [RU]', name: hubAccess, widget: string, required: false }
-              - { label: 'hubAccess [UZ]', name: hubAccess_uz, widget: string, required: false }
-              - { label: 'hubAccess [EN]', name: hubAccess_en, widget: string, required: false }
-              - { label: 'Часы — hubHours [RU]', name: hubHours, widget: string, required: false }
-              - { label: 'Часы — hubHours [UZ]', name: hubHours_uz, widget: string, required: false }
-              - { label: 'Часы — hubHours [EN]', name: hubHours_en, widget: string, required: false }
-              - { label: 'hubDispatch [RU]', name: hubDispatch, widget: string, required: false }
-              - { label: 'hubDispatch [UZ]', name: hubDispatch_uz, widget: string, required: false }
-              - { label: 'hubDispatch [EN]', name: hubDispatch_en, widget: string, required: false }
-              - { label: 'Заголовок — contactsTitle [RU]', name: contactsTitle, widget: string, required: false }
-              - { label: 'Заголовок — contactsTitle [UZ]', name: contactsTitle_uz, widget: string, required: false }
-              - { label: 'Заголовок — contactsTitle [EN]', name: contactsTitle_en, widget: string, required: false }
-              - { label: 'statusLine [RU]', name: statusLine, widget: string, required: false }
-              - { label: 'statusLine [UZ]', name: statusLine_uz, widget: string, required: false }
-              - { label: 'statusLine [EN]', name: statusLine_en, widget: string, required: false }
-              - { label: 'securityLine [RU]', name: securityLine, widget: string, required: false }
-              - { label: 'securityLine [UZ]', name: securityLine_uz, widget: string, required: false }
-              - { label: 'securityLine [EN]', name: securityLine_en, widget: string, required: false }
-      - name: "home"
-        label: "Главная страница (/)"
-        file: "src/data/cms/home.json"
-        fields:
-          - { label: "⚙️ Заголовок консоли (напр. RailTech)", name: "consoleTitle", widget: "string", default: "RailTech" }
-          - { label: "🇷🇺 [RU] Подзаголовок консоли", name: "consoleSubtitle", widget: "string" }
-          - { label: "🇺🇿 [UZ] Konsol ost-sarlavhasi", name: "consoleSubtitle_uz", widget: "string", required: false }
-          - { label: "🇬🇧 [EN] Console Subtitle", name: "consoleSubtitle_en", widget: "string", required: false }
-          - { label: 'consoleKicker [RU]', name: consoleKicker, widget: string, required: false }
-          - { label: 'consoleKicker [UZ]', name: consoleKicker_uz, widget: string, required: false }
-          - { label: 'consoleKicker [EN]', name: consoleKicker_en, widget: string, required: false }
-          - { label: 'consoleStamp [RU]', name: consoleStamp, widget: string, required: false }
-          - { label: 'consoleStamp [UZ]', name: consoleStamp_uz, widget: string, required: false }
-          - { label: 'consoleStamp [EN]', name: consoleStamp_en, widget: string, required: false }
-          - { label: "⚙️ Верхний тег консоли (topCalloutTag)", name: "topCalloutTag", widget: "string", required: false }
-          - { label: "🇷🇺 Верхний статус оператора [RU]", name: "topCalloutStatus", widget: "string", required: false }
-          - { label: "🇺🇿 Yuqori operator maqomi [UZ]", name: "topCalloutStatus_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Top Operator Status [EN]", name: "topCalloutStatus_en", widget: "string", required: false }
-          - { label: "🇷🇺 Верхний бейдж НДС [RU]", name: "topCalloutVat", widget: "string", required: false }
-          - { label: "🇺🇿 Yuqori QQS nishoni [UZ]", name: "topCalloutVat_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Top VAT Badge [EN]", name: "topCalloutVat_en", widget: "string", required: false }
-          - { label: "⚙️ Верхний бейдж хаба (topCalloutHub)", name: "topCalloutHub", widget: "string", required: false }
-          - { label: "🇷🇺 Верхний бейдж SLA [RU]", name: "topCalloutSla", widget: "string", required: false }
-          - { label: "🇺🇿 Yuqori SLA nishoni [UZ]", name: "topCalloutSla_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Top SLA badge [EN]", name: "topCalloutSla_en", widget: "string", required: false }
-          - { label: 'Подпись — modesLabel [RU]', name: modesLabel, widget: string, required: false }
-          - { label: 'Подпись — modesLabel [UZ]', name: modesLabel_uz, widget: string, required: false }
-          - { label: 'Подпись — modesLabel [EN]', name: modesLabel_en, widget: string, required: false }
-          - { label: 'Подпись — directionsLabel [RU]', name: directionsLabel, widget: string, required: false }
-          - { label: 'Подпись — directionsLabel [UZ]', name: directionsLabel_uz, widget: string, required: false }
-          - { label: 'Подпись — directionsLabel [EN]', name: directionsLabel_en, widget: string, required: false }
-          - label: "⚙️ Режимы 2x2 в левой консоли (modes)"
-            name: "modes"
-            widget: "list"
-            required: false
-            fields:
-              - { label: "Индекс (01..04)", name: "n", widget: "string" }
-              - { label: "Название [RU]", name: "label", widget: "string" }
-              - { label: "Nomi [UZ]", name: "label_uz", widget: "string", required: false }
-              - { label: "Label [EN]", name: "label_en", widget: "string", required: false }
-              - { label: "Ссылка (URL)", name: "href", widget: "string" }
-          - label: "⚙️ Направления в левой консоли (directions)"
-            name: "directions"
-            widget: "list"
-            required: false
-            fields:
-              - { label: "Название [RU]", name: "label", widget: "string" }
-              - { label: "Nomi [UZ]", name: "label_uz", widget: "string", required: false }
-              - { label: "Label [EN]", name: "label_en", widget: "string", required: false }
-              - { label: "Ссылка (URL)", name: "href", widget: "string" }
-
-          # --- HUD MEDIA СЛАЙДЫ ---
-          - label: "⚙️ Слайды главного HUD-слайдера (heroSlides)"
-            name: "heroSlides"
-            widget: "list"
-            fields:
-              - { label: "Изображение слайда", name: "image", widget: "image" }
-              - { label: "Технический тег (напр. CATALOG // SUPPLY)", name: "tag", widget: "string" }
-              - { label: "Ссылка при клике (напр. /catalog/)", name: "link", widget: "string" }
-              - { label: "🇷🇺 Заголовок слайда", name: "title", widget: "string" }
-              - { label: "🇺🇿 Slayd sarlavhasi (UZ)", name: "title_uz", widget: "string", required: false }
-              - { label: "🇬🇧 Slide Title (EN)", name: "title_en", widget: "string", required: false }
-              - { label: "🇷🇺 Описание слайда", name: "description", widget: "text" }
-              - { label: "🇺🇿 Slayd tavsifi (UZ)", name: "description_uz", widget: "text", required: false }
-              - { label: "🇬🇧 Slide Description (EN)", name: "description_en", widget: "text", required: false }
-
-          # --- КОРПОРАТИВНЫЙ ПАСПОРТ (ПРАВАЯ КОЛОНКА) ---
-          - label: "⚙️ Карточки паспорта (Правая колонка)"
-            name: "passport"
-            widget: "list"
-            required: false
-            fields:
-              - { label: "🇷🇺 Параметр", name: "label", widget: "string" }
-              - { label: "🇺🇿 Parametr", name: "label_uz", widget: "string", required: false }
-              - { label: "🇬🇧 Label", name: "label_en", widget: "string", required: false }
-              - { label: "🇷🇺 Значение", name: "value", widget: "string" }
-              - { label: "🇺🇿 Qiymat", name: "value_uz", widget: "string", required: false }
-              - { label: "🇬🇧 Value", name: "value_en", widget: "string", required: false }
-          - { label: 'Подпись — passportLabel [RU]', name: passportLabel, widget: string, required: false }
-          - { label: 'Подпись — passportLabel [UZ]', name: passportLabel_uz, widget: string, required: false }
-          - { label: 'Подпись — passportLabel [EN]', name: passportLabel_en, widget: string, required: false }
-          - { label: "🇷🇺 Кнопка заявки в правой колонке [RU]", name: "ctaLead", widget: "string", required: false }
-          - { label: "🇺🇿 Ariza tugmasi [UZ]", name: "ctaLead_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Lead CTA Button [EN]", name: "ctaLead_en", widget: "string", required: false }
-          - { label: 'gatewaysDivider [RU]', name: gatewaysDivider, widget: string, required: false }
-          - { label: 'gatewaysDivider [UZ]', name: gatewaysDivider_uz, widget: string, required: false }
-          - { label: 'gatewaysDivider [EN]', name: gatewaysDivider_en, widget: string, required: false }
-
-          # --- 4 КАРТОЧКИ НАВИГАЦИОННОГО ШЛЮЗА (gatewayCards) ---
-          - label: "⚙️ 4 Карточки шлюза под слайдером (gatewayCards)"
-            name: "gatewayCards"
-            widget: "list"
-            required: false
-            fields:
-              - { label: "Заголовок [RU]", name: "title", widget: "string" }
-              - { label: "Sarlavha [UZ]", name: "title_uz", widget: "string", required: false }
-              - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-              - { label: "Изображение", name: "image", widget: "image", required: false }
-              - { label: "Ссылка (URL)", name: "href", widget: "string" }
-              - { label: "Описание [RU]", name: "text", widget: "text" }
-              - { label: "Tavsif [UZ]", name: "text_uz", widget: "text", required: false }
-              - { label: "Description [EN]", name: "text_en", widget: "text", required: false }
-
-          # --- ВИТРИНА СКЛАДА, ПРОЕКТЫ, БЛОГ И ГАРАНТИИ ---
-          - { label: "🇷🇺 Бейдж витрины склада [RU]", name: "showcaseSectionBadge", widget: "string", required: false }
-          - { label: "🇺🇿 Ombor vitrinasi nishoni [UZ]", name: "showcaseSectionBadge_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Showcase Badge [EN]", name: "showcaseSectionBadge_en", widget: "string", required: false }
-          - { label: "🇷🇺 Заголовок витрины склада [RU]", name: "showcaseSectionTitle", widget: "string", required: false }
-          - { label: "🇺🇿 Ombor vitrinasi sarlavhasi [UZ]", name: "showcaseSectionTitle_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Showcase Title [EN]", name: "showcaseSectionTitle_en", widget: "string", required: false }
-          - { label: 'Ссылка — showcaseAllLink [RU]', name: showcaseAllLink, widget: string, required: false }
-          - { label: 'Ссылка — showcaseAllLink [UZ]', name: showcaseAllLink_uz, widget: string, required: false }
-          - { label: 'Ссылка — showcaseAllLink [EN]', name: showcaseAllLink_en, widget: string, required: false }
-
-          - { label: "🇷🇺 Бейдж секции проектов [RU]", name: "projectsSectionBadge", widget: "string", required: false }
-          - { label: "🇺🇿 Loyihalar bo'limi nishoni [UZ]", name: "projectsSectionBadge_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Projects Section Badge [EN]", name: "projectsSectionBadge_en", widget: "string", required: false }
-          - { label: "🇷🇺 Заголовок секции проектов [RU]", name: "projectsSectionTitle", widget: "string", required: false }
-          - { label: "🇺🇿 Loyihalar bo'limi sarlavhasi [UZ]", name: "projectsSectionTitle_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Projects Section Title [EN]", name: "projectsSectionTitle_en", widget: "string", required: false }
-          - { label: "🇷🇺 Подзаголовок секции проектов [RU]", name: "projectsSectionSubtitle", widget: "string", required: false }
-          - { label: "🇺🇿 Loyihalar ost-sarlavhasi [UZ]", name: "projectsSectionSubtitle_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Projects Section Subtitle [EN]", name: "projectsSectionSubtitle_en", widget: "string", required: false }
-
-          - { label: "🇷🇺 Бейдж секции блога [RU]", name: "blogBadge", widget: "string", required: false }
-          - { label: "🇺🇿 Blog bo'limi nishoni [UZ]", name: "blogBadge_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Blog Badge [EN]", name: "blogBadge_en", widget: "string", required: false }
-          - { label: "🇷🇺 Заголовок секции блога [RU]", name: "blogTitle", widget: "string", required: false }
-          - { label: "🇺🇿 Blog bo'limi sarlavhasi [UZ]", name: "blogTitle_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Blog Title [EN]", name: "blogTitle_en", widget: "string", required: false }
-          - { label: "🇷🇺 Подзаголовок секции блога [RU]", name: "blogSubtitle", widget: "string", required: false }
-          - { label: "🇺🇿 Blog ost-sarlavhasi [UZ]", name: "blogSubtitle_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Blog Subtitle [EN]", name: "blogSubtitle_en", widget: "string", required: false }
-
-          - { label: "🇷🇺 Бейдж блока гарантий [RU]", name: "trustSectionBadge", widget: "string", required: false }
-          - { label: "🇺🇿 Kafolatlar nishoni [UZ]", name: "trustSectionBadge_uz", widget: "string", required: false }
-          - { label: "🇬🇧 Guarantees Badge [EN]", name: "trustSectionBadge_en", widget: "string", required: false }
-          - { label: "🇷🇺 [RU] Заголовок блока гарантий", name: "trustSectionTitle", widget: "string", required: false }
-          - { label: "🇺🇿 [UZ] Kafolatlar bloki sarlavhasi", name: "trustSectionTitle_uz", widget: "string", required: false }
-          - { label: "🇬🇧 [EN] Guarantees Title", name: "trustSectionTitle_en", widget: "string", required: false }
-          - label: "⚙️ Карточки регламента и гарантий"
-            name: "trustItems"
-            widget: "list"
-            required: false
-            fields:
-              - { label: "Код [RU]", name: "code", widget: "string" }
-              - { label: "Код [UZ]", name: "code_uz", widget: "string", required: false }
-              - { label: "Код [EN]", name: "code_en", widget: "string", required: false }
-              - { label: "Текст [RU]", name: "text", widget: "text" }
-              - { label: "Текст [UZ]", name: "text_uz", widget: "text", required: false }
-              - { label: "Текст [EN]", name: "text_en", widget: "text", required: false }
-
-      # --- ABOUT PAGE ---
-      - name: "about"
-        label: "О компании (/about)"
-        file: "src/data/cms/about.json"
-        fields:
-          - { label: "🇷🇺 [RU] Бейдж страницы", name: "badge", widget: "string" }
-          - { label: "🇺🇿 [UZ] Sahifa nishoni", name: "badge_uz", widget: "string", required: false }
-          - { label: "🇬🇧 [EN] Page badge", name: "badge_en", widget: "string", required: false }
-          - { label: "🇷🇺 [RU] Заголовок H1", name: "pageTitle", widget: "string" }
-          - { label: "🇺🇿 [UZ] Bosh sarlavha H1", name: "pageTitle_uz", widget: "string", required: false }
-          - { label: "🇬🇧 [EN] H1 page title", name: "pageTitle_en", widget: "string", required: false }
-          - { label: "🇷🇺 [RU] Подзаголовок", name: "pageSubtitle", widget: "text" }
-          - { label: "🇺🇿 [UZ] Qisqa tavsif", name: "pageSubtitle_uz", widget: "text", required: false }
-          - { label: "🇬🇧 [EN] Page subtitle", name: "pageSubtitle_en", widget: "text", required: false }
-          - label: "Миссия компании"
-            name: "mission"
-            widget: "object"
-            required: false
-            fields:
-              - { label: "🇷🇺 [RU] Заголовок", name: "title", widget: "string" }
-              - { label: "🇺🇿 [UZ] Sarlavha", name: "title_uz", widget: "string", required: false }
-              - { label: "🇬🇧 [EN] Title", name: "title_en", widget: "string", required: false }
-              - { label: "🇷🇺 [RU] Текст", name: "text", widget: "text" }
-              - { label: "🇺🇿 [UZ] Matn", name: "text_uz", widget: "text", required: false }
-              - { label: "🇬🇧 [EN] Text", name: "text_en", widget: "text", required: false }
-          - label: "⚙️ Преимущества компании (advantages)"
-            name: "advantages"
-            widget: "list"
-            required: false
-            fields:
-              - { label: "Код [RU]", name: "code", widget: "string" }
-              - { label: "Код [UZ]", name: "code_uz", widget: "string", required: false }
-              - { label: "Код [EN]", name: "code_en", widget: "string", required: false }
-              - { label: "Заголовок [RU]", name: "title", widget: "string" }
-              - { label: "Заголовок [UZ]", name: "title_uz", widget: "string", required: false }
-              - { label: "Заголовок [EN]", name: "title_en", widget: "string", required: false }
-              - { label: "Описание [RU]", name: "description", widget: "text" }
-              - { label: "Описание [UZ]", name: "description_uz", widget: "text", required: false }
-              - { label: "Описание [EN]", name: "description_en", widget: "text", required: false }
-              - label: "Тезисы преимущества [RU]"
-                name: "items"
-                widget: "list"
-                required: false
-                field: { label: "Тезис [RU]", name: "item", widget: "string" }
-              - label: "Afzallik punktlari [UZ]"
-                name: "items_uz"
-                widget: "list"
-                required: false
-                field: { label: "Punkt [UZ]", name: "item", widget: "string" }
-              - label: "Advantage Bullets [EN]"
-                name: "items_en"
-                widget: "list"
-                required: false
-                field: { label: "Bullet [EN]", name: "item", widget: "string" }
-          - { label: 'Бейдж — directionsBadge [RU]', name: directionsBadge, widget: string, required: false }
-          - { label: 'Бейдж — directionsBadge [UZ]', name: directionsBadge_uz, widget: string, required: false }
-          - { label: 'Бейдж — directionsBadge [EN]', name: directionsBadge_en, widget: string, required: false }
-          - { label: 'Заголовок — directionsTitle [RU]', name: directionsTitle, widget: string, required: false }
-          - { label: 'Заголовок — directionsTitle [UZ]', name: directionsTitle_uz, widget: string, required: false }
-          - { label: 'Заголовок — directionsTitle [EN]', name: directionsTitle_en, widget: string, required: false }
-          - label: "⚙️ Направления деятельности (directions)"
-            name: "directions"
-            widget: "list"
-            required: false
-            fields:
-              - { label: "Заголовок [RU]", name: "title", widget: "string" }
-              - { label: "Sarlavha [UZ]", name: "title_uz", widget: "string", required: false }
-              - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-              - { label: "Описание [RU]", name: "desc", widget: "text" }
-              - { label: "Tavsif [UZ]", name: "desc_uz", widget: "text", required: false }
-              - { label: "Description [EN]", name: "desc_en", widget: "text", required: false }
-          - { label: 'Заголовок — dossierTitle [RU]', name: dossierTitle, widget: string, required: false }
-          - { label: 'Заголовок — dossierTitle [UZ]', name: dossierTitle_uz, widget: string, required: false }
-          - { label: 'Заголовок — dossierTitle [EN]', name: dossierTitle_en, widget: string, required: false }
-          - { label: 'Статус — vatStatus [RU]', name: vatStatus, widget: string, required: false }
-          - { label: 'Статус — vatStatus [UZ]', name: vatStatus_uz, widget: string, required: false }
-          - { label: 'Статус — vatStatus [EN]', name: vatStatus_en, widget: string, required: false }
-          - { label: 'Бейдж — faqBadge [RU]', name: faqBadge, widget: string, required: false }
-          - { label: 'Бейдж — faqBadge [UZ]', name: faqBadge_uz, widget: string, required: false }
-          - { label: 'Бейдж — faqBadge [EN]', name: faqBadge_en, widget: string, required: false }
-          - { label: 'Заголовок — faqTitle [RU]', name: faqTitle, widget: string, required: false }
-          - { label: 'Заголовок — faqTitle [UZ]', name: faqTitle_uz, widget: string, required: false }
-          - { label: 'Заголовок — faqTitle [EN]', name: faqTitle_en, widget: string, required: false }
-          - { label: 'Подзаголовок — faqSubtitle [RU]', name: faqSubtitle, widget: string, required: false }
-          - { label: 'Подзаголовок — faqSubtitle [UZ]', name: faqSubtitle_uz, widget: string, required: false }
-          - { label: 'Подзаголовок — faqSubtitle [EN]', name: faqSubtitle_en, widget: string, required: false }
-          - { label: 'Примечание — faqNote [RU]', name: faqNote, widget: string, required: false }
-          - { label: 'Примечание — faqNote [UZ]', name: faqNote_uz, widget: string, required: false }
-          - { label: 'Примечание — faqNote [EN]', name: faqNote_en, widget: string, required: false }
-          - label: "Вопросы и ответы (FAQ)"
-            name: "faq"
-            widget: "list"
-            required: false
-            fields:
-              - { label: "🇷🇺 [RU] Вопрос", name: "q", widget: "string" }
-              - { label: "🇺🇿 [UZ] Savol", name: "q_uz", widget: "string", required: false }
-              - { label: "🇬🇧 [EN] Question", name: "q_en", widget: "string", required: false }
-              - { label: "🇷🇺 [RU] Ответ", name: "a", widget: "text" }
-              - { label: "🇺🇿 [UZ] Javob", name: "a_uz", widget: "text", required: false }
-              - { label: "🇬🇧 [EN] Answer", name: "a_en", widget: "text", required: false }
-
-      # --- CONTACTS PAGE ---
-      - name: "contacts"
-        label: "Контакты и реквизиты (/contacts)"
-        file: "src/data/cms/contacts.json"
-        fields:
-          - { label: "🇷🇺 [RU] Бейдж", name: "badge", widget: "string" }
-          - { label: "🇺🇿 [UZ] Nishon", name: "badge_uz", widget: "string", required: false }
-          - { label: "🇬🇧 [EN] Badge", name: "badge_en", widget: "string", required: false }
-          - { label: "🇷🇺 [RU] Статус работы склада", name: "statusBadge", widget: "string", required: false }
-          - { label: "🇺🇿 [UZ] Ombor holati", name: "statusBadge_uz", widget: "string", required: false }
-          - { label: "🇬🇧 [EN] Warehouse status badge", name: "statusBadge_en", widget: "string", required: false }
-          - { label: "🇷🇺 [RU] Локация", name: "location", widget: "string" }
-          - { label: "🇺🇿 [UZ] Lokatsiya", name: "location_uz", widget: "string", required: false }
-          - { label: "🇬🇧 [EN] Location", name: "location_en", widget: "string", required: false }
-          - { label: "🇷🇺 [RU] Заголовок H1", name: "pageTitle", widget: "string" }
-          - { label: "🇺🇿 [UZ] Bosh sarlavha H1", name: "pageTitle_uz", widget: "string", required: false }
-          - { label: "🇬🇧 [EN] H1 Page title", name: "pageTitle_en", widget: "string", required: false }
-          - { label: "🇷🇺 [RU] Подзаголовок", name: "pageSubtitle", widget: "text" }
-          - { label: "🇺🇿 [UZ] Qisqa tavsif", name: "pageSubtitle_uz", widget: "text", required: false }
-          - { label: "🇬🇧 [EN] Page subtitle", name: "pageSubtitle_en", widget: "text", required: false }
-          - { label: 'Заголовок — departmentsTitle [RU]', name: departmentsTitle, widget: string, required: false }
-          - { label: 'Заголовок — departmentsTitle [UZ]', name: departmentsTitle_uz, widget: string, required: false }
-          - { label: 'Заголовок — departmentsTitle [EN]', name: departmentsTitle_en, widget: string, required: false }
-          - label: "⚙️ Отделы компании (departments)"
-            name: "departments"
-            widget: "list"
-            required: false
-            fields:
-              - { label: "Название [RU]", name: "name", widget: "string" }
-              - { label: "Nomi [UZ]", name: "name_uz", widget: "string", required: false }
-              - { label: "Name [EN]", name: "name_en", widget: "string", required: false }
-              - { label: "Описание [RU]", name: "desc", widget: "string" }
-              - { label: "Tavsifi [UZ]", name: "desc_uz", widget: "string", required: false }
-              - { label: "Description [EN]", name: "desc_en", widget: "string", required: false }
-              - { label: "Телефон", name: "phone", widget: "string" }
-              - { label: "Email", name: "email", widget: "string" }
-          - { label: 'Заголовок — logisticsTitle [RU]', name: logisticsTitle, widget: string, required: false }
-          - { label: 'Заголовок — logisticsTitle [UZ]', name: logisticsTitle_uz, widget: string, required: false }
-          - { label: 'Заголовок — logisticsTitle [EN]', name: logisticsTitle_en, widget: string, required: false }
-          - label: "Инструкции по проезду к складу [RU]"
-            name: "logisticsInstructions"
-            widget: "list"
-            required: false
-            field: { label: "Пункт инструкции [RU]", name: "item", widget: "string" }
-          - label: "Omborga kirish yo'riqnomasi [UZ]"
-            name: "logisticsInstructions_uz"
-            widget: "list"
-            required: false
-            field: { label: "Yo'riqnoma bandi [UZ]", name: "item", widget: "string" }
-          - label: "Warehouse Access Guidelines [EN]"
-            name: "logisticsInstructions_en"
-            widget: "list"
-            required: false
-            field: { label: "Instruction Step [EN]", name: "item", widget: "string" }
-          - label: "Режим работы (schedule)"
-            name: "schedule"
-            widget: "object"
-            required: false
-            fields:
-              - { label: "Склад [RU]", name: "warehouse", widget: "string", required: false }
-              - { label: "Ombor [UZ]", name: "warehouse_uz", widget: "string", required: false }
-              - { label: "Warehouse [EN]", name: "warehouse_en", widget: "string", required: false }
-              - { label: "Офис [RU]", name: "office", widget: "string", required: false }
-              - { label: "Ofis [UZ]", name: "office_uz", widget: "string", required: false }
-              - { label: "Office [EN]", name: "office_en", widget: "string", required: false }
-              - { label: "Выходные [RU]", name: "weekend", widget: "string", required: false }
-              - { label: "Dam olish kunlari [UZ]", name: "weekend_uz", widget: "string", required: false }
-              - { label: "Weekends [EN]", name: "weekend_en", widget: "string", required: false }
-          - { label: 'Заголовок — bankTitle [RU]', name: bankTitle, widget: string, required: false }
-          - { label: 'Заголовок — bankTitle [UZ]', name: bankTitle_uz, widget: string, required: false }
-          - { label: 'Заголовок — bankTitle [EN]', name: bankTitle_en, widget: string, required: false }
-          - label: "Банковские реквизиты"
-            name: "bankDetails"
-            widget: "object"
-            required: false
-            fields:
-              - { label: "Получатель [RU]", name: "recipient", widget: "string" }
-              - { label: "Qabul qiluvchi [UZ]", name: "recipient_uz", widget: "string", required: false }
-              - { label: "Recipient [EN]", name: "recipient_en", widget: "string", required: false }
-              - { label: "ИНН / Статус [RU]", name: "inn", widget: "string" }
-              - { label: "STIR / Maqom [UZ]", name: "inn_uz", widget: "string", required: false }
-              - { label: "TIN / Status [EN]", name: "inn_en", widget: "string", required: false }
-              - { label: "Расчетный счет", name: "account", widget: "string" }
-              - { label: "Банк [RU]", name: "bank", widget: "string" }
-              - { label: "Bank [UZ]", name: "bank_uz", widget: "string", required: false }
-              - { label: "Bank [EN]", name: "bank_en", widget: "string", required: false }
-              - { label: "МФО", name: "mfo", widget: "string" }
-
-      # --- STATIC PAGES HEADERS & LEAD MODAL ---
-      - name: "pages"
-        label: "Заголовки разделов и Модальное окно (/pages.json)"
-        file: "src/data/cms/pages.json"
-        fields:
-          - label: "Страница Каталога"
-            name: "catalogPage"
-            widget: "object"
-            fields:
-              - { label: "Код", name: "code", widget: "string" }
-              - { label: "Заголовок [RU]", name: "title", widget: "string" }
-              - { label: "Sarlavha [UZ]", name: "title_uz", widget: "string", required: false }
-              - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-              - { label: "Подзаголовок [RU]", name: "subtitle", widget: "text" }
-              - { label: "Tavsif [UZ]", name: "subtitle_uz", widget: "text", required: false }
-              - { label: "Subtitle [EN]", name: "subtitle_en", widget: "text", required: false }
-              - { label: "CTA Заголовок [RU]", name: "ctaTitle", widget: "string" }
-              - { label: "CTA Sarlavha [UZ]", name: "ctaTitle_uz", widget: "string", required: false }
-              - { label: "CTA Title [EN]", name: "ctaTitle_en", widget: "string", required: false }
-              - { label: "CTA Текст [RU]", name: "ctaSubtitle", widget: "text" }
-              - { label: "CTA Tavsif [UZ]", name: "ctaSubtitle_uz", widget: "text", required: false }
-              - { label: "CTA Text [EN]", name: "ctaSubtitle_en", widget: "text", required: false }
-              - { label: "CTA Кнопка [RU]", name: "ctaButton", widget: "string" }
-              - { label: "CTA Tugma [UZ]", name: "ctaButton_uz", widget: "string", required: false }
-              - { label: "CTA Button [EN]", name: "ctaButton_en", widget: "string", required: false }
-              - label: "4 Карточки складской инфраструктуры (warehouseCards)"
-                name: "warehouseCards"
-                widget: "list"
-                required: false
-                fields:
-                  - { label: "Код (SKLAD // 01)", name: "code", widget: "string" }
-                  - { label: "Параметр [RU]", name: "label", widget: "string" }
-                  - { label: "Parametr [UZ]", name: "label_uz", widget: "string", required: false }
-                  - { label: "Label [EN]", name: "label_en", widget: "string", required: false }
-                  - { label: "Значение [RU]", name: "value", widget: "string" }
-                  - { label: "Qiymat [UZ]", name: "value_uz", widget: "string", required: false }
-                  - { label: "Value [EN]", name: "value_en", widget: "string", required: false }
-              - { label: 'defaultCategory [RU]', name: defaultCategory, widget: string, required: false }
-              - { label: 'defaultCategory [UZ]', name: defaultCategory_uz, widget: string, required: false }
-              - { label: 'defaultCategory [EN]', name: defaultCategory_en, widget: string, required: false }
-              - { label: 'defaultWarehouse [RU]', name: defaultWarehouse, widget: string, required: false }
-              - { label: 'defaultWarehouse [UZ]', name: defaultWarehouse_uz, widget: string, required: false }
-              - { label: 'defaultWarehouse [EN]', name: defaultWarehouse_en, widget: string, required: false }
-              - { label: 'defaultWarranty [RU]', name: defaultWarranty, widget: string, required: false }
-              - { label: 'defaultWarranty [UZ]', name: defaultWarranty_uz, widget: string, required: false }
-              - { label: 'defaultWarranty [EN]', name: defaultWarranty_en, widget: string, required: false }
-              - { label: 'Примечание — defaultPriceNote [RU]', name: defaultPriceNote, widget: string, required: false }
-              - { label: 'Примечание — defaultPriceNote [UZ]', name: defaultPriceNote_uz, widget: string, required: false }
-              - { label: 'Примечание — defaultPriceNote [EN]', name: defaultPriceNote_en, widget: string, required: false }
-              - label: detail
-                name: detail
-                widget: object
-                required: false
-                collapsed: true
-                fields:
-                  - { label: 'Бейдж — vatBadge [RU]', name: vatBadge, widget: string, required: false }
-                  - { label: 'Бейдж — vatBadge [UZ]', name: vatBadge_uz, widget: string, required: false }
-                  - { label: 'Бейдж — vatBadge [EN]', name: vatBadge_en, widget: string, required: false }
-                  - { label: 'Заголовок — specsTitle [RU]', name: specsTitle, widget: string, required: false }
-                  - { label: 'Заголовок — specsTitle [UZ]', name: specsTitle_uz, widget: string, required: false }
-                  - { label: 'Заголовок — specsTitle [EN]', name: specsTitle_en, widget: string, required: false }
-                  - { label: 'Код — specsCode [RU]', name: specsCode, widget: string, required: false }
-                  - { label: 'Заголовок — descriptionTitle [RU]', name: descriptionTitle, widget: string, required: false }
-                  - { label: 'Заголовок — descriptionTitle [UZ]', name: descriptionTitle_uz, widget: string, required: false }
-                  - { label: 'Заголовок — descriptionTitle [EN]', name: descriptionTitle_en, widget: string, required: false }
-                  - { label: 'Заголовок — documentsTitle [RU]', name: documentsTitle, widget: string, required: false }
-                  - { label: 'Заголовок — documentsTitle [UZ]', name: documentsTitle_uz, widget: string, required: false }
-                  - { label: 'Заголовок — documentsTitle [EN]', name: documentsTitle_en, widget: string, required: false }
-                  - { label: 'Заголовок — supplyTitle [RU]', name: supplyTitle, widget: string, required: false }
-                  - { label: 'Заголовок — supplyTitle [UZ]', name: supplyTitle_uz, widget: string, required: false }
-                  - { label: 'Заголовок — supplyTitle [EN]', name: supplyTitle_en, widget: string, required: false }
-                  - label: Пункты — supplyItems [RU]
-                    name: supplyItems
-                    widget: list
-                    required: false
-                    fields:
-                      - { label: 'Текст — text [RU]', name: text, widget: text, required: false }
-                      - { label: 'Текст — text [UZ]', name: text_uz, widget: text, required: false }
-                      - { label: 'Текст — text [EN]', name: text_en, widget: string, required: false }
-                  - { label: 'Заголовок — procurementTitle [RU]', name: procurementTitle, widget: string, required: false }
-                  - { label: 'Заголовок — procurementTitle [UZ]', name: procurementTitle_uz, widget: string, required: false }
-                  - { label: 'Заголовок — procurementTitle [EN]', name: procurementTitle_en, widget: string, required: false }
-                  - { label: 'Примечание — dispatchNote [RU]', name: dispatchNote, widget: string, required: false }
-                  - { label: 'Примечание — dispatchNote [UZ]', name: dispatchNote_uz, widget: string, required: false }
-                  - { label: 'Примечание — dispatchNote [EN]', name: dispatchNote_en, widget: string, required: false }
-                  - { label: 'Значение — taxationValue [RU]', name: taxationValue, widget: string, required: false }
-                  - { label: 'Значение — taxationValue [UZ]', name: taxationValue_uz, widget: string, required: false }
-                  - { label: 'Значение — taxationValue [EN]', name: taxationValue_en, widget: string, required: false }
-                  - { label: 'Заголовок — relatedTitle [RU]', name: relatedTitle, widget: string, required: false }
-                  - { label: 'Заголовок — relatedTitle [UZ]', name: relatedTitle_uz, widget: string, required: false }
-                  - { label: 'Заголовок — relatedTitle [EN]', name: relatedTitle_en, widget: string, required: false }
-          - label: "Страница Услуг"
-            name: "servicesPage"
-            widget: "object"
-            fields:
-              - { label: "Код", name: "code", widget: "string" }
-              - { label: "Заголовок [RU]", name: "title", widget: "string" }
-              - { label: "Sarlavha [UZ]", name: "title_uz", widget: "string", required: false }
-              - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-              - { label: "Подзаголовок [RU]", name: "subtitle", widget: "text" }
-              - { label: "Tavsif [UZ]", name: "subtitle_uz", widget: "text", required: false }
-              - { label: "Subtitle [EN]", name: "subtitle_en", widget: "text", required: false }
-              - { label: "CTA Заголовок [RU]", name: "ctaTitle", widget: "string" }
-              - { label: "CTA Sarlavha [UZ]", name: "ctaTitle_uz", widget: "string", required: false }
-              - { label: "CTA Title [EN]", name: "ctaTitle_en", widget: "string", required: false }
-              - { label: "CTA Текст [RU]", name: "ctaSubtitle", widget: "text" }
-              - { label: "CTA Tavsif [UZ]", name: "ctaSubtitle_uz", widget: "text", required: false }
-              - { label: "CTA Text [EN]", name: "ctaSubtitle_en", widget: "text", required: false }
-              - { label: "CTA Кнопка [RU]", name: "ctaButton", widget: "string" }
-              - { label: "CTA Tugma [UZ]", name: "ctaButton_uz", widget: "string", required: false }
-              - { label: "CTA Button [EN]", name: "ctaButton_en", widget: "string", required: false }
-              - { label: 'Подпись — dividerLabel [RU]', name: dividerLabel, widget: string, required: false }
-              - { label: 'Бейдж — ctaBadge [RU]', name: ctaBadge, widget: string, required: false }
-              - label: detail
-                name: detail
-                widget: object
-                required: false
-                collapsed: true
-                fields:
-                  - { label: 'Бейдж — activeBadge [RU]', name: activeBadge, widget: string, required: false }
-                  - { label: 'Бейдж — activeBadge [UZ]', name: activeBadge_uz, widget: string, required: false }
-                  - { label: 'Бейдж — activeBadge [EN]', name: activeBadge_en, widget: string, required: false }
-                  - { label: 'Бейдж — vatBadge [RU]', name: vatBadge, widget: string, required: false }
-                  - { label: 'Бейдж — vatBadge [UZ]', name: vatBadge_uz, widget: string, required: false }
-                  - { label: 'Бейдж — vatBadge [EN]', name: vatBadge_en, widget: string, required: false }
-                  - { label: 'Заголовок — stepsTitle [RU]', name: stepsTitle, widget: string, required: false }
-                  - { label: 'Заголовок — stepsTitle [UZ]', name: stepsTitle_uz, widget: string, required: false }
-                  - { label: 'Заголовок — stepsTitle [EN]', name: stepsTitle_en, widget: string, required: false }
-                  - { label: 'Заголовок — bodyTitle [RU]', name: bodyTitle, widget: string, required: false }
-                  - { label: 'Заголовок — bodyTitle [UZ]', name: bodyTitle_uz, widget: string, required: false }
-                  - { label: 'Заголовок — bodyTitle [EN]', name: bodyTitle_en, widget: string, required: false }
-                  - { label: 'Заголовок — documentsTitle [RU]', name: documentsTitle, widget: string, required: false }
-                  - { label: 'Заголовок — documentsTitle [UZ]', name: documentsTitle_uz, widget: string, required: false }
-                  - { label: 'Заголовок — documentsTitle [EN]', name: documentsTitle_en, widget: string, required: false }
-                  - { label: 'Заголовок — benefitsTitle [RU]', name: benefitsTitle, widget: string, required: false }
-                  - { label: 'Заголовок — benefitsTitle [UZ]', name: benefitsTitle_uz, widget: string, required: false }
-                  - { label: 'Заголовок — benefitsTitle [EN]', name: benefitsTitle_en, widget: string, required: false }
-                  - { label: 'Значение — contractValue [RU]', name: contractValue, widget: string, required: false }
-                  - { label: 'Значение — contractValue [UZ]', name: contractValue_uz, widget: string, required: false }
-                  - { label: 'Значение — contractValue [EN]', name: contractValue_en, widget: string, required: false }
-                  - { label: 'Заголовок — orderTitle [RU]', name: orderTitle, widget: string, required: false }
-                  - { label: 'Заголовок — orderTitle [UZ]', name: orderTitle_uz, widget: string, required: false }
-                  - { label: 'Заголовок — orderTitle [EN]', name: orderTitle_en, widget: string, required: false }
-                  - { label: 'Примечание — orderNote [RU]', name: orderNote, widget: string, required: false }
-                  - { label: 'Примечание — orderNote [UZ]', name: orderNote_uz, widget: string, required: false }
-                  - { label: 'Примечание — orderNote [EN]', name: orderNote_en, widget: string, required: false }
-                  - { label: 'Значение — currencyValue [RU]', name: currencyValue, widget: string, required: false }
-                  - { label: 'Значение — currencyValue [UZ]', name: currencyValue_uz, widget: string, required: false }
-                  - { label: 'Значение — currencyValue [EN]', name: currencyValue_en, widget: string, required: false }
-                  - { label: 'Значение — taxationValue [RU]', name: taxationValue, widget: string, required: false }
-                  - { label: 'Значение — taxationValue [UZ]', name: taxationValue_uz, widget: string, required: false }
-                  - { label: 'Значение — taxationValue [EN]', name: taxationValue_en, widget: string, required: false }
-                  - { label: 'Подпись — defaultCtaLabel [RU]', name: defaultCtaLabel, widget: string, required: false }
-                  - { label: 'Подпись — defaultCtaLabel [UZ]', name: defaultCtaLabel_uz, widget: string, required: false }
-                  - { label: 'Подпись — defaultCtaLabel [EN]', name: defaultCtaLabel_en, widget: string, required: false }
-          - label: "Страница Проектов"
-            name: "projectsPage"
-            widget: "object"
-            fields:
-              - { label: "Код", name: "code", widget: "string" }
-              - { label: "Заголовок [RU]", name: "title", widget: "string" }
-              - { label: "Sarlavha [UZ]", name: "title_uz", widget: "string", required: false }
-              - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-              - { label: "Подзаголовок [RU]", name: "subtitle", widget: "text" }
-              - { label: "Tavsif [UZ]", name: "subtitle_uz", widget: "text", required: false }
-              - { label: "Subtitle [EN]", name: "subtitle_en", widget: "text", required: false }
-              - { label: "CTA Заголовок [RU]", name: "ctaTitle", widget: "string" }
-              - { label: "CTA Sarlavha [UZ]", name: "ctaTitle_uz", widget: "string", required: false }
-              - { label: "CTA Title [EN]", name: "ctaTitle_en", widget: "string", required: false }
-              - { label: "CTA Текст [RU]", name: "ctaSubtitle", widget: "text" }
-              - { label: "CTA Tavsif [UZ]", name: "ctaSubtitle_uz", widget: "text", required: false }
-              - { label: "CTA Text [EN]", name: "ctaSubtitle_en", widget: "text", required: false }
-              - { label: "CTA Кнопка [RU]", name: "ctaButton", widget: "string" }
-              - { label: "CTA Tugma [UZ]", name: "ctaButton_uz", widget: "string", required: false }
-              - { label: "CTA Button [EN]", name: "ctaButton_en", widget: "string", required: false }
-              - { label: 'defaultCategory [RU]', name: defaultCategory, widget: string, required: false }
-              - { label: 'defaultCategory [UZ]', name: defaultCategory_uz, widget: string, required: false }
-              - { label: 'defaultCategory [EN]', name: defaultCategory_en, widget: string, required: false }
-              - { label: 'Заголовок — directionsTitle [RU]', name: directionsTitle, widget: string, required: false }
-              - { label: 'Заголовок — directionsTitle [UZ]', name: directionsTitle_uz, widget: string, required: false }
-              - { label: 'Заголовок — directionsTitle [EN]', name: directionsTitle_en, widget: string, required: false }
-              - { label: 'directionsDivider [RU]', name: directionsDivider, widget: string, required: false }
-              - { label: 'artLabDivider [RU]', name: artLabDivider, widget: string, required: false }
-              - label: "3 Направления спецпроектов (directions)"
-                name: "directions"
-                widget: "list"
-                required: false
-                fields:
-                  - { label: "Номер (01..03)", name: "n", widget: "string" }
-                  - { label: "Заголовок [RU]", name: "title", widget: "string" }
-                  - { label: "Sarlavha [UZ]", name: "title_uz", widget: "string", required: false }
-                  - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-                  - { label: "Описание [RU]", name: "text", widget: "text" }
-                  - { label: "Tavsif [UZ]", name: "text_uz", widget: "text", required: false }
-                  - { label: "Description [EN]", name: "text_en", widget: "text", required: false }
-              - label: "Манифест RailTech Art Lab (artLab)"
-                name: "artLab"
-                widget: "object"
-                required: false
-                fields:
-                  - { label: "Бейдж [RU]", name: "badge", widget: "string", required: false }
-                  - { label: "Nishon [UZ]", name: "badge_uz", widget: "string", required: false }
-                  - { label: "Badge [EN]", name: "badge_en", widget: "string", required: false }
-                  - { label: "Локация резиденции [RU]", name: "location", widget: "string", required: false }
-                  - { label: "Rezidensiya joyi [UZ]", name: "location_uz", widget: "string", required: false }
-                  - { label: "Residency Location [EN]", name: "location_en", widget: "string", required: false }
-                  - { label: "Абзац 1 [RU]", name: "p1", widget: "text", required: false }
-                  - { label: "1-xatboshi [UZ]", name: "p1_uz", widget: "text", required: false }
-                  - { label: "Paragraph 1 [EN]", name: "p1_en", widget: "text", required: false }
-                  - { label: "Абзац 2 [RU]", name: "p2", widget: "text", required: false }
-                  - { label: "2-xatboshi [UZ]", name: "p2_uz", widget: "text", required: false }
-                  - { label: "Paragraph 2 [EN]", name: "p2_en", widget: "text", required: false }
-                  - { label: "Заголовок для вендоров [RU]", name: "vendorTitle", widget: "string", required: false }
-                  - { label: "Vendorlar uchun sarlavha [UZ]", name: "vendorTitle_uz", widget: "string", required: false }
-                  - { label: "Vendor Title [EN]", name: "vendorTitle_en", widget: "string", required: false }
-                  - { label: "Текст для вендоров [RU]", name: "vendorDesc", widget: "text", required: false }
-                  - { label: "Vendorlar uchun matn [UZ]", name: "vendorDesc_uz", widget: "text", required: false }
-                  - { label: "Vendor Description [EN]", name: "vendorDesc_en", widget: "text", required: false }
-                  - { label: "Текст кнопки [RU]", name: "buttonText", widget: "string", required: false }
-                  - { label: "Tugma matni [UZ]", name: "buttonText_uz", widget: "string", required: false }
-                  - { label: "Button Text [EN]", name: "buttonText_en", widget: "string", required: false }
-              - label: detail
-                name: detail
-                widget: object
-                required: false
-                collapsed: true
-                fields:
-                  - { label: 'Заголовок — materialsTitle [RU]', name: materialsTitle, widget: string, required: false }
-                  - { label: 'Заголовок — materialsTitle [UZ]', name: materialsTitle_uz, widget: string, required: false }
-                  - { label: 'Заголовок — materialsTitle [EN]', name: materialsTitle_en, widget: string, required: false }
-                  - { label: 'Заголовок — scopeTitle [RU]', name: scopeTitle, widget: string, required: false }
-                  - { label: 'Заголовок — scopeTitle [UZ]', name: scopeTitle_uz, widget: string, required: false }
-                  - { label: 'Заголовок — scopeTitle [EN]', name: scopeTitle_en, widget: string, required: false }
-                  - { label: 'Заголовок — orderTitle [RU]', name: orderTitle, widget: string, required: false }
-                  - { label: 'Заголовок — orderTitle [UZ]', name: orderTitle_uz, widget: string, required: false }
-                  - { label: 'Заголовок — orderTitle [EN]', name: orderTitle_en, widget: string, required: false }
-                  - { label: 'Примечание — orderNote [RU]', name: orderNote, widget: text, required: false }
-                  - { label: 'Примечание — orderNote [UZ]', name: orderNote_uz, widget: text, required: false }
-                  - { label: 'Примечание — orderNote [EN]', name: orderNote_en, widget: text, required: false }
-                  - { label: 'Значение — settlementValue [RU]', name: settlementValue, widget: string, required: false }
-                  - { label: 'Значение — settlementValue [UZ]', name: settlementValue_uz, widget: string, required: false }
-                  - { label: 'Значение — settlementValue [EN]', name: settlementValue_en, widget: string, required: false }
-                  - { label: 'Значение — leadTimeValue [RU]', name: leadTimeValue, widget: string, required: false }
-                  - { label: 'Значение — leadTimeValue [UZ]', name: leadTimeValue_uz, widget: string, required: false }
-                  - { label: 'Значение — leadTimeValue [EN]', name: leadTimeValue_en, widget: string, required: false }
-                  - { label: 'Кнопка — orderButton [RU]', name: orderButton, widget: string, required: false }
-                  - { label: 'Кнопка — orderButton [UZ]', name: orderButton_uz, widget: string, required: false }
-                  - { label: 'Кнопка — orderButton [EN]', name: orderButton_en, widget: string, required: false }
-          - label: "Страница Блога"
-            name: "blogPage"
-            widget: "object"
-            fields:
-              - { label: "Код", name: "code", widget: "string" }
-              - { label: "Заголовок [RU]", name: "title", widget: "string" }
-              - { label: "Sarlavha [UZ]", name: "title_uz", widget: "string", required: false }
-              - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-              - { label: "Подзаголовок [RU]", name: "subtitle", widget: "text" }
-              - { label: "Tavsif [UZ]", name: "subtitle_uz", widget: "text", required: false }
-              - { label: "Subtitle [EN]", name: "subtitle_en", widget: "text", required: false }
-              - { label: "CTA Заголовок [RU]", name: "ctaTitle", widget: "string" }
-              - { label: "CTA Sarlavha [UZ]", name: "ctaTitle_uz", widget: "string", required: false }
-              - { label: "CTA Title [EN]", name: "ctaTitle_en", widget: "string", required: false }
-              - { label: "CTA Текст [RU]", name: "ctaSubtitle", widget: "text" }
-              - { label: "CTA Tavsif [UZ]", name: "ctaSubtitle_uz", widget: "text", required: false }
-              - { label: "CTA Text [EN]", name: "ctaSubtitle_en", widget: "text", required: false }
-              - { label: "CTA Кнопка [RU]", name: "ctaButton", widget: "string" }
-              - { label: "CTA Tugma [UZ]", name: "ctaButton_uz", widget: "string", required: false }
-              - { label: "CTA Button [EN]", name: "ctaButton_en", widget: "string", required: false }
-              - { label: 'defaultAuthor [RU]', name: defaultAuthor, widget: string, required: false }
-              - { label: 'defaultAuthor [UZ]', name: defaultAuthor_uz, widget: string, required: false }
-              - { label: 'defaultAuthor [EN]', name: defaultAuthor_en, widget: string, required: false }
-              - { label: 'Бейдж — featuredBadge [RU]', name: featuredBadge, widget: string, required: false }
-              - { label: 'Бейдж — featuredBadge [UZ]', name: featuredBadge_uz, widget: string, required: false }
-              - { label: 'Бейдж — featuredBadge [EN]', name: featuredBadge_en, widget: string, required: false }
-              - { label: 'reviewer [RU]', name: reviewer, widget: string, required: false }
-              - { label: 'reviewer [UZ]', name: reviewer_uz, widget: string, required: false }
-              - { label: 'reviewer [EN]', name: reviewer_en, widget: string, required: false }
-              - label: detail
-                name: detail
-                widget: object
-                required: false
-                collapsed: true
-                fields:
-                  - { label: 'frameBottom [RU]', name: frameBottom, widget: string, required: false }
-                  - { label: 'Заголовок — sidebarTitle [RU]', name: sidebarTitle, widget: string, required: false }
-                  - { label: 'Заголовок — sidebarTitle [UZ]', name: sidebarTitle_uz, widget: string, required: false }
-                  - { label: 'Заголовок — sidebarTitle [EN]', name: sidebarTitle_en, widget: string, required: false }
-                  - { label: 'Примечание — sidebarNote [RU]', name: sidebarNote, widget: string, required: false }
-                  - { label: 'Примечание — sidebarNote [UZ]', name: sidebarNote_uz, widget: string, required: false }
-                  - { label: 'Примечание — sidebarNote [EN]', name: sidebarNote_en, widget: string, required: false }
-                  - { label: 'Текст — sidebarText [RU]', name: sidebarText, widget: text, required: false }
-                  - { label: 'Текст — sidebarText [UZ]', name: sidebarText_uz, widget: text, required: false }
-                  - { label: 'Текст — sidebarText [EN]', name: sidebarText_en, widget: text, required: false }
-                  - label: 'Факты в боковой колонке (sidebarFacts)'
-                    name: sidebarFacts
-                    widget: list
-                    required: false
-                    fields:
-                      - { label: 'Текст — text [RU]', name: text, widget: string, required: false }
-                      - { label: 'Текст — text [UZ]', name: text_uz, widget: string, required: false }
-                      - { label: 'Текст — text [EN]', name: text_en, widget: string, required: false }
-          - label: "Модальное окно заявки (leadModal)"
-            name: "leadModal"
-            widget: "object"
-            fields:
-              - { label: "Бейдж [RU]", name: "badge", widget: "string" }
-              - { label: "Nishon [UZ]", name: "badge_uz", widget: "string", required: false }
-              - { label: "Badge [EN]", name: "badge_en", widget: "string", required: false }
-              - { label: "Локация [RU]", name: "locationMeta", widget: "string" }
-              - { label: "Lokatsiya [UZ]", name: "locationMeta_uz", widget: "string", required: false }
-              - { label: "Location [EN]", name: "locationMeta_en", widget: "string", required: false }
-              - { label: "Заголовок быстрых каналов [RU]", name: "quickChannels", widget: "string", required: false }
-              - { label: "Tezkor aloqa kanallari [UZ]", name: "quickChannels_uz", widget: "string", required: false }
-              - { label: "Direct Channels Label [EN]", name: "quickChannels_en", widget: "string", required: false }
-              - { label: "Лейбл темы [RU]", name: "subjectLabel", widget: "string" }
-              - { label: "Mavzu [UZ]", name: "subjectLabel_uz", widget: "string", required: false }
-              - { label: "Subject [EN]", name: "subjectLabel_en", widget: "string", required: false }
-              - { label: "Лейбл имени [RU]", name: "nameLabel", widget: "string" }
-              - { label: "Ism [UZ]", name: "nameLabel_uz", widget: "string", required: false }
-              - { label: "Name [EN]", name: "nameLabel_en", widget: "string", required: false }
-              - { label: "Лейбл телефона [RU]", name: "phoneLabel", widget: "string" }
-              - { label: "Telefon [UZ]", name: "phoneLabel_uz", widget: "string", required: false }
-              - { label: "Phone [EN]", name: "phoneLabel_en", widget: "string", required: false }
-              - { label: "Лейбл организации [RU]", name: "companyLabel", widget: "string" }
-              - { label: "Tashkilot [UZ]", name: "companyLabel_uz", widget: "string", required: false }
-              - { label: "Company [EN]", name: "companyLabel_en", widget: "string", required: false }
-              - { label: "Лейбл ИНН [RU]", name: "innLabel", widget: "string" }
-              - { label: "STIR [UZ]", name: "innLabel_uz", widget: "string", required: false }
-              - { label: "TIN [EN]", name: "innLabel_en", widget: "string", required: false }
-              - { label: "Лейбл сообщения [RU]", name: "messageLabel", widget: "string" }
-              - { label: "Xabar [UZ]", name: "messageLabel_uz", widget: "string", required: false }
-              - { label: "Message [EN]", name: "messageLabel_en", widget: "string", required: false }
-              - { label: "Лейбл файла [RU]", name: "fileLabel", widget: "string" }
-              - { label: "Fayl [UZ]", name: "fileLabel_uz", widget: "string", required: false }
-              - { label: "File [EN]", name: "fileLabel_en", widget: "string", required: false }
-              - { label: "Кнопка обзора файла [RU]", name: "fileBrowse", widget: "string", required: false }
-              - { label: "Fayl tanlash tugmasi [UZ]", name: "fileBrowse_uz", widget: "string", required: false }
-              - { label: "Browse Button [EN]", name: "fileBrowse_en", widget: "string", required: false }
-              - { label: "Кнопка отмены [RU]", name: "cancelBtn", widget: "string", required: false }
-              - { label: "Bekor qilish tugmasi [UZ]", name: "cancelBtn_uz", widget: "string", required: false }
-              - { label: "Cancel Button [EN]", name: "cancelBtn_en", widget: "string", required: false }
-              - { label: "Кнопка отправки [RU]", name: "submitBtn", widget: "string" }
-              - { label: "Yuborish tugmasi [UZ]", name: "submitBtn_uz", widget: "string", required: false }
-              - { label: "Submit button [EN]", name: "submitBtn_en", widget: "string", required: false }
-              - { label: "Статус отправки [RU]", name: "sendingBtn", widget: "string", required: false }
-              - { label: "Yuborish holati [UZ]", name: "sendingBtn_uz", widget: "string", required: false }
-              - { label: "Sending Status [EN]", name: "sendingBtn_en", widget: "string", required: false }
-
-      # --- LEGAL PAGES (PRIVACY & TERMS) ---
-      - name: "legal"
-        label: "Юридические регламенты (Политика конфиденциальности & Оферта)"
-        file: "src/data/cms/legal.json"
-        fields:
-          - label: "Политика конфиденциальности (ЗРУ-547)"
-            name: "privacy"
-            widget: "object"
-            fields:
-              - { label: "Заголовок [RU]", name: "title", widget: "string" }
-              - { label: "Sarlavha [UZ]", name: "title_uz", widget: "string", required: false }
-              - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-              - { label: "Подзаголовок [RU]", name: "subtitle", widget: "text" }
-              - { label: "Tavsif [UZ]", name: "subtitle_uz", widget: "text", required: false }
-              - { label: "Subtitle [EN]", name: "subtitle_en", widget: "text", required: false }
-              - { label: "Бейдж закона [RU]", name: "badgeLaw", widget: "string", required: false }
-              - { label: "Qonun nishoni [UZ]", name: "badgeLaw_uz", widget: "string", required: false }
-              - { label: "Law badge [EN]", name: "badgeLaw_en", widget: "string", required: false }
-              - { label: "Бейдж юрисдикции [RU]", name: "badgeCountry", widget: "string", required: false }
-              - { label: "Yurisdiksiya nishoni [UZ]", name: "badgeCountry_uz", widget: "string", required: false }
-              - { label: "Jurisdiction badge [EN]", name: "badgeCountry_en", widget: "string", required: false }
-              - { label: "Бейдж редакции [RU]", name: "badgeEdition", widget: "string", required: false }
-              - { label: "Tahrir nishoni [UZ]", name: "badgeEdition_uz", widget: "string", required: false }
-              - { label: "Edition badge [EN]", name: "badgeEdition_en", widget: "string", required: false }
-              - { label: 'crumb [RU]', name: crumb, widget: string, required: false }
-              - { label: 'crumb [UZ]', name: crumb_uz, widget: string, required: false }
-              - { label: 'crumb [EN]', name: crumb_en, widget: string, required: false }
-              - { label: 'Подпись — contactLabel [RU]', name: contactLabel, widget: string, required: false }
-              - { label: 'Подпись — contactLabel [UZ]', name: contactLabel_uz, widget: string, required: false }
-              - { label: 'Подпись — contactLabel [EN]', name: contactLabel_en, widget: string, required: false }
-              - label: "Разделы политики"
-                name: "sections"
-                widget: "list"
-                fields:
-                  - { label: "Номер", name: "num", widget: "string" }
-                  - { label: "Заголовок [RU]", name: "title", widget: "string" }
-                  - { label: "Sarlavha [UZ]", name: "title_uz", widget: "string", required: false }
-                  - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-                  - { label: "Текст [RU]", name: "content", widget: "text" }
-                  - { label: "Matn [UZ]", name: "content_uz", widget: "text", required: false }
-                  - { label: "Content [EN]", name: "content_en", widget: "text", required: false }
-          - label: "Условия использования сервисов"
-            name: "terms"
-            widget: "object"
-            fields:
-              - { label: "Заголовок [RU]", name: "title", widget: "string" }
-              - { label: "Sarlavha [UZ]", name: "title_uz", widget: "string", required: false }
-              - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-              - { label: "Подзаголовок [RU]", name: "subtitle", widget: "text" }
-              - { label: "Tavsif [UZ]", name: "subtitle_uz", widget: "text", required: false }
-              - { label: "Subtitle [EN]", name: "subtitle_en", widget: "text", required: false }
-              - { label: "Бейдж сервиса [RU]", name: "badgeService", widget: "string", required: false }
-              - { label: "Xizmat nishoni [UZ]", name: "badgeService_uz", widget: "string", required: false }
-              - { label: "Service badge [EN]", name: "badgeService_en", widget: "string", required: false }
-              - { label: "Бейдж оферты [RU]", name: "badgeOffer", widget: "string", required: false }
-              - { label: "Oferta nishoni [UZ]", name: "badgeOffer_uz", widget: "string", required: false }
-              - { label: "Offer badge [EN]", name: "badgeOffer_en", widget: "string", required: false }
-              - { label: "Бейдж редакции [RU]", name: "badgeEdition", widget: "string", required: false }
-              - { label: "Tahrir nishoni [UZ]", name: "badgeEdition_uz", widget: "string", required: false }
-              - { label: "Edition badge [EN]", name: "badgeEdition_en", widget: "string", required: false }
-              - { label: 'crumb [RU]', name: crumb, widget: string, required: false }
-              - { label: 'crumb [UZ]', name: crumb_uz, widget: string, required: false }
-              - { label: 'crumb [EN]', name: crumb_en, widget: string, required: false }
-              - { label: 'Подпись — contactLabel [RU]', name: contactLabel, widget: string, required: false }
-              - { label: 'Подпись — contactLabel [UZ]', name: contactLabel_uz, widget: string, required: false }
-              - { label: 'Подпись — contactLabel [EN]', name: contactLabel_en, widget: string, required: false }
-              - label: "Разделы соглашения"
-                name: "sections"
-                widget: "list"
-                fields:
-                  - { label: "Номер", name: "num", widget: "string" }
-                  - { label: "Заголовок [RU]", name: "title", widget: "string" }
-                  - { label: "Sarlavha [UZ]", name: "title_uz", widget: "string", required: false }
-                  - { label: "Title [EN]", name: "title_en", widget: "string", required: false }
-                  - { label: "Текст [RU]", name: "content", widget: "text" }
-                  - { label: "Matn [UZ]", name: "content_uz", widget: "text", required: false }
-                  - { label: "Content [EN]", name: "content_en", widget: "text", required: false }
-
-  # --------------------------------------------------------------------------
-  # 6. INTERFACE STRINGS (src/data/cms/ui/*.json)
-  # --------------------------------------------------------------------------
-  - name: "ui"
-    label: "6. Интерфейс: кнопки и подписи"
-    description: "Тексты кнопок, подписей полей, хлебных крошек и сообщений на трёх языках. Ключ (key) используется в коде — не меняйте его. Пустые UZ/EN показывают русский текст."
-    folder: "src/data/cms/ui"
-    format: "json"
-    extension: "json"
-    create: false
-    delete: false
-    identifier_field: "title"
+      - label: Подпись [EN]
+        name: label_en
+        widget: string
+        required: false
+  - name: home
+    label: Главная
+    file: src/data/cms/home.json
     fields:
-      - { label: "Раздел", name: "title", widget: "string" }
-      - label: "Строки"
-        name: "strings"
-        widget: "list"
-        collapsed: true
-        summary: "{{fields.key}} — {{fields.ru}}"
+    - label: Первый экран
+      name: hero
+      widget: object
+      fields:
+      - label: Надзаголовок [RU]
+        name: eyebrow
+        widget: string
+      - label: Надзаголовок [UZ]
+        name: eyebrow_uz
+        widget: string
+        required: false
+      - label: Надзаголовок [EN]
+        name: eyebrow_en
+        widget: string
+        required: false
+      - label: Заголовок [RU]
+        name: title
+        widget: string
+      - label: Заголовок [UZ]
+        name: title_uz
+        widget: string
+        required: false
+      - label: Заголовок [EN]
+        name: title_en
+        widget: string
+        required: false
+      - label: Подзаголовок [RU]
+        name: lead
+        widget: text
+      - label: Подзаголовок [UZ]
+        name: lead_uz
+        widget: text
+        required: false
+      - label: Подзаголовок [EN]
+        name: lead_en
+        widget: text
+        required: false
+      - label: Входы для аудиторий
+        name: entries
+        widget: list
+        required: false
         fields:
-          - { label: "Ключ (не менять)", name: "key", widget: "string" }
-          - { label: "🇷🇺 RU", name: "ru", widget: "text" }
-          - { label: "🇺🇿 UZ", name: "uz", widget: "text", required: false }
-          - { label: "🇬🇧 EN", name: "en", widget: "text", required: false }
+        - label: Заголовок [RU]
+          name: title
+          widget: string
+        - label: Заголовок [UZ]
+          name: title_uz
+          widget: string
+          required: false
+        - label: Заголовок [EN]
+          name: title_en
+          widget: string
+          required: false
+        - label: Текст [RU]
+          name: text
+          widget: text
+        - label: Текст [UZ]
+          name: text_uz
+          widget: text
+          required: false
+        - label: Текст [EN]
+          name: text_en
+          widget: text
+          required: false
+        - label: Ссылка (маршрут, напр. /services/supply/)
+          name: link
+          widget: string
+    - label: 'Мост: барьеры и решения'
+      name: bridge
+      widget: object
+      fields:
+      - label: Надзаголовок [RU]
+        name: eyebrow
+        widget: string
+      - label: Надзаголовок [UZ]
+        name: eyebrow_uz
+        widget: string
+        required: false
+      - label: Надзаголовок [EN]
+        name: eyebrow_en
+        widget: string
+        required: false
+      - label: Заголовок [RU]
+        name: title
+        widget: string
+      - label: Заголовок [UZ]
+        name: title_uz
+        widget: string
+        required: false
+      - label: Заголовок [EN]
+        name: title_en
+        widget: string
+        required: false
+      - label: Колонка «Заказчик» [RU]
+        name: customerTitle
+        widget: string
+      - label: Колонка «Заказчик» [UZ]
+        name: customerTitle_uz
+        widget: string
+        required: false
+      - label: Колонка «Заказчик» [EN]
+        name: customerTitle_en
+        widget: string
+        required: false
+      - label: Пояснение «Заказчик» [RU]
+        name: customerNote
+        widget: string
+      - label: Пояснение «Заказчик» [UZ]
+        name: customerNote_uz
+        widget: string
+        required: false
+      - label: Пояснение «Заказчик» [EN]
+        name: customerNote_en
+        widget: string
+        required: false
+      - label: Колонка RailTech [RU]
+        name: railtechTitle
+        widget: string
+      - label: Колонка RailTech [UZ]
+        name: railtechTitle_uz
+        widget: string
+        required: false
+      - label: Колонка RailTech [EN]
+        name: railtechTitle_en
+        widget: string
+        required: false
+      - label: Пояснение RailTech [RU]
+        name: railtechNote
+        widget: string
+      - label: Пояснение RailTech [UZ]
+        name: railtechNote_uz
+        widget: string
+        required: false
+      - label: Пояснение RailTech [EN]
+        name: railtechNote_en
+        widget: string
+        required: false
+      - label: Колонка «Партнёр» [RU]
+        name: partnerTitle
+        widget: string
+      - label: Колонка «Партнёр» [UZ]
+        name: partnerTitle_uz
+        widget: string
+        required: false
+      - label: Колонка «Партнёр» [EN]
+        name: partnerTitle_en
+        widget: string
+        required: false
+      - label: Пояснение «Партнёр» [RU]
+        name: partnerNote
+        widget: string
+      - label: Пояснение «Партнёр» [UZ]
+        name: partnerNote_uz
+        widget: string
+        required: false
+      - label: Пояснение «Партнёр» [EN]
+        name: partnerNote_en
+        widget: string
+        required: false
+      - label: Этапы
+        name: rows
+        widget: list
+        required: false
+        fields:
+        - label: Этап [RU]
+          name: stage
+          widget: string
+        - label: Этап [UZ]
+          name: stage_uz
+          widget: string
+          required: false
+        - label: Этап [EN]
+          name: stage_en
+          widget: string
+          required: false
+        - label: Заказчик теряет [RU]
+          name: customer
+          widget: text
+        - label: Заказчик теряет [UZ]
+          name: customer_uz
+          widget: text
+          required: false
+        - label: Заказчик теряет [EN]
+          name: customer_en
+          widget: text
+          required: false
+        - label: RailTech берёт на себя [RU]
+          name: railtech
+          widget: text
+        - label: RailTech берёт на себя [UZ]
+          name: railtech_uz
+          widget: text
+          required: false
+        - label: RailTech берёт на себя [EN]
+          name: railtech_en
+          widget: text
+          required: false
+        - label: Партнёр теряет [RU]
+          name: partner
+          widget: text
+        - label: Партнёр теряет [UZ]
+          name: partner_uz
+          widget: text
+          required: false
+        - label: Партнёр теряет [EN]
+          name: partner_en
+          widget: text
+          required: false
+    - label: Возможности
+      name: directions
+      widget: object
+      fields:
+      - label: Надзаголовок [RU]
+        name: eyebrow
+        widget: string
+      - label: Надзаголовок [UZ]
+        name: eyebrow_uz
+        widget: string
+        required: false
+      - label: Надзаголовок [EN]
+        name: eyebrow_en
+        widget: string
+        required: false
+      - label: Заголовок [RU]
+        name: title
+        widget: string
+      - label: Заголовок [UZ]
+        name: title_uz
+        widget: string
+        required: false
+      - label: Заголовок [EN]
+        name: title_en
+        widget: string
+        required: false
+    - label: О компании
+      name: about
+      widget: object
+      fields:
+      - label: Надзаголовок [RU]
+        name: eyebrow
+        widget: string
+      - label: Надзаголовок [UZ]
+        name: eyebrow_uz
+        widget: string
+        required: false
+      - label: Надзаголовок [EN]
+        name: eyebrow_en
+        widget: string
+        required: false
+      - label: Заголовок [RU]
+        name: title
+        widget: string
+      - label: Заголовок [UZ]
+        name: title_uz
+        widget: string
+        required: false
+      - label: Заголовок [EN]
+        name: title_en
+        widget: string
+        required: false
+      - label: Текст [RU]
+        name: text
+        widget: text
+      - label: Текст [UZ]
+        name: text_uz
+        widget: text
+        required: false
+      - label: Текст [EN]
+        name: text_en
+        widget: text
+        required: false
+      - label: Миссия [RU]
+        name: mission
+        widget: text
+      - label: Миссия [UZ]
+        name: mission_uz
+        widget: text
+        required: false
+      - label: Миссия [EN]
+        name: mission_en
+        widget: text
+        required: false
+    - label: Производители
+      name: partners
+      widget: object
+      fields:
+      - label: Надзаголовок [RU]
+        name: eyebrow
+        widget: string
+      - label: Надзаголовок [UZ]
+        name: eyebrow_uz
+        widget: string
+        required: false
+      - label: Надзаголовок [EN]
+        name: eyebrow_en
+        widget: string
+        required: false
+      - label: Заголовок [RU]
+        name: title
+        widget: string
+      - label: Заголовок [UZ]
+        name: title_uz
+        widget: string
+        required: false
+      - label: Заголовок [EN]
+        name: title_en
+        widget: string
+        required: false
+      - label: Пояснение [RU]
+        name: note
+        widget: text
+      - label: Пояснение [UZ]
+        name: note_uz
+        widget: text
+        required: false
+      - label: Пояснение [EN]
+        name: note_en
+        widget: text
+        required: false
+    - label: Кабинет
+      name: cabinet
+      widget: object
+      fields:
+      - label: Надзаголовок [RU]
+        name: eyebrow
+        widget: string
+      - label: Надзаголовок [UZ]
+        name: eyebrow_uz
+        widget: string
+        required: false
+      - label: Надзаголовок [EN]
+        name: eyebrow_en
+        widget: string
+        required: false
+      - label: Заголовок [RU]
+        name: title
+        widget: string
+      - label: Заголовок [UZ]
+        name: title_uz
+        widget: string
+        required: false
+      - label: Заголовок [EN]
+        name: title_en
+        widget: string
+        required: false
+      - label: Текст [RU]
+        name: text
+        widget: text
+      - label: Текст [UZ]
+        name: text_uz
+        widget: text
+        required: false
+      - label: Текст [EN]
+        name: text_en
+        widget: text
+        required: false
+      - label: Факты
+        name: facts
+        widget: list
+        required: false
+        fields:
+        - label: Значение [RU]
+          name: value
+          widget: string
+        - label: Значение [UZ]
+          name: value_uz
+          widget: string
+          required: false
+        - label: Значение [EN]
+          name: value_en
+          widget: string
+          required: false
+        - label: Подпись [RU]
+          name: label
+          widget: string
+        - label: Подпись [UZ]
+          name: label_uz
+          widget: string
+          required: false
+        - label: Подпись [EN]
+          name: label_en
+          widget: string
+          required: false
+      - label: Иллюстрация сделки
+        name: demo
+        widget: object
+        fields:
+        - label: Название [RU]
+          name: title
+          widget: string
+        - label: Название [UZ]
+          name: title_uz
+          widget: string
+          required: false
+        - label: Название [EN]
+          name: title_en
+          widget: string
+          required: false
+        - label: Пометка [RU]
+          name: note
+          widget: string
+        - label: Пометка [UZ]
+          name: note_uz
+          widget: string
+          required: false
+        - label: Пометка [EN]
+          name: note_en
+          widget: string
+          required: false
+        - label: Стадии [RU]
+          name: stages
+          widget: list
+          field:
+            label: Стадия
+            name: stage
+            widget: string
+        - label: Стадии [UZ]
+          name: stages_uz
+          widget: list
+          required: false
+          field:
+            label: Стадия
+            name: stage
+            widget: string
+        - label: Стадии [EN]
+          name: stages_en
+          widget: list
+          required: false
+          field:
+            label: Стадия
+            name: stage
+            widget: string
+        - label: Текущая стадия (номер с 0)
+          name: current
+          widget: number
+          value_type: int
+        - label: Строки
+          name: rows
+          widget: list
+          required: false
+          fields:
+          - label: Документ [RU]
+            name: label
+            widget: string
+          - label: Документ [UZ]
+            name: label_uz
+            widget: string
+            required: false
+          - label: Документ [EN]
+            name: label_en
+            widget: string
+            required: false
+          - label: Статус [RU]
+            name: status
+            widget: string
+          - label: Статус [UZ]
+            name: status_uz
+            widget: string
+            required: false
+          - label: Статус [EN]
+            name: status_en
+            widget: string
+            required: false
+          - label: Цвет статуса
+            name: tone
+            widget: select
+            options:
+            - ok
+            - wait
+            - neutral
+        - label: Подпись снизу [RU]
+          name: footnote
+          widget: string
+        - label: Подпись снизу [UZ]
+          name: footnote_uz
+          widget: string
+          required: false
+        - label: Подпись снизу [EN]
+          name: footnote_en
+          widget: string
+          required: false
+    - label: Новости
+      name: news
+      widget: object
+      fields:
+      - label: Надзаголовок [RU]
+        name: eyebrow
+        widget: string
+      - label: Надзаголовок [UZ]
+        name: eyebrow_uz
+        widget: string
+        required: false
+      - label: Надзаголовок [EN]
+        name: eyebrow_en
+        widget: string
+        required: false
+      - label: Заголовок [RU]
+        name: title
+        widget: string
+      - label: Заголовок [UZ]
+        name: title_uz
+        widget: string
+        required: false
+      - label: Заголовок [EN]
+        name: title_en
+        widget: string
+        required: false
+    - label: Приглашение и заявка
+      name: invite
+      widget: object
+      fields:
+      - label: Надзаголовок [RU]
+        name: eyebrow
+        widget: string
+      - label: Надзаголовок [UZ]
+        name: eyebrow_uz
+        widget: string
+        required: false
+      - label: Надзаголовок [EN]
+        name: eyebrow_en
+        widget: string
+        required: false
+      - label: Заголовок [RU]
+        name: title
+        widget: string
+      - label: Заголовок [UZ]
+        name: title_uz
+        widget: string
+        required: false
+      - label: Заголовок [EN]
+        name: title_en
+        widget: string
+        required: false
+      - label: Текст [RU]
+        name: text
+        widget: text
+      - label: Текст [UZ]
+        name: text_uz
+        widget: text
+        required: false
+      - label: Текст [EN]
+        name: text_en
+        widget: text
+        required: false
+  - name: pages
+    label: 'Страницы: Услуги, Новости, Контакты, 404'
+    file: src/data/cms/pages.json
+    fields:
+    - label: Услуги (обзор)
+      name: services
+      widget: object
+      fields:
+      - label: Надзаголовок [RU]
+        name: eyebrow
+        widget: string
+      - label: Надзаголовок [UZ]
+        name: eyebrow_uz
+        widget: string
+        required: false
+      - label: Надзаголовок [EN]
+        name: eyebrow_en
+        widget: string
+        required: false
+      - label: Заголовок [RU]
+        name: title
+        widget: string
+      - label: Заголовок [UZ]
+        name: title_uz
+        widget: string
+        required: false
+      - label: Заголовок [EN]
+        name: title_en
+        widget: string
+        required: false
+      - label: Вводный абзац [RU]
+        name: lead
+        widget: text
+      - label: Вводный абзац [UZ]
+        name: lead_uz
+        widget: text
+        required: false
+      - label: Вводный абзац [EN]
+        name: lead_en
+        widget: text
+        required: false
+      - label: Группа «Заказчикам» [RU]
+        name: customersTitle
+        widget: string
+      - label: Группа «Заказчикам» [UZ]
+        name: customersTitle_uz
+        widget: string
+        required: false
+      - label: Группа «Заказчикам» [EN]
+        name: customersTitle_en
+        widget: string
+        required: false
+      - label: Описание группы [RU]
+        name: customersText
+        widget: text
+      - label: Описание группы [UZ]
+        name: customersText_uz
+        widget: text
+        required: false
+      - label: Описание группы [EN]
+        name: customersText_en
+        widget: text
+        required: false
+      - label: Группа «Партнёрам» [RU]
+        name: partnersTitle
+        widget: string
+      - label: Группа «Партнёрам» [UZ]
+        name: partnersTitle_uz
+        widget: string
+        required: false
+      - label: Группа «Партнёрам» [EN]
+        name: partnersTitle_en
+        widget: string
+        required: false
+      - label: Описание группы [RU]
+        name: partnersText
+        widget: text
+      - label: Описание группы [UZ]
+        name: partnersText_uz
+        widget: text
+        required: false
+      - label: Описание группы [EN]
+        name: partnersText_en
+        widget: text
+        required: false
+    - label: Новости
+      name: news
+      widget: object
+      fields:
+      - label: Надзаголовок [RU]
+        name: eyebrow
+        widget: string
+      - label: Надзаголовок [UZ]
+        name: eyebrow_uz
+        widget: string
+        required: false
+      - label: Надзаголовок [EN]
+        name: eyebrow_en
+        widget: string
+        required: false
+      - label: Заголовок [RU]
+        name: title
+        widget: string
+      - label: Заголовок [UZ]
+        name: title_uz
+        widget: string
+        required: false
+      - label: Заголовок [EN]
+        name: title_en
+        widget: string
+        required: false
+      - label: Вводный абзац [RU]
+        name: lead
+        widget: text
+      - label: Вводный абзац [UZ]
+        name: lead_uz
+        widget: text
+        required: false
+      - label: Вводный абзац [EN]
+        name: lead_en
+        widget: text
+        required: false
+    - label: Контакты
+      name: contacts
+      widget: object
+      fields:
+      - label: Надзаголовок [RU]
+        name: eyebrow
+        widget: string
+      - label: Надзаголовок [UZ]
+        name: eyebrow_uz
+        widget: string
+        required: false
+      - label: Надзаголовок [EN]
+        name: eyebrow_en
+        widget: string
+        required: false
+      - label: Заголовок [RU]
+        name: title
+        widget: string
+      - label: Заголовок [UZ]
+        name: title_uz
+        widget: string
+        required: false
+      - label: Заголовок [EN]
+        name: title_en
+        widget: string
+        required: false
+      - label: Вводный абзац [RU]
+        name: lead
+        widget: text
+      - label: Вводный абзац [UZ]
+        name: lead_uz
+        widget: text
+        required: false
+      - label: Вводный абзац [EN]
+        name: lead_en
+        widget: text
+        required: false
+      - label: Заголовок формы [RU]
+        name: formTitle
+        widget: string
+      - label: Заголовок формы [UZ]
+        name: formTitle_uz
+        widget: string
+        required: false
+      - label: Заголовок формы [EN]
+        name: formTitle_en
+        widget: string
+        required: false
+      - label: Текст у формы [RU]
+        name: formText
+        widget: text
+      - label: Текст у формы [UZ]
+        name: formText_uz
+        widget: text
+        required: false
+      - label: Текст у формы [EN]
+        name: formText_en
+        widget: text
+        required: false
+    - label: Страница 404
+      name: notFound
+      widget: object
+      fields:
+      - label: Заголовок [RU]
+        name: title
+        widget: string
+      - label: Заголовок [UZ]
+        name: title_uz
+        widget: string
+        required: false
+      - label: Заголовок [EN]
+        name: title_en
+        widget: string
+        required: false
+      - label: Текст [RU]
+        name: text
+        widget: text
+      - label: Текст [UZ]
+        name: text_uz
+        widget: text
+        required: false
+      - label: Текст [EN]
+        name: text_en
+        widget: text
+        required: false
+  - name: partners
+    label: Производители-партнёры (плитки)
+    file: src/data/cms/partners.json
+    fields:
+    - label: Производители
+      name: partners
+      widget: list
+      required: false
+      fields:
+      - label: ID (латиница, не менять после публикации)
+        name: id
+        widget: string
+      - label: Название [RU]
+        name: name
+        widget: string
+      - label: Название [UZ]
+        name: name_uz
+        widget: string
+        required: false
+      - label: Название [EN]
+        name: name_en
+        widget: string
+        required: false
+      - label: Страна [RU]
+        name: country
+        widget: string
+      - label: Страна [UZ]
+        name: country_uz
+        widget: string
+        required: false
+      - label: Страна [EN]
+        name: country_en
+        widget: string
+        required: false
+      - label: Статус RailTech
+        name: status
+        widget: select
+        options:
+        - label: Официальный дилер (есть документ)
+          value: dealer
+        - label: Прямые поставки
+          value: direct
+      - label: Статья о партнёре (имя файла в Новостях без .md)
+        name: article
+        widget: string
+        required: false
+      - label: Порядок
+        name: order
+        widget: number
+        value_type: int
+  - name: legal
+    label: Юридические страницы
+    file: src/data/cms/legal.json
+    fields:
+    - label: Политика конфиденциальности
+      name: privacy
+      widget: object
+      fields:
+      - label: Заголовок [RU]
+        name: title
+        widget: string
+      - label: Заголовок [UZ]
+        name: title_uz
+        widget: string
+        required: false
+      - label: Заголовок [EN]
+        name: title_en
+        widget: string
+        required: false
+      - label: Вводный абзац [RU]
+        name: lead
+        widget: text
+      - label: Вводный абзац [UZ]
+        name: lead_uz
+        widget: text
+        required: false
+      - label: Вводный абзац [EN]
+        name: lead_en
+        widget: text
+        required: false
+      - label: Редакция [RU]
+        name: edition
+        widget: string
+      - label: Редакция [UZ]
+        name: edition_uz
+        widget: string
+        required: false
+      - label: Редакция [EN]
+        name: edition_en
+        widget: string
+        required: false
+      - label: Разделы
+        name: sections
+        widget: list
+        required: false
+        fields:
+        - label: Заголовок раздела [RU]
+          name: title
+          widget: string
+        - label: Заголовок раздела [UZ]
+          name: title_uz
+          widget: string
+          required: false
+        - label: Заголовок раздела [EN]
+          name: title_en
+          widget: string
+          required: false
+        - label: Текст раздела [RU]
+          name: content
+          widget: text
+        - label: Текст раздела [UZ]
+          name: content_uz
+          widget: text
+          required: false
+        - label: Текст раздела [EN]
+          name: content_en
+          widget: text
+          required: false
+    - label: Условия использования
+      name: terms
+      widget: object
+      fields:
+      - label: Заголовок [RU]
+        name: title
+        widget: string
+      - label: Заголовок [UZ]
+        name: title_uz
+        widget: string
+        required: false
+      - label: Заголовок [EN]
+        name: title_en
+        widget: string
+        required: false
+      - label: Вводный абзац [RU]
+        name: lead
+        widget: text
+      - label: Вводный абзац [UZ]
+        name: lead_uz
+        widget: text
+        required: false
+      - label: Вводный абзац [EN]
+        name: lead_en
+        widget: text
+        required: false
+      - label: Редакция [RU]
+        name: edition
+        widget: string
+      - label: Редакция [UZ]
+        name: edition_uz
+        widget: string
+        required: false
+      - label: Редакция [EN]
+        name: edition_en
+        widget: string
+        required: false
+      - label: Разделы
+        name: sections
+        widget: list
+        required: false
+        fields:
+        - label: Заголовок раздела [RU]
+          name: title
+          widget: string
+        - label: Заголовок раздела [UZ]
+          name: title_uz
+          widget: string
+          required: false
+        - label: Заголовок раздела [EN]
+          name: title_en
+          widget: string
+          required: false
+        - label: Текст раздела [RU]
+          name: content
+          widget: text
+        - label: Текст раздела [UZ]
+          name: content_uz
+          widget: text
+          required: false
+        - label: Текст раздела [EN]
+          name: content_en
+          widget: text
+          required: false
+    - label: Cookies
+      name: cookies
+      widget: object
+      fields:
+      - label: Заголовок [RU]
+        name: title
+        widget: string
+      - label: Заголовок [UZ]
+        name: title_uz
+        widget: string
+        required: false
+      - label: Заголовок [EN]
+        name: title_en
+        widget: string
+        required: false
+      - label: Вводный абзац [RU]
+        name: lead
+        widget: text
+      - label: Вводный абзац [UZ]
+        name: lead_uz
+        widget: text
+        required: false
+      - label: Вводный абзац [EN]
+        name: lead_en
+        widget: text
+        required: false
+      - label: Редакция [RU]
+        name: edition
+        widget: string
+      - label: Редакция [UZ]
+        name: edition_uz
+        widget: string
+        required: false
+      - label: Редакция [EN]
+        name: edition_en
+        widget: string
+        required: false
+      - label: Разделы
+        name: sections
+        widget: list
+        required: false
+        fields:
+        - label: Заголовок раздела [RU]
+          name: title
+          widget: string
+        - label: Заголовок раздела [UZ]
+          name: title_uz
+          widget: string
+          required: false
+        - label: Заголовок раздела [EN]
+          name: title_en
+          widget: string
+          required: false
+        - label: Текст раздела [RU]
+          name: content
+          widget: text
+        - label: Текст раздела [UZ]
+          name: content_uz
+          widget: text
+          required: false
+        - label: Текст раздела [EN]
+          name: content_en
+          widget: text
+          required: false
+  - name: seo
+    label: SEO
+    file: src/data/cms/seo.json
+    fields:
+    - label: Название сайта [RU]
+      name: siteName
+      widget: string
+    - label: Название сайта [UZ]
+      name: siteName_uz
+      widget: string
+      required: false
+    - label: Название сайта [EN]
+      name: siteName_en
+      widget: string
+      required: false
+    - label: Суффикс заголовка
+      name: titleSuffix
+      widget: string
+    - label: Картинка для соцсетей
+      name: defaultImage
+      widget: image
+    - label: Описание организации (schema.org) [RU]
+      name: organizationDescription
+      widget: text
+    - label: Описание организации (schema.org) [UZ]
+      name: organizationDescription_uz
+      widget: text
+      required: false
+    - label: Описание организации (schema.org) [EN]
+      name: organizationDescription_en
+      widget: text
+      required: false
+    - label: Компетенции [RU]
+      name: knowsAbout
+      widget: list
+      field:
+        label: Тема
+        name: topic
+        widget: string
+    - label: Компетенции [UZ]
+      name: knowsAbout_uz
+      widget: list
+      required: false
+      field:
+        label: Тема
+        name: topic
+        widget: string
+    - label: Компетенции [EN]
+      name: knowsAbout_en
+      widget: list
+      required: false
+      field:
+        label: Тема
+        name: topic
+        widget: string
+    - label: Страницы
+      name: pages
+      widget: object
+      fields:
+      - label: Главная
+        name: home
+        widget: object
+        fields:
+        - label: Title (≤ 60) [RU]
+          name: title
+          widget: string
+        - label: Title (≤ 60) [UZ]
+          name: title_uz
+          widget: string
+          required: false
+        - label: Title (≤ 60) [EN]
+          name: title_en
+          widget: string
+          required: false
+        - label: Description (70–160) [RU]
+          name: description
+          widget: text
+        - label: Description (70–160) [UZ]
+          name: description_uz
+          widget: text
+          required: false
+        - label: Description (70–160) [EN]
+          name: description_en
+          widget: text
+          required: false
+      - label: Услуги
+        name: services
+        widget: object
+        fields:
+        - label: Title (≤ 60) [RU]
+          name: title
+          widget: string
+        - label: Title (≤ 60) [UZ]
+          name: title_uz
+          widget: string
+          required: false
+        - label: Title (≤ 60) [EN]
+          name: title_en
+          widget: string
+          required: false
+        - label: Description (70–160) [RU]
+          name: description
+          widget: text
+        - label: Description (70–160) [UZ]
+          name: description_uz
+          widget: text
+          required: false
+        - label: Description (70–160) [EN]
+          name: description_en
+          widget: text
+          required: false
+      - label: Новости
+        name: news
+        widget: object
+        fields:
+        - label: Title (≤ 60) [RU]
+          name: title
+          widget: string
+        - label: Title (≤ 60) [UZ]
+          name: title_uz
+          widget: string
+          required: false
+        - label: Title (≤ 60) [EN]
+          name: title_en
+          widget: string
+          required: false
+        - label: Description (70–160) [RU]
+          name: description
+          widget: text
+        - label: Description (70–160) [UZ]
+          name: description_uz
+          widget: text
+          required: false
+        - label: Description (70–160) [EN]
+          name: description_en
+          widget: text
+          required: false
+      - label: Контакты
+        name: contacts
+        widget: object
+        fields:
+        - label: Title (≤ 60) [RU]
+          name: title
+          widget: string
+        - label: Title (≤ 60) [UZ]
+          name: title_uz
+          widget: string
+          required: false
+        - label: Title (≤ 60) [EN]
+          name: title_en
+          widget: string
+          required: false
+        - label: Description (70–160) [RU]
+          name: description
+          widget: text
+        - label: Description (70–160) [UZ]
+          name: description_uz
+          widget: text
+          required: false
+        - label: Description (70–160) [EN]
+          name: description_en
+          widget: text
+          required: false
+      - label: Политика
+        name: privacy
+        widget: object
+        fields:
+        - label: Title (≤ 60) [RU]
+          name: title
+          widget: string
+        - label: Title (≤ 60) [UZ]
+          name: title_uz
+          widget: string
+          required: false
+        - label: Title (≤ 60) [EN]
+          name: title_en
+          widget: string
+          required: false
+        - label: Description (70–160) [RU]
+          name: description
+          widget: text
+        - label: Description (70–160) [UZ]
+          name: description_uz
+          widget: text
+          required: false
+        - label: Description (70–160) [EN]
+          name: description_en
+          widget: text
+          required: false
+      - label: Условия
+        name: terms
+        widget: object
+        fields:
+        - label: Title (≤ 60) [RU]
+          name: title
+          widget: string
+        - label: Title (≤ 60) [UZ]
+          name: title_uz
+          widget: string
+          required: false
+        - label: Title (≤ 60) [EN]
+          name: title_en
+          widget: string
+          required: false
+        - label: Description (70–160) [RU]
+          name: description
+          widget: text
+        - label: Description (70–160) [UZ]
+          name: description_uz
+          widget: text
+          required: false
+        - label: Description (70–160) [EN]
+          name: description_en
+          widget: text
+          required: false
+      - label: Cookies
+        name: cookies
+        widget: object
+        fields:
+        - label: Title (≤ 60) [RU]
+          name: title
+          widget: string
+        - label: Title (≤ 60) [UZ]
+          name: title_uz
+          widget: string
+          required: false
+        - label: Title (≤ 60) [EN]
+          name: title_en
+          widget: string
+          required: false
+        - label: Description (70–160) [RU]
+          name: description
+          widget: text
+        - label: Description (70–160) [UZ]
+          name: description_uz
+          widget: text
+          required: false
+        - label: Description (70–160) [EN]
+          name: description_en
+          widget: text
+          required: false
+      - label: '404'
+        name: notFound
+        widget: object
+        fields:
+        - label: Title (≤ 60) [RU]
+          name: title
+          widget: string
+        - label: Title (≤ 60) [UZ]
+          name: title_uz
+          widget: string
+          required: false
+        - label: Title (≤ 60) [EN]
+          name: title_en
+          widget: string
+          required: false
+        - label: Description (70–160) [RU]
+          name: description
+          widget: text
+        - label: Description (70–160) [UZ]
+          name: description_uz
+          widget: text
+          required: false
+        - label: Description (70–160) [EN]
+          name: description_en
+          widget: text
+          required: false
+- name: ui
+  label: 4. Подписи интерфейса
+  editor:
+    preview: false
+  files:
+  - name: ui_layout
+    label: Шапка, меню и футер
+    file: src/data/cms/ui/layout.json
+    fields:
+    - label: Раздел
+      name: title
+      widget: string
+    - label: Подписи
+      name: strings
+      widget: list
+      required: false
+      fields:
+      - label: Ключ (не менять)
+        name: key
+        widget: string
+      - label: RU
+        name: ru
+        widget: string
+      - label: UZ
+        name: uz
+        widget: string
+        required: false
+      - label: EN
+        name: en
+        widget: string
+        required: false
+      summary: '{{fields.key}} — {{fields.ru}}'
+  - name: ui_common
+    label: Общие подписи и главная
+    file: src/data/cms/ui/common.json
+    fields:
+    - label: Раздел
+      name: title
+      widget: string
+    - label: Подписи
+      name: strings
+      widget: list
+      required: false
+      fields:
+      - label: Ключ (не менять)
+        name: key
+        widget: string
+      - label: RU
+        name: ru
+        widget: string
+      - label: UZ
+        name: uz
+        widget: string
+        required: false
+      - label: EN
+        name: en
+        widget: string
+        required: false
+      summary: '{{fields.key}} — {{fields.ru}}'
+  - name: ui_services
+    label: Страницы услуг
+    file: src/data/cms/ui/services.json
+    fields:
+    - label: Раздел
+      name: title
+      widget: string
+    - label: Подписи
+      name: strings
+      widget: list
+      required: false
+      fields:
+      - label: Ключ (не менять)
+        name: key
+        widget: string
+      - label: RU
+        name: ru
+        widget: string
+      - label: UZ
+        name: uz
+        widget: string
+        required: false
+      - label: EN
+        name: en
+        widget: string
+        required: false
+      summary: '{{fields.key}} — {{fields.ru}}'
+  - name: ui_news
+    label: Новости
+    file: src/data/cms/ui/news.json
+    fields:
+    - label: Раздел
+      name: title
+      widget: string
+    - label: Подписи
+      name: strings
+      widget: list
+      required: false
+      fields:
+      - label: Ключ (не менять)
+        name: key
+        widget: string
+      - label: RU
+        name: ru
+        widget: string
+      - label: UZ
+        name: uz
+        widget: string
+        required: false
+      - label: EN
+        name: en
+        widget: string
+        required: false
+      summary: '{{fields.key}} — {{fields.ru}}'
+  - name: ui_contacts
+    label: Контакты и реквизиты
+    file: src/data/cms/ui/contacts.json
+    fields:
+    - label: Раздел
+      name: title
+      widget: string
+    - label: Подписи
+      name: strings
+      widget: list
+      required: false
+      fields:
+      - label: Ключ (не менять)
+        name: key
+        widget: string
+      - label: RU
+        name: ru
+        widget: string
+      - label: UZ
+        name: uz
+        widget: string
+        required: false
+      - label: EN
+        name: en
+        widget: string
+        required: false
+      summary: '{{fields.key}} — {{fields.ru}}'
+  - name: ui_form
+    label: Форма заявки
+    file: src/data/cms/ui/form.json
+    fields:
+    - label: Раздел
+      name: title
+      widget: string
+    - label: Подписи
+      name: strings
+      widget: list
+      required: false
+      fields:
+      - label: Ключ (не менять)
+        name: key
+        widget: string
+      - label: RU
+        name: ru
+        widget: string
+      - label: UZ
+        name: uz
+        widget: string
+        required: false
+      - label: EN
+        name: en
+        widget: string
+        required: false
+      summary: '{{fields.key}} — {{fields.ru}}'

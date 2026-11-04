@@ -1,0 +1,111 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
+import SectionHead from '../../../components/ui/SectionHead.astro';
+import NewsCard from '../../../components/ui/NewsCard.astro';
+import pages from '../../../data/cms/pages.json';
+import { langStaticPaths, tField } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { pageSeo } from '../../../utils/seo';
+
+export const getStaticPaths = langStaticPaths;
+const lang = Astro.locals.lang;
+const seo = pageSeo('news', lang);
+const p = pages.news as Record<string, string>;
+const items = (await getCollection('news')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+const TYPES = ['news', 'article', 'project', 'partner'] as const;
+const present = TYPES.filter((type) => items.some((e) => e.data.type === type));
+const crumbs = [{ name: t(lang, 'nav.news'), path: '/news/' }];
+---
+
+<BaseLayout title={seo.title} description={seo.description} breadcrumbs={crumbs}>
+  <div class="wrap"><Breadcrumbs items={crumbs} /></div>
+  <section class="wrap page" aria-labelledby="news-h1">
+    <SectionHead id="news-h1" level={1} eyebrow={tField(p, 'eyebrow', lang)} title={tField(p, 'title', lang)} lead={tField(p, 'lead', lang)} />
+
+    {present.length > 1 && (
+      <div class="filter" role="group" aria-label={t(lang, 'news.filterAria')} data-news-filter>
+        <button type="button" aria-pressed="true" data-type="all">{t(lang, 'news.type.all')}</button>
+        {present.map((type) => <button type="button" aria-pressed="false" data-type={type}>{t(lang, `news.type.${type}`)}</button>)}
+      </div>
+    )}
+
+    <ul class="grid" data-news-list>
+      {items.map((entry) => <li data-type={entry.data.type}><NewsCard entry={entry} headingLevel={2} /></li>)}
+    </ul>
+    <p class="muted empty" data-news-empty hidden>{t(lang, 'news.empty')}</p>
+  </section>
+</BaseLayout>
+
+<script>
+  // Progressive enhancement: without JS every material is listed.
+  const group = document.querySelector<HTMLElement>('[data-news-filter]');
+  const list = document.querySelector<HTMLElement>('[data-news-list]');
+  const empty = document.querySelector<HTMLElement>('[data-news-empty]');
+  group?.addEventListener('click', (event) => {
+    const button = (event.target as HTMLElement).closest('button');
+    if (!button || !list) return;
+    const type = button.dataset.type;
+    group.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+    let shown = 0;
+    list.querySelectorAll<HTMLElement>('li').forEach((li) => {
+      const visible = type === 'all' || li.dataset.type === type;
+      li.hidden = !visible;
+      if (visible) shown += 1;
+    });
+    if (empty) empty.hidden = shown > 0;
+  });
+</script>
+
+<style>
+  .page {
+    padding-block: 28px 96px;
+  }
+  .filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+  .filter button {
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--c-line-strong);
+    background: var(--c-bg);
+    color: var(--c-ink);
+    font: 600 14px/1 var(--f-body);
+    cursor: pointer;
+  }
+  .filter button[aria-pressed='true'] {
+    background: var(--c-ink);
+    border-color: var(--c-ink);
+    color: var(--c-on-ink);
+  }
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 40px 24px;
+  }
+  .grid li[hidden] {
+    display: none;
+  }
+  @media (max-width: 1080px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 760px) {
+    .page {
+      padding-block: 20px 56px;
+    }
+    .grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 28px;
+    }
+  }
+</style>

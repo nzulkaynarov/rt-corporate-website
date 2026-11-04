@@ -1,0 +1,65 @@
+---
+/** Closing call to action on inner pages: «Начать работу» + «Войти в Кабинет». */
+import { localeHref } from '../../i18n';
+import { t } from '../../i18n/ui';
+import { START_PATH } from '../../utils/nav';
+import { company } from '../../utils/company';
+
+interface Props {
+  title: string;
+  text?: string;
+}
+const lang = Astro.locals.lang;
+const { title, text } = Astro.props;
+---
+
+<section class="cta" aria-labelledby="cta-title">
+  <div class="wrap cta__in">
+    <div>
+      <h2 id="cta-title">{title}</h2>
+      {text && <p>{text}</p>}
+    </div>
+    <div class="btn-row">
+      <a class="btn btn--light" href={localeHref(START_PATH, lang)}>{t(lang, 'cta.start')}</a>
+      <a class="btn btn--outline-light" href={company.cabinet.loginUrl}>{t(lang, 'cta.cabinet')}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    background: var(--c-ink);
+    color: var(--c-on-ink);
+  }
+  .cta__in {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding-block: 64px;
+  }
+  h2 {
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--c-on-ink);
+    max-width: 700px;
+  }
+  p {
+    color: var(--c-on-ink-soft);
+    margin-top: 10px;
+    max-width: 640px;
+  }
+  @media (max-width: 760px) {
+    .cta__in {
+      padding-block: 44px;
+    }
+    h2 {
+      font-size: 26px;
+    }
+    .btn-row,
+    .btn-row .btn {
+      width: 100%;
+    }
+  }
+</style>

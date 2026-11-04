@@ -1,35 +1,113 @@
 {
-  "title": "Подвал сайта (footer)",
+  "title": "Шапка, меню и футер",
   "strings": [
     {
-      "key": "lead.subject.footer",
-      "ru": "Запрос спецификации с сайта",
-      "uz": "Saytdan spetsifikatsiya so'rovi",
-      "en": "Specification request"
+      "key": "skip.toMain",
+      "ru": "Перейти к содержимому",
+      "uz": "Asosiy mazmunga o'tish",
+      "en": "Skip to main content"
     },
     {
-      "key": "footer.requisites",
-      "ru": "РЕКВИЗИТЫ ПРЕДПРИЯТИЯ:",
-      "uz": "KORXONA REKVIZITLARI:",
-      "en": "COMPANY REQUISITES:"
+      "key": "nav.home",
+      "ru": "Главная",
+      "uz": "Bosh sahifa",
+      "en": "Home"
     },
     {
-      "key": "footer.tin",
-      "ru": "ИНН:",
-      "uz": "STIR (INN):",
-      "en": "TIN / INN:"
+      "key": "nav.services",
+      "ru": "Услуги",
+      "uz": "Xizmatlar",
+      "en": "Services"
     },
     {
-      "key": "footer.vat",
-      "ru": "НДС:",
-      "uz": "QQS:",
-      "en": "VAT:"
+      "key": "nav.news",
+      "ru": "Новости",
+      "uz": "Yangiliklar",
+      "en": "News"
     },
     {
-      "key": "footer.esf",
-      "ru": "ЭСФ:",
-      "uz": "EHF:",
-      "en": "ESF:"
+      "key": "nav.contacts",
+      "ru": "Контакты",
+      "uz": "Kontaktlar",
+      "en": "Contacts"
+    },
+    {
+      "key": "nav.cabinet",
+      "ru": "Кабинет",
+      "uz": "Kabinet",
+      "en": "Cabinet"
+    },
+    {
+      "key": "nav.menu",
+      "ru": "Меню",
+      "uz": "Menyu",
+      "en": "Menu"
+    },
+    {
+      "key": "nav.mainAria",
+      "ru": "Основное меню",
+      "uz": "Asosiy menyu",
+      "en": "Main menu"
+    },
+    {
+      "key": "nav.langAria",
+      "ru": "Язык сайта",
+      "uz": "Sayt tili",
+      "en": "Site language"
+    },
+    {
+      "key": "nav.homeAria",
+      "ru": "RailTech — на главную",
+      "uz": "RailTech — bosh sahifaga",
+      "en": "RailTech — go to homepage"
+    },
+    {
+      "key": "cta.start",
+      "ru": "Начать работу",
+      "uz": "Ishni boshlash",
+      "en": "Get started"
+    },
+    {
+      "key": "cta.cabinet",
+      "ru": "Войти в Кабинет",
+      "uz": "Kabinetga kirish",
+      "en": "Sign in to the Cabinet"
+    },
+    {
+      "key": "cta.request",
+      "ru": "Отправить заявку",
+      "uz": "Ariza yuborish",
+      "en": "Send request"
+    },
+    {
+      "key": "footer.sections",
+      "ru": "Разделы",
+      "uz": "Bo'limlar",
+      "en": "Sections"
+    },
+    {
+      "key": "footer.documents",
+      "ru": "Документы",
+      "uz": "Hujjatlar",
+      "en": "Documents"
+    },
+    {
+      "key": "footer.contacts",
+      "ru": "Контакты",
+      "uz": "Kontaktlar",
+      "en": "Contacts"
+    },
+    {
+      "key": "footer.tagline",
+      "ru": "Надёжный мост между международными производителями и предприятиями Узбекистана.",
+      "uz": "Xalqaro ishlab chiqaruvchilar va O'zbekiston korxonalari o'rtasidagi ishonchli ko'prik.",
+      "en": "A reliable bridge between international manufacturers and companies in Uzbekistan."
+    },
+    {
+      "key": "footer.inn",
+      "ru": "ИНН",
+      "uz": "STIR",
+      "en": "TIN"
     },
     {
       "key": "footer.privacy",
@@ -41,49 +119,55 @@
       "key": "footer.terms",
       "ru": "Условия использования",
       "uz": "Foydalanish shartlari",
-      "en": "Terms of Service"
-    },
-    {
-      "key": "footer.privacyShort",
-      "ru": "Конфиденциальность",
-      "uz": "Maxfiylik",
-      "en": "Privacy"
-    },
-    {
-      "key": "footer.termsShort",
-      "ru": "Условия использования",
-      "uz": "Foydalanish shartlari",
       "en": "Terms of Use"
     },
     {
-      "key": "footer.admin",
-      "ru": "Панель управления",
-      "uz": "Boshqaruv paneli",
-      "en": "Admin panel"
+      "key": "footer.cookies",
+      "ru": "Cookies",
+      "uz": "Cookie-fayllar",
+      "en": "Cookies"
     },
     {
-      "key": "footer.phone",
-      "ru": "Телефон:",
-      "uz": "Telefon:",
-      "en": "Phone:"
+      "key": "breadcrumbs.aria",
+      "ru": "Навигационная цепочка",
+      "uz": "Navigatsiya zanjiri",
+      "en": "Breadcrumbs"
     },
     {
-      "key": "footer.email",
-      "ru": "Электронная почта:",
-      "uz": "Elektron pochta:",
-      "en": "Email address:"
+      "key": "lang.ru.short",
+      "ru": "RU",
+      "uz": "RU",
+      "en": "RU"
     },
     {
-      "key": "footer.submitRequest",
-      "ru": "[ ОСТАВИТЬ ЗАЯВКУ ↗ ]",
-      "uz": "[ ARIZA QOLDIRISH ↗ ]",
-      "en": "[ SUBMIT REQUEST ↗ ]"
+      "key": "lang.ru.name",
+      "ru": "Русский",
+      "uz": "",
+      "en": ""
     },
     {
-      "key": "footer.office",
-      "ru": "ОФИС:",
-      "uz": "OFIS:",
-      "en": "OFFICE:"
+      "key": "lang.uz.short",
+      "ru": "UZ",
+      "uz": "UZ",
+      "en": "UZ"
+    },
+    {
+      "key": "lang.uz.name",
+      "ru": "O'zbekcha",
+      "uz": "O'zbekcha",
+      "en": "O'zbekcha"
+    },
+    {
+      "key": "lang.en.short",
+      "ru": "EN",
+      "uz": "EN",
+      "en": "EN"
+    },
+    {
+      "key": "lang.en.name",
+      "ru": "English",
+      "uz": "English",
+      "en": "English"
     }
   ]
 }

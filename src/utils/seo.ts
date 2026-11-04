@@ -2,7 +2,7 @@
  * SEO helpers. All texts come from the CMS:
  *   - static pages → src/data/cms/seo.json  (pages.<key>.title / description [+ _uz/_en])
  *   - collection entries → optional seoTitle / seoDescription [+ _uz/_en] fields,
- *     falling back to the entry title + site suffix and its summary/subtitle/specs.
+ *     falling back to the entry title + site suffix and its summary.
  */
 import seoData from '../data/cms/seo.json';
 import { pick, tField, type Lang } from '../i18n';
@@ -24,7 +24,7 @@ export function plainText(value: unknown): string {
     .replace(/<[^>]+>/g, ' ')
     .replace(/!\[[^\]]*]\([^)]*\)/g, ' ')
     .replace(/\[([^\]]*)]\([^)]*\)/g, '$1')
-    .replace(/[#>*_`|~]+/g, ' ')
+    .replace(/[#>*_`~]+/g, ' ') // «|» is kept: titles use it as a separator
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -53,51 +53,22 @@ export function siteSeo(lang: Lang) {
     defaultImage: (s.defaultImage as string) || '/og-cover.png',
     organizationDescription: tField(s, 'organizationDescription', lang) as string,
     knowsAbout: pick<string[]>(lang, s.knowsAbout || [], s.knowsAbout_uz, s.knowsAbout_en),
-    catalogDescription: tField(s, 'catalogDescription', lang) as string,
   };
 }
 
 /**
- * Meta for a collection entry (catalog / services / projects / blog).
- * Explicit seoTitle/seoDescription win; otherwise title + suffix and the first
- * non-empty description candidate (e.g. ['summary', 'subtitle', 'specs']).
+ * Meta for a collection entry (services, news).
+ * Explicit seoTitle/seoDescription win; otherwise title + site suffix (cut to 60) and the summary (cut to 160).
  */
-export function entrySeo(
-  data: Record<string, any>,
-  lang: Lang,
-  options: {
-    titleField?: string;
-    titleExtra?: string;
-    descriptionFields?: string[];
-    /** e.g. '{title} ({sku}): {specs}. …' — placeholders are localized entry fields */
-    descriptionTemplate?: string;
-    body?: string;
-  } = {},
-): SeoMeta {
-  const { titleField = 'title', titleExtra, descriptionFields = ['summary', 'subtitle', 'specs'], descriptionTemplate, body } = options;
+export function entrySeo(data: Record<string, any>, lang: Lang, body?: string): SeoMeta {
   const { titleSuffix } = siteSeo(lang);
-
   let title = plainText(tField(data, 'seoTitle', lang));
   if (!title) {
-    const base = plainText(tField(data, titleField, lang)) + (titleExtra ? ` ${titleExtra}` : '');
+    const base = plainText(tField(data, 'title', lang));
     title = base.length + titleSuffix.length <= TITLE_MAX ? base + titleSuffix : truncate(base, TITLE_MAX);
   }
-
-  let description = plainText(tField(data, 'seoDescription', lang));
-  if (!description && descriptionTemplate) {
-    description = plainText(
-      descriptionTemplate.replace(/\{(\w+)\}/g, (_, field) => plainText(tField(data, field, lang)).replace(/[.\s]+$/, '')),
-    )
-      .replace(/\s+([:.,])/g, '$1')
-      .replace(/([:.,])\1+/g, '$1');
-  }
-  if (!description) {
-    for (const field of descriptionFields) {
-      description = plainText(tField(data, field, lang));
-      if (description) break;
-    }
-  }
-  if (!description && body) description = plainText(body);
+  const description =
+    plainText(tField(data, 'seoDescription', lang)) || plainText(tField(data, 'summary', lang)) || plainText(body);
   return { title, description: truncate(description, DESCRIPTION_MAX) };
 }
 

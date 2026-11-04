@@ -1,340 +1,353 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import './tokens.css';
 
-@layer base {
-  :root {
-    --cad-canvas: #D4D8DC;
-    --cad-ink: #0A0A0A;
-    --cad-muted: #4A5056;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-  html, body {
-    overflow-x: clip;
-    width: 100%;
-    max-width: 100vw;
-    position: relative;
-  }
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* Space for the scrollbar is always reserved: short and long pages have the same width, nothing shifts sideways. */
+  scrollbar-gutter: stable;
+  /* Anchors (#request, #requisites) stop below the sticky header. */
+  scroll-padding-top: calc(var(--hdr-h) + 16px);
+}
 
-  html {
-    background-color: #D4D8DC;
-    color: #0A0A0A;
-    scroll-behavior: smooth;
-    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
-  }
+/* Page-to-page navigation: the browser cross-fades the pages instead of a white flash (Chrome/Edge 126+, Safari 18.2+;
+   other browsers simply load the page). The header has its own name, so it stays in place. */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.22s;
+  animation-timing-function: var(--ease-out);
+}
+::view-transition-group(site-header) {
+  animation: none;
+}
 
+/* Smooth wheel scrolling (src/scripts/motion.ts, Lenis). Native scrolling stays on touch screens. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-ink);
+  font: 400 17px/1.6 var(--f-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+@media (min-width: 1920px) {
   body {
-    background: radial-gradient(circle at 50% 35%, #E0E4E8 0%, #D0D4D8 65%, #C4C9CE 100%);
-    min-height: 100vh;
+    font-size: 18px;
   }
 }
 
-
-/* CAD Isometric and Orthogonal Engineering Grid */
-.cad-grid-bg {
-  background-image:
-    linear-gradient(to right, rgba(10, 10, 10, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(10, 10, 10, 0.06) 1px, transparent 1px);
-  background-size: 48px 48px;
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--f-display);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+p {
+  margin: 0;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+a {
+  color: var(--c-brand-ink);
+}
+a:hover {
+  color: var(--c-brand-ink-hover);
 }
 
-/* ==========================================================================
-   UNIFIED DESIGN CODE — Hairline CAD + Frosted Glassmorphism HUD
-   ========================================================================== */
-:root {
-  --hud-canvas: #D4D8DC;
-  --hud-canvas-2: #C8CDD2;
-  --hud-ink: #0A0A0A;
-  --hud-meta: #4A5056;
-  --hud-line: rgba(10, 10, 10, 0.22);
-  --hud-line-strong: rgba(10, 10, 10, 0.65);
-  --hud-chamfer: 16px;
+:focus-visible {
+  outline: 2px solid var(--c-brand-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
-/* --- .hud-glass-card : single standard for every card on the site --- */
-.hud-glass-card {
-  --c: var(--hud-chamfer);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  background: rgba(255, 255, 255, 0.28);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%);
-  transition: background-color 0.25s ease, transform 0.25s ease;
-  isolation: isolate;
+.wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
 }
-/* hairline border drawn with an inset pseudo-element so it follows the chamfer */
-.hud-glass-card::before {
-  content: '';
+
+.skip-link {
   position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  background: var(--hud-line);
-  clip-path: polygon(
-    0 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 0,
-    1px 1px, 1px calc(100% - 1px), calc(100% - var(--c) - 0.4px) calc(100% - 1px),
-    calc(100% - 1px) calc(100% - var(--c) - 0.4px), calc(100% - 1px) 1px, 1px 1px
-  );
-  transition: background-color 0.25s ease;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  background: var(--c-ink);
+  color: var(--c-on-ink);
+  padding: 10px 16px;
+  border-radius: var(--r-sm);
+  font-weight: 600;
+  text-decoration: none;
 }
-.hud-glass-card:hover { background: rgba(255, 255, 255, 0.42); }
-.hud-glass-card:hover::before { background: var(--hud-line-strong); }
-.hud-glass-card--tl {
-  clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+.skip-link:focus {
+  top: 12px;
+  color: var(--c-on-ink);
 }
-.hud-glass-card--tl::before {
-  clip-path: polygon(
-    var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c), var(--c) 0,
-    calc(var(--c) + 0.4px) 1px, 1px calc(var(--c) + 0.4px), 1px calc(100% - 1px), calc(100% - var(--c) - 0.4px) calc(100% - 1px),
-    calc(100% - 1px) calc(100% - var(--c) - 0.4px), calc(100% - 1px) 1px, calc(var(--c) + 0.4px) 1px
-  );
-}
-.hud-card-index {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  color: var(--hud-meta);
-  text-transform: uppercase;
-}
-.hud-card-index b { color: var(--hud-ink); font-weight: 700; }
-.hud-card-media {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid var(--hud-line);
-  background: var(--hud-canvas-2);
-}
-.hud-card-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(0.35) contrast(1.02);
-  transition: transform 0.6s ease, filter 0.4s ease;
-}
-.hud-glass-card:hover .hud-card-media img { transform: scale(1.04); filter: grayscale(0) contrast(1.05); }
 
-/* --- .hud-viewport-frame : drawing frame for main media blocks --- */
-.hud-viewport-frame {
-  --c: 20px;
-  position: relative;
-  padding: 10px;
-}
-.hud-viewport-frame > .hud-vf-outline {
+.visually-hidden {
   position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: var(--hud-ink);
-  clip-path: polygon(
-    var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c), var(--c) 0,
-    calc(var(--c) + 0.4px) 1px, 1px calc(var(--c) + 0.4px), 1px calc(100% - 1px), calc(100% - var(--c) - 0.4px) calc(100% - 1px),
-    calc(100% - 1px) calc(100% - var(--c) - 0.4px), calc(100% - 1px) 1px, calc(var(--c) + 0.4px) 1px
-  );
-}
-.hud-viewport-inner {
-  position: relative;
-  overflow: hidden;
-  clip-path: polygon(calc(var(--c) - 6px) 0, 100% 0, 100% calc(100% - var(--c) + 6px), calc(100% - var(--c) + 6px) 100%, 0 100%, 0 calc(var(--c) - 6px));
-  background: var(--hud-canvas-2);
-}
-/* leader-line callouts:  •─── LABEL */
-.hud-callout {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  color: var(--hud-meta);
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-.hud-callout::before {
-  content: '';
-  width: 5px;
-  height: 5px;
-  border-radius: 50%; /* the dot of a drawing leader — the single allowed circle */
-  background: var(--hud-meta);
-  flex: none;
-}
-.hud-callout > i {
-  display: inline-block;
-  width: 28px;
+  width: 1px;
   height: 1px;
-  background: var(--hud-meta);
-  margin-left: -6px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-/* --- .hud-step-divider : stepped bus line •───╲____╱─── --- */
-.hud-step-divider {
-  display: block;
-  width: 100%;
-  height: 18px;
-  color: var(--hud-meta);
+.eyebrow {
+  font: 600 13px/1.2 var(--f-body);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-brand-ink);
 }
-.hud-step-divider svg { width: 100%; height: 100%; overflow: visible; }
+.muted {
+  color: var(--c-muted);
+}
 
-/* --- Chamfered primary button --- */
-.hud-btn {
+/* Sections */
+.section {
+  padding-block: var(--section-y);
+}
+.section--soft {
+  background: var(--c-soft);
+}
+.section--ink {
+  background: var(--c-ink);
+  color: var(--c-on-ink);
+}
+/* Two sections of the same background in a row read as one block: no double gap between them
+   (service pages skip optional sections, so the white/soft alternation is not always kept). */
+.section--soft + .section--soft,
+.section:not(.section--soft, .section--ink) + .section:not(.section--soft, .section--ink) {
+  padding-top: 0;
+}
+
+/* Buttons */
+.btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 14px 22px;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  background: var(--hud-ink);
-  color: #fff;
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
-  transition: background-color 0.2s ease, letter-spacing 0.2s ease;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: var(--r-sm);
+  border: 1.5px solid transparent;
+  font: 600 15px/1 var(--f-display);
+  text-decoration: none;
+  white-space: nowrap;
   cursor: pointer;
+  transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease, border-color var(--dur-fast) ease,
+    transform var(--dur-fast) var(--ease-out);
 }
-.hud-btn:hover { background: #2a2d31; letter-spacing: 0.12em; }
-.hud-btn--ghost {
+.btn:active {
+  transform: translateY(1px);
+}
+.btn--primary {
+  background: var(--c-ink);
+  color: var(--c-on-ink);
+}
+.btn--primary:hover {
+  background: var(--c-ink-deep);
+  color: var(--c-on-ink);
+}
+.btn--outline {
+  border-color: var(--c-ink);
+  color: var(--c-ink);
   background: transparent;
-  color: var(--hud-ink);
-  box-shadow: inset 0 0 0 1px var(--hud-ink);
 }
-.hud-btn--ghost:hover { background: var(--hud-ink); color: #fff; }
-
-/* --- Section heading --- */
-.hud-section-head {
+.btn--outline:hover {
+  background: var(--c-soft);
+  color: var(--c-ink);
+}
+.btn--light {
+  background: var(--c-bg);
+  color: var(--c-ink);
+}
+.btn--light:hover {
+  background: var(--c-brand-soft);
+  color: var(--c-ink);
+}
+.btn--outline-light {
+  border-color: var(--c-on-ink);
+  color: var(--c-on-ink);
+}
+.btn--outline-light:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--c-on-ink);
+}
+.btn-row {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 12px;
-  padding-bottom: 12px;
-  margin-bottom: 28px;
-  border-bottom: 1px solid var(--hud-line);
+  gap: 10px;
 }
 
-/* --- HUD slider animations --- */
-@keyframes hud-scan {
-  0% { transform: translateY(-10%); opacity: 0; }
-  10% { opacity: 1; }
-  100% { transform: translateY(110%); opacity: 0; }
+/* Long text (Markdown bodies, legal pages) */
+.prose {
+  max-width: 760px;
+  font-size: 17px;
+  line-height: 1.7;
 }
-@keyframes hud-reticle-pulse {
-  0% { transform: scale(1); opacity: 0.25; }
-  35% { transform: scale(1.12); opacity: 0.6; }
-  100% { transform: scale(1); opacity: 0.25; }
+.prose > * + * {
+  margin-top: 1em;
 }
-@keyframes hud-fade-in {
-  from { opacity: 0; transform: scale(1.025); }
-  to { opacity: 1; transform: scale(1); }
+.prose > :first-child {
+  margin-top: 0;
 }
-.hud-scanline {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 100%;
-  pointer-events: none;
-  background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0) 88%, rgba(255,255,255,0.55) 99%, rgba(255,255,255,0.9) 100%);
-  animation: hud-scan 0.9s cubic-bezier(.4,.0,.2,1) forwards;
+.prose h2,
+.prose h3 {
+  margin-top: 1.8em;
+  font-size: 24px;
+  font-weight: 700;
 }
-.hud-reticle { animation: none; opacity: 0.25; }
-.hud-reticle.is-pulsing { animation: hud-reticle-pulse 0.7s ease-out; }
-.hud-slide-img { animation: hud-fade-in 0.7s ease-out both; }
-
-@media (prefers-reduced-motion: reduce) {
-  .hud-scanline, .hud-reticle.is-pulsing, .hud-slide-img { animation: none; }
+.prose h4 {
+  margin-top: 1.4em;
+  font-size: 19px;
 }
-
-/* Custom Minimalist CAD Range Sliders (matching END IS UI reference) */
-input[type="range"].cad-slider {
-  -webkit-appearance: none;
-  appearance: none;
+.prose ul,
+.prose ol {
+  padding-left: 1.3em;
+}
+.prose li + li {
+  margin-top: 0.35em;
+}
+.prose blockquote {
+  margin: 1.4em 0;
+  padding: 4px 0 4px 18px;
+  border-left: 3px solid var(--c-accent);
+  color: var(--c-muted);
+}
+.prose table {
+  border-collapse: collapse;
   width: 100%;
-  height: 1px;
-  background: #0A0A0A;
-  outline: none;
-  margin: 10px 0;
+  display: block;
+  overflow-x: auto;
+}
+/* Photos in the text (src/utils/markdown.ts): one photo → figure with caption; several in a row → grid. */
+.prose .fig {
+  margin: 1.6em 0;
+}
+.prose .fig img {
+  display: block;
+  width: 100%;
+  border-radius: var(--r-md);
+}
+.prose figcaption {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--c-muted);
+}
+.prose .fig-grid {
+  margin: 1.6em 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+.prose .fig-grid .fig {
+  margin: 0;
+}
+.prose .fig-grid img {
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+/* Footnotes: [^1] in the text → small number; notes at the end. */
+.prose sup a {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0 2px;
+}
+.prose .footnotes {
+  margin-top: 2.4em;
+  padding-top: 1em;
+  border-top: 1px solid var(--c-line);
+  font-size: 15px;
+  color: var(--c-muted);
+}
+.prose .footnotes ol {
+  padding-left: 1.3em;
+}
+.prose th,
+.prose td {
+  border-bottom: 1px solid var(--c-line);
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
 }
 
-input[type="range"].cad-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 5px;
-  background: #0A0A0A;
-  cursor: pointer;
-  border: none;
-  transition: transform 0.1s ease;
+/* Cards that lift on hover (entries, services, news, partners). */
+.lift {
+  transition: border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+@media (hover: hover) {
+  .lift:hover {
+    transform: translateY(-3px);
+  }
 }
 
-input[type="range"].cad-slider::-webkit-slider-thumb:hover {
-  transform: scaleY(1.5);
+/* Scroll reveal: blocks of each section rise in while they enter the screen from below. Pure CSS tied to the scroll
+   position (no script, nothing is hidden before the first frame): what is on screen when a page opens is simply there,
+   so navigation does not make the content jump. Browsers without scroll-driven animations show everything static. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .section > .wrap > *,
+    [data-reveal] {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 220px;
+    }
+  }
+}
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
 }
 
-input[type="range"].cad-slider::-moz-range-thumb {
-  width: 18px;
-  height: 5px;
-  background: #0A0A0A;
-  cursor: pointer;
-  border: none;
-  border-radius: 0;
-}
-
-/* --- Block 3 Dynamic HUD Features --- */
-
-/* 1. Tactical Reticle Corners on .hud-glass-card */
-.hud-target-corner {
-  position: absolute;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 11px;
-  line-height: 1;
-  color: var(--hud-ink);
-  opacity: 0.22;
-  pointer-events: none;
-  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.24s ease;
-  z-index: 4;
-}
-.hud-tc-tl { top: 3px; left: 3px; }
-.hud-tc-tr { top: 3px; right: 3px; }
-.hud-tc-bl { bottom: 3px; left: 3px; }
-.hud-tc-br { bottom: 3px; right: 3px; }
-
-.hud-glass-card:hover .hud-target-corner {
-  opacity: 0.85;
-}
-.hud-glass-card:hover .hud-tc-tl { transform: translate(3px, 3px); }
-.hud-glass-card:hover .hud-tc-tr { transform: translate(-3px, 3px); }
-.hud-glass-card:hover .hud-tc-bl { transform: translate(3px, -3px); }
-.hud-glass-card:hover .hud-tc-br { transform: translate(-3px, -3px); }
-
-/* 2. Self-drawing step dividers on scroll */
-.hud-step-path {
-  transform-origin: left;
-  transform: scaleX(0);
-  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.hud-step-divider-container.is-drawn .hud-step-path {
-  transform: scaleX(1);
-}
-.hud-step-divider-container.is-drawn .hud-step-node {
-  animation: hud-node-pulse 2s infinite ease-in-out;
-}
-@keyframes hud-node-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.85; }
-  50% { transform: scale(1.6); opacity: 1; fill: #0A0A0A; }
+@media (max-width: 760px) {
+  body {
+    font-size: 16px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hud-step-path { transform: scaleX(1) !important; transition: none !important; }
-  .hud-step-divider-container.is-drawn .hud-step-node { animation: none !important; }
-  .hud-target-corner { transition: none !important; }
-}
-
-/* Modern dialog & modal overscroll containment per web guidance */
-dialog:modal {
-  overscroll-behavior: contain;
-}
-dialog::backdrop {
-  overflow: hidden;
-  overscroll-behavior: contain;
+  html {
+    scroll-behavior: auto;
+  }
+  @view-transition {
+    navigation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
 }

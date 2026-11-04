@@ -1,0 +1,394 @@
+---
+/**
+ * First screen: eyebrow, H1 (the bridge), lead and two audience entries.
+ * The orbit graphic is decorative (the logo is the sun, partners are planets on their orbits); hidden on phones.
+ * Planets drift very slowly and speed up while the page is scrolled (script below); the round button stops them
+ * (WCAG 2.2.2), «reduce motion» in the system turns them off, and they pause while the first screen is out of view.
+ */
+import { localeHref, tField } from '../../i18n';
+import { t } from '../../i18n/ui';
+import home from '../../data/cms/home.json';
+import { withBase } from '../../utils/url';
+import { company } from '../../utils/company';
+
+const lang = Astro.locals.lang;
+const h = home.hero as Record<string, any>;
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap hero__in">
+    <div class="hero__txt">
+      <p class="eyebrow">{tField(h, 'eyebrow', lang)}</p>
+      <h1 id="hero-title">{tField(h, 'title', lang)}</h1>
+      <p class="hero__lead">{tField(h, 'lead', lang)}</p>
+      <ul class="entries">
+        {(h.entries || []).map((e: any) => (
+          <li>
+            <a class="entry lift" href={localeHref(e.link, lang)}>
+              <b>
+                {tField(e, 'title', lang)}
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 9h12M10 4l5 5-5 5"></path></svg>
+              </b>
+              <span>{tField(e, 'text', lang)}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="orbit-box" data-orbit>
+      <div class="orbit" aria-hidden="true">
+        <div class="orbit__disc"></div>
+        <div class="ring ring--outer"><i class="planet planet--accent"></i></div>
+        <div class="ring ring--mid"><i class="planet planet--ink"></i></div>
+        <div class="ring ring--inner"><i class="planet planet--brand"></i></div>
+        <div class="orbit__core"><img src={withBase(company.logo)} alt="" width="104" height="104" /></div>
+      </div>
+      <button
+        class="orbit__toggle"
+        type="button"
+        aria-pressed="false"
+        aria-label={t(lang, 'home.hero.orbitPause')}
+        title={t(lang, 'home.hero.orbitPause')}
+        data-label-pause={t(lang, 'home.hero.orbitPause')}
+        data-label-play={t(lang, 'home.hero.orbitPlay')}
+      >
+        <svg class="ico-pause" width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><rect x="3" y="2" width="3" height="10" rx="1"></rect><rect x="8" y="2" width="3" height="10" rx="1"></rect></svg>
+        <svg class="ico-play" width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M4 2.5v9a.6.6 0 0 0 .9.5l7.2-4.5a.6.6 0 0 0 0-1L4.9 2a.6.6 0 0 0-.9.5z"></path></svg>
+      </button>
+    </div>
+  </div>
+  <div class="dots" aria-hidden="true"></div>
+</section>
+
+<script>
+  /*
+   * Planets: a very slow drift that speeds up while the page is scrolled and calms down again when scrolling stops.
+   * One requestAnimationFrame loop writes the turned angle into --spin; each ring multiplies it by its own --k.
+   * The loop stops when the button pauses it, when the first screen is out of view and under «reduce motion».
+   */
+  const BASE = 1.2; // degrees per second for the outer orbit (one turn ≈ 5 minutes)
+  const BOOST_MAX = 40; // up to ×40 while scrolling fast
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  document.querySelectorAll<HTMLElement>('[data-orbit]').forEach((box) => {
+    const btn = box.querySelector<HTMLButtonElement>('.orbit__toggle');
+    let spin = 0;
+    let boost = 0;
+    let lastY = window.scrollY;
+    let lastT = 0;
+    let raf = 0;
+    let paused = false;
+    let visible = true;
+
+    const frame = (t: number) => {
+      const dt = lastT ? Math.min((t - lastT) / 1000, 0.1) : 0;
+      lastT = t;
+      const y = window.scrollY;
+      const speed = dt ? Math.abs(y - lastY) / dt : 0; // px per second
+      lastY = y;
+      const target = Math.min(speed / 40, BOOST_MAX);
+      // Rise fast, fall slowly — the planets coast after the scroll stops.
+      boost += (target - boost) * (target > boost ? 0.25 : 0.04);
+      spin += BASE * (1 + boost) * dt;
+      box.style.setProperty('--spin', `${spin.toFixed(2)}deg`);
+      raf = requestAnimationFrame(frame);
+    };
+    const run = () => {
+      cancelAnimationFrame(raf);
+      raf = 0;
+      if (paused || !visible || reduce.matches) return;
+      lastT = 0;
+      lastY = window.scrollY;
+      raf = requestAnimationFrame(frame);
+    };
+
+    btn?.addEventListener('click', () => {
+      paused = !paused;
+      box.classList.toggle('is-paused', paused);
+      btn.setAttribute('aria-pressed', String(paused));
+      const label = (paused ? btn.dataset.labelPlay : btn.dataset.labelPause) || '';
+      btn.setAttribute('aria-label', label);
+      btn.title = label;
+      run();
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => {
+        visible = e.isIntersecting;
+        box.classList.toggle('is-off', !visible);
+        run();
+      }).observe(box);
+    }
+    reduce.addEventListener('change', run);
+    run();
+  });
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero__in {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: 48px;
+    align-items: center;
+    padding-block: clamp(36px, 8px + 5vw, 104px) clamp(44px, 12px + 5vw, 112px);
+    min-height: min(calc(100svh - var(--hdr-h)), 860px);
+  }
+  .hero__txt {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  h1 {
+    font-size: var(--fs-hero);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .hero__lead {
+    font-size: var(--fs-lead);
+    color: var(--c-muted);
+    max-width: 36em;
+  }
+  .entries {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .entry {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: 100%;
+    padding: 22px 24px;
+    border: 1px solid var(--c-line);
+    border-top: 3px solid var(--c-accent);
+    border-radius: var(--r-sm);
+    text-decoration: none;
+    color: var(--c-ink);
+    background: var(--c-bg);
+  }
+  .entry:hover {
+    border-color: var(--c-brand-mid);
+    border-top-color: var(--c-accent);
+    box-shadow: var(--shadow-lift);
+    color: var(--c-ink);
+  }
+  .entry b {
+    font: 700 19px/1.2 var(--f-display);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .entry svg {
+    color: var(--c-brand-ink);
+    flex: none;
+  }
+  .entry span {
+    font-size: 15px;
+    color: var(--c-muted);
+    line-height: 1.5;
+  }
+  .orbit-box {
+    position: relative;
+    width: 100%;
+    max-width: clamp(420px, 28vw, 640px);
+    margin-left: auto;
+    animation: orbit-in 0.6s var(--ease-out) both;
+  }
+  .orbit {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 1px solid var(--c-line);
+    display: grid;
+    place-items: center;
+  }
+  .orbit__disc {
+    position: absolute;
+    inset: 9%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 25%, var(--c-brand-mid) 0%, var(--c-brand-soft) 85%);
+    animation: breathe 9s ease-in-out infinite;
+  }
+  .orbit__core {
+    position: relative;
+    z-index: 2;
+    width: 40%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background: var(--c-bg);
+    display: grid;
+    place-items: center;
+    box-shadow: 0 18px 40px -18px rgba(45, 62, 80, 0.45);
+  }
+  .orbit__core img {
+    width: 52%;
+    height: 52%;
+  }
+  /* Orbits: each ring turns around the centre and carries one planet on its edge. */
+  /* --a: start angle (planets are spread out even without JavaScript); --k: speed relative to the outer orbit,
+     negative turns the other way; --spin: angle written by the script below. */
+  .ring {
+    position: absolute;
+    border-radius: 50%;
+    transform: rotate(calc(var(--a) + var(--spin, 0deg) * var(--k)));
+    will-change: transform;
+  }
+  .ring--outer {
+    inset: -1px;
+    --a: 45deg;
+    --k: 1;
+  }
+  .ring--mid {
+    inset: 4%;
+    border: 1px dashed var(--c-line-strong);
+    --a: 245deg;
+    --k: -1.6;
+  }
+  .ring--inner {
+    inset: 24%;
+    border: 1px solid var(--c-bg);
+    z-index: 1;
+    --a: 150deg;
+    --k: 2.9;
+  }
+  .planet {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .planet--accent {
+    width: 5.2%;
+    background: var(--c-accent);
+    box-shadow: 0 0 0 6px var(--c-accent-soft);
+  }
+  .planet--ink {
+    width: 3%;
+    background: var(--c-ink);
+  }
+  .planet--brand {
+    width: 4.4%;
+    background: var(--c-bg);
+    border: 2px solid var(--c-brand);
+  }
+  .orbit-box:is(.is-paused, .is-off) .orbit__disc {
+    animation-play-state: paused;
+  }
+  .orbit__toggle {
+    position: absolute;
+    /* In the corner of the square box — outside the outer orbit, planets never pass under it. */
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 1px solid var(--c-line);
+    border-radius: 50%;
+    background: var(--c-bg);
+    color: var(--c-muted);
+    cursor: pointer;
+    opacity: 0.75;
+    transition: opacity var(--dur-fast) ease, color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+  }
+  .orbit__toggle:hover,
+  .orbit__toggle:focus-visible {
+    opacity: 1;
+    color: var(--c-ink);
+    border-color: var(--c-line-strong);
+  }
+  .ico-play,
+  .is-paused .ico-pause {
+    display: none;
+  }
+  .is-paused .ico-play {
+    display: block;
+  }
+  @keyframes breathe {
+    50% {
+      transform: scale(1.025);
+    }
+  }
+  /* Only the decorative graphic fades in; the text of the first screen is in place from the first frame. */
+  @keyframes orbit-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .orbit__toggle {
+      display: none;
+    }
+  }
+  .dots {
+    position: absolute;
+    right: 40px;
+    bottom: 28px;
+    width: 140px;
+    height: 84px;
+    background-image: radial-gradient(var(--c-accent) 1.6px, transparent 1.8px);
+    background-size: 20px 20px;
+    opacity: 0.5;
+  }
+  @media (max-width: 1080px) {
+    .hero__in {
+      gap: 32px;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+    }
+  }
+  @media (max-width: 900px) {
+    .hero__in {
+      grid-template-columns: minmax(0, 1fr);
+      min-height: 0;
+    }
+    .orbit-box {
+      display: none;
+    }
+  }
+  @media (max-width: 760px) {
+    .hero__in {
+      gap: 0;
+    }
+    .hero__txt {
+      gap: 16px;
+    }
+    .entries {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .entry {
+      padding: 14px 12px;
+    }
+    .entry b {
+      font-size: clamp(14px, 3.9vw, 16px);
+      gap: 4px;
+    }
+    .entry svg {
+      width: 16px;
+      height: 16px;
+    }
+    .entry span,
+    .dots {
+      display: none;
+    }
+  }
+  /* Narrow phones: the long entry title needs the whole card width. */
+  @media (max-width: 380px) {
+    .entry svg {
+      display: none;
+    }
+  }
+</style>

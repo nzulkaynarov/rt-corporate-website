@@ -1,204 +1,127 @@
 ---
-import { telHref } from '../../utils/url';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { ContactsLeadForm } from '../../components/islands/ContactsLeadForm';
-import I18nText from '../../components/I18nText.astro';
-import HudPageHeader from '../../components/hud/HudPageHeader.astro';
-import contactsData from '../../data/cms/contacts.json';
-import globalData from '../../data/cms/global.json';
-import { LANGS, langStaticPaths, tField } from '../../i18n';
+import Breadcrumbs from '../../components/ui/Breadcrumbs.astro';
+import SectionHead from '../../components/ui/SectionHead.astro';
+import LeadFormBlock from '../../components/ui/LeadFormBlock.astro';
+import pages from '../../data/cms/pages.json';
+import { langStaticPaths, tField } from '../../i18n';
 import { t } from '../../i18n/ui';
-import { pageSeo, plainText, absoluteUrl } from '../../utils/seo';
-import { navLabel, navLabels } from '../../utils/nav';
+import { company, mailHref, mapUrl, telHref, telegramUrl } from '../../utils/company';
+import { pageSeo } from '../../utils/seo';
 
 export const getStaticPaths = langStaticPaths;
-
 const lang = Astro.locals.lang;
 const tr = (key: string) => t(lang, key);
 const seo = pageSeo('contacts', lang);
-const g = globalData as Record<string, any>;
-const C = (field: string): string => tField(contactsData, field, lang);
-const tri = (obj: Record<string, any>, field: string) => ({ ru: obj[field], uz: obj[`${field}_uz`], en: obj[`${field}_en`] });
-const bank = contactsData.bankDetails;
-
-const orgId = `${absoluteUrl('/', Astro.site)}#organization`;
-
-// Plain-text requisites block for the «copy» button, in the page language.
-const requisitesPayload = [
-  tField(g, 'companyName', lang),
-  `${tr('contacts.bank.tin')} ${g.inn}`,
-  `${tr('contacts.bank.account')} ${bank.account}`,
-  `${tr('contacts.bank.bank')} ${tField(bank, 'bank', lang)}`,
-  `${tr('contacts.bank.mfo')} ${bank.mfo}`,
-  `${tr('contacts.copy.address')} ${tr('company.country')}, ${tField(g, 'address', lang)}`,
-  `${tr('contacts.office')} ${tField(g, 'officeAddress', lang)}`,
-  `${tr('contacts.copy.phone')} ${g.phone}`,
-  `${tr('contacts.copy.email')} ${g.emailGeneral}`,
-].join('\n');
-const copiedLabel = tr('contacts.copy.done');
-// Map search by the office address (no hard-coded coordinates).
-const mapUrl = `https://yandex.uz/maps/?text=${encodeURIComponent(`${tField(g, 'officeAddress', 'ru')}`)}`;
+const p = pages.contacts as Record<string, string>;
+const office = tField(company, 'officeAddress', lang) as string;
+const tg = telegramUrl();
+const crumbs = [{ name: tr('nav.contacts'), path: '/contacts/' }];
 ---
 
-<BaseLayout
-  title={seo.title}
-  description={seo.description}
-  breadcrumbs={[{ name: navLabel('/contacts/', lang), path: '/contacts/' }]}
-  jsonLd={{
-    '@type': 'ContactPage',
-    name: plainText(C('pageTitle')),
-    description: seo.description,
-    inLanguage: lang,
-    about: { '@id': orgId },
-    mainEntity: {
-      '@type': 'Organization',
-      '@id': orgId,
-      contactPoint: contactsData.departments.map((dept) => ({
-        '@type': 'ContactPoint',
-        name: plainText(tField(dept, 'name', lang)),
-        description: plainText(tField(dept, 'desc', lang)),
-        telephone: dept.phone,
-        email: dept.email,
-        contactType: 'sales',
-        areaServed: g.countryCode,
-        availableLanguage: [...LANGS],
-      })),
-    },
-  }}
->
-  <div class="max-w-7xl mx-auto px-4 py-6 font-sans">
-    <HudPageHeader
-      code={C('badge')}
-      crumb={navLabels('/contacts/')}
-      title={tri(contactsData, 'pageTitle')}
-      lead={tri(contactsData, 'pageSubtitle')}
-    />
+<BaseLayout title={seo.title} description={seo.description} breadcrumbs={crumbs}>
+  <div class="wrap"><Breadcrumbs items={crumbs} /></div>
+  <section class="wrap page" aria-labelledby="contacts-h1">
+    <SectionHead id="contacts-h1" level={1} eyebrow={tField(p, 'eyebrow', lang)} title={tField(p, 'title', lang)} lead={tField(p, 'lead', lang)} />
+    <div class="grid">
+      <div class="info">
+        <h2 class="visually-hidden">{tr('contacts.channels')}</h2>
+        <dl class="list">
+          <div><dt>{tr('contacts.office')}</dt><dd>{office}<br /><a href={mapUrl(office)} target="_blank" rel="noopener noreferrer">{tr('contacts.map')} ↗</a></dd></div>
+          <div><dt>{tr('contacts.phone')}</dt><dd><a href={telHref()}>{company.phone}</a></dd></div>
+          <div><dt>{tr('contacts.email')}</dt><dd><a href={mailHref()}>{company.email}</a></dd></div>
+          {tg && <div><dt>{tr('contacts.telegram')}</dt><dd><a href={tg} rel="noopener">@{company.telegramBot}</a></dd></div>}
+          <div><dt>{tr('contacts.cabinet')}</dt><dd><a href={company.cabinet.loginUrl}>{company.cabinet.url.replace(/^https?:\/\//, '')}</a></dd></div>
+        </dl>
 
-    <!-- Main Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-14">
-      <!-- Left Column: Department Directory & Logistics -->
-      <div class="lg:col-span-7 flex flex-col space-y-6">
-        <!-- Direct Lines Table -->
-        <div class="hud-glass-card p-0 font-mono overflow-hidden">
-          <div class="border-b border-[#0A0A0A] bg-[#0A0A0A] text-white px-4 py-2 text-xs font-bold tracking-wider">
-            {C('departmentsTitle')}
-          </div>
-          <div class="divide-y divide-[#0A0A0A]/20 text-xs">
-            {contactsData.departments.map((dept) => (
-              <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-[#C8CDD2]/50">
-                <div>
-                  <span class="font-bold text-[#0A0A0A] block text-sm">
-                    <I18nText ru={dept.name} uz={dept.name_uz} en={dept.name_en} />
-                  </span>
-                  <span class="text-[#4A5056]">
-                    <I18nText ru={dept.desc} uz={dept.desc_uz} en={dept.desc_en} />
-                  </span>
-                </div>
-                <div class="text-right">
-                  <a href={telHref(dept.phone)} class="font-bold text-sm text-[#0A0A0A] hover:underline block">
-                    {dept.phone}
-                  </a>
-                  <a href={`mailto:${dept.email}`} class="text-[11px] text-[#4A5056] hover:underline">
-                    {dept.email}
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <!-- Logistics & Access Guidelines -->
-        <div class="hud-glass-card p-6 font-mono text-xs">
-          <div class="text-xs font-bold text-[#0A0A0A] border-b border-[#0A0A0A] pb-2 mb-3">
-            {C('logisticsTitle')}
-          </div>
-          <div class="space-y-3 text-[#4A5056] font-sans">
-            {contactsData.logisticsInstructions.map((instruction, idx) => {
-              const instrUz = contactsData.logisticsInstructions_uz && contactsData.logisticsInstructions_uz[idx];
-              const instrEn = contactsData.logisticsInstructions_en && contactsData.logisticsInstructions_en[idx];
-              return (
-                <p>
-                  <I18nText ru={instruction} uz={instrUz} en={instrEn} />
-                </p>
-              );
-            })}
-          </div>
-
-          <div class="mt-4 pt-3 border-t border-[#0A0A0A]/20 flex items-center justify-between text-[11px]">
-            <div>{tr('contacts.office')} <span class="text-[#0A0A0A] font-bold">{tField(g, 'officeAddress', lang)}</span></div>
-            <a
-              href={mapUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="hud-btn px-2.5 py-1 text-xs font-bold"
-            >
-              {tr('contacts.openMap')}
-            </a>
-          </div>
-        </div>
+        <section class="req" id="requisites" aria-labelledby="req-title">
+          <h2 id="req-title">{tr('contacts.requisites')}</h2>
+          <dl class="list list--compact">
+            <div><dt>{tr('contacts.fullName')}</dt><dd>{tField(company, 'fullName', lang)}</dd></div>
+            <div><dt>{tr('contacts.inn')}</dt><dd>{company.inn}</dd></div>
+            <div><dt>{tr('contacts.legal')}</dt><dd>{tField(company, 'legalAddress', lang)}</dd></div>
+            <div><dt>{tr('contacts.bank')}</dt><dd>{tField(company.bank, 'name', lang)}</dd></div>
+            <div><dt>{tr('contacts.mfo')}</dt><dd>{company.bank.mfo}</dd></div>
+            <div><dt>{tr('contacts.account')}</dt><dd class="num">{company.bank.account}</dd></div>
+          </dl>
+        </section>
       </div>
-
-      <!-- Right Column: Interactive Feedback & RFQ Form -->
-      <div class="lg:col-span-5 flex flex-col space-y-6">
-        <ContactsLeadForm client:load lang={lang} />
-
-        <!-- Official Bank Details Box -->
-        <div class="hud-glass-card p-5 font-mono text-xs space-y-2">
-          <div class="font-bold text-[#0A0A0A]">
-            {C('bankTitle')}
-          </div>
-          <div class="text-[11px] text-[#4A5056] space-y-1">
-            <div>
-              {tr('contacts.bank.recipient')}{' '}
-              <span class="text-[#0A0A0A] font-bold">{tField(bank, 'recipient', lang)}</span>
-            </div>
-            <div>
-              {tr('contacts.bank.tin')}{' '}
-              <span class="text-[#0A0A0A] font-bold">{g.inn}</span>
-            </div>
-            <div>
-              {tr('contacts.bank.account')}{' '}
-              <span class="text-[#0A0A0A]">{bank.account}</span>
-            </div>
-            <div>
-              {tr('contacts.bank.bank')}{' '}
-              <span>{tField(bank, 'bank', lang)}</span>
-            </div>
-            <div>
-              {tr('contacts.bank.mfo')} {bank.mfo}
-            </div>
-          </div>
-
-          <button
-            type="button"
-            id="copy-requisites-btn"
-            class="hud-btn w-full mt-3 py-2 px-3 text-xs font-mono font-bold cursor-pointer flex items-center justify-center gap-1.5"
-          >
-            <span id="copy-btn-text">{tr('contacts.copy.button')}</span>
-          </button>
-        </div>
+      <div class="form" id="request">
+        <h2>{tField(p, 'formTitle', lang)}</h2>
+        <p class="muted">{tField(p, 'formText', lang)}</p>
+        <LeadFormBlock idPrefix="contacts-lead" />
       </div>
     </div>
-  </div>
-
-  <script define:vars={{ requisitesPayload, copiedLabel }}>
-    const btn = document.getElementById('copy-requisites-btn');
-    const label = document.getElementById('copy-btn-text');
-    if (btn && label) {
-      const originalText = label.textContent;
-      btn.addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText(requisitesPayload);
-          label.textContent = copiedLabel;
-          btn.classList.add('bg-[#0A0A0A]', 'text-white');
-          setTimeout(() => {
-            label.textContent = originalText;
-            btn.classList.remove('bg-[#0A0A0A]', 'text-white');
-          }, 2000);
-        } catch (e) {
-          console.error(e);
-        }
-      });
-    }
-  </script>
+  </section>
 </BaseLayout>
+
+<style>
+  .page {
+    padding-block: 28px 96px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 64px;
+    align-items: start;
+  }
+  .info {
+    display: grid;
+    gap: 40px;
+  }
+  .list {
+    margin: 0;
+    border-top: 1px solid var(--c-line);
+  }
+  .list div {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--c-line);
+  }
+  .list dt {
+    color: var(--c-muted);
+    font-size: 15px;
+  }
+  .list dd {
+    margin: 0;
+    font-weight: 500;
+  }
+  .list--compact div {
+    padding: 10px 0;
+    font-size: 15px;
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+    word-break: break-all;
+  }
+  .req h2,
+  .form h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .form > p {
+    margin-bottom: 20px;
+  }
+  @media (max-width: 1080px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 40px;
+    }
+    .form {
+      order: -1;
+    }
+  }
+  @media (max-width: 760px) {
+    .page {
+      padding-block: 20px 56px;
+    }
+    .list div {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2px;
+      padding: 12px 0;
+    }
+  }
+</style>

@@ -130,7 +130,10 @@ function checkData(fields, data, where) {
       const options = (field.options || []).map((o) => (typeof o === 'object' ? o.value : o));
       const values = Array.isArray(value) ? value : [value];
       for (const v of values) if (!options.includes(v)) errors.push(`${at}: "${v}" is not one of the select options`);
-    } else if (SCALAR_WIDGETS.has(widget) && typeof value === 'object') errors.push(`${at}: ${widget} widget but value is an object/array`);
+    } else if (SCALAR_WIDGETS.has(widget) && typeof value === 'object') {
+      const okMultiple = field.multiple && Array.isArray(value) && value.every((v) => v === null || typeof v !== 'object');
+      if (!okMultiple) errors.push(`${at}: ${widget} widget but value is an object/array`);
+    }
   }
 }
 

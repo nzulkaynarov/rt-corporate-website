@@ -1,0 +1,161 @@
+{
+  "title": "Форма заявки",
+  "strings": [
+    {
+      "key": "form.aria",
+      "ru": "Заявка",
+      "uz": "Ariza",
+      "en": "Request"
+    },
+    {
+      "key": "form.name",
+      "ru": "Имя и должность",
+      "uz": "Ism va lavozim",
+      "en": "Name and job title"
+    },
+    {
+      "key": "form.namePh",
+      "ru": "Например, Алишер, инженер по снабжению",
+      "uz": "Masalan, Alisher, ta'minot bo'yicha muhandis",
+      "en": "For example, Alisher, procurement engineer"
+    },
+    {
+      "key": "form.company",
+      "ru": "Компания",
+      "uz": "Kompaniya",
+      "en": "Company"
+    },
+    {
+      "key": "form.companyPh",
+      "ru": "Название организации",
+      "uz": "Tashkilot nomi",
+      "en": "Organization name"
+    },
+    {
+      "key": "form.contact",
+      "ru": "Телефон или e-mail",
+      "uz": "Telefon yoki e-mail",
+      "en": "Phone or email"
+    },
+    {
+      "key": "form.contactPh",
+      "ru": "+998 … или name@company.uz",
+      "uz": "+998 … yoki name@company.uz",
+      "en": "+998 … or name@company.uz"
+    },
+    {
+      "key": "form.text",
+      "ru": "Что нужно",
+      "uz": "Nima kerak",
+      "en": "What you need"
+    },
+    {
+      "key": "form.textPh",
+      "ru": "Обозначение изделия, список позиций или задача",
+      "uz": "Mahsulot belgilanishi, pozitsiyalar ro'yxati yoki vazifa tavsifi",
+      "en": "Product designation, list of items, or a description of the task"
+    },
+    {
+      "key": "form.consent",
+      "ru": "Согласен на обработку персональных данных, чтобы со мной связались по этому запросу.",
+      "uz": "Ushbu so'rov bo'yicha men bilan bog'lanishlari uchun shaxsga doir ma'lumotlarimga ishlov berilishiga roziman.",
+      "en": "I consent to the processing of my personal data so that I can be contacted about this request."
+    },
+    {
+      "key": "form.privacy",
+      "ru": "Политика конфиденциальности",
+      "uz": "Maxfiylik siyosati",
+      "en": "Privacy Policy"
+    },
+    {
+      "key": "form.submit",
+      "ru": "Отправить заявку",
+      "uz": "Ariza yuborish",
+      "en": "Send request"
+    },
+    {
+      "key": "form.sending",
+      "ru": "Отправляем…",
+      "uz": "Yuborilmoqda…",
+      "en": "Sending…"
+    },
+    {
+      "key": "form.success.title",
+      "ru": "Заявка отправлена",
+      "uz": "Ariza yuborildi",
+      "en": "Request sent"
+    },
+    {
+      "key": "form.success.text",
+      "ru": "Менеджер свяжется с вами в течение рабочего дня и пришлёт приглашение в Кабинет.",
+      "uz": "Menejer ish kuni davomida siz bilan bog'lanadi va Kabinetga taklifnoma yuboradi.",
+      "en": "A manager will contact you within one business day and send you an invitation to the Cabinet."
+    },
+    {
+      "key": "form.error.required",
+      "ru": "Заполните это поле",
+      "uz": "Iltimos, ushbu maydonni to'ldiring",
+      "en": "Please fill in this field"
+    },
+    {
+      "key": "form.error.contact",
+      "ru": "Укажите телефон или e-mail",
+      "uz": "Iltimos, telefon yoki e-mailni kiriting",
+      "en": "Please enter a phone number or email"
+    },
+    {
+      "key": "form.error.phone",
+      "ru": "Проверьте номер телефона",
+      "uz": "Iltimos, telefon raqamini tekshiring",
+      "en": "Please check the phone number"
+    },
+    {
+      "key": "form.error.email",
+      "ru": "Проверьте адрес e-mail",
+      "uz": "Iltimos, e-mail manzilini tekshiring",
+      "en": "Please check the email address"
+    },
+    {
+      "key": "form.error.consent",
+      "ru": "Нужно согласие на обработку данных",
+      "uz": "Iltimos, ma'lumotlarga ishlov berishga rozilik bildiring",
+      "en": "Please agree to the processing of your data"
+    },
+    {
+      "key": "form.error.tooFast",
+      "ru": "Форма отправлена слишком быстро. Подождите несколько секунд и отправьте ещё раз.",
+      "uz": "Forma juda tez yuborildi. Bir necha soniya kuting va qayta yuboring.",
+      "en": "The form was submitted too quickly. Please wait a few seconds and try again."
+    },
+    {
+      "key": "form.error.expired",
+      "ru": "Форма устарела. Отправьте её ещё раз.",
+      "uz": "Forma eskirgan. Iltimos, uni qayta yuboring.",
+      "en": "This form has expired. Please submit it again."
+    },
+    {
+      "key": "form.error.rate",
+      "ru": "Слишком много заявок с этого адреса. Попробуйте позже или напишите нам.",
+      "uz": "Ushbu manzildan juda ko'p ariza yuborildi. Keyinroq urinib ko'ring yoki bizga yozing.",
+      "en": "Too many requests from this address. Please try again later or message us."
+    },
+    {
+      "key": "form.error.network",
+      "ru": "Не удалось отправить заявку. Напишите нам или позвоните — ответим так же быстро:",
+      "uz": "Arizani yuborib bo'lmadi. Bizga yozing yoki qo'ng'iroq qiling — xuddi shunday tez javob beramiz:",
+      "en": "We couldn't send your request. Message or call us, and we'll reply just as quickly:"
+    },
+    {
+      "key": "form.alt.newClient",
+      "ru": "Я новый клиент — в Кабинете",
+      "uz": "Men yangi mijozman — Kabinetga o'tish",
+      "en": "I'm a new client — go to the Cabinet"
+    },
+    {
+      "key": "form.alt.telegram",
+      "ru": "Telegram",
+      "uz": "Telegram",
+      "en": "Telegram"
+    }
+  ]
+}

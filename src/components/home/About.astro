@@ -1,0 +1,117 @@
+---
+/**
+ * «О компании»: text, mission, office and INN, metrics (owner edits the figures in /admin → Компания).
+ * Figures count up when they come into view (`data-count`, src/scripts/motion.ts); screen readers get the final value.
+ */
+import { localeHref, tField } from '../../i18n';
+import { t } from '../../i18n/ui';
+import home from '../../data/cms/home.json';
+import { company } from '../../utils/company';
+
+const lang = Astro.locals.lang;
+const a = home.about as Record<string, string>;
+---
+
+<section class="section section--soft" id="about" aria-labelledby="about-title">
+  <div class="wrap about">
+    <div class="about__txt">
+      <p class="eyebrow">{tField(a, 'eyebrow', lang)}</p>
+      <h2 id="about-title">{tField(a, 'title', lang)}</h2>
+      <p>{tField(a, 'text', lang)}</p>
+      <p class="muted about__mission">{tField(a, 'mission', lang)}</p>
+      <p class="about__facts">
+        <span>{t(lang, 'home.about.office')}: {tField(company, 'officeAddress', lang)}</span>
+        <span>{t(lang, 'home.about.inn')} {company.inn}</span>
+        <a href={localeHref('/contacts/#requisites', lang)}>{t(lang, 'home.about.requisites')} →</a>
+      </p>
+    </div>
+    <dl class="metrics">
+      {company.metrics.map((m: any) => (
+        <div class="metric">
+          <dt>{tField(m, 'label', lang)}</dt>
+          <dd>
+            <span class="visually-hidden">{m.value}</span>
+            <span aria-hidden="true" data-count={m.value}>{m.value}</span>
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 64px;
+    align-items: start;
+  }
+  .about__txt {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  h2 {
+    font-size: var(--fs-h2);
+    font-weight: 700;
+  }
+  .about__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    font-size: 15px;
+    color: var(--c-muted);
+    padding-top: 6px;
+  }
+  .metrics {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--c-line);
+  }
+  .metric {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--c-line);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .metric dd {
+    order: -1;
+  }
+  .metric:nth-child(odd) {
+    padding-right: 20px;
+  }
+  .metric dd {
+    margin: 0;
+    font: 800 44px/1 var(--f-display);
+    font-variant-numeric: tabular-nums;
+  }
+  .metric dt {
+    color: var(--c-muted);
+    font-size: 15px;
+  }
+  @media (max-width: 1080px) {
+    .about {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 28px;
+    }
+  }
+  @media (max-width: 760px) {
+    .about__txt {
+      gap: 12px;
+    }
+    .about__mission {
+      display: none;
+    }
+    .metric {
+      padding: 14px 0;
+    }
+    .metric dd {
+      font-size: 32px;
+    }
+    .metric dt {
+      font-size: 14px;
+    }
+  }
+</style>

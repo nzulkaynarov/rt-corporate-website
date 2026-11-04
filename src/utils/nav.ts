@@ -1,19 +1,28 @@
-import globalData from '../data/cms/global.json';
-import { pick, type Lang } from '../i18n';
-
 /**
- * Section label from the CMS main menu (global.json → navigation), so breadcrumbs,
- * page headers and schema.org BreadcrumbList always match the menu wording.
- *   navLabel('/catalog/', 'uz') → 'KATALOG'
+ * The one site menu (docs/ARCHITECTURE.md §2). Header, mobile menu and footer are built from it —
+ * never add a second navigation. Labels are UI keys in src/data/cms/ui/layout.json.
  */
-export function navLabel(path: string, lang: Lang): string {
-  const norm = (p: string) => `/${p.replace(/^\/+|\/+$/g, '')}/`;
-  const item = (globalData.navigation || []).find((n: any) => norm(n.path) === norm(path)) as any;
-  if (!item) throw new Error(`[nav] No navigation item for "${path}" in src/data/cms/global.json`);
-  return pick(lang, item.label, item.label_uz, item.label_en);
+export interface NavItem {
+  key: string;
+  path: string;
 }
 
-/** Same as navLabel but as an { ru, uz, en } object for components that take trilingual props. */
-export function navLabels(path: string) {
-  return { ru: navLabel(path, 'ru'), uz: navLabel(path, 'uz'), en: navLabel(path, 'en') };
+export const MAIN_NAV: NavItem[] = [
+  { key: 'nav.services', path: '/services/' },
+  { key: 'nav.news', path: '/news/' },
+  { key: 'nav.contacts', path: '/contacts/' },
+];
+
+export const LEGAL_NAV: NavItem[] = [
+  { key: 'footer.privacy', path: '/privacy/' },
+  { key: 'footer.terms', path: '/terms/' },
+  { key: 'footer.cookies', path: '/cookies/' },
+];
+
+/** Where «Начать работу» leads: the request form on the contacts page. */
+export const START_PATH = '/contacts/#request';
+
+/** True when `route` (language-neutral, e.g. '/services/supply/') belongs to the menu item. */
+export function isActive(item: NavItem, route: string): boolean {
+  return item.path === '/' ? route === '/' : route.startsWith(item.path);
 }

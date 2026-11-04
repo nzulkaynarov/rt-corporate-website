@@ -1,0 +1,125 @@
+{
+  "title": "Новости",
+  "strings": [
+    {
+      "key": "news.type.all",
+      "ru": "Все",
+      "uz": "Hammasi",
+      "en": "All"
+    },
+    {
+      "key": "news.type.news",
+      "ru": "Новости",
+      "uz": "Yangiliklar",
+      "en": "News"
+    },
+    {
+      "key": "news.type.article",
+      "ru": "Статьи",
+      "uz": "Maqolalar",
+      "en": "Articles"
+    },
+    {
+      "key": "news.type.project",
+      "ru": "Проекты",
+      "uz": "Loyihalar",
+      "en": "Projects"
+    },
+    {
+      "key": "news.type.partner",
+      "ru": "Партнёры",
+      "uz": "Hamkorlar",
+      "en": "Partners"
+    },
+    {
+      "key": "news.filterAria",
+      "ru": "Тип материала",
+      "uz": "Material turi",
+      "en": "Content type"
+    },
+    {
+      "key": "news.back",
+      "ru": "Все материалы",
+      "uz": "Barcha materiallar",
+      "en": "All posts"
+    },
+    {
+      "key": "news.partnerMaterials",
+      "ru": "Материалы о партнёре",
+      "uz": "Hamkor haqidagi materiallar",
+      "en": "Posts about this partner"
+    },
+    {
+      "key": "news.partnerStatus",
+      "ru": "Статус RailTech",
+      "uz": "RailTech maqomi",
+      "en": "RailTech status"
+    },
+    {
+      "key": "news.empty",
+      "ru": "В этом разделе пока нет материалов.",
+      "uz": "Bu bo'limda hozircha materiallar yo'q.",
+      "en": "There are no posts in this section yet."
+    },
+    {
+      "key": "news.related",
+      "ru": "Ещё материалы",
+      "uz": "Boshqa materiallar",
+      "en": "More posts"
+    },
+    {
+      "key": "news.partnerCountry",
+      "ru": "Страна",
+      "uz": "Mamlakat",
+      "en": "Country"
+    },
+    {
+      "key": "news.gallery.title",
+      "ru": "Фотографии",
+      "uz": "Fotosuratlar",
+      "en": "Photos"
+    },
+    {
+      "key": "news.gallery.open",
+      "ru": "Открыть фото {n} из {total}",
+      "uz": "Fotosuratni ochish: {n} / {total}",
+      "en": "Open photo {n} of {total}"
+    },
+    {
+      "key": "news.gallery.close",
+      "ru": "Закрыть",
+      "uz": "Yopish",
+      "en": "Close"
+    },
+    {
+      "key": "news.gallery.prev",
+      "ru": "Предыдущее фото",
+      "uz": "Oldingi fotosurat",
+      "en": "Previous photo"
+    },
+    {
+      "key": "news.gallery.next",
+      "ru": "Следующее фото",
+      "uz": "Keyingi fotosurat",
+      "en": "Next photo"
+    },
+    {
+      "key": "news.gallery.counter",
+      "ru": "{n} из {total}",
+      "uz": "{n} / {total}",
+      "en": "{n} of {total}"
+    },
+    {
+      "key": "prose.footnotes",
+      "ru": "Сноски",
+      "uz": "Izohlar",
+      "en": "Footnotes"
+    },
+    {
+      "key": "prose.footnoteBack",
+      "ru": "Вернуться к тексту, сноска {n}",
+      "uz": "Matnga qaytish, {n}-izoh",
+      "en": "Back to text, footnote {n}"
+    }
+  ]
+}

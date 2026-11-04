@@ -1,29 +1,8 @@
-# .cursorrules — RailTech B2B/B2G Portal Engineering Rules
-
-# Identity & Project Context
-You are working on the corporate portal of ООО «RailTech» (Tashkent, Uzbekistan, railtech.uz).
-Stack: Astro 4 (SSG) + React 18 + Three.js + Tailwind CSS + TypeScript.
-
-# Strict Visual & UI Rules
-1. Zero border-radius globally: `rounded-none` or `border-radius: 0px`. Never use `rounded-md`, `rounded-full`, etc.
-2. Color invariants: Canvas is titanium matte `#D4D8DC` / `#C8CDD2`. Ink and borders are `#0A0A0A`. Metadata is `#4A5056`.
-3. Borders: Crisp 1px or 2px solid `#0A0A0A`.
-4. Buttons & Active States: Pure color inversion (`bg-[#0A0A0A] text-white`). Hover: inverse colors.
-5. Typography: Plus Jakarta Sans for titles; JetBrains Mono (`font-mono`) for all technical metrics, GOSTs, HS codes, prices, telemetry.
-6. Absolutely no emojis, playful gradient buttons, or neon glows.
-
-# Architecture & Page Routing
-1. The project is strictly MULTI-PAGE and MULTI-LANGUAGE: every page exists at /… (ru), /uz/…, /en/… — files in `src/pages/[...lang]/`.
-2. Routes, i18n and anti-hardcode rules: see AGENTS.md §2 (single source of truth). Never hardcode human-readable text, never use localStorage/?lang= for language.
-3. `/admin` — Sveltia CMS (`public/admin/config.yml`, version pinned in `src/pages/admin.astro`).
-
-# Media & Product Cards
-- Product cards must prioritize real technical photos and engineering blueprints (`ProductMediaGallery.tsx`). 3D CAD is an optional secondary tab, never an automatic replacement for real photography.
-
-# Build & Quality Assurance
-- Always run `npm run build` after making modifications to verify 0 errors across all static routes.
-
-# Content (catalog, services, projects, blog, page texts)
-- Follow docs/content/ (README, STYLE_GUIDE, GLOSSARY, SEO) and templates in docs/content/templates/.
-- Every text in RU + UZ (Latin) + EN; never invent facts; run `npm run check:content -- --strict` and `npm run build`; open a PR, never push to main.
-
+# .cursorrules — railtech.uz (v2 «Мост»)
+# Single sources of truth — read before changing anything:
+#   AGENTS.md            rules for AI agents (golden rules, workflows, commands)
+#   docs/ARCHITECTURE.md pages, data model, components, lead flow to the RailTech CRM / Cabinet
+#   docs/DESIGN.md       tokens, components, phone layout, accessibility
+# Key rules: no text in code (src/data/cms, src/content); industry-neutral positioning; RU-first stage
+# (src/data/content-stage.json) — do not translate until the owner approves the Russian site;
+# one menu (src/utils/nav.ts); run `make check` (and `make e2e` for code changes) before a PR; never push to main.

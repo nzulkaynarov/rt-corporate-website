@@ -1,0 +1,39 @@
+---
+import { company } from '../utils/company';
+/**
+ * Old v1 URLs (catalog, blog, projects, about) → new pages for ru/uz/en (src/data/legacy-redirects.json).
+ * GitHub Pages has no server redirects: each old URL gets a tiny page with meta refresh + canonical + noindex.
+ * NB: no nested template literals in this frontmatter — the Astro compiler misreads them.
+ */
+import legacy from '../data/legacy-redirects.json';
+import { LANGS, DEFAULT_LANG, localeHref, type Lang } from '../i18n';
+
+export function getStaticPaths() {
+  return LANGS.flatMap((lang) =>
+    Object.entries(legacy.redirects).map(([from, to]) => ({
+      params: { legacy: (lang === DEFAULT_LANG ? '' : lang + '/') + from.replace(/^\/|\/$/g, '') },
+      props: { to, lang },
+    })),
+  );
+}
+interface Props {
+  to: string;
+  lang: Lang;
+}
+const { to, lang } = Astro.props;
+const target = localeHref(to, lang);
+const absolute = new URL(target, Astro.site).href;
+---
+
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <title>{company.brandName}</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <link rel="canonical" href={absolute} />
+  </head>
+  <body>
+    <p><a href={target}>{absolute}</a></p>
+  </body>
+</html>

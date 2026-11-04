@@ -1,0 +1,91 @@
+---
+/** Card of a news/article/project/partner entry. Without a cover a neutral brand plate is shown. */
+import type { CollectionEntry } from 'astro:content';
+import { localeHref, tField } from '../../i18n';
+import { t } from '../../i18n/ui';
+import { formatDate } from '../../utils/format';
+import { withBase } from '../../utils/url';
+import { company } from '../../utils/company';
+import { contentLang } from '../../utils/stage';
+
+interface Props {
+  entry: CollectionEntry<'news'>;
+  headingLevel?: 2 | 3;
+}
+const lang = Astro.locals.lang;
+// News may still be Russian on /uz/ and /en/ (src/data/content-stage.json → ruOnlySections).
+const cl = contentLang(lang, 'news');
+const { entry, headingLevel = 3 } = Astro.props;
+const d = entry.data as Record<string, any>;
+const Heading = headingLevel === 2 ? 'h2' : 'h3';
+---
+
+<a class="ncard" href={localeHref(`/news/${entry.slug}/`, lang)} data-type={d.type} lang={cl !== lang ? cl : undefined}>
+  {d.cover ? (
+    <img class="ncard__img" src={withBase(d.cover)} alt={tField(d, 'coverAlt', cl)} loading="lazy" width="640" height="400" />
+  ) : (
+    <div class="ncard__img ncard__img--empty" aria-hidden="true">
+      <img src={withBase(company.logoPlaceholder)} alt="" width="56" height="56" />
+    </div>
+  )}
+  <div class="ncard__meta">
+    <b>{t(lang, `news.type.${d.type}`)}</b>
+    <time datetime={d.date}>{formatDate(d.date, lang)}</time>
+  </div>
+  <Heading class="ncard__title">{tField(d, 'title', cl)}</Heading>
+</a>
+
+<style>
+  .ncard {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--c-ink);
+    height: 100%;
+  }
+  .ncard__title {
+    transition: color var(--dur-fast) ease;
+  }
+  .ncard:hover .ncard__title {
+    color: var(--c-brand-ink);
+  }
+  .ncard__img {
+    transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+  }
+  @media (hover: hover) {
+    .ncard:hover .ncard__img {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lift);
+    }
+  }
+  .ncard__img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--r-md);
+    background: var(--c-brand-soft);
+  }
+  .ncard__img--empty {
+    display: grid;
+    place-items: center;
+  }
+  .ncard__img--empty img {
+    opacity: 0.55;
+  }
+  .ncard__meta {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--c-muted);
+  }
+  .ncard__meta b {
+    color: var(--c-brand-ink);
+    font-weight: 600;
+  }
+  .ncard__title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+</style>

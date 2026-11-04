@@ -1,168 +1,78 @@
+/**
+ * Social preview image public/og-cover.png (1200×630) in the «Мост» style (docs/DESIGN.md).
+ * Texts come from the CMS (company.json, home.json). Run after changing them: `make og`.
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const rootDir = path.resolve(__dirname, '..');
-const outputPath = path.join(rootDir, 'public', 'og-cover.png');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const read = (p) => JSON.parse(fs.readFileSync(path.join(root, p), 'utf8'));
+const company = read('src/data/cms/company.json');
+const home = read('src/data/cms/home.json');
+// Service titles in their order (src/content/services/*.md front matter).
+const services = fs
+  .readdirSync(path.join(root, 'src/content/services'))
+  .map((f) => fs.readFileSync(path.join(root, 'src/content/services', f), 'utf8'))
+  .map((md) => ({ order: Number(md.match(/^order:\s*(\d+)/m)?.[1] || 99), title: md.match(/^title:\s*"?(.+?)"?\s*$/m)?.[1] || '' }))
+  .sort((a, b) => a.order - b.order)
+  .map((s) => s.title);
+const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-// Figures come from the data (same rules as src/utils/counters.ts): catalog entries and manufacturers,
-// years / partners from global.json → metrics. Re-run after big catalog changes: node scripts/generate-og-png.mjs
-const catalogDir = path.join(rootDir, 'src', 'content', 'catalog');
-const globalData = JSON.parse(fs.readFileSync(path.join(rootDir, 'src', 'data', 'cms', 'global.json'), 'utf8'));
-const catalogFiles = fs.readdirSync(catalogDir).filter((f) => f.endsWith('.md'));
-const makers = new Set((globalData.manufacturers || []).map((m) => String(m.name || '').trim()).filter(Boolean));
-for (const f of catalogFiles) {
-  const m = fs.readFileSync(path.join(catalogDir, f), 'utf8').match(/^manufacturer:\s*"?(.+?)"?\s*$/m);
-  if (m) makers.add(m[1].trim());
+/** Splits a headline into lines of at most `max` characters. */
+function lines(text, max) {
+  const out = [];
+  let line = '';
+  for (const word of text.split(' ')) {
+    if ((line + ' ' + word).trim().length > max) {
+      out.push(line.trim());
+      line = word;
+    } else line += ' ' + word;
+  }
+  if (line.trim()) out.push(line.trim());
+  return out;
 }
-const esc = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;');
-const C = {
-  years: esc(globalData.metrics?.years || ''),
-  partners: esc(globalData.metrics?.partners || ''),
-  items: catalogFiles.length,
-  manufacturers: makers.size,
-};
 
-const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630' width='1200' height='630'>
+const title = lines(home.hero.title, 24);
+const C = { ink: '#2D3E50', muted: '#5A6876', brand: '#35819B', brandMid: '#A7CED9', brandSoft: '#E3F0F4', accent: '#E8833A', line: '#DDE5EA' };
+const font = "Montserrat, 'Segoe UI', Arial, Helvetica, sans-serif";
+
+const mark = (x, y, s) => `
+  <g transform="translate(${x} ${y}) scale(${s / 655})">
+    <polygon fill="${C.brand}" points="327.5 0 655 327.5 327.5 655 0 327.5"/>
+    <g transform="translate(185 157)" stroke="#FFFFFF" stroke-linecap="round" stroke-width="20" fill="none">
+      <path d="M170.176222,267.355023 C204.768507,239.937358 226.974943,197.437049 226.974943,149.724068 C226.974943,67.0337488 160.276589,0 78,0 M78.3416856,131.523666 L78.3416856,0.343403827 M170.529527,267.943507 L228,341" stroke-linejoin="round"/>
+      <path d="M77.6578947,170.304659 L77.6578947,339.695341 M0.342105263,170.342742 L155.657895,170.342742"/>
+    </g>
+  </g>`;
+
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
-    <pattern id='cadGrid' width='24' height='24' patternUnits='userSpaceOnUse'>
-      <path d='M 24 0 L 0 0 0 24' fill='none' stroke='#0A0A0A' stroke-width='0.75' stroke-opacity='0.08'/>
-    </pattern>
-    <pattern id='majorGrid' width='96' height='96' patternUnits='userSpaceOnUse'>
-      <path d='M 96 0 L 0 0 0 96' fill='none' stroke='#0A0A0A' stroke-width='1.2' stroke-opacity='0.15'/>
-    </pattern>
+    <radialGradient id="disc" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="${C.brandMid}"/>
+      <stop offset="100%" stop-color="${C.brandSoft}"/>
+    </radialGradient>
   </defs>
+  <rect width="1200" height="630" fill="#FFFFFF"/>
+  <circle cx="930" cy="315" r="250" fill="none" stroke="${C.line}" stroke-width="2"/>
+  <circle cx="930" cy="315" r="205" fill="url(#disc)"/>
+  <circle cx="930" cy="315" r="92" fill="#FFFFFF"/>
+  ${mark(880, 265, 100)}
+  <circle cx="1088" cy="137" r="14" fill="${C.accent}"/>
+  <circle cx="690" cy="420" r="7" fill="${C.ink}"/>
 
-  <rect width='1200' height='630' fill='#C8CDD2'/>
-  <rect width='1200' height='630' fill='url(#cadGrid)'/>
-  <rect width='1200' height='630' fill='url(#majorGrid)'/>
+  ${mark(72, 64, 44)}
+  <text x="128" y="96" font-family="${font}" font-size="30" font-weight="700" fill="${C.ink}">${esc(company.brandName)}</text>
 
-  <!-- Outer Frame -->
-  <rect x='24' y='24' width='1152' height='582' fill='none' stroke='#0A0A0A' stroke-width='2'/>
-  <rect x='32' y='32' width='1136' height='566' fill='none' stroke='#0A0A0A' stroke-width='1' stroke-dasharray='6 4' stroke-opacity='0.4'/>
-
-  <!-- Corner Marks -->
-  <g stroke='#0A0A0A' stroke-width='2'>
-    <line x1='16' y1='24' x2='32' y2='24'/>
-    <line x1='24' y1='16' x2='24' y2='32'/>
-    <line x1='1168' y1='24' x2='1184' y2='24'/>
-    <line x1='1176' y1='16' x2='1176' y2='32'/>
-    <line x1='16' y1='606' x2='32' y2='606'/>
-    <line x1='24' y1='598' x2='24' y2='614'/>
-    <line x1='1168' y1='606' x2='1184' y2='606'/>
-    <line x1='1176' y1='598' x2='1176' y2='614'/>
-  </g>
-
-  <!-- Top Strip -->
-  <rect x='48' y='48' width='1104' height='36' fill='#D4D8DC' stroke='#0A0A0A' stroke-width='1'/>
-  <text x='64' y='71' font-family='Arial, Helvetica, sans-serif' font-size='12' font-weight='700' fill='#0A0A0A' letter-spacing='2'>
-    REF: UZ-RAILTECH-2026 // NODE: TASHKENT // MANUFACTURERS - RAILTECH - CUSTOMERS
+  <text font-family="${font}" font-size="54" font-weight="800" fill="${C.ink}" letter-spacing="-1">
+    ${title.map((l, i) => `<tspan x="72" y="${232 + i * 64}">${esc(l)}</tspan>`).join('')}
   </text>
-  <text x='1136' y='71' text-anchor='end' font-family='Arial, Helvetica, sans-serif' font-size='12' font-weight='700' fill='#0A0A0A' letter-spacing='1'>
-    RAILTECH.UZ
-  </text>
+  <rect x="72" y="${262 + title.length * 64 - 30}" width="64" height="4" fill="${C.accent}"/>
+  <text x="72" y="${262 + title.length * 64 + 16}" font-family="${font}" font-size="20" font-weight="600" fill="${C.muted}">${esc(services.join(' · '))}</text>
 
-  <!-- Left Block -->
-  <g transform='translate(64, 125)'>
-    <!-- Header Brand Box -->
-    <rect x='0' y='0' width='230' height='50' fill='#0A0A0A'/>
-    <text x='16' y='36' font-family='Arial, Helvetica, sans-serif' font-size='32' font-weight='900' fill='#FFFFFF' letter-spacing='5'>
-      RAILTECH
-    </text>
-    <text x='245' y='22' font-family='Arial, Helvetica, sans-serif' font-size='11' font-weight='700' fill='#4A5056' letter-spacing='2'>
-      RAIL EQUIPMENT · MANUFACTURER REPRESENTATION
-    </text>
-    <text x='245' y='42' font-family='Arial, Helvetica, sans-serif' font-size='13' font-weight='700' fill='#0A0A0A' letter-spacing='1'>
-      РЕСПУБЛИКА УЗБЕКИСТАН // B2B &amp; B2G
-    </text>
-
-    <!-- Main Title -->
-    <text x='0' y='115' font-family='Arial, Helvetica, sans-serif' font-size='38' font-weight='900' fill='#0A0A0A' letter-spacing='-0.5'>
-      RAILTECH // ООО «RAILTECH»
-    </text>
-
-    <!-- Subtitle / Signature -->
-    <text x='0' y='160' font-family='Arial, Helvetica, sans-serif' font-size='17' font-weight='700' fill='#0A0A0A' letter-spacing='0.5'>
-      ПОСТАВКИ · ИНЖИНИРИНГ · ЛОКАЛИЗАЦИЯ · ПРЕДСТАВИТЕЛЬСТВО
-    </text>
-
-    <!-- Description -->
-    <text x='0' y='205' font-family='Arial, Helvetica, sans-serif' font-size='16' fill='#4A5056'>
-      Надёжный мост между международными производителями и предприятиями Узбекистана
-    </text>
-    <text x='0' y='232' font-family='Arial, Helvetica, sans-serif' font-size='16' fill='#4A5056'>
-      Ж/д электроника и оборудование · Запросы КП — в Кабинете cabinet.railtech.uz
-    </text>
-
-    <!-- Metrics -->
-    <g transform='translate(0, 275)'>
-      <rect x='0' y='0' width='145' height='55' fill='#D4D8DC' stroke='#0A0A0A' stroke-width='1.5'/>
-      <text x='12' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#4A5056'>НА РЫНКЕ</text>
-      <text x='12' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#0A0A0A'>${C.years} ЛЕТ</text>
-
-      <rect x='155' y='0' width='145' height='55' fill='#D4D8DC' stroke='#0A0A0A' stroke-width='1.5'/>
-      <text x='167' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#4A5056'>ПАРТНЁРОВ</text>
-      <text x='167' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#0A0A0A'>${C.partners}</text>
-
-      <rect x='310' y='0' width='145' height='55' fill='#D4D8DC' stroke='#0A0A0A' stroke-width='1.5'/>
-      <text x='322' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#4A5056'>ПОЗИЦИЙ В КАТАЛОГЕ</text>
-      <text x='322' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#0A0A0A'>${C.items}</text>
-
-      <rect x='465' y='0' width='145' height='55' fill='#0A0A0A' stroke='#0A0A0A' stroke-width='1.5'/>
-      <text x='477' y='20' font-family='Arial, Helvetica, sans-serif' font-size='10' font-weight='700' fill='#D4D8DC'>ПРОИЗВОДИТЕЛЕЙ</text>
-      <text x='477' y='44' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='900' fill='#FFFFFF'>${C.manufacturers}</text>
-    </g>
-  </g>
-
-  <!-- Right CAD Diagram -->
-  <g transform='translate(770, 140)'>
-    <rect x='0' y='0' width='370' height='370' fill='#D4D8DC' fill-opacity='0.6' stroke='#0A0A0A' stroke-width='2'/>
-    <line x1='0' y1='0' x2='370' y2='370' stroke='#0A0A0A' stroke-width='0.5' stroke-dasharray='4 4' stroke-opacity='0.3'/>
-    <line x1='370' y1='0' x2='0' y2='370' stroke='#0A0A0A' stroke-width='0.5' stroke-dasharray='4 4' stroke-opacity='0.3'/>
-
-    <circle cx='185' cy='185' r='155' fill='none' stroke='#0A0A0A' stroke-width='1' stroke-opacity='0.3'/>
-    <circle cx='185' cy='185' r='115' fill='none' stroke='#0A0A0A' stroke-width='1.5'/>
-    <circle cx='185' cy='185' r='55' fill='none' stroke='#0A0A0A' stroke-width='2'/>
-    <circle cx='185' cy='185' r='18' fill='#0A0A0A'/>
-
-    <!-- Isometric Bogie -->
-    <g stroke='#0A0A0A' stroke-width='2' fill='none'>
-      <line x1='30' y1='280' x2='340' y2='280' stroke-width='4'/>
-      <line x1='30' y1='300' x2='340' y2='300' stroke-width='3'/>
-      <ellipse cx='85' cy='225' rx='34' ry='55' stroke-width='2.5'/>
-      <ellipse cx='85' cy='225' rx='12' ry='22' stroke-width='1.5'/>
-      <ellipse cx='285' cy='225' rx='34' ry='55' stroke-width='2.5'/>
-      <ellipse cx='285' cy='225' rx='12' ry='22' stroke-width='1.5'/>
-      <line x1='85' y1='225' x2='285' y2='225' stroke-width='5'/>
-      <polygon points='55,185 315,185 295,155 75,155' stroke-width='2.5' fill='#C8CDD2' fill-opacity='0.8'/>
-      <rect x='145' y='125' width='80' height='40' stroke-width='2.5' fill='#0A0A0A'/>
-      <line x1='160' y1='165' x2='160' y2='185' stroke-width='3'/>
-      <line x1='175' y1='165' x2='175' y2='185' stroke-width='3'/>
-      <line x1='195' y1='165' x2='195' y2='185' stroke-width='3'/>
-      <line x1='210' y1='165' x2='210' y2='185' stroke-width='3'/>
-    </g>
-
-    <text x='185' y='345' text-anchor='middle' font-family='Arial, Helvetica, sans-serif' font-size='11' font-weight='700' fill='#0A0A0A' letter-spacing='1'>
-      ROLLING STOCK // CAD SCHEMATIC
-    </text>
-  </g>
-
-  <!-- Bottom Footer -->
-  <rect x='48' y='546' width='1104' height='36' fill='#0A0A0A'/>
-  <text x='64' y='569' font-family='Arial, Helvetica, sans-serif' font-size='12' font-weight='700' fill='#D4D8DC' letter-spacing='2'>
-    © 2026 ООО «RAILTECH» // ТАШКЕНТ // ТЕЛ: +998 90 118-90-00 // INFO@RAILTECH.UZ
-  </text>
-  <text x='1136' y='569' text-anchor='end' font-family='Arial, Helvetica, sans-serif' font-size='12' font-weight='700' fill='#FFFFFF' letter-spacing='2'>
-    CABINET.RAILTECH.UZ ↗
-  </text>
+  <text x="72" y="580" font-family="${font}" font-size="20" font-weight="600" fill="${C.muted}">${esc(company.siteDomain)} · ${esc(company.city)} · ${esc(company.phone)}</text>
 </svg>`;
 
-const buffer = Buffer.from(svg);
-await sharp(buffer)
-  .resize(1200, 630)
-  .png({ quality: 95, compressionLevel: 9 })
-  .toFile(outputPath);
-
-console.log('og-cover.png regenerated at:', outputPath);
+await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toFile(path.join(root, 'public', 'og-cover.png'));
+console.log('og-cover.png regenerated');
