@@ -26,9 +26,12 @@ const STAGE_FILE = 'src/data/content-stage.json';
 const STAGE = fs.existsSync(STAGE_FILE) ? JSON.parse(fs.readFileSync(STAGE_FILE, 'utf8')) : {};
 /** RU-first stage: on with --ru-only or while src/data/content-stage.json has "ruOnly": true (one switch for CI, hook and make). */
 const RU_ONLY = args.includes('--ru-only') || STAGE.ruOnly === true;
+/** Sections still in Russian on /uz/ and /en/ (e.g. ["news"]): their UZ/EN values are counted, not required. */
+const RU_ONLY_SECTIONS = new Set(STAGE.ruOnlySections || []);
+const ruOnlyFile = (file) => [...RU_ONLY_SECTIONS].some((s) => file.split(path.sep).join('/').startsWith(`src/content/${s}/`));
 const pendingTranslation = new Map(); // file → number of missing UZ/EN values
 const missingTr = (file, msg) => {
-  if (RU_ONLY) pendingTranslation.set(file, (pendingTranslation.get(file) || 0) + 1);
+  if (RU_ONLY || ruOnlyFile(file)) pendingTranslation.set(file, (pendingTranslation.get(file) || 0) + 1);
   else err(file, msg);
 };
 const onlyIdx = args.indexOf('--files');
@@ -274,7 +277,8 @@ for (const name of fs.existsSync(UI) ? fs.readdirSync(UI).filter((n) => n.endsWi
   let data;
   try { data = JSON.parse(fs.readFileSync(file, 'utf8')); } catch (e) { err(file, e.message); continue; }
   for (const s of data.strings || []) {
-    const ruOnly = /^lead\.message\./.test(s.key); // internal Telegram/e-mail labels for the sales team
+    // internal Telegram/e-mail labels for the sales team; language names are endonyms (empty UZ/EN = the RU value)
+    const ruOnly = /^(lead\.message|lang)\./.test(s.key);
     checkText(file, s.key, s.ru, 'ru');
     checkPositioning(file, s.key, s.ru);
     for (const l of LANGS) {
@@ -291,9 +295,9 @@ const outWarnings = pick(warnings);
 const failed = outErrors.length > 0 || (STRICT && outWarnings.length > 0);
 
 const pendingFiles = [...pendingTranslation.keys()].filter((f) => !ONLY || ONLY.includes(f));
-if (RU_ONLY && pendingFiles.length) {
+if (pendingFiles.length) {
   const total = pendingFiles.reduce((n, f) => n + pendingTranslation.get(f), 0);
-  console.warn(`[check-content] --ru-only: ${total} UZ/EN value(s) await translation in ${pendingFiles.length} file(s) (not errors at this stage)`);
+  console.warn(`[check-content] RU-first: ${total} UZ/EN value(s) await translation in ${pendingFiles.length} file(s) (not errors at this stage: src/data/content-stage.json)`);
 }
 if (outWarnings.length) {
   console.warn(`[check-content] ${outWarnings.length} warning(s):`);

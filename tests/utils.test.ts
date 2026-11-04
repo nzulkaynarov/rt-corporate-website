@@ -23,7 +23,8 @@ describe('seo', () => {
 describe('format', () => {
   it('formats ISO dates per language', () => {
     expect(formatDate('2026-11-04', 'ru')).toBe('4 ноября 2026 г.');
-    expect(formatDate('2026-11-04', 'en')).toBe('4 November 2026');
+    expect(formatDate('2026-11-04', 'en')).toBe('November 4, 2026');
+    expect(formatDate('2026-11-04', 'uz')).toBe('2026-yil 4-noyabr');
     expect(formatDate('not-a-date', 'ru')).toBe('not-a-date');
   });
 });

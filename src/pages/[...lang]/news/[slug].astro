@@ -12,6 +12,7 @@ import { formatDate } from '../../../utils/format';
 import { renderBody } from '../../../utils/markdown';
 import { entrySeo, absoluteUrl, siteSeo } from '../../../utils/seo';
 import { withBase } from '../../../utils/url';
+import { contentLang } from '../../../utils/stage';
 
 export async function getStaticPaths() {
   const entries = await getCollection('news');
@@ -21,13 +22,15 @@ interface Props {
   entry: CollectionEntry<'news'>;
 }
 const lang = Astro.locals.lang;
+// Content language: RU while news is not translated (src/data/content-stage.json → ruOnlySections); UI stays in `lang`.
+const cl = contentLang(lang, 'news');
 const { entry } = Astro.props;
 const d = entry.data as Record<string, any>;
-const title = tField(d, 'title', lang) as string;
-const localizedBody = lang === 'uz' ? d.body_uz : lang === 'en' ? d.body_en : undefined;
+const title = tField(d, 'title', cl) as string;
+const localizedBody = cl === 'uz' ? d.body_uz : cl === 'en' ? d.body_en : undefined;
 const bodyHtml = await renderBody(localizedBody || entry.body, lang);
-const seo = entrySeo(d, lang, entry.body);
-const gallery: { image: string; alt: string }[] = (d.gallery || []).map((g: Record<string, string>) => ({ image: g.image, alt: tField(g, 'alt', lang) || '' }));
+const seo = entrySeo(d, cl, entry.body);
+const gallery: { image: string; alt: string }[] = (d.gallery || []).map((g: Record<string, string>) => ({ image: g.image, alt: tField(g, 'alt', cl) || '' }));
 
 const all = (await getCollection('news')).filter((e) => e.slug !== entry.slug).sort((a, b) => b.data.date.localeCompare(a.data.date));
 const partner = d.type === 'partner' ? partnersData.partners.find((p) => (d.partners || []).includes(p.id)) : undefined;
@@ -47,7 +50,7 @@ const jsonLd = {
   description: seo.description,
   datePublished: d.date,
   dateModified: d.date,
-  inLanguage: lang,
+  inLanguage: cl,
   url,
   // Google requires an image for Article rich results: the cover, otherwise the site's social preview.
   image: absoluteUrl(withBase(d.cover || siteSeo(lang).defaultImage), Astro.site),
@@ -59,11 +62,11 @@ const jsonLd = {
 <BaseLayout title={seo.title} description={seo.description} breadcrumbs={crumbs} jsonLd={jsonLd} ogType="article" image={d.cover}>
   <div class="wrap"><Breadcrumbs items={crumbs} /></div>
 
-  <article class="wrap art" data-lightbox>
+  <article class="wrap art" data-lightbox lang={cl !== lang ? cl : undefined}>
     <header class="art__head">
       <p class="art__meta"><b>{t(lang, `news.type.${d.type}`)}</b><time datetime={d.date}>{formatDate(d.date, lang)}</time></p>
       <h1>{title}</h1>
-      <p class="art__summary">{tField(d, 'summary', lang)}</p>
+      <p class="art__summary">{tField(d, 'summary', cl)}</p>
       {partner && (
         <dl class="art__partner">
           <div><dt class="visually-hidden">{t(lang, 'news.partnerStatus')}</dt><dd class:list={['pill', { 'pill--dealer': partner.status === 'dealer' }]}>{t(lang, `partner.status.${partner.status}`)}</dd></div>
@@ -71,7 +74,7 @@ const jsonLd = {
         </dl>
       )}
     </header>
-    {d.cover && <img class="art__cover" src={withBase(d.cover)} alt={tField(d, 'coverAlt', lang)} width="1200" height="675" />}
+    {d.cover && <img class="art__cover" src={withBase(d.cover)} alt={tField(d, 'coverAlt', cl)} width="1200" height="675" />}
     <div class="prose" set:html={bodyHtml} />
     {gallery.length > 0 && (
       <section class="gallery" aria-labelledby="gallery-title">

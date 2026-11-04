@@ -1,1 +1,5 @@
-{ "ruOnly": true, "_comment": "RU-first stage: missing UZ/EN translations are counted, not errors. Set to false after the translation pass (docs/ARCHITECTURE.md §3)." }
+{
+  "ruOnly": false,
+  "ruOnlySections": ["news"],
+  "_comment": "Translation stage. ruOnly: true = whole site RU-first (UZ/EN not required, noindex). ruOnlySections: sections still in Russian on /uz/ and /en/ (shown in RU, noindex, out of the sitemap, translations not required). The owner switches them (docs/ARCHITECTURE.md §3)."
+}

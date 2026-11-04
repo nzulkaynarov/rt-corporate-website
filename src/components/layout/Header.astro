@@ -8,7 +8,7 @@ import { t } from '../../i18n/ui';
 import { MAIN_NAV, START_PATH, isActive } from '../../utils/nav';
 import { company } from '../../utils/company';
 import { withBase } from '../../utils/url';
-import stage from '../../data/content-stage.json';
+import { RU_ONLY } from '../../utils/stage';
 
 interface Props {
   alternates?: Record<'ru' | 'uz' | 'en', string>;
@@ -20,7 +20,7 @@ const langLinks = Astro.props.alternates || alternateHrefs(Astro.url.pathname);
 const items = MAIN_NAV.map((item) => ({ ...item, href: localeHref(item.path, lang), active: isActive(item, route) }));
 const startHref = localeHref(START_PATH, lang);
 // RU-first stage: UZ/EN pages still show Russian text, so the switcher is hidden until the translation pass.
-const showLangs = stage.ruOnly !== true;
+const showLangs = !RU_ONLY;
 ---
 
 <header class="hdr">

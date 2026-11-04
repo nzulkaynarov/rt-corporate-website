@@ -6,20 +6,23 @@ import { t } from '../../i18n/ui';
 import { formatDate } from '../../utils/format';
 import { withBase } from '../../utils/url';
 import { company } from '../../utils/company';
+import { contentLang } from '../../utils/stage';
 
 interface Props {
   entry: CollectionEntry<'news'>;
   headingLevel?: 2 | 3;
 }
 const lang = Astro.locals.lang;
+// News may still be Russian on /uz/ and /en/ (src/data/content-stage.json → ruOnlySections).
+const cl = contentLang(lang, 'news');
 const { entry, headingLevel = 3 } = Astro.props;
 const d = entry.data as Record<string, any>;
 const Heading = headingLevel === 2 ? 'h2' : 'h3';
 ---
 
-<a class="ncard" href={localeHref(`/news/${entry.slug}/`, lang)} data-type={d.type}>
+<a class="ncard" href={localeHref(`/news/${entry.slug}/`, lang)} data-type={d.type} lang={cl !== lang ? cl : undefined}>
   {d.cover ? (
-    <img class="ncard__img" src={withBase(d.cover)} alt={tField(d, 'coverAlt', lang)} loading="lazy" width="640" height="400" />
+    <img class="ncard__img" src={withBase(d.cover)} alt={tField(d, 'coverAlt', cl)} loading="lazy" width="640" height="400" />
   ) : (
     <div class="ncard__img ncard__img--empty" aria-hidden="true">
       <img src={withBase(company.logoPlaceholder)} alt="" width="56" height="56" />
@@ -29,7 +32,7 @@ const Heading = headingLevel === 2 ? 'h2' : 'h3';
     <b>{t(lang, `news.type.${d.type}`)}</b>
     <time datetime={d.date}>{formatDate(d.date, lang)}</time>
   </div>
-  <Heading class="ncard__title">{tField(d, 'title', lang)}</Heading>
+  <Heading class="ncard__title">{tField(d, 'title', cl)}</Heading>
 </a>
 
 <style>

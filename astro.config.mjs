@@ -8,14 +8,16 @@ const base = isCustomDomain ? '/' : '/rt-corporate-website';
 import legacy from './src/data/legacy-redirects.json' with { type: 'json' };
 import stage from './src/data/content-stage.json' with { type: 'json' };
 
-/** Not in the sitemap: CMS panel, v1 → v2 redirect pages (src/pages/[...legacy].astro), untranslated UZ/EN pages. */
+/** Not in the sitemap: CMS panel, v1 → v2 redirect pages (src/pages/[...legacy].astro), untranslated UZ/EN pages
+ * (whole site while ruOnly, or sections listed in ruOnlySections — same rule as src/utils/stage.ts). */
 const LEGACY = Object.keys(legacy.redirects);
 const isExcluded = (pathname) => {
   const noBase = pathname.replace(/^\/rt-corporate-website/, '') || '/';
   const lang = (noBase.match(/^\/(uz|en)\//) || [])[1];
   const route = lang ? noBase.slice(lang.length + 1) : noBase;
-  // RU-first stage: UZ/EN pages still show Russian text → kept out of the sitemap (and noindex in BaseLayout).
-  return route === '/admin/' || LEGACY.includes(route) || (stage.ruOnly === true && Boolean(lang));
+  // UZ/EN pages that still show Russian text → kept out of the sitemap (and noindex in BaseLayout).
+  const ruOnlyRoute = stage.ruOnly === true || (stage.ruOnlySections || []).includes(route.split('/')[1] || '');
+  return route === '/admin/' || LEGACY.includes(route) || (ruOnlyRoute && Boolean(lang));
 };
 
 export default defineConfig({

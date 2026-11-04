@@ -10,13 +10,17 @@ import path from 'node:path';
  * strings, industry-specific positioning outside /news/ (docs/ARCHITECTURE.md §1), missing skip link /
  * <main id="main"> / «Войти в Кабинет» link, redirect pages (v1 URLs) pointing to a missing page.
  * Warnings: title > 60 / description outside 50–160 chars, duplicate titles, untranslated UZ/EN pages
- * (only counted while src/data/content-stage.json has "ruOnly": true — those pages are noindex then).
+ * (counted for the whole site while src/data/content-stage.json has "ruOnly": true, and for the sections listed in
+ * "ruOnlySections" — those pages show Russian on /uz/ and /en/ and are noindex).
  */
 const DIST = 'dist';
 const LANGS = ['ru', 'uz', 'en'];
 const SKIP = [/^admin\//, /^404\.html$/];
 const STAGE = fs.existsSync('src/data/content-stage.json') ? JSON.parse(fs.readFileSync('src/data/content-stage.json', 'utf8')) : {};
 const RU_ONLY = STAGE.ruOnly === true;
+const RU_ONLY_SECTIONS = STAGE.ruOnlySections || [];
+/** Same rule as src/utils/stage.ts: the route's content is still Russian in every language. */
+const ruOnlyRoute = (route) => RU_ONLY || RU_ONLY_SECTIONS.includes(route.split('/')[1] || '');
 const HUD = /RT_CONSOLE|HUD_SCAN|OPTICAL_FEED|SYS\.ACTIVE|GATEWAYS|NODE:\s*TASHKENT|STATUS:\s*PRODUCTION|CAD\.UI/;
 const POSITIONING = /UzTE16M|ТЭП70|3ЭС5К|\bВЛ[68]0|ЭР9Е|ТЭ10М|ЧМЭ3|ТЭМ2|локомотив|подвижн\S* состав|ж\/д электроник|rail electronics/i;
 let untranslated = 0;
@@ -70,6 +74,7 @@ for (const rel of files) {
   const route = `/${rel.replace(/index\.html$/, '')}`;
   const seg = route.split('/')[1];
   const lang = LANGS.includes(seg) && seg !== 'ru' ? seg : 'ru';
+  const bare = lang === 'ru' ? route : route.slice(lang.length + 1); // route without the language prefix
   const page = `${BASE}${route}`;
   const err = (msg) => errors.push(`${page}: ${msg}`);
   const warn = (msg) => warnings.push(`${page}: ${msg}`);
@@ -116,8 +121,9 @@ for (const rel of files) {
     if (!canonical) err('missing canonical');
     else if (new URL(canonical).pathname !== page) err(`canonical points to ${new URL(canonical).pathname}`);
     const hreflangs = [...html.matchAll(/<link[^>]+rel="alternate"[^>]+hreflang="([^"]+)"/gi)].map((m) => m[1]);
-    for (const h of [...(RU_ONLY ? ['ru'] : LANGS), 'x-default']) if (!hreflangs.includes(h)) err(`missing hreflang="${h}"`);
-  } else if (RU_ONLY && lang !== 'ru') {
+    for (const h of [...(ruOnlyRoute(bare) ? ['ru'] : LANGS), 'x-default']) if (!hreflangs.includes(h)) err(`missing hreflang="${h}"`);
+    if (ruOnlyRoute(bare) && lang !== 'ru') err('page of a Russian-only section must be noindex in UZ/EN (src/data/content-stage.json)');
+  } else if (ruOnlyRoute(bare) && lang !== 'ru') {
     untranslated += 1;
   }
 
@@ -165,7 +171,7 @@ for (const rel of files) {
     const letters = text.match(/\p{L}/gu) || [];
     const cyr = text.match(/\p{Script=Cyrillic}/gu) || [];
     const share = letters.length ? cyr.length / letters.length : 0;
-    if (share > 0.15 && !RU_ONLY) warn(`${Math.round(share * 100)}% of the text is Cyrillic — untranslated ${lang.toUpperCase()} content in the CMS?`);
+    if (share > 0.15 && !ruOnlyRoute(bare)) warn(`${Math.round(share * 100)}% of the text is Cyrillic — untranslated ${lang.toUpperCase()} content in the CMS?`);
   }
 }
 
@@ -182,5 +188,5 @@ if (errors.length) {
   for (const e of errors) console.error('  - ' + e);
   process.exit(1);
 }
-if (RU_ONLY) console.warn(`[check-build] RU-first stage: ${untranslated} UZ/EN page(s) are noindex until translated (src/data/content-stage.json)`);
+if (untranslated) console.warn(`[check-build] ${untranslated} UZ/EN page(s) of Russian-only sections are noindex until translated (src/data/content-stage.json)`);
 console.log(`[check-build] ${files.length - redirects} pages + ${redirects} redirects OK (${LANGS.join('/')}), ${warnings.length} warning(s)`);

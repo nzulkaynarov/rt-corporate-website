@@ -55,6 +55,8 @@ test('header offers «Начать работу» and «Войти в Кабин
 test('the lead form validates, sends to the CRM and confirms', async ({ page }) => {
   await mockCrm(page, { status: 202, body: { lead_id: 42 } });
   await page.goto('contacts/');
+  // The form is a React island: wait until it is hydrated (Astro removes the `ssr` attribute), then type.
+  await page.locator('#request astro-island:not([ssr])').waitFor();
   const form = page.locator('#request form');
   await form.getByRole('button').click();
   await expect(form.locator('.lf__err').first()).toBeVisible();
@@ -76,6 +78,8 @@ test('when the CRM is unreachable the form shows other channels', async ({ page 
   await page.route(`${CRM}/token`, (route) => route.abort());
   await page.route(CRM, (route) => route.abort());
   await page.goto('contacts/');
+  // The form is a React island: wait until it is hydrated (Astro removes the `ssr` attribute), then type.
+  await page.locator('#request astro-island:not([ssr])').waitFor();
   const form = page.locator('#request form');
   await form.locator('input[name="name"]').fill('Тест');
   await form.locator('input[name="contact"]').fill('test@example.com');
@@ -106,4 +110,34 @@ test('old v1 URLs redirect to the new sections', async ({ page }) => {
   await expect(page).toHaveURL(/\/services\/supply\/$/);
   await page.goto('blog/railtech-official-dealer-npo-saut/');
   await expect(page).toHaveURL(/\/news\/railtech-official-dealer-npo-saut\/$/);
+});
+
+test.describe('languages (src/data/content-stage.json)', () => {
+  const stage = readJson('src/data/content-stage.json') as { ruOnly?: boolean; ruOnlySections?: string[] };
+  test.skip(stage.ruOnly === true, 'RU-first stage: UZ/EN are not published yet');
+
+  for (const lang of ['uz', 'en']) {
+    for (const path of ['', 'services/supply/', 'contacts/', 'privacy/']) {
+      test(`/${lang}/${path} is translated and indexable`, async ({ page }) => {
+        await page.goto(`${lang}/${path}`);
+        await expect(page.locator('html')).toHaveAttribute('lang', lang);
+        await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /^index/);
+        const h1 = (await page.locator('h1').textContent()) || '';
+        expect(h1).not.toMatch(/[А-Яа-яЁё]/);
+      });
+    }
+  }
+
+  test('the language switcher keeps the page', async ({ page }) => {
+    await page.goto('services/supply/');
+    await page.locator('.langs a[hreflang="en"]').click();
+    await expect(page).toHaveURL(/\/en\/services\/supply\/$/);
+  });
+
+  test('a Russian-only section is shown in Russian on /uz/ and kept out of search', async ({ page }) => {
+    test.skip(!(stage.ruOnlySections || []).includes('news'), 'news is translated');
+    await page.goto(`uz/news/${partners.partners[0].article}/`);
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+    await expect(page.locator('article')).toHaveAttribute('lang', 'ru');
+  });
 });
