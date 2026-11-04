@@ -2,6 +2,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
+import Lightbox from '../../../components/ui/Lightbox.astro';
 import NewsCard from '../../../components/ui/NewsCard.astro';
 import CtaBand from '../../../components/ui/CtaBand.astro';
 import partnersData from '../../../data/cms/partners.json';
@@ -26,6 +27,7 @@ const title = tField(d, 'title', lang) as string;
 const localizedBody = lang === 'uz' ? d.body_uz : lang === 'en' ? d.body_en : undefined;
 const bodyHtml = await renderBody(localizedBody || entry.body, lang);
 const seo = entrySeo(d, lang, entry.body);
+const gallery: { image: string; alt: string }[] = (d.gallery || []).map((g: Record<string, string>) => ({ image: g.image, alt: tField(g, 'alt', lang) || '' }));
 
 const all = (await getCollection('news')).filter((e) => e.slug !== entry.slug).sort((a, b) => b.data.date.localeCompare(a.data.date));
 const partner = d.type === 'partner' ? partnersData.partners.find((p) => (d.partners || []).includes(p.id)) : undefined;
@@ -57,7 +59,7 @@ const jsonLd = {
 <BaseLayout title={seo.title} description={seo.description} breadcrumbs={crumbs} jsonLd={jsonLd} ogType="article" image={d.cover}>
   <div class="wrap"><Breadcrumbs items={crumbs} /></div>
 
-  <article class="wrap art">
+  <article class="wrap art" data-lightbox>
     <header class="art__head">
       <p class="art__meta"><b>{t(lang, `news.type.${d.type}`)}</b><time datetime={d.date}>{formatDate(d.date, lang)}</time></p>
       <h1>{title}</h1>
@@ -71,7 +73,22 @@ const jsonLd = {
     </header>
     {d.cover && <img class="art__cover" src={withBase(d.cover)} alt={tField(d, 'coverAlt', lang)} width="1200" height="675" />}
     <div class="prose" set:html={bodyHtml} />
+    {gallery.length > 0 && (
+      <section class="gallery" aria-labelledby="gallery-title">
+        <h2 id="gallery-title">{t(lang, 'news.gallery.title')}</h2>
+        <ul>
+          {gallery.map((g, i) => (
+            <li>
+              <button type="button" data-lightbox-item aria-label={t(lang, 'news.gallery.open', { n: i + 1, total: gallery.length })}>
+                <img src={withBase(g.image)} alt={g.alt} loading="lazy" decoding="async" width="480" height="320" />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
   </article>
+  <Lightbox />
 
   {related.length > 0 && (
     <section class="section section--soft" aria-labelledby="rel-title">
@@ -146,6 +163,42 @@ const jsonLd = {
     max-width: 960px;
     border-radius: var(--r-md);
     margin-bottom: 36px;
+  }
+  .gallery {
+    max-width: 960px;
+    margin-top: 48px;
+  }
+  .gallery h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .gallery ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .gallery button {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: var(--r-md);
+    overflow: hidden;
+    background: var(--c-brand-soft);
+  }
+  .gallery img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    transition: transform var(--dur) var(--ease-out);
+  }
+  .gallery button:hover img {
+    transform: scale(1.04);
   }
   .rel-head {
     display: flex;

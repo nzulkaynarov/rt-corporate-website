@@ -52,7 +52,7 @@ SEO и навигации нет «ж/д», серий локомотивов и
 | `src/data/cms/seo.json` | title/description страниц, значения по умолчанию | `_uz`/`_en` |
 | `src/data/cms/ui/*.json` | Подписи интерфейса (кнопки, метки, формы) | `ru`/`uz`/`en` в одной записи |
 | `src/content/services/*.md` | 4 услуги: аудитория, лид, коротко, шаги, что получает клиент/партнёр, требования, FAQ, тело | `_uz`/`_en`, `body_uz`/`body_en` |
-| `src/content/news/*.md` | Материалы: `type` = `news` / `article` / `project` / `partner`, дата, обложка, `partners: [id]`, источники | `_uz`/`_en`, `body_uz`/`body_en` |
+| `src/content/news/*.md` | Материалы: `type` = `news` / `article` / `project` / `partner`, дата, обложка, галерея (`gallery: [{image, alt}]`), `partners: [id]`, источники; в тексте — фото с подписью, цитаты, таблицы, сноски (`src/utils/markdown.ts`) | `_uz`/`_en`, `body_uz`/`body_en` |
 
 Схема коллекций — `src/content/config.ts`; схема CMS — `public/admin/config.yml`. Они должны совпадать (проверяет
 `scripts/validate-cms-config.mjs` при сборке).
@@ -69,8 +69,10 @@ src/components/ui/                  Button, Section, SectionHead, Breadcrumbs, F
 src/components/home/                Hero, Bridge, Directions, About, CabinetBlock, LatestNews, Invite
 src/components/islands/LeadForm.tsx единственный React-остров: форма заявки → CRM
 src/styles/tokens.css, global.css   дизайн-токены и базовые стили (docs/DESIGN.md)
-src/scripts/motion.ts               движение на всех страницах: плавная прокрутка колесом (Lenis), появление блоков
-                                    при прокрутке, тень шапки; подключается в BaseLayout (DESIGN.md → «Движение»)
+src/components/ui/Lightbox.astro    просмотр фото статьи на весь экран (<dialog>, стрелки, Esc, свайп)
+src/scripts/motion.ts               плавная прокрутка колесом (Lenis), тень шапки, счётчики цифр (`data-count`);
+                                    подключается в BaseLayout (DESIGN.md → «Движение»); появление блоков — чистый CSS
+src/utils/fonts.ts                  файлы шрифтов для предзагрузки (font-display: optional — astro.config.mjs)
 ```
 
 Правила: один компонент — одна задача; стили компонента — в его `<style>` через токены `var(--…)`, без литеральных цветов;

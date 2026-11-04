@@ -1,0 +1,197 @@
+---
+/**
+ * Full-screen photo viewer for an article: every image inside `[data-lightbox]` (photos in the text and the gallery)
+ * opens in a <dialog> with previous / next, keyboard arrows, Esc and swipe. Without JavaScript the photos are plain images.
+ */
+import { t } from '../../i18n/ui';
+
+const lang = Astro.locals.lang;
+---
+
+<dialog class="lb" data-lenis-prevent aria-label={t(lang, 'news.gallery.title')} data-counter={t(lang, 'news.gallery.counter')}>
+  <figure class="lb__fig">
+    <img class="lb__img" alt="" />
+    <figcaption class="lb__cap"><span class="lb__text"></span><span class="lb__count"></span></figcaption>
+  </figure>
+  <button class="lb__btn lb__close" type="button" aria-label={t(lang, 'news.gallery.close')}>
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l12 12M17 5L5 17"></path></svg>
+  </button>
+  <button class="lb__btn lb__prev" type="button" aria-label={t(lang, 'news.gallery.prev')}>
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M14 4l-7 7 7 7"></path></svg>
+  </button>
+  <button class="lb__btn lb__next" type="button" aria-label={t(lang, 'news.gallery.next')}>
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 4l7 7-7 7"></path></svg>
+  </button>
+</dialog>
+
+<script>
+  const dlg = document.querySelector<HTMLDialogElement>('dialog.lb');
+  const root = document.querySelector<HTMLElement>('[data-lightbox]');
+  if (dlg && root && typeof dlg.showModal === 'function') {
+    const imgs = Array.from(root.querySelectorAll<HTMLImageElement>('img')).filter((i) => !i.closest('.lb'));
+    const view = dlg.querySelector<HTMLImageElement>('.lb__img')!;
+    const text = dlg.querySelector<HTMLElement>('.lb__text')!;
+    const count = dlg.querySelector<HTMLElement>('.lb__count')!;
+    const prev = dlg.querySelector<HTMLButtonElement>('.lb__prev')!;
+    const next = dlg.querySelector<HTMLButtonElement>('.lb__next')!;
+    const counter = dlg.dataset.counter || '{n} / {total}';
+    let index = 0;
+
+    const caption = (img: HTMLImageElement) => img.closest('figure')?.querySelector('figcaption')?.textContent || img.alt || '';
+    const show = (i: number) => {
+      index = (i + imgs.length) % imgs.length;
+      const img = imgs[index];
+      view.src = img.currentSrc || img.src;
+      view.alt = img.alt;
+      text.textContent = caption(img);
+      count.textContent = imgs.length > 1 ? counter.replace('{n}', String(index + 1)).replace('{total}', String(imgs.length)) : '';
+      prev.hidden = next.hidden = imgs.length < 2;
+    };
+    const open = (i: number) => {
+      show(i);
+      dlg.showModal();
+    };
+
+    imgs.forEach((img, i) => {
+      const trigger = img.closest<HTMLElement>('button[data-lightbox-item]') || img;
+      if (trigger === img) {
+        img.tabIndex = 0;
+        img.setAttribute('role', 'button');
+        img.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            open(i);
+          }
+        });
+      }
+      trigger.classList.add('lb-trigger');
+      trigger.addEventListener('click', () => open(i));
+    });
+    prev.addEventListener('click', () => show(index - 1));
+    next.addEventListener('click', () => show(index + 1));
+    dlg.querySelector('.lb__close')!.addEventListener('click', () => dlg.close());
+    // Click on the dark backdrop (outside the photo and the buttons) closes the viewer.
+    dlg.addEventListener('click', (e) => {
+      if (e.target === dlg) dlg.close();
+    });
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(index - 1);
+      if (e.key === 'ArrowRight') show(index + 1);
+    });
+    let x0: number | null = null;
+    dlg.addEventListener('touchstart', (e) => (x0 = e.touches[0].clientX), { passive: true });
+    dlg.addEventListener('touchend', (e) => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 50) show(index + (dx < 0 ? 1 : -1));
+      x0 = null;
+    });
+  }
+</script>
+
+<style>
+  .lb {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--c-overlay);
+    color: var(--c-on-ink);
+  }
+  .lb[open] {
+    display: grid;
+    place-items: center;
+    animation: lb-in var(--dur) var(--ease-out);
+  }
+  .lb::backdrop {
+    background: transparent;
+  }
+  .lb__fig {
+    margin: 0;
+    display: grid;
+    gap: 12px;
+    justify-items: center;
+    max-width: min(1400px, calc(100vw - 140px));
+  }
+  .lb__img {
+    max-width: 100%;
+    max-height: calc(100dvh - 140px);
+    object-fit: contain;
+    border-radius: var(--r-sm);
+  }
+  .lb__cap {
+    display: flex;
+    gap: 16px;
+    font-size: 15px;
+    color: var(--c-on-ink-soft);
+  }
+  .lb__count {
+    color: var(--c-on-ink-muted);
+    white-space: nowrap;
+  }
+  .lb__btn {
+    position: fixed;
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--c-ink-line);
+    border-radius: 50%;
+    background: var(--c-glass);
+    color: var(--c-on-ink);
+    cursor: pointer;
+    transition: background-color var(--dur-fast) ease;
+  }
+  .lb__btn:hover {
+    background: var(--c-glass-hover);
+  }
+  .lb__close {
+    top: 20px;
+    right: 20px;
+  }
+  .lb__prev,
+  .lb__next {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .lb__prev {
+    left: 20px;
+  }
+  .lb__next {
+    right: 20px;
+  }
+  :global(html:has(dialog.lb[open])) {
+    overflow: hidden;
+  }
+  :global(.lb-trigger) {
+    cursor: zoom-in;
+  }
+  @keyframes lb-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @media (max-width: 760px) {
+    .lb__fig {
+      max-width: calc(100vw - 24px);
+    }
+    .lb__prev,
+    .lb__next {
+      top: auto;
+      bottom: 20px;
+      transform: none;
+    }
+    .lb__prev {
+      left: calc(50% - 60px);
+    }
+    .lb__next {
+      right: calc(50% - 60px);
+    }
+    .lb__img {
+      max-height: calc(100dvh - 180px);
+    }
+  }
+</style>

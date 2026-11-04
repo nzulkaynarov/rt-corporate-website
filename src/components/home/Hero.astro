@@ -199,7 +199,7 @@ const h = home.hero as Record<string, any>;
     width: 100%;
     max-width: clamp(420px, 28vw, 640px);
     margin-left: auto;
-    animation: orbit-in 1.1s var(--ease-out) 0.15s both;
+    animation: orbit-in 0.6s var(--ease-out) both;
   }
   .orbit {
     position: relative;
@@ -321,29 +321,10 @@ const h = home.hero as Record<string, any>;
       transform: scale(1.025);
     }
   }
+  /* Only the decorative graphic fades in; the text of the first screen is in place from the first frame. */
   @keyframes orbit-in {
     from {
       opacity: 0;
-      transform: scale(0.92) rotate(-8deg);
-    }
-  }
-  /* First-screen text comes in line by line. */
-  .hero__txt > * {
-    animation: rise 0.8s var(--ease-out) both;
-  }
-  .hero__txt > :nth-child(2) {
-    animation-delay: 0.06s;
-  }
-  .hero__txt > :nth-child(3) {
-    animation-delay: 0.14s;
-  }
-  .hero__txt > :nth-child(4) {
-    animation-delay: 0.22s;
-  }
-  @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(18px);
     }
   }
   @media (prefers-reduced-motion: reduce) {

@@ -120,7 +120,11 @@ function checkMedia(file, d) {
     if (p && p.startsWith('/') && !publicPathExists(p)) err(file, `${key}: file public${p} does not exist`);
   }
   for (const key of ['images', 'gallery']) {
-    (d[key] || []).forEach((p, i) => { if (p && p.startsWith('/') && !publicPathExists(p)) err(file, `${key}[${i}]: file public${p} does not exist`); });
+    (d[key] || []).forEach((item, i) => {
+      const p = typeof item === 'string' ? item : item?.image;
+      if (p && p.startsWith('/') && !publicPathExists(p)) err(file, `${key}[${i}]: file public${p} does not exist`);
+      if (item && typeof item === 'object' && !item.alt) warn(file, `${key}[${i}]: no photo description (alt)`);
+    });
   }
   (d.documents || []).forEach((doc, i) => {
     if (!doc.file) return err(file, `documents[${i}].file is required`);

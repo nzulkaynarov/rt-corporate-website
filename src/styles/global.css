@@ -249,6 +249,49 @@ a:hover {
   display: block;
   overflow-x: auto;
 }
+/* Photos in the text (src/utils/markdown.ts): one photo → figure with caption; several in a row → grid. */
+.prose .fig {
+  margin: 1.6em 0;
+}
+.prose .fig img {
+  display: block;
+  width: 100%;
+  border-radius: var(--r-md);
+}
+.prose figcaption {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--c-muted);
+}
+.prose .fig-grid {
+  margin: 1.6em 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+.prose .fig-grid .fig {
+  margin: 0;
+}
+.prose .fig-grid img {
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+/* Footnotes: [^1] in the text → small number; notes at the end. */
+.prose sup a {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0 2px;
+}
+.prose .footnotes {
+  margin-top: 2.4em;
+  padding-top: 1em;
+  border-top: 1px solid var(--c-line);
+  font-size: 15px;
+  color: var(--c-muted);
+}
+.prose .footnotes ol {
+  padding-left: 1.3em;
+}
 .prose th,
 .prose td {
   border-bottom: 1px solid var(--c-line);
@@ -268,19 +311,24 @@ a:hover {
   }
 }
 
-/* Scroll reveal (src/scripts/motion.ts): blocks of each section rise in once when they come into view.
-   html.rv is set by an inline script in <head>; without JavaScript nothing is hidden. */
-.rv .section > .wrap > *,
-.rv [data-reveal] {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out);
-  transition-delay: calc(var(--rv-i, 0) * 70ms);
+/* Scroll reveal: blocks of each section rise in while they enter the screen from below. Pure CSS tied to the scroll
+   position (no script, nothing is hidden before the first frame): what is on screen when a page opens is simply there,
+   so navigation does not make the content jump. Browsers without scroll-driven animations show everything static. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .section > .wrap > *,
+    [data-reveal] {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 220px;
+    }
+  }
 }
-.rv .section > .wrap > .is-in,
-.rv [data-reveal].is-in {
-  opacity: 1;
-  transform: none;
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
 }
 
 @media (max-width: 760px) {
@@ -301,10 +349,5 @@ a:hover {
   *::after {
     transition: none !important;
     animation: none !important;
-  }
-  .rv .section > .wrap > *,
-  .rv [data-reveal] {
-    opacity: 1;
-    transform: none;
   }
 }

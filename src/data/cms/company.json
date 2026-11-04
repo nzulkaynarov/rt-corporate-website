@@ -38,9 +38,9 @@
   },
   "leadEndpoint": "https://crm.railtech.uz/api/v1/leads/web",
   "metrics": [
-    { "value": "5+", "label": "лет на рынке", "label_uz": "", "label_en": "" },
-    { "value": "30+", "label": "активных партнёров", "label_uz": "", "label_en": "" },
-    { "value": "10+", "label": "производителей", "label_uz": "", "label_en": "" },
-    { "value": "250+", "label": "позиций оборудования", "label_uz": "", "label_en": "" }
+    { "value": "5+", "label": "лет работаем на рынке Узбекистана", "label_uz": "", "label_en": "" },
+    { "value": "30+", "label": "компаний, с которыми уже поработали", "label_uz": "", "label_en": "" },
+    { "value": "10+", "label": "производителей, с которыми есть опыт работы", "label_uz": "", "label_en": "" },
+    { "value": "250+", "label": "позиций оборудования в опыте поставок", "label_uz": "", "label_en": "" }
   ]
 }

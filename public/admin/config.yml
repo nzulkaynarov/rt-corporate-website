@@ -158,20 +158,26 @@ collections:
       widget: text
       required: false
   - &id002
-    label: 'Текст [RU] (Markdown, подзаголовки ###)'
+    label: 'Текст [RU]: подзаголовки ###, цитата, списки, таблица, фото с подписью, сноска текст[^1] + [^1]: пояснение'
     name: body
     widget: markdown
     required: false
+    buttons: [bold, italic, link, heading-three, heading-four, quote, bulleted-list, numbered-list]
+    editor_components: [image]
   - &id003
     label: Текст [UZ]
     name: body_uz
     widget: markdown
     required: false
+    buttons: [bold, italic, link, heading-three, heading-four, quote, bulleted-list, numbered-list]
+    editor_components: [image]
   - &id004
     label: Текст [EN]
     name: body_en
     widget: markdown
     required: false
+    buttons: [bold, italic, link, heading-three, heading-four, quote, bulleted-list, numbered-list]
+    editor_components: [image]
   - &id005
     label: 'SEO: заголовок (≤ 60 знаков, пусто = название) [RU]'
     name: seoTitle
@@ -269,6 +275,27 @@ collections:
     name: coverAlt_en
     widget: string
     required: false
+  - label: Галерея (фото под текстом, открываются на весь экран)
+    name: gallery
+    widget: list
+    required: false
+    summary: '{{fields.alt}}'
+    fields:
+    - label: Фото
+      name: image
+      widget: image
+    - label: Описание фото [RU]
+      name: alt
+      widget: string
+      required: false
+    - label: Описание фото [UZ]
+      name: alt_uz
+      widget: string
+      required: false
+    - label: Описание фото [EN]
+      name: alt_en
+      widget: string
+      required: false
   - label: Партнёры, о которых материал
     name: partners
     widget: relation

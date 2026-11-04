@@ -10,10 +10,8 @@ import '@fontsource/golos-text/400.css';
 import '@fontsource/golos-text/500.css';
 import '@fontsource/golos-text/600.css';
 import '../styles/global.css';
-// The three faces of the first screen are preloaded, so text does not jump when the font arrives.
-import fontBody from '@fontsource/golos-text/files/golos-text-cyrillic-400-normal.woff2?url';
-import fontHead700 from '@fontsource/montserrat/files/montserrat-cyrillic-700-normal.woff2?url';
-import fontHead800 from '@fontsource/montserrat/files/montserrat-cyrillic-800-normal.woff2?url';
+// Every face used on screen is preloaded (src/utils/fonts.ts), so text never jumps when a font arrives.
+import { PRELOAD_FONTS } from '../utils/fonts';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import { company, telegramUrl } from '../utils/company';
@@ -113,15 +111,7 @@ if (jsonLd) graph.push(...(Array.isArray(jsonLd) ? jsonLd : [jsonLd]));
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
-    {[fontBody, fontHead700, fontHead800].map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
-    <!-- Scroll reveal (src/scripts/motion.ts): hide blocks before first paint; if the script does not start, show them. -->
-    <script is:inline>
-      (function (r) {
-        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        r.classList.add('rv');
-        setTimeout(function () { if (!r.classList.contains('rv-on')) r.classList.remove('rv'); }, 2500);
-      })(document.documentElement);
-    </script>
+    {PRELOAD_FONTS.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
     <meta name="description" content={description} />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
     {!noindex && (

@@ -72,6 +72,54 @@
       "ru": "Страна",
       "uz": "",
       "en": ""
+    },
+    {
+      "key": "news.gallery.title",
+      "ru": "Фотографии",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "news.gallery.open",
+      "ru": "Открыть фото {n} из {total}",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "news.gallery.close",
+      "ru": "Закрыть",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "news.gallery.prev",
+      "ru": "Предыдущее фото",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "news.gallery.next",
+      "ru": "Следующее фото",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "news.gallery.counter",
+      "ru": "{n} из {total}",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "prose.footnotes",
+      "ru": "Сноски",
+      "uz": "",
+      "en": ""
+    },
+    {
+      "key": "prose.footnoteBack",
+      "ru": "Вернуться к тексту, сноска {n}",
+      "uz": "",
+      "en": ""
     }
   ]
 }

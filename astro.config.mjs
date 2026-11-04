@@ -24,6 +24,20 @@ export default defineConfig({
   output: 'static',
   // The dev-server toolbar (black pill at the bottom) is off: owner reviews the site in dev mode.
   devToolbar: { enabled: false },
+  vite: {
+    plugins: [
+      {
+        // @fontsource ships `font-display: swap`: the first frame of every page is drawn with the fallback font and
+        // the header menu jumps when Montserrat arrives. `optional` + preload (BaseLayout) uses the font from the first
+        // frame; if it is not ready in ~100 ms the page keeps the fallback (no jump) and the next page has the font.
+        name: 'railtech-font-display-optional',
+        enforce: 'pre',
+        transform(code, id) {
+          if (id.includes('@fontsource') && id.endsWith('.css')) return code.replace(/font-display:\s*swap/g, 'font-display: optional');
+        },
+      },
+    ],
+  },
   integrations: [
     react(),
     sitemap({

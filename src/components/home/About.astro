@@ -1,5 +1,8 @@
 ---
-/** «О компании»: text, mission, office and INN, metrics (owner edits the figures in /admin → Компания). */
+/**
+ * «О компании»: text, mission, office and INN, metrics (owner edits the figures in /admin → Компания).
+ * Figures count up when they come into view (`data-count`, src/scripts/motion.ts); screen readers get the final value.
+ */
 import { localeHref, tField } from '../../i18n';
 import { t } from '../../i18n/ui';
 import home from '../../data/cms/home.json';
@@ -26,7 +29,10 @@ const a = home.about as Record<string, string>;
       {company.metrics.map((m: any) => (
         <div class="metric">
           <dt>{tField(m, 'label', lang)}</dt>
-          <dd>{m.value}</dd>
+          <dd>
+            <span class="visually-hidden">{m.value}</span>
+            <span aria-hidden="true" data-count={m.value}>{m.value}</span>
+          </dd>
         </div>
       ))}
     </dl>

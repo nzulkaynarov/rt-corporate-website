@@ -58,6 +58,8 @@ const news = defineCollection({
     /** Optional cover image (path under /public, e.g. /images/news/<slug>.jpg). Without it a neutral plate is shown. */
     cover: z.string().optional(),
     ...i18n('coverAlt', false),
+    /** Photo gallery under the text (path under /public + description); opens full screen on click. */
+    gallery: z.array(z.object({ image: z.string(), ...i18n('alt', false) })).default([]),
     /** Partner ids from src/data/cms/partners.json this material is about. */
     partners: z.array(z.string()).default([]),
     featured: z.boolean().default(false),

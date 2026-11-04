@@ -3,13 +3,13 @@
  * with «reduce motion» turned on in the system, the site works and shows all content without animation.
  *
  * 1. Smooth wheel scrolling (Lenis). Touch screens keep native scrolling; nested scroll areas scroll on their own.
- * 2. Scroll reveal: direct children of `.section > .wrap` and any `[data-reveal]` rise in once when they come into view.
- *    CSS (global.css, `.rv …`) hides them only while `html.rv` is set by the inline script in <head>.
- * 3. Header shadow once the page is scrolled (`.hdr--scrolled`).
+ * 2. Header shadow once the page is scrolled (`.hdr--scrolled`).
+ * 3. Counters: `[data-count="250+"]` counts from 0 to the number once it comes into view; text around the number
+ *    («+», «24/7») is kept. The element is aria-hidden; the final value is in a visually hidden twin next to it.
+ * Scroll reveal of section blocks is pure CSS (global.css, `animation-timeline: view()`), no script.
  */
 import Lenis from 'lenis';
 
-const root = document.documentElement;
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 /* 1. Smooth scrolling */
@@ -34,39 +34,7 @@ function stopLenis() {
 startLenis();
 reduce.addEventListener('change', () => (reduce.matches ? stopLenis() : startLenis()));
 
-/* 2. Scroll reveal */
-const REVEAL = '.section > .wrap > *, [data-reveal]';
-
-function reveal() {
-  if (!root.classList.contains('rv')) return;
-  root.classList.add('rv-on');
-  const items = Array.from(document.querySelectorAll<HTMLElement>(REVEAL));
-  const set = new Set<Element>(items);
-  const showAll = () => items.forEach((el) => el.classList.add('is-in'));
-  if (reduce.matches || !('IntersectionObserver' in window)) return showAll();
-
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const e of entries) {
-        if (!e.isIntersecting) continue;
-        e.target.classList.add('is-in');
-        io.unobserve(e.target);
-      }
-    },
-    { rootMargin: '0px 0px -8% 0px', threshold: 0 },
-  );
-  for (const el of items) {
-    // Neighbouring blocks of one section come in one after another (at most 4 steps of delay).
-    const siblings = el.parentElement ? Array.from(el.parentElement.children).filter((c) => set.has(c)) : [el];
-    el.style.setProperty('--rv-i', String(Math.min(siblings.indexOf(el), 4)));
-    // Already scrolled past (back/forward navigation, #anchor): show at once, no animation off-screen.
-    if (el.getBoundingClientRect().bottom < 0) el.classList.add('is-in');
-    else io.observe(el);
-  }
-}
-reveal();
-
-/* 3. Header state */
+/* 2. Header state */
 const hdr = document.querySelector('.hdr');
 if (hdr) {
   let ticking = false;
@@ -85,4 +53,41 @@ if (hdr) {
     { passive: true },
   );
   update();
+}
+
+/* 3. Counters */
+const counters = Array.from(document.querySelectorAll<HTMLElement>('[data-count]'));
+if (counters.length && !reduce.matches && 'IntersectionObserver' in window) {
+  const DURATION = 1600;
+  const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+  const run = (el: HTMLElement) => {
+    const final = el.dataset.count || '';
+    const m = final.match(/^(\D*)(\d+)(.*)$/s);
+    if (!m) return;
+    const [, before, digits, after] = m;
+    const target = Number(digits);
+    const start = performance.now();
+    const step = (now: number) => {
+      const t = Math.min((now - start) / DURATION, 1);
+      el.textContent = `${before}${Math.round(target * easeOut(t))}${after}`;
+      if (t < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        io.unobserve(e.target);
+        run(e.target as HTMLElement);
+      }
+    },
+    { threshold: 0.6 },
+  );
+  for (const el of counters) {
+    // Below the fold: start from 0 so the count is seen; already on screen: count right away.
+    const m = (el.dataset.count || '').match(/^(\D*)(\d+)(.*)$/s);
+    if (m && el.getBoundingClientRect().top > window.innerHeight) el.textContent = `${m[1]}0${m[3]}`;
+    io.observe(el);
+  }
 }
