@@ -173,6 +173,15 @@ function walkStrings(node, where, fn) {
   if (node && typeof node === 'object') for (const [k, v] of Object.entries(node)) walkStrings(v, where ? `${where}.${k}` : k, fn);
 }
 
+// Dealer-status basis (owner decision, docs/STATUS.md §2.4): the manufacturer's document is shown to a customer on
+// request only — its number, date, term, appendix and the issuer's registration numbers are never published.
+const STATUS_BASIS = [/свидетельств\S*\s*№/i, /\bОГРН\b/, /Приложени\S*\s*№/i, /guvohnoma/i, /certificate\s+No\.?\s*\d/i, /действует до \d/i];
+function checkStatusBasis(file, where, value) {
+  if (typeof value !== 'string') return;
+  const hit = STATUS_BASIS.find((re) => re.test(value));
+  if (hit) err(file, `${where}: «${value.match(hit)[0]}» — the basis of a dealer status is not published (docs/STATUS.md §2.4)`);
+}
+
 const PARTNERS_FILE = 'src/data/cms/partners.json';
 const partnerIds = new Set(fs.existsSync(PARTNERS_FILE) ? (JSON.parse(fs.readFileSync(PARTNERS_FILE, 'utf8')).partners || []).map((p) => p.id) : []);
 const NEWS_TYPES = ['news', 'article', 'project', 'partner'];
@@ -202,6 +211,7 @@ const RULES = {
     if (d.cover && d.cover.startsWith('/') && !publicPathExists(d.cover)) err(file, `cover: file public${d.cover} does not exist`);
     if (!d.cover) warn(file, 'no cover photo — a neutral plate is shown');
     checkBody(file, d, body, 600);
+    walkStrings({ ...d, body }, '', (where, v) => checkStatusBasis(file, where, v));
   },
 };
 

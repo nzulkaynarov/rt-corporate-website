@@ -9,7 +9,7 @@ summary_uz: "2026-yil 20–26-may kunlari «O'zbekiston temir yo'llari» AJ dele
 summary_en: "On May 20–26, 2026, a JSC Uzbekistan Railways delegation in Astana and Yekaterinburg studied the locomotive diagnostics and maintenance experience of ALSTOM and NPO SAUT LLC: БЛОК-М, САУТ-К, САУТ-ЦМ/НСП, automatic train operation and ТУ-152."
 partners:
 - "npo-saut"
-seoTitle: "Делегация УТЙ в НПО САУТ, май 2026"
+seoTitle: "Делегация «Узбекистон темир йуллари» в НПО САУТ, 2026"
 seoTitle_uz: "«O'zbekiston temir yo'llari» delegatsiyasi «НПО САУТ»da"
 seoTitle_en: "Uzbekistan Railways Delegation at NPO SAUT, May 2026"
 seoDescription: "Визит делегации АО «Узбекистон темир йуллари» в Астану и Екатеринбург: ALSTOM, НПО САУТ, БЛОК-М, САУТ-ЦМ/НСП, «Уральские локомотивы»."
