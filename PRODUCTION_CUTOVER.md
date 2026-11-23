@@ -8,9 +8,16 @@
 `/pages/privacy.html` → `/privacy/`, `http://` и старый адрес github.io → `https://railtech.uz`, HTTPS принудительный,
 форма получает токен CRM со страницы, админка `/admin/` открывается.
 
-**Осталось:** `https://www.railtech.uz` не открывается — сертификат выпущен только для `railtech.uz`. В DNS (Яндекс)
-запись `www` — CNAME на `railtech.uz`; чтобы GitHub выпустил сертификат и переадресовывал `www` на основной домен,
-её нужно заменить на CNAME `nzulkaynarov.github.io.` (так было и у старого сайта, это не следствие переезда).
+**`www` (2026-11-24):** `https://www.railtech.uz` переадресует на `https://railtech.uz`. В DNS (Яндекс) запись `www` —
+CNAME `nzulkaynarov.github.io.`, сертификат GitHub выпущен на оба имени. Как это чинилось — на случай повторения:
+
+- GitHub хранит сертификат по имени домена и переиспользует его: снять и снова привязать `railtech.uz` недостаточно.
+  Новый сертификат на оба имени выпускается, если в Settings → Pages → Custom domain временно поставить
+  `www.railtech.uz`, дождаться сертификата и вернуть `railtech.uz` (затем включить «Enforce HTTPS»).
+- После возврата основного имени главная может уйти в петлю переадресаций (`railtech.uz` ↔ `www`): в кэше GitHub
+  остаётся старый ответ. Кэш сбрасывает повторная публикация: Actions → «Deploy RailTech Portal to GitHub Pages» →
+  Run workflow (`gh workflow run deploy.yml --ref main`).
+- Пока основным стоит `www`, форма заявок не работает: CRM принимает запросы только с `https://railtech.uz`.
 
 ## 0. Что было перед переездом
 
@@ -66,8 +73,8 @@ PR не меняется.
 
 ## 3. Telegram-бот
 
-В `src/data/cms/company.json → telegramBot` стоит тестовый бот (`railtech_test_bot`). Замените его на имя рабочего бота
-CRM (без `@`): админка → «Компания», или PR через скил `edit-site-texts`. Проверьте ссылку `t.me/<бот>?start=web` — она
+В `src/data/cms/company.json → telegramBot` стоит рабочий бот CRM (`uzrailtech_bot`, с 2026-11-23). Имя меняется без
+`@`: админка → «Компания», или PR через скил `edit-site-texts`. После замены проверьте ссылку `t.me/<бот>?start=web` — она
 стоит в форме, футере и панели связи на телефоне.
 
 ## 4. Поисковые системы
