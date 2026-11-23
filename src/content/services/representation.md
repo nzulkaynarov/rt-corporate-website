@@ -57,7 +57,7 @@ faq:
     a: Отправьте заявку с кратким описанием компании и продукции. Мы изучим спрос, предложим формат сотрудничества и после подписания соглашения пригласим вас в Кабинет партнёра.
   - q: На каком языке работать?
     a: Кабинет работает на русском, узбекском и английском языках; переписку ведём на удобном для вас языке.
-seoTitle: Представительство производителей в Узбекистане | RailTech
+seoTitle: Представительство производителей в Узбекистане
 seoDescription: 'Выход на рынок Узбекистана без собственного офиса: дилерское соглашение, продвижение, готовые заявки, сертификация, таможня и доставка DDP/CIP.'
 uz:
   title: Vakillik
@@ -112,7 +112,7 @@ uz:
       a: Kompaniya va mahsulotning qisqacha tavsifi bilan ariza yuboring. Biz talabni o'rganamiz, hamkorlik formatini taklif qilamiz va shartnoma imzolangandan so'ng sizni hamkor Kabinetiga taklif qilamiz.
     - q: Qaysi tilda ishlanadi?
       a: Kabinet rus, o'zbek va ingliz tillarida ishlaydi; yozishmalarni siz uchun qulay tilda olib boramiz.
-  seoTitle: O'zbekistonda ishlab chiqaruvchilar vakilligi | RailTech
+  seoTitle: O'zbekistonda ishlab chiqaruvchilar vakilligi
   seoDescription: 'O''z ofisingizsiz O''zbekiston bozoriga chiqish: diler shartnomasi, ilgari surish, tayyor arizalar, sertifikatlash, bojxona va DDP/CIP yetkazib berish.'
 en:
   title: Representation
@@ -167,6 +167,6 @@ en:
       a: Send a request with a brief description of your company and products. We will study demand, propose a cooperation format and, once the agreement is signed, invite you to the partner Cabinet.
     - q: What language do we work in?
       a: The Cabinet is available in Russian, Uzbek and English; we correspond in whichever language suits you.
-  seoTitle: Manufacturer Representation in Uzbekistan | RailTech
+  seoTitle: Manufacturer Representation in Uzbekistan
   seoDescription: 'Enter the Uzbek market without your own office: dealer agreement, promotion, ready-to-process requests, certification, customs clearance and DDP/CIP delivery.'
 ---

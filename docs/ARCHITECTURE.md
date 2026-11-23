@@ -35,7 +35,7 @@ SEO и навигации нет «ж/д», серий локомотивов и
 | старые адреса | `src/pages/[...lang]/{catalog,blog,projects,about}/…` | Перенаправления (meta refresh + canonical, `noindex`) | `src/data/legacy-redirects.json` |
 
 Навигация (шапка): **Услуги · Новости · Контакты** + переключатель языка + кнопки **«Начать работу»** (форма заявки,
-`/contacts/#request`) и **«Войти в Кабинет»** (`company.json → cabinet.loginUrl`). Футер: разделы, сервисные страницы,
+`/contacts/#request`) и **«Войти в Кабинет»** (`company.json → cabinet.url` + `/login`). Футер: разделы, сервисные страницы,
 контакты, ИНН. Меню одно — футер и мобильное меню строятся из `src/utils/nav.ts`.
 
 ## 3. Модель данных
@@ -65,6 +65,15 @@ SEO и навигации нет «ж/д», серий локомотивов и
 
 Схема коллекций — `src/content/config.ts`; схема CMS — `public/admin/config.yml`. Они должны совпадать (проверяет
 `scripts/validate-cms-config.mjs` при сборке).
+
+**Один факт — одно место.** Телефон, e-mail, ИНН, домены, год основания и адреса хранятся только в `company.json`;
+в остальных текстах вместо них стоят подстановки `{phone}`, `{email}`, `{inn}`, `{site}`, `{cabinet}`, `{foundedYear}`,
+`{officeAddress}`, `{legalAddress}` (`src/i18n/facts.mjs`, заполняют `localize()` и `tField()` на языке страницы;
+новости — исторические записи, в них факты пишутся текстом). `check-content` запрещает набирать эти значения текстом
+и требует тех же подстановок в переводах, `check-build` — незаполненных подстановок на страницах.
+**Вычисляемое не вводится:** « | RailTech» в title добавляет сайт (если бренда нет в заголовке и влезает 60 знаков),
+юридические страницы — одна дата редакции на документ (`legal.json → <page>.edition`) и нумерация разделов по порядку,
+ссылки Кабинета — от `cabinet.url`.
 
 **Правила ввода в админке** (`config.yml`): формат реквизитов и ссылок (`pattern`, `type: url/email`), длина
 «Кратко» и SEO (`minlength`/`maxlength` со счётчиком), подсказки (`hint`), адрес нового материала латиницей из
@@ -113,13 +122,13 @@ Telegram ─► t.me/<бот>?start=web  (бот CRM, источник «сай�
 ```
 
 - Адреса берутся из `company.json`: `leadEndpoint` (по умолчанию `https://crm.railtech.uz/api/v1/leads/web`),
-  `cabinet.loginUrl`, `cabinet.newClientUrl`, `telegramBot`.
+  `cabinet.url` (вход `/login` и приглашение `/new-client` строятся от него в `src/utils/company.ts`), `telegramBot`.
 - Контракт приёма (платформа, `packages/contracts/openapi/crm.yaml`): `GET …/token` → `{token, expires_at, min_fill_seconds}`;
   `POST …` JSON `{name, company?, phone?, email?, text, language, form_token, consent: true, website: ""}` → `202 {lead_id}`;
   ошибки `422 validation_failed` (`details.reason`), `429 rate_limited`. Поле `website` — ловушка для ботов, всегда пустое.
 - CRM принимает запросы только с разрешённых адресов (CORS). Чтобы форма работала с railtech.uz, на платформе в
   `infra/compose/prod.yml` к `CABINET_ORIGIN` добавляется адрес сайта. Пока этого нет, форма при ошибке сети показывает
-  запасные каналы: Telegram, телефон, e-mail и ссылку `cabinet.newClientUrl`.
+  запасные каналы: Telegram, телефон, e-mail и ссылку `cabinet.url` + `/new-client`.
 - Регистрации в Кабинете «с улицы» нет — только по приглашению менеджера. Поэтому на сайте нет кнопки «Зарегистрироваться».
 - Сайт не ставит cookie и не подключает аналитику; данные заявки уходят только в CRM RailTech.
 

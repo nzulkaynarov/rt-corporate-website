@@ -16,7 +16,10 @@ describe('seo', () => {
   });
   it('entrySeo prefers seoTitle/seoDescription and falls back to title + suffix and summary', () => {
     expect(entrySeo({ title: 'Поставки', summary: 'Кратко о поставках' }, 'ru')).toEqual({ title: 'Поставки | RailTech', description: 'Кратко о поставках' });
-    expect(entrySeo({ title: 'X', seoTitle: 'Свой заголовок', seoDescription: 'Своё описание' }, 'ru')).toEqual({ title: 'Свой заголовок', description: 'Своё описание' });
+    // « | RailTech» is added by the site to an explicit seoTitle too, unless the title names the brand or would not fit
+    expect(entrySeo({ title: 'X', seoTitle: 'Свой заголовок', seoDescription: 'Своё описание' }, 'ru')).toEqual({ title: 'Свой заголовок | RailTech', description: 'Своё описание' });
+    expect(entrySeo({ title: 'X', seoTitle: 'RailTech — свой заголовок', summary: 'S' }, 'ru').title).toBe('RailTech — свой заголовок');
+    expect(entrySeo({ title: 'X', seoTitle: 'Очень длинный заголовок страницы, который почти не влезает', summary: 'S' }, 'ru').title).toBe('Очень длинный заголовок страницы, который почти не влезает');
   });
 });
 

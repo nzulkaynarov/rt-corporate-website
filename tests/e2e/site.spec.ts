@@ -44,7 +44,7 @@ test('header offers «Начать работу» and «Войти в Кабин
   await page.goto('');
   if (isMobile) await page.locator('.mmenu summary').click();
   const scope = isMobile ? page.locator('.mmenu__panel') : page.locator('.hdr__cta');
-  await expect(scope.locator(`a[href="${company.cabinet.loginUrl}"]`)).toBeVisible();
+  await expect(scope.locator(`a[href="${company.cabinet.url}/login"]`)).toBeVisible();
   const start = scope.locator('a[href$="/contacts/#request"]');
   await expect(start).toBeVisible();
   await start.click();

@@ -3,7 +3,7 @@
 import { localeHref, tField, localize } from '../../i18n';
 import { t } from '../../i18n/ui';
 import homeData from '../../data/cms/home.json';
-import { company } from '../../utils/company';
+import { company, cabinet } from '../../utils/company';
 import { START_PATH } from '../../utils/nav';
 
 const lang = Astro.locals.lang;
@@ -26,7 +26,7 @@ const stages: string[] = demo.stages || [];
       </dl>
       <div class="btn-row">
         <a class="btn btn--light" href={localeHref(START_PATH, lang)}>{t(lang, 'cta.start')}</a>
-        <a class="btn btn--outline-light" href={company.cabinet.loginUrl}>{t(lang, 'cta.cabinet')}</a>
+        <a class="btn btn--outline-light" href={cabinet.loginUrl}>{t(lang, 'cta.cabinet')}</a>
       </div>
     </div>
     <figure class="ui" aria-label={t(lang, 'home.cabinet.demoAria')}>

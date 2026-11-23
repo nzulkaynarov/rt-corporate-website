@@ -3,7 +3,7 @@
 import { localeHref, tField } from '../../i18n';
 import { t } from '../../i18n/ui';
 import { MAIN_NAV, LEGAL_NAV } from '../../utils/nav';
-import { company, mailHref, telHref, telegramUrl } from '../../utils/company';
+import { company, mailHref, telHref, telegramUrl, cabinet } from '../../utils/company';
 import { withBase } from '../../utils/url';
 
 const lang = Astro.locals.lang;
@@ -25,7 +25,7 @@ const tg = telegramUrl();
       <h2>{tr('footer.sections')}</h2>
       <ul>
         {MAIN_NAV.map((item) => <li><a href={localeHref(item.path, lang)}>{tr(item.key)}</a></li>)}
-        <li><a href={company.cabinet.loginUrl}>{tr('nav.cabinet')}</a></li>
+        <li><a href={cabinet.loginUrl}>{tr('nav.cabinet')}</a></li>
       </ul>
     </div>
     <div>

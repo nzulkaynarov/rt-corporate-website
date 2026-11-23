@@ -12,6 +12,7 @@ import partners from '../src/data/cms/partners.json';
 import legacy from '../src/data/legacy-redirects.json';
 import seo from '../src/data/cms/seo.json';
 import legal from '../src/data/cms/legal.json';
+import { cabinet } from '../src/utils/company';
 
 const slugs = (dir: string) => fs.readdirSync(dir).filter((f) => f.endsWith('.md')).map((f) => f.replace(/\.md$/, ''));
 const front = (file: string) => yaml.load(fs.readFileSync(file, 'utf8').split('---')[1]) as Record<string, any>;
@@ -25,8 +26,9 @@ describe('company.json', () => {
     expect(company.inn).toMatch(/^\d{9}$/);
     expect(company.phone).toMatch(/^\+998/);
     expect(company.email).toMatch(/@/);
-    expect(company.cabinet.loginUrl).toMatch(/^https:\/\/cabinet\.railtech\.uz\//);
-    expect(company.cabinet.newClientUrl).toMatch(/^https:\/\/cabinet\.railtech\.uz\//);
+    expect(company.cabinet.url).toMatch(/^https:\/\/cabinet\.railtech\.uz\/?$/);
+    expect(cabinet.loginUrl).toBe('https://cabinet.railtech.uz/login');
+    expect(cabinet.newClientUrl).toBe('https://cabinet.railtech.uz/new-client');
     expect(company.leadEndpoint).toMatch(/^https:\/\/.+\/api\/v1\/leads\/web$/);
     expect(company.metrics.length).toBeGreaterThan(0);
   });

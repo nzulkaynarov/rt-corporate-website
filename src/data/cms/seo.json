@@ -7,7 +7,7 @@
   "siteName": "RailTech",
   "titleSuffix": "| RailTech",
   "defaultImage": "/og-cover.png",
-  "organizationDescription": "ООО «RailTech» (Ташкент, с 2021 года) поставляет оборудование и услуги предприятиям Узбекистана и представляет интересы международных производителей: поставки, инжиниринг, представительство, локализация.",
+  "organizationDescription": "ООО «RailTech» (Ташкент, с {foundedYear} года) поставляет оборудование и услуги предприятиям Узбекистана и представляет интересы международных производителей: поставки, инжиниринг, представительство, локализация.",
   "knowsAbout": [
     "Поставки промышленного оборудования в Узбекистан",
     "Представительство международных производителей в Узбекистане",
@@ -31,27 +31,27 @@
     },
     "contacts": {
       "title": "Контакты и реквизиты RailTech, Ташкент",
-      "description": "Офис RailTech: Ташкент, ул. Абдуллы Каххара, 46. Телефон +998 90 118-90-00, info@railtech.uz, Telegram, реквизиты и форма заявки."
+      "description": "Офис RailTech: {officeAddress}. Телефон {phone}, {email}, Telegram, реквизиты и форма заявки."
     },
     "privacy": {
-      "title": "Политика обработки персональных данных | RailTech",
-      "description": "Как ООО «RailTech» обрабатывает и защищает персональные данные пользователей сайта railtech.uz и Кабинета по Закону РУз «О персональных данных»."
+      "title": "Политика обработки персональных данных",
+      "description": "Как ООО «RailTech» обрабатывает и защищает персональные данные пользователей сайта {site} и Кабинета по Закону РУз «О персональных данных»."
     },
     "terms": {
-      "title": "Условия использования сайта и сервисов | RailTech",
-      "description": "Правила использования сайта railtech.uz, Кабинета клиента и партнёра и Telegram-бота RailTech. Информация на сайте не является публичной офертой."
+      "title": "Условия использования сайта и сервисов",
+      "description": "Правила использования сайта {site}, Кабинета клиента и партнёра и Telegram-бота RailTech. Информация на сайте не является публичной офертой."
     },
     "cookies": {
-      "title": "Cookies и хранение данных в браузере | RailTech",
-      "description": "Сайт railtech.uz не устанавливает cookie и не использует аналитику. Какие технические данные сохраняет Кабинет и как ими управлять."
+      "title": "Cookies и хранение данных в браузере",
+      "description": "Сайт {site} не устанавливает cookie и не использует аналитику. Какие технические данные сохраняет Кабинет и как ими управлять."
     },
     "notFound": {
-      "title": "Страница не найдена | RailTech",
+      "title": "Страница не найдена",
       "description": "Такой страницы нет на сайте RailTech. Перейдите на главную, в раздел услуг или напишите нам."
     }
   },
   "uz": {
-    "organizationDescription": "«RailTech» MChJ (Toshkent, 2021-yildan beri) O'zbekiston korxonalariga uskunalar va xizmatlar yetkazib beradi hamda xalqaro ishlab chiqaruvchilar manfaatlarini ifodalaydi: yetkazib berish, injiniring, vakillik, mahalliylashtirish.",
+    "organizationDescription": "«RailTech» MChJ (Toshkent, {foundedYear}-yildan beri) O'zbekiston korxonalariga uskunalar va xizmatlar yetkazib beradi hamda xalqaro ishlab chiqaruvchilar manfaatlarini ifodalaydi: yetkazib berish, injiniring, vakillik, mahalliylashtirish.",
     "knowsAbout": [
       "O'zbekistonga sanoat uskunalarini yetkazib berish",
       "O'zbekistonda xalqaro ishlab chiqaruvchilar vakilligi",
@@ -75,28 +75,28 @@
       },
       "contacts": {
         "title": "RailTech kontaktlari va rekvizitlari, Toshkent",
-        "description": "RailTech ofisi: Toshkent, Abdulla Qahhor ko'chasi, 46. Telefon +998 90 118-90-00, info@railtech.uz, Telegram, rekvizitlar va ariza shakli."
+        "description": "RailTech ofisi: {officeAddress}. Telefon {phone}, {email}, Telegram, rekvizitlar va ariza shakli."
       },
       "privacy": {
-        "title": "Shaxsga doir ma'lumotlarga ishlov berish siyosati | RailTech",
-        "description": "«RailTech» MChJ railtech.uz va Kabinet foydalanuvchilarining shaxsga doir ma'lumotlariga O'RQ-547-son Qonunga muvofiq qanday ishlov beradi va himoya qiladi."
+        "title": "Shaxsga doir ma'lumotlarga ishlov berish siyosati",
+        "description": "«RailTech» MChJ {site} va Kabinet foydalanuvchilarining shaxsga doir ma'lumotlariga O'RQ-547-son Qonunga muvofiq qanday ishlov beradi va himoya qiladi."
       },
       "terms": {
-        "title": "Sayt va xizmatlardan foydalanish shartlari | RailTech",
-        "description": "railtech.uz sayti, mijoz va hamkor Kabineti hamda RailTech Telegram-botidan foydalanish qoidalari. Saytdagi ma'lumotlar ommaviy oferta hisoblanmaydi."
+        "title": "Sayt va xizmatlardan foydalanish shartlari",
+        "description": "{site} sayti, mijoz va hamkor Kabineti hamda RailTech Telegram-botidan foydalanish qoidalari. Saytdagi ma'lumotlar ommaviy oferta hisoblanmaydi."
       },
       "cookies": {
-        "title": "Cookie-fayllar va brauzerda ma'lumotlarni saqlash | RailTech",
-        "description": "railtech.uz sayti cookie o'rnatmaydi va analitikadan foydalanmaydi. Kabinet qanday texnik ma'lumotlarni saqlaydi va ularni qanday boshqarish mumkin."
+        "title": "Cookie-fayllar va brauzerda ma'lumotlarni saqlash",
+        "description": "{site} sayti cookie o'rnatmaydi va analitikadan foydalanmaydi. Kabinet qanday texnik ma'lumotlarni saqlaydi va ularni qanday boshqarish mumkin."
       },
       "notFound": {
-        "title": "Sahifa topilmadi | RailTech",
+        "title": "Sahifa topilmadi",
         "description": "RailTech saytida bunday sahifa yo'q. Bosh sahifaga yoki xizmatlar bo'limiga o'ting yoxud bizga yozing."
       }
     }
   },
   "en": {
-    "organizationDescription": "RailTech LLC (Tashkent, since 2021) supplies equipment and services to enterprises in Uzbekistan and represents the interests of international manufacturers: supply, engineering, representation, localization.",
+    "organizationDescription": "RailTech LLC (Tashkent, since {foundedYear}) supplies equipment and services to enterprises in Uzbekistan and represents the interests of international manufacturers: supply, engineering, representation, localization.",
     "knowsAbout": [
       "Industrial equipment supply to Uzbekistan",
       "Representation of international manufacturers in Uzbekistan",
@@ -120,22 +120,22 @@
       },
       "contacts": {
         "title": "RailTech contacts and company details, Tashkent",
-        "description": "RailTech office: 46 Abdulla Qahhor Street, Tashkent. Phone +998 90 118-90-00, info@railtech.uz, Telegram, company details and request form."
+        "description": "RailTech office: {officeAddress}. Phone {phone}, {email}, Telegram, company details and request form."
       },
       "privacy": {
-        "title": "Personal data processing policy | RailTech",
-        "description": "How RailTech LLC processes and protects the personal data of railtech.uz and Cabinet users under the Law of the Republic of Uzbekistan “On Personal Data”."
+        "title": "Personal data processing policy",
+        "description": "How RailTech LLC processes and protects the personal data of {site} and Cabinet users under the Law of the Republic of Uzbekistan “On Personal Data”."
       },
       "terms": {
-        "title": "Terms of use for the website and services | RailTech",
-        "description": "Rules for using the railtech.uz website, the Client & Partner Cabinet and the RailTech Telegram bot. Information on the website is not a public offer."
+        "title": "Terms of use for the website and services",
+        "description": "Rules for using the {site} website, the Client & Partner Cabinet and the RailTech Telegram bot. Information on the website is not a public offer."
       },
       "cookies": {
-        "title": "Cookies and browser data storage | RailTech",
-        "description": "The railtech.uz website sets no cookies and uses no analytics. Learn which technical data the Cabinet stores and how to manage it."
+        "title": "Cookies and browser data storage",
+        "description": "The {site} website sets no cookies and uses no analytics. Learn which technical data the Cabinet stores and how to manage it."
       },
       "notFound": {
-        "title": "Page not found | RailTech",
+        "title": "Page not found",
         "description": "This page does not exist on the RailTech website. Go to the home page or the services section, or write to us."
       }
     }

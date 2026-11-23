@@ -21,7 +21,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import yaml from 'js-yaml';
-import { toSuffixed } from '../src/i18n/blocks.mjs';
+import { localize, toSuffixed } from '../src/i18n/blocks.mjs';
+import { FACT_TOKENS, TOKEN_RE, factsFrom } from '../src/i18n/facts.mjs';
 
 const args = process.argv.slice(2);
 const STRICT = args.includes('--strict');
@@ -86,6 +87,36 @@ function checkText(file, where, value, lang) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Company facts (src/i18n/facts.mjs): texts say {phone}, {email}… and the site fills in company.json values.
+// ---------------------------------------------------------------------------
+const COMPANY_FILE = 'src/data/cms/company.json';
+const COMPANY = fs.existsSync(COMPANY_FILE) ? JSON.parse(fs.readFileSync(COMPANY_FILE, 'utf8')) : {};
+const tokensOf = (v) => [...String(v ?? '').matchAll(TOKEN_RE)].map((m) => m[1]).sort();
+/** Literal values that must be written as tokens (language-neutral ones; addresses vary in form and stay a style rule). */
+const FACT_LITERALS = (() => {
+  const f = factsFrom(localize(COMPANY, 'ru'));
+  return ['email', 'cabinet', 'phone', 'inn', 'site'].filter((k) => f[k]).map((k) => ({ token: k, literal: f[k] }));
+})();
+function checkTokens(file, where, value) {
+  if (typeof value !== 'string') return;
+  for (const t of tokensOf(value)) if (!Object.hasOwn(FACT_TOKENS, t)) err(file, `${where}: unknown substitution {${t}} — known: ${Object.keys(FACT_TOKENS).map((k) => `{${k}}`).join(', ')}`);
+}
+/** A company fact typed as text (phone, e-mail, INN, domains) — must be a token so that it changes in one place. */
+function checkFactLiterals(file, where, value) {
+  if (typeof value !== 'string') return;
+  let rest = value;
+  for (const { token, literal } of FACT_LITERALS) {
+    if (rest.includes(literal)) err(file, `${where}: «${literal}» is typed as text — write {${token}} (the value comes from ${COMPANY_FILE})`);
+    rest = rest.split(literal).join(' ');
+  }
+}
+/** A translation keeps the same substitutions as the RU text. */
+function sameTokens(file, where, ru, v) {
+  const a = tokensOf(ru).join(','); const b = tokensOf(v).join(',');
+  if (a !== b) err(file, `${where}: substitutions differ from RU (${a || 'none'} vs ${b || 'none'}) — keep {…} untranslated`);
+}
+
 /** A translatable field: RU present → UZ and EN must exist, be real translations, pass text checks. */
 function trilingual(file, obj, field, where = field, { optional = false } = {}) {
   const ru = obj?.[field];
@@ -105,6 +136,7 @@ function trilingual(file, obj, field, where = field, { optional = false } = {}) 
       continue;
     }
     if (/[а-яё]/.test(String(ru).replace(/«[^»]*»/g, ' ')) && String(v).trim() === String(ru).trim()) err(file, `${where}_${l}: identical to RU (not translated)`);
+    sameTokens(file, `${where}_${l}`, ru, v);
     checkText(file, `${where}_${l}`, v, l);
   }
 }
@@ -221,6 +253,9 @@ const RULES = {
     if (!d.steps?.length) warn(file, 'no steps («Как работаем»)');
     if (body.trim()) checkBody(file, d, body, 0);
     walkStrings({ ...d, body }, '', (where, v) => !/_(uz|en)$/.test(where.split('.').pop()) && checkPositioning(file, where, v));
+    walkStrings({ ...d, body }, '', (where, v) => { checkTokens(file, where, v); checkFactLiterals(file, where, v); });
+    if (body.trim()) for (const l of LANGS) if (d[`body_${l}`]) sameTokens(file, `body_${l}`, body, d[`body_${l}`]);
+    for (const s of ['', '_uz', '_en']) if (/\|\s*RailTech\s*$/.test(d[`seoTitle${s}`] || '')) warn(file, `seoTitle${s}: « | RailTech» is added by the site — remove it`);
   },
   news(file, d, body) {
     if (!NEWS_TYPES.includes(d.type)) err(file, `type must be one of ${NEWS_TYPES.join(', ')}`);
@@ -234,7 +269,8 @@ const RULES = {
     if (d.cover && d.cover.startsWith('/') && !publicPathExists(d.cover)) err(file, `cover: file public${d.cover} does not exist`);
     if (!d.cover) warn(file, 'no cover photo — a neutral plate is shown');
     checkBody(file, d, body, 600);
-    walkStrings({ ...d, body }, '', (where, v) => checkStatusBasis(file, where, v));
+    walkStrings({ ...d, body }, '', (where, v) => { checkStatusBasis(file, where, v); checkTokens(file, where, v); });
+    for (const s of ['', '_uz', '_en']) if (/\|\s*RailTech\s*$/.test(d[`seoTitle${s}`] || '')) warn(file, `seoTitle${s}: « | RailTech» is added by the site — remove it`);
   },
 };
 
@@ -266,6 +302,9 @@ function walkJson(file, node, where) {
     const at = where ? `${where}.${k}` : k;
     if (typeof v === 'string') {
       const lang = k.match(/_(uz|en)$/)?.[1];
+      checkTokens(file, at, v);
+      if (!file.endsWith('company.json')) checkFactLiterals(file, at, v);
+      if (lang && typeof node[k.replace(/_(uz|en)$/, '')] === 'string') sameTokens(file, at, node[k.replace(/_(uz|en)$/, '')], v);
       if (lang) checkText(file, at, v, lang);
       else if (CYR.test(v)) {
         checkText(file, at, v, 'ru');

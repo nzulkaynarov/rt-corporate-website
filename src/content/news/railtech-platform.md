@@ -13,12 +13,12 @@ seoDescription: Платформа RailTech ведёт заявку от зап�
 uz:
   title: RailTech platformasi hamda mijoz va hamkor kabineti
   summary: Yagona platforma har bir arizani so'rovdan yopilishgacha olib boradi, cabinet.railtech.uz kabineti esa mijoz va hamkorga so'rovlar, tijorat takliflari, shartnomalar, hisoblar va dalolatnomalar uchun yagona oyna beradi.
-  seoTitle: RailTech platformasi va kabineti | RailTech
+  seoTitle: RailTech platformasi va kabineti
   seoDescription: RailTech platformasi arizani so'rovdan yopilishgacha olib boradi; cabinet.railtech.uz — so'rovlar, takliflar, shartnomalar vebda va Telegram Mini App'da.
 en:
   title: RailTech Platform and Client & Partner Cabinet
   summary: A single platform takes every request from inquiry to closing, and the cabinet at cabinet.railtech.uz gives clients and partners one window for requests, quotations, contracts, invoices and acceptance acts.
-  seoTitle: RailTech Platform and Cabinet | RailTech
+  seoTitle: RailTech Platform and Cabinet
   seoDescription: The RailTech platform takes a request from inquiry to closing; cabinet.railtech.uz holds requests, quotes, contracts and acts on web and Telegram Mini App.
 ---
 

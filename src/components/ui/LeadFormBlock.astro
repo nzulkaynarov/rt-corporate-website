@@ -2,7 +2,7 @@
 /** Wraps the LeadForm island with its props from company.json and the form styles (global, prefixed .lf). */
 import LeadForm from '../islands/LeadForm';
 import { localeHref } from '../../i18n';
-import { company, telegramUrl, telHref } from '../../utils/company';
+import { company, telegramUrl, telHref, cabinet } from '../../utils/company';
 
 interface Props {
   idPrefix?: string;
@@ -17,7 +17,7 @@ const lang = Astro.locals.lang;
     idPrefix={Astro.props.idPrefix}
     endpoint={company.leadEndpoint}
     privacyHref={localeHref('/privacy/', lang)}
-    newClientUrl={company.cabinet.newClientUrl}
+    newClientUrl={cabinet.newClientUrl}
     telegramUrl={telegramUrl()}
     phone={company.phone}
     phoneHref={telHref()}

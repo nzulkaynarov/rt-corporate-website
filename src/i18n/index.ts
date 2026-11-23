@@ -12,6 +12,10 @@
  * (legacy `?lang=` links are redirected client-side in BaseLayout).
  */
 
+import companyData from '../data/cms/company.json';
+import { localize as localizeBlocks } from './blocks.mjs';
+import { factsFrom, fillFacts } from './facts.mjs';
+
 export type Lang = 'ru' | 'uz' | 'en';
 
 export const LANGS: readonly Lang[] = ['ru', 'uz', 'en'] as const;
@@ -118,9 +122,22 @@ export function pick<T = string>(lang: Lang, ru: T, uz?: T | null, en?: T | null
 export function tField<T extends Record<string, any>>(item: T | undefined | null, field: string, lang: Lang): any {
   if (!item) return '';
   const block = lang === DEFAULT_LANG ? undefined : item[lang];
-  return pick(lang, item[field] ?? '', lang === 'uz' ? block?.[field] : undefined, lang === 'en' ? block?.[field] : undefined);
+  return fillFacts(pick(lang, item[field] ?? '', lang === 'uz' ? block?.[field] : undefined, lang === 'en' ? block?.[field] : undefined), facts(lang));
 }
 
-export { localize } from './blocks.mjs';
+/** Company facts for `{phone}`, `{email}`… in texts (src/i18n/facts.mjs), in the page language. */
+export function facts(lang: Lang): Record<string, string> {
+  return factsFrom(localizeBlocks(companyData, lang));
+}
+
+/**
+ * CMS data in one language: the uz/en block over the RU values (src/i18n/blocks.mjs), company facts filled in.
+ *   localize(home, 'uz').hero.title
+ */
+export function localize<T extends Record<string, any>>(data: T, lang: Lang): T {
+  return fillFacts(localizeBlocks(data, lang), facts(lang));
+}
+
+export { fillFacts };
 
 export { makeT, type UiFile, type UiString } from './dictionary';

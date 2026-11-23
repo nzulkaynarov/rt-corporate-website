@@ -44,7 +44,7 @@ faq:
     a: Да, опытная эксплуатация — часть пилотного проекта. Условия согласуем с вами и производителем.
   - q: Работаете ли вы с проектными организациями?
     a: Да. Помогаем подобрать оборудование и подготовить спецификации для проекта.
-seoTitle: Инжиниринг и пилотные проекты в Узбекистане | RailTech
+seoTitle: Инжиниринг и пилотные проекты в Узбекистане
 seoDescription: Техническое консультирование, предпроектная поддержка, пилотные проекты и сопровождение внедрения оборудования международных производителей в Узбекистане.
 uz:
   title: Injiniring
@@ -86,7 +86,7 @@ uz:
       a: Ha, tajriba-sinov ekspluatatsiyasi pilot loyihaning bir qismi. Shartlarni siz va ishlab chiqaruvchi bilan kelishamiz.
     - q: Loyiha tashkilotlari bilan ishlaysizmi?
       a: Ha. Loyiha uchun uskunalarni tanlash va spetsifikatsiyalarni tayyorlashda yordam beramiz.
-  seoTitle: O'zbekistonda injiniring va pilot loyihalar | RailTech
+  seoTitle: O'zbekistonda injiniring va pilot loyihalar
   seoDescription: Texnik maslahat, loyihaoldi bosqichida ko'mak, pilot loyihalar hamda O'zbekistonda xalqaro ishlab chiqaruvchilar uskunalarini joriy etishni kuzatib borish.
 en:
   title: Engineering
@@ -128,6 +128,6 @@ en:
       a: Yes, trial operation is part of the pilot project. We agree on the terms with you and the manufacturer.
     - q: Do you work with design organizations?
       a: Yes. We help select equipment and prepare specifications for the project.
-  seoTitle: Engineering and Pilot Projects in Uzbekistan | RailTech
+  seoTitle: Engineering and Pilot Projects in Uzbekistan
   seoDescription: Technical consulting, pre-design support, pilot projects and implementation support for international manufacturers' equipment in Uzbekistan.
 ---
