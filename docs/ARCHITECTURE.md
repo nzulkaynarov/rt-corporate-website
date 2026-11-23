@@ -1,5 +1,5 @@
 # Архитектура сайта railtech.uz (v2, ноябрь 2026)
-Статус: действует · Обновлено: 2026-11-04 · Прежняя версия (HUD/CAD-портал с каталогом) — ветки `archive/legacy-v1-main`, `archive/legacy-v1-content`
+Статус: действует · Обновлено: 2026-11-23 · Прежняя версия (HUD/CAD-портал с каталогом) — ветки `archive/legacy-v1-main`, `archive/legacy-v1-content`
 
 Этот документ — единственная правда о том, **какие страницы есть, откуда берутся данные и как сайт связан с платформой**.
 Агент или разработчик, который хочет добавить страницу, раздел, поле CMS или компонент, сначала правит этот документ
@@ -32,7 +32,7 @@ SEO и навигации нет «ж/д», серий локомотивов и
 | `/privacy/`, `/terms/`, `/cookies/` | `privacy.astro`, `terms.astro`, `cookies.astro` | Сервисные страницы (только в футере) | `data/cms/legal.json` |
 | `/404` | `src/pages/404.astro` | Страница не найдена | `pages.json → notFound` |
 | `/admin/` | `src/pages/admin.astro` | Sveltia CMS (версия зафиксирована) | `public/admin/config.yml` |
-| старые адреса | `src/pages/[...lang]/{catalog,blog,projects,about}/…` | Перенаправления (meta refresh + canonical, `noindex`) | `src/data/legacy-redirects.json` |
+| старые адреса v1 (`catalog`, `blog`, `projects`, `about`, …) | `src/pages/[...legacy].astro` | Перенаправления для ru/uz/en (meta refresh + canonical, `noindex`, вне sitemap) | `src/data/legacy-redirects.json` |
 
 Навигация (шапка): **Услуги · Новости · Контакты** + переключатель языка + кнопки **«Начать работу»** (форма заявки,
 `/contacts/#request`) и **«Войти в Кабинет»** (`company.json → cabinet.url` + `/login`). Футер: разделы, сервисные страницы,
@@ -146,7 +146,7 @@ Telegram ─► t.me/<бот>?start=web  (бот CRM, источник «сай�
 | `make install` | `npm ci` |
 | `make dev` | локальный сервер `http://localhost:4321/rt-corporate-website/` |
 | `make test` | unit-тесты (Vitest): i18n, SEO, форма заявки, навигация |
-| `make check` | схема CMS, правила контента (`--ru-only`), `astro check`, сборка, аудит `dist/` |
+| `make check` | схема CMS, правила контента (этап перевода из `content-stage.json`), unit-тесты, `astro check`, сборка, аудит `dist/` |
 | `make e2e` | Playwright по собранному сайту: страницы открываются, нет ошибок консоли, кнопки ведут куда нужно, нет горизонтальной прокрутки на телефоне, форма показывает ошибки и успех |
 | `make ci` | всё вместе, как в GitHub Actions |
 
