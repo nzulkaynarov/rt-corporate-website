@@ -11,7 +11,8 @@ import { newsRouteLocales } from './src/i18n/entry-langs.mjs';
 
 /** Not in the sitemap: CMS panel, v1 → v2 redirect pages (src/pages/[...legacy].astro), untranslated UZ/EN pages
  * (whole site while ruOnly, or sections listed in ruOnlySections — same rule as src/utils/stage.ts). */
-const LEGACY = Object.keys(legacy.redirects);
+// Redirect pages are built as directories, so their routes always end with a slash (also /pages/privacy.html → …html/).
+const LEGACY = Object.keys(legacy.redirects).map((from) => (from.endsWith('/') ? from : `${from}/`));
 /** «Новости» materials not yet translated into some locale (src/i18n/blocks.mjs → translatedLocales). */
 const NEWS_LOCALES = newsRouteLocales();
 const isExcluded = (pathname) => {

@@ -83,7 +83,9 @@
 4. Обложки 12 материалов (загрузка через админку).
 5. Рабочий Telegram-бот вместо `railtech_test_bot` (CMS → «Компания»).
 
-6. Ключ API для кнопки «Перевести» в админке (Настройки → переводчик: Claude Haiku, Gemini, Google Cloud Translation
+6. DNS: запись `www.railtech.uz` заменить на CNAME `nzulkaynarov.github.io.` (сейчас CNAME на `railtech.uz`, поэтому
+   `https://www.railtech.uz` не открывается — нет сертификата). Подробнее — `PRODUCTION_CUTOVER.md`.
+7. Ключ API для кнопки «Перевести» в админке (Настройки → переводчик: Claude Haiku, Gemini, Google Cloud Translation
    или Mistral; у Google и Mistral есть бесплатный уровень). Ключ хранится в браузере редактора, в репозиторий не попадает.
 
 ## 5. Нужно сделать в платформе (репозиторий RailTech_Platform), до прода
