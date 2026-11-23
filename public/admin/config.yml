@@ -838,7 +838,6 @@ collections:
                   - ru
             i18n: true
         i18n: true
-        description: 'Подстановки из «Компании»: `{phone}`, `{email}`, `{inn}`, `{site}`, `{cabinet}`, `{foundedYear}`, `{officeAddress}`, `{legalAddress}` — не пишите эти значения текстом.'
       - name: pages
         label: 'Страницы: Услуги, Новости, Контакты, 404'
         file: src/data/cms/pages.json
@@ -1169,7 +1168,6 @@ collections:
                 i18n: true
             i18n: true
         i18n: true
-        description: 'Подстановки из «Компании»: `{phone}`, `{email}`, `{inn}`, `{site}`, `{cabinet}`, `{foundedYear}`, `{officeAddress}`, `{legalAddress}` — не пишите эти значения текстом.'
       - name: seo
         label: SEO
         file: src/data/cms/seo.json
@@ -1385,7 +1383,6 @@ collections:
                 i18n: true
             i18n: true
         i18n: true
-        description: 'Подстановки из «Компании»: `{phone}`, `{email}`, `{inn}`, `{site}`, `{cabinet}`, `{foundedYear}`, `{officeAddress}`, `{legalAddress}` — не пишите эти значения текстом.'
     i18n: true
   - name: ui
     label: 4. Подписи интерфейса

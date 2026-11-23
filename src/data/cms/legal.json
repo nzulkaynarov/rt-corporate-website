@@ -6,7 +6,7 @@
   ],
   "privacy": {
     "title": "Политика обработки персональных данных",
-    "lead": "Как ООО «RailTech» собирает, использует, хранит и защищает персональные данные пользователей сайта {site} и Кабинета {cabinet} — в соответствии с Законом РУз № ЗРУ-547 «О персональных данных». Редакция от 4 ноября 2026 года.",
+    "lead": "Как ООО «RailTech» собирает, использует, хранит и защищает персональные данные пользователей сайта {site} и Кабинета {cabinet} — в соответствии с Законом РУз № ЗРУ-547 «О персональных данных».",
     "edition": "2026-11-04",
     "sections": [
       {
@@ -57,7 +57,7 @@
   },
   "terms": {
     "title": "Условия использования сайта и сервисов RailTech",
-    "lead": "Правила использования сайта {site}, Кабинета клиента и партнёра {cabinet} и Telegram-бота компании. Коммерческие условия поставок определяются коммерческим предложением и договором. Редакция от 4 ноября 2026 года.",
+    "lead": "Правила использования сайта {site}, Кабинета клиента и партнёра {cabinet} и Telegram-бота компании. Коммерческие условия поставок определяются коммерческим предложением и договором.",
     "edition": "2026-11-04",
     "sections": [
       {
@@ -124,7 +124,7 @@
   "uz": {
     "privacy": {
       "title": "Shaxsga doir ma'lumotlarga ishlov berish siyosati",
-      "lead": "«RailTech» MChJ {site} sayti va {cabinet} Kabineti foydalanuvchilarining shaxsga doir ma'lumotlarini qanday yig'ishi, ulardan foydalanishi, saqlashi va himoya qilishi — O'zR O'RQ-547-son «Shaxsga doir ma'lumotlar to'g'risida»gi Qonuniga muvofiq. 2026-yil 4-noyabrdagi tahrir.",
+      "lead": "«RailTech» MChJ {site} sayti va {cabinet} Kabineti foydalanuvchilarining shaxsga doir ma'lumotlarini qanday yig'ishi, ulardan foydalanishi, saqlashi va himoya qilishi — O'zR O'RQ-547-son «Shaxsga doir ma'lumotlar to'g'risida»gi Qonuniga muvofiq.",
       "sections": [
         {
           "title": "Umumiy qoidalar",
@@ -174,7 +174,7 @@
     },
     "terms": {
       "title": "RailTech sayti va xizmatlaridan foydalanish shartlari",
-      "lead": "{site} sayti, {cabinet} mijoz va hamkor Kabineti hamda kompaniya Telegram-botidan foydalanish qoidalari. Yetkazib berishning tijorat shartlari tijorat taklifi va shartnoma bilan belgilanadi. 2026-yil 4-noyabrdagi tahrir.",
+      "lead": "{site} sayti, {cabinet} mijoz va hamkor Kabineti hamda kompaniya Telegram-botidan foydalanish qoidalari. Yetkazib berishning tijorat shartlari tijorat taklifi va shartnoma bilan belgilanadi.",
       "sections": [
         {
           "title": "Umumiy qoidalar",
@@ -240,7 +240,7 @@
   "en": {
     "privacy": {
       "title": "Personal data processing policy",
-      "lead": "How RailTech LLC collects, uses, stores and protects personal data of users of the {site} website and the {cabinet} Cabinet, in accordance with Law of the Republic of Uzbekistan No. ZRU-547 \"On Personal Data\". Version of November 4, 2026.",
+      "lead": "How RailTech LLC collects, uses, stores and protects personal data of users of the {site} website and the {cabinet} Cabinet, in accordance with Law of the Republic of Uzbekistan No. ZRU-547 \"On Personal Data\".",
       "sections": [
         {
           "title": "General provisions",
@@ -290,7 +290,7 @@
     },
     "terms": {
       "title": "Terms of use of the RailTech website and services",
-      "lead": "Rules for using the {site} website, the {cabinet} Client & Partner Cabinet and the company's Telegram bot. Commercial terms of supply are set by the quotation and the contract. Version of November 4, 2026.",
+      "lead": "Rules for using the {site} website, the {cabinet} Client & Partner Cabinet and the company's Telegram bot. Commercial terms of supply are set by the quotation and the contract.",
       "sections": [
         {
           "title": "General provisions",
