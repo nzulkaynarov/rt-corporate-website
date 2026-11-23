@@ -193,6 +193,19 @@ if (warnings.length) {
   console.warn(`[check-build] ${warnings.length} warning(s):`);
   for (const w of warnings) console.warn('  ! ' + w);
 }
+// Sitemap: only real, indexable pages — no redirect pages, nothing noindex, nothing missing.
+for (const name of fs.readdirSync(DIST).filter((n) => /^sitemap-\d+\.xml$/.test(n))) {
+  const xml = fs.readFileSync(path.join(DIST, name), 'utf8');
+  for (const [, loc] of xml.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+    const route = decodeURI(new URL(loc).pathname).slice(BASE.length) || '/';
+    const file = path.join(DIST, route, 'index.html');
+    if (!fs.existsSync(file)) { errors.push(`${name}: ${loc} is not a page of the build`); continue; }
+    const html = fs.readFileSync(file, 'utf8');
+    if (/<meta[^>]+http-equiv="refresh"/i.test(html)) errors.push(`${name}: ${loc} is a redirect page (astro.config.mjs → isExcluded)`);
+    else if (/<meta[^>]+name="robots"[^>]+content="noindex/i.test(html)) errors.push(`${name}: ${loc} is noindex`);
+  }
+}
+
 if (errors.length) {
   console.error(`[check-build] ${errors.length} error(s) in ${files.length} pages:`);
   for (const e of errors) console.error('  - ' + e);
