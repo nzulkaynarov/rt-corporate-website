@@ -9,1294 +9,51 @@ media_folder: public/images/uploads
 public_folder: /images/uploads
 locale: ru
 collections:
-- name: services
-  label: 1. Услуги
-  label_singular: Услуга
-  folder: src/content/services
-  create: true
-  slug: '{{slug}}'
-  summary: '{{title}}'
-  sortable_fields:
-  - order
-  - title
-  fields:
-  - label: Для кого
-    name: audience
-    widget: select
-    options:
-    - label: Заказчикам
-      value: customers
-    - label: Партнёрам
-      value: partners
-  - label: Порядок
-    name: order
-    widget: number
-    value_type: int
-    default: 1
-  - label: Название [RU]
-    name: title
-    widget: string
-  - label: Название [UZ]
-    name: title_uz
-    widget: string
-    required: false
-  - label: Название [EN]
-    name: title_en
-    widget: string
-    required: false
-  - label: Кратко (для карточек и поиска) [RU]
-    name: summary
-    widget: text
-  - label: Кратко (для карточек и поиска) [UZ]
-    name: summary_uz
-    widget: text
-    required: false
-  - label: Кратко (для карточек и поиска) [EN]
-    name: summary_en
-    widget: text
-    required: false
-  - label: Вводный абзац [RU]
-    name: lead
-    widget: text
-  - label: Вводный абзац [UZ]
-    name: lead_uz
-    widget: text
-    required: false
-  - label: Вводный абзац [EN]
-    name: lead_en
-    widget: text
-    required: false
-  - label: Коротко (метка → значение)
-    name: highlights
-    widget: list
-    required: false
+  - name: services
+    label: 1. Услуги
+    label_singular: Услуга
+    folder: src/content/services
+    create: true
+    slug: '{{slug}}'
+    summary: '{{title}}'
+    sortable_fields:
+      - order
+      - title
     fields:
-    - label: Метка [RU]
-      name: label
-      widget: string
-    - label: Метка [UZ]
-      name: label_uz
-      widget: string
-      required: false
-    - label: Метка [EN]
-      name: label_en
-      widget: string
-      required: false
-    - label: Значение [RU]
-      name: value
-      widget: string
-    - label: Значение [UZ]
-      name: value_uz
-      widget: string
-      required: false
-    - label: Значение [EN]
-      name: value_en
-      widget: string
-      required: false
-  - label: Как работаем (по порядку)
-    name: steps
-    widget: list
-    required: false
-    fields: &id001
-    - label: Заголовок [RU]
-      name: title
-      widget: string
-    - label: Заголовок [UZ]
-      name: title_uz
-      widget: string
-      required: false
-    - label: Заголовок [EN]
-      name: title_en
-      widget: string
-      required: false
-    - label: Текст [RU]
-      name: text
-      widget: text
-    - label: Текст [UZ]
-      name: text_uz
-      widget: text
-      required: false
-    - label: Текст [EN]
-      name: text_en
-      widget: text
-      required: false
-  - label: Что получает клиент или партнёр
-    name: benefits
-    widget: list
-    required: false
-    fields: *id001
-  - label: Что нужно от партнёра (необязательно)
-    name: requirements
-    widget: list
-    required: false
-    fields: *id001
-  - label: Частые вопросы
-    name: faq
-    widget: list
-    required: false
-    fields:
-    - label: Вопрос [RU]
-      name: q
-      widget: string
-    - label: Вопрос [UZ]
-      name: q_uz
-      widget: string
-      required: false
-    - label: Вопрос [EN]
-      name: q_en
-      widget: string
-      required: false
-    - label: Ответ [RU]
-      name: a
-      widget: text
-    - label: Ответ [UZ]
-      name: a_uz
-      widget: text
-      required: false
-    - label: Ответ [EN]
-      name: a_en
-      widget: text
-      required: false
-  - &id002
-    label: 'Текст [RU]: подзаголовки ###, цитата, списки, таблица, фото с подписью, сноска текст[^1] + [^1]: пояснение'
-    name: body
-    widget: markdown
-    required: false
-    buttons: [bold, italic, link, heading-three, heading-four, quote, bulleted-list, numbered-list]
-    editor_components: [image]
-  - &id003
-    label: Текст [UZ]
-    name: body_uz
-    widget: markdown
-    required: false
-    buttons: [bold, italic, link, heading-three, heading-four, quote, bulleted-list, numbered-list]
-    editor_components: [image]
-  - &id004
-    label: Текст [EN]
-    name: body_en
-    widget: markdown
-    required: false
-    buttons: [bold, italic, link, heading-three, heading-four, quote, bulleted-list, numbered-list]
-    editor_components: [image]
-  - &id005
-    label: 'SEO: заголовок (≤ 60 знаков, пусто = название) [RU]'
-    name: seoTitle
-    widget: string
-    required: false
-  - &id006
-    label: 'SEO: заголовок (≤ 60 знаков, пусто = название) [UZ]'
-    name: seoTitle_uz
-    widget: string
-    required: false
-  - &id007
-    label: 'SEO: заголовок (≤ 60 знаков, пусто = название) [EN]'
-    name: seoTitle_en
-    widget: string
-    required: false
-  - &id008
-    label: 'SEO: описание (70–160 знаков, пусто = краткое описание) [RU]'
-    name: seoDescription
-    widget: text
-    required: false
-  - &id009
-    label: 'SEO: описание (70–160 знаков, пусто = краткое описание) [UZ]'
-    name: seoDescription_uz
-    widget: text
-    required: false
-  - &id010
-    label: 'SEO: описание (70–160 знаков, пусто = краткое описание) [EN]'
-    name: seoDescription_en
-    widget: text
-    required: false
-- name: news
-  label: 2. Новости, статьи, проекты, партнёры
-  label_singular: Материал
-  folder: src/content/news
-  create: true
-  slug: '{{slug}}'
-  summary: '{{date}} · {{title}}'
-  sortable_fields:
-  - date
-  - title
-  fields:
-  - label: Тип
-    name: type
-    widget: select
-    options:
-    - label: Новость
-      value: news
-    - label: Статья
-      value: article
-    - label: Проект
-      value: project
-    - label: О партнёре
-      value: partner
-  - label: Дата
-    name: date
-    widget: datetime
-    format: YYYY-MM-DD
-    date_format: DD.MM.YYYY
-    time_format: false
-  - label: Заголовок [RU]
-    name: title
-    widget: string
-  - label: Заголовок [UZ]
-    name: title_uz
-    widget: string
-    required: false
-  - label: Заголовок [EN]
-    name: title_en
-    widget: string
-    required: false
-  - label: Кратко (70–300 знаков) [RU]
-    name: summary
-    widget: text
-  - label: Кратко (70–300 знаков) [UZ]
-    name: summary_uz
-    widget: text
-    required: false
-  - label: Кратко (70–300 знаков) [EN]
-    name: summary_en
-    widget: text
-    required: false
-  - label: Обложка (своё фото или с разрешения)
-    name: cover
-    widget: image
-    required: false
-  - label: Описание обложки [RU]
-    name: coverAlt
-    widget: string
-    required: false
-  - label: Описание обложки [UZ]
-    name: coverAlt_uz
-    widget: string
-    required: false
-  - label: Описание обложки [EN]
-    name: coverAlt_en
-    widget: string
-    required: false
-  - label: Галерея (фото под текстом, открываются на весь экран)
-    name: gallery
-    widget: list
-    required: false
-    summary: '{{fields.alt}}'
-    fields:
-    - label: Фото
-      name: image
-      widget: image
-    - label: Описание фото [RU]
-      name: alt
-      widget: string
-      required: false
-    - label: Описание фото [UZ]
-      name: alt_uz
-      widget: string
-      required: false
-    - label: Описание фото [EN]
-      name: alt_en
-      widget: string
-      required: false
-  - label: Партнёры, о которых материал
-    name: partners
-    widget: relation
-    required: false
-    collection: site
-    file: partners
-    search_fields:
-    - partners.*.name
-    value_field: partners.*.id
-    display_fields:
-    - partners.*.name
-    multiple: true
-  - label: Закрепить
-    name: featured
-    widget: boolean
-    required: false
-    default: false
-  - *id002
-  - *id003
-  - *id004
-  - *id005
-  - *id006
-  - *id007
-  - *id008
-  - *id009
-  - *id010
-- name: site
-  label: 3. Тексты сайта и настройки
-  editor:
-    preview: false
-  files:
-  - name: company
-    label: 'Компания: реквизиты, контакты, Кабинет, цифры'
-    file: src/data/cms/company.json
-    fields:
-    - label: Бренд
-      name: brandName
-      widget: string
-    - label: Логотип (знак, SVG или PNG — шапка, футер, первый экран, поисковики)
-      name: logo
-      widget: image
-    - label: Заглушка фото (материал без обложки)
-      name: logoPlaceholder
-      widget: image
-    - label: Домен сайта (подпись на картинке для соцсетей)
-      name: siteDomain
-      widget: string
-    - label: Краткое наименование [RU]
-      name: companyName
-      widget: string
-    - label: Краткое наименование [UZ]
-      name: companyName_uz
-      widget: string
-      required: false
-    - label: Краткое наименование [EN]
-      name: companyName_en
-      widget: string
-      required: false
-    - label: Полное наименование [RU]
-      name: fullName
-      widget: string
-    - label: Полное наименование [UZ]
-      name: fullName_uz
-      widget: string
-      required: false
-    - label: Полное наименование [EN]
-      name: fullName_en
-      widget: string
-      required: false
-    - label: Год основания
-      name: foundedYear
-      widget: string
-    - label: ИНН
-      name: inn
-      widget: string
-    - label: Город [RU]
-      name: city
-      widget: string
-    - label: Город [UZ]
-      name: city_uz
-      widget: string
-      required: false
-    - label: Город [EN]
-      name: city_en
-      widget: string
-      required: false
-    - label: Код страны
-      name: countryCode
-      widget: string
-    - label: Юридический адрес [RU]
-      name: legalAddress
-      widget: string
-    - label: Юридический адрес [UZ]
-      name: legalAddress_uz
-      widget: string
-      required: false
-    - label: Юридический адрес [EN]
-      name: legalAddress_en
-      widget: string
-      required: false
-    - label: Адрес офиса [RU]
-      name: officeAddress
-      widget: string
-    - label: Адрес офиса [UZ]
-      name: officeAddress_uz
-      widget: string
-      required: false
-    - label: Адрес офиса [EN]
-      name: officeAddress_en
-      widget: string
-      required: false
-    - label: Телефон
-      name: phone
-      widget: string
-    - label: E-mail
-      name: email
-      widget: string
-    - label: Telegram-бот (имя без @)
-      name: telegramBot
-      widget: string
-      hint: 'Ссылка на сайте: t.me/<имя>?start=web'
-    - label: Банк
-      name: bank
-      widget: object
-      fields:
-      - label: Банк и филиал [RU]
-        name: name
-        widget: string
-      - label: Банк и филиал [UZ]
-        name: name_uz
-        widget: string
-        required: false
-      - label: Банк и филиал [EN]
-        name: name_en
-        widget: string
-        required: false
-      - label: МФО
-        name: mfo
-        widget: string
-      - label: Расчётный счёт
-        name: account
-        widget: string
-    - label: Кабинет
-      name: cabinet
-      widget: object
-      fields:
-      - label: Адрес Кабинета
-        name: url
-        widget: string
-      - label: Страница входа
-        name: loginUrl
-        widget: string
-      - label: Страница «Я новый клиент»
-        name: newClientUrl
-        widget: string
-    - label: Адрес приёма заявок (CRM)
-      name: leadEndpoint
-      widget: string
-      hint: POST заявки и GET …/token; см. docs/ARCHITECTURE.md §5
-    - label: Цифры на главной
-      name: metrics
-      widget: list
-      required: false
-      fields:
-      - label: Значение
-        name: value
-        widget: string
-      - label: Подпись [RU]
-        name: label
-        widget: string
-      - label: Подпись [UZ]
-        name: label_uz
-        widget: string
-        required: false
-      - label: Подпись [EN]
-        name: label_en
-        widget: string
-        required: false
-  - name: home
-    label: Главная
-    file: src/data/cms/home.json
-    fields:
-    - label: Первый экран
-      name: hero
-      widget: object
-      fields:
-      - label: Надзаголовок [RU]
-        name: eyebrow
-        widget: string
-      - label: Надзаголовок [UZ]
-        name: eyebrow_uz
-        widget: string
-        required: false
-      - label: Надзаголовок [EN]
-        name: eyebrow_en
-        widget: string
-        required: false
-      - label: Заголовок [RU]
-        name: title
-        widget: string
-      - label: Заголовок [UZ]
-        name: title_uz
-        widget: string
-        required: false
-      - label: Заголовок [EN]
-        name: title_en
-        widget: string
-        required: false
-      - label: Подзаголовок [RU]
-        name: lead
-        widget: text
-      - label: Подзаголовок [UZ]
-        name: lead_uz
-        widget: text
-        required: false
-      - label: Подзаголовок [EN]
-        name: lead_en
-        widget: text
-        required: false
-      - label: Входы для аудиторий
-        name: entries
-        widget: list
-        required: false
-        fields:
-        - label: Заголовок [RU]
-          name: title
-          widget: string
-        - label: Заголовок [UZ]
-          name: title_uz
-          widget: string
-          required: false
-        - label: Заголовок [EN]
-          name: title_en
-          widget: string
-          required: false
-        - label: Текст [RU]
-          name: text
-          widget: text
-        - label: Текст [UZ]
-          name: text_uz
-          widget: text
-          required: false
-        - label: Текст [EN]
-          name: text_en
-          widget: text
-          required: false
-        - label: Ссылка (маршрут, напр. /services/supply/)
-          name: link
-          widget: string
-    - label: 'Мост: барьеры и решения'
-      name: bridge
-      widget: object
-      fields:
-      - label: Надзаголовок [RU]
-        name: eyebrow
-        widget: string
-      - label: Надзаголовок [UZ]
-        name: eyebrow_uz
-        widget: string
-        required: false
-      - label: Надзаголовок [EN]
-        name: eyebrow_en
-        widget: string
-        required: false
-      - label: Заголовок [RU]
-        name: title
-        widget: string
-      - label: Заголовок [UZ]
-        name: title_uz
-        widget: string
-        required: false
-      - label: Заголовок [EN]
-        name: title_en
-        widget: string
-        required: false
-      - label: Колонка «Заказчик» [RU]
-        name: customerTitle
-        widget: string
-      - label: Колонка «Заказчик» [UZ]
-        name: customerTitle_uz
-        widget: string
-        required: false
-      - label: Колонка «Заказчик» [EN]
-        name: customerTitle_en
-        widget: string
-        required: false
-      - label: Пояснение «Заказчик» [RU]
-        name: customerNote
-        widget: string
-      - label: Пояснение «Заказчик» [UZ]
-        name: customerNote_uz
-        widget: string
-        required: false
-      - label: Пояснение «Заказчик» [EN]
-        name: customerNote_en
-        widget: string
-        required: false
-      - label: Колонка RailTech [RU]
-        name: railtechTitle
-        widget: string
-      - label: Колонка RailTech [UZ]
-        name: railtechTitle_uz
-        widget: string
-        required: false
-      - label: Колонка RailTech [EN]
-        name: railtechTitle_en
-        widget: string
-        required: false
-      - label: Пояснение RailTech [RU]
-        name: railtechNote
-        widget: string
-      - label: Пояснение RailTech [UZ]
-        name: railtechNote_uz
-        widget: string
-        required: false
-      - label: Пояснение RailTech [EN]
-        name: railtechNote_en
-        widget: string
-        required: false
-      - label: Колонка «Партнёр» [RU]
-        name: partnerTitle
-        widget: string
-      - label: Колонка «Партнёр» [UZ]
-        name: partnerTitle_uz
-        widget: string
-        required: false
-      - label: Колонка «Партнёр» [EN]
-        name: partnerTitle_en
-        widget: string
-        required: false
-      - label: Пояснение «Партнёр» [RU]
-        name: partnerNote
-        widget: string
-      - label: Пояснение «Партнёр» [UZ]
-        name: partnerNote_uz
-        widget: string
-        required: false
-      - label: Пояснение «Партнёр» [EN]
-        name: partnerNote_en
-        widget: string
-        required: false
-      - label: Этапы
-        name: rows
-        widget: list
-        required: false
-        fields:
-        - label: Этап [RU]
-          name: stage
-          widget: string
-        - label: Этап [UZ]
-          name: stage_uz
-          widget: string
-          required: false
-        - label: Этап [EN]
-          name: stage_en
-          widget: string
-          required: false
-        - label: Заказчик теряет [RU]
-          name: customer
-          widget: text
-        - label: Заказчик теряет [UZ]
-          name: customer_uz
-          widget: text
-          required: false
-        - label: Заказчик теряет [EN]
-          name: customer_en
-          widget: text
-          required: false
-        - label: RailTech берёт на себя [RU]
-          name: railtech
-          widget: text
-        - label: RailTech берёт на себя [UZ]
-          name: railtech_uz
-          widget: text
-          required: false
-        - label: RailTech берёт на себя [EN]
-          name: railtech_en
-          widget: text
-          required: false
-        - label: Партнёр теряет [RU]
-          name: partner
-          widget: text
-        - label: Партнёр теряет [UZ]
-          name: partner_uz
-          widget: text
-          required: false
-        - label: Партнёр теряет [EN]
-          name: partner_en
-          widget: text
-          required: false
-    - label: Возможности
-      name: directions
-      widget: object
-      fields:
-      - label: Надзаголовок [RU]
-        name: eyebrow
-        widget: string
-      - label: Надзаголовок [UZ]
-        name: eyebrow_uz
-        widget: string
-        required: false
-      - label: Надзаголовок [EN]
-        name: eyebrow_en
-        widget: string
-        required: false
-      - label: Заголовок [RU]
-        name: title
-        widget: string
-      - label: Заголовок [UZ]
-        name: title_uz
-        widget: string
-        required: false
-      - label: Заголовок [EN]
-        name: title_en
-        widget: string
-        required: false
-    - label: О компании
-      name: about
-      widget: object
-      fields:
-      - label: Надзаголовок [RU]
-        name: eyebrow
-        widget: string
-      - label: Надзаголовок [UZ]
-        name: eyebrow_uz
-        widget: string
-        required: false
-      - label: Надзаголовок [EN]
-        name: eyebrow_en
-        widget: string
-        required: false
-      - label: Заголовок [RU]
-        name: title
-        widget: string
-      - label: Заголовок [UZ]
-        name: title_uz
-        widget: string
-        required: false
-      - label: Заголовок [EN]
-        name: title_en
-        widget: string
-        required: false
-      - label: Текст [RU]
-        name: text
-        widget: text
-      - label: Текст [UZ]
-        name: text_uz
-        widget: text
-        required: false
-      - label: Текст [EN]
-        name: text_en
-        widget: text
-        required: false
-      - label: Миссия [RU]
-        name: mission
-        widget: text
-      - label: Миссия [UZ]
-        name: mission_uz
-        widget: text
-        required: false
-      - label: Миссия [EN]
-        name: mission_en
-        widget: text
-        required: false
-    - label: Производители
-      name: partners
-      widget: object
-      fields:
-      - label: Надзаголовок [RU]
-        name: eyebrow
-        widget: string
-      - label: Надзаголовок [UZ]
-        name: eyebrow_uz
-        widget: string
-        required: false
-      - label: Надзаголовок [EN]
-        name: eyebrow_en
-        widget: string
-        required: false
-      - label: Заголовок [RU]
-        name: title
-        widget: string
-      - label: Заголовок [UZ]
-        name: title_uz
-        widget: string
-        required: false
-      - label: Заголовок [EN]
-        name: title_en
-        widget: string
-        required: false
-      - label: Пояснение [RU]
-        name: note
-        widget: text
-      - label: Пояснение [UZ]
-        name: note_uz
-        widget: text
-        required: false
-      - label: Пояснение [EN]
-        name: note_en
-        widget: text
-        required: false
-    - label: Кабинет
-      name: cabinet
-      widget: object
-      fields:
-      - label: Надзаголовок [RU]
-        name: eyebrow
-        widget: string
-      - label: Надзаголовок [UZ]
-        name: eyebrow_uz
-        widget: string
-        required: false
-      - label: Надзаголовок [EN]
-        name: eyebrow_en
-        widget: string
-        required: false
-      - label: Заголовок [RU]
-        name: title
-        widget: string
-      - label: Заголовок [UZ]
-        name: title_uz
-        widget: string
-        required: false
-      - label: Заголовок [EN]
-        name: title_en
-        widget: string
-        required: false
-      - label: Текст [RU]
-        name: text
-        widget: text
-      - label: Текст [UZ]
-        name: text_uz
-        widget: text
-        required: false
-      - label: Текст [EN]
-        name: text_en
-        widget: text
-        required: false
-      - label: Факты
-        name: facts
-        widget: list
-        required: false
-        fields:
-        - label: Значение [RU]
-          name: value
-          widget: string
-        - label: Значение [UZ]
-          name: value_uz
-          widget: string
-          required: false
-        - label: Значение [EN]
-          name: value_en
-          widget: string
-          required: false
-        - label: Подпись [RU]
-          name: label
-          widget: string
-        - label: Подпись [UZ]
-          name: label_uz
-          widget: string
-          required: false
-        - label: Подпись [EN]
-          name: label_en
-          widget: string
-          required: false
-      - label: Иллюстрация сделки
-        name: demo
-        widget: object
-        fields:
-        - label: Название [RU]
-          name: title
-          widget: string
-        - label: Название [UZ]
-          name: title_uz
-          widget: string
-          required: false
-        - label: Название [EN]
-          name: title_en
-          widget: string
-          required: false
-        - label: Пометка [RU]
-          name: note
-          widget: string
-        - label: Пометка [UZ]
-          name: note_uz
-          widget: string
-          required: false
-        - label: Пометка [EN]
-          name: note_en
-          widget: string
-          required: false
-        - label: Стадии [RU]
-          name: stages
-          widget: list
-          field:
-            label: Стадия
-            name: stage
-            widget: string
-        - label: Стадии [UZ]
-          name: stages_uz
-          widget: list
-          required: false
-          field:
-            label: Стадия
-            name: stage
-            widget: string
-        - label: Стадии [EN]
-          name: stages_en
-          widget: list
-          required: false
-          field:
-            label: Стадия
-            name: stage
-            widget: string
-        - label: Текущая стадия (номер с 0)
-          name: current
-          widget: number
-          value_type: int
-        - label: Строки
-          name: rows
-          widget: list
-          required: false
-          fields:
-          - label: Документ [RU]
-            name: label
-            widget: string
-          - label: Документ [UZ]
-            name: label_uz
-            widget: string
-            required: false
-          - label: Документ [EN]
-            name: label_en
-            widget: string
-            required: false
-          - label: Статус [RU]
-            name: status
-            widget: string
-          - label: Статус [UZ]
-            name: status_uz
-            widget: string
-            required: false
-          - label: Статус [EN]
-            name: status_en
-            widget: string
-            required: false
-          - label: Цвет статуса
-            name: tone
-            widget: select
-            options:
-            - ok
-            - wait
-            - neutral
-        - label: Подпись снизу [RU]
-          name: footnote
-          widget: string
-        - label: Подпись снизу [UZ]
-          name: footnote_uz
-          widget: string
-          required: false
-        - label: Подпись снизу [EN]
-          name: footnote_en
-          widget: string
-          required: false
-    - label: Новости
-      name: news
-      widget: object
-      fields:
-      - label: Надзаголовок [RU]
-        name: eyebrow
-        widget: string
-      - label: Надзаголовок [UZ]
-        name: eyebrow_uz
-        widget: string
-        required: false
-      - label: Надзаголовок [EN]
-        name: eyebrow_en
-        widget: string
-        required: false
-      - label: Заголовок [RU]
-        name: title
-        widget: string
-      - label: Заголовок [UZ]
-        name: title_uz
-        widget: string
-        required: false
-      - label: Заголовок [EN]
-        name: title_en
-        widget: string
-        required: false
-    - label: Приглашение и заявка
-      name: invite
-      widget: object
-      fields:
-      - label: Надзаголовок [RU]
-        name: eyebrow
-        widget: string
-      - label: Надзаголовок [UZ]
-        name: eyebrow_uz
-        widget: string
-        required: false
-      - label: Надзаголовок [EN]
-        name: eyebrow_en
-        widget: string
-        required: false
-      - label: Заголовок [RU]
-        name: title
-        widget: string
-      - label: Заголовок [UZ]
-        name: title_uz
-        widget: string
-        required: false
-      - label: Заголовок [EN]
-        name: title_en
-        widget: string
-        required: false
-      - label: Текст [RU]
-        name: text
-        widget: text
-      - label: Текст [UZ]
-        name: text_uz
-        widget: text
-        required: false
-      - label: Текст [EN]
-        name: text_en
-        widget: text
-        required: false
-  - name: pages
-    label: 'Страницы: Услуги, Новости, Контакты, 404'
-    file: src/data/cms/pages.json
-    fields:
-    - label: Услуги (обзор)
-      name: services
-      widget: object
-      fields:
-      - label: Надзаголовок [RU]
-        name: eyebrow
-        widget: string
-      - label: Надзаголовок [UZ]
-        name: eyebrow_uz
-        widget: string
-        required: false
-      - label: Надзаголовок [EN]
-        name: eyebrow_en
-        widget: string
-        required: false
-      - label: Заголовок [RU]
-        name: title
-        widget: string
-      - label: Заголовок [UZ]
-        name: title_uz
-        widget: string
-        required: false
-      - label: Заголовок [EN]
-        name: title_en
-        widget: string
-        required: false
-      - label: Вводный абзац [RU]
-        name: lead
-        widget: text
-      - label: Вводный абзац [UZ]
-        name: lead_uz
-        widget: text
-        required: false
-      - label: Вводный абзац [EN]
-        name: lead_en
-        widget: text
-        required: false
-      - label: Группа «Заказчикам» [RU]
-        name: customersTitle
-        widget: string
-      - label: Группа «Заказчикам» [UZ]
-        name: customersTitle_uz
-        widget: string
-        required: false
-      - label: Группа «Заказчикам» [EN]
-        name: customersTitle_en
-        widget: string
-        required: false
-      - label: Описание группы [RU]
-        name: customersText
-        widget: text
-      - label: Описание группы [UZ]
-        name: customersText_uz
-        widget: text
-        required: false
-      - label: Описание группы [EN]
-        name: customersText_en
-        widget: text
-        required: false
-      - label: Группа «Партнёрам» [RU]
-        name: partnersTitle
-        widget: string
-      - label: Группа «Партнёрам» [UZ]
-        name: partnersTitle_uz
-        widget: string
-        required: false
-      - label: Группа «Партнёрам» [EN]
-        name: partnersTitle_en
-        widget: string
-        required: false
-      - label: Описание группы [RU]
-        name: partnersText
-        widget: text
-      - label: Описание группы [UZ]
-        name: partnersText_uz
-        widget: text
-        required: false
-      - label: Описание группы [EN]
-        name: partnersText_en
-        widget: text
-        required: false
-    - label: Новости
-      name: news
-      widget: object
-      fields:
-      - label: Надзаголовок [RU]
-        name: eyebrow
-        widget: string
-      - label: Надзаголовок [UZ]
-        name: eyebrow_uz
-        widget: string
-        required: false
-      - label: Надзаголовок [EN]
-        name: eyebrow_en
-        widget: string
-        required: false
-      - label: Заголовок [RU]
-        name: title
-        widget: string
-      - label: Заголовок [UZ]
-        name: title_uz
-        widget: string
-        required: false
-      - label: Заголовок [EN]
-        name: title_en
-        widget: string
-        required: false
-      - label: Вводный абзац [RU]
-        name: lead
-        widget: text
-      - label: Вводный абзац [UZ]
-        name: lead_uz
-        widget: text
-        required: false
-      - label: Вводный абзац [EN]
-        name: lead_en
-        widget: text
-        required: false
-    - label: Контакты
-      name: contacts
-      widget: object
-      fields:
-      - label: Надзаголовок [RU]
-        name: eyebrow
-        widget: string
-      - label: Надзаголовок [UZ]
-        name: eyebrow_uz
-        widget: string
-        required: false
-      - label: Надзаголовок [EN]
-        name: eyebrow_en
-        widget: string
-        required: false
-      - label: Заголовок [RU]
-        name: title
-        widget: string
-      - label: Заголовок [UZ]
-        name: title_uz
-        widget: string
-        required: false
-      - label: Заголовок [EN]
-        name: title_en
-        widget: string
-        required: false
-      - label: Вводный абзац [RU]
-        name: lead
-        widget: text
-      - label: Вводный абзац [UZ]
-        name: lead_uz
-        widget: text
-        required: false
-      - label: Вводный абзац [EN]
-        name: lead_en
-        widget: text
-        required: false
-      - label: Заголовок формы [RU]
-        name: formTitle
-        widget: string
-      - label: Заголовок формы [UZ]
-        name: formTitle_uz
-        widget: string
-        required: false
-      - label: Заголовок формы [EN]
-        name: formTitle_en
-        widget: string
-        required: false
-      - label: Текст у формы [RU]
-        name: formText
-        widget: text
-      - label: Текст у формы [UZ]
-        name: formText_uz
-        widget: text
-        required: false
-      - label: Текст у формы [EN]
-        name: formText_en
-        widget: text
-        required: false
-    - label: Страница 404
-      name: notFound
-      widget: object
-      fields:
-      - label: Заголовок [RU]
-        name: title
-        widget: string
-      - label: Заголовок [UZ]
-        name: title_uz
-        widget: string
-        required: false
-      - label: Заголовок [EN]
-        name: title_en
-        widget: string
-        required: false
-      - label: Текст [RU]
-        name: text
-        widget: text
-      - label: Текст [UZ]
-        name: text_uz
-        widget: text
-        required: false
-      - label: Текст [EN]
-        name: text_en
-        widget: text
-        required: false
-  - name: partners
-    label: Производители-партнёры (плитки)
-    file: src/data/cms/partners.json
-    fields:
-    - label: Производители
-      name: partners
-      widget: list
-      required: false
-      fields:
-      - label: ID (латиница, не менять после публикации)
-        name: id
-        widget: string
-      - label: Название [RU]
-        name: name
-        widget: string
-      - label: Название [UZ]
-        name: name_uz
-        widget: string
-        required: false
-      - label: Название [EN]
-        name: name_en
-        widget: string
-        required: false
-      - label: Страна [RU]
-        name: country
-        widget: string
-      - label: Страна [UZ]
-        name: country_uz
-        widget: string
-        required: false
-      - label: Страна [EN]
-        name: country_en
-        widget: string
-        required: false
-      - label: Статус RailTech
-        name: status
+      - label: Для кого
+        name: audience
         widget: select
         options:
-        - label: Официальный дилер (есть документ)
-          value: dealer
-        - label: Прямые поставки
-          value: direct
-      - label: Статья о партнёре (имя файла в Новостях без .md)
-        name: article
-        widget: string
-        required: false
+          - label: Заказчикам
+            value: customers
+          - label: Партнёрам
+            value: partners
       - label: Порядок
         name: order
         widget: number
         value_type: int
-  - name: legal
-    label: Юридические страницы
-    file: src/data/cms/legal.json
-    fields:
-    - label: Политика конфиденциальности
-      name: privacy
-      widget: object
-      fields:
-      - label: Заголовок [RU]
+        default: 1
+      - label: Название [RU]
         name: title
         widget: string
-      - label: Заголовок [UZ]
+      - label: Название [UZ]
         name: title_uz
         widget: string
         required: false
-      - label: Заголовок [EN]
+      - label: Название [EN]
         name: title_en
         widget: string
+        required: false
+      - label: Кратко (для карточек и поиска) [RU]
+        name: summary
+        widget: text
+      - label: Кратко (для карточек и поиска) [UZ]
+        name: summary_uz
+        widget: text
+        required: false
+      - label: Кратко (для карточек и поиска) [EN]
+        name: summary_en
+        widget: text
         required: false
       - label: Вводный абзац [RU]
         name: lead
@@ -1309,48 +66,204 @@ collections:
         name: lead_en
         widget: text
         required: false
-      - label: Редакция [RU]
-        name: edition
-        widget: string
-      - label: Редакция [UZ]
-        name: edition_uz
-        widget: string
-        required: false
-      - label: Редакция [EN]
-        name: edition_en
-        widget: string
-        required: false
-      - label: Разделы
-        name: sections
+      - label: Коротко (метка → значение)
+        name: highlights
         widget: list
         required: false
         fields:
-        - label: Заголовок раздела [RU]
-          name: title
-          widget: string
-        - label: Заголовок раздела [UZ]
-          name: title_uz
-          widget: string
-          required: false
-        - label: Заголовок раздела [EN]
-          name: title_en
-          widget: string
-          required: false
-        - label: Текст раздела [RU]
-          name: content
-          widget: text
-        - label: Текст раздела [UZ]
-          name: content_uz
-          widget: text
-          required: false
-        - label: Текст раздела [EN]
-          name: content_en
-          widget: text
-          required: false
-    - label: Условия использования
-      name: terms
-      widget: object
-      fields:
+          - label: Метка [RU]
+            name: label
+            widget: string
+          - label: Метка [UZ]
+            name: label_uz
+            widget: string
+            required: false
+          - label: Метка [EN]
+            name: label_en
+            widget: string
+            required: false
+          - label: Значение [RU]
+            name: value
+            widget: string
+          - label: Значение [UZ]
+            name: value_uz
+            widget: string
+            required: false
+          - label: Значение [EN]
+            name: value_en
+            widget: string
+            required: false
+      - label: Как работаем (по порядку)
+        name: steps
+        widget: list
+        required: false
+        fields: &ref_0
+          - label: Заголовок [RU]
+            name: title
+            widget: string
+          - label: Заголовок [UZ]
+            name: title_uz
+            widget: string
+            required: false
+          - label: Заголовок [EN]
+            name: title_en
+            widget: string
+            required: false
+          - label: Текст [RU]
+            name: text
+            widget: text
+          - label: Текст [UZ]
+            name: text_uz
+            widget: text
+            required: false
+          - label: Текст [EN]
+            name: text_en
+            widget: text
+            required: false
+      - label: Что получает клиент или партнёр
+        name: benefits
+        widget: list
+        required: false
+        fields: *ref_0
+      - label: Что нужно от партнёра (необязательно)
+        name: requirements
+        widget: list
+        required: false
+        fields: *ref_0
+      - label: Частые вопросы
+        name: faq
+        widget: list
+        required: false
+        fields:
+          - label: Вопрос [RU]
+            name: q
+            widget: string
+          - label: Вопрос [UZ]
+            name: q_uz
+            widget: string
+            required: false
+          - label: Вопрос [EN]
+            name: q_en
+            widget: string
+            required: false
+          - label: Ответ [RU]
+            name: a
+            widget: text
+          - label: Ответ [UZ]
+            name: a_uz
+            widget: text
+            required: false
+          - label: Ответ [EN]
+            name: a_en
+            widget: text
+            required: false
+      - &ref_1
+        label: 'Текст [RU]: подзаголовки ###, цитата, списки, таблица, фото с подписью, сноска текст[^1] + [^1]: пояснение'
+        name: body
+        widget: markdown
+        required: false
+        buttons:
+          - bold
+          - italic
+          - link
+          - heading-three
+          - heading-four
+          - quote
+          - bulleted-list
+          - numbered-list
+        editor_components:
+          - image
+      - &ref_2
+        label: Текст [UZ]
+        name: body_uz
+        widget: markdown
+        required: false
+        buttons:
+          - bold
+          - italic
+          - link
+          - heading-three
+          - heading-four
+          - quote
+          - bulleted-list
+          - numbered-list
+        editor_components:
+          - image
+      - &ref_3
+        label: Текст [EN]
+        name: body_en
+        widget: markdown
+        required: false
+        buttons:
+          - bold
+          - italic
+          - link
+          - heading-three
+          - heading-four
+          - quote
+          - bulleted-list
+          - numbered-list
+        editor_components:
+          - image
+      - &ref_4
+        label: 'SEO: заголовок (≤ 60 знаков, пусто = название) [RU]'
+        name: seoTitle
+        widget: string
+        required: false
+      - &ref_5
+        label: 'SEO: заголовок (≤ 60 знаков, пусто = название) [UZ]'
+        name: seoTitle_uz
+        widget: string
+        required: false
+      - &ref_6
+        label: 'SEO: заголовок (≤ 60 знаков, пусто = название) [EN]'
+        name: seoTitle_en
+        widget: string
+        required: false
+      - &ref_7
+        label: 'SEO: описание (70–160 знаков, пусто = краткое описание) [RU]'
+        name: seoDescription
+        widget: text
+        required: false
+      - &ref_8
+        label: 'SEO: описание (70–160 знаков, пусто = краткое описание) [UZ]'
+        name: seoDescription_uz
+        widget: text
+        required: false
+      - &ref_9
+        label: 'SEO: описание (70–160 знаков, пусто = краткое описание) [EN]'
+        name: seoDescription_en
+        widget: text
+        required: false
+  - name: news
+    label: 2. Новости, статьи, проекты, партнёры
+    label_singular: Материал
+    folder: src/content/news
+    create: true
+    slug: '{{slug}}'
+    summary: '{{date}} · {{title}}'
+    sortable_fields:
+      - date
+      - title
+    fields:
+      - label: Тип
+        name: type
+        widget: select
+        options:
+          - label: Новость
+            value: news
+          - label: Статья
+            value: article
+          - label: Проект
+            value: project
+          - label: О партнёре
+            value: partner
+      - label: Дата
+        name: date
+        widget: datetime
+        format: YYYY-MM-DD
+        date_format: DD.MM.YYYY
+        time_format: false
       - label: Заголовок [RU]
         name: title
         widget: string
@@ -1362,550 +275,1664 @@ collections:
         name: title_en
         widget: string
         required: false
-      - label: Вводный абзац [RU]
-        name: lead
+      - label: Кратко (70–300 знаков) [RU]
+        name: summary
         widget: text
-      - label: Вводный абзац [UZ]
-        name: lead_uz
-        widget: text
-        required: false
-      - label: Вводный абзац [EN]
-        name: lead_en
+      - label: Кратко (70–300 знаков) [UZ]
+        name: summary_uz
         widget: text
         required: false
-      - label: Редакция [RU]
-        name: edition
-        widget: string
-      - label: Редакция [UZ]
-        name: edition_uz
+      - label: Кратко (70–300 знаков) [EN]
+        name: summary_en
+        widget: text
+        required: false
+      - label: Обложка (своё фото или с разрешения)
+        name: cover
+        widget: image
+        required: false
+      - label: Описание обложки [RU]
+        name: coverAlt
         widget: string
         required: false
-      - label: Редакция [EN]
-        name: edition_en
+      - label: Описание обложки [UZ]
+        name: coverAlt_uz
         widget: string
         required: false
-      - label: Разделы
-        name: sections
+      - label: Описание обложки [EN]
+        name: coverAlt_en
+        widget: string
+        required: false
+      - label: Галерея (фото под текстом, открываются на весь экран)
+        name: gallery
         widget: list
         required: false
+        summary: '{{fields.alt}}'
         fields:
-        - label: Заголовок раздела [RU]
-          name: title
-          widget: string
-        - label: Заголовок раздела [UZ]
-          name: title_uz
-          widget: string
-          required: false
-        - label: Заголовок раздела [EN]
-          name: title_en
-          widget: string
-          required: false
-        - label: Текст раздела [RU]
-          name: content
-          widget: text
-        - label: Текст раздела [UZ]
-          name: content_uz
-          widget: text
-          required: false
-        - label: Текст раздела [EN]
-          name: content_en
-          widget: text
-          required: false
-    - label: Cookies
-      name: cookies
-      widget: object
-      fields:
-      - label: Заголовок [RU]
-        name: title
-        widget: string
-      - label: Заголовок [UZ]
-        name: title_uz
-        widget: string
+          - label: Фото
+            name: image
+            widget: image
+          - label: Описание фото [RU]
+            name: alt
+            widget: string
+            required: false
+          - label: Описание фото [UZ]
+            name: alt_uz
+            widget: string
+            required: false
+          - label: Описание фото [EN]
+            name: alt_en
+            widget: string
+            required: false
+      - label: Партнёры, о которых материал
+        name: partners
+        widget: relation
         required: false
-      - label: Заголовок [EN]
-        name: title_en
-        widget: string
+        collection: site
+        file: partners
+        search_fields:
+          - partners.*.name
+        value_field: partners.*.id
+        display_fields:
+          - partners.*.name
+        multiple: true
+      - label: Закрепить
+        name: featured
+        widget: boolean
         required: false
-      - label: Вводный абзац [RU]
-        name: lead
-        widget: text
-      - label: Вводный абзац [UZ]
-        name: lead_uz
-        widget: text
-        required: false
-      - label: Вводный абзац [EN]
-        name: lead_en
-        widget: text
-        required: false
-      - label: Редакция [RU]
-        name: edition
-        widget: string
-      - label: Редакция [UZ]
-        name: edition_uz
-        widget: string
-        required: false
-      - label: Редакция [EN]
-        name: edition_en
-        widget: string
-        required: false
-      - label: Разделы
-        name: sections
-        widget: list
-        required: false
+        default: false
+      - *ref_1
+      - *ref_2
+      - *ref_3
+      - *ref_4
+      - *ref_5
+      - *ref_6
+      - *ref_7
+      - *ref_8
+      - *ref_9
+  - name: site
+    label: 3. Тексты сайта и настройки
+    editor:
+      preview: false
+    files:
+      - name: company
+        label: 'Компания: реквизиты, контакты, Кабинет, цифры'
+        file: src/data/cms/company.json
         fields:
-        - label: Заголовок раздела [RU]
-          name: title
-          widget: string
-        - label: Заголовок раздела [UZ]
-          name: title_uz
-          widget: string
-          required: false
-        - label: Заголовок раздела [EN]
-          name: title_en
-          widget: string
-          required: false
-        - label: Текст раздела [RU]
-          name: content
-          widget: text
-        - label: Текст раздела [UZ]
-          name: content_uz
-          widget: text
-          required: false
-        - label: Текст раздела [EN]
-          name: content_en
-          widget: text
-          required: false
-  - name: seo
-    label: SEO
-    file: src/data/cms/seo.json
-    fields:
-    - label: Название сайта [RU]
-      name: siteName
-      widget: string
-    - label: Название сайта [UZ]
-      name: siteName_uz
-      widget: string
-      required: false
-    - label: Название сайта [EN]
-      name: siteName_en
-      widget: string
-      required: false
-    - label: Суффикс заголовка
-      name: titleSuffix
-      widget: string
-    - label: Картинка для соцсетей
-      name: defaultImage
-      widget: image
-    - label: Описание организации (schema.org) [RU]
-      name: organizationDescription
-      widget: text
-    - label: Описание организации (schema.org) [UZ]
-      name: organizationDescription_uz
-      widget: text
-      required: false
-    - label: Описание организации (schema.org) [EN]
-      name: organizationDescription_en
-      widget: text
-      required: false
-    - label: Компетенции [RU]
-      name: knowsAbout
-      widget: list
-      field:
-        label: Тема
-        name: topic
-        widget: string
-    - label: Компетенции [UZ]
-      name: knowsAbout_uz
-      widget: list
-      required: false
-      field:
-        label: Тема
-        name: topic
-        widget: string
-    - label: Компетенции [EN]
-      name: knowsAbout_en
-      widget: list
-      required: false
-      field:
-        label: Тема
-        name: topic
-        widget: string
-    - label: Страницы
-      name: pages
-      widget: object
-      fields:
-      - label: Главная
-        name: home
-        widget: object
+          - label: Бренд
+            name: brandName
+            widget: string
+          - label: Логотип (знак, SVG или PNG — шапка, футер, первый экран, поисковики)
+            name: logo
+            widget: image
+          - label: Заглушка фото (материал без обложки)
+            name: logoPlaceholder
+            widget: image
+          - label: Домен сайта (подпись на картинке для соцсетей)
+            name: siteDomain
+            widget: string
+          - label: Краткое наименование [RU]
+            name: companyName
+            widget: string
+          - label: Краткое наименование [UZ]
+            name: companyName_uz
+            widget: string
+            required: false
+          - label: Краткое наименование [EN]
+            name: companyName_en
+            widget: string
+            required: false
+          - label: Полное наименование [RU]
+            name: fullName
+            widget: string
+          - label: Полное наименование [UZ]
+            name: fullName_uz
+            widget: string
+            required: false
+          - label: Полное наименование [EN]
+            name: fullName_en
+            widget: string
+            required: false
+          - label: Год основания
+            name: foundedYear
+            widget: string
+          - label: ИНН
+            name: inn
+            widget: string
+          - label: Город [RU]
+            name: city
+            widget: string
+          - label: Город [UZ]
+            name: city_uz
+            widget: string
+            required: false
+          - label: Город [EN]
+            name: city_en
+            widget: string
+            required: false
+          - label: Код страны
+            name: countryCode
+            widget: string
+          - label: Юридический адрес [RU]
+            name: legalAddress
+            widget: string
+          - label: Юридический адрес [UZ]
+            name: legalAddress_uz
+            widget: string
+            required: false
+          - label: Юридический адрес [EN]
+            name: legalAddress_en
+            widget: string
+            required: false
+          - label: Адрес офиса [RU]
+            name: officeAddress
+            widget: string
+          - label: Адрес офиса [UZ]
+            name: officeAddress_uz
+            widget: string
+            required: false
+          - label: Адрес офиса [EN]
+            name: officeAddress_en
+            widget: string
+            required: false
+          - label: Телефон
+            name: phone
+            widget: string
+          - label: E-mail
+            name: email
+            widget: string
+          - label: Telegram-бот (имя без @)
+            name: telegramBot
+            widget: string
+            hint: 'Ссылка на сайте: t.me/<имя>?start=web'
+          - label: Банк
+            name: bank
+            widget: object
+            fields:
+              - label: Банк и филиал [RU]
+                name: name
+                widget: string
+              - label: Банк и филиал [UZ]
+                name: name_uz
+                widget: string
+                required: false
+              - label: Банк и филиал [EN]
+                name: name_en
+                widget: string
+                required: false
+              - label: МФО
+                name: mfo
+                widget: string
+              - label: Расчётный счёт
+                name: account
+                widget: string
+          - label: Кабинет
+            name: cabinet
+            widget: object
+            fields:
+              - label: Адрес Кабинета
+                name: url
+                widget: string
+              - label: Страница входа
+                name: loginUrl
+                widget: string
+              - label: Страница «Я новый клиент»
+                name: newClientUrl
+                widget: string
+          - label: Адрес приёма заявок (CRM)
+            name: leadEndpoint
+            widget: string
+            hint: POST заявки и GET …/token; см. docs/ARCHITECTURE.md §5
+          - label: Цифры на главной
+            name: metrics
+            widget: list
+            required: false
+            fields:
+              - label: Значение
+                name: value
+                widget: string
+              - label: Подпись [RU]
+                name: label
+                widget: string
+              - label: Подпись [UZ]
+                name: label_uz
+                widget: string
+                required: false
+              - label: Подпись [EN]
+                name: label_en
+                widget: string
+                required: false
+      - name: home
+        label: Главная
+        file: src/data/cms/home.json
         fields:
-        - label: Title (≤ 60) [RU]
-          name: title
-          widget: string
-        - label: Title (≤ 60) [UZ]
-          name: title_uz
-          widget: string
-          required: false
-        - label: Title (≤ 60) [EN]
-          name: title_en
-          widget: string
-          required: false
-        - label: Description (70–160) [RU]
-          name: description
-          widget: text
-        - label: Description (70–160) [UZ]
-          name: description_uz
-          widget: text
-          required: false
-        - label: Description (70–160) [EN]
-          name: description_en
-          widget: text
-          required: false
-      - label: Услуги
-        name: services
-        widget: object
+          - label: Первый экран
+            name: hero
+            widget: object
+            fields:
+              - label: Надзаголовок [RU]
+                name: eyebrow
+                widget: string
+              - label: Надзаголовок [UZ]
+                name: eyebrow_uz
+                widget: string
+                required: false
+              - label: Надзаголовок [EN]
+                name: eyebrow_en
+                widget: string
+                required: false
+              - label: Заголовок [RU]
+                name: title
+                widget: string
+              - label: Заголовок [UZ]
+                name: title_uz
+                widget: string
+                required: false
+              - label: Заголовок [EN]
+                name: title_en
+                widget: string
+                required: false
+              - label: Подзаголовок [RU]
+                name: lead
+                widget: text
+              - label: Подзаголовок [UZ]
+                name: lead_uz
+                widget: text
+                required: false
+              - label: Подзаголовок [EN]
+                name: lead_en
+                widget: text
+                required: false
+              - label: Входы для аудиторий
+                name: entries
+                widget: list
+                required: false
+                fields:
+                  - label: Заголовок [RU]
+                    name: title
+                    widget: string
+                  - label: Заголовок [UZ]
+                    name: title_uz
+                    widget: string
+                    required: false
+                  - label: Заголовок [EN]
+                    name: title_en
+                    widget: string
+                    required: false
+                  - label: Текст [RU]
+                    name: text
+                    widget: text
+                  - label: Текст [UZ]
+                    name: text_uz
+                    widget: text
+                    required: false
+                  - label: Текст [EN]
+                    name: text_en
+                    widget: text
+                    required: false
+                  - label: Ссылка (маршрут, напр. /services/supply/)
+                    name: link
+                    widget: string
+          - label: 'Мост: барьеры и решения'
+            name: bridge
+            widget: object
+            fields:
+              - label: Надзаголовок [RU]
+                name: eyebrow
+                widget: string
+              - label: Надзаголовок [UZ]
+                name: eyebrow_uz
+                widget: string
+                required: false
+              - label: Надзаголовок [EN]
+                name: eyebrow_en
+                widget: string
+                required: false
+              - label: Заголовок [RU]
+                name: title
+                widget: string
+              - label: Заголовок [UZ]
+                name: title_uz
+                widget: string
+                required: false
+              - label: Заголовок [EN]
+                name: title_en
+                widget: string
+                required: false
+              - label: Колонка «Заказчик» [RU]
+                name: customerTitle
+                widget: string
+              - label: Колонка «Заказчик» [UZ]
+                name: customerTitle_uz
+                widget: string
+                required: false
+              - label: Колонка «Заказчик» [EN]
+                name: customerTitle_en
+                widget: string
+                required: false
+              - label: Пояснение «Заказчик» [RU]
+                name: customerNote
+                widget: string
+              - label: Пояснение «Заказчик» [UZ]
+                name: customerNote_uz
+                widget: string
+                required: false
+              - label: Пояснение «Заказчик» [EN]
+                name: customerNote_en
+                widget: string
+                required: false
+              - label: Колонка RailTech [RU]
+                name: railtechTitle
+                widget: string
+              - label: Колонка RailTech [UZ]
+                name: railtechTitle_uz
+                widget: string
+                required: false
+              - label: Колонка RailTech [EN]
+                name: railtechTitle_en
+                widget: string
+                required: false
+              - label: Пояснение RailTech [RU]
+                name: railtechNote
+                widget: string
+              - label: Пояснение RailTech [UZ]
+                name: railtechNote_uz
+                widget: string
+                required: false
+              - label: Пояснение RailTech [EN]
+                name: railtechNote_en
+                widget: string
+                required: false
+              - label: Колонка «Партнёр» [RU]
+                name: partnerTitle
+                widget: string
+              - label: Колонка «Партнёр» [UZ]
+                name: partnerTitle_uz
+                widget: string
+                required: false
+              - label: Колонка «Партнёр» [EN]
+                name: partnerTitle_en
+                widget: string
+                required: false
+              - label: Пояснение «Партнёр» [RU]
+                name: partnerNote
+                widget: string
+              - label: Пояснение «Партнёр» [UZ]
+                name: partnerNote_uz
+                widget: string
+                required: false
+              - label: Пояснение «Партнёр» [EN]
+                name: partnerNote_en
+                widget: string
+                required: false
+              - label: Этапы
+                name: rows
+                widget: list
+                required: false
+                fields:
+                  - label: Этап [RU]
+                    name: stage
+                    widget: string
+                  - label: Этап [UZ]
+                    name: stage_uz
+                    widget: string
+                    required: false
+                  - label: Этап [EN]
+                    name: stage_en
+                    widget: string
+                    required: false
+                  - label: Заказчик теряет [RU]
+                    name: customer
+                    widget: text
+                  - label: Заказчик теряет [UZ]
+                    name: customer_uz
+                    widget: text
+                    required: false
+                  - label: Заказчик теряет [EN]
+                    name: customer_en
+                    widget: text
+                    required: false
+                  - label: RailTech берёт на себя [RU]
+                    name: railtech
+                    widget: text
+                  - label: RailTech берёт на себя [UZ]
+                    name: railtech_uz
+                    widget: text
+                    required: false
+                  - label: RailTech берёт на себя [EN]
+                    name: railtech_en
+                    widget: text
+                    required: false
+                  - label: Партнёр теряет [RU]
+                    name: partner
+                    widget: text
+                  - label: Партнёр теряет [UZ]
+                    name: partner_uz
+                    widget: text
+                    required: false
+                  - label: Партнёр теряет [EN]
+                    name: partner_en
+                    widget: text
+                    required: false
+          - label: Возможности
+            name: directions
+            widget: object
+            fields:
+              - label: Надзаголовок [RU]
+                name: eyebrow
+                widget: string
+              - label: Надзаголовок [UZ]
+                name: eyebrow_uz
+                widget: string
+                required: false
+              - label: Надзаголовок [EN]
+                name: eyebrow_en
+                widget: string
+                required: false
+              - label: Заголовок [RU]
+                name: title
+                widget: string
+              - label: Заголовок [UZ]
+                name: title_uz
+                widget: string
+                required: false
+              - label: Заголовок [EN]
+                name: title_en
+                widget: string
+                required: false
+          - label: О компании
+            name: about
+            widget: object
+            fields:
+              - label: Надзаголовок [RU]
+                name: eyebrow
+                widget: string
+              - label: Надзаголовок [UZ]
+                name: eyebrow_uz
+                widget: string
+                required: false
+              - label: Надзаголовок [EN]
+                name: eyebrow_en
+                widget: string
+                required: false
+              - label: Заголовок [RU]
+                name: title
+                widget: string
+              - label: Заголовок [UZ]
+                name: title_uz
+                widget: string
+                required: false
+              - label: Заголовок [EN]
+                name: title_en
+                widget: string
+                required: false
+              - label: Текст [RU]
+                name: text
+                widget: text
+              - label: Текст [UZ]
+                name: text_uz
+                widget: text
+                required: false
+              - label: Текст [EN]
+                name: text_en
+                widget: text
+                required: false
+              - label: Миссия [RU]
+                name: mission
+                widget: text
+              - label: Миссия [UZ]
+                name: mission_uz
+                widget: text
+                required: false
+              - label: Миссия [EN]
+                name: mission_en
+                widget: text
+                required: false
+          - label: Производители
+            name: partners
+            widget: object
+            fields:
+              - label: Надзаголовок [RU]
+                name: eyebrow
+                widget: string
+              - label: Надзаголовок [UZ]
+                name: eyebrow_uz
+                widget: string
+                required: false
+              - label: Надзаголовок [EN]
+                name: eyebrow_en
+                widget: string
+                required: false
+              - label: Заголовок [RU]
+                name: title
+                widget: string
+              - label: Заголовок [UZ]
+                name: title_uz
+                widget: string
+                required: false
+              - label: Заголовок [EN]
+                name: title_en
+                widget: string
+                required: false
+              - label: Пояснение [RU]
+                name: note
+                widget: text
+              - label: Пояснение [UZ]
+                name: note_uz
+                widget: text
+                required: false
+              - label: Пояснение [EN]
+                name: note_en
+                widget: text
+                required: false
+          - label: Кабинет
+            name: cabinet
+            widget: object
+            fields:
+              - label: Надзаголовок [RU]
+                name: eyebrow
+                widget: string
+              - label: Надзаголовок [UZ]
+                name: eyebrow_uz
+                widget: string
+                required: false
+              - label: Надзаголовок [EN]
+                name: eyebrow_en
+                widget: string
+                required: false
+              - label: Заголовок [RU]
+                name: title
+                widget: string
+              - label: Заголовок [UZ]
+                name: title_uz
+                widget: string
+                required: false
+              - label: Заголовок [EN]
+                name: title_en
+                widget: string
+                required: false
+              - label: Текст [RU]
+                name: text
+                widget: text
+              - label: Текст [UZ]
+                name: text_uz
+                widget: text
+                required: false
+              - label: Текст [EN]
+                name: text_en
+                widget: text
+                required: false
+              - label: Факты
+                name: facts
+                widget: list
+                required: false
+                fields:
+                  - label: Значение [RU]
+                    name: value
+                    widget: string
+                  - label: Значение [UZ]
+                    name: value_uz
+                    widget: string
+                    required: false
+                  - label: Значение [EN]
+                    name: value_en
+                    widget: string
+                    required: false
+                  - label: Подпись [RU]
+                    name: label
+                    widget: string
+                  - label: Подпись [UZ]
+                    name: label_uz
+                    widget: string
+                    required: false
+                  - label: Подпись [EN]
+                    name: label_en
+                    widget: string
+                    required: false
+              - label: Иллюстрация сделки
+                name: demo
+                widget: object
+                fields:
+                  - label: Название [RU]
+                    name: title
+                    widget: string
+                  - label: Название [UZ]
+                    name: title_uz
+                    widget: string
+                    required: false
+                  - label: Название [EN]
+                    name: title_en
+                    widget: string
+                    required: false
+                  - label: Пометка [RU]
+                    name: note
+                    widget: string
+                  - label: Пометка [UZ]
+                    name: note_uz
+                    widget: string
+                    required: false
+                  - label: Пометка [EN]
+                    name: note_en
+                    widget: string
+                    required: false
+                  - label: Стадии [RU]
+                    name: stages
+                    widget: list
+                    field:
+                      label: Стадия
+                      name: stage
+                      widget: string
+                  - label: Стадии [UZ]
+                    name: stages_uz
+                    widget: list
+                    required: false
+                    field:
+                      label: Стадия
+                      name: stage
+                      widget: string
+                  - label: Стадии [EN]
+                    name: stages_en
+                    widget: list
+                    required: false
+                    field:
+                      label: Стадия
+                      name: stage
+                      widget: string
+                  - label: Текущая стадия (номер с 0)
+                    name: current
+                    widget: number
+                    value_type: int
+                  - label: Строки
+                    name: rows
+                    widget: list
+                    required: false
+                    fields:
+                      - label: Документ [RU]
+                        name: label
+                        widget: string
+                      - label: Документ [UZ]
+                        name: label_uz
+                        widget: string
+                        required: false
+                      - label: Документ [EN]
+                        name: label_en
+                        widget: string
+                        required: false
+                      - label: Статус [RU]
+                        name: status
+                        widget: string
+                      - label: Статус [UZ]
+                        name: status_uz
+                        widget: string
+                        required: false
+                      - label: Статус [EN]
+                        name: status_en
+                        widget: string
+                        required: false
+                      - label: Цвет статуса
+                        name: tone
+                        widget: select
+                        options:
+                          - ok
+                          - wait
+                          - neutral
+                  - label: Подпись снизу [RU]
+                    name: footnote
+                    widget: string
+                  - label: Подпись снизу [UZ]
+                    name: footnote_uz
+                    widget: string
+                    required: false
+                  - label: Подпись снизу [EN]
+                    name: footnote_en
+                    widget: string
+                    required: false
+          - label: Новости
+            name: news
+            widget: object
+            fields:
+              - label: Надзаголовок [RU]
+                name: eyebrow
+                widget: string
+              - label: Надзаголовок [UZ]
+                name: eyebrow_uz
+                widget: string
+                required: false
+              - label: Надзаголовок [EN]
+                name: eyebrow_en
+                widget: string
+                required: false
+              - label: Заголовок [RU]
+                name: title
+                widget: string
+              - label: Заголовок [UZ]
+                name: title_uz
+                widget: string
+                required: false
+              - label: Заголовок [EN]
+                name: title_en
+                widget: string
+                required: false
+          - label: Приглашение и заявка
+            name: invite
+            widget: object
+            fields:
+              - label: Надзаголовок [RU]
+                name: eyebrow
+                widget: string
+              - label: Надзаголовок [UZ]
+                name: eyebrow_uz
+                widget: string
+                required: false
+              - label: Надзаголовок [EN]
+                name: eyebrow_en
+                widget: string
+                required: false
+              - label: Заголовок [RU]
+                name: title
+                widget: string
+              - label: Заголовок [UZ]
+                name: title_uz
+                widget: string
+                required: false
+              - label: Заголовок [EN]
+                name: title_en
+                widget: string
+                required: false
+              - label: Текст [RU]
+                name: text
+                widget: text
+              - label: Текст [UZ]
+                name: text_uz
+                widget: text
+                required: false
+              - label: Текст [EN]
+                name: text_en
+                widget: text
+                required: false
+      - name: pages
+        label: 'Страницы: Услуги, Новости, Контакты, 404'
+        file: src/data/cms/pages.json
         fields:
-        - label: Title (≤ 60) [RU]
-          name: title
-          widget: string
-        - label: Title (≤ 60) [UZ]
-          name: title_uz
-          widget: string
-          required: false
-        - label: Title (≤ 60) [EN]
-          name: title_en
-          widget: string
-          required: false
-        - label: Description (70–160) [RU]
-          name: description
-          widget: text
-        - label: Description (70–160) [UZ]
-          name: description_uz
-          widget: text
-          required: false
-        - label: Description (70–160) [EN]
-          name: description_en
-          widget: text
-          required: false
-      - label: Новости
-        name: news
-        widget: object
+          - label: Услуги (обзор)
+            name: services
+            widget: object
+            fields:
+              - label: Надзаголовок [RU]
+                name: eyebrow
+                widget: string
+              - label: Надзаголовок [UZ]
+                name: eyebrow_uz
+                widget: string
+                required: false
+              - label: Надзаголовок [EN]
+                name: eyebrow_en
+                widget: string
+                required: false
+              - label: Заголовок [RU]
+                name: title
+                widget: string
+              - label: Заголовок [UZ]
+                name: title_uz
+                widget: string
+                required: false
+              - label: Заголовок [EN]
+                name: title_en
+                widget: string
+                required: false
+              - label: Вводный абзац [RU]
+                name: lead
+                widget: text
+              - label: Вводный абзац [UZ]
+                name: lead_uz
+                widget: text
+                required: false
+              - label: Вводный абзац [EN]
+                name: lead_en
+                widget: text
+                required: false
+              - label: Группа «Заказчикам» [RU]
+                name: customersTitle
+                widget: string
+              - label: Группа «Заказчикам» [UZ]
+                name: customersTitle_uz
+                widget: string
+                required: false
+              - label: Группа «Заказчикам» [EN]
+                name: customersTitle_en
+                widget: string
+                required: false
+              - label: Описание группы [RU]
+                name: customersText
+                widget: text
+              - label: Описание группы [UZ]
+                name: customersText_uz
+                widget: text
+                required: false
+              - label: Описание группы [EN]
+                name: customersText_en
+                widget: text
+                required: false
+              - label: Группа «Партнёрам» [RU]
+                name: partnersTitle
+                widget: string
+              - label: Группа «Партнёрам» [UZ]
+                name: partnersTitle_uz
+                widget: string
+                required: false
+              - label: Группа «Партнёрам» [EN]
+                name: partnersTitle_en
+                widget: string
+                required: false
+              - label: Описание группы [RU]
+                name: partnersText
+                widget: text
+              - label: Описание группы [UZ]
+                name: partnersText_uz
+                widget: text
+                required: false
+              - label: Описание группы [EN]
+                name: partnersText_en
+                widget: text
+                required: false
+          - label: Новости
+            name: news
+            widget: object
+            fields:
+              - label: Надзаголовок [RU]
+                name: eyebrow
+                widget: string
+              - label: Надзаголовок [UZ]
+                name: eyebrow_uz
+                widget: string
+                required: false
+              - label: Надзаголовок [EN]
+                name: eyebrow_en
+                widget: string
+                required: false
+              - label: Заголовок [RU]
+                name: title
+                widget: string
+              - label: Заголовок [UZ]
+                name: title_uz
+                widget: string
+                required: false
+              - label: Заголовок [EN]
+                name: title_en
+                widget: string
+                required: false
+              - label: Вводный абзац [RU]
+                name: lead
+                widget: text
+              - label: Вводный абзац [UZ]
+                name: lead_uz
+                widget: text
+                required: false
+              - label: Вводный абзац [EN]
+                name: lead_en
+                widget: text
+                required: false
+          - label: Контакты
+            name: contacts
+            widget: object
+            fields:
+              - label: Надзаголовок [RU]
+                name: eyebrow
+                widget: string
+              - label: Надзаголовок [UZ]
+                name: eyebrow_uz
+                widget: string
+                required: false
+              - label: Надзаголовок [EN]
+                name: eyebrow_en
+                widget: string
+                required: false
+              - label: Заголовок [RU]
+                name: title
+                widget: string
+              - label: Заголовок [UZ]
+                name: title_uz
+                widget: string
+                required: false
+              - label: Заголовок [EN]
+                name: title_en
+                widget: string
+                required: false
+              - label: Вводный абзац [RU]
+                name: lead
+                widget: text
+              - label: Вводный абзац [UZ]
+                name: lead_uz
+                widget: text
+                required: false
+              - label: Вводный абзац [EN]
+                name: lead_en
+                widget: text
+                required: false
+              - label: Заголовок формы [RU]
+                name: formTitle
+                widget: string
+              - label: Заголовок формы [UZ]
+                name: formTitle_uz
+                widget: string
+                required: false
+              - label: Заголовок формы [EN]
+                name: formTitle_en
+                widget: string
+                required: false
+              - label: Текст у формы [RU]
+                name: formText
+                widget: text
+              - label: Текст у формы [UZ]
+                name: formText_uz
+                widget: text
+                required: false
+              - label: Текст у формы [EN]
+                name: formText_en
+                widget: text
+                required: false
+          - label: Страница 404
+            name: notFound
+            widget: object
+            fields:
+              - label: Заголовок [RU]
+                name: title
+                widget: string
+              - label: Заголовок [UZ]
+                name: title_uz
+                widget: string
+                required: false
+              - label: Заголовок [EN]
+                name: title_en
+                widget: string
+                required: false
+              - label: Текст [RU]
+                name: text
+                widget: text
+              - label: Текст [UZ]
+                name: text_uz
+                widget: text
+                required: false
+              - label: Текст [EN]
+                name: text_en
+                widget: text
+                required: false
+      - name: partners
+        label: Производители-партнёры (плитки)
+        file: src/data/cms/partners.json
         fields:
-        - label: Title (≤ 60) [RU]
-          name: title
-          widget: string
-        - label: Title (≤ 60) [UZ]
-          name: title_uz
-          widget: string
-          required: false
-        - label: Title (≤ 60) [EN]
-          name: title_en
-          widget: string
-          required: false
-        - label: Description (70–160) [RU]
-          name: description
-          widget: text
-        - label: Description (70–160) [UZ]
-          name: description_uz
-          widget: text
-          required: false
-        - label: Description (70–160) [EN]
-          name: description_en
-          widget: text
-          required: false
-      - label: Контакты
-        name: contacts
-        widget: object
+          - label: Производители
+            name: partners
+            widget: list
+            required: false
+            fields:
+              - label: ID (латиница, не менять после публикации)
+                name: id
+                widget: string
+              - label: Название [RU]
+                name: name
+                widget: string
+              - label: Название [UZ]
+                name: name_uz
+                widget: string
+                required: false
+              - label: Название [EN]
+                name: name_en
+                widget: string
+                required: false
+              - label: Страна [RU]
+                name: country
+                widget: string
+              - label: Страна [UZ]
+                name: country_uz
+                widget: string
+                required: false
+              - label: Страна [EN]
+                name: country_en
+                widget: string
+                required: false
+              - label: Статус RailTech
+                name: status
+                widget: select
+                options:
+                  - label: Официальный дилер (есть документ)
+                    value: dealer
+                  - label: Прямые поставки
+                    value: direct
+              - label: Статья о партнёре (имя файла в Новостях без .md)
+                name: article
+                widget: string
+                required: false
+              - label: Порядок
+                name: order
+                widget: number
+                value_type: int
+      - name: legal
+        label: Юридические страницы
+        file: src/data/cms/legal.json
         fields:
-        - label: Title (≤ 60) [RU]
-          name: title
-          widget: string
-        - label: Title (≤ 60) [UZ]
-          name: title_uz
-          widget: string
-          required: false
-        - label: Title (≤ 60) [EN]
-          name: title_en
-          widget: string
-          required: false
-        - label: Description (70–160) [RU]
-          name: description
-          widget: text
-        - label: Description (70–160) [UZ]
-          name: description_uz
-          widget: text
-          required: false
-        - label: Description (70–160) [EN]
-          name: description_en
-          widget: text
-          required: false
-      - label: Политика
-        name: privacy
-        widget: object
+          - label: Политика конфиденциальности
+            name: privacy
+            widget: object
+            fields:
+              - label: Заголовок [RU]
+                name: title
+                widget: string
+              - label: Заголовок [UZ]
+                name: title_uz
+                widget: string
+                required: false
+              - label: Заголовок [EN]
+                name: title_en
+                widget: string
+                required: false
+              - label: Вводный абзац [RU]
+                name: lead
+                widget: text
+              - label: Вводный абзац [UZ]
+                name: lead_uz
+                widget: text
+                required: false
+              - label: Вводный абзац [EN]
+                name: lead_en
+                widget: text
+                required: false
+              - label: Редакция [RU]
+                name: edition
+                widget: string
+              - label: Редакция [UZ]
+                name: edition_uz
+                widget: string
+                required: false
+              - label: Редакция [EN]
+                name: edition_en
+                widget: string
+                required: false
+              - label: Разделы
+                name: sections
+                widget: list
+                required: false
+                fields:
+                  - label: Заголовок раздела [RU]
+                    name: title
+                    widget: string
+                  - label: Заголовок раздела [UZ]
+                    name: title_uz
+                    widget: string
+                    required: false
+                  - label: Заголовок раздела [EN]
+                    name: title_en
+                    widget: string
+                    required: false
+                  - label: Текст раздела [RU]
+                    name: content
+                    widget: text
+                  - label: Текст раздела [UZ]
+                    name: content_uz
+                    widget: text
+                    required: false
+                  - label: Текст раздела [EN]
+                    name: content_en
+                    widget: text
+                    required: false
+          - label: Условия использования
+            name: terms
+            widget: object
+            fields:
+              - label: Заголовок [RU]
+                name: title
+                widget: string
+              - label: Заголовок [UZ]
+                name: title_uz
+                widget: string
+                required: false
+              - label: Заголовок [EN]
+                name: title_en
+                widget: string
+                required: false
+              - label: Вводный абзац [RU]
+                name: lead
+                widget: text
+              - label: Вводный абзац [UZ]
+                name: lead_uz
+                widget: text
+                required: false
+              - label: Вводный абзац [EN]
+                name: lead_en
+                widget: text
+                required: false
+              - label: Редакция [RU]
+                name: edition
+                widget: string
+              - label: Редакция [UZ]
+                name: edition_uz
+                widget: string
+                required: false
+              - label: Редакция [EN]
+                name: edition_en
+                widget: string
+                required: false
+              - label: Разделы
+                name: sections
+                widget: list
+                required: false
+                fields:
+                  - label: Заголовок раздела [RU]
+                    name: title
+                    widget: string
+                  - label: Заголовок раздела [UZ]
+                    name: title_uz
+                    widget: string
+                    required: false
+                  - label: Заголовок раздела [EN]
+                    name: title_en
+                    widget: string
+                    required: false
+                  - label: Текст раздела [RU]
+                    name: content
+                    widget: text
+                  - label: Текст раздела [UZ]
+                    name: content_uz
+                    widget: text
+                    required: false
+                  - label: Текст раздела [EN]
+                    name: content_en
+                    widget: text
+                    required: false
+          - label: Cookies
+            name: cookies
+            widget: object
+            fields:
+              - label: Заголовок [RU]
+                name: title
+                widget: string
+              - label: Заголовок [UZ]
+                name: title_uz
+                widget: string
+                required: false
+              - label: Заголовок [EN]
+                name: title_en
+                widget: string
+                required: false
+              - label: Вводный абзац [RU]
+                name: lead
+                widget: text
+              - label: Вводный абзац [UZ]
+                name: lead_uz
+                widget: text
+                required: false
+              - label: Вводный абзац [EN]
+                name: lead_en
+                widget: text
+                required: false
+              - label: Редакция [RU]
+                name: edition
+                widget: string
+              - label: Редакция [UZ]
+                name: edition_uz
+                widget: string
+                required: false
+              - label: Редакция [EN]
+                name: edition_en
+                widget: string
+                required: false
+              - label: Разделы
+                name: sections
+                widget: list
+                required: false
+                fields:
+                  - label: Заголовок раздела [RU]
+                    name: title
+                    widget: string
+                  - label: Заголовок раздела [UZ]
+                    name: title_uz
+                    widget: string
+                    required: false
+                  - label: Заголовок раздела [EN]
+                    name: title_en
+                    widget: string
+                    required: false
+                  - label: Текст раздела [RU]
+                    name: content
+                    widget: text
+                  - label: Текст раздела [UZ]
+                    name: content_uz
+                    widget: text
+                    required: false
+                  - label: Текст раздела [EN]
+                    name: content_en
+                    widget: text
+                    required: false
+      - name: seo
+        label: SEO
+        file: src/data/cms/seo.json
         fields:
-        - label: Title (≤ 60) [RU]
-          name: title
-          widget: string
-        - label: Title (≤ 60) [UZ]
-          name: title_uz
-          widget: string
-          required: false
-        - label: Title (≤ 60) [EN]
-          name: title_en
-          widget: string
-          required: false
-        - label: Description (70–160) [RU]
-          name: description
-          widget: text
-        - label: Description (70–160) [UZ]
-          name: description_uz
-          widget: text
-          required: false
-        - label: Description (70–160) [EN]
-          name: description_en
-          widget: text
-          required: false
-      - label: Условия
-        name: terms
-        widget: object
+          - label: Название сайта [RU]
+            name: siteName
+            widget: string
+          - label: Название сайта [UZ]
+            name: siteName_uz
+            widget: string
+            required: false
+          - label: Название сайта [EN]
+            name: siteName_en
+            widget: string
+            required: false
+          - label: Суффикс заголовка
+            name: titleSuffix
+            widget: string
+          - label: Картинка для соцсетей
+            name: defaultImage
+            widget: image
+          - label: Описание организации (schema.org) [RU]
+            name: organizationDescription
+            widget: text
+          - label: Описание организации (schema.org) [UZ]
+            name: organizationDescription_uz
+            widget: text
+            required: false
+          - label: Описание организации (schema.org) [EN]
+            name: organizationDescription_en
+            widget: text
+            required: false
+          - label: Компетенции [RU]
+            name: knowsAbout
+            widget: list
+            field:
+              label: Тема
+              name: topic
+              widget: string
+          - label: Компетенции [UZ]
+            name: knowsAbout_uz
+            widget: list
+            required: false
+            field:
+              label: Тема
+              name: topic
+              widget: string
+          - label: Компетенции [EN]
+            name: knowsAbout_en
+            widget: list
+            required: false
+            field:
+              label: Тема
+              name: topic
+              widget: string
+          - label: Страницы
+            name: pages
+            widget: object
+            fields:
+              - label: Главная
+                name: home
+                widget: object
+                fields:
+                  - label: Title (≤ 60) [RU]
+                    name: title
+                    widget: string
+                  - label: Title (≤ 60) [UZ]
+                    name: title_uz
+                    widget: string
+                    required: false
+                  - label: Title (≤ 60) [EN]
+                    name: title_en
+                    widget: string
+                    required: false
+                  - label: Description (70–160) [RU]
+                    name: description
+                    widget: text
+                  - label: Description (70–160) [UZ]
+                    name: description_uz
+                    widget: text
+                    required: false
+                  - label: Description (70–160) [EN]
+                    name: description_en
+                    widget: text
+                    required: false
+              - label: Услуги
+                name: services
+                widget: object
+                fields:
+                  - label: Title (≤ 60) [RU]
+                    name: title
+                    widget: string
+                  - label: Title (≤ 60) [UZ]
+                    name: title_uz
+                    widget: string
+                    required: false
+                  - label: Title (≤ 60) [EN]
+                    name: title_en
+                    widget: string
+                    required: false
+                  - label: Description (70–160) [RU]
+                    name: description
+                    widget: text
+                  - label: Description (70–160) [UZ]
+                    name: description_uz
+                    widget: text
+                    required: false
+                  - label: Description (70–160) [EN]
+                    name: description_en
+                    widget: text
+                    required: false
+              - label: Новости
+                name: news
+                widget: object
+                fields:
+                  - label: Title (≤ 60) [RU]
+                    name: title
+                    widget: string
+                  - label: Title (≤ 60) [UZ]
+                    name: title_uz
+                    widget: string
+                    required: false
+                  - label: Title (≤ 60) [EN]
+                    name: title_en
+                    widget: string
+                    required: false
+                  - label: Description (70–160) [RU]
+                    name: description
+                    widget: text
+                  - label: Description (70–160) [UZ]
+                    name: description_uz
+                    widget: text
+                    required: false
+                  - label: Description (70–160) [EN]
+                    name: description_en
+                    widget: text
+                    required: false
+              - label: Контакты
+                name: contacts
+                widget: object
+                fields:
+                  - label: Title (≤ 60) [RU]
+                    name: title
+                    widget: string
+                  - label: Title (≤ 60) [UZ]
+                    name: title_uz
+                    widget: string
+                    required: false
+                  - label: Title (≤ 60) [EN]
+                    name: title_en
+                    widget: string
+                    required: false
+                  - label: Description (70–160) [RU]
+                    name: description
+                    widget: text
+                  - label: Description (70–160) [UZ]
+                    name: description_uz
+                    widget: text
+                    required: false
+                  - label: Description (70–160) [EN]
+                    name: description_en
+                    widget: text
+                    required: false
+              - label: Политика
+                name: privacy
+                widget: object
+                fields:
+                  - label: Title (≤ 60) [RU]
+                    name: title
+                    widget: string
+                  - label: Title (≤ 60) [UZ]
+                    name: title_uz
+                    widget: string
+                    required: false
+                  - label: Title (≤ 60) [EN]
+                    name: title_en
+                    widget: string
+                    required: false
+                  - label: Description (70–160) [RU]
+                    name: description
+                    widget: text
+                  - label: Description (70–160) [UZ]
+                    name: description_uz
+                    widget: text
+                    required: false
+                  - label: Description (70–160) [EN]
+                    name: description_en
+                    widget: text
+                    required: false
+              - label: Условия
+                name: terms
+                widget: object
+                fields:
+                  - label: Title (≤ 60) [RU]
+                    name: title
+                    widget: string
+                  - label: Title (≤ 60) [UZ]
+                    name: title_uz
+                    widget: string
+                    required: false
+                  - label: Title (≤ 60) [EN]
+                    name: title_en
+                    widget: string
+                    required: false
+                  - label: Description (70–160) [RU]
+                    name: description
+                    widget: text
+                  - label: Description (70–160) [UZ]
+                    name: description_uz
+                    widget: text
+                    required: false
+                  - label: Description (70–160) [EN]
+                    name: description_en
+                    widget: text
+                    required: false
+              - label: Cookies
+                name: cookies
+                widget: object
+                fields:
+                  - label: Title (≤ 60) [RU]
+                    name: title
+                    widget: string
+                  - label: Title (≤ 60) [UZ]
+                    name: title_uz
+                    widget: string
+                    required: false
+                  - label: Title (≤ 60) [EN]
+                    name: title_en
+                    widget: string
+                    required: false
+                  - label: Description (70–160) [RU]
+                    name: description
+                    widget: text
+                  - label: Description (70–160) [UZ]
+                    name: description_uz
+                    widget: text
+                    required: false
+                  - label: Description (70–160) [EN]
+                    name: description_en
+                    widget: text
+                    required: false
+              - label: '404'
+                name: notFound
+                widget: object
+                fields:
+                  - label: Title (≤ 60) [RU]
+                    name: title
+                    widget: string
+                  - label: Title (≤ 60) [UZ]
+                    name: title_uz
+                    widget: string
+                    required: false
+                  - label: Title (≤ 60) [EN]
+                    name: title_en
+                    widget: string
+                    required: false
+                  - label: Description (70–160) [RU]
+                    name: description
+                    widget: text
+                  - label: Description (70–160) [UZ]
+                    name: description_uz
+                    widget: text
+                    required: false
+                  - label: Description (70–160) [EN]
+                    name: description_en
+                    widget: text
+                    required: false
+  - name: ui
+    label: 4. Подписи интерфейса
+    editor:
+      preview: false
+    files:
+      - name: ui_layout
+        label: Шапка, меню и футер
+        file: src/data/cms/ui/layout.json
         fields:
-        - label: Title (≤ 60) [RU]
-          name: title
-          widget: string
-        - label: Title (≤ 60) [UZ]
-          name: title_uz
-          widget: string
-          required: false
-        - label: Title (≤ 60) [EN]
-          name: title_en
-          widget: string
-          required: false
-        - label: Description (70–160) [RU]
-          name: description
-          widget: text
-        - label: Description (70–160) [UZ]
-          name: description_uz
-          widget: text
-          required: false
-        - label: Description (70–160) [EN]
-          name: description_en
-          widget: text
-          required: false
-      - label: Cookies
-        name: cookies
-        widget: object
+          - label: Раздел
+            name: title
+            widget: string
+          - label: Подписи
+            name: strings
+            widget: list
+            required: false
+            fields:
+              - label: Ключ (не менять)
+                name: key
+                widget: string
+              - label: RU
+                name: ru
+                widget: string
+              - label: UZ
+                name: uz
+                widget: string
+                required: false
+              - label: EN
+                name: en
+                widget: string
+                required: false
+            summary: '{{fields.key}} — {{fields.ru}}'
+      - name: ui_common
+        label: Общие подписи и главная
+        file: src/data/cms/ui/common.json
         fields:
-        - label: Title (≤ 60) [RU]
-          name: title
-          widget: string
-        - label: Title (≤ 60) [UZ]
-          name: title_uz
-          widget: string
-          required: false
-        - label: Title (≤ 60) [EN]
-          name: title_en
-          widget: string
-          required: false
-        - label: Description (70–160) [RU]
-          name: description
-          widget: text
-        - label: Description (70–160) [UZ]
-          name: description_uz
-          widget: text
-          required: false
-        - label: Description (70–160) [EN]
-          name: description_en
-          widget: text
-          required: false
-      - label: '404'
-        name: notFound
-        widget: object
+          - label: Раздел
+            name: title
+            widget: string
+          - label: Подписи
+            name: strings
+            widget: list
+            required: false
+            fields:
+              - label: Ключ (не менять)
+                name: key
+                widget: string
+              - label: RU
+                name: ru
+                widget: string
+              - label: UZ
+                name: uz
+                widget: string
+                required: false
+              - label: EN
+                name: en
+                widget: string
+                required: false
+            summary: '{{fields.key}} — {{fields.ru}}'
+      - name: ui_services
+        label: Страницы услуг
+        file: src/data/cms/ui/services.json
         fields:
-        - label: Title (≤ 60) [RU]
-          name: title
-          widget: string
-        - label: Title (≤ 60) [UZ]
-          name: title_uz
-          widget: string
-          required: false
-        - label: Title (≤ 60) [EN]
-          name: title_en
-          widget: string
-          required: false
-        - label: Description (70–160) [RU]
-          name: description
-          widget: text
-        - label: Description (70–160) [UZ]
-          name: description_uz
-          widget: text
-          required: false
-        - label: Description (70–160) [EN]
-          name: description_en
-          widget: text
-          required: false
-- name: ui
-  label: 4. Подписи интерфейса
-  editor:
-    preview: false
-  files:
-  - name: ui_layout
-    label: Шапка, меню и футер
-    file: src/data/cms/ui/layout.json
-    fields:
-    - label: Раздел
-      name: title
-      widget: string
-    - label: Подписи
-      name: strings
-      widget: list
-      required: false
-      fields:
-      - label: Ключ (не менять)
-        name: key
-        widget: string
-      - label: RU
-        name: ru
-        widget: string
-      - label: UZ
-        name: uz
-        widget: string
-        required: false
-      - label: EN
-        name: en
-        widget: string
-        required: false
-      summary: '{{fields.key}} — {{fields.ru}}'
-  - name: ui_common
-    label: Общие подписи и главная
-    file: src/data/cms/ui/common.json
-    fields:
-    - label: Раздел
-      name: title
-      widget: string
-    - label: Подписи
-      name: strings
-      widget: list
-      required: false
-      fields:
-      - label: Ключ (не менять)
-        name: key
-        widget: string
-      - label: RU
-        name: ru
-        widget: string
-      - label: UZ
-        name: uz
-        widget: string
-        required: false
-      - label: EN
-        name: en
-        widget: string
-        required: false
-      summary: '{{fields.key}} — {{fields.ru}}'
-  - name: ui_services
-    label: Страницы услуг
-    file: src/data/cms/ui/services.json
-    fields:
-    - label: Раздел
-      name: title
-      widget: string
-    - label: Подписи
-      name: strings
-      widget: list
-      required: false
-      fields:
-      - label: Ключ (не менять)
-        name: key
-        widget: string
-      - label: RU
-        name: ru
-        widget: string
-      - label: UZ
-        name: uz
-        widget: string
-        required: false
-      - label: EN
-        name: en
-        widget: string
-        required: false
-      summary: '{{fields.key}} — {{fields.ru}}'
-  - name: ui_news
-    label: Новости
-    file: src/data/cms/ui/news.json
-    fields:
-    - label: Раздел
-      name: title
-      widget: string
-    - label: Подписи
-      name: strings
-      widget: list
-      required: false
-      fields:
-      - label: Ключ (не менять)
-        name: key
-        widget: string
-      - label: RU
-        name: ru
-        widget: string
-      - label: UZ
-        name: uz
-        widget: string
-        required: false
-      - label: EN
-        name: en
-        widget: string
-        required: false
-      summary: '{{fields.key}} — {{fields.ru}}'
-  - name: ui_contacts
-    label: Контакты и реквизиты
-    file: src/data/cms/ui/contacts.json
-    fields:
-    - label: Раздел
-      name: title
-      widget: string
-    - label: Подписи
-      name: strings
-      widget: list
-      required: false
-      fields:
-      - label: Ключ (не менять)
-        name: key
-        widget: string
-      - label: RU
-        name: ru
-        widget: string
-      - label: UZ
-        name: uz
-        widget: string
-        required: false
-      - label: EN
-        name: en
-        widget: string
-        required: false
-      summary: '{{fields.key}} — {{fields.ru}}'
-  - name: ui_form
-    label: Форма заявки
-    file: src/data/cms/ui/form.json
-    fields:
-    - label: Раздел
-      name: title
-      widget: string
-    - label: Подписи
-      name: strings
-      widget: list
-      required: false
-      fields:
-      - label: Ключ (не менять)
-        name: key
-        widget: string
-      - label: RU
-        name: ru
-        widget: string
-      - label: UZ
-        name: uz
-        widget: string
-        required: false
-      - label: EN
-        name: en
-        widget: string
-        required: false
-      summary: '{{fields.key}} — {{fields.ru}}'
+          - label: Раздел
+            name: title
+            widget: string
+          - label: Подписи
+            name: strings
+            widget: list
+            required: false
+            fields:
+              - label: Ключ (не менять)
+                name: key
+                widget: string
+              - label: RU
+                name: ru
+                widget: string
+              - label: UZ
+                name: uz
+                widget: string
+                required: false
+              - label: EN
+                name: en
+                widget: string
+                required: false
+            summary: '{{fields.key}} — {{fields.ru}}'
+      - name: ui_news
+        label: Новости
+        file: src/data/cms/ui/news.json
+        fields:
+          - label: Раздел
+            name: title
+            widget: string
+          - label: Подписи
+            name: strings
+            widget: list
+            required: false
+            fields:
+              - label: Ключ (не менять)
+                name: key
+                widget: string
+              - label: RU
+                name: ru
+                widget: string
+              - label: UZ
+                name: uz
+                widget: string
+                required: false
+              - label: EN
+                name: en
+                widget: string
+                required: false
+            summary: '{{fields.key}} — {{fields.ru}}'
+      - name: ui_contacts
+        label: Контакты и реквизиты
+        file: src/data/cms/ui/contacts.json
+        fields:
+          - label: Раздел
+            name: title
+            widget: string
+          - label: Подписи
+            name: strings
+            widget: list
+            required: false
+            fields:
+              - label: Ключ (не менять)
+                name: key
+                widget: string
+              - label: RU
+                name: ru
+                widget: string
+              - label: UZ
+                name: uz
+                widget: string
+                required: false
+              - label: EN
+                name: en
+                widget: string
+                required: false
+            summary: '{{fields.key}} — {{fields.ru}}'
+      - name: ui_form
+        label: Форма заявки
+        file: src/data/cms/ui/form.json
+        fields:
+          - label: Раздел
+            name: title
+            widget: string
+          - label: Подписи
+            name: strings
+            widget: list
+            required: false
+            fields:
+              - label: Ключ (не менять)
+                name: key
+                widget: string
+              - label: RU
+                name: ru
+                widget: string
+              - label: UZ
+                name: uz
+                widget: string
+                required: false
+              - label: EN
+                name: en
+                widget: string
+                required: false
+            summary: '{{fields.key}} — {{fields.ru}}'
