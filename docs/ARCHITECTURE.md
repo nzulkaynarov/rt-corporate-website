@@ -109,7 +109,8 @@ SEO и навигации нет «ж/д», серий локомотивов и
 src/layouts/BaseLayout.astro        <head>: SEO, canonical, hreflang, JSON-LD, шрифты; Header + <main> + Footer
 src/components/layout/              Header (меню, языки, кнопки), MobileMenu (<details>, без JS), Footer
 src/components/ui/                  Button, Section, SectionHead, Breadcrumbs, Faq (<details>), PartnerTiles, NewsCard,
-                                    RelatedMaterials (рекомендации из src/utils/feed.ts), Prose
+                                    RelatedMaterials (рекомендации из src/utils/feed.ts), ArticleAside (боковая колонка
+                                    одиночной страницы: карточка партнёра, связи, кнопка заявки), Toc («На странице»), Prose
 src/components/home/                Hero, Bridge, Directions, About, CabinetBlock, LatestNews, Invite
 src/components/islands/LeadForm.tsx единственный React-остров: форма заявки → CRM
 src/styles/tokens.css, global.css   дизайн-токены и базовые стили (docs/DESIGN.md)

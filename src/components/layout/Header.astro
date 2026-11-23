@@ -92,6 +92,7 @@ const showLangs = !RU_ONLY;
   .brand {
     display: flex;
     align-items: center;
+    min-height: 44px;
     gap: 12px;
     text-decoration: none;
     color: var(--c-ink);
@@ -150,7 +151,9 @@ const showLangs = !RU_ONLY;
   .langs a {
     display: inline-flex;
     align-items: center;
-    min-height: 32px;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 36px;
     padding: 0 8px;
     border-radius: 4px;
     color: var(--c-muted);
@@ -224,6 +227,7 @@ const showLangs = !RU_ONLY;
       gap: 10px;
     }
     .langs a {
+      min-width: 0;
       padding: 0 6px;
     }
   }

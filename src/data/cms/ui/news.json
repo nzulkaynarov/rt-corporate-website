@@ -120,6 +120,24 @@
       "ru": "Вернуться к тексту, сноска {n}",
       "uz": "Matnga qaytish, {n}-izoh",
       "en": "Back to text, footnote {n}"
+    },
+    {
+      "key": "article.toc",
+      "ru": "На странице",
+      "uz": "Sahifada",
+      "en": "On this page"
+    },
+    {
+      "key": "article.partners",
+      "ru": "Производители",
+      "uz": "Ishlab chiqaruvchilar",
+      "en": "Manufacturers"
+    },
+    {
+      "key": "article.services",
+      "ru": "Услуги по теме",
+      "uz": "Mavzuga oid xizmatlar",
+      "en": "Related services"
     }
   ]
 }

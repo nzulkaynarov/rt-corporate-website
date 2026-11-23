@@ -20,7 +20,7 @@ const d = entry.data as Record<string, any>;
 const Heading = headingLevel === 2 ? 'h2' : 'h3';
 ---
 
-<a class="ncard" href={localeHref(`/news/${entry.slug}/`, lang)} data-type={d.type} lang={cl !== lang ? cl : undefined}>
+<a class:list={['ncard', { 'ncard--plain': !d.cover }]} href={localeHref(`/news/${entry.slug}/`, lang)} data-type={d.type} lang={cl !== lang ? cl : undefined}>
   {d.cover ? (
     <img class="ncard__img" src={withBase(d.cover)} alt={tField(d, 'coverAlt', cl)} loading="lazy" width="640" height="400" />
   ) : (
@@ -87,5 +87,22 @@ const Heading = headingLevel === 2 ? 'h2' : 'h3';
     font-size: 20px;
     font-weight: 700;
     line-height: 1.3;
+  }
+  /* Phones: a material without a photo is a compact text card — the empty plate would cost half a screen each. */
+  @media (max-width: 760px) {
+    .ncard--plain {
+      gap: 8px;
+      padding: 14px 16px 16px;
+      border: 1px solid var(--c-line);
+      border-top: 3px solid var(--c-accent);
+      border-radius: var(--r-md);
+      background: var(--c-bg);
+    }
+    .ncard--plain .ncard__img--empty {
+      display: none;
+    }
+    .ncard__title {
+      font-size: 18px;
+    }
   }
 </style>

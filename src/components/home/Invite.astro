@@ -78,7 +78,12 @@ const tg = telegramUrl();
     .contacts {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px 18px;
+      gap: 0 18px;
+    }
+    .contacts a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
     }
     .contacts span,
     .contacts__office {

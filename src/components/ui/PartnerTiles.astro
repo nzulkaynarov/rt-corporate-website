@@ -117,6 +117,8 @@ const partners = (await getPartners())
       display: flex;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
+      /* snap to the page gutter, not to the screen edge */
+      scroll-padding-inline: var(--gutter);
       gap: 10px;
       margin-inline: calc(var(--gutter) * -1);
       padding-inline: var(--gutter);

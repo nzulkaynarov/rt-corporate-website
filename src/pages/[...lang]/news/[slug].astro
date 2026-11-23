@@ -3,12 +3,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import Lightbox from '../../../components/ui/Lightbox.astro';
 import RelatedMaterials from '../../../components/ui/RelatedMaterials.astro';
+import ArticleAside from '../../../components/ui/ArticleAside.astro';
 import CtaBand from '../../../components/ui/CtaBand.astro';
-import { getFeed, materialsOfPartner, relatedTo, type FeedItem } from '../../../utils/feed';
+import { getCollection } from 'astro:content';
+import { getFeed, getPartners, materialsOfPartner, relatedTo, servicesOf, type FeedItem } from '../../../utils/feed';
 import { expandLangs, facts, fillFacts, localeHref, localize, tField } from '../../../i18n';
 import { t } from '../../../i18n/ui';
 import { formatDate } from '../../../utils/format';
-import { renderBody } from '../../../utils/markdown';
+import { renderBody, withToc } from '../../../utils/markdown';
 import { entrySeo, absoluteUrl, siteSeo } from '../../../utils/seo';
 import { withBase } from '../../../utils/url';
 import { entryContentLang, entryLangs } from '../../../utils/stage';
@@ -31,7 +33,7 @@ const cl = entryContentLang(lang, 'news', entry.data, entry.body);
 const d = localize(entry.data, cl) as Record<string, any>;
 const title = tField(d, 'title', cl) as string;
 const localizedBody = cl === 'ru' ? undefined : (entry.data as Record<string, any>)[cl]?.body;
-const bodyHtml = await renderBody(fillFacts(localizedBody || entry.body, facts(lang)), lang);
+const { html: bodyHtml, toc } = withToc(await renderBody(fillFacts(localizedBody || entry.body, facts(lang)), lang));
 const seo = entrySeo(d, cl, entry.body);
 const gallery: { image: string; alt: string }[] = (d.gallery || []).map((g: Record<string, string>) => ({ image: g.image, alt: tField(g, 'alt', cl) || '' }));
 
@@ -44,6 +46,19 @@ const relatedTitle = partnerId ? t(lang, 'news.partnerMaterials') : t(lang, 'new
 // Partner header: tile data of the same record, in the page language.
 const partner = partnerId ? localize(entry.data, lang) : undefined;
 const partnerLegal = partner && partner.legalName !== partner.name ? partner.legalName : '';
+// Side column (src/components/ui/ArticleAside.astro): for a news item — the manufacturers and services it is about.
+const allPartners = await getPartners();
+const asidePartners = partnerId
+  ? []
+  : (d.partners || []).flatMap((id: string) => {
+      const p = allPartners.find((x) => x.id === id);
+      return p ? [{ label: tField(p.data, 'name', lang) as string, note: t(lang, `partner.status.${p.data.status}`), href: p.articleSlug ? localeHref(`/news/${p.articleSlug}/`, lang) : undefined }] : [];
+    });
+const serviceEntries = await getCollection('services');
+const asideServices = servicesOf(entry).flatMap((slug) => {
+  const sv = serviceEntries.find((x) => x.slug === slug);
+  return sv ? [{ label: tField(sv.data, 'title', lang) as string, href: localeHref(`/services/${slug}/`, lang) }] : [];
+});
 
 const crumbs = [
   { name: t(lang, 'nav.news'), path: '/news/' },
@@ -73,32 +88,33 @@ const jsonLd = {
       <p class="art__meta"><b>{t(lang, `news.type.${d.type}`)}</b><time datetime={d.date}>{formatDate(d.date, lang)}</time></p>
       <h1>{title}</h1>
       <p class="art__summary">{tField(d, 'summary', cl)}</p>
-      {partner && (
-        <dl class="art__partner">
-          <div><dt class="visually-hidden">{t(lang, 'news.partnerStatus')}</dt><dd class:list={['pill', { 'pill--dealer': partner.status === 'dealer' }]}>{t(lang, `partner.status.${partner.status}`)}</dd></div>
-          <div><dt class="visually-hidden">{t(lang, 'news.partnerCountry')}</dt><dd>{t(lang, `country.${partner.country}`)}</dd></div>
-          {partnerLegal && <div><dt class="visually-hidden">{t(lang, 'partner.legalName')}</dt><dd>{partnerLegal}</dd></div>}
-          {partner.group && <div><dt class="visually-hidden">{t(lang, 'partner.group')}</dt><dd>{t(lang, 'partner.groupOf', { group: partner.group })}</dd></div>}
-          {(partner.brands || []).length > 0 && <div><dt>{t(lang, 'partner.brands')}</dt><dd>{partner.brands.join(', ')}</dd></div>}
-        </dl>
-      )}
     </header>
-    {d.cover && <img class="art__cover" src={withBase(d.cover)} alt={tField(d, 'coverAlt', cl)} width="1200" height="675" />}
-    <div class="prose" set:html={bodyHtml} />
-    {gallery.length > 0 && (
-      <section class="gallery" aria-labelledby="gallery-title">
-        <h2 id="gallery-title">{t(lang, 'news.gallery.title')}</h2>
-        <ul>
-          {gallery.map((g, i) => (
-            <li>
-              <button type="button" data-lightbox-item aria-label={t(lang, 'news.gallery.open', { n: i + 1, total: gallery.length })}>
-                <img src={withBase(g.image)} alt={g.alt} loading="lazy" decoding="async" width="480" height="320" />
-              </button>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )}
+    <div class:list={['art__aside', { 'art__aside--last': !partner }]}>
+      <ArticleAside
+        partner={partner ? { status: partner.status, country: partner.country, legalName: partnerLegal, group: partner.group, brands: partner.brands } : undefined}
+        partners={asidePartners}
+        services={partner ? [] : asideServices}
+        toc={toc}
+      />
+    </div>
+    <div class="art__body">
+      {d.cover && <img class="art__cover" src={withBase(d.cover)} alt={tField(d, 'coverAlt', cl)} width="1200" height="675" />}
+      <div class="prose" set:html={bodyHtml} />
+      {gallery.length > 0 && (
+        <section class="gallery" aria-labelledby="gallery-title">
+          <h2 id="gallery-title">{t(lang, 'news.gallery.title')}</h2>
+          <ul>
+            {gallery.map((g, i) => (
+              <li>
+                <button type="button" data-lightbox-item aria-label={t(lang, 'news.gallery.open', { n: i + 1, total: gallery.length })}>
+                  <img src={withBase(g.image)} alt={g.alt} loading="lazy" decoding="async" width="480" height="320" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </div>
   </article>
   <Lightbox />
 
@@ -108,15 +124,57 @@ const jsonLd = {
 </BaseLayout>
 
 <style>
+  /*
+   * Single page (docs/DESIGN.md → «Одиночные страницы»): one column up to 1079 px; from 1080 px the text keeps its
+   * reading width on the left and the side column (partner card, related links, «На странице») stays in view on
+   * the right — the page uses the full content width like a service page does.
+   */
   .art {
     padding-block: 28px 80px;
+    display: flex;
+    flex-direction: column;
   }
   .art__head {
-    max-width: 860px;
     display: flex;
     flex-direction: column;
     gap: 18px;
-    margin-bottom: 36px;
+    margin-bottom: 28px;
+  }
+  .art__aside {
+    margin-bottom: 32px;
+  }
+  .art__aside:empty {
+    display: none;
+  }
+  /* news, article, project: on one column the related links follow the text */
+  .art__aside--last {
+    order: 3;
+    margin: 40px 0 0;
+  }
+  @media (min-width: 1080px) {
+    .art {
+      display: grid;
+      grid-template-columns: minmax(0, 760px) minmax(280px, 340px);
+      justify-content: space-between;
+      column-gap: 64px;
+      align-items: start;
+    }
+    .art__head,
+    .art__body {
+      grid-column: 1;
+    }
+    .art__head {
+      margin-bottom: 36px;
+    }
+    .art__aside,
+    .art__aside--last {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      margin: 0;
+      position: sticky;
+      top: calc(var(--hdr-h) + 24px);
+      padding-top: 6px;
+    }
   }
   .art__meta {
     display: flex;
@@ -136,38 +194,12 @@ const jsonLd = {
     font-size: var(--fs-lead);
     color: var(--c-muted);
   }
-  .art__partner {
-    margin: 0;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  .art__partner dd {
-    margin: 0;
-    color: var(--c-muted);
-  }
-  .pill {
-    display: inline-block;
-    padding: 5px 12px;
-    border-radius: var(--r-pill);
-    font-size: 14px;
-    font-weight: 600;
-    background: var(--c-soft);
-    color: var(--c-ink) !important;
-  }
-  .pill--dealer {
-    background: var(--c-brand-soft);
-    color: var(--c-brand-ink-hover) !important;
-  }
   .art__cover {
     width: 100%;
-    max-width: 960px;
     border-radius: var(--r-md);
     margin-bottom: 36px;
   }
   .gallery {
-    max-width: 960px;
     margin-top: 48px;
   }
   .gallery h2 {
