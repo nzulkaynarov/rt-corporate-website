@@ -1,12 +1,14 @@
 ---
 lang:
   - ru
-type: partner
+name: ADZ NAGANO
+legalName: ADZ NAGANO GmbH
+country: DE
+status: direct
+order: 2
 date: '2026-11-04'
 title: ADZ NAGANO — датчики давления и температуры из Германии
 summary: Немецкий производитель датчиков давления, температуры, уровня и силы. Выпускает серийные и заказные решения для железной дороги, машиностроения и процессной техники.
-partners:
-  - adz-nagano
 ---
 
 ### О компании

@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getFeed } from '../../../utils/feed';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import SectionHead from '../../../components/ui/SectionHead.astro';
@@ -14,7 +14,7 @@ const lang = Astro.locals.lang;
 const pages = localize(pagesData, lang);
 const seo = pageSeo('news', lang);
 const p = pages.news as Record<string, string>;
-const items = (await getCollection('news')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+const items = await getFeed();
 const TYPES = ['news', 'article', 'project', 'partner'] as const;
 const present = TYPES.filter((type) => items.some((e) => e.data.type === type));
 const crumbs = [{ name: t(lang, 'nav.news'), path: '/news/' }];

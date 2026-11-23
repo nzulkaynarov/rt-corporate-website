@@ -1,12 +1,15 @@
 ---
 lang:
   - ru
-type: partner
+name: Siemens Mobility
+legalName: Siemens Mobility GmbH
+group: Siemens AG
+country: DE
+status: direct
+order: 4
 date: '2026-11-04'
 title: Siemens Mobility — подвижной состав и инфраструктура
 summary: 'Подразделение Siemens по железнодорожной технике: подвижной состав, компоненты, сигнализация, электрификация, ПО и сервис. RailTech организует прямые поставки.'
-partners:
-  - siemens-mobility
 ---
 
 ### О компании

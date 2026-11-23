@@ -1,12 +1,22 @@
 ---
 lang:
   - ru
-type: partner
+  - uz
+  - en
+name: РАТЕП-ИННОВАЦИЯ
+legalName: ООО «РАТЕП-ИННОВАЦИЯ»
+country: RU
+status: direct
+order: 5
 date: '2026-11-04'
 title: РАТЕП-ИННОВАЦИЯ — электрооборудование для тепловозов
 summary: Серпуховский производитель пультов управления, аппаратных камер и электроники для тепловозов и электровозов. Также выпускает телеком-шкафы. Прямые поставки через RailTech.
-partners:
-  - ratep-innovatsiya
+uz:
+  name: RATEP-INNOVATSIYA
+  legalName: «RATEP-INNOVATSIYA» MChJ
+en:
+  name: RATEP-INNOVATSIYA
+  legalName: RATEP-INNOVATSIYA LLC
 ---
 
 ### О компании

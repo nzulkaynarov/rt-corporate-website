@@ -23,11 +23,11 @@ SEO и навигации нет «ж/д», серий локомотивов и
 
 | Маршрут | Файл | Что это | Источник данных |
 |---|---|---|---|
-| `/` | `index.astro` | Главная: первый экран, мост (барьеры), возможности, о компании, производители, Кабинет, новости, заявка | `data/cms/home.json`, `company.json`, `partners.json`, коллекции `services`, `news` |
+| `/` | `index.astro` | Главная: первый экран, мост (барьеры), возможности, о компании, производители, Кабинет, новости, заявка | `data/cms/home.json`, `company.json`, коллекция `partners`, коллекции `services`, `news` |
 | `/services/` | `services/index.astro` | Обзор услуг: «Заказчикам» и «Партнёрам» | `pages.json → services`, коллекция `services` |
 | `/services/<slug>/` | `services/[slug].astro` | Услуга: `supply`, `engineering` (заказчикам), `representation`, `localization` (партнёрам) | коллекция `services` |
 | `/news/` | `news/index.astro` | Лента: новости, статьи, проекты, партнёры (фильтр по типу) | коллекция `news`, `pages.json → news` |
-| `/news/<slug>/` | `news/[slug].astro` | Материал; у статьи о партнёре — блок «Материалы о партнёре» | коллекция `news`, `partners.json` |
+| `/news/<slug>/` | `news/[slug].astro` | Материал или статья о партнёре (`partner-<id>`); внизу — рекомендации, у партнёра — «Материалы о партнёре» | коллекции `news`, `partners` (`src/utils/feed.ts`) |
 | `/contacts/` | `contacts.astro` | Контакты, реквизиты, форма заявки | `company.json`, `pages.json → contacts` |
 | `/privacy/`, `/terms/`, `/cookies/` | `privacy.astro`, `terms.astro`, `cookies.astro` | Сервисные страницы (только в футере) | `data/cms/legal.json` |
 | `/404` | `src/pages/404.astro` | Страница не найдена | `pages.json → notFound` |
@@ -47,12 +47,18 @@ SEO и навигации нет «ж/д», серий локомотивов и
 | `src/data/cms/company.json` | Реквизиты, адреса, контакты, Telegram, ссылки Кабинета, адрес приёма заявок, цифры («5+ лет» и т. д. — правит владелец) | блоки `uz`/`en` |
 | `src/data/cms/home.json` | Тексты блоков главной (первый экран, мост, возможности, о компании, Кабинет, заявка) | блоки `uz`/`en` |
 | `src/data/cms/pages.json` | Заголовки и вводные тексты страниц «Услуги», «Новости», «Контакты», 404 | блоки `uz`/`en` |
-| `src/data/cms/partners.json` | Производители-партнёры: `id`, название, страна, статус (`dealer` / `direct`), слаг статьи о партнёре, порядок | блоки `uz`/`en` (название, страна) |
 | `src/data/cms/legal.json` | Политика конфиденциальности, условия использования, cookies | блоки `uz`/`en` |
 | `src/data/cms/seo.json` | title/description страниц, значения по умолчанию | блоки `uz`/`en` |
 | `src/data/cms/ui/*.json` | Подписи интерфейса (кнопки, метки, формы) | `ru`/`uz`/`en` в одной записи |
 | `src/content/services/*.md` | 4 услуги: аудитория, лид, коротко, шаги, что получает клиент/партнёр, требования, FAQ, тело | блоки `uz`/`en` (тело — `body` в блоке) |
-| `src/content/news/*.md` | Материалы: `type` = `news` / `article` / `project` / `partner`, дата, обложка, галерея (`gallery: [{image, alt}]`), `partners: [id]`, источники; в тексте — фото с подписью, цитаты, таблицы, сноски (`src/utils/markdown.ts`) | блоки `uz`/`en` (тело — `body` в блоке) |
+| `src/content/news/*.md` | Материалы: `type` = `news` / `article` / `project`, дата, обложка, галерея (`gallery: [{image, alt}]`), `partners` и `services` (связи для рекомендаций), источники; в тексте — фото с подписью, цитаты, таблицы, сноски (`src/utils/markdown.ts`) | блоки `uz`/`en` (тело — `body` в блоке) |
+| `src/content/partners/*.md` | Производитель-партнёр, **одна запись = плитка + статья**: `name` (бренд), `legalName` (юрлицо, к нему относится статус), `group`, `brands`, `country` (код), `status` (`dealer` / `direct`), `order`; статья — дата, заголовок, кратко, обложка, текст. Имя файла = id; статья выходит в «Новостях» как `/news/partner-<id>/` и делает плитку ссылкой, когда написаны заголовок и текст | блоки `uz`/`en` (бренд, юрлицо — сразу; статья — по этапу новостей) |
+| `src/data/cms/ui/countries.json` | Названия стран для `country.<код>` (выбор страны партнёра в админке) | `ru`/`uz`/`en` в одной записи |
+
+**Лента и рекомендации** (`src/utils/feed.ts`). «Новости» — это коллекция `news` и статьи партнёров одной лентой.
+Связи между материалами не прописываются руками: страница партнёра показывает материалы с его `partners`; страница
+услуги — материалы, у которых услуга выбрана в `services` или на неё есть ссылка в тексте (`/services/<slug>/`);
+под материалом — материалы с теми же партнёрами, затем с теми же услугами, затем самые новые (`RelatedMaterials`).
 
 **Формат переводов** (Sveltia CMS i18n, структура `single_file_default_root`): русские значения в корне файла,
 переводы — те же поля в блоках `uz` / `en`, `lang` перечисляет включённые языки (ведёт админка). Пример и правила —
@@ -97,7 +103,8 @@ SEO и навигации нет «ж/д», серий локомотивов и
 ```
 src/layouts/BaseLayout.astro        <head>: SEO, canonical, hreflang, JSON-LD, шрифты; Header + <main> + Footer
 src/components/layout/              Header (меню, языки, кнопки), MobileMenu (<details>, без JS), Footer
-src/components/ui/                  Button, Section, SectionHead, Breadcrumbs, Faq (<details>), PartnerTiles, NewsCard, Prose
+src/components/ui/                  Button, Section, SectionHead, Breadcrumbs, Faq (<details>), PartnerTiles, NewsCard,
+                                    RelatedMaterials (рекомендации из src/utils/feed.ts), Prose
 src/components/home/                Hero, Bridge, Directions, About, CabinetBlock, LatestNews, Invite
 src/components/islands/LeadForm.tsx единственный React-остров: форма заявки → CRM
 src/styles/tokens.css, global.css   дизайн-токены и базовые стили (docs/DESIGN.md)

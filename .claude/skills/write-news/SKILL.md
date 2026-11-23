@@ -16,7 +16,7 @@ description: Write or update a RailTech «Новости» item — news, articl
    о дилерском статусе не публикуем. Если данных нет, вынеси вопрос в PR, а не пиши догадку.
 4. **Файл.** `docs/content/templates/news.md` → `src/content/news/<slug>.md` (slug по SEO.md §4).
    Поля: `type`, `date` (`YYYY-MM-DD`), `title`, `summary` (70–300 знаков), `partners` (id из
-   `src/data/cms/partners.json`, если материал о партнёре), `featured` (по умолчанию false).
+   `src/content/partners`, если материал о партнёре), `services` (если материал об услуге), `featured` (по умолчанию false).
    `cover` необязателен: это своё фото или фото с разрешения в `public/images/news/<slug>.jpg`, плюс `coverAlt`.
 5. **Текст RU.** Тело ≥ 600 знаков, короткие предложения, разделы с `###`, структура по STYLE_GUIDE §5.
    Статья: 2–5 внутренних ссылок маршрутами (`/services/supply/`, `/news/<slug>/`). Отрасль упоминается только как факт

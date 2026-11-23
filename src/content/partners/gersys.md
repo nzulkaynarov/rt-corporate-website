@@ -1,12 +1,14 @@
 ---
 lang:
   - ru
-type: partner
+name: GERSYS
+legalName: GERSYS GmbH
+country: DE
+status: direct
+order: 3
 date: '2026-11-04'
 title: GERSYS — дисплеи и бортовые компьютеры для кабины
 summary: Немецкий разработчик дисплеев для кабины машиниста, бортовых компьютеров и систем помощи машинисту. Сертифицирован по IRIS (ISO/TS 22163).
-partners:
-  - gersys
 ---
 
 ### О компании

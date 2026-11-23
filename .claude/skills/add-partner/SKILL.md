@@ -1,6 +1,6 @@
 ---
 name: add-partner
-description: Add or update a RailTech manufacturer partner — a tile row in src/data/cms/partners.json plus its partner article (src/content/news, type partner) — tile in Russian, Uzbek and English, article in Russian only while news is in ruOnlySections, with correct dealer/direct status rules, then validate. Use when asked to add a manufacturer/partner, change a partner's status or rewrite a partner profile.
+description: Add or update a RailTech manufacturer partner — one record in src/content/partners/<id>.md holding the home-page tile (brand, legal entity, country code, status) and the partner article shown at /news/partner-<id>/ — tile in Russian, Uzbek and English, article in Russian only while news is in ruOnlySections, with correct dealer/direct status rules, then validate. Use when asked to add a manufacturer/partner, change a partner's status or rewrite a partner profile.
 ---
 
 # Добавить или обновить партнёра
@@ -15,22 +15,23 @@ description: Add or update a RailTech manufacturer partner — a tile row in src
 - Новый партнёр появляется только по решению владельца. Наличие продукции у дистрибьютора само по себе не повод.
 
 ## Шаги
-1. **Дубли.** `grep -n "\"id\"" src/data/cms/partners.json` и `ls src/content/news/partner-*`.
-2. **Плитка.** Добавь объект в `src/data/cms/partners.json → partners`:
-   `id` (латиница, дефисы; после публикации не меняется), `name`, `country`, `status`,
-   `article` (`partner-<id>`), `order`. Сразу заполни `name` и `country` элемента в блоках `uz:` / `en:` (по GLOSSARY.md):
-   плитка вне новостей и пишется на трёх языках.
-   Новых полей не добавляй: схема в `public/admin/config.yml` и ARCHITECTURE.md §3.
-3. **Статья.** `docs/content/templates/partner-article.md` → `src/content/news/partner-<id>.md`:
-   `type: partner`, `partners: [<id>]`, разделы «О компании», «Продукция и направления», «Где применяется»,
-   «Что RailTech поставляет», «Источники». Факты бери с официального сайта производителя и пересказывай своими словами.
-   Отрасль производителя в этой статье уместна. В плитке и общих текстах её нет.
-4. **Связи.** `tests/data.test.ts` проверяет, что плитка ведёт на существующую статью с `type: partner`, в которой есть этот `id`.
-   Новости о партнёре получают `partners: [<id>]` и ссылку на статью.
-5. **Языки.** Статья лежит в `src/content/news`: пока `news` в `ruOnlySections` (`src/data/content-stage.json`), её
-   блоки `uz:` / `en:` не добавляй (`lang: [ru]`). Плитка в `partners.json` — на RU, UZ и EN (шаг 2).
-6. **Проверка.** `node scripts/check-content.mjs --files src/data/cms/partners.json src/content/news/partner-<id>.md`,
-   затем `make check`. Дальше `content-qa` → `content-pr`.
+1. **Дубли.** `ls src/content/partners/` и `grep -ril "<название>" src/content/partners src/content/news`.
+2. **Запись.** `docs/content/templates/partner-article.md` → `src/content/partners/<id>.md` (одна запись = плитка + статья):
+   `name` — бренд на плитке, `legalName` — юрлицо (к нему относится статус), `group` — группа, если есть
+   (Siemens Mobility GmbH → `group: Siemens AG`), `brands` — торговые марки, если нужны; `country` — код из списка
+   (`country.<код>` в `src/data/cms/ui/countries.json`; новой страны нет — добавь строку туда на трёх языках и вариант
+   в `public/admin/config.yml`), `status`, `order`. Кириллические `name`/`legalName` сразу переводи в блоках
+   `uz:` / `en:` по GLOSSARY.md: плитка видна на всех языках. Новых полей не добавляй (ARCHITECTURE.md §3).
+3. **Статья** в той же записи: `date`, `title`, `summary` и текст с разделами «О компании», «Продукция и направления»,
+   «Где применяется», «Что RailTech поставляет», «Источники». Факты бери с официального сайта производителя и
+   пересказывай своими словами. Отрасль производителя здесь уместна; в плитке и общих текстах её нет.
+   Пока статьи нет (пустые `title` или текст), плитка показывается без ссылки — это допустимо.
+4. **Связи считаются сами** (`src/utils/feed.ts`): новости о партнёре получают `partners: [<id>]` — и появляются в блоке
+   «Материалы о партнёре»; ссылка в тексте на `/services/<услуга>/` выводит статью на странице услуги.
+5. **Языки.** Статья публикуется в «Новостях»: пока `news` в `ruOnlySections` (`src/data/content-stage.json`), её
+   `title`/`summary`/текст в блоках `uz:` / `en:` не пиши. Плитка (`name`, `legalName`) — на RU, UZ и EN (шаг 2).
+6. **Проверка.** `node scripts/check-content.mjs --files src/content/partners/<id>.md`, затем `make check`.
+   Дальше `content-qa` → `content-pr`.
 
 Смена статуса (`direct` ↔ `dealer`) делается только по брифу владельца. Затем проверь, что тексты статьи и новостей
 о партнёре соответствуют новому статусу.

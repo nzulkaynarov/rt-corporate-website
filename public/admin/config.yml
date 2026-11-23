@@ -191,7 +191,7 @@ collections:
     description: 'Четыре услуги сайта. Новые услуги не создаются: структура задана в docs/ARCHITECTURE.md. Подстановки из «Компании»: `{phone}`, `{email}`, `{inn}`, `{site}`, `{cabinet}`, `{foundedYear}`, `{officeAddress}`, `{legalAddress}` — не пишите эти значения текстом.'
     i18n: true
   - name: news
-    label: 2. Новости, статьи, проекты, партнёры
+    label: 2. Новости, статьи, проекты
     label_singular: Материал
     folder: src/content/news
     create: true
@@ -215,9 +215,7 @@ collections:
             value: article
           - label: Проект
             value: project
-          - label: О партнёре
-            value: partner
-        hint: «О партнёре» — статья, на которую ведёт плитка производителя.
+        hint: Статья о производителе пишется в разделе «3. Производители-партнёры».
       - label: Дата
         name: date
         widget: datetime
@@ -272,15 +270,27 @@ collections:
         name: partners
         widget: relation
         required: false
-        collection: site
-        file: partners
+        collection: partners
         search_fields:
-          - partners.*.name
-        value_field: partners.*.id
+          - name
+          - legalName
+        value_field: '{{slug}}'
         display_fields:
-          - partners.*.name
+          - name
         multiple: true
-        hint: Материал появится в блоке «Материалы о партнёре» на его странице.
+        hint: Материал появится в блоке «Материалы о партнёре» на его странице и в рекомендациях.
+      - label: Услуги, к которым относится
+        name: services
+        widget: relation
+        required: false
+        collection: services
+        value_field: '{{slug}}'
+        search_fields:
+          - title
+        display_fields:
+          - title
+        multiple: true
+        hint: Материал появится на странице услуги. Ссылка в тексте на /services/<услуга>/ работает так же.
       - label: Закрепить
         name: featured
         widget: boolean
@@ -308,7 +318,7 @@ collections:
         maxlength: 160
         hint: 70–160 знаков. Пусто — берётся «Кратко».
         i18n: true
-    description: Новости, статьи, проекты и статьи о партнёрах. Адрес страницы задаётся при создании латиницей и потом не меняется.
+    description: Новости, статьи и проекты. Статья о партнёре пишется в его записи (раздел 3). Адрес страницы задаётся при создании латиницей и потом не меняется.
     view_filters:
       - label: Новости
         field: type
@@ -319,9 +329,6 @@ collections:
       - label: Проекты
         field: type
         pattern: ^project$
-      - label: О партнёрах
-        field: type
-        pattern: ^partner$
       - label: Без обложки
         field: cover
         empty: true
@@ -333,8 +340,226 @@ collections:
         pattern: \d{4}
     i18n:
       initial_locales: default
+  - name: partners
+    label: 3. Производители-партнёры
+    label_singular: Партнёр
+    description: 'Один партнёр — одна запись: плитка на главной и статья в «Новостях» (/news/partner-<адрес>/). Плитка становится ссылкой, когда написаны заголовок и текст статьи.'
+    folder: src/content/partners
+    create: true
+    identifier_field: name
+    slug: '{{slug}}'
+    summary: '{{order}}. {{name}} — {{legalName}}'
+    sortable_fields:
+      fields:
+        - order
+        - name
+      default:
+        field: order
+        direction: ascending
+    view_filters:
+      - label: Официальные дилеры
+        field: status
+        pattern: ^dealer$
+      - label: Прямые поставки
+        field: status
+        pattern: ^direct$
+      - label: Без статьи
+        field: title
+        empty: true
+    i18n: true
+    fields:
+      - label: Бренд (заголовок плитки)
+        name: name
+        widget: string
+        i18n: true
+        required:
+          - ru
+        hint: 'Как компанию называют: «Siemens Mobility», «НПО САУТ». Латиницей — одинаково на всех языках.'
+      - label: Юридическое лицо
+        name: legalName
+        widget: string
+        i18n: true
+        required:
+          - ru
+        hint: 'С формой собственности: «Siemens Mobility GmbH», «ООО «НПО САУТ»». Статус RailTech относится к нему.'
+      - label: Входит в группу
+        name: group
+        widget: string
+        required: false
+        hint: 'Если есть: «Siemens AG».'
+      - label: Торговые марки и линейки
+        name: brands
+        widget: list
+        required: false
+        field:
+          label: Марка
+          name: brand
+          widget: string
+        hint: 'Необязательно: показываются под заголовком статьи.'
+      - label: Страна
+        name: country
+        widget: select
+        options:
+          - label: Австрия
+            value: AT
+          - label: Беларусь
+            value: BY
+          - label: Бельгия
+            value: BE
+          - label: Болгария
+            value: BG
+          - label: Великобритания
+            value: GB
+          - label: Венгрия
+            value: HU
+          - label: Германия
+            value: DE
+          - label: Дания
+            value: DK
+          - label: Индия
+            value: IN
+          - label: Испания
+            value: ES
+          - label: Италия
+            value: IT
+          - label: Казахстан
+            value: KZ
+          - label: Канада
+            value: CA
+          - label: Китай
+            value: CN
+          - label: Нидерланды
+            value: NL
+          - label: Норвегия
+            value: 'NO'
+          - label: ОАЭ
+            value: AE
+          - label: Польша
+            value: PL
+          - label: Республика Корея
+            value: KR
+          - label: Россия
+            value: RU
+          - label: Румыния
+            value: RO
+          - label: Словакия
+            value: SK
+          - label: Соединенные Штаты
+            value: US
+          - label: Турция
+            value: TR
+          - label: Узбекистан
+            value: UZ
+          - label: Финляндия
+            value: FI
+          - label: Франция
+            value: FR
+          - label: Чехия
+            value: CZ
+          - label: Швейцария
+            value: CH
+          - label: Швеция
+            value: SE
+          - label: Япония
+            value: JP
+        hint: Название страны на трёх языках подставляется само. Нет в списке — добавьте в «Подписи интерфейса → Страны» и в эту схему.
+      - label: Статус RailTech
+        name: status
+        widget: select
+        options:
+          - label: Официальный дилер (есть документ)
+            value: dealer
+          - label: Прямые поставки
+            value: direct
+        hint: «Официальный дилер» — только при документе производителя. Основание на сайте не публикуется.
+      - label: Порядок на главной
+        name: order
+        widget: number
+        value_type: int
+        default: 99
+        min: 1
+        hint: 1 — первая плитка.
+      - label: Дата статьи
+        name: date
+        widget: datetime
+        format: YYYY-MM-DD
+        date_format: DD.MM.YYYY
+        time_format: false
+        default: '{{now}}'
+        required: false
+      - label: Заголовок статьи
+        name: title
+        widget: string
+        i18n: true
+        required: false
+        hint: Заполните заголовок и текст — плитка станет ссылкой на статью.
+      - label: Кратко (70–300 знаков)
+        name: summary
+        widget: text
+        i18n: true
+        required: false
+        maxlength: 300
+        hint: Страна, профиль производителя, статус RailTech — без номера и даты документа.
+      - label: Обложка (своё фото или с разрешения)
+        name: cover
+        widget: image
+        required: false
+      - label: Описание обложки
+        name: coverAlt
+        widget: string
+        required: false
+        hint: 'Что изображено на фото: для незрячих и поисковиков.'
+        i18n: true
+      - label: Галерея (фото под текстом, открываются на весь экран)
+        name: gallery
+        widget: list
+        required: false
+        summary: '{{fields.alt}}'
+        fields:
+          - label: Фото
+            name: image
+            widget: image
+            i18n: duplicate
+          - label: Описание фото
+            name: alt
+            widget: string
+            required: false
+            hint: 'Что изображено на фото: для незрячих и поисковиков.'
+            i18n: true
+        collapsed: true
+        i18n: true
+      - label: 'SEO: заголовок (≤ 60 знаков, пусто = название)'
+        name: seoTitle
+        widget: string
+        required: false
+        maxlength: 60
+        hint: До 60 знаков, без « | RailTech» — он добавляется сам. Пусто — берётся заголовок.
+        i18n: true
+      - label: 'SEO: описание (70–160 знаков, пусто = краткое описание)'
+        name: seoDescription
+        widget: text
+        required: false
+        maxlength: 160
+        hint: 70–160 знаков. Пусто — берётся «Кратко».
+        i18n: true
+      - label: Текст статьи
+        name: body
+        widget: markdown
+        required: false
+        buttons:
+          - bold
+          - italic
+          - link
+          - heading-three
+          - heading-four
+          - quote
+          - bulleted-list
+          - numbered-list
+        editor_components:
+          - image
+        i18n: true
   - name: site
-    label: 3. Тексты сайта и настройки
+    label: 4. Тексты сайта и настройки
     editor:
       preview: false
     files:
@@ -965,63 +1190,6 @@ collections:
                   - ru
             i18n: true
         i18n: true
-      - name: partners
-        label: Производители-партнёры (плитки)
-        file: src/data/cms/partners.json
-        fields:
-          - label: Производители
-            name: partners
-            widget: list
-            required: false
-            fields:
-              - label: ID (латиница, не менять после публикации)
-                name: id
-                widget: string
-                pattern:
-                  - ^[a-z0-9]+(-[a-z0-9]+)*$
-                  - Латиница в нижнем регистре, цифры и дефисы
-                i18n: duplicate
-              - label: Название
-                name: name
-                widget: string
-                i18n: true
-                required:
-                  - ru
-              - label: Страна
-                name: country
-                widget: string
-                i18n: true
-                required:
-                  - ru
-              - label: Статус RailTech
-                name: status
-                widget: select
-                options:
-                  - label: Официальный дилер (есть документ)
-                    value: dealer
-                  - label: Прямые поставки
-                    value: direct
-                hint: «Официальный дилер» — только при документе производителя. Основание на сайте не публикуется.
-                i18n: duplicate
-              - label: Статья о партнёре (имя файла в Новостях без .md)
-                name: article
-                widget: string
-                required: false
-                pattern:
-                  - ^[a-z0-9]+(-[a-z0-9]+)*$
-                  - Имя файла статьи без .md, латиница и дефисы
-                i18n: duplicate
-              - label: Порядок
-                name: order
-                widget: number
-                value_type: int
-                min: 1
-                hint: 'Порядок плиток на главной: 1 — первая.'
-                i18n: duplicate
-            summary: '{{fields.name}}'
-            collapsed: true
-            i18n: true
-        i18n: true
       - name: legal
         label: Юридические страницы
         file: src/data/cms/legal.json
@@ -1385,7 +1553,7 @@ collections:
         i18n: true
     i18n: true
   - name: ui
-    label: 4. Подписи интерфейса
+    label: 5. Подписи интерфейса
     editor:
       preview: false
     files:
@@ -1557,6 +1725,39 @@ collections:
       - name: ui_form
         label: Форма заявки
         file: src/data/cms/ui/form.json
+        fields:
+          - label: Раздел
+            name: title
+            widget: string
+            readonly: true
+          - label: Подписи
+            name: strings
+            widget: list
+            required: false
+            fields:
+              - label: Ключ (не менять)
+                name: key
+                widget: string
+                readonly: true
+              - label: RU
+                name: ru
+                widget: string
+              - label: UZ
+                name: uz
+                widget: string
+                required: false
+              - label: EN
+                name: en
+                widget: string
+                required: false
+            summary: '{{fields.key}} — {{fields.ru}}'
+            allow_add: false
+            allow_remove: false
+            allow_reorder: false
+            collapsed: true
+      - name: ui_countries
+        label: Страны (производители-партнёры)
+        file: src/data/cms/ui/countries.json
         fields:
           - label: Раздел
             name: title

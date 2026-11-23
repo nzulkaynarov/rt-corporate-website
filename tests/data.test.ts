@@ -8,7 +8,7 @@ import yaml from 'js-yaml';
 import { describe, expect, it } from 'vitest';
 import company from '../src/data/cms/company.json';
 import home from '../src/data/cms/home.json';
-import partners from '../src/data/cms/partners.json';
+import countries from '../src/data/cms/ui/countries.json';
 import legacy from '../src/data/legacy-redirects.json';
 import seo from '../src/data/cms/seo.json';
 import legal from '../src/data/cms/legal.json';
@@ -18,7 +18,11 @@ const slugs = (dir: string) => fs.readdirSync(dir).filter((f) => f.endsWith('.md
 const front = (file: string) => yaml.load(fs.readFileSync(file, 'utf8').split('---')[1]) as Record<string, any>;
 const services = slugs('src/content/services');
 const news = slugs('src/content/news');
-const ROUTES = new Set(['/', '/services/', '/news/', '/contacts/', '/privacy/', '/terms/', '/cookies/', ...services.map((s) => `/services/${s}/`), ...news.map((s) => `/news/${s}/`)]);
+const partners = slugs('src/content/partners');
+const body = (file: string) => fs.readFileSync(file, 'utf8').split('---').slice(2).join('---').trim();
+/** Partners whose article text is written: their page is /news/partner-<id>/ (src/utils/feed.ts). */
+const partnerArticles = partners.filter((id) => body(`src/content/partners/${id}.md`) && front(`src/content/partners/${id}.md`).title);
+const ROUTES = new Set(['/', '/services/', '/news/', '/contacts/', '/privacy/', '/terms/', '/cookies/', ...services.map((s) => `/services/${s}/`), ...news.map((s) => `/news/${s}/`), ...partnerArticles.map((id) => `/news/partner-${id}/`)]);
 const routeExists = (href: string) => ROUTES.has(href.split('#')[0]);
 
 describe('company.json', () => {
@@ -41,29 +45,38 @@ describe('services collection', () => {
   });
 });
 
-describe('partners.json', () => {
-  it('every tile points to an existing partner article that names the partner', () => {
-    for (const p of partners.partners) {
-      expect(['dealer', 'direct']).toContain(p.status);
-      expect(news, `article for ${p.id}`).toContain(p.article);
-      const d = front(`src/content/news/${p.article}.md`);
-      expect(d.type).toBe('partner');
-      expect(d.partners).toContain(p.id);
+describe('partners collection (one record = tile + article)', () => {
+  const countryCodes = new Set(countries.strings.map((s) => s.key.replace('country.', '')));
+  it('every partner has a brand, a legal entity, a known country and a status', () => {
+    expect(partners.length).toBeGreaterThan(0);
+    for (const id of partners) {
+      const d = front(`src/content/partners/${id}.md`);
+      expect(d.name, id).toBeTruthy();
+      expect(d.legalName, id).toBeTruthy();
+      expect(countryCodes.has(d.country), `${id}: country ${d.country} has no country.<code> string`).toBe(true);
+      expect(['dealer', 'direct']).toContain(d.status);
     }
   });
-  it('ids are unique', () => {
-    const ids = partners.partners.map((p) => p.id);
-    expect(new Set(ids).size).toBe(ids.length);
+  it('a written article has a title, a summary and a date', () => {
+    for (const id of partnerArticles) {
+      const d = front(`src/content/partners/${id}.md`);
+      expect(d.summary, id).toBeTruthy();
+      expect(String(d.date), id).toMatch(/^\d{4}-\d{2}-\d{2}/);
+    }
+  });
+  it('partner article routes do not collide with news files', () => {
+    for (const id of partners) expect(news, id).not.toContain(`partner-${id}`);
   });
 });
 
 describe('news collection', () => {
-  it('references only known partners and valid types', () => {
-    const ids = new Set(partners.partners.map((p) => p.id));
+  it('references only known partners and services and valid types', () => {
+    const ids = new Set(partners);
     for (const s of news) {
       const d = front(`src/content/news/${s}.md`);
-      expect(['news', 'article', 'project', 'partner']).toContain(d.type);
+      expect(['news', 'article', 'project']).toContain(d.type);
       for (const id of d.partners || []) expect(ids.has(id), `${s}: ${id}`).toBe(true);
+      for (const slug of d.services || []) expect(services, `${s}: ${slug}`).toContain(slug);
     }
   });
 });

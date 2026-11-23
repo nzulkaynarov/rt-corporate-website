@@ -1,0 +1,63 @@
+---
+/**
+ * «Материалы о партнёре» / «Читайте также» / «Проекты и новости по услуге»: up to three cards from the feed,
+ * chosen by src/utils/feed.ts (nobody links materials by hand). Hidden when there is nothing to show.
+ */
+import NewsCard from './NewsCard.astro';
+import { localeHref } from '../../i18n';
+import { t } from '../../i18n/ui';
+import type { FeedItem } from '../../utils/feed';
+
+interface Props {
+  title: string;
+  items: Pick<FeedItem, 'slug' | 'data'>[];
+  /** id of the heading (one block per page, but keep it unique if that changes). */
+  id?: string;
+  soft?: boolean;
+}
+const lang = Astro.locals.lang;
+const { title, items, id = 'rel-title', soft = true } = Astro.props;
+---
+
+{items.length > 0 && (
+  <section class:list={['section', { 'section--soft': soft }]} aria-labelledby={id}>
+    <div class="wrap">
+      <div class="rel-head">
+        <h2 id={id}>{title}</h2>
+        <a href={localeHref('/news/', lang)}>{t(lang, 'news.back')} →</a>
+      </div>
+      <ul class="rel">{items.slice(0, 3).map((e) => <li><NewsCard entry={e} /></li>)}</ul>
+    </div>
+  </section>
+)}
+
+<style>
+  .rel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .rel-head h2 {
+    font-size: 30px;
+    font-weight: 700;
+  }
+  .rel {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+  @media (max-width: 760px) {
+    .rel {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .rel-head h2 {
+      font-size: 24px;
+    }
+  }
+</style>
