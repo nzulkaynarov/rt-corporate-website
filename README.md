@@ -54,9 +54,9 @@ tests/                    Vitest и Playwright (tests/e2e)
 GitHub Pages. Пуш в `main` (мёрж PR) запускает `.github/workflows/deploy.yml`: тесты, сборка, публикация.
 Прямой пуш в `main` и force-push запрещены, изменения идут только через PR.
 
-Пока сайт открывается по адресу `https://nzulkaynarov.github.io/rt-corporate-website/`. При заданной переменной
-окружения `CUSTOM_DOMAIN` сборка идёт под `https://railtech.uz` с базой `/`.
-Переезд на домен описан в [`PRODUCTION_CUTOVER.md`](./PRODUCTION_CUTOVER.md).
+Сайт открывается по адресу `https://railtech.uz` (с 2026-11-23). Публикация собирается с переменной окружения
+`CUSTOM_DOMAIN` (база `/`); локально и в проверках PR — без неё, с базой `/rt-corporate-website`.
+Как проходил переезд и как откатить: [`PRODUCTION_CUTOVER.md`](./PRODUCTION_CUTOVER.md).
 
 ## Документация
 

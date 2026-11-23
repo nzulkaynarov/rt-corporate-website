@@ -160,7 +160,8 @@ Telegram ─► t.me/<бот>?start=web  (бот CRM, источник «сай�
 | `make e2e` | Playwright по собранному сайту: страницы открываются, нет ошибок консоли, кнопки ведут куда нужно, нет горизонтальной прокрутки на телефоне, форма показывает ошибки и успех |
 | `make ci` | всё вместе, как в GitHub Actions |
 
-GitHub Pages: база `/rt-corporate-website` (переменная `CUSTOM_DOMAIN` переключает на `railtech.uz`). `main` = прод,
+GitHub Pages, домен `railtech.uz`: публикация (`deploy.yml`) собирается с `CUSTOM_DOMAIN` (база `/`); локально и в
+проверках PR база `/rt-corporate-website`. `main` = прод,
 пуш в `main` запрещён, только PR.
 
 ## 7. Что не делаем
