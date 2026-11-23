@@ -127,6 +127,15 @@
 | одно окно (интерфейс Кабинета: всё на одном экране) | bitta oyna | one workspace | — | Метафора интерфейса: «Вся сделка — в одном окне», «1 окно»; на проверку носителю |
 | одно окно (единая точка обращения) | yagona darcha | one-stop shop | — | «Одно окно для технических вопросов», Кабинет как одно окно для клиента и партнёра; на проверку носителю |
 | ООО «РАТЕП-ИННОВАЦИЯ» | «RATEP-INNOVATSIYA» MChJ | RATEP-INNOVATSIYA LLC | — | В UZ латиницей; на проверку носителю |
+| тепловоз / электровоз / электропоезд | teplovoz / elektrovoz / elektropoezd | diesel locomotive / electric locomotive / electric train | — | Только в фактах о партнёре; на проверку носителю |
+| магистральный / маневровый (тепловоз) | magistral / manyovr (teplovozi) | mainline / shunting (locomotive) | — | на проверку носителю |
+| тяговый подвижной состав | tortuvchi harakatlanuvchi tarkib | traction rolling stock | — | на проверку носителю |
+| кабина машиниста / пульт управления машиниста | mashinist kabinasi / mashinistning boshqaruv pulti | driver's cab / driver's control console | — | на проверку носителю |
+| датчик (давления, температуры) | (bosim, harorat) datchigi | (pressure, temperature) sensor | — | на проверку носителю |
+| децимальный номер | detsimal raqam | decimal number | — | Обозначение по ЕСКД; на проверку носителю |
+| ОАО «РЖД» | «Rossiya temir yo'llari» OAJ (RJD) | Russian Railways (RZD) | — | на проверку носителю |
+| ВНИИЖТ | VNIIJT | VNIIZhT | — | Аббревиатуры российских организаций в UZ/EN транслитерируются; на проверку носителю |
+| МПСУиД (обозначение изделия) | MPSUiD | MPSUiD | — | Строчная «и» не проходит проверку кириллицы в UZ/EN, поэтому латиница; остальные обозначения (БЛОК, САУТ-ЦМ/485) остаются кириллицей; на проверку носителю |
 
 ## Единицы и обозначения
 

@@ -338,8 +338,7 @@ collections:
       - label: Год
         field: date
         pattern: \d{4}
-    i18n:
-      initial_locales: default
+    i18n: true
   - name: partners
     label: 3. Производители-партнёры
     label_singular: Партнёр

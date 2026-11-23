@@ -129,7 +129,9 @@ test.describe('languages (src/data/content-stage.json)', () => {
   test.skip(stage.ruOnly === true, 'RU-first stage: UZ/EN are not published yet');
 
   for (const lang of ['uz', 'en']) {
-    for (const path of ['', 'services/supply/', 'contacts/', 'privacy/']) {
+    // «Новости» too once the section is translated (titles without Cyrillic designations, so the h1 check holds)
+    const news = (stage.ruOnlySections || []).includes('news') ? [] : ['news/', 'news/railtech-platform/', 'news/partner-gersys/'];
+    for (const path of ['', 'services/supply/', 'contacts/', 'privacy/', ...news]) {
       test(`/${lang}/${path} is translated and indexable`, async ({ page }) => {
         await page.goto(`${lang}/${path}`);
         await expect(page.locator('html')).toHaveAttribute('lang', lang);

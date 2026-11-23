@@ -1,6 +1,6 @@
 ---
 name: write-news
-description: Write or update a RailTech «Новости» item — news, article or project (src/content/news, type news/article/project) — in Russian only while news is in ruOnlySections, from a brief and verifiable sources, with internal links, then validate. Use for any request to write a news item, article, case/project or event report. For a manufacturer profile use add-partner.
+description: Write or update a RailTech «Новости» item — news, article or project (src/content/news, type news/article/project) — in Russian, Uzbek and English (an untranslated item is shown in Russian and noindex on /uz/ and /en/), from a brief and verifiable sources, with internal links, then validate. Use for any request to write a news item, article, case/project or event report. For a manufacturer profile use add-partner.
 ---
 
 # Новость, статья или проект
@@ -21,7 +21,8 @@ description: Write or update a RailTech «Новости» item — news, articl
 5. **Текст RU.** Тело ≥ 600 знаков, короткие предложения, разделы с `###`, структура по STYLE_GUIDE §5.
    Статья: 2–5 внутренних ссылок маршрутами (`/services/supply/`, `/news/<slug>/`). Отрасль упоминается только как факт
    события или партнёра, без обобщений о RailTech.
-6. **Только RU.** Пока `news` стоит в `src/data/content-stage.json → ruOnlySections`, блоки `uz:` / `en:` (и `body` в них)
-   не добавляй и не заполняй (на `/uz/` и `/en/` новость показывается на русском). Существующие не удаляй.
+6. **Три языка.** Переведи материал в том же изменении: `title`, `summary`, `seoTitle`/`seoDescription` (если есть),
+   `coverAlt`, подписи галереи и `body` в блоках `uz:` / `en:`, `lang: [ru, uz, en]` (скил `translate-content`, GLOSSARY).
+   Без перевода страница UZ/EN покажет русский и будет закрыта от поиска. Правишь русский — обнови и перевод.
 7. **Проверка.** `node scripts/check-content.mjs --files src/content/news/<slug>.md`, затем `make check`.
    Предупреждение «no cover photo» допустимо, укажи его в PR. Дальше скилы `content-qa` → `content-pr`.

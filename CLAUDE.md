@@ -60,11 +60,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 1. **Без привязки к отрасли.** RailTech работает с любыми предприятиями. В общих текстах нет «ж/д», серий
    локомотивов, отраслевых каталогов. Отрасль упоминается только в фактах статьи о партнёре или новости.
    Это проверяют `check-content` и `check-build`.
-2. **Три языка (кроме новостей).** RU одобрен, в `src/data/content-stage.json` стоят `ruOnly: false` и
-   `ruOnlySections: ["news"]`. Новый или изменённый текст вне новостей пишется сразу на RU, UZ (латиница) и EN
-   (блоки `uz:` / `en:` рядом с русскими полями, `uz`/`en` в ui; формат — docs/content/README.md §2) по GLOSSARY.md;
-   пропуски `check-content` считает ошибками.
-   Новости (`src/content/news`) пока только по-русски: их блоки `uz:` / `en:` не заполняй. `content-stage.json` меняет владелец.
+2. **Три языка.** В `src/data/content-stage.json` стоят `ruOnly: false` и `ruOnlySections: []` (новости переведены
+   2026-11-23). Новый или изменённый текст пишется сразу на RU, UZ (латиница) и EN (блоки `uz:` / `en:` рядом
+   с русскими полями, `uz`/`en` в ui; формат — docs/content/README.md §2) по GLOSSARY.md; вне «Новостей» пропуски
+   `check-content` считает ошибками. «Новости» (новости и статьи партнёров) тоже трёхъязычные, но могут выйти сначала по-русски: пока у материала нет перевода (язык не включён в `lang` или в блоке нет заголовка и текста), его `/uz/` и `/en/` показывают русский, закрыты от поиска и не в sitemap (`src/utils/stage.ts → entryLangs`); `check-content` считает такие пропуски, но не падает.
+   Агент переводит новость в том же изменении. `content-stage.json` меняет владелец.
 3. **Факты не выдумываются**: цены, клиенты, сертификаты, цифры. `dealer` ставится только по документу
    производителя. Основание статуса на сайте не публикуется.
 4. **ARCHITECTURE.md первым.** Новое поле, страница или компонент сначала описываются там, в том же PR.
@@ -78,5 +78,5 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Контент
 - Регламент в `docs/content/README.md`, там же STYLE_GUIDE, GLOSSARY, SEO, CONTENT_PLAN и шаблоны в `templates/`.
 - Скилы: `write-news`, `add-partner`, `add-service`, `edit-site-texts`, затем `content-qa` и `content-pr`.
-  `translate-content` переводит UZ/EN (не при `ruOnly: true`; разделы из `ruOnlySections` пропускает).
-- Субагенты: `content-writer` выполняет бриф целиком, `content-reviewer` проверяет, `content-translator` переводит UZ/EN (кроме разделов из `ruOnlySections`).
+  `translate-content` переводит UZ/EN (не при `ruOnly: true`; разделы из `ruOnlySections`, если они появятся, пропускает).
+- Субагенты: `content-writer` выполняет бриф целиком, `content-reviewer` проверяет, `content-translator` переводит UZ/EN.

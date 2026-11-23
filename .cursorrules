@@ -4,6 +4,6 @@
 #   docs/ARCHITECTURE.md pages, data model, components, lead flow to the RailTech CRM / Cabinet
 #   docs/DESIGN.md       tokens, components, phone layout, accessibility
 # Key rules: no text in code (src/data/cms, src/content); industry-neutral positioning; translation stage in
-# src/data/content-stage.json (owner-only): new/changed text outside news is written in RU + UZ (Latin) + EN at once,
-# news stays Russian-only while "news" is in ruOnlySections;
+# src/data/content-stage.json (owner-only): new/changed text is written in RU + UZ (Latin) + EN at once (news too;
+# an untranslated news page is shown in Russian and noindex until its uz/en block is filled);
 # one menu (src/utils/nav.ts); run `make check` (and `make e2e` for code changes) before a PR; never push to main.

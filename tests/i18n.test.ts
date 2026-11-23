@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { alternateHrefs, getLangFromPath, getRouteFromPath, localeHref, localize, pick, tField } from '../src/i18n';
-import { toSuffixed } from '../src/i18n/blocks.mjs';
+import { toSuffixed, translatedLocales } from '../src/i18n/blocks.mjs';
 import { fillFacts } from '../src/i18n/facts.mjs';
 import { makeT } from '../src/i18n/dictionary';
 
@@ -106,3 +106,16 @@ describe('facts', () => {
     expect(tField({ title: 'ИНН {inn}' }, 'title', 'en')).toBe('ИНН 308346339');
   });
 });
+
+// «Новости» materials are published in Russian first; a locale counts once the CMS enabled it and it has title + text.
+describe('translatedLocales', () => {
+  it('needs the locale enabled, the title and (when RU has a text) the body', () => {
+    const body = 'Текст';
+    expect(translatedLocales({ lang: ['ru'], title: 'Т' }, body)).toEqual(['ru']);
+    expect(translatedLocales({ lang: ['ru', 'uz'], title: 'Т', uz: { title: 'Sarlavha' } }, body)).toEqual(['ru']);
+    expect(translatedLocales({ lang: ['ru', 'uz'], title: 'Т', uz: { title: 'Sarlavha', body: 'Matn' } }, body)).toEqual(['ru', 'uz']);
+    expect(translatedLocales({ lang: ['ru', 'en'], title: 'Т', uz: { title: 'S', body: 'M' }, en: { title: 'Title', body: 'Text' } }, body)).toEqual(['ru', 'en']);
+    expect(translatedLocales({ lang: ['ru', 'uz', 'en'], title: 'Т', uz: { title: 'S' }, en: { title: '' } }, '')).toEqual(['ru', 'uz']);
+  });
+});
+

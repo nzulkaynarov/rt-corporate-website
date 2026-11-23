@@ -10,7 +10,7 @@ import type { FeedItem } from '../../utils/feed';
 
 interface Props {
   title: string;
-  items: Pick<FeedItem, 'slug' | 'data'>[];
+  items: Pick<FeedItem, 'slug' | 'data' | 'body'>[];
   /** id of the heading (one block per page, but keep it unique if that changes). */
   id?: string;
   soft?: boolean;

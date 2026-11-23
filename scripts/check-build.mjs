@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { FACT_TOKENS } from '../src/i18n/facts.mjs';
+import { newsRouteLocales } from '../src/i18n/entry-langs.mjs';
 const FACT_TOKEN_IN_PAGE = new RegExp(`\\{(${Object.keys(FACT_TOKENS).join('|')})\\}`);
 
 /**
@@ -22,7 +23,10 @@ const STAGE = fs.existsSync('src/data/content-stage.json') ? JSON.parse(fs.readF
 const RU_ONLY = STAGE.ruOnly === true;
 const RU_ONLY_SECTIONS = STAGE.ruOnlySections || [];
 /** Same rule as src/utils/stage.ts: the route's content is still Russian in every language. */
-const ruOnlyRoute = (route) => RU_ONLY || RU_ONLY_SECTIONS.includes(route.split('/')[1] || '');
+const sectionRuOnly = (route) => RU_ONLY || RU_ONLY_SECTIONS.includes(route.split('/')[1] || '');
+/** «Новости» materials not translated into a locale exist in RU only (src/i18n/blocks.mjs → translatedLocales). */
+const NEWS_LOCALES = newsRouteLocales();
+const routeLocales = (route) => (sectionRuOnly(route) ? ['ru'] : NEWS_LOCALES.get(route) || LANGS);
 const HUD = /RT_CONSOLE|HUD_SCAN|OPTICAL_FEED|SYS\.ACTIVE|GATEWAYS|NODE:\s*TASHKENT|STATUS:\s*PRODUCTION|CAD\.UI/;
 const POSITIONING = /UzTE16M|ТЭП70|3ЭС5К|\bВЛ[68]0|ЭР9Е|ТЭ10М|ЧМЭ3|ТЭМ2|локомотив|подвижн\S* состав|ж\/д электроник|rail electronics/i;
 let untranslated = 0;
@@ -126,9 +130,10 @@ for (const rel of files) {
     if (!canonical) err('missing canonical');
     else if (new URL(canonical).pathname !== page) err(`canonical points to ${new URL(canonical).pathname}`);
     const hreflangs = [...html.matchAll(/<link[^>]+rel="alternate"[^>]+hreflang="([^"]+)"/gi)].map((m) => m[1]);
-    for (const h of [...(ruOnlyRoute(bare) ? ['ru'] : LANGS), 'x-default']) if (!hreflangs.includes(h)) err(`missing hreflang="${h}"`);
-    if (ruOnlyRoute(bare) && lang !== 'ru') err('page of a Russian-only section must be noindex in UZ/EN (src/data/content-stage.json)');
-  } else if (ruOnlyRoute(bare) && lang !== 'ru') {
+    for (const h of [...routeLocales(bare), 'x-default']) if (!hreflangs.includes(h)) err(`missing hreflang="${h}"`);
+    for (const h of hreflangs) if (h !== 'x-default' && !routeLocales(bare).includes(h)) err(`hreflang="${h}" announces a locale the page is not translated into`);
+    if (!routeLocales(bare).includes(lang)) err(`page not translated into ${lang.toUpperCase()} must be noindex (content-stage.json or the material's uz/en block)`);
+  } else if (!routeLocales(bare).includes(lang)) {
     untranslated += 1;
   }
 
@@ -176,7 +181,7 @@ for (const rel of files) {
     const letters = text.match(/\p{L}/gu) || [];
     const cyr = text.match(/\p{Script=Cyrillic}/gu) || [];
     const share = letters.length ? cyr.length / letters.length : 0;
-    if (share > 0.15 && !ruOnlyRoute(bare)) warn(`${Math.round(share * 100)}% of the text is Cyrillic — untranslated ${lang.toUpperCase()} content in the CMS?`);
+    if (share > 0.15 && routeLocales(bare).includes(lang)) warn(`${Math.round(share * 100)}% of the text is Cyrillic — untranslated ${lang.toUpperCase()} content in the CMS?`);
   }
 }
 
@@ -193,5 +198,5 @@ if (errors.length) {
   for (const e of errors) console.error('  - ' + e);
   process.exit(1);
 }
-if (untranslated) console.warn(`[check-build] ${untranslated} UZ/EN page(s) of Russian-only sections are noindex until translated (src/data/content-stage.json)`);
+if (untranslated) console.warn(`[check-build] ${untranslated} UZ/EN page(s) not translated yet are shown in Russian and noindex (content-stage.json or the material's uz/en block)`);
 console.log(`[check-build] ${files.length - redirects} pages + ${redirects} redirects OK (${LANGS.join('/')}), ${warnings.length} warning(s)`);

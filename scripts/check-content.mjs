@@ -35,7 +35,12 @@ const RU_ONLY = args.includes('--ru-only') || STAGE.ruOnly === true;
 const RU_ONLY_SECTIONS = new Set(STAGE.ruOnlySections || []);
 // Partner articles are published in «Новости» (/news/partner-<id>/), so they follow the news section.
 const sectionOfFile = (file) => file.split(path.sep).join('/').replace(/^src\/content\/partners\//, 'src/content/news/');
-const ruOnlyFile = (file) => [...RU_ONLY_SECTIONS].some((s) => sectionOfFile(file).startsWith(`src/content/${s}/`));
+/**
+ * «Новости» (news entries, partner articles) may be published in Russian first: an untranslated locale is shown in
+ * Russian, noindex and out of the sitemap (src/utils/stage.ts → entryLangs), so its missing UZ/EN are counted, not
+ * errors. Everything else (services, site texts, partner tile names) must be trilingual in the same change.
+ */
+const ruOnlyFile = (file) => sectionOfFile(file).startsWith('src/content/news/') || [...RU_ONLY_SECTIONS].some((s) => sectionOfFile(file).startsWith(`src/content/${s}/`));
 const pendingTranslation = new Map(); // file → number of missing UZ/EN values
 const missingTr = (file, msg) => {
   if (RU_ONLY || ruOnlyFile(file)) pendingTranslation.set(file, (pendingTranslation.get(file) || 0) + 1);
@@ -381,7 +386,7 @@ const failed = outErrors.length > 0 || (STRICT && outWarnings.length > 0);
 const pendingFiles = [...pendingTranslation.keys()].filter((f) => !ONLY || ONLY.includes(f));
 if (pendingFiles.length) {
   const total = pendingFiles.reduce((n, f) => n + pendingTranslation.get(f), 0);
-  console.warn(`[check-content] RU-first: ${total} UZ/EN value(s) await translation in ${pendingFiles.length} file(s) (not errors at this stage: src/data/content-stage.json)`);
+  console.warn(`[check-content] ${total} UZ/EN value(s) await translation in ${pendingFiles.length} file(s): «Новости» materials (shown in Russian and noindex until translated) or the RU-first stage (src/data/content-stage.json)`);
 }
 if (outWarnings.length) {
   console.warn(`[check-content] ${outWarnings.length} warning(s):`);

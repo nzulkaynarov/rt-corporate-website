@@ -1,6 +1,6 @@
 ---
 name: add-partner
-description: Add or update a RailTech manufacturer partner — one record in src/content/partners/<id>.md holding the home-page tile (brand, legal entity, country code, status) and the partner article shown at /news/partner-<id>/ — tile in Russian, Uzbek and English, article in Russian only while news is in ruOnlySections, with correct dealer/direct status rules, then validate. Use when asked to add a manufacturer/partner, change a partner's status or rewrite a partner profile.
+description: Add or update a RailTech manufacturer partner — one record in src/content/partners/<id>.md holding the home-page tile (brand, legal entity, country code, status) and the partner article shown at /news/partner-<id>/ — tile and article in Russian, Uzbek and English, with correct dealer/direct status rules, then validate. Use when asked to add a manufacturer/partner, change a partner's status or rewrite a partner profile.
 ---
 
 # Добавить или обновить партнёра
@@ -28,8 +28,9 @@ description: Add or update a RailTech manufacturer partner — one record in src
    Пока статьи нет (пустые `title` или текст), плитка показывается без ссылки — это допустимо.
 4. **Связи считаются сами** (`src/utils/feed.ts`): новости о партнёре получают `partners: [<id>]` — и появляются в блоке
    «Материалы о партнёре»; ссылка в тексте на `/services/<услуга>/` выводит статью на странице услуги.
-5. **Языки.** Статья публикуется в «Новостях»: пока `news` в `ruOnlySections` (`src/data/content-stage.json`), её
-   `title`/`summary`/текст в блоках `uz:` / `en:` не пиши. Плитка (`name`, `legalName`) — на RU, UZ и EN (шаг 2).
+5. **Языки.** Плитка (`name`, `legalName`) — на RU, UZ и EN сразу (шаг 2). Статью тоже переведи в том же изменении
+   (`title`, `summary`, текст — `body` в блоках `uz:` / `en:`): без перевода её страница UZ/EN покажет русский и будет
+   закрыта от поиска.
 6. **Проверка.** `node scripts/check-content.mjs --files src/content/partners/<id>.md`, затем `make check`.
    Дальше `content-qa` → `content-pr`.
 

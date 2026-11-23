@@ -88,3 +88,21 @@ function spread(target, block, lang) {
     }
   }
 }
+
+/**
+ * Locales a «Новости» material (news entry or partner article) is really translated into: RU always; UZ/EN when the
+ * CMS has the locale enabled (`lang`) and its block has the title and, if the RU text has a body, the body too.
+ * An untranslated locale shows the Russian text, is noindex and stays out of the sitemap (src/utils/stage.ts).
+ * @param {Record<string, any>} data front matter @param {string} [ruBody] RU Markdown body @returns {string[]}
+ */
+export function translatedLocales(data, ruBody = '') {
+  const enabled = Array.isArray(data?.lang) ? data.lang : [];
+  const out = ['ru'];
+  for (const l of ['uz', 'en']) {
+    const block = data?.[l];
+    if (!enabled.includes(l) || !isObject(block) || isEmpty(block.title)) continue;
+    if (String(ruBody).trim() && isEmpty(block.body)) continue;
+    out.push(l);
+  }
+  return out;
+}

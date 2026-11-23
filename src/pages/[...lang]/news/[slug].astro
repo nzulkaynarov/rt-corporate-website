@@ -11,7 +11,7 @@ import { formatDate } from '../../../utils/format';
 import { renderBody } from '../../../utils/markdown';
 import { entrySeo, absoluteUrl, siteSeo } from '../../../utils/seo';
 import { withBase } from '../../../utils/url';
-import { contentLang } from '../../../utils/stage';
+import { entryContentLang, entryLangs } from '../../../utils/stage';
 
 export async function getStaticPaths() {
   const feed = await getFeed();
@@ -22,9 +22,11 @@ interface Props {
   entry: FeedItem;
 }
 const lang = Astro.locals.lang;
-// Content language: RU while news is not translated (src/data/content-stage.json → ruOnlySections); UI stays in `lang`.
-const cl = contentLang(lang, 'news');
 const { entry } = Astro.props;
+// Content language: the page language when this material is translated, otherwise RU (src/utils/stage.ts → entryLangs);
+// an untranslated page is noindex and announces only the locales it exists in. The UI stays in `lang`.
+const langs = entryLangs('news', entry.data, entry.body);
+const cl = entryContentLang(lang, 'news', entry.data, entry.body);
 // RU at the root, translations in the uz/en blocks (src/i18n/blocks.mjs): one localized view of the entry.
 const d = localize(entry.data, cl) as Record<string, any>;
 const title = tField(d, 'title', cl) as string;
@@ -63,7 +65,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={seo.title} description={seo.description} breadcrumbs={crumbs} jsonLd={jsonLd} ogType="article" image={d.cover}>
+<BaseLayout title={seo.title} description={seo.description} breadcrumbs={crumbs} jsonLd={jsonLd} ogType="article" image={d.cover} langs={langs}>
   <div class="wrap"><Breadcrumbs items={crumbs} /></div>
 
   <article class="wrap art" data-lightbox lang={cl !== lang ? cl : undefined}>
