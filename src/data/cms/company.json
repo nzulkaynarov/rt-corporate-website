@@ -30,7 +30,7 @@
   "leadEndpoint": "https://crm.railtech.uz/api/v1/leads/web",
   "metrics": [
     {
-      "value": "5+",
+      "value": "6+",
       "label": "лет работаем на рынке Узбекистана"
     },
     {
@@ -59,7 +59,7 @@
     },
     "metrics": [
       {
-        "value": "5+",
+        "value": "6+",
         "label": "yil O'zbekiston bozorida ishlab kelmoqdamiz"
       },
       {
@@ -89,7 +89,7 @@
     },
     "metrics": [
       {
-        "value": "5+",
+        "value": "6+",
         "label": "years in the Uzbek market"
       },
       {
