@@ -6,6 +6,7 @@
  */
 import stage from '../data/content-stage.json';
 import { DEFAULT_LANG, LANGS, type Lang } from '../i18n';
+import { translatedLocales } from '../i18n/blocks.mjs';
 
 export const RU_ONLY = stage.ruOnly === true;
 const SECTIONS: readonly string[] = (stage as { ruOnlySections?: string[] }).ruOnlySections ?? [];
@@ -25,4 +26,19 @@ export function routeLangs(route: string): readonly Lang[] {
 /** Language to read a section's content in: the page language, or RU while the section is not translated. */
 export function contentLang(lang: Lang, section: string): Lang {
   return isRuOnlySection(section) ? DEFAULT_LANG : lang;
+}
+
+/**
+ * Locales a single «Новости» material is shown in: RU only while its section is Russian-only, otherwise the locales it
+ * is really translated into (src/i18n/blocks.mjs → translatedLocales). A material written in Russian first is
+ * published at once; its /uz/ and /en/ pages show Russian, are noindex and stay out of the sitemap until translated.
+ */
+export function entryLangs(section: string, data: Record<string, any>, body = ''): readonly Lang[] {
+  if (isRuOnlySection(section)) return [DEFAULT_LANG];
+  return translatedLocales(data, body) as Lang[];
+}
+
+/** Language to show a material in: the page language when translated, otherwise RU. */
+export function entryContentLang(lang: Lang, section: string, data: Record<string, any>, body = ''): Lang {
+  return entryLangs(section, data, body).includes(lang) ? lang : DEFAULT_LANG;
 }

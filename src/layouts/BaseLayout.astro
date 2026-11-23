@@ -16,7 +16,7 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import { company, telegramUrl } from '../utils/company';
 import { withBase } from '../utils/url';
-import { LANG_META, DEFAULT_LANG, alternateHrefs, getRouteFromPath, localeHref, tField } from '../i18n';
+import { LANG_META, DEFAULT_LANG, alternateHrefs, getRouteFromPath, localeHref, tField, type Lang } from '../i18n';
 import { t } from '../i18n/ui';
 import { pageSeo, siteSeo, absoluteUrl } from '../utils/seo';
 import { routeLangs } from '../utils/stage';
@@ -36,6 +36,8 @@ interface Props {
   image?: string;
   ogType?: 'website' | 'article';
   noindex?: boolean;
+  /** Locales this page really exists in (a material not yet translated); default: by route (src/utils/stage.ts). */
+  langs?: readonly Lang[];
   /** Breadcrumb trail after «Главная» → schema.org BreadcrumbList */
   breadcrumbs?: Crumb[];
   /** Extra schema.org nodes (Article, Service, FAQPage…) */
@@ -47,10 +49,10 @@ interface Props {
 const lang = Astro.locals.lang;
 const site = siteSeo(lang);
 const fallback = pageSeo('home', lang);
-const { title = fallback.title, description = fallback.description, image, ogType = 'website', noindex: noindexProp = false, breadcrumbs = [], jsonLd, langLinks } = Astro.props;
+const { title = fallback.title, description = fallback.description, image, ogType = 'website', noindex: noindexProp = false, breadcrumbs = [], jsonLd, langLinks, langs } = Astro.props;
 // Translation stage (src/utils/stage.ts): a page whose content is still Russian in UZ/EN is kept out of search there,
 // and the RU page does not announce untranslated alternates.
-const hreflangs = routeLangs(getRouteFromPath(Astro.url.pathname));
+const hreflangs = langs ?? routeLangs(getRouteFromPath(Astro.url.pathname));
 const noindex = noindexProp || !hreflangs.includes(lang);
 
 const siteUrl = Astro.site;

@@ -1,6 +1,6 @@
 ---
 name: content-writer
-description: Creates and updates RailTech site content (news, articles, projects, partner tiles and articles, the four services, page texts) according to docs/content rules — in Russian, Uzbek and English (news: Russian only while news is in ruOnlySections) — validates it and prepares a PR. Use for any "add/update content" task given as a brief or issue.
+description: Creates and updates RailTech site content (news, articles, projects, partner tiles and articles, the four services, page texts) according to docs/content rules — in Russian, Uzbek and English (news too: an untranslated item is shown in Russian and noindex on /uz/ and /en/) — validates it and prepares a PR. Use for any "add/update content" task given as a brief or issue.
 tools: Read, Write, Edit, Glob, Grep, Bash, WebSearch, WebFetch, Skill
 ---
 
@@ -14,10 +14,9 @@ RailTech поставляет оборудование и услуги пред�
 `add-service` (одна из четырёх услуг), `edit-site-texts` (JSON страниц, подписи, SEO). В конце запусти `content-qa` и `content-pr`.
 
 Жёсткие правила:
-- **Три языка, кроме новостей.** RU одобрен (`src/data/content-stage.json → ruOnly: false`). Новый или изменённый текст
-  вне новостей (услуги, `src/data/cms/*.json`, `ui/*.json`, плитки партнёров) пиши в том же изменении на RU, UZ (латиница)
-  и EN: блоки `uz:` / `en:` (docs/content/README.md §2), `uz`/`en` в ui, по GLOSSARY. Новости (`src/content/news`, включая статьи о партнёрах)
-  пока `news` в `ruOnlySections`, пиши только по-русски, их блоки `uz:` / `en:` не заполняй. `content-stage.json` не меняй.
+- **Три языка.** `src/data/content-stage.json → ruOnly: false, ruOnlySections: []`. Новый или изменённый текст (услуги,
+  `src/data/cms/*.json`, `ui/*.json`, партнёры, новости) пиши в том же изменении на RU, UZ (латиница) и EN: блоки `uz:` / `en:`
+  (docs/content/README.md §2), `uz`/`en` в ui, по GLOSSARY. `content-stage.json` не меняй.
 - **Без привязки к отрасли.** В общих текстах (услуги, главная, страницы, SEO, подписи, плитки) нет «ж/д», серий техники и
   отраслевых каталогов. Отрасль упоминается только как факт в статье о партнёре или новости.
 - **Факты** (цены, клиенты, сертификаты, цифры, сроки, должности) берутся только из брифа или проверяемых источников.
