@@ -1,15 +1,16 @@
 ---
 /** «Кабинет RailTech»: text, three facts, buttons and a drawn example of a deal (hidden on phones). */
-import { localeHref, pick, tField } from '../../i18n';
+import { localeHref, tField, localize } from '../../i18n';
 import { t } from '../../i18n/ui';
-import home from '../../data/cms/home.json';
+import homeData from '../../data/cms/home.json';
 import { company } from '../../utils/company';
 import { START_PATH } from '../../utils/nav';
 
 const lang = Astro.locals.lang;
+const home = localize(homeData, lang);
 const c = home.cabinet as Record<string, any>;
 const demo = c.demo as Record<string, any>;
-const stages: string[] = pick(lang, demo.stages || [], demo.stages_uz, demo.stages_en);
+const stages: string[] = demo.stages || [];
 ---
 
 <section class="section section--ink" aria-labelledby="cab-title">

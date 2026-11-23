@@ -1,20 +1,22 @@
 ---
-title: "RailTech — официальный дилер и представитель ООО «НПО САУТ» в Узбекистане"
-title_uz: "RailTech — «НПО САУТ» MChJning O'zbekistondagi rasmiy dileri va vakili"
-title_en: "RailTech Becomes Official Dealer and Representative of NPO SAUT LLC in Uzbekistan"
-type: "news"
-date: "2026-02-26"
-summary: "ООО «RailTech» — официальный дилер и представитель ООО «НПО САУТ» в Республике Узбекистан. Рассказываем, что входит в нашу работу и что это значит для заказчиков."
-summary_uz: ""
-summary_en: ""
+lang:
+  - ru
+  - uz
+  - en
+type: news
+date: '2026-02-26'
+title: RailTech — официальный дилер и представитель ООО «НПО САУТ» в Узбекистане
+summary: ООО «RailTech» — официальный дилер и представитель ООО «НПО САУТ» в Республике Узбекистан. Рассказываем, что входит в нашу работу и что это значит для заказчиков.
 partners:
-- "npo-saut"
-seoTitle: "RailTech — официальный дилер НПО САУТ в Узбекистане"
-seoTitle_uz: "RailTech — «НПО САУТ» rasmiy dileri O'zbekistonda"
-seoTitle_en: "RailTech: Official NPO SAUT Dealer in Uzbekistan"
-seoDescription: "RailTech — официальный дилер и представитель ООО «НПО САУТ» в Узбекистане: поставка, техническое консультирование, локализация."
-seoDescription_uz: ""
-seoDescription_en: ""
+  - npo-saut
+seoTitle: RailTech — официальный дилер НПО САУТ в Узбекистане
+seoDescription: 'RailTech — официальный дилер и представитель ООО «НПО САУТ» в Узбекистане: поставка, техническое консультирование, локализация.'
+uz:
+  title: RailTech — «НПО САУТ» MChJning O'zbekistondagi rasmiy dileri va vakili
+  seoTitle: RailTech — «НПО САУТ» rasmiy dileri O'zbekistonda
+en:
+  title: RailTech Becomes Official Dealer and Representative of NPO SAUT LLC in Uzbekistan
+  seoTitle: 'RailTech: Official NPO SAUT Dealer in Uzbekistan'
 ---
 
 В феврале 2026 года ООО «НПО САУТ» (Екатеринбург, Россия) назначило ООО «RailTech» **официальным дилером и представителем** в Республике Узбекистан.

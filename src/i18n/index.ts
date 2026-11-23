@@ -110,10 +110,17 @@ export function pick<T = string>(lang: Lang, ru: T, uz?: T | null, en?: T | null
   return ru;
 }
 
-/** Localized CMS field with RU fallback: tField(entry, 'title', 'uz') → entry.title_uz || entry.title. */
+/**
+ * Localized CMS field with RU fallback: tField(entry, 'title', 'uz') → entry.uz.title || entry.title
+ * (locale blocks, src/i18n/blocks.mjs). Nested values (list items, objects) are read from `localize(data, lang)`,
+ * which has already applied the block, so for them this returns the plain field.
+ */
 export function tField<T extends Record<string, any>>(item: T | undefined | null, field: string, lang: Lang): any {
   if (!item) return '';
-  return pick(lang, item[field] ?? '', item[`${field}_uz`], item[`${field}_en`]);
+  const block = lang === DEFAULT_LANG ? undefined : item[lang];
+  return pick(lang, item[field] ?? '', lang === 'uz' ? block?.[field] : undefined, lang === 'en' ? block?.[field] : undefined);
 }
+
+export { localize } from './blocks.mjs';
 
 export { makeT, type UiFile, type UiString } from './dictionary';

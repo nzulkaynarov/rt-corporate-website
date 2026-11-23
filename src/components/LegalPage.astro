@@ -2,8 +2,8 @@
 /** Privacy / terms / cookies page from src/data/cms/legal.json. */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from './ui/Breadcrumbs.astro';
-import legal from '../data/cms/legal.json';
-import { tField } from '../i18n';
+import legalData from '../data/cms/legal.json';
+import { tField, localize } from '../i18n';
 import { company, mailHref } from '../utils/company';
 import { pageSeo } from '../utils/seo';
 
@@ -11,6 +11,7 @@ interface Props {
   page: 'privacy' | 'terms' | 'cookies';
 }
 const lang = Astro.locals.lang;
+const legal = localize(legalData, lang);
 const { page } = Astro.props;
 const data = legal[page] as Record<string, any>;
 const seo = pageSeo(page, lang);

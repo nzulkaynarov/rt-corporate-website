@@ -3,14 +3,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/ui/Breadcrumbs.astro';
 import SectionHead from '../../components/ui/SectionHead.astro';
 import LeadFormBlock from '../../components/ui/LeadFormBlock.astro';
-import pages from '../../data/cms/pages.json';
-import { langStaticPaths, tField } from '../../i18n';
+import pagesData from '../../data/cms/pages.json';
+import { langStaticPaths, tField, localize } from '../../i18n';
 import { t } from '../../i18n/ui';
-import { company, mailHref, mapUrl, telHref, telegramUrl } from '../../utils/company';
+import { company, companyIn, mailHref, mapUrl, telHref, telegramUrl } from '../../utils/company';
 import { pageSeo } from '../../utils/seo';
 
 export const getStaticPaths = langStaticPaths;
 const lang = Astro.locals.lang;
+const pages = localize(pagesData, lang);
 const tr = (key: string) => t(lang, key);
 const seo = pageSeo('contacts', lang);
 const p = pages.contacts as Record<string, string>;
@@ -40,7 +41,7 @@ const crumbs = [{ name: tr('nav.contacts'), path: '/contacts/' }];
             <div><dt>{tr('contacts.fullName')}</dt><dd>{tField(company, 'fullName', lang)}</dd></div>
             <div><dt>{tr('contacts.inn')}</dt><dd>{company.inn}</dd></div>
             <div><dt>{tr('contacts.legal')}</dt><dd>{tField(company, 'legalAddress', lang)}</dd></div>
-            <div><dt>{tr('contacts.bank')}</dt><dd>{tField(company.bank, 'name', lang)}</dd></div>
+            <div><dt>{tr('contacts.bank')}</dt><dd>{companyIn(lang).bank.name}</dd></div>
             <div><dt>{tr('contacts.mfo')}</dt><dd>{company.bank.mfo}</dd></div>
             <div><dt>{tr('contacts.account')}</dt><dd class="num">{company.bank.account}</dd></div>
           </dl>

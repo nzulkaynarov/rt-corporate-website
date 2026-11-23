@@ -3,12 +3,13 @@
  * «О компании»: text, mission, office and INN, metrics (owner edits the figures in /admin → Компания).
  * Figures count up when they come into view (`data-count`, src/scripts/motion.ts); screen readers get the final value.
  */
-import { localeHref, tField } from '../../i18n';
+import { localeHref, tField, localize } from '../../i18n';
 import { t } from '../../i18n/ui';
-import home from '../../data/cms/home.json';
-import { company } from '../../utils/company';
+import homeData from '../../data/cms/home.json';
+import { company, companyIn } from '../../utils/company';
 
 const lang = Astro.locals.lang;
+const home = localize(homeData, lang);
 const a = home.about as Record<string, string>;
 ---
 
@@ -26,7 +27,7 @@ const a = home.about as Record<string, string>;
       </p>
     </div>
     <dl class="metrics">
-      {company.metrics.map((m: any) => (
+      {companyIn(lang).metrics.map((m: any) => (
         <div class="metric">
           <dt>{tField(m, 'label', lang)}</dt>
           <dd>

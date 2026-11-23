@@ -4,12 +4,13 @@
  * Desktop: three columns, the RailTech column in the middle. Phone: only the RailTech column;
  * both sides' losses fold into «Что теряет каждая сторона» (<details>).
  */
-import { tField } from '../../i18n';
+import { tField, localize } from '../../i18n';
 import { t } from '../../i18n/ui';
-import home from '../../data/cms/home.json';
+import homeData from '../../data/cms/home.json';
 import SectionHead from '../ui/SectionHead.astro';
 
 const lang = Astro.locals.lang;
+const home = localize(homeData, lang);
 const b = home.bridge as Record<string, any>;
 const rows = (b.rows || []).map((r: Record<string, string>) => ({
   stage: tField(r, 'stage', lang),

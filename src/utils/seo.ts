@@ -1,11 +1,11 @@
 /**
  * SEO helpers. All texts come from the CMS:
- *   - static pages → src/data/cms/seo.json  (pages.<key>.title / description [+ _uz/_en])
- *   - collection entries → optional seoTitle / seoDescription [+ _uz/_en] fields,
+ *   - static pages → src/data/cms/seo.json  (pages.<key>.title / description; translations in the uz/en blocks)
+ *   - collection entries → optional seoTitle / seoDescription fields (and their uz/en block values),
  *     falling back to the entry title + site suffix and its summary.
  */
 import seoData from '../data/cms/seo.json';
-import { pick, tField, type Lang } from '../i18n';
+import { localize, tField, type Lang } from '../i18n';
 import { withBase } from './url';
 
 export interface SeoMeta {
@@ -39,20 +39,20 @@ export function truncate(text: string, max: number): string {
 
 /** Meta for a static page from seo.json. */
 export function pageSeo(key: SeoPageKey, lang: Lang): SeoMeta {
-  const page = seoData.pages[key] as Record<string, string>;
+  const page = localize(seoData, lang).pages[key] as Record<string, string>;
   return { title: tField(page, 'title', lang), description: tField(page, 'description', lang) };
 }
 
 /** Site-wide SEO settings (site name, organisation description, knowsAbout…) in the page language. */
 export function siteSeo(lang: Lang) {
-  const s = seoData as Record<string, any>;
+  const s = localize(seoData, lang) as Record<string, any>;
   return {
     siteName: tField(s, 'siteName', lang) as string,
     // CMS trims whitespace on save, so the separator space is added here
     titleSuffix: s.titleSuffix ? ` ${String(s.titleSuffix).trim()}` : '',
     defaultImage: (s.defaultImage as string) || '/og-cover.png',
     organizationDescription: tField(s, 'organizationDescription', lang) as string,
-    knowsAbout: pick<string[]>(lang, s.knowsAbout || [], s.knowsAbout_uz, s.knowsAbout_en),
+    knowsAbout: (s.knowsAbout || []) as string[],
   };
 }
 

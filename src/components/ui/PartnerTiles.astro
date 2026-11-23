@@ -5,9 +5,9 @@
  * On phones the tiles become a horizontal swipe row.
  */
 import { getCollection } from 'astro:content';
-import { localeHref, tField } from '../../i18n';
+import { localeHref, localize, tField } from '../../i18n';
 import { t } from '../../i18n/ui';
-import partnersData from '../../data/cms/partners.json';
+import partnersFile from '../../data/cms/partners.json';
 
 interface Props {
   /** Ids to show (default: all). */
@@ -15,6 +15,7 @@ interface Props {
 }
 const lang = Astro.locals.lang;
 const news = new Set<string>((await getCollection('news')).map((e) => e.slug));
+const partnersData = localize(partnersFile, lang);
 const partners = [...partnersData.partners]
   .filter((p) => !Astro.props.ids || Astro.props.ids.includes(p.id))
   .sort((a, b) => (a.order ?? 99) - (b.order ?? 99))

@@ -1,19 +1,25 @@
 ---
-title: "Платформа RailTech и Кабинет клиента и партнёра"
-title_uz: "RailTech platformasi hamda mijoz va hamkor kabineti"
-title_en: "RailTech Platform and Client & Partner Cabinet"
-type: "project"
-date: "2026-11-03"
-summary: "Единая платформа ведёт каждую заявку от запроса до закрытия, а Кабинет cabinet.railtech.uz даёт клиенту и партнёру одно окно для запросов, КП, договоров, счетов и актов."
-summary_uz: "Yagona platforma har bir arizani so'rovdan yopilishgacha olib boradi, cabinet.railtech.uz kabineti esa mijoz va hamkorga so'rovlar, tijorat takliflari, shartnomalar, hisoblar va dalolatnomalar uchun yagona oyna beradi."
-summary_en: "A single platform takes every request from inquiry to closing, and the cabinet at cabinet.railtech.uz gives clients and partners one window for requests, quotations, contracts, invoices and acceptance acts."
+lang:
+  - ru
+  - uz
+  - en
+type: project
+date: '2026-11-03'
+title: Платформа RailTech и Кабинет клиента и партнёра
+summary: Единая платформа ведёт каждую заявку от запроса до закрытия, а Кабинет cabinet.railtech.uz даёт клиенту и партнёру одно окно для запросов, КП, договоров, счетов и актов.
 partners: []
-seoTitle: "Платформа и Кабинет RailTech для клиентов и партнёров"
-seoTitle_uz: "RailTech platformasi va kabineti | RailTech"
-seoTitle_en: "RailTech Platform and Cabinet | RailTech"
-seoDescription: "Платформа RailTech ведёт заявку от запроса до закрытия; Кабинет cabinet.railtech.uz — запросы, КП, договоры и акты в вебе и Telegram Mini App."
-seoDescription_uz: "RailTech platformasi arizani so'rovdan yopilishgacha olib boradi; cabinet.railtech.uz — so'rovlar, takliflar, shartnomalar vebda va Telegram Mini App'da."
-seoDescription_en: "The RailTech platform takes a request from inquiry to closing; cabinet.railtech.uz holds requests, quotes, contracts and acts on web and Telegram Mini App."
+seoTitle: Платформа и Кабинет RailTech для клиентов и партнёров
+seoDescription: Платформа RailTech ведёт заявку от запроса до закрытия; Кабинет cabinet.railtech.uz — запросы, КП, договоры и акты в вебе и Telegram Mini App.
+uz:
+  title: RailTech platformasi hamda mijoz va hamkor kabineti
+  summary: Yagona platforma har bir arizani so'rovdan yopilishgacha olib boradi, cabinet.railtech.uz kabineti esa mijoz va hamkorga so'rovlar, tijorat takliflari, shartnomalar, hisoblar va dalolatnomalar uchun yagona oyna beradi.
+  seoTitle: RailTech platformasi va kabineti | RailTech
+  seoDescription: RailTech platformasi arizani so'rovdan yopilishgacha olib boradi; cabinet.railtech.uz — so'rovlar, takliflar, shartnomalar vebda va Telegram Mini App'da.
+en:
+  title: RailTech Platform and Client & Partner Cabinet
+  summary: A single platform takes every request from inquiry to closing, and the cabinet at cabinet.railtech.uz gives clients and partners one window for requests, quotations, contracts, invoices and acceptance acts.
+  seoTitle: RailTech Platform and Cabinet | RailTech
+  seoDescription: The RailTech platform takes a request from inquiry to closing; cabinet.railtech.uz holds requests, quotes, contracts and acts on web and Telegram Mini App.
 ---
 
 ### Задача

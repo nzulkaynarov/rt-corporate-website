@@ -1,5 +1,5 @@
 /**
- * Markdown bodies of collection entries (RU body, body_uz, body_en) → HTML for the page language.
+ * Markdown bodies of collection entries (RU file body, uz.body, en.body) → HTML for the page language.
  *
  * Content authors write internal links as language-neutral routes (`/catalog/rt-saf-001/`,
  * docs/content/SEO.md §5) and images as public paths (`/images/...`). Here they become

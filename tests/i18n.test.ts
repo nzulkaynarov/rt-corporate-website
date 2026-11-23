@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { alternateHrefs, getLangFromPath, getRouteFromPath, localeHref, pick, tField } from '../src/i18n';
+import { alternateHrefs, getLangFromPath, getRouteFromPath, localeHref, localize, pick, tField } from '../src/i18n';
+import { toSuffixed } from '../src/i18n/blocks.mjs';
 import { makeT } from '../src/i18n/dictionary';
 
 // In tests BASE_URL is '/', so BASE = '' (on GitHub Pages it is '/rt-corporate-website').
@@ -42,8 +43,44 @@ describe('pick / tField', () => {
   it('falls back to RU when a translation is empty', () => {
     expect(pick('uz', 'Услуги', '', 'Services')).toBe('Услуги');
     expect(pick('en', 'Услуги', '', 'Services')).toBe('Services');
-    expect(tField({ title: 'Новости', title_uz: 'Yangiliklar' }, 'title', 'uz')).toBe('Yangiliklar');
+    expect(tField({ title: 'Новости', uz: { title: 'Yangiliklar' } }, 'title', 'uz')).toBe('Yangiliklar');
+    expect(tField({ title: 'Новости', uz: { title: '' } }, 'title', 'uz')).toBe('Новости');
     expect(tField({ title: 'Новости' }, 'title', 'en')).toBe('Новости');
+  });
+});
+
+// Locale blocks (src/i18n/blocks.mjs): RU at the root, translations in uz/en, as Sveltia CMS stores them.
+describe('localize / toSuffixed', () => {
+  const data = {
+    lang: ['ru', 'uz'],
+    title: 'Поставки',
+    order: 1,
+    steps: [{ title: 'Запрос', link: '/a/' }, { title: 'КП', link: '/b/' }],
+    tags: ['один', 'два'],
+    bank: { name: 'Банк', mfo: '00421' },
+    uz: { title: 'Yetkazib berish', steps: [{ title: "So'rov", link: '/a/' }, { title: '' }], tags: ['bir', 'ikki'], bank: { name: 'Bank' }, body: 'UZ matn' },
+  };
+  it('overlays the block with RU fallback and drops the locale keys', () => {
+    expect(localize(data, 'uz')).toEqual({
+      title: 'Yetkazib berish',
+      order: 1,
+      steps: [{ title: "So'rov", link: '/a/' }, { title: 'КП', link: '/b/' }],
+      tags: ['bir', 'ikki'],
+      bank: { name: 'Bank', mfo: '00421' },
+      body: 'UZ matn',
+    });
+    expect(localize(data, 'en').title).toBe('Поставки');
+    expect(localize(data, 'ru')).not.toHaveProperty('uz');
+  });
+  it('gives the content rules a flat view with _uz/_en suffixes', () => {
+    const flat = toSuffixed(data);
+    expect(flat.title_uz).toBe('Yetkazib berish');
+    expect(flat.steps[0].title_uz).toBe("So'rov");
+    expect(flat.tags_uz).toEqual(['bir', 'ikki']);
+    expect(flat.bank.name_uz).toBe('Bank');
+    expect(flat.body_uz).toBe('UZ matn');
+    expect(flat).not.toHaveProperty('uz');
+    expect(data.steps[0]).not.toHaveProperty('title_uz'); // the source is not mutated
   });
 });
 

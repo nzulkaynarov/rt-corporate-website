@@ -4,13 +4,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import SectionHead from '../../../components/ui/SectionHead.astro';
 import CtaBand from '../../../components/ui/CtaBand.astro';
-import pages from '../../../data/cms/pages.json';
-import { langStaticPaths, localeHref, tField } from '../../../i18n';
+import pagesData from '../../../data/cms/pages.json';
+import { langStaticPaths, localeHref, tField, localize } from '../../../i18n';
 import { t } from '../../../i18n/ui';
 import { pageSeo } from '../../../utils/seo';
 
 export const getStaticPaths = langStaticPaths;
 const lang = Astro.locals.lang;
+const pages = localize(pagesData, lang);
 const seo = pageSeo('services', lang);
 const p = pages.services as Record<string, string>;
 const services = (await getCollection('services')).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));

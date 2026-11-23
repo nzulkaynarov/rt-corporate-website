@@ -1,12 +1,13 @@
 ---
 /** Invitation with the lead form and direct contacts. */
-import { tField } from '../../i18n';
+import { tField, localize } from '../../i18n';
 import { t } from '../../i18n/ui';
-import home from '../../data/cms/home.json';
+import homeData from '../../data/cms/home.json';
 import { company, mailHref, telHref, telegramUrl } from '../../utils/company';
 import LeadFormBlock from '../ui/LeadFormBlock.astro';
 
 const lang = Astro.locals.lang;
+const home = localize(homeData, lang);
 const v = home.invite as Record<string, string>;
 const tg = telegramUrl();
 ---

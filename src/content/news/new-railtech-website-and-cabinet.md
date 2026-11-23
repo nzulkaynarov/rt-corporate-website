@@ -1,12 +1,14 @@
 ---
-title: "Новый сайт railtech.uz и Кабинет RailTech: вся сделка в одном окне"
-type: "news"
-date: "2026-11-04"
-summary: "ООО «RailTech» обновило сайт railtech.uz: о компании, услугах для заказчиков и партнёров и о работе через Кабинет cabinet.railtech.uz — от заявки до акта."
+lang:
+  - ru
+type: news
+date: '2026-11-04'
+title: 'Новый сайт railtech.uz и Кабинет RailTech: вся сделка в одном окне'
+summary: 'ООО «RailTech» обновило сайт railtech.uz: о компании, услугах для заказчиков и партнёров и о работе через Кабинет cabinet.railtech.uz — от заявки до акта.'
 partners: []
 featured: true
-seoTitle: "Новый сайт railtech.uz и Кабинет RailTech"
-seoDescription: "Обновлённый railtech.uz: поставки, инжиниринг, представительство и локализация. Заявки и сделки — в Кабинете cabinet.railtech.uz, в браузере и в Telegram."
+seoTitle: Новый сайт railtech.uz и Кабинет RailTech
+seoDescription: 'Обновлённый railtech.uz: поставки, инжиниринг, представительство и локализация. Заявки и сделки — в Кабинете cabinet.railtech.uz, в браузере и в Telegram.'
 ---
 
 ООО «RailTech» обновило сайт railtech.uz. Новый сайт рассказывает о компании, о её возможностях и приглашает к работе через Кабинет клиента и партнёра — cabinet.railtech.uz. Сайт работает на русском языке; узбекская и английская версии готовятся.

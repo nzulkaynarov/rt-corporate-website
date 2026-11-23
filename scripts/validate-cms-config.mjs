@@ -170,6 +170,37 @@ function checkData(fields, data, where) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// i18n (Sveltia `single_file_default_root`): RU at the root, translations in locale blocks (src/i18n/blocks.mjs)
+// ---------------------------------------------------------------------------
+const LOCALES = config?.i18n?.locales || [];
+const DEFAULT_LOCALE = config?.i18n?.default_locale || LOCALES[0];
+const OTHER_LOCALES = LOCALES.filter((l) => l !== DEFAULT_LOCALE);
+if (LOCALES.length && config.i18n.structure !== 'single_file_default_root') {
+  errors.push('i18n.structure must be "single_file_default_root" (the site reads RU at the root, src/i18n/blocks.mjs)');
+}
+
+/** Fields stored in a locale block: translatable (`i18n: true`) and duplicated ones, recursively. */
+function blockFields(fields) {
+  return fields
+    .filter((f) => f.i18n === true || f.i18n === 'translate' || f.i18n === 'duplicate')
+    .map((f) => (f.fields && f.i18n !== 'duplicate' ? { ...f, fields: blockFields(f.fields) } : f));
+}
+
+function checkEntry(fields, data, where, i18n) {
+  if (!i18n) return checkData(fields, data, where);
+  const { lang, ...rest } = data;
+  const blocks = {};
+  for (const l of OTHER_LOCALES) { blocks[l] = rest[l]; delete rest[l]; }
+  if (lang !== undefined && (!Array.isArray(lang) || lang.some((l) => !LOCALES.includes(l)))) errors.push(`${where}.lang: must list locales from ${LOCALES.join(', ')}`);
+  checkData(fields, rest, where);
+  for (const l of OTHER_LOCALES) {
+    if (blocks[l] === undefined) continue;
+    if (!(lang || []).includes(l)) errors.push(`${where}.${l}: block exists but "lang" does not list "${l}" (the CMS would show the locale as disabled)`);
+    checkData(blockFields(fields), blocks[l], `${where}.${l}`);
+  }
+}
+
 if (!errors.length) {
   for (const col of config.collections) {
     if (col.folder) {
@@ -177,11 +208,11 @@ if (!errors.length) {
       if (!fs.existsSync(col.folder)) { errors.push(`collection ${col.name}: folder "${col.folder}" does not exist`); continue; }
       for (const name of fs.readdirSync(col.folder).filter((n) => n.endsWith(`.${ext}`)).sort()) {
         const file = path.join(col.folder, name);
-        try { checkData(col.fields, readEntry(file), file); } catch (e) { errors.push(`${file}: ${e.message}`); }
+        try { checkEntry(col.fields, readEntry(file), file, Boolean(col.i18n)); } catch (e) { errors.push(`${file}: ${e.message}`); }
       }
     } else {
       for (const f of col.files) {
-        try { checkData(f.fields, readEntry(f.file), f.file); } catch (e) { errors.push(`${f.file}: ${e.message}`); }
+        try { checkEntry(f.fields, readEntry(f.file), f.file, Boolean(col.i18n && f.i18n)); } catch (e) { errors.push(`${f.file}: ${e.message}`); }
       }
     }
   }

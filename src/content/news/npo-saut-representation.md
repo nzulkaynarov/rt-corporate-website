@@ -1,20 +1,20 @@
 ---
-title: "Официальное представительство ООО «НПО САУТ» в Узбекистане"
-title_uz: "«НПО САУТ» MChJ ning O'zbekistondagi rasmiy vakilligi"
-title_en: "Official Representation of NPO SAUT LLC in Uzbekistan"
-type: "project"
-date: "2026-02-26"
-summary: "Как RailTech представляет ООО «НПО САУТ» в Узбекистане: задача производителя, наша роль и что из этой схемы можно повторить для других партнёров."
-summary_uz: ""
-summary_en: ""
+lang:
+  - ru
+  - uz
+  - en
+type: project
+date: '2026-02-26'
+title: Официальное представительство ООО «НПО САУТ» в Узбекистане
+summary: 'Как RailTech представляет ООО «НПО САУТ» в Узбекистане: задача производителя, наша роль и что из этой схемы можно повторить для других партнёров.'
 partners:
-- "npo-saut"
-seoTitle: "Проект: представительство НПО САУТ в Узбекистане"
-seoTitle_uz: ""
-seoTitle_en: ""
-seoDescription: "Проект RailTech: официальное представительство ООО «НПО САУТ» в Узбекистане — поставки, инжиниринг, локализация и работа с организациями."
-seoDescription_uz: ""
-seoDescription_en: ""
+  - npo-saut
+seoTitle: 'Проект: представительство НПО САУТ в Узбекистане'
+seoDescription: 'Проект RailTech: официальное представительство ООО «НПО САУТ» в Узбекистане — поставки, инжиниринг, локализация и работа с организациями.'
+uz:
+  title: «НПО САУТ» MChJ ning O'zbekistondagi rasmiy vakilligi
+en:
+  title: Official Representation of NPO SAUT LLC in Uzbekistan
 ---
 
 ### Задача
