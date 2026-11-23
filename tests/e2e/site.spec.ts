@@ -24,6 +24,15 @@ const partnerArticles = partners.filter((p) => p.article);
 const PAGES = ['', 'services/', 'services/supply/', 'services/engineering/', 'services/representation/', 'services/localization/', 'news/', 'contacts/', 'privacy/', 'terms/', 'cookies/'];
 const CRM = company.leadEndpoint;
 
+/**
+ * How far the page is wider than the screen. `window.innerWidth` is useless here: in mobile emulation the layout
+ * viewport grows with the content, so the page width is compared with the configured screen width.
+ */
+async function pageOverflow(page: Page): Promise<number> {
+  const screen = page.viewportSize()?.width ?? 0;
+  return (await page.evaluate(() => document.documentElement.scrollWidth)) - screen;
+}
+
 function trackErrors(page: Page) {
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
@@ -45,11 +54,49 @@ test.describe('every page', () => {
       const res = await page.goto(path);
       expect(res?.status()).toBe(200);
       await expect(page.locator('h1')).toHaveCount(1);
-      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-      expect(overflow).toBeLessThanOrEqual(0);
+      expect(await pageOverflow(page)).toBeLessThanOrEqual(0);
       expect(errors).toEqual([]);
     });
   }
+});
+
+// Every material: a long URL or designation in the text must wrap, not widen the page (phones scroll sideways otherwise).
+test.describe('every material', () => {
+  const news = fs.readdirSync('src/content/news').filter((n) => n.endsWith('.md')).map((n) => n.replace(/\.md$/, ''));
+  for (const slug of [...news, ...partnerArticles.map((p) => p.article)]) {
+    test(`/news/${slug}/ fits the screen`, async ({ page }) => {
+      await page.goto(`news/${slug}/`);
+      await expect(page.locator('h1')).toHaveCount(1);
+      expect(await pageOverflow(page)).toBeLessThanOrEqual(0);
+    });
+  }
+});
+
+test('phones keep the request, Telegram and a call one tap away in the bottom bar', async ({ page, isMobile }) => {
+  await page.goto('services/supply/');
+  const bar = page.locator('.mbar');
+  if (!isMobile) return void (await expect(bar).toBeHidden());
+  await expect(bar).toBeVisible();
+  await expect(bar.locator('a[href$="/contacts/#request"]')).toBeVisible();
+  await expect(bar.locator('a[href^="https://t.me/"]')).toBeVisible();
+  await expect(bar.locator('a[href^="tel:"]')).toBeVisible();
+  for (const a of await bar.locator('a').all()) expect((await a.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+  // the page ends above the bar: at the very bottom the last line of the footer is not covered
+  const room = await page.evaluate(() => {
+    const spans = document.querySelectorAll('footer span');
+    const last = spans[spans.length - 1].getBoundingClientRect();
+    return document.documentElement.scrollHeight - (last.bottom + window.scrollY);
+  });
+  expect(room).toBeGreaterThanOrEqual((await bar.boundingBox())!.height);
+});
+
+test('single pages use the side column on wide screens and one column on phones', async ({ page, isMobile }) => {
+  await page.goto(`news/${partnerArticles[0].article}/`);
+  const text = await page.locator('.prose').boundingBox();
+  const card = await page.locator('.art__aside .card').boundingBox();
+  expect(text && card).toBeTruthy();
+  if (isMobile) expect(card!.y).toBeLessThan(text!.y); // partner card above the text, same column
+  else expect(card!.x).toBeGreaterThan(text!.x + text!.width); // to the right of the text
 });
 
 test('header offers «Начать работу» and «Войти в Кабинет»', async ({ page, isMobile }) => {

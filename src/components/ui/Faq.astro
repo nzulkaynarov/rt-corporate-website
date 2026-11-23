@@ -21,16 +21,17 @@ const { items } = Astro.props;
   }
   details {
     border-bottom: 1px solid var(--c-line);
-    padding: 18px 0;
+    padding: 10px 0;
   }
   summary {
     cursor: pointer;
     list-style: none;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 16px;
     font: 700 17px/1.35 var(--f-display);
-    min-height: 28px;
+    min-height: 44px;
   }
   summary::-webkit-details-marker {
     display: none;
@@ -44,7 +45,7 @@ const { items } = Astro.props;
     content: '–';
   }
   p {
-    margin-top: 10px;
+    margin: 4px 0 8px;
     color: var(--c-muted);
     font-size: 16px;
   }

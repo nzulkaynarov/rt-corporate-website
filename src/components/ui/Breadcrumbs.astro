@@ -41,4 +41,20 @@ const all = [{ name: t(lang, 'nav.home'), path: '/' }, ...items];
   .crumbs [aria-current] {
     color: var(--c-ink);
   }
+  .crumbs a {
+    display: inline-flex;
+    align-items: center;
+  }
+  @media (max-width: 760px) {
+    /* the current page repeats the H1 right below it and takes up to three lines: keep the path only */
+    .crumbs li:last-child:not(:first-child) {
+      display: none;
+    }
+    .crumbs ol {
+      padding-top: 12px;
+    }
+    .crumbs a {
+      min-height: 44px;
+    }
+  }
 </style>

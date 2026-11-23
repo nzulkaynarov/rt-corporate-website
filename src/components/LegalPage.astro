@@ -2,6 +2,7 @@
 /** Privacy / terms / cookies page from src/data/cms/legal.json. */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from './ui/Breadcrumbs.astro';
+import Toc from './ui/Toc.astro';
 import legalData from '../data/cms/legal.json';
 import { tField, localize } from '../i18n';
 import { t } from '../i18n/ui';
@@ -20,6 +21,8 @@ const seo = pageSeo(page, lang);
 // One edition date per document (legal.json → <page>.edition), formatted for the page language.
 const editionDate = formatDate(String(data.edition || ''), lang);
 const crumbs = [{ name: tField(data, 'title', lang) as string, path: `/${page}/` }];
+// «На странице» in the side column on wide screens: the numbered sections of the document.
+const toc = (data.sections || []).map((s: any, i: number) => ({ id: `s-${i + 1}`, text: `${i + 1}. ${tField(s, 'title', lang)}` }));
 ---
 
 <BaseLayout title={seo.title} description={seo.description} breadcrumbs={crumbs}>
@@ -30,10 +33,11 @@ const crumbs = [{ name: tField(data, 'title', lang) as string, path: `/${page}/`
       <p class="lead">{tField(data, 'lead', lang)}</p>
       {data.edition && <p class="muted edition">{t(lang, 'legal.edition', { date: editionDate })}</p>}
     </header>
+    <div class="legal__toc"><Toc items={toc} /></div>
     <div class="prose">
       {(data.sections || []).map((s: any, i: number) => (
         <section>
-          <h2>{i + 1}. {tField(s, 'title', lang)}</h2>
+          <h2 id={`s-${i + 1}`}>{i + 1}. {tField(s, 'title', lang)}</h2>
           <p>{tField(s, 'content', lang)}</p>
         </section>
       ))}
@@ -43,14 +47,38 @@ const crumbs = [{ name: tField(data, 'title', lang) as string, path: `/${page}/`
 </BaseLayout>
 
 <style>
+  /* Same single-page layout as an article: one column, and from 1080 px «На странице» stays in view on the right. */
   .legal {
     padding-block: 28px 96px;
   }
   header {
-    max-width: 860px;
     display: grid;
     gap: 14px;
     margin-bottom: 24px;
+  }
+  .legal__toc {
+    display: none;
+  }
+  @media (min-width: 1080px) {
+    .legal {
+      display: grid;
+      grid-template-columns: minmax(0, 760px) minmax(280px, 340px);
+      justify-content: space-between;
+      column-gap: 64px;
+      align-items: start;
+    }
+    header,
+    .prose {
+      grid-column: 1;
+    }
+    .legal__toc {
+      display: block;
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      position: sticky;
+      top: calc(var(--hdr-h) + 24px);
+      padding-top: 6px;
+    }
   }
   h1 {
     font-size: var(--fs-h1);

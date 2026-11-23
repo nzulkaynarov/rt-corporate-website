@@ -37,6 +37,9 @@ SEO и навигации нет «ж/д», серий локомотивов и
 Навигация (шапка): **Услуги · Новости · Контакты** + переключатель языка + кнопки **«Начать работу»** (форма заявки,
 `/contacts/#request`) и **«Войти в Кабинет»** (`company.json → cabinet.url` + `/login`). Футер: разделы, сервисные страницы,
 контакты, ИНН. Меню одно — футер и мобильное меню строятся из `src/utils/nav.ts`.
+На телефоне (≤ 760 px) внизу экрана закреплена **панель связи** (`MobileBar`): «Начать работу» (та же форма заявки),
+Telegram и звонок — это не вторая навигация, а те же действия шапки, которые на телефоне спрятаны в «Меню».
+Панель скрывается, пока посетитель печатает в поле формы.
 
 ## 3. Модель данных
 
@@ -107,9 +110,11 @@ SEO и навигации нет «ж/д», серий локомотивов и
 
 ```
 src/layouts/BaseLayout.astro        <head>: SEO, canonical, hreflang, JSON-LD, шрифты; Header + <main> + Footer
-src/components/layout/              Header (меню, языки, кнопки), MobileMenu (<details>, без JS), Footer
+src/components/layout/              Header (меню, языки, кнопки), MobileMenu (<details>, без JS), Footer,
+                                    MobileBar (панель связи внизу экрана на телефоне, без JS)
 src/components/ui/                  Button, Section, SectionHead, Breadcrumbs, Faq (<details>), PartnerTiles, NewsCard,
-                                    RelatedMaterials (рекомендации из src/utils/feed.ts), Prose
+                                    RelatedMaterials (рекомендации из src/utils/feed.ts), ArticleAside (боковая колонка
+                                    одиночной страницы: карточка партнёра, связи, кнопка заявки), Toc («На странице»), Prose
 src/components/home/                Hero, Bridge, Directions, About, CabinetBlock, LatestNews, Invite
 src/components/islands/LeadForm.tsx единственный React-остров: форма заявки → CRM
 src/styles/tokens.css, global.css   дизайн-токены и базовые стили (docs/DESIGN.md)

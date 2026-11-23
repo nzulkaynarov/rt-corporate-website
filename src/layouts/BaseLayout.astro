@@ -14,6 +14,7 @@ import '../styles/global.css';
 import { PRELOAD_FONTS } from '../utils/fonts';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import MobileBar from '../components/layout/MobileBar.astro';
 import { company, telegramUrl } from '../utils/company';
 import { withBase } from '../utils/url';
 import { LANG_META, DEFAULT_LANG, alternateHrefs, getRouteFromPath, localeHref, tField, type Lang } from '../i18n';
@@ -156,6 +157,7 @@ if (jsonLd) graph.push(...(Array.isArray(jsonLd) ? jsonLd : [jsonLd]));
       <slot />
     </main>
     <Footer />
+    <MobileBar />
     <script>
       import '../scripts/motion.ts';
     </script>

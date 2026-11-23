@@ -1,0 +1,197 @@
+---
+/**
+ * Side column of a «Новости» material (docs/DESIGN.md → «Одиночные страницы»). On wide screens it sits to the right of
+ * the text and stays in view; on narrower screens it is an ordinary block in the single column.
+ *   - partner article: the partner card (status, country, legal entity, group, brands) and the request button;
+ *   - news, article, project: the manufacturers and services the material is about (computed, src/utils/feed.ts);
+ *   - «На странице» for a text with several sections (wide screens only).
+ */
+import Toc from './Toc.astro';
+import { localeHref } from '../../i18n';
+import { t } from '../../i18n/ui';
+import { START_PATH } from '../../utils/nav';
+import type { TocItem } from '../../utils/markdown';
+
+interface PartnerCard {
+  status: string;
+  country: string;
+  legalName?: string;
+  group?: string;
+  brands?: string[];
+}
+interface LinkItem {
+  label: string;
+  note?: string;
+  href?: string;
+}
+interface Props {
+  /** Partner article: the tile data of the same record, already in the page language. */
+  partner?: PartnerCard;
+  /** Manufacturers the material names. */
+  partners?: LinkItem[];
+  /** Services the material is about. */
+  services?: LinkItem[];
+  toc?: TocItem[];
+}
+const lang = Astro.locals.lang;
+const { partner, partners = [], services = [], toc = [] } = Astro.props;
+const hasCard = Boolean(partner) || partners.length > 0 || services.length > 0;
+---
+
+{(hasCard || toc.length > 1) && (
+  <aside class:list={['aside', { 'aside--partner': Boolean(partner), 'aside--toc-only': !hasCard }]}>
+    {hasCard && (
+      <div class="card">
+        {partner && (
+          <dl class="facts">
+            <div><dt>{t(lang, 'news.partnerStatus')}</dt><dd><span class:list={['pill', { 'pill--dealer': partner.status === 'dealer' }]}>{t(lang, `partner.status.${partner.status}`)}</span></dd></div>
+            <div><dt>{t(lang, 'news.partnerCountry')}</dt><dd>{t(lang, `country.${partner.country}`)}</dd></div>
+            {partner.legalName && <div><dt>{t(lang, 'partner.legalName')}</dt><dd>{partner.legalName}</dd></div>}
+            {partner.group && <div><dt>{t(lang, 'partner.group')}</dt><dd>{partner.group}</dd></div>}
+            {(partner.brands || []).length > 0 && <div><dt>{t(lang, 'partner.brands')}</dt><dd>{partner.brands!.join(', ')}</dd></div>}
+          </dl>
+        )}
+        {partners.length > 0 && (
+          <div class="group">
+            <p class="group__title">{t(lang, 'article.partners')}</p>
+            <ul>
+              {partners.map((p) => (
+                <li>{p.href ? <a href={p.href}><b>{p.label}</b>{p.note && <span>{p.note}</span>}</a> : <span class="plain"><b>{p.label}</b>{p.note && <span>{p.note}</span>}</span>}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {services.length > 0 && (
+          <div class="group">
+            <p class="group__title">{t(lang, 'article.services')}</p>
+            <ul>
+              {services.map((s) => <li><a href={s.href}><b>{s.label}</b></a></li>)}
+            </ul>
+          </div>
+        )}
+        <a class="btn btn--primary cta" href={localeHref(START_PATH, lang)}>{t(lang, 'cta.request')}</a>
+      </div>
+    )}
+    <div class="toc-box"><Toc items={toc} /></div>
+  </aside>
+)}
+
+<style>
+  .aside {
+    display: grid;
+    gap: 28px;
+    align-content: start;
+  }
+  .card {
+    display: grid;
+    gap: 18px;
+    padding: 22px 24px 24px;
+    border: 1px solid var(--c-line);
+    border-top: 3px solid var(--c-accent);
+    border-radius: var(--r-md);
+    background: var(--c-bg);
+  }
+  .facts {
+    margin: 0;
+    display: grid;
+    gap: 12px;
+  }
+  .facts dt,
+  .group__title {
+    font: 700 13px/1.2 var(--f-display);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+    margin-bottom: 4px;
+  }
+  .facts dd {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+  .pill {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: var(--r-pill);
+    font-size: 14px;
+    font-weight: 600;
+    background: var(--c-soft);
+    color: var(--c-ink);
+  }
+  .pill--dealer {
+    background: var(--c-brand-soft);
+    color: var(--c-brand-ink-hover);
+  }
+  .group ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+  }
+  .group li + li {
+    border-top: 1px solid var(--c-line);
+  }
+  .group a,
+  .group .plain {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    min-height: 44px;
+    padding: 6px 0;
+    color: var(--c-ink);
+    text-decoration: none;
+  }
+  .group a b {
+    color: var(--c-brand-ink);
+  }
+  .group a:hover b {
+    text-decoration: underline;
+  }
+  .group b {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.3;
+  }
+  .group span span {
+    font-size: 14px;
+    color: var(--c-muted);
+  }
+  .group a span {
+    font-size: 14px;
+    color: var(--c-muted);
+  }
+  .cta {
+    justify-content: center;
+  }
+  /* One column (phones, tablets): the contents are an ordinary block; «На странице» is for wide screens only. */
+  @media (max-width: 1079px) {
+    /* compact card: the facts sit side by side (two columns on a phone, a row on a tablet), not in a tall stack */
+    .card {
+      gap: 16px;
+      padding: 16px 18px 18px;
+    }
+    .facts {
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px 20px;
+    }
+    .cta {
+      justify-self: start;
+    }
+    .toc-box {
+      display: none;
+    }
+    .aside--toc-only {
+      display: none;
+    }
+    /* under a news text the page ends with the request band anyway: no second button */
+    .aside:not(.aside--partner) .cta {
+      display: none;
+    }
+  }
+  @media (max-width: 520px) {
+    .cta {
+      justify-self: stretch;
+    }
+  }
+</style>

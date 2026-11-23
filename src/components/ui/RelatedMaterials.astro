@@ -53,8 +53,29 @@ const { title, items, id = 'rel-title', soft = true } = Astro.props;
     gap: 24px;
   }
   @media (max-width: 760px) {
+    /* phones: a row to swipe, like the news on the home page (docs/DESIGN.md → «Телефон») */
     .rel {
-      grid-template-columns: minmax(0, 1fr);
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      /* snap to the page gutter, not to the screen edge */
+      scroll-padding-inline: var(--gutter);
+      gap: 14px;
+      margin-inline: calc(var(--gutter) * -1);
+      padding-inline: var(--gutter);
+      padding-bottom: 6px;
+    }
+    .rel li {
+      flex: 0 0 78%;
+      scroll-snap-align: start;
+    }
+    .rel-head {
+      margin-bottom: 12px;
+    }
+    .rel-head a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
     }
     .rel-head h2 {
       font-size: 24px;

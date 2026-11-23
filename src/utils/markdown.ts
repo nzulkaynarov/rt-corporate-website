@@ -65,3 +65,23 @@ export async function renderBody(markdown: string | undefined, lang: Lang): Prom
   if (!markdown?.trim()) return '';
   return localizeHtml(figures(await parser(lang).parse(markdown)), lang);
 }
+
+export interface TocItem {
+  id: string;
+  text: string;
+}
+
+/**
+ * Gives every section heading (`##`, `###`) of rendered HTML an anchor id (`s-1`, `s-2`, … — stable in any language)
+ * and returns the list for «На странице» (src/components/ui/Toc.astro). Headings that already have an id
+ * (footnotes) are left alone.
+ */
+export function withToc(html: string): { html: string; toc: TocItem[] } {
+  const toc: TocItem[] = [];
+  const out = html.replace(/<(h[23])>([\s\S]*?)<\/\1>/g, (_m, tag: string, inner: string) => {
+    const id = `s-${toc.length + 1}`;
+    toc.push({ id, text: inner.replace(/<[^>]+>/g, '').trim() });
+    return `<${tag} id="${id}">${inner}</${tag}>`;
+  });
+  return { html: out, toc };
+}

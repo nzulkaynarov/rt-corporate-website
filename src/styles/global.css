@@ -213,6 +213,14 @@ a:hover {
   max-width: 760px;
   font-size: 17px;
   line-height: 1.7;
+  /* a long URL in «Источники» or an unbreakable designation must wrap, not widen the page on a phone */
+  overflow-wrap: anywhere;
+}
+@media (min-width: 1920px) {
+  /* monitors: the reading text follows the body size (docs/DESIGN.md) */
+  .prose {
+    font-size: 18px;
+  }
 }
 .prose > * + * {
   margin-top: 1em;
