@@ -54,6 +54,8 @@ const tg = telegramUrl();
     background: var(--c-ink-deep);
     color: var(--c-on-ink-soft);
     font-size: 15px;
+    /* phones: room for the contact bar fixed to the bottom of the screen (MobileBar) */
+    padding-bottom: calc(var(--mbar-h, 0px) + env(safe-area-inset-bottom, 0px));
   }
   .ftr__in {
     display: grid;

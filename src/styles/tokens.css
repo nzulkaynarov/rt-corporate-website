@@ -68,5 +68,7 @@
 @media (max-width: 760px) {
   :root {
     --hdr-h: 64px;
+    /* contact bar fixed to the bottom of the screen (src/components/layout/MobileBar.astro) */
+    --mbar-h: 64px;
   }
 }

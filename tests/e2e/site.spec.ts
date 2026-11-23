@@ -72,6 +72,24 @@ test.describe('every material', () => {
   }
 });
 
+test('phones keep the request, Telegram and a call one tap away in the bottom bar', async ({ page, isMobile }) => {
+  await page.goto('services/supply/');
+  const bar = page.locator('.mbar');
+  if (!isMobile) return void (await expect(bar).toBeHidden());
+  await expect(bar).toBeVisible();
+  await expect(bar.locator('a[href$="/contacts/#request"]')).toBeVisible();
+  await expect(bar.locator('a[href^="https://t.me/"]')).toBeVisible();
+  await expect(bar.locator('a[href^="tel:"]')).toBeVisible();
+  for (const a of await bar.locator('a').all()) expect((await a.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+  // the page ends above the bar: at the very bottom the last line of the footer is not covered
+  const room = await page.evaluate(() => {
+    const spans = document.querySelectorAll('footer span');
+    const last = spans[spans.length - 1].getBoundingClientRect();
+    return document.documentElement.scrollHeight - (last.bottom + window.scrollY);
+  });
+  expect(room).toBeGreaterThanOrEqual((await bar.boundingBox())!.height);
+});
+
 test('single pages use the side column on wide screens and one column on phones', async ({ page, isMobile }) => {
   await page.goto(`news/${partnerArticles[0].article}/`);
   const text = await page.locator('.prose').boundingBox();

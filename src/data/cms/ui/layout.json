@@ -168,6 +168,24 @@
       "ru": "English",
       "uz": "English",
       "en": "English"
+    },
+    {
+      "key": "mbar.aria",
+      "ru": "Быстрая связь",
+      "uz": "Tezkor aloqa",
+      "en": "Quick contact"
+    },
+    {
+      "key": "mbar.telegram",
+      "ru": "Написать в Telegram",
+      "uz": "Telegram orqali yozish",
+      "en": "Message us on Telegram"
+    },
+    {
+      "key": "mbar.call",
+      "ru": "Позвонить",
+      "uz": "Qo'ng'iroq qilish",
+      "en": "Call us"
     }
   ]
 }

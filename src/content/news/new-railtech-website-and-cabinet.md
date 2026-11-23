@@ -15,7 +15,7 @@ uz:
   title: "Yangi railtech.uz sayti va RailTech Kabineti: butun bitim bitta oynada"
   summary: "«RailTech» MChJ railtech.uz saytini yangiladi: kompaniya, buyurtmachilar va hamkorlar uchun xizmatlar hamda cabinet.railtech.uz Kabineti orqali ishlash haqida — arizadan dalolatnomagacha."
   body: |-
-    «RailTech» MChJ railtech.uz saytini yangiladi. Yangi sayt kompaniya va uning imkoniyatlari haqida hikoya qiladi hamda mijoz va hamkor Kabineti — cabinet.railtech.uz orqali ishlashga taklif etadi. Sayt rus tilida ishlaydi; o'zbek va ingliz tilidagi versiyalari tayyorlanmoqda.
+    «RailTech» MChJ railtech.uz saytini yangiladi. Yangi sayt kompaniya va uning imkoniyatlari haqida hikoya qiladi hamda mijoz va hamkor Kabineti — cabinet.railtech.uz orqali ishlashga taklif etadi. Sayt rus, o'zbek va ingliz tillarida ishlaydi.
 
     ### Saytda nimalar bor
 
@@ -43,7 +43,7 @@ en:
   title: "New railtech.uz Website and RailTech Cabinet: The Whole Deal in One Workspace"
   summary: "RailTech LLC has updated railtech.uz: the company, services for customers and partners, and working through the Cabinet at cabinet.railtech.uz — from request to acceptance act."
   body: |-
-    RailTech LLC has updated its website, railtech.uz. The new site presents the company and its capabilities and invites you to work with it through the Client & Partner Cabinet at cabinet.railtech.uz. The site is available in Russian; Uzbek and English versions are in preparation.
+    RailTech LLC has updated its website, railtech.uz. The new site presents the company and its capabilities and invites you to work with it through the Client & Partner Cabinet at cabinet.railtech.uz. The site is available in Russian, Uzbek and English.
 
     ### What's on the site
 
@@ -69,7 +69,7 @@ en:
   seoDescription: "The updated railtech.uz: supply, engineering, representation and localization. Requests and deals run in the cabinet.railtech.uz Cabinet, on web and Telegram."
 ---
 
-ООО «RailTech» обновило сайт railtech.uz. Новый сайт рассказывает о компании, о её возможностях и приглашает к работе через Кабинет клиента и партнёра — cabinet.railtech.uz. Сайт работает на русском языке; узбекская и английская версии готовятся.
+ООО «RailTech» обновило сайт railtech.uz. Новый сайт рассказывает о компании, о её возможностях и приглашает к работе через Кабинет клиента и партнёра — cabinet.railtech.uz. Сайт работает на русском, узбекском и английском языках.
 
 ### Что на сайте
 
