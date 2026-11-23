@@ -18,7 +18,7 @@
   "officeAddress": "г. Ташкент, ул. Абдуллы Каххара, 46",
   "phone": "+998 90 118-90-00",
   "email": "info@railtech.uz",
-  "telegramBot": "railtech_test_bot",
+  "telegramBot": "uzrailtech_bot",
   "bank": {
     "name": "АИКБ «IPAK YO'LI BANK», Мирзо-Улугбекский филиал",
     "mfo": "00421",
@@ -30,7 +30,7 @@
   "leadEndpoint": "https://crm.railtech.uz/api/v1/leads/web",
   "metrics": [
     {
-      "value": "6+",
+      "value": "5+",
       "label": "лет работаем на рынке Узбекистана"
     },
     {
@@ -59,7 +59,7 @@
     },
     "metrics": [
       {
-        "value": "6+",
+        "value": "5+",
         "label": "yil O'zbekiston bozorida ishlab kelmoqdamiz"
       },
       {
@@ -89,7 +89,7 @@
     },
     "metrics": [
       {
-        "value": "6+",
+        "value": "5+",
         "label": "years in the Uzbek market"
       },
       {
