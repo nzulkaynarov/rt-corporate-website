@@ -42,8 +42,12 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends fonts-montserrat
           npm run og
 
+      # Production is https://railtech.uz (PRODUCTION_CUTOVER.md): site = the domain, base = "/".
+      # PR checks build without the variable (base /rt-corporate-website), which the Playwright tests expect.
       - name: Build static site with Astro (includes CMS schema check and dist audit)
         run: npm run build
+        env:
+          CUSTOM_DOMAIN: "1"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
