@@ -1,6 +1,8 @@
 {
-  "_comment": "Old URLs of the v1 site (catalog, blog, projects, about) → new pages. Generated once on 2026-11-04; add rows when a published URL changes. Rendered by src/pages/[...legacy].astro for ru/uz/en.",
+  "_comment": "Old URLs → new pages: the v1 site (catalog, blog, projects, about) and the static site that served railtech.uz before the cutover (/pages/*.html). Generated once on 2026-11-04; add rows when a published URL changes. Rendered by src/pages/[...legacy].astro for ru/uz/en.",
   "redirects": {
+    "/pages/privacy.html": "/privacy/",
+    "/pages/terms.html": "/terms/",
     "/catalog/": "/services/supply/",
     "/blog/": "/news/",
     "/projects/": "/news/",

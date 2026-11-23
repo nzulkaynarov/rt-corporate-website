@@ -1,68 +1,75 @@
 # Переезд на railtech.uz (production cutover)
 
-Чек-лист перевода сайта с `https://nzulkaynarov.github.io/rt-corporate-website/` на **`https://railtech.uz`**.
-Изменения в репозитории делаются через PR в `main`, прямой пуш в `main` запрещён. Мёрж PR публикует сайт.
+Перевод сайта с `https://nzulkaynarov.github.io/rt-corporate-website/` на **`https://railtech.uz`**.
+Состояние проверено 2026-11-23. Изменения в репозитории делаются через PR в `main`; мёрж PR публикует сайт.
 
-## 1. Сборка под домен
+## 0. Что есть сейчас
 
-`astro.config.mjs` переключается переменной окружения `CUSTOM_DOMAIN`: когда она задана, `site = https://railtech.uz`, `base = /`.
-Добавьте её в шаг сборки `.github/workflows/deploy.yml` (отдельный PR):
+- **Домен уже смотрит на GitHub Pages.** `railtech.uz` → A-записи GitHub (`185.199.108–111.153`), `www` → CNAME на
+  `railtech.uz`, DNS у Яндекса. Менять DNS не нужно.
+- **Домен занят старым сайтом.** `railtech.uz` привязан к репозиторию `nzulkaynarov/rt` («Static website for
+  railtech.uz», файл `site/CNAME`, публикация через `pages.yml`). У него три страницы: `/`, `/pages/privacy.html`,
+  `/pages/terms.html` и языки через `?lang=`. Переезд = перенос домена с `rt` на `rt-corporate-website`.
+- **CRM уже принимает заявки с `https://railtech.uz`** (заголовок `access-control-allow-origin` есть). С
+  `https://nzulkaynarov.github.io` и `https://www.railtech.uz` — нет: до переезда форма показывает запасные каналы, а
+  `www` GitHub сам переадресует на основной домен.
+- Сайт собирается под домен: `CUSTOM_DOMAIN=1 npm run build` проходит, canonical, sitemap и `robots.txt` указывают на
+  `https://railtech.uz`.
+- Адреса старого сайта не потеряются: `/pages/privacy.html` и `/pages/terms.html` перенаправляются на `/privacy/` и
+  `/terms/` (`src/data/legacy-redirects.json`), `?lang=uz|en` — на `/uz/` и `/en/` (BaseLayout).
 
-```diff
-       - name: Build static site with Astro (includes CMS schema check and dist audit)
-         run: npm run build
-+        env:
-+          CUSTOM_DOMAIN: "1"
-```
+## 1. Порядок переезда
 
-Ссылки, canonical, hreflang, sitemap, `robots.txt` и schema.org строятся из `site`/`base` и перестроятся сами.
-Перед мёржем проверьте локально:
+Шаги 2–4 идут подряд: между ними сайт по одному из адресов недоступен (обычно несколько минут; сертификат HTTPS
+GitHub выпускает до часа).
 
-```bash
-CUSTOM_DOMAIN=1 npm run build   # astro check, сборка и аудит dist/ под домен
-```
+1. **Подготовка (без изменений для посетителей).** Смёржить перенаправления старых адресов. Заменить тестовый
+   Telegram-бот (§3), если рабочий бот готов.
+2. **Сборка под домен.** PR: в `.github/workflows/deploy.yml` шагу сборки добавить переменную:
 
-- `dist/index.html`: `<link rel="canonical" href="https://railtech.uz/">`, `og:image` = `https://railtech.uz/og-cover.png`.
-- `dist/sitemap-0.xml`: все адреса начинаются с `https://railtech.uz/`. Пока `ruOnly: true`, в sitemap только русские страницы.
-- `dist/robots.txt` указывает на `https://railtech.uz/sitemap-index.xml`.
+   ```diff
+          - name: Build static site with Astro (includes CMS schema check and dist audit)
+            run: npm run build
+   +        env:
+   +          CUSTOM_DOMAIN: "1"
+   ```
 
-Тесты Playwright (`make e2e`) рассчитаны на базу `/rt-corporate-website/`, поэтому их запускают без `CUSTOM_DOMAIN`.
+   После мёржа адрес `nzulkaynarov.github.io/rt-corporate-website/` перестаёт работать (ссылки строятся от корня
+   домена) — поэтому сразу шаг 3.
+3. **Перенос домена.**
+   - репозиторий `rt` → Settings → Pages → Custom domain: очистить (и убрать `site/CNAME`, иначе следующая публикация
+     вернёт домен; проще всего отключить `pages.yml` или архивировать репозиторий);
+   - репозиторий `rt-corporate-website` → Settings → Pages → Custom domain: `railtech.uz`. Публикация идёт через
+     GitHub Actions, файл `public/CNAME` не нужен.
+4. **HTTPS.** Дождаться проверки домена и сертификата, включить «Enforce HTTPS».
+5. **Проверка на railtech.uz:** главная на трёх языках, `/pages/privacy.html` → `/privacy/`, `https://www.railtech.uz`
+   → основной домен, форма получает токен и отправляет заявку (`202`), заявка появляется в очереди CRM с источником
+   «сайт», админка `/admin/` открывается и сохраняет.
+6. **Откат**, если что-то пошло не так: вернуть домен репозиторию `rt` (шаг 3 в обратную сторону) и откатить PR из шага 2.
 
-## 2. Домен в GitHub Pages и DNS
+Тесты Playwright (`make e2e`) рассчитаны на базу `/rt-corporate-website/`, поэтому идут без `CUSTOM_DOMAIN` — CI для
+PR не меняется.
 
-1. Репозиторий → Settings → Pages → Custom domain: `railtech.uz`, затем включить «Enforce HTTPS» после выпуска сертификата.
-   Сайт публикуется через GitHub Actions, поэтому домен задаётся в настройках, файл `public/CNAME` не нужен.
-2. DNS у регистратора:
-   - `A @` → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-   - `CNAME www` → `nzulkaynarov.github.io.`
-3. Дождитесь проверки домена в Settings → Pages и выпуска сертификата.
+## 2. Админка после переезда
 
-## 3. Форма заявки: CORS на платформе
+`/admin/` входит через GitHub. В настройках OAuth-приложения (или сервиса авторизации Sveltia), если он используется,
+адрес сайта должен быть `https://railtech.uz`. Вход токеном доступа и работа с локальным репозиторием от домена не зависят.
 
-Форма отправляет заявку в CRM (`company.json → leadEndpoint`, по умолчанию `https://crm.railtech.uz/api/v1/leads/web`).
-CRM принимает запросы только с разрешённых адресов (ARCHITECTURE.md §5).
+## 3. Telegram-бот
 
-- В репозитории платформы `nzulkaynarov/RailTech_Platform`, файл `infra/compose/prod.yml`: добавить `https://railtech.uz`
-  (и `https://www.railtech.uz`, если он открывается без переадресации) в `CABINET_ORIGIN`. Это отдельный PR в платформу.
-- После выката проверить на railtech.uz: форма получает токен (`GET …/token`) и отправляет заявку (`202`), заявка появляется
-  в очереди CRM с источником «сайт».
-- Пока CORS не настроен, форма при ошибке сети показывает запасные каналы: Telegram, телефон, e-mail, `cabinet.url` + `/new-client`.
+В `src/data/cms/company.json → telegramBot` стоит тестовый бот (`railtech_test_bot`). Замените его на имя рабочего бота
+CRM (без `@`): админка → «Компания», или PR через скил `edit-site-texts`. Проверьте ссылку `t.me/<бот>?start=web` — она
+стоит в форме, футере и панели связи на телефоне.
 
-## 4. Telegram-бот
+## 4. Поисковые системы
 
-В `src/data/cms/company.json → telegramBot` сейчас стоит тестовый бот (`railtech_test_bot`). Замените его на имя рабочего
-бота CRM (без `@`) по указанию владельца, PR через скил `edit-site-texts`. Проверьте ссылку `t.me/<бот>?start=web` на сайте.
+1. Google Search Console и Яндекс Вебмастер: подтвердить `https://railtech.uz` (если ещё не подтверждён для старого
+   сайта) и отправить `https://railtech.uz/sitemap-index.xml`.
+2. Через 1–2 недели проверить индексацию страниц на трёх языках и отчёт hreflang. Материал «Новостей», ещё не
+   переведённый на язык, закрыт `noindex` на этом языке — это ожидаемо.
 
-## 5. Поисковые системы
+## 5. После переезда
 
-1. Google Search Console и Яндекс Вебмастер: подтвердить `https://railtech.uz` и отправить `https://railtech.uz/sitemap-index.xml`.
-2. Через 1–2 недели проверить индексацию русских страниц. Страницы UZ/EN до перевода закрыты `noindex`, это ожидаемо.
-
-## 6. После перевода UZ/EN
-
-Когда владелец примет русскую версию и проход перевода смёржен:
-
-1. Владелец переключает `src/data/content-stage.json` → `"ruOnly": false` (PR).
-   Страницы `/uz/…` и `/en/…` получают индексацию, hreflang ru/uz/en и попадают в sitemap. Появляется переключатель языка.
-   С этого момента `check-content` считает непереведённые поля материалов ошибкой, а аудит `dist/` требует hreflang для всех языков.
-2. Отправить sitemap повторно в Search Console и Вебмастер и проверить hreflang в отчётах.
+- `docs/STATUS.md`: записать дату переезда; убрать из «Ждём от владельца» выполненное.
+- Репозиторий `rt` архивировать, чтобы он случайно не забрал домен обратно.
+- Обложки материалов и проверка UZ/EN носителем — по `docs/STATUS.md`.
