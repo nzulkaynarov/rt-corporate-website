@@ -173,7 +173,8 @@ function readMd(file) {
   const raw = fs.readFileSync(file, 'utf8');
   const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
   if (!m) throw new Error('no front matter');
-  const data = yaml.load(m[1]) || {};
+  // CORE schema: an unquoted date written by the CMS (date: 2026-04-20) stays the string the rules expect.
+  const data = yaml.load(m[1], { schema: yaml.CORE_SCHEMA }) || {};
   checkLocales(file, data);
   return { data: toSuffixed(data), body: m[2] || '' };
 }

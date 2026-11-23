@@ -41,6 +41,8 @@ collections:
         name: title
         widget: string
         i18n: true
+        required:
+          - ru
       - label: Кратко (для карточек и поиска)
         name: summary
         widget: text
@@ -48,10 +50,14 @@ collections:
         minlength: 70
         hint: '70–300 знаков: карточка услуги и описание для поиска.'
         i18n: true
+        required:
+          - ru
       - label: Вводный абзац
         name: lead
         widget: text
         i18n: true
+        required:
+          - ru
       - label: Коротко (метка → значение)
         name: highlights
         widget: list
@@ -61,10 +67,14 @@ collections:
             name: label
             widget: string
             i18n: true
+            required:
+              - ru
           - label: Значение
             name: value
             widget: string
             i18n: true
+            required:
+              - ru
         summary: '{{fields.value}} — {{fields.label}}'
         i18n: true
       - label: Как работаем (по порядку)
@@ -76,10 +86,14 @@ collections:
             name: title
             widget: string
             i18n: true
+            required:
+              - ru
           - label: Текст
             name: text
             widget: text
             i18n: true
+            required:
+              - ru
         summary: '{{fields.title}}'
         collapsed: true
         i18n: true
@@ -92,10 +106,14 @@ collections:
             name: title
             widget: string
             i18n: true
+            required:
+              - ru
           - label: Текст
             name: text
             widget: text
             i18n: true
+            required:
+              - ru
         summary: '{{fields.title}}'
         collapsed: true
         i18n: true
@@ -108,10 +126,14 @@ collections:
             name: title
             widget: string
             i18n: true
+            required:
+              - ru
           - label: Текст
             name: text
             widget: text
             i18n: true
+            required:
+              - ru
         summary: '{{fields.title}}'
         collapsed: true
         i18n: true
@@ -124,10 +146,14 @@ collections:
             name: q
             widget: string
             i18n: true
+            required:
+              - ru
           - label: Ответ
             name: a
             widget: text
             i18n: true
+            required:
+              - ru
         summary: '{{fields.q}}'
         collapsed: true
         i18n: true
@@ -203,6 +229,8 @@ collections:
         name: title
         widget: string
         i18n: true
+        required:
+          - ru
       - label: Кратко (70–300 знаков)
         name: summary
         widget: text
@@ -210,6 +238,8 @@ collections:
         minlength: 70
         hint: '70–300 знаков: подзаголовок, карточка и описание для поиска.'
         i18n: true
+        required:
+          - ru
       - label: Обложка (своё фото или с разрешения)
         name: cover
         widget: image
@@ -331,10 +361,14 @@ collections:
             name: companyName
             widget: string
             i18n: true
+            required:
+              - ru
           - label: Полное наименование
             name: fullName
             widget: string
             i18n: true
+            required:
+              - ru
           - label: Год основания
             name: foundedYear
             widget: string
@@ -351,6 +385,8 @@ collections:
             name: city
             widget: string
             i18n: true
+            required:
+              - ru
           - label: Код страны
             name: countryCode
             widget: string
@@ -361,10 +397,14 @@ collections:
             name: legalAddress
             widget: string
             i18n: true
+            required:
+              - ru
           - label: Адрес офиса
             name: officeAddress
             widget: string
             i18n: true
+            required:
+              - ru
           - label: Телефон
             name: phone
             widget: string
@@ -390,6 +430,8 @@ collections:
                 name: name
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: МФО
                 name: mfo
                 widget: string
@@ -442,6 +484,8 @@ collections:
                 name: label
                 widget: string
                 i18n: true
+                required:
+                  - ru
             summary: '{{fields.value}} — {{fields.label}}'
             i18n: true
         i18n: true
@@ -457,14 +501,20 @@ collections:
                 name: eyebrow
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Заголовок
                 name: title
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Подзаголовок
                 name: lead
                 widget: text
                 i18n: true
+                required:
+                  - ru
               - label: Входы для аудиторий
                 name: entries
                 widget: list
@@ -474,10 +524,14 @@ collections:
                     name: title
                     widget: string
                     i18n: true
+                    required:
+                      - ru
                   - label: Текст
                     name: text
                     widget: text
                     i18n: true
+                    required:
+                      - ru
                   - label: Ссылка (маршрут, напр. /services/supply/)
                     name: link
                     widget: string
@@ -496,34 +550,50 @@ collections:
                 name: eyebrow
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Заголовок
                 name: title
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Колонка «Заказчик»
                 name: customerTitle
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Пояснение «Заказчик»
                 name: customerNote
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Колонка RailTech
                 name: railtechTitle
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Пояснение RailTech
                 name: railtechNote
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Колонка «Партнёр»
                 name: partnerTitle
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Пояснение «Партнёр»
                 name: partnerNote
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Этапы
                 name: rows
                 widget: list
@@ -533,18 +603,26 @@ collections:
                     name: stage
                     widget: string
                     i18n: true
+                    required:
+                      - ru
                   - label: Заказчик теряет
                     name: customer
                     widget: text
                     i18n: true
+                    required:
+                      - ru
                   - label: RailTech берёт на себя
                     name: railtech
                     widget: text
                     i18n: true
+                    required:
+                      - ru
                   - label: Партнёр теряет
                     name: partner
                     widget: text
                     i18n: true
+                    required:
+                      - ru
                 summary: '{{fields.stage}}'
                 collapsed: true
                 i18n: true
@@ -557,10 +635,14 @@ collections:
                 name: eyebrow
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Заголовок
                 name: title
                 widget: string
                 i18n: true
+                required:
+                  - ru
             i18n: true
           - label: О компании
             name: about
@@ -570,18 +652,26 @@ collections:
                 name: eyebrow
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Заголовок
                 name: title
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Текст
                 name: text
                 widget: text
                 i18n: true
+                required:
+                  - ru
               - label: Миссия
                 name: mission
                 widget: text
                 i18n: true
+                required:
+                  - ru
             i18n: true
           - label: Производители
             name: partners
@@ -591,14 +681,20 @@ collections:
                 name: eyebrow
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Заголовок
                 name: title
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Пояснение
                 name: note
                 widget: text
                 i18n: true
+                required:
+                  - ru
             i18n: true
           - label: Кабинет
             name: cabinet
@@ -608,14 +704,20 @@ collections:
                 name: eyebrow
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Заголовок
                 name: title
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Текст
                 name: text
                 widget: text
                 i18n: true
+                required:
+                  - ru
               - label: Факты
                 name: facts
                 widget: list
@@ -625,10 +727,14 @@ collections:
                     name: value
                     widget: string
                     i18n: true
+                    required:
+                      - ru
                   - label: Подпись
                     name: label
                     widget: string
                     i18n: true
+                    required:
+                      - ru
                 summary: '{{fields.value}} — {{fields.label}}'
                 i18n: true
               - label: Иллюстрация сделки
@@ -639,10 +745,14 @@ collections:
                     name: title
                     widget: string
                     i18n: true
+                    required:
+                      - ru
                   - label: Пометка
                     name: note
                     widget: string
                     i18n: true
+                    required:
+                      - ru
                   - label: Стадии
                     name: stages
                     widget: list
@@ -651,6 +761,8 @@ collections:
                       name: stage
                       widget: string
                     i18n: true
+                    required:
+                      - ru
                   - label: Текущая стадия (номер с 0)
                     name: current
                     widget: number
@@ -667,10 +779,14 @@ collections:
                         name: label
                         widget: string
                         i18n: true
+                        required:
+                          - ru
                       - label: Статус
                         name: status
                         widget: string
                         i18n: true
+                        required:
+                          - ru
                       - label: Цвет статуса
                         name: tone
                         widget: select
@@ -686,6 +802,8 @@ collections:
                     name: footnote
                     widget: string
                     i18n: true
+                    required:
+                      - ru
                 i18n: true
             i18n: true
           - label: Новости
@@ -696,10 +814,14 @@ collections:
                 name: eyebrow
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Заголовок
                 name: title
                 widget: string
                 i18n: true
+                required:
+                  - ru
             i18n: true
           - label: Приглашение и заявка
             name: invite
@@ -709,14 +831,20 @@ collections:
                 name: eyebrow
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Заголовок
                 name: title
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Текст
                 name: text
                 widget: text
                 i18n: true
+                required:
+                  - ru
             i18n: true
         i18n: true
       - name: pages
@@ -731,30 +859,44 @@ collections:
                 name: eyebrow
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Заголовок
                 name: title
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Вводный абзац
                 name: lead
                 widget: text
                 i18n: true
+                required:
+                  - ru
               - label: Группа «Заказчикам»
                 name: customersTitle
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Описание группы
                 name: customersText
                 widget: text
                 i18n: true
+                required:
+                  - ru
               - label: Группа «Партнёрам»
                 name: partnersTitle
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Описание группы
                 name: partnersText
                 widget: text
                 i18n: true
+                required:
+                  - ru
             i18n: true
           - label: Новости
             name: news
@@ -764,14 +906,20 @@ collections:
                 name: eyebrow
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Заголовок
                 name: title
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Вводный абзац
                 name: lead
                 widget: text
                 i18n: true
+                required:
+                  - ru
             i18n: true
           - label: Контакты
             name: contacts
@@ -781,22 +929,32 @@ collections:
                 name: eyebrow
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Заголовок
                 name: title
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Вводный абзац
                 name: lead
                 widget: text
                 i18n: true
+                required:
+                  - ru
               - label: Заголовок формы
                 name: formTitle
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Текст у формы
                 name: formText
                 widget: text
                 i18n: true
+                required:
+                  - ru
             i18n: true
           - label: Страница 404
             name: notFound
@@ -806,10 +964,14 @@ collections:
                 name: title
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Текст
                 name: text
                 widget: text
                 i18n: true
+                required:
+                  - ru
             i18n: true
         i18n: true
       - name: partners
@@ -832,10 +994,14 @@ collections:
                 name: name
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Страна
                 name: country
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Статус RailTech
                 name: status
                 widget: select
@@ -877,14 +1043,20 @@ collections:
                 name: title
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Вводный абзац
                 name: lead
                 widget: text
                 i18n: true
+                required:
+                  - ru
               - label: Редакция
                 name: edition
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Разделы
                 name: sections
                 widget: list
@@ -894,10 +1066,14 @@ collections:
                     name: title
                     widget: string
                     i18n: true
+                    required:
+                      - ru
                   - label: Текст раздела
                     name: content
                     widget: text
                     i18n: true
+                    required:
+                      - ru
                 summary: '{{fields.title}}'
                 collapsed: true
                 i18n: true
@@ -910,14 +1086,20 @@ collections:
                 name: title
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Вводный абзац
                 name: lead
                 widget: text
                 i18n: true
+                required:
+                  - ru
               - label: Редакция
                 name: edition
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Разделы
                 name: sections
                 widget: list
@@ -927,10 +1109,14 @@ collections:
                     name: title
                     widget: string
                     i18n: true
+                    required:
+                      - ru
                   - label: Текст раздела
                     name: content
                     widget: text
                     i18n: true
+                    required:
+                      - ru
                 summary: '{{fields.title}}'
                 collapsed: true
                 i18n: true
@@ -943,14 +1129,20 @@ collections:
                 name: title
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Вводный абзац
                 name: lead
                 widget: text
                 i18n: true
+                required:
+                  - ru
               - label: Редакция
                 name: edition
                 widget: string
                 i18n: true
+                required:
+                  - ru
               - label: Разделы
                 name: sections
                 widget: list
@@ -960,10 +1152,14 @@ collections:
                     name: title
                     widget: string
                     i18n: true
+                    required:
+                      - ru
                   - label: Текст раздела
                     name: content
                     widget: text
                     i18n: true
+                    required:
+                      - ru
                 summary: '{{fields.title}}'
                 collapsed: true
                 i18n: true
@@ -977,6 +1173,8 @@ collections:
             name: siteName
             widget: string
             i18n: true
+            required:
+              - ru
           - label: Суффикс заголовка
             name: titleSuffix
             widget: string
@@ -987,6 +1185,8 @@ collections:
             name: organizationDescription
             widget: text
             i18n: true
+            required:
+              - ru
           - label: Компетенции
             name: knowsAbout
             widget: list
@@ -996,6 +1196,8 @@ collections:
               widget: string
             collapsed: true
             i18n: true
+            required:
+              - ru
           - label: Страницы
             name: pages
             widget: object
@@ -1010,6 +1212,8 @@ collections:
                     maxlength: 60
                     hint: До 60 знаков вместе с « | RailTech».
                     i18n: true
+                    required:
+                      - ru
                   - label: Description (70–160)
                     name: description
                     widget: text
@@ -1017,6 +1221,8 @@ collections:
                     minlength: 50
                     hint: 70–160 знаков.
                     i18n: true
+                    required:
+                      - ru
                 i18n: true
               - label: Услуги
                 name: services
@@ -1028,6 +1234,8 @@ collections:
                     maxlength: 60
                     hint: До 60 знаков вместе с « | RailTech».
                     i18n: true
+                    required:
+                      - ru
                   - label: Description (70–160)
                     name: description
                     widget: text
@@ -1035,6 +1243,8 @@ collections:
                     minlength: 50
                     hint: 70–160 знаков.
                     i18n: true
+                    required:
+                      - ru
                 i18n: true
               - label: Новости
                 name: news
@@ -1046,6 +1256,8 @@ collections:
                     maxlength: 60
                     hint: До 60 знаков вместе с « | RailTech».
                     i18n: true
+                    required:
+                      - ru
                   - label: Description (70–160)
                     name: description
                     widget: text
@@ -1053,6 +1265,8 @@ collections:
                     minlength: 50
                     hint: 70–160 знаков.
                     i18n: true
+                    required:
+                      - ru
                 i18n: true
               - label: Контакты
                 name: contacts
@@ -1064,6 +1278,8 @@ collections:
                     maxlength: 60
                     hint: До 60 знаков вместе с « | RailTech».
                     i18n: true
+                    required:
+                      - ru
                   - label: Description (70–160)
                     name: description
                     widget: text
@@ -1071,6 +1287,8 @@ collections:
                     minlength: 50
                     hint: 70–160 знаков.
                     i18n: true
+                    required:
+                      - ru
                 i18n: true
               - label: Политика
                 name: privacy
@@ -1082,6 +1300,8 @@ collections:
                     maxlength: 60
                     hint: До 60 знаков вместе с « | RailTech».
                     i18n: true
+                    required:
+                      - ru
                   - label: Description (70–160)
                     name: description
                     widget: text
@@ -1089,6 +1309,8 @@ collections:
                     minlength: 50
                     hint: 70–160 знаков.
                     i18n: true
+                    required:
+                      - ru
                 i18n: true
               - label: Условия
                 name: terms
@@ -1100,6 +1322,8 @@ collections:
                     maxlength: 60
                     hint: До 60 знаков вместе с « | RailTech».
                     i18n: true
+                    required:
+                      - ru
                   - label: Description (70–160)
                     name: description
                     widget: text
@@ -1107,6 +1331,8 @@ collections:
                     minlength: 50
                     hint: 70–160 знаков.
                     i18n: true
+                    required:
+                      - ru
                 i18n: true
               - label: Cookies
                 name: cookies
@@ -1118,6 +1344,8 @@ collections:
                     maxlength: 60
                     hint: До 60 знаков вместе с « | RailTech».
                     i18n: true
+                    required:
+                      - ru
                   - label: Description (70–160)
                     name: description
                     widget: text
@@ -1125,6 +1353,8 @@ collections:
                     minlength: 50
                     hint: 70–160 знаков.
                     i18n: true
+                    required:
+                      - ru
                 i18n: true
               - label: '404'
                 name: notFound
@@ -1136,6 +1366,8 @@ collections:
                     maxlength: 60
                     hint: До 60 знаков вместе с « | RailTech».
                     i18n: true
+                    required:
+                      - ru
                   - label: Description (70–160)
                     name: description
                     widget: text
@@ -1143,6 +1375,8 @@ collections:
                     minlength: 50
                     hint: 70–160 знаков.
                     i18n: true
+                    required:
+                      - ru
                 i18n: true
             i18n: true
         i18n: true

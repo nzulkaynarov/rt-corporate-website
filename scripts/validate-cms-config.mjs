@@ -98,7 +98,8 @@ function readEntry(file) {
   if (file.endsWith('.json')) return JSON.parse(raw);
   const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
   if (!m) return { body: raw };
-  return { ...(yaml.load(m[1]) || {}), body: m[2] };
+  // CORE schema: the CMS writes dates unquoted (date: 2026-04-20); keep them strings like the datetime widget does.
+  return { ...(yaml.load(m[1], { schema: yaml.CORE_SCHEMA }) || {}), body: m[2] };
 }
 
 /** Sveltia `pattern`: ['regex' or '/regex/flags', 'message']. */

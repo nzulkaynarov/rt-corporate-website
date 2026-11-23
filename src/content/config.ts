@@ -63,8 +63,11 @@ const news = defineCollection({
     lang: locales,
     /** news — новость; article — статья; project — проект; partner — статья о партнёре (plitka on the home page links here). */
     type: z.enum(['news', 'article', 'project', 'partner']),
-    /** ISO date YYYY-MM-DD. */
-    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    /**
+     * ISO date YYYY-MM-DD. The CMS writes it unquoted (`date: 2026-04-20`), which YAML reads as a Date: both forms
+     * are accepted and normalized to the string.
+     */
+    date: z.union([z.string().regex(/^\d{4}-\d{2}-\d{2}$/), z.date().transform((d) => d.toISOString().slice(0, 10))]),
     /** Optional cover image (path under /public, e.g. /images/news/<slug>.jpg). Without it a neutral plate is shown. */
     cover: z.string().optional(),
     /** Partner ids from src/data/cms/partners.json this material is about. */

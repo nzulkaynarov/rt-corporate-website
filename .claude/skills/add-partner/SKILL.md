@@ -18,7 +18,7 @@ description: Add or update a RailTech manufacturer partner — a tile row in src
 1. **Дубли.** `grep -n "\"id\"" src/data/cms/partners.json` и `ls src/content/news/partner-*`.
 2. **Плитка.** Добавь объект в `src/data/cms/partners.json → partners`:
    `id` (латиница, дефисы; после публикации не меняется), `name`, `country`, `status`,
-   `article` (`partner-<id>`), `order`. Сразу заполни `name_uz/_en` и `country_uz/_en` (по GLOSSARY.md):
+   `article` (`partner-<id>`), `order`. Сразу заполни `name` и `country` элемента в блоках `uz:` / `en:` (по GLOSSARY.md):
    плитка вне новостей и пишется на трёх языках.
    Новых полей не добавляй: схема в `public/admin/config.yml` и ARCHITECTURE.md §3.
 3. **Статья.** `docs/content/templates/partner-article.md` → `src/content/news/partner-<id>.md`:
@@ -28,7 +28,7 @@ description: Add or update a RailTech manufacturer partner — a tile row in src
 4. **Связи.** `tests/data.test.ts` проверяет, что плитка ведёт на существующую статью с `type: partner`, в которой есть этот `id`.
    Новости о партнёре получают `partners: [<id>]` и ссылку на статью.
 5. **Языки.** Статья лежит в `src/content/news`: пока `news` в `ruOnlySections` (`src/data/content-stage.json`), её
-   `_uz`/`_en` и `body_uz`/`body_en` не добавляй. Плитка в `partners.json` — на RU, UZ и EN (шаг 2).
+   блоки `uz:` / `en:` не добавляй (`lang: [ru]`). Плитка в `partners.json` — на RU, UZ и EN (шаг 2).
 6. **Проверка.** `node scripts/check-content.mjs --files src/data/cms/partners.json src/content/news/partner-<id>.md`,
    затем `make check`. Дальше `content-qa` → `content-pr`.
 
