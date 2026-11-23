@@ -37,10 +37,20 @@ export function truncate(text: string, max: number): string {
   return `${(lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut).replace(/[\s,.;:—-]+$/, '')}…`;
 }
 
+/**
+ * « | RailTech» is added by the site, never typed in the CMS: appended when the title does not name the brand
+ * already and still fits 60 characters.
+ */
+function withSuffix(title: string, lang: Lang): string {
+  const { siteName, titleSuffix } = siteSeo(lang);
+  if (!title || (siteName && title.includes(siteName))) return title;
+  return title.length + titleSuffix.length <= TITLE_MAX ? title + titleSuffix : title;
+}
+
 /** Meta for a static page from seo.json. */
 export function pageSeo(key: SeoPageKey, lang: Lang): SeoMeta {
   const page = localize(seoData, lang).pages[key] as Record<string, string>;
-  return { title: tField(page, 'title', lang), description: tField(page, 'description', lang) };
+  return { title: withSuffix(tField(page, 'title', lang), lang), description: tField(page, 'description', lang) };
 }
 
 /** Site-wide SEO settings (site name, organisation description, knowsAbout…) in the page language. */
@@ -62,7 +72,7 @@ export function siteSeo(lang: Lang) {
  */
 export function entrySeo(data: Record<string, any>, lang: Lang, body?: string): SeoMeta {
   const { titleSuffix } = siteSeo(lang);
-  let title = plainText(tField(data, 'seoTitle', lang));
+  let title = withSuffix(plainText(tField(data, 'seoTitle', lang)), lang);
   if (!title) {
     const base = plainText(tField(data, 'title', lang));
     title = base.length + titleSuffix.length <= TITLE_MAX ? base + titleSuffix : truncate(base, TITLE_MAX);

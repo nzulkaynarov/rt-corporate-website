@@ -6,7 +6,7 @@
 import { LANGS, LANG_META, alternateHrefs, getRouteFromPath, localeHref } from '../../i18n';
 import { t } from '../../i18n/ui';
 import { MAIN_NAV, START_PATH, isActive } from '../../utils/nav';
-import { company } from '../../utils/company';
+import { company, cabinet } from '../../utils/company';
 import { withBase } from '../../utils/url';
 import { RU_ONLY } from '../../utils/stage';
 
@@ -44,7 +44,7 @@ const showLangs = !RU_ONLY;
 
     <div class="hdr__cta">
       <a class="btn btn--primary" href={startHref}>{tr('cta.start')}</a>
-      <a class="btn btn--outline" href={company.cabinet.loginUrl}>
+      <a class="btn btn--outline" href={cabinet.loginUrl}>
         {tr('cta.cabinet')}
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 10L10 4M5 4h5v5"></path></svg>
       </a>
@@ -61,7 +61,7 @@ const showLangs = !RU_ONLY;
         </nav>
         <div class="mmenu__cta">
           <a class="btn btn--primary" href={startHref}>{tr('cta.start')}</a>
-          <a class="btn btn--outline" href={company.cabinet.loginUrl}>{tr('cta.cabinet')}</a>
+          <a class="btn btn--outline" href={cabinet.loginUrl}>{tr('cta.cabinet')}</a>
         </div>
       </div>
     </details>

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { alternateHrefs, getLangFromPath, getRouteFromPath, localeHref, localize, pick, tField } from '../src/i18n';
 import { toSuffixed } from '../src/i18n/blocks.mjs';
+import { fillFacts } from '../src/i18n/facts.mjs';
 import { makeT } from '../src/i18n/dictionary';
 
 // In tests BASE_URL is '/', so BASE = '' (on GitHub Pages it is '/rt-corporate-website').
@@ -89,5 +90,19 @@ describe('makeT', () => {
   it('fills placeholders and falls back to RU', () => {
     expect(t('en', 'a.b', { name: 'A' })).toBe('Hi, A');
     expect(t('uz', 'a.b', { name: 'A' })).toBe('Привет, A');
+  });
+});
+
+// Company facts in texts (src/i18n/facts.mjs): one value in company.json, {tokens} everywhere else.
+describe('facts', () => {
+  it('fills known tokens in nested values and keeps unknown braces', () => {
+    const facts = { phone: '+998 90 118-90-00', email: 'info@railtech.uz' };
+    expect(fillFacts({ a: 'Телефон: {phone}', b: ['{email}', '{unknown}'] }, facts)).toEqual({ a: 'Телефон: +998 90 118-90-00', b: ['info@railtech.uz', '{unknown}'] });
+  });
+  it('localize() fills facts in the page language', () => {
+    const data = { text: 'Офис: {officeAddress}', uz: { text: 'Ofis: {officeAddress}' } };
+    expect(localize(data, 'ru').text).toMatch(/^Офис: г\. Ташкент/);
+    expect(localize(data, 'uz').text).toMatch(/^Ofis: Toshkent sh\./);
+    expect(tField({ title: 'ИНН {inn}' }, 'title', 'en')).toBe('ИНН 308346339');
   });
 });

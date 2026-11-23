@@ -5,9 +5,9 @@ import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import SectionHead from '../../../components/ui/SectionHead.astro';
 import Faq from '../../../components/ui/Faq.astro';
 import CtaBand from '../../../components/ui/CtaBand.astro';
-import { expandLangs, localeHref, localize, tField } from '../../../i18n';
+import { expandLangs, facts, fillFacts, localeHref, localize, tField } from '../../../i18n';
 import { t } from '../../../i18n/ui';
-import { company } from '../../../utils/company';
+import { company, cabinet } from '../../../utils/company';
 import { START_PATH } from '../../../utils/nav';
 import { entrySeo, absoluteUrl } from '../../../utils/seo';
 import { renderBody } from '../../../utils/markdown';
@@ -25,7 +25,7 @@ const { entry } = Astro.props;
 const d = localize(entry.data, lang) as Record<string, any>;
 const L = (obj: Record<string, any>, field: string) => tField(obj, field, lang) as string;
 const localizedBody = lang === 'ru' ? undefined : (entry.data as Record<string, any>)[lang]?.body;
-const bodyHtml = await renderBody(localizedBody || entry.body, lang);
+const bodyHtml = await renderBody(fillFacts(localizedBody || entry.body, facts(lang)), lang);
 const seo = entrySeo(d, lang, entry.body);
 const title = L(d, 'title');
 const audienceLabel = t(lang, `services.audience.${d.audience}`);
@@ -55,7 +55,7 @@ const benefitsKey = d.audience === 'partners' ? 'services.benefits.partners' : '
       <p class="hero__lead">{L(d, 'lead')}</p>
       <div class="btn-row">
         <a class="btn btn--primary" href={localeHref(START_PATH, lang)}>{t(lang, 'cta.request')}</a>
-        <a class="btn btn--outline" href={company.cabinet.loginUrl}>{t(lang, 'cta.cabinet')}</a>
+        <a class="btn btn--outline" href={cabinet.loginUrl}>{t(lang, 'cta.cabinet')}</a>
       </div>
     </div>
     {d.highlights?.length > 0 && (

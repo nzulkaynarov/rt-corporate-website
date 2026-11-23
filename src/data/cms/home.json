@@ -5,7 +5,7 @@
     "en"
   ],
   "hero": {
-    "eyebrow": "Ташкент · с 2021 года",
+    "eyebrow": "Ташкент · с {foundedYear} года",
     "title": "Надёжный мост между производителем и заказчиком",
     "lead": "Поставляем оборудование и услуги предприятиям Узбекистана и представляем интересы международных производителей в регионе.",
     "entries": [
@@ -63,7 +63,7 @@
   },
   "about": {
     "eyebrow": "О компании",
-    "title": "ООО «RailTech» — Ташкент, с 2021 года",
+    "title": "ООО «RailTech» — Ташкент, с {foundedYear} года",
     "text": "Наши заказчики — промышленные компании, предприятия транспорта и инфраструктуры, инженерные проекты. Международных производителей представляем в Узбекистане и помогаем им локализовать производство.",
     "mission": "Наша задача — быть единой точкой ответственности между заказчиком и международным партнёром: заявка, КП, документы и поставка в одном месте."
   },
@@ -132,7 +132,7 @@
   },
   "uz": {
     "hero": {
-      "eyebrow": "Toshkent · 2021-yildan beri",
+      "eyebrow": "Toshkent · {foundedYear}-yildan beri",
       "title": "Ishlab chiqaruvchi va buyurtmachi o'rtasidagi ishonchli ko'prik",
       "lead": "O'zbekiston korxonalariga uskunalar va xizmatlar yetkazib beramiz hamda mintaqada xalqaro ishlab chiqaruvchilar manfaatlarini ifodalaymiz.",
       "entries": [
@@ -189,7 +189,7 @@
     },
     "about": {
       "eyebrow": "Kompaniya haqida",
-      "title": "«RailTech» MChJ — Toshkent, 2021-yildan beri",
+      "title": "«RailTech» MChJ — Toshkent, {foundedYear}-yildan beri",
       "text": "Bizning buyurtmachilarimiz — sanoat kompaniyalari, transport va infratuzilma korxonalari, muhandislik loyihalari. O'zbekistonda xalqaro ishlab chiqaruvchilarning vakili sifatida ishlaymiz va ularga ishlab chiqarishni mahalliylashtirishda yordam beramiz.",
       "mission": "Bizning vazifamiz — buyurtmachi va xalqaro hamkor o'rtasida yagona mas'uliyat nuqtasi bo'lish: ariza, tijorat taklifi, hujjatlar va yetkazib berish bir joyda."
     },
@@ -258,7 +258,7 @@
   },
   "en": {
     "hero": {
-      "eyebrow": "Tashkent · since 2021",
+      "eyebrow": "Tashkent · since {foundedYear}",
       "title": "A reliable bridge between manufacturers and customers",
       "lead": "We supply equipment and services to enterprises in Uzbekistan and represent the interests of international manufacturers in the region.",
       "entries": [
@@ -315,7 +315,7 @@
     },
     "about": {
       "eyebrow": "About us",
-      "title": "RailTech LLC — Tashkent, since 2021",
+      "title": "RailTech LLC — Tashkent, since {foundedYear}",
       "text": "Our customers are industrial companies, transport and infrastructure enterprises, and engineering projects. We represent international manufacturers in Uzbekistan and help them localize production.",
       "mission": "Our job is to be the single point of responsibility between the customer and the international partner: request, quotation, documents and delivery in one place."
     },

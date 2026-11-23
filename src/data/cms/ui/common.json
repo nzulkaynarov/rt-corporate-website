@@ -126,6 +126,12 @@
       "ru": "Написать в Telegram",
       "uz": "Telegram orqali yozish",
       "en": "Message us on Telegram"
+    },
+    {
+      "key": "legal.edition",
+      "ru": "Редакция от {date}",
+      "uz": "{date}dagi tahrir",
+      "en": "Version of {date}"
     }
   ]
 }

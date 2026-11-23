@@ -37,7 +37,7 @@ benefits:
     text: Каждая сделка по стадиям в Кабинете, документы и переписка — в одном месте
 faq:
   - q: Как отправить запрос?
-    a: Через форму на сайте, Telegram-бот или письмом на info@railtech.uz. Можно приложить список позиций в Excel. Менеджер свяжется с вами и пришлёт приглашение в Кабинет.
+    a: Через форму на сайте, Telegram-бот или письмом на {email}. Можно приложить список позиций в Excel. Менеджер свяжется с вами и пришлёт приглашение в Кабинет.
   - q: Почему на сайте нет цен?
     a: Цена зависит от количества, условий поставки и исполнения изделия. Итоговую стоимость с логистикой и пошлинами указываем в коммерческом предложении.
   - q: Какие документы вы предоставляете?
@@ -46,7 +46,7 @@ faq:
     a: Гарантию определяют условия изготовителя; срок указываем в коммерческом предложении.
   - q: Можно ли заказать позицию, которой нет у ваших партнёров?
     a: Да. Пришлите обозначение, номер чертежа или фото шильдика — подберём изделие у производителя или проверенного поставщика.
-seoTitle: Поставки оборудования в Узбекистан до склада | RailTech
+seoTitle: Поставки оборудования в Узбекистан до склада
 seoDescription: 'Оборудование и комплектующие международных производителей для предприятий Узбекистана: подбор по обозначению, полная стоимость в КП, DDP/CIP, документы.'
 uz:
   title: Yetkazib berish
@@ -81,7 +81,7 @@ uz:
       text: Har bir bitim Kabinetda bosqichma-bosqich, hujjatlar va yozishmalar — bir joyda
   faq:
     - q: So'rovni qanday yuborish mumkin?
-      a: Saytdagi shakl, Telegram-bot yoki info@railtech.uz manziliga xat orqali. Pozitsiyalar ro'yxatini Excel faylida ilova qilishingiz mumkin. Menejer siz bilan bog'lanadi va Kabinetga taklifnoma yuboradi.
+      a: Saytdagi shakl, Telegram-bot yoki {email} manziliga xat orqali. Pozitsiyalar ro'yxatini Excel faylida ilova qilishingiz mumkin. Menejer siz bilan bog'lanadi va Kabinetga taklifnoma yuboradi.
     - q: Nega saytda narxlar yo'q?
       a: Narx miqdorga, yetkazib berish shartlariga va mahsulot modifikatsiyasiga bog'liq. Logistika va boj to'lovlarini o'z ichiga olgan yakuniy qiymatni tijorat taklifida ko'rsatamiz.
     - q: Qanday hujjatlarni taqdim etasiz?
@@ -101,7 +101,7 @@ uz:
     - sanoat uskunalari — buyurtmachi spetsifikatsiyasi bo'yicha.
 
     Turli mamlakatlardagi ishlab chiqaruvchilar bilan ishlaymiz: rasmiy dilerlik va to'g'ridan-to'g'ri yetkazib berish. Pozitsiyalarning to'liq ro'yxati, mavjudligi va narxlari — taklifnomadan so'ng Kabinetda.
-  seoTitle: O'zbekistonga uskunalarni omborgacha yetkazish | RailTech
+  seoTitle: O'zbekistonga uskunalarni omborgacha yetkazish
   seoDescription: 'Xalqaro ishlab chiqaruvchilar uskunalari O''zbekiston korxonalari uchun: belgilanish bo''yicha tanlash, to''liq qiymat, DDP/CIP, hujjatlar.'
 en:
   title: Supply
@@ -136,7 +136,7 @@ en:
       text: Every deal tracked by stage in the Cabinet, with documents and correspondence in one place
   faq:
     - q: How do I send a request?
-      a: Use the form on the website, the Telegram bot or email info@railtech.uz. You can attach a list of items in Excel. A manager will contact you and send you an invitation to the Cabinet.
+      a: Use the form on the website, the Telegram bot or email {email}. You can attach a list of items in Excel. A manager will contact you and send you an invitation to the Cabinet.
     - q: Why are there no prices on the website?
       a: The price depends on the quantity, delivery terms and product version. We state the final cost, including logistics and duties, in the quotation.
     - q: What documents do you provide?
@@ -156,7 +156,7 @@ en:
     - industrial equipment to the customer's specification.
 
     We work with manufacturers from different countries, both as an official dealer and through direct supply. The full list of items, availability and prices are in the Cabinet once you are invited.
-  seoTitle: Equipment Supply in Uzbekistan to Your Warehouse | RailTech
+  seoTitle: Equipment Supply in Uzbekistan to Your Warehouse
   seoDescription: 'Equipment and components from international manufacturers for companies in Uzbekistan: part matching, landed cost in the quotation, DDP/CIP, documents.'
 ---
 

@@ -9,7 +9,7 @@ title: Брендированная аудитория НПО САУТ в ТГТ
 summary: В апреле 2026 года в ТГТУ открыта учебная аудитория ООО «НПО САУТ» с системами безопасности движения поездов, а стороны подписали меморандум о сотрудничестве; RailTech участвовал как официальный дилер и представитель НПО САУТ.
 partners:
   - npo-saut
-seoTitle: Аудитория НПО САУТ в ТГТУ и меморандум | RailTech
+seoTitle: Аудитория НПО САУТ в ТГТУ и меморандум
 seoDescription: 'Аудитория ООО «НПО САУТ» в ТГТУ открыта 20 апреля 2026 г.; меморандум: локализация, НИОКР, дуальное обучение с 2027/2028 учебного года.'
 uz:
   title: TDTUdagi «НПО САУТ» brendlangan auditoriyasi va hamkorlik memorandumi
@@ -40,7 +40,7 @@ uz:
     ### Nimani taklif qila olamiz
 
     O'quv va sinov bazalari, pilot loyihalar va mahalliylashtirish uchun uskunalar bo'yicha so'rovlarni qabul qilamiz: [injiniring](/services/engineering/), [mahalliylashtirish](/services/localization/), [yetkazib berish](/services/supply/).
-  seoTitle: TDTUdagi «НПО САУТ» auditoriyasi va memorandum | RailTech
+  seoTitle: TDTUdagi «НПО САУТ» auditoriyasi va memorandum
   seoDescription: 'TDTUdagi «НПО САУТ» MChJ auditoriyasi 2026 yil 20 aprelda ochildi; memorandum: mahalliylashtirish, ilmiy tadqiqotlar, 2027/2028 yildan dual ta''lim.'
 en:
   title: NPO SAUT Branded Classroom at TSTU and Cooperation Memorandum
@@ -71,7 +71,7 @@ en:
     ### What we can offer
 
     We accept requests for equipment for training and test facilities, pilot projects and localization: [engineering](/services/engineering/), [localization](/services/localization/), [supply](/services/supply/).
-  seoTitle: NPO SAUT Classroom at TSTU and Memorandum | RailTech
+  seoTitle: NPO SAUT Classroom at TSTU and Memorandum
   seoDescription: NPO SAUT LLC classroom opened at TSTU on April 20, 2026; the memorandum covers localization, R&D and dual education from the 2027/2028 academic year.
 ---
 

@@ -8,6 +8,14 @@ export { company };
 /** Company data in one language (nested values such as bank.name and metrics[].label included). */
 export const companyIn = (lang: string) => localize(company, lang);
 
+/** Cabinet links, all built from company.json → cabinet.url (routes of the RailTech platform). */
+const cabinetBase = String(company.cabinet.url).replace(/\/+$/, '');
+export const cabinet = {
+  url: cabinetBase,
+  loginUrl: `${cabinetBase}/login`,
+  newClientUrl: `${cabinetBase}/new-client`,
+};
+
 /** Telegram bot link with the «came from the website» start parameter (CRM source = web). */
 export function telegramUrl(bot: string | undefined = company.telegramBot): string {
   return bot ? `https://t.me/${bot.replace(/^@/, '')}?start=web` : '';

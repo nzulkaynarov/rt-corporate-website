@@ -178,7 +178,7 @@ collections:
         widget: string
         required: false
         maxlength: 60
-        hint: До 60 знаков. Пусто — берётся заголовок и « | RailTech».
+        hint: До 60 знаков, без « | RailTech» — он добавляется сам. Пусто — берётся заголовок.
         i18n: true
       - label: 'SEO: описание (70–160 знаков, пусто = краткое описание)'
         name: seoDescription
@@ -188,7 +188,7 @@ collections:
         hint: 70–160 знаков. Пусто — берётся «Кратко».
         i18n: true
     delete: false
-    description: 'Четыре услуги сайта. Новые услуги не создаются: структура задана в docs/ARCHITECTURE.md.'
+    description: 'Четыре услуги сайта. Новые услуги не создаются: структура задана в docs/ARCHITECTURE.md. Подстановки из «Компании»: `{phone}`, `{email}`, `{inn}`, `{site}`, `{cabinet}`, `{foundedYear}`, `{officeAddress}`, `{legalAddress}` — не пишите эти значения текстом.'
     i18n: true
   - name: news
     label: 2. Новости, статьи, проекты, партнёры
@@ -299,7 +299,7 @@ collections:
         widget: string
         required: false
         maxlength: 60
-        hint: До 60 знаков. Пусто — берётся заголовок и « | RailTech».
+        hint: До 60 знаков, без « | RailTech» — он добавляется сам. Пусто — берётся заголовок.
         i18n: true
       - label: 'SEO: описание (70–160 знаков, пусто = краткое описание)'
         name: seoDescription
@@ -456,16 +456,7 @@ collections:
                 widget: string
                 type: url
                 i18n: duplicate
-              - label: Страница входа
-                name: loginUrl
-                widget: string
-                type: url
-                i18n: duplicate
-              - label: Страница «Я новый клиент»
-                name: newClientUrl
-                widget: string
-                type: url
-                i18n: duplicate
+                hint: Адрес Кабинета, например https://cabinet.railtech.uz. Ссылки входа (/login) и приглашения (/new-client) строятся от него.
           - label: Адрес приёма заявок (CRM)
             name: leadEndpoint
             widget: string
@@ -1051,12 +1042,14 @@ collections:
                 i18n: true
                 required:
                   - ru
-              - label: Редакция
+                hint: 'Подстановки из «Компании»: `{phone}`, `{email}`, `{inn}`, `{site}`, `{cabinet}`, `{foundedYear}`, `{officeAddress}`, `{legalAddress}` — не пишите эти значения текстом.'
+              - label: Дата редакции
                 name: edition
-                widget: string
-                i18n: true
-                required:
-                  - ru
+                widget: datetime
+                format: YYYY-MM-DD
+                date_format: DD.MM.YYYY
+                time_format: false
+                hint: Одна дата для всех языков; фраза «Редакция от …» строится сама.
               - label: Разделы
                 name: sections
                 widget: list
@@ -1068,12 +1061,14 @@ collections:
                     i18n: true
                     required:
                       - ru
+                    hint: 'Без номера: «1.», «2.» ставятся автоматически по порядку.'
                   - label: Текст раздела
                     name: content
                     widget: text
                     i18n: true
                     required:
                       - ru
+                    hint: 'Подстановки из «Компании»: `{phone}`, `{email}`, `{inn}`, `{site}`, `{cabinet}`, `{foundedYear}`, `{officeAddress}`, `{legalAddress}` — не пишите эти значения текстом.'
                 summary: '{{fields.title}}'
                 collapsed: true
                 i18n: true
@@ -1094,12 +1089,14 @@ collections:
                 i18n: true
                 required:
                   - ru
-              - label: Редакция
+                hint: 'Подстановки из «Компании»: `{phone}`, `{email}`, `{inn}`, `{site}`, `{cabinet}`, `{foundedYear}`, `{officeAddress}`, `{legalAddress}` — не пишите эти значения текстом.'
+              - label: Дата редакции
                 name: edition
-                widget: string
-                i18n: true
-                required:
-                  - ru
+                widget: datetime
+                format: YYYY-MM-DD
+                date_format: DD.MM.YYYY
+                time_format: false
+                hint: Одна дата для всех языков; фраза «Редакция от …» строится сама.
               - label: Разделы
                 name: sections
                 widget: list
@@ -1111,12 +1108,14 @@ collections:
                     i18n: true
                     required:
                       - ru
+                    hint: 'Без номера: «1.», «2.» ставятся автоматически по порядку.'
                   - label: Текст раздела
                     name: content
                     widget: text
                     i18n: true
                     required:
                       - ru
+                    hint: 'Подстановки из «Компании»: `{phone}`, `{email}`, `{inn}`, `{site}`, `{cabinet}`, `{foundedYear}`, `{officeAddress}`, `{legalAddress}` — не пишите эти значения текстом.'
                 summary: '{{fields.title}}'
                 collapsed: true
                 i18n: true
@@ -1137,12 +1136,14 @@ collections:
                 i18n: true
                 required:
                   - ru
-              - label: Редакция
+                hint: 'Подстановки из «Компании»: `{phone}`, `{email}`, `{inn}`, `{site}`, `{cabinet}`, `{foundedYear}`, `{officeAddress}`, `{legalAddress}` — не пишите эти значения текстом.'
+              - label: Дата редакции
                 name: edition
-                widget: string
-                i18n: true
-                required:
-                  - ru
+                widget: datetime
+                format: YYYY-MM-DD
+                date_format: DD.MM.YYYY
+                time_format: false
+                hint: Одна дата для всех языков; фраза «Редакция от …» строится сама.
               - label: Разделы
                 name: sections
                 widget: list
@@ -1154,12 +1155,14 @@ collections:
                     i18n: true
                     required:
                       - ru
+                    hint: 'Без номера: «1.», «2.» ставятся автоматически по порядку.'
                   - label: Текст раздела
                     name: content
                     widget: text
                     i18n: true
                     required:
                       - ru
+                    hint: 'Подстановки из «Компании»: `{phone}`, `{email}`, `{inn}`, `{site}`, `{cabinet}`, `{foundedYear}`, `{officeAddress}`, `{legalAddress}` — не пишите эти значения текстом.'
                 summary: '{{fields.title}}'
                 collapsed: true
                 i18n: true
@@ -1210,7 +1213,7 @@ collections:
                     name: title
                     widget: string
                     maxlength: 60
-                    hint: До 60 знаков вместе с « | RailTech».
+                    hint: До 60 знаков. « | RailTech» добавляется сам, если влезает и бренда нет в заголовке.
                     i18n: true
                     required:
                       - ru
@@ -1232,7 +1235,7 @@ collections:
                     name: title
                     widget: string
                     maxlength: 60
-                    hint: До 60 знаков вместе с « | RailTech».
+                    hint: До 60 знаков. « | RailTech» добавляется сам, если влезает и бренда нет в заголовке.
                     i18n: true
                     required:
                       - ru
@@ -1254,7 +1257,7 @@ collections:
                     name: title
                     widget: string
                     maxlength: 60
-                    hint: До 60 знаков вместе с « | RailTech».
+                    hint: До 60 знаков. « | RailTech» добавляется сам, если влезает и бренда нет в заголовке.
                     i18n: true
                     required:
                       - ru
@@ -1276,7 +1279,7 @@ collections:
                     name: title
                     widget: string
                     maxlength: 60
-                    hint: До 60 знаков вместе с « | RailTech».
+                    hint: До 60 знаков. « | RailTech» добавляется сам, если влезает и бренда нет в заголовке.
                     i18n: true
                     required:
                       - ru
@@ -1298,7 +1301,7 @@ collections:
                     name: title
                     widget: string
                     maxlength: 60
-                    hint: До 60 знаков вместе с « | RailTech».
+                    hint: До 60 знаков. « | RailTech» добавляется сам, если влезает и бренда нет в заголовке.
                     i18n: true
                     required:
                       - ru
@@ -1320,7 +1323,7 @@ collections:
                     name: title
                     widget: string
                     maxlength: 60
-                    hint: До 60 знаков вместе с « | RailTech».
+                    hint: До 60 знаков. « | RailTech» добавляется сам, если влезает и бренда нет в заголовке.
                     i18n: true
                     required:
                       - ru
@@ -1342,7 +1345,7 @@ collections:
                     name: title
                     widget: string
                     maxlength: 60
-                    hint: До 60 знаков вместе с « | RailTech».
+                    hint: До 60 знаков. « | RailTech» добавляется сам, если влезает и бренда нет в заголовке.
                     i18n: true
                     required:
                       - ru
@@ -1364,7 +1367,7 @@ collections:
                     name: title
                     widget: string
                     maxlength: 60
-                    hint: До 60 знаков вместе с « | RailTech».
+                    hint: До 60 знаков. « | RailTech» добавляется сам, если влезает и бренда нет в заголовке.
                     i18n: true
                     required:
                       - ru

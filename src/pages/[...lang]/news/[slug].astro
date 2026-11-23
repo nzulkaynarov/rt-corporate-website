@@ -6,7 +6,7 @@ import Lightbox from '../../../components/ui/Lightbox.astro';
 import NewsCard from '../../../components/ui/NewsCard.astro';
 import CtaBand from '../../../components/ui/CtaBand.astro';
 import partnersFile from '../../../data/cms/partners.json';
-import { expandLangs, localeHref, localize, tField } from '../../../i18n';
+import { expandLangs, facts, fillFacts, localeHref, localize, tField } from '../../../i18n';
 import { t } from '../../../i18n/ui';
 import { formatDate } from '../../../utils/format';
 import { renderBody } from '../../../utils/markdown';
@@ -30,7 +30,7 @@ const d = localize(entry.data, cl) as Record<string, any>;
 const partnersData = localize(partnersFile, lang);
 const title = tField(d, 'title', cl) as string;
 const localizedBody = cl === 'ru' ? undefined : (entry.data as Record<string, any>)[cl]?.body;
-const bodyHtml = await renderBody(localizedBody || entry.body, lang);
+const bodyHtml = await renderBody(fillFacts(localizedBody || entry.body, facts(lang)), lang);
 const seo = entrySeo(d, cl, entry.body);
 const gallery: { image: string; alt: string }[] = (d.gallery || []).map((g: Record<string, string>) => ({ image: g.image, alt: tField(g, 'alt', cl) || '' }));
 

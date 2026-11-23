@@ -6,7 +6,7 @@ import LeadFormBlock from '../../components/ui/LeadFormBlock.astro';
 import pagesData from '../../data/cms/pages.json';
 import { langStaticPaths, tField, localize } from '../../i18n';
 import { t } from '../../i18n/ui';
-import { company, companyIn, mailHref, mapUrl, telHref, telegramUrl } from '../../utils/company';
+import { company, companyIn, mailHref, mapUrl, telHref, telegramUrl, cabinet } from '../../utils/company';
 import { pageSeo } from '../../utils/seo';
 
 export const getStaticPaths = langStaticPaths;
@@ -32,7 +32,7 @@ const crumbs = [{ name: tr('nav.contacts'), path: '/contacts/' }];
           <div><dt>{tr('contacts.phone')}</dt><dd><a href={telHref()}>{company.phone}</a></dd></div>
           <div><dt>{tr('contacts.email')}</dt><dd><a href={mailHref()}>{company.email}</a></dd></div>
           {tg && <div><dt>{tr('contacts.telegram')}</dt><dd><a href={tg} rel="noopener">@{company.telegramBot}</a></dd></div>}
-          <div><dt>{tr('contacts.cabinet')}</dt><dd><a href={company.cabinet.loginUrl}>{company.cabinet.url.replace(/^https?:\/\//, '')}</a></dd></div>
+          <div><dt>{tr('contacts.cabinet')}</dt><dd><a href={cabinet.loginUrl}>{cabinet.url.replace(/^https?:\/\//, '')}</a></dd></div>
         </dl>
 
         <section class="req" id="requisites" aria-labelledby="req-title">

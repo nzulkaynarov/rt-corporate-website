@@ -59,7 +59,7 @@ faq:
     a: Да. Закон «О специальных экономических зонах» (ЗРУ-604) предусматривает, в частности, таможенные льготы на технологическое оборудование, не производимое в Узбекистане. Участником становится компания, заключившая инвестиционное соглашение и включённая в реестр зоны. Мы помогаем оценить, какая площадка подходит.
   - q: Даёт ли RailTech юридические гарантии льгот?
     a: Нет. Льготы и статусы предоставляют государственные органы. Мы готовим данные, сопровождаем процедуры и привлекаем профильных юристов и консультантов.
-seoTitle: Локализация производства в Узбекистане | RailTech
+seoTitle: Локализация производства в Узбекистане
 seoDescription: 'RailTech — местный партнёр для локализации: анализ спроса, сертификация и происхождение, промышленные партнёры и площадки, сборка узлов, путь к СП.'
 uz:
   title: Mahalliylashtirish
@@ -139,7 +139,7 @@ uz:
 
     - [2026-yil 4-fevraldagi PF-17-son Farmon](https://lex.uz/ru/docs/8037367), [2025-yil 26-dekabrdagi PF-259-son Farmon](https://lex.uz/ru/docs/7952240), [2020-yil 21-avgustdagi PQ-4812-son qaror](https://lex.uz/docs/4964637)
     - [O'RQ-598 «Investitsiyalar va investitsiya faoliyati to'g'risida»](https://lex.uz/docs/4664144), [O'RQ-604 «Maxsus iqtisodiy zonalar to'g'risida»](https://lex.uz/docs/4737514), [O'RQ-819 «Texnik jihatdan tartibga solish to'g'risida»](https://lex.uz/docs/6392314)
-  seoTitle: Ishlab chiqarishni mahalliylashtirish | RailTech
+  seoTitle: Ishlab chiqarishni mahalliylashtirish
   seoDescription: 'RailTech — mahalliylashtirish bo''yicha mahalliy hamkor: talab tahlili, sertifikatlash, sanoat hamkorlari va maydonlar, uzellarni yig''ish, QKga yo''l.'
 en:
   title: Localization
@@ -219,7 +219,7 @@ en:
 
     - [Decree No. UP-17 of February 4, 2026](https://lex.uz/ru/docs/8037367), [Decree No. UP-259 of December 26, 2025](https://lex.uz/ru/docs/7952240), [Resolution No. PP-4812 of August 21, 2020](https://lex.uz/docs/4964637)
     - [ZRU-598 “On Investments and Investment Activities”](https://lex.uz/docs/4664144), [ZRU-604 “On Special Economic Zones”](https://lex.uz/docs/4737514), [ZRU-819 “On Technical Regulation”](https://lex.uz/docs/6392314)
-  seoTitle: Production Localization in Uzbekistan | RailTech
+  seoTitle: Production Localization in Uzbekistan
   seoDescription: 'RailTech, your local partner for localization: demand analysis, certification and origin, industrial partners and sites, assembly, a path to a JV.'
 ---
 

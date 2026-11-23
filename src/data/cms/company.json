@@ -25,9 +25,7 @@
     "account": "20208000205374302001"
   },
   "cabinet": {
-    "url": "https://cabinet.railtech.uz",
-    "loginUrl": "https://cabinet.railtech.uz/login",
-    "newClientUrl": "https://cabinet.railtech.uz/new-client"
+    "url": "https://cabinet.railtech.uz"
   },
   "leadEndpoint": "https://crm.railtech.uz/api/v1/leads/web",
   "metrics": [

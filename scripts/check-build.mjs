@@ -1,5 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { FACT_TOKENS } from '../src/i18n/facts.mjs';
+const FACT_TOKEN_IN_PAGE = new RegExp(`\\{(${Object.keys(FACT_TOKENS).join('|')})\\}`);
 
 /**
  * Post-build SEO / i18n audit of dist/ (runs automatically after `npm run build`).
@@ -97,7 +99,10 @@ for (const rel of files) {
   }
   if (!/<main\b[^>]*id="main"/.test(html)) err('missing <main id="main">');
   if (!/class="skip-link"/.test(html)) err('missing skip link');
-  if (!/href="https:\/\/cabinet\.railtech\.uz\/login"/.test(html)) err('missing «Войти в Кабинет» link (company.json → cabinet.loginUrl)');
+  if (!/href="https:\/\/cabinet\.railtech\.uz\/login"/.test(html)) err('missing «Войти в Кабинет» link (company.json → cabinet.url + /login)');
+  // Company facts are filled in by the site (src/i18n/facts.mjs): a {token} left in the page is a reading bug.
+  const leftover = html.replace(/<(script|style)\b[\s\S]*?<\/\1>/gi, ' ').match(FACT_TOKEN_IN_PAGE);
+  if (leftover) err(`unfilled substitution ${leftover[0]} (src/i18n/facts.mjs; read texts through localize()/tField())`);
 
   const htmlLang = attr(html.match(/<html[^>]*>/i)?.[0] || '', 'lang');
   if (htmlLang !== lang) err(`<html lang="${htmlLang}"> but URL language is "${lang}"`);
