@@ -51,6 +51,7 @@ function checkField(field, where, seen) {
   if (field.widget === 'select' && !Array.isArray(field.options)) {
     errors.push(`${path}: select widget needs "options"`);
   }
+  checkFieldOptions(field, path);
   if (field.fields) checkFields(field.fields, `${path}.fields`);
   if (field.field) checkField(field.field, `${path}.field`);
   if (Array.isArray(field.types)) {
@@ -100,6 +101,36 @@ function readEntry(file) {
   return { ...(yaml.load(m[1]) || {}), body: m[2] };
 }
 
+/** Sveltia `pattern`: ['regex' or '/regex/flags', 'message']. */
+function toRegExp(pattern) {
+  const [src] = pattern;
+  const m = /^\/(.*)\/([a-z]*)$/.exec(src);
+  return m ? new RegExp(m[1], m[2]) : new RegExp(src);
+}
+
+/**
+ * The CMS refuses to save an entry whose value breaks `pattern`, `minlength`, `maxlength` or `type` (url/email).
+ * Existing data must satisfy the same rules, otherwise an editor could not save an unrelated change.
+ */
+function checkConstraints(field, value, at) {
+  if (typeof value !== 'string' || value.trim() === '') return;
+  const len = [...value.trim()].length;
+  if (field.minlength && len < field.minlength) errors.push(`${at}: ${len} chars, the CMS requires ≥ ${field.minlength}`);
+  if (field.maxlength && len > field.maxlength) errors.push(`${at}: ${len} chars, the CMS allows ≤ ${field.maxlength}`);
+  if (field.pattern && !toRegExp(field.pattern).test(value)) errors.push(`${at}: ${JSON.stringify(value)} does not match the CMS pattern (${field.pattern[1]})`);
+  if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) errors.push(`${at}: not an e-mail address`);
+  if (field.type === 'url' && !/^https?:\/\/\S+$/.test(value)) errors.push(`${at}: not a URL`);
+}
+
+function checkFieldOptions(field, where) {
+  if (field.pattern) {
+    if (!Array.isArray(field.pattern) || field.pattern.length !== 2) errors.push(`${where}: "pattern" must be [regex, message]`);
+    else {
+      try { toRegExp(field.pattern); } catch (e) { errors.push(`${where}: invalid pattern: ${e.message}`); }
+    }
+  }
+}
+
 const SCALAR_WIDGETS = new Set(['string', 'text', 'markdown', 'image', 'file', 'datetime', 'color', 'code', 'hidden', 'uuid', 'map', 'relation', 'compute', 'keyvalue']);
 
 function checkData(fields, data, where) {
@@ -116,6 +147,8 @@ function checkData(fields, data, where) {
     if (value === undefined || value === null) continue;
     const at = `${where}.${field.name}`;
     const widget = field.widget || 'string';
+    if (widget === 'string' || widget === 'text') checkConstraints(field, value, at);
+    if (widget === 'list' && field.field && Array.isArray(value)) value.forEach((v, i) => checkConstraints(field.field, v, `${at}[${i}]`));
     if (widget === 'object' && field.fields) checkData(field.fields, value, at);
     else if (widget === 'list') {
       if (!Array.isArray(value)) { errors.push(`${at}: list widget but value is not an array`); continue; }
