@@ -1,11 +1,10 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import Lightbox from '../../../components/ui/Lightbox.astro';
-import NewsCard from '../../../components/ui/NewsCard.astro';
+import RelatedMaterials from '../../../components/ui/RelatedMaterials.astro';
 import CtaBand from '../../../components/ui/CtaBand.astro';
-import partnersFile from '../../../data/cms/partners.json';
+import { getFeed, materialsOfPartner, relatedTo, type FeedItem } from '../../../utils/feed';
 import { expandLangs, facts, fillFacts, localeHref, localize, tField } from '../../../i18n';
 import { t } from '../../../i18n/ui';
 import { formatDate } from '../../../utils/format';
@@ -15,11 +14,12 @@ import { withBase } from '../../../utils/url';
 import { contentLang } from '../../../utils/stage';
 
 export async function getStaticPaths() {
-  const entries = await getCollection('news');
-  return expandLangs(entries.map((entry) => ({ params: { slug: entry.slug }, props: { entry } })));
+  const feed = await getFeed();
+  return expandLangs(feed.map((entry) => ({ params: { slug: entry.slug }, props: { entry } })));
 }
 interface Props {
-  entry: CollectionEntry<'news'>;
+  /** A news entry or a partner article (src/utils/feed.ts). */
+  entry: FeedItem;
 }
 const lang = Astro.locals.lang;
 // Content language: RU while news is not translated (src/data/content-stage.json → ruOnlySections); UI stays in `lang`.
@@ -27,19 +27,21 @@ const cl = contentLang(lang, 'news');
 const { entry } = Astro.props;
 // RU at the root, translations in the uz/en blocks (src/i18n/blocks.mjs): one localized view of the entry.
 const d = localize(entry.data, cl) as Record<string, any>;
-const partnersData = localize(partnersFile, lang);
 const title = tField(d, 'title', cl) as string;
 const localizedBody = cl === 'ru' ? undefined : (entry.data as Record<string, any>)[cl]?.body;
 const bodyHtml = await renderBody(fillFacts(localizedBody || entry.body, facts(lang)), lang);
 const seo = entrySeo(d, cl, entry.body);
 const gallery: { image: string; alt: string }[] = (d.gallery || []).map((g: Record<string, string>) => ({ image: g.image, alt: tField(g, 'alt', cl) || '' }));
 
-const all = (await getCollection('news')).filter((e) => e.slug !== entry.slug).sort((a, b) => b.data.date.localeCompare(a.data.date));
-const partner = d.type === 'partner' ? partnersData.partners.find((p) => (d.partners || []).includes(p.id)) : undefined;
-const related = partner
-  ? all.filter((e) => (e.data.partners || []).includes(partner.id))
-  : all.filter((e) => (e.data.partners || []).some((id: string) => (d.partners || []).includes(id))).concat(all).filter((e, i, arr) => arr.indexOf(e) === i).slice(0, 3);
-const relatedTitle = partner ? t(lang, 'news.partnerMaterials') : t(lang, 'news.related');
+// Recommendations are computed (src/utils/feed.ts): a partner page lists the materials naming the partner,
+// any other material shows those with the same partners, then the same services, then the newest.
+const feed = await getFeed();
+const partnerId = entry.partnerId;
+const related = partnerId ? materialsOfPartner(partnerId, feed) : relatedTo(entry, feed);
+const relatedTitle = partnerId ? t(lang, 'news.partnerMaterials') : t(lang, 'news.related');
+// Partner header: tile data of the same record, in the page language.
+const partner = partnerId ? localize(entry.data, lang) : undefined;
+const partnerLegal = partner && partner.legalName !== partner.name ? partner.legalName : '';
 
 const crumbs = [
   { name: t(lang, 'nav.news'), path: '/news/' },
@@ -72,7 +74,10 @@ const jsonLd = {
       {partner && (
         <dl class="art__partner">
           <div><dt class="visually-hidden">{t(lang, 'news.partnerStatus')}</dt><dd class:list={['pill', { 'pill--dealer': partner.status === 'dealer' }]}>{t(lang, `partner.status.${partner.status}`)}</dd></div>
-          <div><dt class="visually-hidden">{t(lang, 'news.partnerCountry')}</dt><dd>{tField(partner, 'country', lang)}</dd></div>
+          <div><dt class="visually-hidden">{t(lang, 'news.partnerCountry')}</dt><dd>{t(lang, `country.${partner.country}`)}</dd></div>
+          {partnerLegal && <div><dt class="visually-hidden">{t(lang, 'partner.legalName')}</dt><dd>{partnerLegal}</dd></div>}
+          {partner.group && <div><dt class="visually-hidden">{t(lang, 'partner.group')}</dt><dd>{t(lang, 'partner.groupOf', { group: partner.group })}</dd></div>}
+          {(partner.brands || []).length > 0 && <div><dt>{t(lang, 'partner.brands')}</dt><dd>{partner.brands.join(', ')}</dd></div>}
         </dl>
       )}
     </header>
@@ -95,17 +100,7 @@ const jsonLd = {
   </article>
   <Lightbox />
 
-  {related.length > 0 && (
-    <section class="section section--soft" aria-labelledby="rel-title">
-      <div class="wrap">
-        <div class="rel-head">
-          <h2 id="rel-title">{relatedTitle}</h2>
-          <a href={localeHref('/news/', lang)}>{t(lang, 'news.back')} →</a>
-        </div>
-        <ul class="rel">{related.slice(0, 3).map((e) => <li><NewsCard entry={e} /></li>)}</ul>
-      </div>
-    </section>
-  )}
+  <RelatedMaterials title={relatedTitle} items={related} />
 
   <CtaBand title={t(lang, 'services.cta.title')} text={t(lang, 'services.cta.text')} />
 </BaseLayout>
@@ -205,35 +200,9 @@ const jsonLd = {
   .gallery button:hover img {
     transform: scale(1.04);
   }
-  .rel-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-bottom: 28px;
-  }
-  .rel-head h2 {
-    font-size: 30px;
-    font-weight: 700;
-  }
-  .rel {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-  }
   @media (max-width: 760px) {
     .art {
       padding-block: 20px 48px;
-    }
-    .rel {
-      grid-template-columns: minmax(0, 1fr);
-    }
-    .rel-head h2 {
-      font-size: 24px;
     }
   }
 </style>

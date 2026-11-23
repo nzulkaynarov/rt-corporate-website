@@ -66,6 +66,12 @@
       "ru": "Опишите задачу — менеджер свяжется с вами и пришлёт приглашение в Кабинет.",
       "uz": "Vazifani tasvirlab bering — menejer siz bilan bog'lanadi va Kabinetga taklifnoma yuboradi.",
       "en": "Tell us what you need, and a manager will contact you and send you an invitation to the Cabinet."
+    },
+    {
+      "key": "services.related",
+      "ru": "Проекты и материалы по услуге",
+      "uz": "Xizmat bo'yicha loyihalar va materiallar",
+      "en": "Projects and posts on this service"
     }
   ]
 }

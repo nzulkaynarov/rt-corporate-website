@@ -88,16 +88,17 @@ tests/                       Vitest (data, i18n, lead, utils) и tests/e2e (Play
 ### Новость, статья или проект → скил `write-news`
 1. Проверь дубли: `grep -ril "<тема>" src/content/news/`.
 2. Скопируй `docs/content/templates/news.md` в `src/content/news/<slug>.md`. Slug: латиница, дефисы, не меняется после публикации.
-3. Заполни `type` (`news` | `article` | `project`), `date`, `title`, `summary` (70–300 знаков), `partners` (id из `partners.json`, если материал о партнёре).
+3. Заполни `type` (`news` | `article` | `project`), `date`, `title`, `summary` (70–300 знаков), `partners` (имена файлов из `src/content/partners`, если материал о партнёре), `services` (если материал об услуге).
    `cover` необязателен: без него показывается плашка «Фото готовится».
 4. Тело на русском, разделы с `###`. Внизу раздел `### Источники` со ссылками.
 5. `node scripts/check-content.mjs --files src/content/news/<slug>.md`, потом `make check`.
 
 ### Партнёр → скил `add-partner`
-1. Добавь строку в `src/data/cms/partners.json`: `id` (латиница, навсегда), `name`, `country`,
-   `status` (`dealer` только при документе производителя, иначе `direct`), `article`, `order`.
-2. Создай статью `src/content/news/<article>.md` с `type: partner` и `partners: [<id>]` по шаблону
-   `docs/content/templates/partner-article.md`. Тест `tests/data.test.ts` проверяет, что плитка ведёт на эту статью.
+1. Одна запись `src/content/partners/<id>.md` (шаблон `docs/content/templates/partner-article.md`): плитка
+   (`name` — бренд, `legalName` — юрлицо, `group`, `country` — код, `status`: `dealer` только при документе
+   производителя, иначе `direct`; `order`) и статья (`date`, `title`, `summary`, текст) — она выходит в «Новостях»
+   по адресу `/news/partner-<id>/`, плитка становится ссылкой, когда статья написана.
+2. Рекомендации считаются сами (`src/utils/feed.ts`): по `partners` в новостях и по ссылкам на услуги.
 3. Отрасль партнёра описывается здесь, в фактах о нём. В общих текстах её нет.
 
 ### Изменить услугу → скил `add-service`

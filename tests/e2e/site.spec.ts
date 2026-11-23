@@ -4,10 +4,22 @@
  */
 import { expect, test, type Page } from '@playwright/test';
 import fs from 'node:fs';
+import yaml from 'js-yaml';
 
 const readJson = (file: string) => JSON.parse(fs.readFileSync(file, 'utf8'));
 const company = readJson('src/data/cms/company.json');
-const partners = readJson('src/data/cms/partners.json') as { partners: { id: string; article: string }[] };
+/** Partners (src/content/partners: tile + article) in tile order; `article` is the route slug once the text exists. */
+const partners = fs
+  .readdirSync('src/content/partners')
+  .filter((n) => n.endsWith('.md'))
+  .map((n) => {
+    const [, front, ...rest] = fs.readFileSync(`src/content/partners/${n}`, 'utf8').split('---');
+    const d = yaml.load(front) as { order?: number; title?: string };
+    const id = n.replace(/\.md$/, '');
+    return { id, order: d.order ?? 99, article: rest.join('---').trim() && d.title ? `partner-${id}` : '' };
+  })
+  .sort((a, b) => a.order - b.order || a.id.localeCompare(b.id));
+const partnerArticles = partners.filter((p) => p.article);
 
 const PAGES = ['', 'services/', 'services/supply/', 'services/engineering/', 'services/representation/', 'services/localization/', 'news/', 'contacts/', 'privacy/', 'terms/', 'cookies/'];
 const CRM = company.leadEndpoint;
@@ -91,7 +103,7 @@ test('when the CRM is unreachable the form shows other channels', async ({ page 
 
 test('partner tiles lead to the partner articles', async ({ page }) => {
   await page.goto('');
-  const first = partners.partners[0];
+  const first = partnerArticles[0];
   await page.locator(`#partners a[href$="/news/${first.article}/"]`).click();
   await expect(page).toHaveURL(new RegExp(`/news/${first.article}/$`));
   await expect(page.locator('h1')).toBeVisible();
@@ -101,7 +113,7 @@ test('news filter shows only the chosen type', async ({ page }) => {
   await page.goto('news/');
   await page.locator('[data-news-filter] button[data-type="partner"]').click();
   const visible = page.locator('[data-news-list] li:not([hidden])');
-  expect(await visible.count()).toBe(partners.partners.length);
+  expect(await visible.count()).toBe(partnerArticles.length);
   for (const li of await visible.all()) await expect(li).toHaveAttribute('data-type', 'partner');
 });
 
@@ -136,7 +148,7 @@ test.describe('languages (src/data/content-stage.json)', () => {
 
   test('a Russian-only section is shown in Russian on /uz/ and kept out of search', async ({ page }) => {
     test.skip(!(stage.ruOnlySections || []).includes('news'), 'news is translated');
-    await page.goto(`uz/news/${partners.partners[0].article}/`);
+    await page.goto(`uz/news/${partnerArticles[0].article}/`);
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
     await expect(page.locator('article')).toHaveAttribute('lang', 'ru');
   });

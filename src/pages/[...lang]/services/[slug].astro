@@ -4,6 +4,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import SectionHead from '../../../components/ui/SectionHead.astro';
 import Faq from '../../../components/ui/Faq.astro';
+import RelatedMaterials from '../../../components/ui/RelatedMaterials.astro';
+import { getFeed, materialsOfService } from '../../../utils/feed';
 import CtaBand from '../../../components/ui/CtaBand.astro';
 import { expandLangs, facts, fillFacts, localeHref, localize, tField } from '../../../i18n';
 import { t } from '../../../i18n/ui';
@@ -42,6 +44,8 @@ const jsonLd: Record<string, unknown>[] = [
 if (faq.length) {
   jsonLd.push({ '@type': 'FAQPage', mainEntity: faq.map((f: { q: string; a: string }) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
 }
+// Projects, news and partner articles about this service: chosen in the CMS or linking to this page (src/utils/feed.ts).
+const feed = await getFeed();
 const benefitsKey = d.audience === 'partners' ? 'services.benefits.partners' : 'services.benefits.customers';
 ---
 
@@ -125,6 +129,8 @@ const benefitsKey = d.audience === 'partners' ? 'services.benefits.partners' : '
       </div>
     </section>
   )}
+
+  <RelatedMaterials title={t(lang, 'services.related')} items={materialsOfService(entry.slug, feed)} soft={false} />
 
   <CtaBand title={t(lang, 'services.cta.title')} text={t(lang, 'services.cta.text')} />
 </BaseLayout>

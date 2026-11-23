@@ -3,7 +3,7 @@
 # Копия → src/content/news/<slug>.md (slug: латиница, дефисы, 2–6 слов; после публикации не меняется).
 # Схема: src/content/config.ts → news. Новости пока только на русском (news в ruOnlySections,
 # src/data/content-stage.json): lang: [ru], блоки uz: / en: НЕ добавляем.
-# Статья о партнёре (type: partner) пишется по шаблону partner-article.md.
+# Статья о партнёре пишется в его записи src/content/partners/<id>.md (шаблон partner-article.md).
 # Строки-комментарии (#) удалите перед публикацией.
 
 lang: [ru]              # языки материала; блоки uz:/en: появятся при переводе
@@ -11,7 +11,8 @@ type: "news"            # news — новость, article — статья, pro
 date: "YYYY-MM-DD"      # дата события или публикации
 title: "<Заголовок: что произошло, до ~70 знаков>"
 summary: "<Одно-два предложения, 70–300 знаков: что, где, когда, роль RailTech. Это и описание для поиска.>"
-partners: []            # id из src/data/cms/partners.json, если материал о партнёре: ["npo-saut"]
+partners: []            # партнёры из src/content/partners, если материал о них: ["npo-saut"]
+services: []            # услуги, если материал о них: ["supply"] (ссылка в тексте на /services/supply/ работает так же)
 featured: false         # true — закрепить в ленте (решает владелец)
 # cover: "/images/news/<slug>.jpg"      # необязательно: своё фото или с разрешения; без него — плашка «Фото готовится»
 # coverAlt: "<что на фото>"

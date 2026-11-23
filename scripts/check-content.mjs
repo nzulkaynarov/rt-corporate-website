@@ -33,7 +33,9 @@ const STAGE = fs.existsSync(STAGE_FILE) ? JSON.parse(fs.readFileSync(STAGE_FILE,
 const RU_ONLY = args.includes('--ru-only') || STAGE.ruOnly === true;
 /** Sections still in Russian on /uz/ and /en/ (e.g. ["news"]): their UZ/EN values are counted, not required. */
 const RU_ONLY_SECTIONS = new Set(STAGE.ruOnlySections || []);
-const ruOnlyFile = (file) => [...RU_ONLY_SECTIONS].some((s) => file.split(path.sep).join('/').startsWith(`src/content/${s}/`));
+// Partner articles are published in «Новости» (/news/partner-<id>/), so they follow the news section.
+const sectionOfFile = (file) => file.split(path.sep).join('/').replace(/^src\/content\/partners\//, 'src/content/news/');
+const ruOnlyFile = (file) => [...RU_ONLY_SECTIONS].some((s) => sectionOfFile(file).startsWith(`src/content/${s}/`));
 const pendingTranslation = new Map(); // file → number of missing UZ/EN values
 const missingTr = (file, msg) => {
   if (RU_ONLY || ruOnlyFile(file)) pendingTranslation.set(file, (pendingTranslation.get(file) || 0) + 1);
@@ -237,9 +239,27 @@ function checkStatusBasis(file, where, value) {
   if (hit) err(file, `${where}: «${value.match(hit)[0]}» — the basis of a dealer status is not published (docs/STATUS.md §2.4)`);
 }
 
-const PARTNERS_FILE = 'src/data/cms/partners.json';
-const partnerIds = new Set(fs.existsSync(PARTNERS_FILE) ? (JSON.parse(fs.readFileSync(PARTNERS_FILE, 'utf8')).partners || []).map((p) => p.id) : []);
-const NEWS_TYPES = ['news', 'article', 'project', 'partner'];
+const PARTNERS_DIR = 'src/content/partners';
+const mdNames = (dir) => (fs.existsSync(dir) ? fs.readdirSync(dir).filter((n) => n.endsWith('.md')).map((n) => n.replace(/\.md$/, '')) : []);
+const partnerIds = new Set(mdNames(PARTNERS_DIR));
+const serviceSlugs = new Set(mdNames('src/content/services'));
+const NEWS_TYPES = ['news', 'article', 'project'];
+const COUNTRIES_FILE = 'src/data/cms/ui/countries.json';
+const COUNTRY_CODES = new Set(fs.existsSync(COUNTRIES_FILE) ? JSON.parse(fs.readFileSync(COUNTRIES_FILE, 'utf8')).strings.map((s) => s.key.replace(/^country\./, '')) : []);
+
+/** Shared rules of a «Новости» material (news entries and partner articles). */
+function checkArticle(file, d, body) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(d.date || '')) || Number.isNaN(Date.parse(d.date))) err(file, `date "${d.date}" must be YYYY-MM-DD`);
+  else if (Date.parse(d.date) > Date.now() + 864e5) warn(file, `date ${d.date} is in the future`);
+  ['title', 'summary'].forEach((f) => trilingual(file, d, f));
+  trilingual(file, d, 'coverAlt', 'coverAlt', { optional: true });
+  if (d.summary && (d.summary.length < 70 || d.summary.length > 300)) warn(file, `summary is ${d.summary.length} chars (70–300; it is the meta description fallback)`);
+  if (d.cover && d.cover.startsWith('/') && !publicPathExists(d.cover)) err(file, `cover: file public${d.cover} does not exist`);
+  if (!d.cover) warn(file, 'no cover photo — a neutral plate is shown');
+  checkBody(file, d, body, 600);
+  walkStrings({ ...d, body }, '', (where, v) => { checkStatusBasis(file, where, v); checkTokens(file, where, v); });
+  for (const s of ['', '_uz', '_en']) if (/\|\s*RailTech\s*$/.test(d[`seoTitle${s}`] || '')) warn(file, `seoTitle${s}: « | RailTech» is added by the site — remove it`);
+}
 
 const RULES = {
   services(file, d, body) {
@@ -258,19 +278,29 @@ const RULES = {
     for (const s of ['', '_uz', '_en']) if (/\|\s*RailTech\s*$/.test(d[`seoTitle${s}`] || '')) warn(file, `seoTitle${s}: « | RailTech» is added by the site — remove it`);
   },
   news(file, d, body) {
-    if (!NEWS_TYPES.includes(d.type)) err(file, `type must be one of ${NEWS_TYPES.join(', ')}`);
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(String(d.date || '')) || Number.isNaN(Date.parse(d.date))) err(file, `date "${d.date}" must be YYYY-MM-DD`);
-    else if (Date.parse(d.date) > Date.now() + 864e5) warn(file, `date ${d.date} is in the future`);
-    ['title', 'summary'].forEach((f) => trilingual(file, d, f));
-    trilingual(file, d, 'coverAlt', 'coverAlt', { optional: true });
-    (d.partners || []).forEach((id) => { if (!partnerIds.has(id)) err(file, `partners: unknown partner id "${id}" (see ${PARTNERS_FILE})`); });
-    if (d.type === 'partner' && !(d.partners || []).length) err(file, 'a partner article must list its partner id in partners');
-    if (d.summary && (d.summary.length < 70 || d.summary.length > 300)) warn(file, `summary is ${d.summary.length} chars (70–300; it is the meta description fallback)`);
-    if (d.cover && d.cover.startsWith('/') && !publicPathExists(d.cover)) err(file, `cover: file public${d.cover} does not exist`);
-    if (!d.cover) warn(file, 'no cover photo — a neutral plate is shown');
-    checkBody(file, d, body, 600);
-    walkStrings({ ...d, body }, '', (where, v) => { checkStatusBasis(file, where, v); checkTokens(file, where, v); });
-    for (const s of ['', '_uz', '_en']) if (/\|\s*RailTech\s*$/.test(d[`seoTitle${s}`] || '')) warn(file, `seoTitle${s}: « | RailTech» is added by the site — remove it`);
+    if (!NEWS_TYPES.includes(d.type)) err(file, `type must be one of ${NEWS_TYPES.join(', ')} (articles about partners live in ${PARTNERS_DIR})`);
+    (d.partners || []).forEach((id) => { if (!partnerIds.has(id)) err(file, `partners: unknown partner "${id}" (file names in ${PARTNERS_DIR})`); });
+    (d.services || []).forEach((s) => { if (!serviceSlugs.has(s)) err(file, `services: unknown service "${s}"`); });
+    const slug = path.basename(file, '.md');
+    if (slug.startsWith('partner-') && partnerIds.has(slug.slice('partner-'.length))) err(file, `the route /news/${slug}/ belongs to the partner article — rename the file`);
+    checkArticle(file, d, body);
+  },
+  // One record = tile on the home page + article at /news/partner-<id>/ (src/utils/feed.ts).
+  partners(file, d, body) {
+    if (!['dealer', 'direct'].includes(d.status)) err(file, 'status must be "dealer" or "direct"');
+    if (!COUNTRY_CODES.has(d.country)) err(file, `country "${d.country}": choose a country from the list (country.<code> in ${COUNTRIES_FILE})`);
+    // The tile is shown in every language: a Cyrillic brand or legal name needs UZ and EN now, whatever the news stage.
+    for (const f of ['name', 'legalName']) {
+      if (isEmpty(d[f])) { err(file, `${f}: RU value is required`); continue; }
+      checkText(file, f, d[f], 'ru');
+      for (const l of LANGS) {
+        const v = d[`${f}_${l}`];
+        if (!isEmpty(v)) checkText(file, `${f}_${l}`, v, l);
+        else if (CYR.test(d[f].replace(/«[^»]*»/g, ''))) err(file, `${f}_${l}: missing ${l.toUpperCase()} — the tile is shown on every language`);
+      }
+    }
+    if (!body.trim() || isEmpty(d.title)) { warn(file, 'no article yet (title and text) — the tile is not a link'); return; }
+    checkArticle(file, d, body);
   },
 };
 
@@ -322,11 +352,6 @@ for (const name of fs.readdirSync(CMS).filter((n) => n.endsWith('.json'))) {
   data = toSuffixed(data);
   walkJson(file, data, '');
   if (name !== 'legal.json') walkStrings(data, '', (where, v) => checkPositioning(file, where, v));
-}
-// Partner tiles must point to an existing partner article.
-for (const p of fs.existsSync(PARTNERS_FILE) ? JSON.parse(fs.readFileSync(PARTNERS_FILE, 'utf8')).partners || [] : []) {
-  if (!['dealer', 'direct'].includes(p.status)) err(PARTNERS_FILE, `${p.id}: status must be "dealer" or "direct"`);
-  if (p.article && !fs.existsSync(`src/content/news/${p.article}.md`)) warn(PARTNERS_FILE, `${p.id}: article src/content/news/${p.article}.md does not exist yet — the tile is not clickable`);
 }
 const UI = path.join(CMS, 'ui');
 for (const name of fs.existsSync(UI) ? fs.readdirSync(UI).filter((n) => n.endsWith('.json')) : []) {

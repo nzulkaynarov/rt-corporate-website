@@ -30,7 +30,7 @@
 | Официальный дилер и представитель | rasmiy diler va vakil | official dealer and representative | — | То же условие |
 | Прямые поставки | to'g'ridan-to'g'ri yetkazib berish | direct supply | — | `status: direct` |
 | Новость / статья / проект | yangilik / maqola / loyiha | news / article / project | — | Типы материалов (`type`) |
-| Статья о партнёре | hamkor haqida maqola | partner profile | — | `type: partner`; проверить |
+| Статья о партнёре | hamkor haqida maqola | partner profile | — | коллекция `partners` (тип в ленте `partner`); проверить |
 
 ## Услуги
 

@@ -12,7 +12,7 @@ description: Change RailTech site texts stored in src/data/cms/*.json (company, 
 | Реквизиты, контакты, Telegram, ссылки Кабинета, адрес приёма заявок, цифры компании | `src/data/cms/company.json`, **только по прямому указанию владельца** |
 | Блоки главной: первый экран, мост, возможности, о компании, Кабинет, заявка | `src/data/cms/home.json` |
 | Заголовки и вводные «Услуги», «Новости», «Контакты», 404 | `src/data/cms/pages.json` |
-| Плитки партнёров | `src/data/cms/partners.json` (скил `add-partner`) |
+| Плитки партнёров | `src/content/partners/<id>.md` — плитка и статья в одной записи (скил `add-partner`) |
 | Политика, условия, cookies | `src/data/cms/legal.json` |
 | title и description страниц | `src/data/cms/seo.json → pages.<key>` (title ≤ 60, description 70–160) |
 | Кнопки, подписи, сообщения формы | `src/data/cms/ui/<область>.json` → `{ "key", "ru", "uz", "en" }` |

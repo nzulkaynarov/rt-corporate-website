@@ -16,8 +16,7 @@
 | Тип | Файл | URL | Скил |
 |---|---|---|---|
 | Новость, статья, проект | `src/content/news/<slug>.md`, `type: news / article / project` | `/news/<slug>/` | `write-news` |
-| Статья о партнёре | `src/content/news/<slug>.md`, `type: partner`, `partners: [<id>]` | `/news/<slug>/` | `add-partner` |
-| Плитка партнёра | `src/data/cms/partners.json` | главная | `add-partner` |
+| Партнёр: плитка + статья | `src/content/partners/<id>.md` (одна запись) | главная, `/news/partner-<id>/` | `add-partner` |
 | Услуга (4: `supply`, `engineering`, `representation`, `localization`) | `src/content/services/<slug>.md` | `/services/<slug>/` | `add-service` |
 | Реквизиты, контакты, ссылки Кабинета, цифры | `src/data/cms/company.json` | все страницы | `edit-site-texts` (только по указанию владельца) |
 | Тексты главной | `src/data/cms/home.json` | `/` | `edit-site-texts` |

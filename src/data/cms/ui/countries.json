@@ -1,0 +1,191 @@
+{
+  "title": "Страны (производители-партнёры)",
+  "strings": [
+    {
+      "key": "country.DE",
+      "ru": "Германия",
+      "uz": "Germaniya",
+      "en": "Germany"
+    },
+    {
+      "key": "country.AT",
+      "ru": "Австрия",
+      "uz": "Avstriya",
+      "en": "Austria"
+    },
+    {
+      "key": "country.CH",
+      "ru": "Швейцария",
+      "uz": "Shveytsariya",
+      "en": "Switzerland"
+    },
+    {
+      "key": "country.IT",
+      "ru": "Италия",
+      "uz": "Italiya",
+      "en": "Italy"
+    },
+    {
+      "key": "country.FR",
+      "ru": "Франция",
+      "uz": "Fransiya",
+      "en": "France"
+    },
+    {
+      "key": "country.ES",
+      "ru": "Испания",
+      "uz": "Ispaniya",
+      "en": "Spain"
+    },
+    {
+      "key": "country.NL",
+      "ru": "Нидерланды",
+      "uz": "Niderlandiya",
+      "en": "Netherlands"
+    },
+    {
+      "key": "country.BE",
+      "ru": "Бельгия",
+      "uz": "Belgiya",
+      "en": "Belgium"
+    },
+    {
+      "key": "country.SE",
+      "ru": "Швеция",
+      "uz": "Shvetsiya",
+      "en": "Sweden"
+    },
+    {
+      "key": "country.FI",
+      "ru": "Финляндия",
+      "uz": "Finlandiya",
+      "en": "Finland"
+    },
+    {
+      "key": "country.DK",
+      "ru": "Дания",
+      "uz": "Daniya",
+      "en": "Denmark"
+    },
+    {
+      "key": "country.NO",
+      "ru": "Норвегия",
+      "uz": "Norvegiya",
+      "en": "Norway"
+    },
+    {
+      "key": "country.CZ",
+      "ru": "Чехия",
+      "uz": "Chexiya",
+      "en": "Czechia"
+    },
+    {
+      "key": "country.SK",
+      "ru": "Словакия",
+      "uz": "Slovakiya",
+      "en": "Slovakia"
+    },
+    {
+      "key": "country.PL",
+      "ru": "Польша",
+      "uz": "Polsha",
+      "en": "Poland"
+    },
+    {
+      "key": "country.HU",
+      "ru": "Венгрия",
+      "uz": "Vengriya",
+      "en": "Hungary"
+    },
+    {
+      "key": "country.RO",
+      "ru": "Румыния",
+      "uz": "Ruminiya",
+      "en": "Romania"
+    },
+    {
+      "key": "country.BG",
+      "ru": "Болгария",
+      "uz": "Bolgariya",
+      "en": "Bulgaria"
+    },
+    {
+      "key": "country.GB",
+      "ru": "Великобритания",
+      "uz": "Buyuk Britaniya",
+      "en": "United Kingdom"
+    },
+    {
+      "key": "country.US",
+      "ru": "Соединенные Штаты",
+      "uz": "Amerika Qo'shma Shtatlari",
+      "en": "United States"
+    },
+    {
+      "key": "country.CA",
+      "ru": "Канада",
+      "uz": "Kanada",
+      "en": "Canada"
+    },
+    {
+      "key": "country.CN",
+      "ru": "Китай",
+      "uz": "Xitoy",
+      "en": "China"
+    },
+    {
+      "key": "country.JP",
+      "ru": "Япония",
+      "uz": "Yaponiya",
+      "en": "Japan"
+    },
+    {
+      "key": "country.KR",
+      "ru": "Республика Корея",
+      "uz": "Janubiy Koreya",
+      "en": "South Korea"
+    },
+    {
+      "key": "country.IN",
+      "ru": "Индия",
+      "uz": "Hindiston",
+      "en": "India"
+    },
+    {
+      "key": "country.TR",
+      "ru": "Турция",
+      "uz": "Turkiya",
+      "en": "Türkiye"
+    },
+    {
+      "key": "country.AE",
+      "ru": "ОАЭ",
+      "uz": "Birlashgan Arab Amirliklari",
+      "en": "United Arab Emirates"
+    },
+    {
+      "key": "country.RU",
+      "ru": "Россия",
+      "uz": "Rossiya",
+      "en": "Russia"
+    },
+    {
+      "key": "country.BY",
+      "ru": "Беларусь",
+      "uz": "Belarus",
+      "en": "Belarus"
+    },
+    {
+      "key": "country.KZ",
+      "ru": "Казахстан",
+      "uz": "Qozog'iston",
+      "en": "Kazakhstan"
+    },
+    {
+      "key": "country.UZ",
+      "ru": "Узбекистан",
+      "uz": "O'zbekiston",
+      "en": "Uzbekistan"
+    }
+  ]
+}

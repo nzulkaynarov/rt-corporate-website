@@ -132,6 +132,30 @@
       "ru": "Редакция от {date}",
       "uz": "{date}dagi tahrir",
       "en": "Version of {date}"
+    },
+    {
+      "key": "partner.legalName",
+      "ru": "Юридическое лицо",
+      "uz": "Yuridik shaxs",
+      "en": "Legal entity"
+    },
+    {
+      "key": "partner.group",
+      "ru": "Группа компаний",
+      "uz": "Kompaniyalar guruhi",
+      "en": "Group"
+    },
+    {
+      "key": "partner.groupOf",
+      "ru": "Входит в {group}",
+      "uz": "{group} tarkibiga kiradi",
+      "en": "Part of {group}"
+    },
+    {
+      "key": "partner.brands",
+      "ru": "Бренды",
+      "uz": "Brendlar",
+      "en": "Brands"
     }
   ]
 }

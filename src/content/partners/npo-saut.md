@@ -1,12 +1,22 @@
 ---
 lang:
   - ru
-type: partner
+  - uz
+  - en
+name: НПО САУТ
+legalName: ООО «НПО САУТ»
+country: RU
+status: dealer
+order: 1
 date: '2026-11-04'
 title: НПО САУТ — системы безопасности движения поездов
 summary: Екатеринбургский разработчик бортовых систем безопасности и управления для локомотивов и электропоездов. RailTech — официальный дилер НПО САУТ в Узбекистане.
-partners:
-  - npo-saut
+uz:
+  name: НПО САУТ
+  legalName: «НПО САУТ» MChJ
+en:
+  name: NPO SAUT
+  legalName: NPO SAUT LLC
 ---
 
 ### О компании
