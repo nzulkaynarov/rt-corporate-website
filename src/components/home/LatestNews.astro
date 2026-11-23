@@ -1,12 +1,13 @@
 ---
 /** Three latest materials (featured first). Phones: a horizontal swipe row. */
 import { getCollection } from 'astro:content';
-import { localeHref, tField } from '../../i18n';
+import { localeHref, tField, localize } from '../../i18n';
 import { t } from '../../i18n/ui';
-import home from '../../data/cms/home.json';
+import homeData from '../../data/cms/home.json';
 import NewsCard from '../ui/NewsCard.astro';
 
 const lang = Astro.locals.lang;
+const home = localize(homeData, lang);
 const n = home.news as Record<string, string>;
 const items = (await getCollection('news'))
   .sort((a, b) => b.data.date.localeCompare(a.data.date))

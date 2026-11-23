@@ -1,12 +1,13 @@
 ---
 /** «Возможности»: the four services grouped by audience (data: collection `services`). */
 import { getCollection } from 'astro:content';
-import { localeHref, tField } from '../../i18n';
+import { localeHref, tField, localize } from '../../i18n';
 import { t } from '../../i18n/ui';
-import home from '../../data/cms/home.json';
+import homeData from '../../data/cms/home.json';
 import SectionHead from '../ui/SectionHead.astro';
 
 const lang = Astro.locals.lang;
+const home = localize(homeData, lang);
 const services = (await getCollection('services')).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 const groups = (['customers', 'partners'] as const).map((audience) => ({
   audience,

@@ -5,8 +5,8 @@ import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import Lightbox from '../../../components/ui/Lightbox.astro';
 import NewsCard from '../../../components/ui/NewsCard.astro';
 import CtaBand from '../../../components/ui/CtaBand.astro';
-import partnersData from '../../../data/cms/partners.json';
-import { expandLangs, localeHref, tField } from '../../../i18n';
+import partnersFile from '../../../data/cms/partners.json';
+import { expandLangs, localeHref, localize, tField } from '../../../i18n';
 import { t } from '../../../i18n/ui';
 import { formatDate } from '../../../utils/format';
 import { renderBody } from '../../../utils/markdown';
@@ -25,9 +25,11 @@ const lang = Astro.locals.lang;
 // Content language: RU while news is not translated (src/data/content-stage.json → ruOnlySections); UI stays in `lang`.
 const cl = contentLang(lang, 'news');
 const { entry } = Astro.props;
-const d = entry.data as Record<string, any>;
+// RU at the root, translations in the uz/en blocks (src/i18n/blocks.mjs): one localized view of the entry.
+const d = localize(entry.data, cl) as Record<string, any>;
+const partnersData = localize(partnersFile, lang);
 const title = tField(d, 'title', cl) as string;
-const localizedBody = cl === 'uz' ? d.body_uz : cl === 'en' ? d.body_en : undefined;
+const localizedBody = cl === 'ru' ? undefined : (entry.data as Record<string, any>)[cl]?.body;
 const bodyHtml = await renderBody(localizedBody || entry.body, lang);
 const seo = entrySeo(d, cl, entry.body);
 const gallery: { image: string; alt: string }[] = (d.gallery || []).map((g: Record<string, string>) => ({ image: g.image, alt: tField(g, 'alt', cl) || '' }));

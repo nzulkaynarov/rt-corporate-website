@@ -4,19 +4,18 @@
  * shown in all three languages (each block has its own lang). Texts: pages.json → notFound.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import pages from '../data/cms/pages.json';
-import { LANGS, LANG_META, localeHref, tField } from '../i18n';
+import pagesData from '../data/cms/pages.json';
+import { LANGS, LANG_META, localeHref, localize, tField } from '../i18n';
 import { t } from '../i18n/ui';
 import { pageSeo } from '../utils/seo';
 
 const seo = pageSeo('notFound', 'ru');
 const homeLinks = { ru: localeHref('/', 'ru'), uz: localeHref('/', 'uz'), en: localeHref('/', 'en') };
-const nf = pages.notFound as Record<string, string>;
 const blocks = LANGS.map((code) => ({
   code,
   hreflang: LANG_META[code].hreflang,
-  title: tField(nf, 'title', code),
-  text: tField(nf, 'text', code),
+  title: tField(localize(pagesData, code).notFound, 'title', code),
+  text: tField(localize(pagesData, code).notFound, 'text', code),
   home: localeHref('/', code),
   homeLabel: t(code, 'nav.home'),
   services: localeHref('/services/', code),

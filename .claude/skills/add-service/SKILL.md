@@ -20,7 +20,7 @@ description: Update one of the four RailTech service pages (supply, engineering 
 4. **Факты.** Сроки, условия, документы пишутся только подтверждённые (бриф, `company.json`, опубликованные факты).
 5. **Ссылки.** 1–3 ссылки маршрутами на проекты или статьи в `/news/…`, которые подтверждают услугу.
 6. **Три языка.** Услуги переведены (`src/data/content-stage.json → ruOnly: false`). Каждое новое или изменённое поле
-   правь в том же изменении на RU, UZ (латиница) и EN: `<поле>_uz`/`<поле>_en`, тело `body_uz`/`body_en`, у списков
+   правь в том же изменении на RU, UZ (латиница) и EN: то же поле в блоках `uz:` / `en:`, тело — `body` в блоке, у списков
    (`highlights`, `steps`, `faq` и др.) у каждого элемента, по GLOSSARY.md и STYLE_GUIDE §6. Пропуск — ошибка `check-content`.
 7. **Проверка.** `node scripts/check-content.mjs --files src/content/services/<slug>.md`, затем `make check`.
    Дальше `content-qa` → `content-pr`.

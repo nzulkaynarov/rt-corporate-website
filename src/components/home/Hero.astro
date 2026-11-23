@@ -5,13 +5,14 @@
  * Planets drift very slowly and speed up while the page is scrolled (script below); the round button stops them
  * (WCAG 2.2.2), «reduce motion» in the system turns them off, and they pause while the first screen is out of view.
  */
-import { localeHref, tField } from '../../i18n';
+import { localeHref, tField, localize } from '../../i18n';
 import { t } from '../../i18n/ui';
-import home from '../../data/cms/home.json';
+import homeData from '../../data/cms/home.json';
 import { withBase } from '../../utils/url';
 import { company } from '../../utils/company';
 
 const lang = Astro.locals.lang;
+const home = localize(homeData, lang);
 const h = home.hero as Record<string, any>;
 ---
 

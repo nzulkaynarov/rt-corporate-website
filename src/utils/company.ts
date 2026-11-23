@@ -1,7 +1,12 @@
 /** Company data (src/data/cms/company.json) and links derived from it. */
 import company from '../data/cms/company.json';
+import { localize } from '../i18n/blocks.mjs';
 
+/** RU values at the root; top-level fields are localized with tField(company, field, lang). */
 export { company };
+
+/** Company data in one language (nested values such as bank.name and metrics[].label included). */
+export const companyIn = (lang: string) => localize(company, lang);
 
 /** Telegram bot link with the «came from the website» start parameter (CRM source = web). */
 export function telegramUrl(bot: string | undefined = company.telegramBot): string {

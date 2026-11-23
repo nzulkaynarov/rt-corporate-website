@@ -2,9 +2,11 @@
 # Шаблон услуги. Услуг ровно четыре: supply, engineering (customers), representation, localization (partners).
 # Новая услуга — только после правки docs/ARCHITECTURE.md владельцем (тест tests/data.test.ts проверяет список).
 # Файл: src/content/services/<slug>.md. Схема: src/content/config.ts → services.
-# Три языка: у каждого текстового поля в том же изменении пишутся <поле>_uz (латиница) и <поле>_en, тело — body_uz / body_en (GLOSSARY.md).
+# Три языка: русские поля в корне, переводы — те же поля в блоках uz: (латиница) и en: в том же изменении (GLOSSARY.md,
+# формат — docs/content/README.md §2). Тело на UZ/EN — поле body в блоке.
 # Тексты без привязки к отрасли (правило positioning в scripts/check-content.mjs).
 
+lang: [ru, uz, en]
 audience: "customers"     # customers — заказчикам, partners — партнёрам
 order: 1                  # место в списке своей аудитории
 title: "<Название услуги, 1–3 слова>"
@@ -25,6 +27,19 @@ faq:                      # 3–7 вопросов клиента
     a: "<Ответ: коротко, с фактами; цен нет — цена в КП.>"
 # seoTitle: "<≤ 60 знаков, если автовариант не подходит>"
 # seoDescription: "<70–160 знаков>"
+uz:
+  title: "<Nomi>"
+  summary: "<…>"
+  lead: "<…>"
+  highlights:             # те же элементы, что выше, в том же порядке
+    - label: "<…>"
+      value: "<…>"
+  steps: [ … ]            # и так для steps, benefits, requirements, faq
+  body: |-
+    <Тело услуги на узбекском, если есть русское тело>
+en:
+  title: "<Name>"
+  # … те же поля, что в uz:
 ---
 
 <Необязательное тело услуги в Markdown (разделы с ###). Можно оставить пустым — страница строится из полей выше.>

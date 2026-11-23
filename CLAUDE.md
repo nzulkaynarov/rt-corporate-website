@@ -62,8 +62,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
    Это проверяют `check-content` и `check-build`.
 2. **Три языка (кроме новостей).** RU одобрен, в `src/data/content-stage.json` стоят `ruOnly: false` и
    `ruOnlySections: ["news"]`. Новый или изменённый текст вне новостей пишется сразу на RU, UZ (латиница) и EN
-   (`_uz`/`_en`, `body_uz`/`body_en`, `uz`/`en` в ui) по GLOSSARY.md; пропуски `check-content` считает ошибками.
-   Новости (`src/content/news`) пока только по-русски: их `_uz`/`_en` не заполняй. `content-stage.json` меняет владелец.
+   (блоки `uz:` / `en:` рядом с русскими полями, `uz`/`en` в ui; формат — docs/content/README.md §2) по GLOSSARY.md;
+   пропуски `check-content` считает ошибками.
+   Новости (`src/content/news`) пока только по-русски: их блоки `uz:` / `en:` не заполняй. `content-stage.json` меняет владелец.
 3. **Факты не выдумываются**: цены, клиенты, сертификаты, цифры. `dealer` ставится только по документу
    производителя. Основание статуса на сайте не публикуется.
 4. **ARCHITECTURE.md первым.** Новое поле, страница или компонент сначала описываются там, в том же PR.

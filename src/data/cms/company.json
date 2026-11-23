@@ -1,33 +1,26 @@
 {
+  "lang": [
+    "ru",
+    "uz",
+    "en"
+  ],
   "brandName": "RailTech",
   "logo": "/brand/rt-mark.svg",
   "logoPlaceholder": "/brand/rt-mark-outline.svg",
   "siteDomain": "railtech.uz",
   "companyName": "ООО «RailTech»",
-  "companyName_uz": "«RailTech» MChJ",
-  "companyName_en": "RailTech LLC",
   "fullName": "Общество с ограниченной ответственностью «RailTech»",
-  "fullName_uz": "«RailTech» mas'uliyati cheklangan jamiyati",
-  "fullName_en": "RailTech Limited Liability Company",
   "foundedYear": "2021",
   "inn": "308346339",
   "city": "Ташкент",
-  "city_uz": "Toshkent",
-  "city_en": "Tashkent",
   "countryCode": "UZ",
   "legalAddress": "г. Ташкент, Ц-1, 47/33",
-  "legalAddress_uz": "Toshkent sh., Ts-1, 47/33",
-  "legalAddress_en": "Ts-1, 47/33, Tashkent",
   "officeAddress": "г. Ташкент, ул. Абдуллы Каххара, 46",
-  "officeAddress_uz": "Toshkent sh., Abdulla Qahhor ko'chasi, 46",
-  "officeAddress_en": "46 Abdulla Qahhor Street, Tashkent",
   "phone": "+998 90 118-90-00",
   "email": "info@railtech.uz",
   "telegramBot": "railtech_test_bot",
   "bank": {
     "name": "АИКБ «IPAK YO'LI BANK», Мирзо-Улугбекский филиал",
-    "name_uz": "«IPAK YO'LI BANK», Mirzo Ulug'bek filiali",
-    "name_en": "IPAK YO'LI BANK, Mirzo Ulugbek branch",
     "mfo": "00421",
     "account": "20208000205374302001"
   },
@@ -40,27 +33,79 @@
   "metrics": [
     {
       "value": "5+",
-      "label": "лет работаем на рынке Узбекистана",
-      "label_uz": "yil O'zbekiston bozorida ishlab kelmoqdamiz",
-      "label_en": "years in the Uzbek market"
+      "label": "лет работаем на рынке Узбекистана"
     },
     {
       "value": "30+",
-      "label": "компаний, с которыми уже поработали",
-      "label_uz": "kompaniya bilan ishlaganmiz",
-      "label_en": "companies we have worked with"
+      "label": "компаний, с которыми уже поработали"
     },
     {
       "value": "10+",
-      "label": "производителей, с которыми есть опыт работы",
-      "label_uz": "ishlab chiqaruvchi bilan ishlash tajribamiz bor",
-      "label_en": "manufacturers we have experience working with"
+      "label": "производителей, с которыми есть опыт работы"
     },
     {
       "value": "250+",
-      "label": "позиций оборудования в опыте поставок",
-      "label_uz": "nomdagi uskunani yetkazib berganmiz",
-      "label_en": "equipment items in our supply track record"
+      "label": "позиций оборудования в опыте поставок"
     }
-  ]
+  ],
+  "uz": {
+    "companyName": "«RailTech» MChJ",
+    "fullName": "«RailTech» mas'uliyati cheklangan jamiyati",
+    "city": "Toshkent",
+    "legalAddress": "Toshkent sh., Ts-1, 47/33",
+    "officeAddress": "Toshkent sh., Abdulla Qahhor ko'chasi, 46",
+    "bank": {
+      "name": "«IPAK YO'LI BANK», Mirzo Ulug'bek filiali",
+      "mfo": "00421",
+      "account": "20208000205374302001"
+    },
+    "metrics": [
+      {
+        "value": "5+",
+        "label": "yil O'zbekiston bozorida ishlab kelmoqdamiz"
+      },
+      {
+        "value": "30+",
+        "label": "kompaniya bilan ishlaganmiz"
+      },
+      {
+        "value": "10+",
+        "label": "ishlab chiqaruvchi bilan ishlash tajribamiz bor"
+      },
+      {
+        "value": "250+",
+        "label": "nomdagi uskunani yetkazib berganmiz"
+      }
+    ]
+  },
+  "en": {
+    "companyName": "RailTech LLC",
+    "fullName": "RailTech Limited Liability Company",
+    "city": "Tashkent",
+    "legalAddress": "Ts-1, 47/33, Tashkent",
+    "officeAddress": "46 Abdulla Qahhor Street, Tashkent",
+    "bank": {
+      "name": "IPAK YO'LI BANK, Mirzo Ulugbek branch",
+      "mfo": "00421",
+      "account": "20208000205374302001"
+    },
+    "metrics": [
+      {
+        "value": "5+",
+        "label": "years in the Uzbek market"
+      },
+      {
+        "value": "30+",
+        "label": "companies we have worked with"
+      },
+      {
+        "value": "10+",
+        "label": "manufacturers we have experience working with"
+      },
+      {
+        "value": "250+",
+        "label": "equipment items in our supply track record"
+      }
+    ]
+  }
 }

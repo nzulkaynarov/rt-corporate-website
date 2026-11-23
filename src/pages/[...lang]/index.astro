@@ -9,12 +9,13 @@ import LatestNews from '../../components/home/LatestNews.astro';
 import Invite from '../../components/home/Invite.astro';
 import SectionHead from '../../components/ui/SectionHead.astro';
 import PartnerTiles from '../../components/ui/PartnerTiles.astro';
-import home from '../../data/cms/home.json';
-import { langStaticPaths, tField } from '../../i18n';
+import homeData from '../../data/cms/home.json';
+import { langStaticPaths, tField, localize } from '../../i18n';
 import { pageSeo } from '../../utils/seo';
 
 export const getStaticPaths = langStaticPaths;
 const lang = Astro.locals.lang;
+const home = localize(homeData, lang);
 const seo = pageSeo('home', lang);
 const p = home.partners as Record<string, string>;
 ---

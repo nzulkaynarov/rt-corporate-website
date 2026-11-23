@@ -14,10 +14,14 @@
  * placeholders (TODO, lorem…), bad slug/SKU, status ↔ statusKey mismatch, invalid dates.
  * WARNINGS: SEO length limits, short texts, placeholder document links, future dates,
  * untranslated strings in CMS JSON.
+ *
+ * Translations live in `uz` / `en` locale blocks (src/i18n/blocks.mjs). The rules below read a flat view where
+ * `uz.steps[0].title` is `steps[0].title_uz`; messages name the block path again (`uz.steps[0].title`).
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import yaml from 'js-yaml';
+import { toSuffixed } from '../src/i18n/blocks.mjs';
 
 const args = process.argv.slice(2);
 const STRICT = args.includes('--strict');
@@ -151,6 +155,15 @@ function checkBody(file, d, body, minRu) {
   }
 }
 
+/** `lang` (maintained by the CMS) must list every locale block, otherwise the CMS hides that translation. */
+function checkLocales(file, data) {
+  const enabled = Array.isArray(data.lang) ? data.lang : ['ru'];
+  for (const l of LANGS) {
+    if (data[l] && !enabled.includes(l)) err(file, `${l}: translation block exists but "lang" does not list "${l}" — add it (the CMS shows the locale as disabled)`);
+    if (data[l] !== undefined && (typeof data[l] !== 'object' || Array.isArray(data[l]))) err(file, `${l}: must be an object with translated fields`);
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Collections
 // ---------------------------------------------------------------------------
@@ -160,7 +173,10 @@ function readMd(file) {
   const raw = fs.readFileSync(file, 'utf8');
   const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
   if (!m) throw new Error('no front matter');
-  return { data: yaml.load(m[1]) || {}, body: m[2] || '' };
+  // CORE schema: an unquoted date written by the CMS (date: 2026-04-20) stays the string the rules expect.
+  const data = yaml.load(m[1], { schema: yaml.CORE_SCHEMA }) || {};
+  checkLocales(file, data);
+  return { data: toSuffixed(data), body: m[2] || '' };
 }
 
 // Positioning guard (docs/ARCHITECTURE.md §1): general texts must not narrow RailTech to one industry.
@@ -263,6 +279,8 @@ for (const name of fs.readdirSync(CMS).filter((n) => n.endsWith('.json'))) {
   const file = path.join(CMS, name);
   let data;
   try { data = JSON.parse(fs.readFileSync(file, 'utf8')); } catch (e) { err(file, e.message); continue; }
+  checkLocales(file, data);
+  data = toSuffixed(data);
   walkJson(file, data, '');
   if (name !== 'legal.json') walkStrings(data, '', (where, v) => checkPositioning(file, where, v));
 }
@@ -290,8 +308,10 @@ for (const name of fs.existsSync(UI) ? fs.readdirSync(UI).filter((n) => n.endsWi
 
 // ---------------------------------------------------------------------------
 const pick = (list) => (ONLY ? list.filter((m) => ONLY.some((f) => m.startsWith(`${f}:`))) : list);
-const outErrors = pick(errors);
-const outWarnings = pick(warnings);
+/** Flat names back to locale-block paths: `steps[0].title_uz` → `uz.steps[0].title`, `body_en` → `en.body`. */
+const blockPath = (msg) => msg.replace(/([A-Za-z][\w.[\]]*?)_(uz|en)(?=[:\s]|$)/g, '$2.$1');
+const outErrors = pick(errors).map(blockPath);
+const outWarnings = pick(warnings).map(blockPath);
 const failed = outErrors.length > 0 || (STRICT && outWarnings.length > 0);
 
 const pendingFiles = [...pendingTranslation.keys()].filter((f) => !ONLY || ONLY.includes(f));

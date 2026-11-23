@@ -8,8 +8,8 @@ Service, FAQPage, Article/NewsArticle) из полей записи. Задач�
 - Этап задаёт `src/data/content-stage.json`. Сейчас `"ruOnly": false`: русская версия одобрена, страницы `/uz/…` и `/en/…`
   индексируются, есть в sitemap, hreflang указывает на `ru`, `uz`, `en` и `x-default`, переключатель языка виден.
 - SEO-поля вне новостей (`seo.json`, `seoTitle`/`seoDescription` услуг) заполняем сразу на трёх языках:
-  `seoTitle_uz/_en`, `seoDescription_uz/_en` пишутся в том же изменении, что и русские.
-- Разделы из `ruOnlySections` (сейчас `news`) пока только на русском: их `seoTitle_uz/_en` и `seoDescription_uz/_en`
+  `seoTitle` и `seoDescription` в блоках `uz:` / `en:` пишутся в том же изменении, что и русские.
+- Разделы из `ruOnlySections` (сейчас `news`) пока только на русском: их `seoTitle` / `seoDescription` в блоках `uz:` / `en:`
   не заполняем. Страницы новостей на `/uz/` и `/en/` показывают русский текст, получают `noindex`, их нет в sitemap,
   русская страница объявляет только hreflang `ru` и `x-default`. Когда владелец уберёт `news` из списка, они откроются
   для индексации; к этому моменту переводы уже должны быть готовы.
