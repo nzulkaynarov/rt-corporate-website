@@ -45,10 +45,7 @@ uz:
 
     ### Manbalar
 
-    - https://www.adz.de/unternehmen.html
-    - https://www.adz.de/branchen.html
-    - https://www.adz.de/druck.html
-    - https://www.adz.de/impressum.html
+    - https://www.adz.de
 en:
   name: ADZ NAGANO
   legalName: ADZ NAGANO GmbH
@@ -82,10 +79,7 @@ en:
 
     ### Sources
 
-    - https://www.adz.de/unternehmen.html
-    - https://www.adz.de/branchen.html
-    - https://www.adz.de/druck.html
-    - https://www.adz.de/impressum.html
+    - https://www.adz.de
 ---
 
 ### О компании
@@ -115,7 +109,4 @@ RailTech организует прямые поставки от ADZ NAGANO GmbH
 
 ### Источники
 
-- https://www.adz.de/unternehmen.html
-- https://www.adz.de/branchen.html
-- https://www.adz.de/druck.html
-- https://www.adz.de/impressum.html
+- https://www.adz.de

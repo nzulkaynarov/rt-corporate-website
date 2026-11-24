@@ -48,24 +48,6 @@ uz:
     ### Manbalar
 
     - https://transconverter.ru
-    - https://transconverter.ru/about/advantages
-    - https://transconverter.ru/about/quality
-    - https://transconverter.ru/about/cert
-    - https://transconverter.ru/about/geo
-    - https://transconverter.ru/psn235u2
-    - https://transconverter.ru/psn100y2
-    - https://transconverter.ru/psn110
-    - https://transconverter.ru/evb51y1
-    - https://transconverter.ru/ipbs26
-    - https://transconverter.ru/zut105
-    - https://transconverter.ru/tgf56
-    - https://transconverter.ru/pch36y1
-    - https://transconverter.ru/ps70yhl
-    - https://transconverter.ru/testarea
-    - https://transconverter.ru/archives/1525
-    - https://transconverter.ru/archives/1527
-    - https://transconverter.ru/archives/1530
-    - https://transconverter.ru/contacts
 en:
   name: Transconverter
   legalName: Transconverter LLC
@@ -102,24 +84,6 @@ en:
     ### Sources
 
     - https://transconverter.ru
-    - https://transconverter.ru/about/advantages
-    - https://transconverter.ru/about/quality
-    - https://transconverter.ru/about/cert
-    - https://transconverter.ru/about/geo
-    - https://transconverter.ru/psn235u2
-    - https://transconverter.ru/psn100y2
-    - https://transconverter.ru/psn110
-    - https://transconverter.ru/evb51y1
-    - https://transconverter.ru/ipbs26
-    - https://transconverter.ru/zut105
-    - https://transconverter.ru/tgf56
-    - https://transconverter.ru/pch36y1
-    - https://transconverter.ru/ps70yhl
-    - https://transconverter.ru/testarea
-    - https://transconverter.ru/archives/1525
-    - https://transconverter.ru/archives/1527
-    - https://transconverter.ru/archives/1530
-    - https://transconverter.ru/contacts
 ---
 
 ### О компании
@@ -152,21 +116,3 @@ RailTech организует прямые поставки от ООО «Тра
 ### Источники
 
 - https://transconverter.ru
-- https://transconverter.ru/about/advantages
-- https://transconverter.ru/about/quality
-- https://transconverter.ru/about/cert
-- https://transconverter.ru/about/geo
-- https://transconverter.ru/psn235u2
-- https://transconverter.ru/psn100y2
-- https://transconverter.ru/psn110
-- https://transconverter.ru/evb51y1
-- https://transconverter.ru/ipbs26
-- https://transconverter.ru/zut105
-- https://transconverter.ru/tgf56
-- https://transconverter.ru/pch36y1
-- https://transconverter.ru/ps70yhl
-- https://transconverter.ru/testarea
-- https://transconverter.ru/archives/1525
-- https://transconverter.ru/archives/1527
-- https://transconverter.ru/archives/1530
-- https://transconverter.ru/contacts

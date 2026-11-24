@@ -46,11 +46,7 @@ uz:
 
     ### Manbalar
 
-    - https://saut.ru/about/
-    - https://saut.ru/catalog/
-    - https://saut.ru/activities/
-    - https://saut.ru/partners/
-    - https://saut.ru/contacts/
+    - https://saut.ru
 en:
   name: NPO SAUT
   legalName: NPO SAUT LLC
@@ -85,11 +81,7 @@ en:
 
     ### Sources
 
-    - https://saut.ru/about/
-    - https://saut.ru/catalog/
-    - https://saut.ru/activities/
-    - https://saut.ru/partners/
-    - https://saut.ru/contacts/
+    - https://saut.ru
 ---
 
 ### О компании
@@ -120,8 +112,4 @@ en:
 
 ### Источники
 
-- https://saut.ru/about/
-- https://saut.ru/catalog/
-- https://saut.ru/activities/
-- https://saut.ru/partners/
-- https://saut.ru/contacts/
+- https://saut.ru

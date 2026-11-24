@@ -45,11 +45,6 @@ uz:
     ### Manbalar
 
     - https://ratep-inn.ru
-    - https://ratep-inn.ru/company/history
-    - https://ratep-inn.ru/products/electrical-equipment
-    - https://ratep-inn.ru/company/production
-    - https://ratep-inn.ru/docs/quality-management
-    - https://ratep-inn.ru/contacts
 en:
   name: RATEP-INNOVATSIYA
   legalName: RATEP-INNOVATSIYA LLC
@@ -83,11 +78,6 @@ en:
     ### Sources
 
     - https://ratep-inn.ru
-    - https://ratep-inn.ru/company/history
-    - https://ratep-inn.ru/products/electrical-equipment
-    - https://ratep-inn.ru/company/production
-    - https://ratep-inn.ru/docs/quality-management
-    - https://ratep-inn.ru/contacts
 ---
 
 ### О компании
@@ -117,8 +107,3 @@ RailTech организует прямые поставки от ООО «РАТ
 ### Источники
 
 - https://ratep-inn.ru
-- https://ratep-inn.ru/company/history
-- https://ratep-inn.ru/products/electrical-equipment
-- https://ratep-inn.ru/company/production
-- https://ratep-inn.ru/docs/quality-management
-- https://ratep-inn.ru/contacts

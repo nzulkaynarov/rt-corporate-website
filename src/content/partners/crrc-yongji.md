@@ -50,27 +50,6 @@ uz:
     ### Manbalar
 
     - https://www.crrcgc.cc/yjdjen/167_10995/167_11003/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10995/167_11080/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10995/167_11081/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10995/167_17478/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10996/167_11004/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10998/167_11225/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10998/167_11226/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10998/167_11227/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10998/167_11228/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10998/167_11231/index.html
-    - https://www.crrcgc.cc/yjdj/147_9198/147_9207/index.html
-    - https://www.crrcgc.cc/yjdj/147_9198/147_12053/index.html
-    - https://www.crrcgc.cc/yjdj/147_9200/147_9223/147_11206/index.html
-    - https://www.crrcgc.cc/yjdj/147_9200/147_9223/147_12251/index.html
-    - https://www.crrcgc.cc/yjdj/147_9200/147_12254/index.html
-    - https://www.crrcgc.cc/yjdj/147_9200/147_12253/147_11210/index.html
-    - https://www.crrcgc.cc/yjdj/147_9200/147_12253/147_12257/index.html
-    - https://www.crrcgc.cc/yjdj/147_9200/147_11211/index.html
-    - https://www.crrcgc.cc/yjdj/2016-05/04/article_7579334E749C4A21972CC4EE892106D6.html
-    - https://www.crrcgc.cc/yjdj/2025-05/09/article_2025050911451916156.html
-    - https://www.crrcgc.cc/yjdj/2016-04/29/article_2A4C361E047D46CBA590B201F76EF382.html
-    - https://www.crrcgc.cc/en/73_5130/73_5141/index.html
 en:
   name: CRRC Yongji Electric
   legalName: CRRC Yongji Electric Co., Ltd.
@@ -108,27 +87,6 @@ en:
     ### Sources
 
     - https://www.crrcgc.cc/yjdjen/167_10995/167_11003/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10995/167_11080/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10995/167_11081/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10995/167_17478/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10996/167_11004/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10998/167_11225/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10998/167_11226/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10998/167_11227/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10998/167_11228/index.html
-    - https://www.crrcgc.cc/yjdjen/167_10998/167_11231/index.html
-    - https://www.crrcgc.cc/yjdj/147_9198/147_9207/index.html
-    - https://www.crrcgc.cc/yjdj/147_9198/147_12053/index.html
-    - https://www.crrcgc.cc/yjdj/147_9200/147_9223/147_11206/index.html
-    - https://www.crrcgc.cc/yjdj/147_9200/147_9223/147_12251/index.html
-    - https://www.crrcgc.cc/yjdj/147_9200/147_12254/index.html
-    - https://www.crrcgc.cc/yjdj/147_9200/147_12253/147_11210/index.html
-    - https://www.crrcgc.cc/yjdj/147_9200/147_12253/147_12257/index.html
-    - https://www.crrcgc.cc/yjdj/147_9200/147_11211/index.html
-    - https://www.crrcgc.cc/yjdj/2016-05/04/article_7579334E749C4A21972CC4EE892106D6.html
-    - https://www.crrcgc.cc/yjdj/2025-05/09/article_2025050911451916156.html
-    - https://www.crrcgc.cc/yjdj/2016-04/29/article_2A4C361E047D46CBA590B201F76EF382.html
-    - https://www.crrcgc.cc/en/73_5130/73_5141/index.html
 ---
 
 ### О компании
@@ -162,24 +120,3 @@ RailTech организует прямые поставки от CRRC Yongji Ele
 ### Источники
 
 - https://www.crrcgc.cc/yjdjen/167_10995/167_11003/index.html
-- https://www.crrcgc.cc/yjdjen/167_10995/167_11080/index.html
-- https://www.crrcgc.cc/yjdjen/167_10995/167_11081/index.html
-- https://www.crrcgc.cc/yjdjen/167_10995/167_17478/index.html
-- https://www.crrcgc.cc/yjdjen/167_10996/167_11004/index.html
-- https://www.crrcgc.cc/yjdjen/167_10998/167_11225/index.html
-- https://www.crrcgc.cc/yjdjen/167_10998/167_11226/index.html
-- https://www.crrcgc.cc/yjdjen/167_10998/167_11227/index.html
-- https://www.crrcgc.cc/yjdjen/167_10998/167_11228/index.html
-- https://www.crrcgc.cc/yjdjen/167_10998/167_11231/index.html
-- https://www.crrcgc.cc/yjdj/147_9198/147_9207/index.html
-- https://www.crrcgc.cc/yjdj/147_9198/147_12053/index.html
-- https://www.crrcgc.cc/yjdj/147_9200/147_9223/147_11206/index.html
-- https://www.crrcgc.cc/yjdj/147_9200/147_9223/147_12251/index.html
-- https://www.crrcgc.cc/yjdj/147_9200/147_12254/index.html
-- https://www.crrcgc.cc/yjdj/147_9200/147_12253/147_11210/index.html
-- https://www.crrcgc.cc/yjdj/147_9200/147_12253/147_12257/index.html
-- https://www.crrcgc.cc/yjdj/147_9200/147_11211/index.html
-- https://www.crrcgc.cc/yjdj/2016-05/04/article_7579334E749C4A21972CC4EE892106D6.html
-- https://www.crrcgc.cc/yjdj/2025-05/09/article_2025050911451916156.html
-- https://www.crrcgc.cc/yjdj/2016-04/29/article_2A4C361E047D46CBA590B201F76EF382.html
-- https://www.crrcgc.cc/en/73_5130/73_5141/index.html

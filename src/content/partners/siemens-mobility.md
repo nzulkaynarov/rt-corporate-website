@@ -45,11 +45,7 @@ uz:
 
     ### Manbalar
 
-    - https://www.mobility.siemens.com/global/en.html
-    - https://www.mobility.siemens.com/global/en/company/about-us.html
     - https://www.mobility.siemens.com/de/en.html
-    - https://www.mobility.siemens.com/global/en/portfolio/rolling-stock/locomotives.html
-    - https://press.siemens.com/global/en/article/press-materials-siemens-mobility
 en:
   name: Siemens Mobility
   legalName: Siemens Mobility GmbH
@@ -82,11 +78,7 @@ en:
 
     ### Sources
 
-    - https://www.mobility.siemens.com/global/en.html
-    - https://www.mobility.siemens.com/global/en/company/about-us.html
     - https://www.mobility.siemens.com/de/en.html
-    - https://www.mobility.siemens.com/global/en/portfolio/rolling-stock/locomotives.html
-    - https://press.siemens.com/global/en/article/press-materials-siemens-mobility
 ---
 
 ### О компании
@@ -115,9 +107,5 @@ RailTech организует прямые поставки от Siemens Mobilit
 
 ### Источники
 
-- https://www.mobility.siemens.com/global/en.html
-- https://www.mobility.siemens.com/global/en/company/about-us.html
 - https://www.mobility.siemens.com/de/en.html
-- https://www.mobility.siemens.com/global/en/portfolio/rolling-stock/locomotives.html
-- https://press.siemens.com/global/en/article/press-materials-siemens-mobility
 

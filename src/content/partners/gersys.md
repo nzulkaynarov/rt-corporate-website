@@ -44,11 +44,6 @@ uz:
     ### Manbalar
 
     - https://www.gersys.de
-    - https://www.gersys.de/gersys/historie
-    - https://www.gersys.de/gersys/zertifikate
-    - https://www.gersys.de/produkte/multifunktionsdisplays
-    - https://www.gersys.de/produkte/fahrerassistenzsysteme
-    - https://www.gersys.de/impressum
 en:
   name: GERSYS
   legalName: GERSYS GmbH
@@ -81,11 +76,6 @@ en:
     ### Sources
 
     - https://www.gersys.de
-    - https://www.gersys.de/gersys/historie
-    - https://www.gersys.de/gersys/zertifikate
-    - https://www.gersys.de/produkte/multifunktionsdisplays
-    - https://www.gersys.de/produkte/fahrerassistenzsysteme
-    - https://www.gersys.de/impressum
 ---
 
 ### О компании
@@ -114,8 +104,3 @@ RailTech организует прямые поставки от GERSYS GmbH. М
 ### Источники
 
 - https://www.gersys.de
-- https://www.gersys.de/gersys/historie
-- https://www.gersys.de/gersys/zertifikate
-- https://www.gersys.de/produkte/multifunktionsdisplays
-- https://www.gersys.de/produkte/fahrerassistenzsysteme
-- https://www.gersys.de/impressum
