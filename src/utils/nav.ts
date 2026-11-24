@@ -9,6 +9,7 @@ export interface NavItem {
 
 export const MAIN_NAV: NavItem[] = [
   { key: 'nav.services', path: '/services/' },
+  { key: 'nav.partners', path: '/partners/' },
   { key: 'nav.news', path: '/news/' },
   { key: 'nav.contacts', path: '/contacts/' },
 ];
@@ -22,7 +23,12 @@ export const LEGAL_NAV: NavItem[] = [
 /** Where «Начать работу» leads: the request form on the contacts page. */
 export const START_PATH = '/contacts/#request';
 
+/** Partner articles live at /news/partner-<id>/ but belong to «Производители» in the menu and breadcrumbs. */
+export const isPartnerArticle = (route: string) => route.startsWith('/news/partner-');
+
 /** True when `route` (language-neutral, e.g. '/services/supply/') belongs to the menu item. */
 export function isActive(item: NavItem, route: string): boolean {
-  return item.path === '/' ? route === '/' : route.startsWith(item.path);
+  if (item.path === '/') return route === '/';
+  if (isPartnerArticle(route)) return item.path === '/partners/';
+  return route.startsWith(item.path);
 }

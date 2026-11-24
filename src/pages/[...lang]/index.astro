@@ -10,7 +10,8 @@ import Invite from '../../components/home/Invite.astro';
 import SectionHead from '../../components/ui/SectionHead.astro';
 import PartnerTiles from '../../components/ui/PartnerTiles.astro';
 import homeData from '../../data/cms/home.json';
-import { langStaticPaths, tField, localize } from '../../i18n';
+import { langStaticPaths, localeHref, tField, localize } from '../../i18n';
+import { t } from '../../i18n/ui';
 import { pageSeo } from '../../utils/seo';
 
 export const getStaticPaths = langStaticPaths;
@@ -29,9 +30,16 @@ const p = home.partners as Record<string, string>;
     <div class="wrap">
       <SectionHead id="partners-title" eyebrow={tField(p, 'eyebrow', lang)} title={tField(p, 'title', lang)} lead={tField(p, 'note', lang)} />
       <PartnerTiles />
+      <p class="all"><a href={localeHref('/partners/', lang)}>{t(lang, 'home.partners.all')} →</a></p>
     </div>
   </section>
   <CabinetBlock />
   <LatestNews />
   <Invite />
 </BaseLayout>
+
+<style>
+  .all {
+    margin: 24px 0 0;
+  }
+</style>

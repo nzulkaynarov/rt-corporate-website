@@ -26,7 +26,8 @@ SEO и навигации нет «ж/д», серий локомотивов и
 | `/` | `index.astro` | Главная: первый экран, мост (барьеры), возможности, о компании, производители, Кабинет, новости, заявка | `data/cms/home.json`, `company.json`, коллекция `partners`, коллекции `services`, `news` |
 | `/services/` | `services/index.astro` | Обзор услуг: «Заказчикам» и «Партнёрам» | `pages.json → services`, коллекция `services` |
 | `/services/<slug>/` | `services/[slug].astro` | Услуга: `supply`, `engineering` (заказчикам), `representation`, `localization` (партнёрам) | коллекция `services` |
-| `/news/` | `news/index.astro` | Лента: новости, статьи, проекты, партнёры (фильтр по типу) | коллекция `news`, `pages.json → news` |
+| `/partners/` | `partners/index.astro` | «Производители»: плитки всех партнёров с логотипом, страной, статусом и строкой профиля; ведут на статьи `/news/partner-<id>/` (адреса статей не меняются; в меню и хлебных крошках статья относится к «Производителям»). Строка профиля — факт статьи о партнёре, поэтому отрасль в ней допустима, как в «Новостях»; заголовок и вводный текст страницы — без отрасли | коллекция `partners`, `pages.json → partners` |
+| `/news/` | `news/index.astro` | Лента: новости, статьи, проекты (статьи о партнёрах — на `/partners/`; фильтр по типу) | коллекция `news`, `pages.json → news` |
 | `/news/<slug>/` | `news/[slug].astro` | Материал или статья о партнёре (`partner-<id>`); внизу — рекомендации, у партнёра — «Материалы о партнёре» | коллекции `news`, `partners` (`src/utils/feed.ts`) |
 | `/contacts/` | `contacts.astro` | Контакты, реквизиты, форма заявки | `company.json`, `pages.json → contacts` |
 | `/privacy/`, `/terms/`, `/cookies/` | `privacy.astro`, `terms.astro`, `cookies.astro` | Сервисные страницы (только в футере) | `data/cms/legal.json` |
@@ -34,7 +35,7 @@ SEO и навигации нет «ж/д», серий локомотивов и
 | `/admin/` | `src/pages/admin.astro` | Sveltia CMS (версия зафиксирована) | `public/admin/config.yml` |
 | старые адреса v1 (`catalog`, `blog`, `projects`, `about`, …) | `src/pages/[...legacy].astro` | Перенаправления для ru/uz/en (meta refresh + canonical, `noindex`, вне sitemap) | `src/data/legacy-redirects.json` |
 
-Навигация (шапка): **Услуги · Новости · Контакты** + переключатель языка + кнопки **«Начать работу»** (форма заявки,
+Навигация (шапка): **Услуги · Производители · Новости · Контакты** + переключатель языка + кнопки **«Начать работу»** (форма заявки,
 `/contacts/#request`) и **«Войти в Кабинет»** (`company.json → cabinet.url` + `/login`). Футер: разделы, сервисные страницы,
 контакты, ИНН. Меню одно — футер и мобильное меню строятся из `src/utils/nav.ts`.
 На телефоне (≤ 760 px) внизу экрана закреплена **панель связи** (`MobileBar`): «Начать работу» (та же форма заявки),

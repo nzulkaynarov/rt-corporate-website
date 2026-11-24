@@ -96,7 +96,8 @@ for (const rel of files) {
   }
   const noindex = /<meta[^>]+name="robots"[^>]+content="noindex/i.test(html);
   if (HUD.test(html)) err(`decorative HUD/telemetry text: «${html.match(HUD)[0]}» (docs/DESIGN.md)`);
-  if (lang === 'ru' && !route.startsWith('/news/')) {
+  // /partners/ shows the partners' own one-line profiles (facts of the partner articles), like /news/.
+  if (lang === 'ru' && !route.startsWith('/news/') && !route.startsWith('/partners/')) {
     const visible = html.replace(/<(script|style)\b[\s\S]*?<\/\1>/gi, ' ').replace(/<[^>]+>/g, ' ');
     const hit = visible.match(POSITIONING);
     if (hit) err(`industry-specific positioning «${hit[0]}» outside /news/ (docs/ARCHITECTURE.md §1)`);

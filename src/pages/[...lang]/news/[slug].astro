@@ -61,7 +61,7 @@ const asideServices = servicesOf(entry).flatMap((slug) => {
 });
 
 const crumbs = [
-  { name: t(lang, 'nav.news'), path: '/news/' },
+  partnerId ? { name: t(lang, 'nav.partners'), path: '/partners/' } : { name: t(lang, 'nav.news'), path: '/news/' },
   { name: title, path: `/news/${entry.slug}/` },
 ];
 const url = absoluteUrl(localeHref(`/news/${entry.slug}/`, lang), Astro.site);

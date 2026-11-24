@@ -1143,6 +1143,29 @@ collections:
                 required:
                   - ru
             i18n: true
+          - label: Производители
+            name: partners
+            widget: object
+            fields:
+              - label: Надзаголовок
+                name: eyebrow
+                widget: string
+                i18n: true
+                required:
+                  - ru
+              - label: Заголовок
+                name: title
+                widget: string
+                i18n: true
+                required:
+                  - ru
+              - label: Вводный абзац
+                name: lead
+                widget: text
+                i18n: true
+                required:
+                  - ru
+            i18n: true
           - label: Контакты
             name: contacts
             widget: object
@@ -1425,6 +1448,28 @@ collections:
                 i18n: true
               - label: Новости
                 name: news
+                widget: object
+                fields:
+                  - label: Title (≤ 60)
+                    name: title
+                    widget: string
+                    maxlength: 60
+                    hint: До 60 знаков. « | RailTech» добавляется сам, если влезает и бренда нет в заголовке.
+                    i18n: true
+                    required:
+                      - ru
+                  - label: Description (70–160)
+                    name: description
+                    widget: text
+                    maxlength: 160
+                    minlength: 50
+                    hint: 70–160 знаков.
+                    i18n: true
+                    required:
+                      - ru
+                i18n: true
+              - label: Производители
+                name: partners
                 widget: object
                 fields:
                   - label: Title (≤ 60)

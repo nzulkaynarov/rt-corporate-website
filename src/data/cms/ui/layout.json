@@ -20,6 +20,18 @@
       "en": "Services"
     },
     {
+      "key": "nav.partners",
+      "ru": "Производители",
+      "uz": "Ishlab chiqaruvchilar",
+      "en": "Manufacturers"
+    },
+    {
+      "key": "home.partners.all",
+      "ru": "Все производители",
+      "uz": "Barcha ishlab chiqaruvchilar",
+      "en": "All manufacturers"
+    },
+    {
       "key": "nav.news",
       "ru": "Новости",
       "uz": "Yangiliklar",
