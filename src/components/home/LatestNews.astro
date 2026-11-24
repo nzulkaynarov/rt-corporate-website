@@ -9,7 +9,7 @@ import NewsCard from '../ui/NewsCard.astro';
 const lang = Astro.locals.lang;
 const home = localize(homeData, lang);
 const n = home.news as Record<string, string>;
-const items = (await getFeed()).slice(0, 3);
+const items = (await getFeed()).filter((e) => e.data.type !== 'partner').slice(0, 3);
 ---
 
 {items.length > 0 && (

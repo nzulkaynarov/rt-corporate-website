@@ -159,10 +159,13 @@ test('partner tiles lead to the partner articles', async ({ page }) => {
 
 test('news filter shows only the chosen type', async ({ page }) => {
   await page.goto('news/');
-  await page.locator('[data-news-filter] button[data-type="partner"]').click();
+  const type = 'project';
+  const total = await page.locator(`[data-news-list] li[data-type="${type}"]`).count();
+  expect(total).toBeGreaterThan(0);
+  await page.locator(`[data-news-filter] button[data-type="${type}"]`).click();
   const visible = page.locator('[data-news-list] li:not([hidden])');
-  expect(await visible.count()).toBe(partnerArticles.length);
-  for (const li of await visible.all()) await expect(li).toHaveAttribute('data-type', 'partner');
+  expect(await visible.count()).toBe(total);
+  for (const li of await visible.all()) await expect(li).toHaveAttribute('data-type', type);
 });
 
 test('old v1 URLs redirect to the new sections', async ({ page }) => {
@@ -202,6 +205,16 @@ test.describe('languages (src/data/content-stage.json)', () => {
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
     await expect(page.locator('article')).toHaveAttribute('lang', 'ru');
   });
+});
+
+test('«Производители» lists every partner, links to the articles and owns them in the menu', async ({ page }) => {
+  await page.goto('partners/');
+  await expect(page.locator('h1')).toBeVisible();
+  for (const p of partnerArticles) await expect(page.locator(`.tiles a[href$="/news/${p.article}/"]`)).toHaveCount(1);
+  await page.goto(`news/${partnerArticles[0].article}/`);
+  await expect(page.locator('nav.crumbs a[href$="/partners/"]')).toBeVisible();
+  await page.goto('news/');
+  await expect(page.locator('[data-news-list] li[data-type="partner"]')).toHaveCount(0);
 });
 
 test('a service page preselects the role in the request form and the lead carries it', async ({ page }) => {

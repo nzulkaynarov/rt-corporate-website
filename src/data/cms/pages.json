@@ -16,7 +16,12 @@
   "news": {
     "eyebrow": "Новости",
     "title": "Новости, статьи и проекты RailTech",
-    "lead": "События компании, проекты с партнёрами и материалы о производителях, с которыми мы работаем."
+    "lead": "События компании, статьи и проекты с партнёрами."
+  },
+  "partners": {
+    "eyebrow": "Производители",
+    "title": "Производители, с которыми работает RailTech",
+    "lead": "Компании, продукцию которых RailTech поставляет предприятиям Узбекистана. Нажмите на производителя, чтобы узнать о нём больше. Перечень пополняется."
   },
   "contacts": {
     "eyebrow": "Контакты",
@@ -42,7 +47,12 @@
     "news": {
       "eyebrow": "Yangiliklar",
       "title": "RailTech yangiliklari, maqolalari va loyihalari",
-      "lead": "Kompaniya voqealari, hamkorlar bilan loyihalar va biz ishlaydigan ishlab chiqaruvchilar haqidagi materiallar."
+      "lead": "Kompaniya voqealari, maqolalar va hamkorlar bilan loyihalar."
+    },
+    "partners": {
+      "eyebrow": "Ishlab chiqaruvchilar",
+      "title": "RailTech ishlaydigan ishlab chiqaruvchilar",
+      "lead": "RailTech mahsulotlarini O'zbekiston korxonalariga yetkazib beradigan kompaniyalar. Batafsil ma'lumot uchun ishlab chiqaruvchini bosing. Ro'yxat to'ldirib boriladi."
     },
     "contacts": {
       "eyebrow": "Kontaktlar",
@@ -69,7 +79,12 @@
     "news": {
       "eyebrow": "News",
       "title": "RailTech news, articles and projects",
-      "lead": "Company events, projects with partners and articles about the manufacturers we work with."
+      "lead": "Company events, articles and projects with partners."
+    },
+    "partners": {
+      "eyebrow": "Manufacturers",
+      "title": "Manufacturers RailTech works with",
+      "lead": "Companies whose products RailTech supplies to enterprises in Uzbekistan. Select a manufacturer to learn more. The list keeps growing."
     },
     "contacts": {
       "eyebrow": "Contacts",

@@ -33,8 +33,15 @@ describe('format', () => {
 });
 
 describe('nav', () => {
-  it('has exactly one menu: services, news, contacts', () => {
-    expect(MAIN_NAV.map((i) => i.path)).toEqual(['/services/', '/news/', '/contacts/']);
+  it('has exactly one menu: services, manufacturers, news, contacts', () => {
+    expect(MAIN_NAV.map((i) => i.path)).toEqual(['/services/', '/partners/', '/news/', '/contacts/']);
+  });
+  it('a partner article belongs to «Производители», not to «Новости»', () => {
+    const partners = MAIN_NAV.find((i) => i.path === '/partners/')!;
+    const news = MAIN_NAV.find((i) => i.path === '/news/')!;
+    expect(isActive(partners, '/news/partner-grabba/')).toBe(true);
+    expect(isActive(news, '/news/partner-grabba/')).toBe(false);
+    expect(isActive(news, '/news/some-news/')).toBe(true);
   });
   it('marks the section of a nested page as active', () => {
     expect(isActive(MAIN_NAV[0], '/services/supply/')).toBe(true);

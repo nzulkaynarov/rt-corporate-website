@@ -14,8 +14,9 @@ const lang = Astro.locals.lang;
 const pages = localize(pagesData, lang);
 const seo = pageSeo('news', lang);
 const p = pages.news as Record<string, string>;
-const items = await getFeed();
-const TYPES = ['news', 'article', 'project', 'partner'] as const;
+// Partner articles have their own page (/partners/); the feed keeps news, articles and projects.
+const items = (await getFeed()).filter((e) => e.data.type !== 'partner');
+const TYPES = ['news', 'article', 'project'] as const;
 const present = TYPES.filter((type) => items.some((e) => e.data.type === type));
 const crumbs = [{ name: t(lang, 'nav.news'), path: '/news/' }];
 ---

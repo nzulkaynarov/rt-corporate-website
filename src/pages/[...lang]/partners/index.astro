@@ -1,0 +1,64 @@
+---
+/**
+ * «Производители»: every manufacturer RailTech works with (collection `partners`, docs/ARCHITECTURE.md §2).
+ * The tiles are the home-page tiles with a one-line profile; each leads to the partner article /news/partner-<id>/.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
+import SectionHead from '../../../components/ui/SectionHead.astro';
+import PartnerTiles from '../../../components/ui/PartnerTiles.astro';
+import CtaBand from '../../../components/ui/CtaBand.astro';
+import pagesData from '../../../data/cms/pages.json';
+import { langStaticPaths, localeHref, localize, tField } from '../../../i18n';
+import { t } from '../../../i18n/ui';
+import { getPartners } from '../../../utils/feed';
+import { absoluteUrl, pageSeo } from '../../../utils/seo';
+
+export const getStaticPaths = langStaticPaths;
+const lang = Astro.locals.lang;
+const p = localize(pagesData, lang).partners as Record<string, string>;
+const seo = pageSeo('partners', lang);
+const crumbs = [{ name: t(lang, 'nav.partners'), path: '/partners/' }];
+const partners = await getPartners();
+// schema.org: the list of manufacturers, each pointing to its article.
+const jsonLd = {
+  '@type': 'ItemList',
+  name: tField(p, 'title', lang),
+  itemListElement: partners
+    .filter((x) => x.articleSlug)
+    .map((x, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: tField(x.data, 'name', lang),
+      url: absoluteUrl(localeHref(`/news/${x.articleSlug}/`, lang), Astro.site),
+    })),
+};
+---
+
+<BaseLayout title={seo.title} description={seo.description} breadcrumbs={crumbs} jsonLd={jsonLd}>
+  <div class="wrap"><Breadcrumbs items={crumbs} /></div>
+  <section class="wrap page" aria-labelledby="partners-h1">
+    <SectionHead id="partners-h1" level={1} eyebrow={tField(p, 'eyebrow', lang)} title={tField(p, 'title', lang)} lead={tField(p, 'lead', lang)} />
+    <div class="list"><PartnerTiles detailed /></div>
+  </section>
+  <CtaBand title={t(lang, 'services.cta.title')} text={t(lang, 'services.cta.text')} />
+</BaseLayout>
+
+<style>
+  .page {
+    padding-block: 28px 72px;
+  }
+  .list {
+    margin-top: 32px;
+  }
+  /* here the tiles are the content: a grid on phones too, not a swipe row */
+  @media (max-width: 760px) {
+    .list :global(.tiles) {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      overflow: visible;
+      margin-inline: 0;
+      padding-inline: 0;
+    }
+  }
+</style>

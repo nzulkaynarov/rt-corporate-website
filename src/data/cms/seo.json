@@ -27,7 +27,11 @@
     },
     "news": {
       "title": "Новости, статьи и проекты RailTech",
-      "description": "События компании RailTech, проекты с партнёрами и материалы о производителях, с которыми мы работаем в Узбекистане."
+      "description": "События компании RailTech, статьи и проекты с партнёрами в Узбекистане."
+    },
+    "partners": {
+      "title": "Производители, с которыми работает RailTech",
+      "description": "Производители оборудования и компонентов, чью продукцию RailTech поставляет предприятиям Узбекистана: страна, статус и профиль каждой компании."
     },
     "contacts": {
       "title": "Контакты и реквизиты RailTech, Ташкент",
@@ -71,7 +75,11 @@
       },
       "news": {
         "title": "RailTech yangiliklari, maqolalari va loyihalari",
-        "description": "RailTech kompaniyasi voqealari, hamkorlar bilan loyihalar va O'zbekistonda biz ishlaydigan ishlab chiqaruvchilar haqida materiallar."
+        "description": "RailTech kompaniyasi voqealari, O'zbekistondagi hamkorlar bilan maqolalar va loyihalar."
+      },
+      "partners": {
+        "title": "RailTech ishlaydigan ishlab chiqaruvchilar",
+        "description": "RailTech O'zbekiston korxonalariga mahsulotini yetkazib beradigan ishlab chiqaruvchilar: har bir kompaniyaning mamlakati, maqomi va profili."
       },
       "contacts": {
         "title": "RailTech kontaktlari va rekvizitlari, Toshkent",
@@ -116,7 +124,11 @@
       },
       "news": {
         "title": "RailTech news, articles and projects",
-        "description": "RailTech company events, projects with partners and articles about the manufacturers we work with in Uzbekistan."
+        "description": "RailTech company events, articles and projects with partners in Uzbekistan."
+      },
+      "partners": {
+        "title": "Manufacturers RailTech works with",
+        "description": "Manufacturers of equipment and components whose products RailTech supplies to enterprises in Uzbekistan: each company's country, status and profile."
       },
       "contacts": {
         "title": "RailTech contacts and company details, Tashkent",
