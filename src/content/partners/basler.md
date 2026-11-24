@@ -5,17 +5,29 @@ lang:
   - en
 name: Basler
 legalName: Basler AG
+group: ''
+brands: []
+logo: /images/uploads/basler-logo.png
 country: DE
 status: direct
 order: 11
-date: '2026-11-24'
+date: 2026-11-24
 title: Basler — промышленные камеры и компьютерное зрение
 summary: 'Немецкий производитель промышленных камер и компонентов компьютерного зрения: камеры, объективы, подсветка, платы захвата изображения и ПО pylon. RailTech организует прямые поставки.'
+cover: ''
+coverAlt: ''
+gallery: []
+seoTitle: ''
+seoDescription: ''
 uz:
   name: Basler
   legalName: Basler AG
   title: Basler — sanoat kameralari va kompyuter ko'rishi
   summary: "Sanoat kameralari va kompyuter ko'rishi komponentlarini ishlab chiqaruvchi nemis kompaniyasi: kameralar, obyektivlar, yoritish, tasvirni qabul qilish platalari va pylon dasturiy ta'minoti. RailTech to'g'ridan-to'g'ri yetkazib berishni tashkil etadi."
+  coverAlt: ''
+  gallery: []
+  seoTitle: ''
+  seoDescription: ''
   body: |-
     ### Kompaniya haqida
 
@@ -51,6 +63,10 @@ en:
   legalName: Basler AG
   title: Basler — industrial cameras and computer vision
   summary: 'German manufacturer of industrial cameras and computer vision components: cameras, lenses, lighting, acquisition cards and pylon software. RailTech arranges direct supply.'
+  coverAlt: ''
+  gallery: []
+  seoTitle: ''
+  seoDescription: ''
   body: |-
     ### About the company
 
