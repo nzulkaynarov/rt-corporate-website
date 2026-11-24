@@ -43,15 +43,36 @@ export type FieldError = 'required' | 'contact' | 'phone' | 'email' | 'consent';
 export type FieldErrors = Partial<Record<'name' | 'contact' | 'text' | 'consent', FieldError>>;
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+/** What may stand in a phone number: digits, a leading +, spaces, dashes, dots and brackets. */
+const PHONE_CHARS = /^\+?[\d\s().-]+$/;
+const UZ_CODE = '998';
+const UZ_LOCAL_DIGITS = 9;
 
-/** Splits «Телефон или e-mail» into phone / email. Phone keeps + and digits (7–15 digits). */
+/**
+ * Normalises a phone number to E.164 (`+998901234567`) or returns null. Same rules as the CRM
+ * (`normalize_phone_e164`): Uzbekistan = `+998` and exactly 9 digits (a bare 9-digit local number gets `+998`,
+ * the local «8 90 …» form is rejected), other countries need a code and 8–15 digits.
+ */
+export function normalizePhone(raw: string): string | null {
+  const value = raw.trim();
+  if (!PHONE_CHARS.test(value)) return null;
+  let digits = value.replace(/\D/g, '');
+  if (!value.startsWith('+')) {
+    if (digits.startsWith('00') && digits.length > 2) digits = digits.slice(2);
+    else if (digits.length === UZ_LOCAL_DIGITS) digits = UZ_CODE + digits;
+    else if (digits.startsWith('8') && digits.length === UZ_LOCAL_DIGITS + 1) return null;
+  }
+  if (digits.startsWith(UZ_CODE) && digits.length !== UZ_CODE.length + UZ_LOCAL_DIGITS) return null;
+  return /^[1-9]\d{7,14}$/.test(digits) ? `+${digits}` : null;
+}
+
+/** Splits «Телефон или e-mail» into phone / email. */
 export function parseContact(raw: string): { phone?: string; email?: string; error?: FieldError } {
   const value = raw.trim();
   if (!value) return { error: 'contact' };
   if (value.includes('@')) return EMAIL.test(value) ? { email: value } : { error: 'email' };
-  const digits = value.replace(/\D/g, '');
-  if (digits.length < 7 || digits.length > 15) return { error: 'phone' };
-  return { phone: (value.trim().startsWith('+') ? '+' : '') + digits };
+  const phone = normalizePhone(value);
+  return phone ? { phone } : { error: 'phone' };
 }
 
 export function validateLead(input: LeadInput): FieldErrors {
@@ -91,16 +112,47 @@ export function buildPayload(input: LeadInput, lang: Lang, formToken: string, vi
 }
 
 /** Outcome of the POST, mapped to a UI message key in src/data/cms/ui/form.json. */
-export type SubmitOutcome = 'success' | 'tooFast' | 'expired' | 'rate' | 'invalid' | 'network';
+export type SubmitOutcome = 'success' | 'tooFast' | 'expired' | 'rate' | 'invalid' | 'network' | 'field';
 
-export function outcomeFromResponse(status: number, body: unknown): SubmitOutcome {
-  if (status === 202 || status === 200 || status === 201) return 'success';
-  if (status === 429) return 'rate';
-  const reason = (body as { details?: { reason?: string } } | null)?.details?.reason;
-  if (status === 422) {
-    if (reason === 'form_too_fast') return 'tooFast';
-    if (reason === 'form_token_expired' || reason === 'form_token_invalid') return 'expired';
-    return 'invalid';
+export interface SubmitResult {
+  outcome: SubmitOutcome;
+  /** `field`: the CRM refused one input — show the message at it, not a general failure. */
+  field?: keyof FieldErrors;
+  error?: FieldError;
+  /** `success`: the number the CRM gave the request (e.g. L-0042). */
+  requestNumber?: string;
+}
+
+/** CRM `details.reason` → the field and the message shown at it. */
+const REASON_FIELD: Record<string, { field: keyof FieldErrors; error: FieldError }> = {
+  invalid_phone: { field: 'contact', error: 'phone' },
+  invalid_email: { field: 'contact', error: 'email' },
+  contact_required: { field: 'contact', error: 'contact' },
+  consent_required: { field: 'consent', error: 'consent' },
+};
+/** Schema errors (`details.field`) for fields the form has. */
+const SCHEMA_FIELD: Record<string, { field: keyof FieldErrors; error: FieldError }> = {
+  name: { field: 'name', error: 'required' },
+  text: { field: 'text', error: 'required' },
+  phone: { field: 'contact', error: 'phone' },
+  email: { field: 'contact', error: 'email' },
+  consent: { field: 'consent', error: 'consent' },
+};
+
+export function outcomeFromResponse(status: number, body: unknown): SubmitResult {
+  const data = body as { request_number?: unknown; details?: { reason?: string; field?: string } } | null;
+  if (status === 202 || status === 200 || status === 201) {
+    const number = data?.request_number;
+    return { outcome: 'success', ...(typeof number === 'string' && number ? { requestNumber: number.slice(0, 32) } : {}) };
   }
-  return 'network';
+  if (status === 429) return { outcome: 'rate' };
+  if (status === 422) {
+    const reason = data?.details?.reason;
+    if (reason === 'form_too_fast') return { outcome: 'tooFast' };
+    if (reason === 'form_token_expired' || reason === 'form_token_invalid') return { outcome: 'expired' };
+    const hit = (reason && REASON_FIELD[reason]) || (data?.details?.field && SCHEMA_FIELD[data.details.field]);
+    if (hit) return { outcome: 'field', ...hit };
+    return { outcome: 'invalid' };
+  }
+  return { outcome: 'network' };
 }

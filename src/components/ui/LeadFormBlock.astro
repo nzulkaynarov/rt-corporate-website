@@ -61,7 +61,8 @@ const lang = Astro.locals.lang;
     min-height: 110px;
     resize: vertical;
   }
-  .lf [aria-invalid='true'] {
+  .lf input[aria-invalid='true'],
+  .lf textarea[aria-invalid='true'] {
     border-color: var(--c-danger-ink);
   }
   .lf__role {

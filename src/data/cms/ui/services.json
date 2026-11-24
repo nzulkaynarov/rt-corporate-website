@@ -63,9 +63,9 @@
     },
     {
       "key": "services.cta.text",
-      "ru": "Опишите задачу — менеджер свяжется с вами и пришлёт приглашение в Кабинет.",
-      "uz": "Vazifani tasvirlab bering — menejer siz bilan bog'lanadi va Kabinetga taklifnoma yuboradi.",
-      "en": "Tell us what you need, and a manager will contact you and send you an invitation to the Cabinet."
+      "ru": "Опишите задачу — менеджер ответит в рабочее время.",
+      "uz": "Vazifani tasvirlab bering — menejer ish vaqtida javob beradi.",
+      "en": "Tell us what you need, and a manager will reply during business hours."
     },
     {
       "key": "services.related",

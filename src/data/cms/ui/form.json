@@ -27,15 +27,15 @@
     },
     {
       "key": "form.name",
-      "ru": "Имя и должность",
-      "uz": "Ism va lavozim",
-      "en": "Name and job title"
+      "ru": "Как к вам обращаться",
+      "uz": "Sizga qanday murojaat qilamiz",
+      "en": "How should we address you"
     },
     {
       "key": "form.namePh",
-      "ru": "Например, Алишер, инженер по снабжению",
-      "uz": "Masalan, Alisher, ta'minot bo'yicha muhandis",
-      "en": "For example, Alisher, procurement engineer"
+      "ru": "Например, Алишер Каримов",
+      "uz": "Masalan, Alisher Karimov",
+      "en": "For example, Alisher Karimov"
     },
     {
       "key": "form.company",
@@ -104,10 +104,16 @@
       "en": "Request sent"
     },
     {
+      "key": "form.success.titleNumber",
+      "ru": "Заявка {number} принята",
+      "uz": "{number}-ariza qabul qilindi",
+      "en": "Request {number} received"
+    },
+    {
       "key": "form.success.text",
-      "ru": "Менеджер свяжется с вами в течение рабочего дня и пришлёт приглашение в Кабинет.",
-      "uz": "Menejer ish kuni davomida siz bilan bog'lanadi va Kabinetga taklifnoma yuboradi.",
-      "en": "A manager will contact you within one business day and send you an invitation to the Cabinet."
+      "ru": "Менеджер ответит в рабочее время.",
+      "uz": "Menejer ish vaqtida javob beradi.",
+      "en": "A manager will reply during business hours."
     },
     {
       "key": "form.error.required",
@@ -123,9 +129,9 @@
     },
     {
       "key": "form.error.phone",
-      "ru": "Проверьте номер телефона",
-      "uz": "Iltimos, telefon raqamini tekshiring",
-      "en": "Please check the phone number"
+      "ru": "Проверьте номер. Пример: +998 90 123 45 67",
+      "uz": "Raqamni tekshiring. Masalan: +998 90 123 45 67",
+      "en": "Please check the number. Example: +998 90 123 45 67"
     },
     {
       "key": "form.error.email",
@@ -152,16 +158,22 @@
       "en": "This form has expired. Please submit it again."
     },
     {
+      "key": "form.error.invalid",
+      "ru": "Проверьте введённые данные и отправьте ещё раз.",
+      "uz": "Kiritilgan ma'lumotlarni tekshirib, qayta yuboring.",
+      "en": "Please check the details and send again."
+    },
+    {
       "key": "form.error.rate",
-      "ru": "Слишком много заявок с этого адреса. Попробуйте позже или напишите нам.",
-      "uz": "Ushbu manzildan juda ko'p ariza yuborildi. Keyinroq urinib ko'ring yoki bizga yozing.",
-      "en": "Too many requests from this address. Please try again later or message us."
+      "ru": "Слишком много заявок подряд. Попробуйте через час или напишите нам:",
+      "uz": "Ketma-ket juda ko'p ariza yuborildi. Bir soatdan keyin urinib ko'ring yoki bizga yozing:",
+      "en": "Too many requests in a row. Please try again in an hour or message us:"
     },
     {
       "key": "form.error.network",
-      "ru": "Не удалось отправить заявку. Напишите нам или позвоните — ответим так же быстро:",
-      "uz": "Arizani yuborib bo'lmadi. Bizga yozing yoki qo'ng'iroq qiling — xuddi shunday tez javob beramiz:",
-      "en": "We couldn't send your request. Message or call us, and we'll reply just as quickly:"
+      "ru": "Не удалось отправить заявку. Напишите нам или позвоните:",
+      "uz": "Arizani yuborib bo'lmadi. Bizga yozing yoki qo'ng'iroq qiling:",
+      "en": "We couldn't send your request. Please message or call us:"
     },
     {
       "key": "form.alt.newClient",
