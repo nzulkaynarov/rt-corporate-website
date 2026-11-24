@@ -6,18 +6,28 @@ lang:
 name: JEZETEK
 legalName: Sichuan Jiutian Embodied Intelligence Technology Co., Ltd.
 group: Sichuan Jiuzhou Investment Holding Group
+brands: []
 logo: /images/partners/jezetek.png
 country: CN
 status: direct
 order: 13
-date: '2026-11-24'
+date: 2026-11-24
 title: JEZETEK — роботы для пути и подвижного состава
-summary: 'Китайская компания из Чэнду. Делает роботов для обслуживания рельсового пути и подвижного состава: они затягивают болты рельсовых скреплений и очищают крышевые изоляторы. RailTech организует прямые поставки.'
+summary: Китайская компания из Чэнду. Компания выпускает два вида роботов для обслуживания железнодорожной инфраструктуры. Путевой робот затягивает и отвинчивает резьбовые крепления рельсов, а робот для очистки изоляторов удаляет загрязнения с изоляторов контактной сети. RailTech организует прямые поставки.
+cover: ''
+coverAlt: ''
+gallery: []
+seoTitle: ''
+seoDescription: ''
 uz:
   name: JEZETEK
   legalName: Sichuan Jiutian Embodied Intelligence Technology Co., Ltd.
-  title: "JEZETEK — yo'l va harakatlanuvchi tarkib uchun robotlar"
+  title: JEZETEK — yo'l va harakatlanuvchi tarkib uchun robotlar
   summary: "Chendu shahridagi Xitoy kompaniyasi. Rels yo'li va harakatlanuvchi tarkibga texnik xizmat ko'rsatadigan robotlar ishlab chiqaradi: ular rels mahkamlagichlari boltlarini qotiradi va tom izolyatorlarini tozalaydi. RailTech to'g'ridan-to'g'ri yetkazib berishni tashkil etadi."
+  coverAlt: ''
+  gallery: []
+  seoTitle: ''
+  seoDescription: ''
   body: |-
     ### Kompaniya haqida
 
@@ -53,6 +63,10 @@ en:
   legalName: Sichuan Jiutian Embodied Intelligence Technology Co., Ltd.
   title: JEZETEK — robots for track and rolling stock maintenance
   summary: 'Chinese company based in Chengdu. It makes robots for rail track and rolling stock maintenance: they tighten rail fastening bolts and clean roof insulators. RailTech arranges direct supply.'
+  coverAlt: ''
+  gallery: []
+  seoTitle: ''
+  seoDescription: ''
   body: |-
     ### About the company
 
