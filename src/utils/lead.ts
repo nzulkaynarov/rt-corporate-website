@@ -51,15 +51,21 @@ const UZ_LOCAL_DIGITS = 9;
 /**
  * Normalises a phone number to E.164 (`+998901234567`) or returns null. Same rules as the CRM
  * (`normalize_phone_e164`): Uzbekistan = `+998` and exactly 9 digits (a bare 9-digit local number gets `+998`,
- * the local «8 90 …» form is rejected), other countries need a code and 8–15 digits.
+ * the local «8 90 …» form is rejected), other countries need a code and 8–15 digits. A leading «00» counts as the
+ * international prefix only with 10+ digits after it. Only ASCII digits: `\d` without the `u` flag is [0-9], so Arabic-Indic
+ * and other digits are refused.
  */
 export function normalizePhone(raw: string): string | null {
   const value = raw.trim();
   if (!PHONE_CHARS.test(value)) return null;
   let digits = value.replace(/\D/g, '');
   if (!value.startsWith('+')) {
-    if (digits.startsWith('00') && digits.length > 2) digits = digits.slice(2);
-    else if (digits.length === UZ_LOCAL_DIGITS) digits = UZ_CODE + digits;
+    // «00» is the international prefix only when a full number follows (10+ digits): «00 90 123 45 67» is not
+    // «+90 123…», it is a mistyped local number — rejected, as in the CRM.
+    if (digits.startsWith('00')) {
+      if (digits.length - 2 < 10) return null;
+      digits = digits.slice(2);
+    } else if (digits.length === UZ_LOCAL_DIGITS) digits = UZ_CODE + digits;
     else if (digits.startsWith('8') && digits.length === UZ_LOCAL_DIGITS + 1) return null;
   }
   if (digits.startsWith(UZ_CODE) && digits.length !== UZ_CODE.length + UZ_LOCAL_DIGITS) return null;
