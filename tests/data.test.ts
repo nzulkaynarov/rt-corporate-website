@@ -69,7 +69,9 @@ describe('partners collection (one record = tile + article)', () => {
     for (const id of partnerArticles) {
       const d = front(`src/content/partners/${id}.md`);
       expect(d.summary, id).toBeTruthy();
-      expect(String(d.date), id).toMatch(/^\d{4}-\d{2}-\d{2}/);
+      // The CMS writes the date unquoted, which YAML reads as a Date (the schema normalizes it the same way).
+      const date = d.date instanceof Date ? d.date.toISOString().slice(0, 10) : String(d.date);
+      expect(date, id).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     }
   });
   it('partner article routes do not collide with news files', () => {
