@@ -186,6 +186,12 @@
       "ru": "Узбекистан",
       "uz": "O'zbekiston",
       "en": "Uzbekistan"
+    },
+    {
+      "key": "country.AU",
+      "ru": "Австралия",
+      "uz": "Avstraliya",
+      "en": "Australia"
     }
   ]
 }

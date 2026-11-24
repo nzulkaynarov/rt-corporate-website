@@ -112,6 +112,10 @@ test('header offers «Начать работу» and «Войти в Кабин
 });
 
 test('the lead form validates, sends to the CRM and confirms', async ({ page }) => {
+  // On touch screens the page scrolls smoothly (CSS scroll-behavior): focusing the first invalid field starts a scroll
+  // animation, and a tap during it can land as mousedown without a click. Users tap after the page stops; the test
+  // turns the animation off instead of racing it.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await mockCrm(page, { status: 202, body: { lead_id: 42 } });
   await page.goto('contacts/');
   // The form is a React island: wait until it is hydrated (Astro removes the `ssr` attribute), then type.

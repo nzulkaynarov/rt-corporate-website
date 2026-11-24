@@ -2,7 +2,7 @@
 /**
  * Side column of a «Новости» material (docs/DESIGN.md → «Одиночные страницы»). On wide screens it sits to the right of
  * the text and stays in view; on narrower screens it is an ordinary block in the single column.
- *   - partner article: the partner card (status, country, legal entity, group, brands) and the request button;
+ *   - partner article: the partner card (logo, status, country, legal entity, group, brands) and the request button;
  *   - news, article, project: the manufacturers and services the material is about (computed, src/utils/feed.ts);
  *   - «На странице» for a text with several sections (wide screens only).
  */
@@ -11,8 +11,11 @@ import { localeHref } from '../../i18n';
 import { t } from '../../i18n/ui';
 import { START_PATH } from '../../utils/nav';
 import type { TocItem } from '../../utils/markdown';
+import { withBase } from '../../utils/url';
 
 interface PartnerCard {
+  /** Manufacturer's logo (path under /public), optional. */
+  logo?: string;
   status: string;
   country: string;
   legalName?: string;
@@ -42,6 +45,7 @@ const hasCard = Boolean(partner) || partners.length > 0 || services.length > 0;
   <aside class:list={['aside', { 'aside--partner': Boolean(partner), 'aside--toc-only': !hasCard }]}>
     {hasCard && (
       <div class="card">
+        {partner?.logo && <p class="logo"><img src={withBase(partner.logo)} alt="" loading="lazy" decoding="async" /></p>}
         {partner && (
           <dl class="facts">
             <div><dt>{t(lang, 'news.partnerStatus')}</dt><dd><span class:list={['pill', { 'pill--dealer': partner.status === 'dealer' }]}>{t(lang, `partner.status.${partner.status}`)}</span></dd></div>
@@ -90,6 +94,20 @@ const hasCard = Boolean(partner) || partners.length > 0 || services.length > 0;
     border-top: 3px solid var(--c-accent);
     border-radius: var(--r-md);
     background: var(--c-bg);
+  }
+  .logo {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    height: 48px;
+  }
+  .logo img {
+    display: block;
+    height: 100%;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    object-position: left center;
   }
   .facts {
     margin: 0;

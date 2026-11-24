@@ -6,6 +6,7 @@ lang:
 name: Siemens Mobility
 legalName: Siemens Mobility GmbH
 group: Siemens AG
+logo: /images/partners/siemens-mobility.png
 country: DE
 status: direct
 order: 4

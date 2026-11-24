@@ -57,6 +57,14 @@ describe('partners collection (one record = tile + article)', () => {
       expect(['dealer', 'direct']).toContain(d.status);
     }
   });
+  it('a logo, when set, is an SVG or PNG file that exists under public/', () => {
+    for (const id of partners) {
+      const logo = front(`src/content/partners/${id}.md`).logo;
+      if (!logo) continue;
+      expect(logo, id).toMatch(/^\/images\/.+\.(svg|png)$/);
+      expect(fs.existsSync(path.join('public', logo)), `${id}: public${logo} is missing`).toBe(true);
+    }
+  });
   it('a written article has a title, a summary and a date', () => {
     for (const id of partnerArticles) {
       const d = front(`src/content/partners/${id}.md`);

@@ -5,6 +5,7 @@ lang:
   - en
 name: НПО САУТ
 legalName: ООО «НПО САУТ»
+logo: /images/partners/npo-saut.svg
 country: RU
 status: dealer
 order: 1

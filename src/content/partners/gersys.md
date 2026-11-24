@@ -5,6 +5,7 @@ lang:
   - en
 name: GERSYS
 legalName: GERSYS GmbH
+logo: /images/partners/gersys.png
 country: DE
 status: direct
 order: 3

@@ -10,6 +10,7 @@ name: "<Бренд, как компанию называют: «Siemens Mobility
 legalName: "<Юрлицо с формой собственности: «Siemens Mobility GmbH», «ООО «НПО САУТ»» — статус относится к нему>"
 # group: "<Группа, если есть: «Siemens AG»>"
 # brands: ["<торговая марка или линейка>"]
+# logo: "/images/partners/<id>.svg"       # официальный логотип (SVG или PNG с прозрачным фоном), необязательно
 country: "DE"            # код страны из списка (country.<код> в src/data/cms/ui/countries.json)
 status: "direct"         # dealer — только при документе производителя
 order: 99                # место плитки на главной
