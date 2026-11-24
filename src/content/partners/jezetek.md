@@ -23,7 +23,7 @@ uz:
   name: JEZETEK
   legalName: Sichuan Jiutian Embodied Intelligence Technology Co., Ltd.
   title: JEZETEK — yo'l va harakatlanuvchi tarkib uchun robotlar
-  summary: "Chendu shahridagi Xitoy kompaniyasi. Rels yo'li va harakatlanuvchi tarkibga texnik xizmat ko'rsatadigan robotlar ishlab chiqaradi: ular rels mahkamlagichlari boltlarini qotiradi va tom izolyatorlarini tozalaydi. RailTech to'g'ridan-to'g'ri yetkazib berishni tashkil etadi."
+  summary: "Chengdudagi Xitoy kompaniyasi temir yo'l infratuzilmasi uchun 2 turdagi robot ishlab chiqaradi: yo'l roboti relslarning tishli mahkamlagichlarini tortadi va bo'shatadi, ikkinchisi esa kontakt tarmog'i izolyatorlarini tozalaydi. RailTech to'g'ridan-to'g'ri yetkazib berishni tashkil qiladi."
   coverAlt: ''
   gallery: []
   seoTitle: ''
@@ -62,7 +62,7 @@ en:
   name: JEZETEK
   legalName: Sichuan Jiutian Embodied Intelligence Technology Co., Ltd.
   title: JEZETEK — robots for track and rolling stock maintenance
-  summary: 'Chinese company based in Chengdu. It makes robots for rail track and rolling stock maintenance: they tighten rail fastening bolts and clean roof insulators. RailTech arranges direct supply.'
+  summary: A Chinese company from Chengdu. The company produces two types of robots for railway infrastructure maintenance. The track robot tightens and loosens rail threaded fasteners, and the insulator cleaning robot removes contamination from overhead line insulators. RailTech organizes direct supplies.
   coverAlt: ''
   gallery: []
   seoTitle: ''
