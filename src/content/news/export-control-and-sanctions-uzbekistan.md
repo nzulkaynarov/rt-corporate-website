@@ -59,6 +59,8 @@ uz:
     ### Eslatma
 
     Material 2026-yil 24-noyabr holatiga ko'ra ochiq manbalar asosida tayyorlangan. U ma'lumot uchun mo'ljallangan, yuridik maslahat hisoblanmaydi va amaldagi huquq bo'yicha tekshiruv o'rnini bosmaydi. Tartibga solish o'zgarib turadi; har bir yetkazib berish shartlari shartnoma bilan belgilanadi.
+
+    Manbalar: Lex.uz milliy qonunchilik bazasi, Yevropa Ittifoqi Kengashi, Yevropa Komissiyasi, Buyuk Britaniya Tashqi ishlar vazirligi, «Katta yettilik» mamlakatlarining biznes uchun qo'llanmasi, Spot va Kun.uz nashrlari. Hujjatlarga havolalar matnda berilgan.
 en:
   title: 'Sanctions and export control: how it works in Uzbekistan'
   summary: "A reference for foreign manufacturers: Uzbekistan's position on sanctions, the export control law, bank screening of payments and the terms suppliers put into the contract."
@@ -105,6 +107,8 @@ en:
     ### Disclaimer
 
     This material was prepared from open sources as of 24 November 2026. It is for reference only, is not legal advice and does not replace a check under the applicable law. Regulation changes; the terms of each supply are defined by the contract.
+
+    Sources: the Lex.uz national legislation database, the Council of the European Union, the European Commission, the UK Foreign, Commonwealth & Development Office, the G7 guidance for industry, and the news outlets Spot and Kun.uz. Links to the documents are in the text.
 ---
 
 Зарубежные производители, которые впервые поставляют продукцию в Узбекистан, часто спрашивают, как здесь устроены экспортный контроль и работа с санкционными ограничениями. Мы собрали открытые сведения по состоянию на 24 ноября 2026 года. Ссылки в тексте ведут на первоисточники. Материал справочный и не является юридической консультацией.
@@ -147,3 +151,5 @@ en:
 ### Оговорка
 
 Материал подготовлен по открытым источникам на 24 ноября 2026 года. Он носит справочный характер, не является юридической консультацией и не заменяет проверку по применимому праву. Регулирование меняется; условия каждой поставки определяются договором.
+
+Источники: национальная база законодательства Lex.uz, Совет Европейского союза, Европейская комиссия, МИД Великобритании, руководство стран «Большой семёрки» для бизнеса, издания Spot и Kun.uz. Ссылки на документы стоят в тексте.
