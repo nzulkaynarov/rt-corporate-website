@@ -102,6 +102,13 @@ for (const rel of files) {
     const hit = visible.match(POSITIONING);
     if (hit) err(`industry-specific positioning «${hit[0]}» outside /news/ (docs/ARCHITECTURE.md §1)`);
   }
+  // Security (docs/ARCHITECTURE.md §6): every page carries the CSP; no script or iframe from another host.
+  const cspMeta = html.match(/<meta[^>]+http-equiv="Content-Security-Policy"[^>]+content="([^"]+)"/i);
+  if (!cspMeta) err('missing Content-Security-Policy <meta> (src/layouts/BaseLayout.astro)');
+  else if (html.indexOf(cspMeta[0]) > html.search(/<script\b|<link[^>]+rel="stylesheet"/i)) err('the CSP <meta> must come before any script or stylesheet');
+  const foreignScript = html.match(/<script[^>]+src="(https?:)?\/\/[^"]+"/i);
+  if (foreignScript) err(`script from another host: ${foreignScript[0]}`);
+  if (/<iframe\b/i.test(html)) err('iframe on a page (CSP frame-src is none)');
   if (!/<main\b[^>]*id="main"/.test(html)) err('missing <main id="main">');
   if (!/class="skip-link"/.test(html)) err('missing skip link');
   if (!/href="https:\/\/cabinet\.railtech\.uz\/login"/.test(html)) err('missing «Войти в Кабинет» link (company.json → cabinet.url + /login)');
@@ -194,6 +201,16 @@ if (warnings.length) {
   console.warn(`[check-build] ${warnings.length} warning(s):`);
   for (const w of warnings) console.warn('  ! ' + w);
 }
+// The admin loads the CMS from a CDN: pinned version with Subresource Integrity (src/pages/admin.astro).
+{
+  const admin = path.join(DIST, 'admin', 'index.html');
+  if (fs.existsSync(admin)) {
+    const tag = fs.readFileSync(admin, 'utf8').match(/<script[^>]+src="https:\/\/[^"]+"[^>]*>/i)?.[0] || '';
+    if (!/@\d+\.\d+\.\d+\//.test(tag)) errors.push('admin: the CMS script must be pinned to an exact version');
+    if (!/integrity="sha(256|384|512)-[^"]+"/.test(tag) || !/crossorigin="anonymous"/.test(tag)) errors.push('admin: the CMS script needs integrity="sha384-…" and crossorigin="anonymous"');
+  }
+}
+
 // Sitemap: only real, indexable pages — no redirect pages, nothing noindex, nothing missing.
 for (const name of fs.readdirSync(DIST).filter((n) => /^sitemap-\d+\.xml$/.test(n))) {
   const xml = fs.readFileSync(path.join(DIST, name), 'utf8');

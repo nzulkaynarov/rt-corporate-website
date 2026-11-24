@@ -20,7 +20,7 @@ export const LEGAL_NAV: NavItem[] = [
   { key: 'footer.cookies', path: '/cookies/' },
 ];
 
-/** Where «Начать работу» leads: the request form on the contacts page. */
+/** Where «Отправить заявку» leads: the request form on the contacts page. */
 export const START_PATH = '/contacts/#request';
 
 /** Partner articles live at /news/partner-<id>/ but belong to «Производители» in the menu and breadcrumbs. */

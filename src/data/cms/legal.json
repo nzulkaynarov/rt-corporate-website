@@ -7,7 +7,7 @@
   "privacy": {
     "title": "Политика обработки персональных данных",
     "lead": "Как ООО «RailTech» собирает, использует, хранит и защищает персональные данные пользователей сайта {site} и Кабинета {cabinet} — в соответствии с Законом РУз № ЗРУ-547 «О персональных данных».",
-    "edition": "2026-11-04",
+    "edition": "2026-11-24",
     "sections": [
       {
         "title": "Общие положения",
@@ -19,7 +19,7 @@
       },
       {
         "title": "Какие данные мы обрабатываем",
-        "content": "Форма заявки на сайте: имя и должность, название компании, телефон или e-mail и описание запроса; вместе с заявкой передаётся язык страницы. Кабинет {cabinet}: данные представителей организации, необходимые для входа и работы, а также документы сделки — запросы, коммерческие предложения, договоры, счета и акты, в которых могут быть указаны фамилии, должности и подписи представителей. Обращения по электронной почте, телефону и в Telegram: данные, которые вы сообщаете сами. Технические данные: при открытии сайта серверы хостинга могут фиксировать IP-адрес, сведения о браузере и время запроса. Сайт {site} не устанавливает cookie и не использует аналитику (подробнее — на странице «Cookies»). Мы не запрашиваем специальные персональные данные, биометрические и генетические данные (ст. 25, 26 Закона). Объём данных определяете вы: отказ от их предоставления не требует объяснения причин (ст. 13), но без контакта мы не сможем ответить на заявку."
+        "content": "Форма заявки на сайте: имя и должность, название компании, телефон или e-mail и описание запроса; вместе с заявкой передаются язык страницы, выбранная роль (заказчик или производитель), адрес первой страницы визита, сайт, с которого вы перешли, и метки рекламной ссылки (utm), если они были. Кабинет {cabinet}: данные представителей организации, необходимые для входа и работы, а также документы сделки — запросы, коммерческие предложения, договоры, счета и акты, в которых могут быть указаны фамилии, должности и подписи представителей. Обращения по электронной почте, телефону и в Telegram: данные, которые вы сообщаете сами. Технические данные: при открытии сайта серверы хостинга могут фиксировать IP-адрес, сведения о браузере и время запроса. Сайт {site} не устанавливает cookie и не использует аналитику (подробнее — на странице «Cookies»). Мы не запрашиваем специальные персональные данные, биометрические и генетические данные (ст. 25, 26 Закона). Объём данных определяете вы: отказ от их предоставления не требует объяснения причин (ст. 13), но без контакта мы не сможем ответить на заявку."
       },
       {
         "title": "Цели и правовые основания обработки",
@@ -101,11 +101,11 @@
   "cookies": {
     "title": "Cookies и хранение данных в браузере",
     "lead": "Какие данные сайт {site} и Кабинет {cabinet} сохраняют в вашем браузере и зачем.",
-    "edition": "2026-11-04",
+    "edition": "2026-11-24",
     "sections": [
       {
         "title": "Сайт {site}",
-        "content": "Сайт не устанавливает cookie, не подключает аналитику, рекламу и счётчики посещений. Шрифты и изображения загружаются с самого сайта. Сервер хостинга может вести технические журналы запросов (IP-адрес, сведения о браузере, время) для работы и защиты сайта."
+        "content": "Сайт не устанавливает cookie, не подключает аналитику, рекламу и счётчики посещений. Пока вкладка открыта, сайт хранит в хранилище браузера (sessionStorage) первую страницу визита, сайт, с которого вы перешли, и метки ссылки, чтобы передать их вместе с заявкой; при закрытии вкладки эти данные удаляются, без заявки они никуда не отправляются. Шрифты и изображения загружаются с самого сайта. Сервер хостинга может вести технические журналы запросов (IP-адрес, сведения о браузере, время) для работы и защиты сайта."
       },
       {
         "title": "Кабинет {cabinet}",
@@ -136,7 +136,7 @@
         },
         {
           "title": "Qaysi ma'lumotlarga ishlov beramiz",
-          "content": "Saytdagi ariza shakli: ism va lavozim, kompaniya nomi, telefon yoki e-mail hamda so'rov tavsifi; ariza bilan birga sahifa tili ham uzatiladi. {cabinet} Kabineti: tashkilot vakillarining kirish va ishlash uchun zarur bo'lgan ma'lumotlari, shuningdek bitim hujjatlari — so'rovlar, tijorat takliflari, shartnomalar, hisoblar va dalolatnomalar, ularda vakillarning familiyalari, lavozimlari va imzolari ko'rsatilishi mumkin. Elektron pochta, telefon va Telegram orqali murojaatlar: siz o'zingiz ma'lum qilgan ma'lumotlar. Texnik ma'lumotlar: sayt ochilganda xosting serverlari IP-manzil, brauzer haqidagi ma'lumotlar va so'rov vaqtini qayd etishi mumkin. {site} sayti cookie o'rnatmaydi va analitikadan foydalanmaydi (batafsil — «Cookie-fayllar» sahifasida). Biz shaxsga doir maxsus ma'lumotlarni, biometrik va genetik ma'lumotlarni so'ramaymiz (Qonunning 25, 26-moddalari). Ma'lumotlar hajmini siz belgilaysiz: ularni berishdan bosh tortish sabablarini tushuntirishni talab qilmaydi (13-modda), biroq aloqa ma'lumotisiz arizaga javob bera olmaymiz."
+          "content": "Saytdagi ariza shakli: ism va lavozim, kompaniya nomi, telefon yoki e-mail hamda so'rov tavsifi; ariza bilan birga sahifa tili, tanlangan rol (buyurtmachi yoki ishlab chiqaruvchi), tashrifning birinchi sahifasi manzili, siz o'tgan sayt va reklama havolasi belgilari (utm), agar ular bo'lsa, uzatiladi. {cabinet} Kabineti: tashkilot vakillarining kirish va ishlash uchun zarur bo'lgan ma'lumotlari, shuningdek bitim hujjatlari — so'rovlar, tijorat takliflari, shartnomalar, hisoblar va dalolatnomalar, ularda vakillarning familiyalari, lavozimlari va imzolari ko'rsatilishi mumkin. Elektron pochta, telefon va Telegram orqali murojaatlar: siz o'zingiz ma'lum qilgan ma'lumotlar. Texnik ma'lumotlar: sayt ochilganda xosting serverlari IP-manzil, brauzer haqidagi ma'lumotlar va so'rov vaqtini qayd etishi mumkin. {site} sayti cookie o'rnatmaydi va analitikadan foydalanmaydi (batafsil — «Cookie-fayllar» sahifasida). Biz shaxsga doir maxsus ma'lumotlarni, biometrik va genetik ma'lumotlarni so'ramaymiz (Qonunning 25, 26-moddalari). Ma'lumotlar hajmini siz belgilaysiz: ularni berishdan bosh tortish sabablarini tushuntirishni talab qilmaydi (13-modda), biroq aloqa ma'lumotisiz arizaga javob bera olmaymiz."
         },
         {
           "title": "Ishlov berish maqsadlari va huquqiy asoslari",
@@ -220,7 +220,7 @@
       "sections": [
         {
           "title": "{site} sayti",
-          "content": "Sayt cookie o'rnatmaydi, analitika, reklama va tashriflar hisoblagichlarini ulamaydi. Shriftlar va tasvirlar saytning o'zidan yuklanadi. Xosting serveri sayt ishlashi va himoyasi uchun so'rovlarning texnik jurnallarini (IP-manzil, brauzer haqidagi ma'lumotlar, vaqt) yuritishi mumkin."
+          "content": "Sayt cookie o'rnatmaydi, analitika, reklama va tashriflar hisoblagichlarini ulamaydi. Vkladka ochiq ekan, sayt ariza bilan birga uzatish uchun brauzer xotirasida (sessionStorage) tashrifning birinchi sahifasi, siz o'tgan sayt va havola belgilarini saqlaydi; vkladka yopilganda bu ma'lumotlar o'chiriladi, arizasiz ular hech qayerga yuborilmaydi. Shriftlar va tasvirlar saytning o'zidan yuklanadi. Xosting serveri sayt ishlashi va himoyasi uchun so'rovlarning texnik jurnallarini (IP-manzil, brauzer haqidagi ma'lumotlar, vaqt) yuritishi mumkin."
         },
         {
           "title": "{cabinet} Kabineti",
@@ -252,7 +252,7 @@
         },
         {
           "title": "Data we process",
-          "content": "Website request form: name and position, company name, telephone or email and a description of the request; the page language is sent together with the request. The {cabinet} Cabinet: data of the organization's representatives needed to sign in and work, as well as deal documents (requests, quotations, contracts, invoices and acceptance acts) that may contain representatives' surnames, positions and signatures. Inquiries by email, telephone and Telegram: the data you provide yourself. Technical data: when the website is opened, the hosting servers may record the IP address, browser information and the time of the request. The {site} website does not set cookies and does not use analytics (see the \"Cookies\" page for details). We do not request special personal data, biometric or genetic data (Articles 25 and 26 of the Law). You decide how much data to provide: refusing to provide it does not require any explanation of the reasons (Article 13), but without contact details we will not be able to respond to the request."
+          "content": "Website request form: name and position, company name, telephone or email and a description of the request; together with the request we send the page language, the role you chose (customer or manufacturer), the address of the first page of your visit, the website you came from and the advertising link tags (utm), if there were any. The {cabinet} Cabinet: data of the organization's representatives needed to sign in and work, as well as deal documents (requests, quotations, contracts, invoices and acceptance acts) that may contain representatives' surnames, positions and signatures. Inquiries by email, telephone and Telegram: the data you provide yourself. Technical data: when the website is opened, the hosting servers may record the IP address, browser information and the time of the request. The {site} website does not set cookies and does not use analytics (see the \"Cookies\" page for details). We do not request special personal data, biometric or genetic data (Articles 25 and 26 of the Law). You decide how much data to provide: refusing to provide it does not require any explanation of the reasons (Article 13), but without contact details we will not be able to respond to the request."
         },
         {
           "title": "Purposes and legal grounds",
@@ -336,7 +336,7 @@
       "sections": [
         {
           "title": "The {site} website",
-          "content": "The website does not set cookies and does not use analytics, advertising or visit counters. Fonts and images are loaded from the website itself. The hosting server may keep technical request logs (IP address, browser information, time) to operate and protect the website."
+          "content": "The website does not set cookies and does not use analytics, advertising or visit counters. While the tab is open, the website keeps in browser storage (sessionStorage) the first page of your visit, the website you came from and the link tags, to send them together with a request; they are deleted when the tab is closed and are not sent anywhere without a request. Fonts and images are loaded from the website itself. The hosting server may keep technical request logs (IP address, browser information, time) to operate and protect the website."
         },
         {
           "title": "The {cabinet} Cabinet",

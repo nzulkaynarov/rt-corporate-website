@@ -132,7 +132,7 @@ const benefitsKey = d.audience === 'partners' ? 'services.benefits.partners' : '
 
   <RelatedMaterials title={t(lang, 'services.related')} items={materialsOfService(entry.slug, feed)} soft={false} />
 
-  <CtaBand title={t(lang, 'services.cta.title')} text={t(lang, 'services.cta.text')} />
+  <CtaBand title={t(lang, 'services.cta.title')} text={t(lang, 'services.cta.text')} role={d.audience === 'partners' ? 'partner' : 'customer'} />
 </BaseLayout>
 
 <style>
