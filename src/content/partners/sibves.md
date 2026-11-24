@@ -46,10 +46,6 @@ uz:
     ### Manbalar
 
     - https://sibves.ru
-    - https://sibves.ru/#benefits
-    - https://sibves.ru/#products
-    - https://sibves.ru/#about
-    - https://sibves.ru/#contacts
 en:
   name: SIBVES
   legalName: SIBVES LLC
@@ -84,10 +80,6 @@ en:
     ### Sources
 
     - https://sibves.ru
-    - https://sibves.ru/#benefits
-    - https://sibves.ru/#products
-    - https://sibves.ru/#about
-    - https://sibves.ru/#contacts
 ---
 
 ### О компании
@@ -118,7 +110,3 @@ RailTech организует прямые поставки от ООО «СИБ
 ### Источники
 
 - https://sibves.ru
-- https://sibves.ru/#benefits
-- https://sibves.ru/#products
-- https://sibves.ru/#about
-- https://sibves.ru/#contacts

@@ -54,15 +54,6 @@ uz:
     ### Manbalar
 
     - https://microem.ru/
-    - https://microem.ru/about/
-    - https://microem.ru/about/components-supply/
-    - https://microem.ru/about/design-center/
-    - https://microem.ru/about/sborka-pechatnykh-plat/
-    - https://microem.ru/about/soedinitelnye-sistemy/
-    - https://microem.ru/catalog/
-    - https://microem.ru/manufacturers/
-    - https://microem.ru/applications/
-    - https://microem.ru/contacts/
 en:
   name: MicroEM
   legalName: MicroEM Komponent LLC
@@ -104,15 +95,6 @@ en:
     ### Sources
 
     - https://microem.ru/
-    - https://microem.ru/about/
-    - https://microem.ru/about/components-supply/
-    - https://microem.ru/about/design-center/
-    - https://microem.ru/about/sborka-pechatnykh-plat/
-    - https://microem.ru/about/soedinitelnye-sistemy/
-    - https://microem.ru/catalog/
-    - https://microem.ru/manufacturers/
-    - https://microem.ru/applications/
-    - https://microem.ru/contacts/
 ---
 
 ### О компании
@@ -150,12 +132,3 @@ RailTech организует прямые поставки от ООО «Мик
 ### Источники
 
 - https://microem.ru/
-- https://microem.ru/about/
-- https://microem.ru/about/components-supply/
-- https://microem.ru/about/design-center/
-- https://microem.ru/about/sborka-pechatnykh-plat/
-- https://microem.ru/about/soedinitelnye-sistemy/
-- https://microem.ru/catalog/
-- https://microem.ru/manufacturers/
-- https://microem.ru/applications/
-- https://microem.ru/contacts/

@@ -45,19 +45,7 @@ uz:
 
     ### Manbalar
 
-    - https://docs.baslerweb.com/legal-info.html
-    - https://downloads-ctf.baslerweb.com/dg51pdwahxgw/1jFygRZWsQshfx9yU3lWuQ/bab86a82fb0254f4ac2486f7551af422/Computer_Vision_Portfolio_Brochure.pdf
-    - https://docs.baslerweb.com/cameras.html
-    - https://docs.baslerweb.com/area-and-line-scan-cameras.html
-    - https://docs.baslerweb.com/tof-cameras.html
-    - https://docs.baslerweb.com/stereo-cameras.html
-    - https://docs.baslerweb.com/embedded-vision-kits.html
-    - https://docs.baslerweb.com/lenses.html
-    - https://docs.baslerweb.com/illumination.html
-    - https://docs.baslerweb.com/acquisition-cards.html
-    - https://docs.baslerweb.com/software.html
-    - https://docs.baslerweb.com/pylon-software-suite.html
-    - https://docs.baslerweb.com/accessories.html
+    - https://www.baslerweb.com
 en:
   name: Basler
   legalName: Basler AG
@@ -92,19 +80,7 @@ en:
 
     ### Sources
 
-    - https://docs.baslerweb.com/legal-info.html
-    - https://downloads-ctf.baslerweb.com/dg51pdwahxgw/1jFygRZWsQshfx9yU3lWuQ/bab86a82fb0254f4ac2486f7551af422/Computer_Vision_Portfolio_Brochure.pdf
-    - https://docs.baslerweb.com/cameras.html
-    - https://docs.baslerweb.com/area-and-line-scan-cameras.html
-    - https://docs.baslerweb.com/tof-cameras.html
-    - https://docs.baslerweb.com/stereo-cameras.html
-    - https://docs.baslerweb.com/embedded-vision-kits.html
-    - https://docs.baslerweb.com/lenses.html
-    - https://docs.baslerweb.com/illumination.html
-    - https://docs.baslerweb.com/acquisition-cards.html
-    - https://docs.baslerweb.com/software.html
-    - https://docs.baslerweb.com/pylon-software-suite.html
-    - https://docs.baslerweb.com/accessories.html
+    - https://www.baslerweb.com
 ---
 
 ### О компании
@@ -135,16 +111,4 @@ RailTech организует прямые поставки от Basler AG. Мы
 
 ### Источники
 
-- https://docs.baslerweb.com/legal-info.html
-- https://downloads-ctf.baslerweb.com/dg51pdwahxgw/1jFygRZWsQshfx9yU3lWuQ/bab86a82fb0254f4ac2486f7551af422/Computer_Vision_Portfolio_Brochure.pdf
-- https://docs.baslerweb.com/cameras.html
-- https://docs.baslerweb.com/area-and-line-scan-cameras.html
-- https://docs.baslerweb.com/tof-cameras.html
-- https://docs.baslerweb.com/stereo-cameras.html
-- https://docs.baslerweb.com/embedded-vision-kits.html
-- https://docs.baslerweb.com/lenses.html
-- https://docs.baslerweb.com/illumination.html
-- https://docs.baslerweb.com/acquisition-cards.html
-- https://docs.baslerweb.com/software.html
-- https://docs.baslerweb.com/pylon-software-suite.html
-- https://docs.baslerweb.com/accessories.html
+- https://www.baslerweb.com

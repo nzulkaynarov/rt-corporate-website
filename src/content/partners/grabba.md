@@ -52,18 +52,6 @@ uz:
     ### Manbalar
 
     - https://www.grabba.com
-    - https://www.grabba.com/about-us/
-    - https://www.grabba.com/contact-us/
-    - https://www.grabba.com/products/
-    - https://www.grabba.com/product/rugged/
-    - https://www.grabba.com/product/compact/
-    - https://www.grabba.com/product/grabbaone-tablet/
-    - https://www.grabba.com/product/scout/
-    - https://www.grabba.com/product/a-series/
-    - https://www.grabba.com/product/animal-tag-reader/
-    - https://www.grabba.com/product/universal-magtray/
-    - https://www.grabba.com/technologies/
-    - https://www.grabba.com/solutions/
 en:
   name: Grabba
   legalName: Grabba Technologies Pty Ltd
@@ -104,18 +92,6 @@ en:
     ### Sources
 
     - https://www.grabba.com
-    - https://www.grabba.com/about-us/
-    - https://www.grabba.com/contact-us/
-    - https://www.grabba.com/products/
-    - https://www.grabba.com/product/rugged/
-    - https://www.grabba.com/product/compact/
-    - https://www.grabba.com/product/grabbaone-tablet/
-    - https://www.grabba.com/product/scout/
-    - https://www.grabba.com/product/a-series/
-    - https://www.grabba.com/product/animal-tag-reader/
-    - https://www.grabba.com/product/universal-magtray/
-    - https://www.grabba.com/technologies/
-    - https://www.grabba.com/solutions/
 ---
 
 ### О компании
@@ -152,15 +128,3 @@ RailTech организует прямые поставки от Grabba Technolo
 ### Источники
 
 - https://www.grabba.com
-- https://www.grabba.com/about-us/
-- https://www.grabba.com/contact-us/
-- https://www.grabba.com/products/
-- https://www.grabba.com/product/rugged/
-- https://www.grabba.com/product/compact/
-- https://www.grabba.com/product/grabbaone-tablet/
-- https://www.grabba.com/product/scout/
-- https://www.grabba.com/product/a-series/
-- https://www.grabba.com/product/animal-tag-reader/
-- https://www.grabba.com/product/universal-magtray/
-- https://www.grabba.com/technologies/
-- https://www.grabba.com/solutions/
