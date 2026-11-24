@@ -5,17 +5,29 @@ lang:
   - en
 name: Bole Electrical
 legalName: Changsha Bole Electrical Technology Co., Ltd.
+group: ''
+brands: []
+logo: /images/uploads/bole.jpg
 country: CN
 status: direct
 order: 7
-date: '2026-11-24'
+date: 2026-11-24
 title: Bole Electrical — силовые модули IGBT и драйверы
 summary: Китайская компания из провинции Хунань. По её данным, разрабатывает тяговые системы для рельсового транспорта, выпускает силовые модули IGBT и драйверы, ремонтирует преобразователи.
+cover: ''
+coverAlt: ''
+gallery: []
+seoTitle: ''
+seoDescription: ''
 uz:
   name: Bole Electrical
   legalName: Changsha Bole Electrical Technology Co., Ltd.
   title: Bole Electrical — IGBT kuch modullari va drayverlari
   summary: Xunan provinsiyasidagi Xitoy kompaniyasi. O'z ma'lumotlariga ko'ra, relsli transport uchun tortuv tizimlarini ishlab chiqadi, IGBT kuch modullari va drayverlarini ishlab chiqaradi, o'zgartirgichlarni ta'mirlaydi.
+  coverAlt: ''
+  gallery: []
+  seoTitle: ''
+  seoDescription: ''
   body: |-
     ### Kompaniya haqida
 
@@ -48,6 +60,10 @@ en:
   legalName: Changsha Bole Electrical Technology Co., Ltd.
   title: Bole Electrical — IGBT power modules and gate drivers
   summary: Chinese company from Hunan province. By its own account, it develops traction systems for rail transport, makes IGBT power modules and gate drivers, and repairs converters.
+  coverAlt: ''
+  gallery: []
+  seoTitle: ''
+  seoDescription: ''
   body: |-
     ### About the company
 
