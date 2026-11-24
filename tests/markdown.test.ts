@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { renderBody } from '../src/utils/markdown';
+import { renderBody, withToc } from '../src/utils/markdown';
 
 describe('article body formatting (src/utils/markdown.ts)', () => {
   it('one image with a title becomes a figure with a caption', async () => {
@@ -23,5 +23,9 @@ describe('article body formatting (src/utils/markdown.ts)', () => {
 
   it('quotes stay blockquotes', async () => {
     expect(await renderBody('> Цитата', 'ru')).toContain('<blockquote>');
+  });
+  it('«На странице» gets plain heading text: entities are decoded once', () => {
+    const { toc } = withToc('<h3>RailTech&#39;s role &amp; <em>next</em> steps</h3><h3>A &quot;B&quot;</h3>');
+    expect(toc.map((i) => i.text)).toEqual(["RailTech's role & next steps", 'A "B"']);
   });
 });
