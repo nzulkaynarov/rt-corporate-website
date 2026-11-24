@@ -225,6 +225,7 @@ test('a service page preselects the role in the request form and the lead carrie
   await expect(page.getByRole('status')).toBeVisible();
   expect(sent).toMatchObject({ form: 'site-partner', utm: { utm_source: 'test' } });
   expect((sent as unknown as { page: string }).page).toMatch(/\/services\/representation\/$/);
+});
 
 test('pages work under the Content Security Policy (no violations)', async ({ page }) => {
   // Record every CSP violation the browser reports (src/layouts/BaseLayout.astro → csp).
