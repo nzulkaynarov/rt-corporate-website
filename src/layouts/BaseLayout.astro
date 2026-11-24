@@ -64,6 +64,23 @@ const orgId = `${absoluteUrl('/', siteUrl)}#organization`;
 const ogImageUrl = absoluteUrl(withBase(image || site.defaultImage), siteUrl);
 const isPng = /\.png($|\?)/i.test(ogImageUrl);
 const tg = telegramUrl();
+// Content Security Policy (docs/ARCHITECTURE.md §6). GitHub Pages cannot send headers, so it is a <meta>: scripts,
+// styles, fonts and images only from the site itself; the page may talk only to the CRM (lead form). Inline scripts
+// stay allowed because Astro hydrates the form with one; nothing on the site renders visitor input.
+const crmOrigin = new URL(company.leadEndpoint).origin;
+const csp = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "font-src 'self'",
+  `connect-src 'self' ${crmOrigin}`,
+  "frame-src 'none'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  'upgrade-insecure-requests',
+].join('; ');
 
 const graph: Record<string, unknown>[] = [
   {
@@ -112,6 +129,8 @@ if (jsonLd) graph.push(...(Array.isArray(jsonLd) ? jsonLd : [jsonLd]));
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content={csp} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>{title}</title>
     {PRELOAD_FONTS.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
     <meta name="description" content={description} />

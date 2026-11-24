@@ -225,4 +225,19 @@ test('a service page preselects the role in the request form and the lead carrie
   await expect(page.getByRole('status')).toBeVisible();
   expect(sent).toMatchObject({ form: 'site-partner', utm: { utm_source: 'test' } });
   expect((sent as unknown as { page: string }).page).toMatch(/\/services\/representation\/$/);
+
+test('pages work under the Content Security Policy (no violations)', async ({ page }) => {
+  // Record every CSP violation the browser reports (src/layouts/BaseLayout.astro → csp).
+  await page.addInitScript(() => {
+    (window as unknown as { __csp: string[] }).__csp = [];
+    document.addEventListener('securitypolicyviolation', (e) =>
+      (window as unknown as { __csp: string[] }).__csp.push(`${e.violatedDirective} ${e.blockedURI}`),
+    );
+  });
+  await mockCrm(page, { status: 202, body: { lead_id: 1 } });
+  for (const path of ['', 'contacts/', 'news/', 'news/partner-gersys/', 'en/services/supply/']) {
+    await page.goto(path);
+    await page.waitForLoadState('networkidle');
+    expect(await page.evaluate(() => (window as unknown as { __csp: string[] }).__csp), path).toEqual([]);
+  }
 });
