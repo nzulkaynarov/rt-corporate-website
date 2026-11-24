@@ -395,10 +395,17 @@ collections:
           name: brand
           widget: string
         hint: 'Необязательно: показываются под заголовком статьи.'
+      - label: Логотип
+        name: logo
+        widget: image
+        required: false
+        hint: 'Необязательно: SVG или PNG с прозрачным фоном, с официального сайта производителя. Показывается на плитке и в карточке статьи.'
       - label: Страна
         name: country
         widget: select
         options:
+          - label: Австралия
+            value: AU
           - label: Австрия
             value: AT
           - label: Беларусь

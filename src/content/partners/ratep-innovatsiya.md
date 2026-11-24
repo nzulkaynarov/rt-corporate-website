@@ -5,6 +5,7 @@ lang:
   - en
 name: РАТЕП-ИННОВАЦИЯ
 legalName: ООО «РАТЕП-ИННОВАЦИЯ»
+logo: /images/partners/ratep-innovatsiya.svg
 country: RU
 status: direct
 order: 5

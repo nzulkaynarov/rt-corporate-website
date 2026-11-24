@@ -1,13 +1,14 @@
 ---
 /**
  * Manufacturer tiles from the partners collection (src/content/partners: one record = tile + article). The brand is
- * the tile heading, the legal entity is shown under it; the tile links to /news/partner-<id>/ once the article text is
+ * the tile heading (with the manufacturer's logo above it, if the record has one), the legal entity is shown under it; the tile links to /news/partner-<id>/ once the article text is
  * written. Country names come from country.<code> interface strings. The basis of a dealer status is not shown.
  * On phones the tiles become a horizontal swipe row.
  */
 import { localeHref, tField } from '../../i18n';
 import { t } from '../../i18n/ui';
 import { getPartners } from '../../utils/feed';
+import { withBase } from '../../utils/url';
 
 interface Props {
   /** Ids to show (default: all). */
@@ -21,6 +22,7 @@ const partners = (await getPartners())
     const legal = tField(p.data, 'legalName', lang) as string;
     return {
       label,
+      logo: p.data.logo ? withBase(p.data.logo) : '',
       legal: legal && legal !== label ? legal : '',
       country: t(lang, `country.${p.data.country}`),
       statusKey: p.data.status,
@@ -28,6 +30,8 @@ const partners = (await getPartners())
       href: p.articleSlug ? localeHref(`/news/${p.articleSlug}/`, lang) : '',
     };
   });
+// A tile without a logo keeps the same top space, so the names line up across the row.
+const anyLogo = partners.some((p) => p.logo);
 ---
 
 <ul class="tiles" aria-label={t(lang, 'partner.tilesAria')}>
@@ -35,6 +39,7 @@ const partners = (await getPartners())
     <li>
       {p.href ? (
         <a class:list={['tile', 'lift', { 'tile--dealer': p.statusKey === 'dealer' }]} href={p.href}>
+          {p.logo ? <span class="tile__logo"><img src={p.logo} alt="" loading="lazy" decoding="async" /></span> : anyLogo && <span class="tile__logo tile__logo--none" aria-hidden="true"></span>}
           <b>{p.label}</b>
           {p.legal && <span class="tile__legal">{p.legal}</span>}
           <span class="tile__country">{p.country}</span>
@@ -43,6 +48,7 @@ const partners = (await getPartners())
         </a>
       ) : (
         <div class:list={['tile', { 'tile--dealer': p.statusKey === 'dealer' }]}>
+          {p.logo ? <span class="tile__logo"><img src={p.logo} alt="" loading="lazy" decoding="async" /></span> : anyLogo && <span class="tile__logo tile__logo--none" aria-hidden="true"></span>}
           <b>{p.label}</b>
           {p.legal && <span class="tile__legal">{p.legal}</span>}
           <span class="tile__country">{p.country}</span>
@@ -79,6 +85,30 @@ const partners = (await getPartners())
     border-color: var(--c-brand-mid);
     box-shadow: var(--shadow-lift);
     color: var(--c-ink);
+  }
+  /* Logo plate: always white, so a mark drawn for a light background reads on the tinted dealer tile too. */
+  .tile__logo {
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+    height: 44px;
+    max-width: calc(100% - 26px);
+    margin-bottom: 8px;
+    padding: 6px 10px;
+    border-radius: var(--r-sm);
+    background: var(--c-bg);
+  }
+  /* Fixed height, width by the mark's proportions (an SVG with only a viewBox has no size of its own). */
+  .tile__logo--none {
+    background: none;
+  }
+  .tile__logo img {
+    display: block;
+    height: 100%;
+    width: auto;
+    max-width: 132px;
+    object-fit: contain;
+    object-position: left center;
   }
   .tile b {
     font: 700 16px/1.3 var(--f-display);

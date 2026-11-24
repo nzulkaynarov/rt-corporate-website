@@ -20,7 +20,9 @@ description: Add or update a RailTech manufacturer partner — one record in src
    `name` — бренд на плитке, `legalName` — юрлицо (к нему относится статус), `group` — группа, если есть
    (Siemens Mobility GmbH → `group: Siemens AG`), `brands` — торговые марки, если нужны; `country` — код из списка
    (`country.<код>` в `src/data/cms/ui/countries.json`; новой страны нет — добавь строку туда на трёх языках и вариант
-   в `public/admin/config.yml`), `status`, `order`. Кириллические `name`/`legalName` сразу переводи в блоках
+   в `public/admin/config.yml`), `status`, `order`; `logo` — логотип с официального сайта производителя (SVG или PNG с
+   прозрачным фоном, вариант для светлого фона) в `public/images/partners/<id>.svg|png`; не перерисовывай и не
+   перекрашивай, нет официального файла — оставь без логотипа. Кириллические `name`/`legalName` сразу переводи в блоках
    `uz:` / `en:` по GLOSSARY.md: плитка видна на всех языках. Новых полей не добавляй (ARCHITECTURE.md §3).
 3. **Статья** в той же записи: `date`, `title`, `summary` и текст с разделами «О компании», «Продукция и направления»,
    «Где применяется», «Что RailTech поставляет», «Источники». Факты бери с официального сайта производителя и

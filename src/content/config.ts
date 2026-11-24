@@ -102,6 +102,8 @@ const partners = defineCollection({
     group: z.string().optional(),
     /** Trade marks and product lines of the company (shown under the article heading). */
     brands: z.array(z.string()).default([]),
+    /** Manufacturer's logo (path under /public, SVG or transparent PNG): shown on the tile and in the article card. */
+    logo: z.string().optional(),
     /** ISO 3166-1 alpha-2; names come from the interface strings country.<code> (src/data/cms/ui/countries.json). */
     country: z.string().regex(/^[A-Z]{2}$/),
     /** dealer — only with the manufacturer's document; direct — direct supplies. The basis is never published. */

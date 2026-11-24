@@ -5,6 +5,7 @@ lang:
   - en
 name: ADZ NAGANO
 legalName: ADZ NAGANO GmbH
+logo: /images/partners/adz-nagano.svg
 country: DE
 status: direct
 order: 2

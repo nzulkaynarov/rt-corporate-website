@@ -91,7 +91,7 @@ const jsonLd = {
     </header>
     <div class:list={['art__aside', { 'art__aside--last': !partner }]}>
       <ArticleAside
-        partner={partner ? { status: partner.status, country: partner.country, legalName: partnerLegal, group: partner.group, brands: partner.brands } : undefined}
+        partner={partner ? { logo: partner.logo, status: partner.status, country: partner.country, legalName: partnerLegal, group: partner.group, brands: partner.brands } : undefined}
         partners={asidePartners}
         services={partner ? [] : asideServices}
         toc={toc}

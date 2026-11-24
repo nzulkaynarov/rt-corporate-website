@@ -136,6 +136,16 @@
 | ОАО «РЖД» | «Rossiya temir yo'llari» OAJ (RJD) | Russian Railways (RZD) | — | на проверку носителю |
 | ВНИИЖТ | VNIIJT | VNIIZhT | — | Аббревиатуры российских организаций в UZ/EN транслитерируются; на проверку носителю |
 | МПСУиД (обозначение изделия) | MPSUiD | MPSUiD | — | Строчная «и» не проходит проверку кириллицы в UZ/EN, поэтому латиница; остальные обозначения (БЛОК, САУТ-ЦМ/485) остаются кириллицей; на проверку носителю |
+| ООО «Трансконвертер» | «Transkonverter» MChJ | Transconverter LLC | — | EN — как пишет сама компания; UZ транслитерацией, как у РАТЕП; на проверку носителю |
+| штаб-квартира | bosh qarorgoh | headquarters | `shtab-kvartira` | Партнёры 2026-11-24; на проверку носителю |
+| тяговый двигатель | tortuv dvigateli | traction motor | — | на проверку носителю |
+| преобразователь (электроэнергии) | o'zgartirgich | converter | — | статический преобразователь — elektr energiyasining statik o'zgartirgichi / static power converter; на проверку носителю |
+| преобразователь собственных нужд | o'z ehtiyojlari o'zgartirgichi | auxiliary power supply converter | — | на проверку носителю |
+| силовой модуль | kuch moduli | power module | — | на проверку носителю |
+| электропривод | elektr yuritma | electric drive | — | на проверку носителю |
+| рельсовый транспорт | relsli transport | rail transport | — | на проверку носителю |
+| компьютерное (техническое) зрение | kompyuter ko'rishi (texnik ko'rish) | computer (machine) vision | — | на проверку носителю |
+| считыватель | o'qigich | reader | — | Смарт-карт, RFID, паспортов; на проверку носителю |
 
 ## Единицы и обозначения
 
