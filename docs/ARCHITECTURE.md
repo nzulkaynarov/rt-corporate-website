@@ -113,7 +113,7 @@ Telegram и звонок — это не вторая навигация, а т�
 src/layouts/BaseLayout.astro        <head>: SEO, canonical, hreflang, JSON-LD, шрифты; Header + <main> + Footer
 src/components/layout/              Header (меню, языки, кнопки), MobileMenu (<details>, без JS), Footer,
                                     MobileBar (панель связи внизу экрана на телефоне, без JS)
-src/components/ui/                  Button, Section, SectionHead, Breadcrumbs, Faq (<details>), PartnerTiles, NewsCard,
+src/components/ui/                  Button, Section, SectionHead, Breadcrumbs, Faq (<details>), PartnerTiles, PartnerLogos (главная), NewsCard,
                                     RelatedMaterials (рекомендации из src/utils/feed.ts), ArticleAside (боковая колонка
                                     одиночной страницы: карточка партнёра, связи, кнопка заявки), Toc («На странице»), Prose
 src/components/home/                Hero, Bridge, Directions, About, CabinetBlock, LatestNews, Invite

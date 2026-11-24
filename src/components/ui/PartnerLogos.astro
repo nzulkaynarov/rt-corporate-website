@@ -1,0 +1,126 @@
+---
+/**
+ * Compact logo wall of the manufacturers for the home page (docs/DESIGN.md → «Производители на главной»).
+ * Each logo leads to the partner article; the brand name stays under the logo (some marks have no lettering), the
+ * official dealer gets a small mark. Full tiles with country, legal entity and status live on /partners/.
+ */
+import { localeHref, tField } from '../../i18n';
+import { t } from '../../i18n/ui';
+import { getPartners } from '../../utils/feed';
+import { withBase } from '../../utils/url';
+
+const lang = Astro.locals.lang;
+const partners = (await getPartners()).map((p) => ({
+  name: tField(p.data, 'name', lang) as string,
+  logo: p.data.logo ? withBase(p.data.logo) : '',
+  dealer: p.data.status === 'dealer',
+  href: p.articleSlug ? localeHref(`/news/${p.articleSlug}/`, lang) : localeHref('/partners/', lang),
+}));
+---
+
+<ul class="logos" aria-label={t(lang, 'partner.tilesAria')}>
+  {partners.map((p) => (
+    <li>
+      <a class="logo lift" href={p.href}>
+        <span class="logo__img">{p.logo ? <img src={p.logo} alt="" loading="lazy" decoding="async" /> : <b>{p.name}</b>}</span>
+        <span class="logo__name">{p.name}</span>
+        {p.dealer && <span class="logo__dealer">{t(lang, 'partner.status.dealer')}</span>}
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .logos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
+  .logo {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 100%;
+    min-height: 112px;
+    padding: 16px 12px 12px;
+    border: 1px solid var(--c-line);
+    border-radius: var(--r-md);
+    background: var(--c-bg);
+    color: var(--c-muted);
+    text-decoration: none;
+    text-align: center;
+  }
+  a.logo:hover {
+    border-color: var(--c-brand-mid);
+    box-shadow: var(--shadow-lift);
+  }
+  .logo__img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 100%;
+  }
+  .logo__img img {
+    display: block;
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+  }
+  .logo__img b {
+    font: 700 15px/1.2 var(--f-display);
+    color: var(--c-ink);
+  }
+  .logo__name {
+    font-size: 13px;
+    line-height: 1.25;
+  }
+  .logo__dealer {
+    white-space: nowrap;
+    padding: 2px 8px;
+    border-radius: var(--r-pill);
+    background: var(--c-brand-soft);
+    color: var(--c-brand-ink-hover);
+    font-size: 11px;
+    font-weight: 600;
+  }
+  /* phone: two rows that swipe sideways, so the section stays short; «Все производители» is right below */
+  @media (max-width: 760px) {
+    .logos {
+      grid-template-columns: none;
+      grid-template-rows: repeat(2, auto);
+      grid-auto-flow: column;
+      grid-auto-columns: 31%;
+      gap: 8px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--gutter);
+      margin-inline: calc(var(--gutter) * -1);
+      padding-inline: var(--gutter);
+      padding-bottom: 6px;
+    }
+    .logos li {
+      scroll-snap-align: start;
+    }
+    .logo {
+      min-height: 92px;
+      padding: 12px 6px 8px;
+    }
+    .logo__img {
+      height: 30px;
+    }
+    .logo__name {
+      font-size: 12px;
+    }
+    .logo__dealer {
+      font-size: 10px;
+    }
+  }
+</style>
