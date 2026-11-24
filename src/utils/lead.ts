@@ -5,6 +5,7 @@
  * Contract: RailTech_Platform packages/contracts/openapi/crm.yaml (docs/ARCHITECTURE.md §5).
  */
 import type { Lang } from '../i18n';
+import type { Visit } from './visit';
 
 export interface LeadInput {
   name: string;
@@ -12,9 +13,13 @@ export interface LeadInput {
   contact: string;
   text: string;
   consent: boolean;
+  /** Who writes: a customer (supply, engineering) or a manufacturer/partner; '' = not chosen. */
+  role: LeadRole;
   /** Honeypot: hidden field that people never fill. */
   website: string;
 }
+
+export type LeadRole = '' | 'customer' | 'partner';
 
 export interface LeadPayload {
   name: string;
@@ -26,6 +31,12 @@ export interface LeadPayload {
   form_token: string;
   consent: true;
   website: string;
+  /** Source facts the CRM keeps with the lead (optional in the contract). */
+  form?: string;
+  page?: string;
+  referrer?: string;
+  utm?: Record<string, string>;
+  landing_language?: string;
 }
 
 export type FieldError = 'required' | 'contact' | 'phone' | 'email' | 'consent';
@@ -53,8 +64,14 @@ export function validateLead(input: LeadInput): FieldErrors {
   return errors;
 }
 
-export function buildPayload(input: LeadInput, lang: Lang, formToken: string): LeadPayload {
+/**
+ * The request body. `visit` (src/utils/visit.ts) adds where the visit came from: first page, external referrer, utm
+ * marks; `currentPage` is used when the visit was not recorded. `form` names the form and the role chosen in it.
+ */
+export function buildPayload(input: LeadInput, lang: Lang, formToken: string, visit: Visit | null = null, currentPage = ''): LeadPayload {
   const { phone, email } = parseContact(input.contact);
+  const page = (visit?.landing || currentPage).slice(0, 1024);
+  const utm = visit && Object.keys(visit.utm).length ? visit.utm : undefined;
   return {
     name: input.name.trim().slice(0, 255),
     ...(input.company.trim() ? { company: input.company.trim().slice(0, 255) } : {}),
@@ -65,6 +82,11 @@ export function buildPayload(input: LeadInput, lang: Lang, formToken: string): L
     form_token: formToken,
     consent: true,
     website: input.website,
+    form: input.role ? `site-${input.role}` : 'site',
+    ...(page ? { page } : {}),
+    ...(visit?.referrer ? { referrer: visit.referrer.slice(0, 1024) } : {}),
+    ...(utm ? { utm } : {}),
+    ...(visit?.lang ? { landing_language: visit.lang.slice(0, 8) } : {}),
   };
 }
 

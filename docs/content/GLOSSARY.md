@@ -19,7 +19,7 @@
 | ООО «RailTech» | «RailTech» MChJ | RailTech LLC | `OOO RailTech` | Бренд всегда `RailTech`, без перевода |
 | Кабинет клиента и партнёра | mijoz va hamkor Kabineti | Client & Partner Cabinet | — | cabinet.railtech.uz; название продукта, всегда с заглавной: «Кабинет» / Kabinet (Kabinetda, Kabinetga, RailTech Kabineti, hamkor Kabineti) / Cabinet (RailTech Cabinet, partner Cabinet) |
 | Войти в Кабинет | Kabinetga kirish | Sign in to the Cabinet | — | Подпись кнопки; проверить |
-| Начать работу | Ishni boshlash | Get started | — | Подпись кнопки, ведёт к форме заявки; проверить |
+| Отправить заявку (главная кнопка) | Ariza yuborish | Send request | — | Шапка, нижний блок, панель на телефоне и кнопка формы — одна подпись (решение владельца 2026-11-24) |
 | Заявка | ariza | request | — | Форма на сайте → CRM |
 | Отправить заявку | Ariza yuborish | Send request | — | Подпись кнопки формы; проверить |
 | Заказчикам | buyurtmachilarga | for customers | — | Раздел услуг (`audience: customers`) |
