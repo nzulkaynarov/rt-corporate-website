@@ -118,7 +118,7 @@
 
 ## 6. Живой запуск на своём компьютере
 
-Нужны Node 22, Git, `make` (на Windows — Git Bash/WSL или команды `npm run …` из `package.json`).
+Нужны Node 24 (как в CI), Git, `make` (на Windows — Git Bash/WSL или команды `npm run …` из `package.json`).
 
 ```bash
 git clone https://github.com/nzulkaynarov/rt-corporate-website.git
