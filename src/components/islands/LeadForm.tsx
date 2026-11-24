@@ -24,7 +24,7 @@ interface Props {
   idPrefix?: string;
 }
 
-type Status = 'idle' | 'sending' | SubmitOutcome;
+type Status = 'idle' | 'sending' | Exclude<SubmitOutcome, 'field'>;
 
 const EMPTY: LeadInput = { name: '', company: '', contact: '', text: '', consent: false, role: '', website: '' };
 
@@ -52,6 +52,7 @@ export default function LeadForm(props: Props) {
   const [values, setValues] = useState<LeadInput>(EMPTY);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<Status>('idle');
+  const [requestNumber, setRequestNumber] = useState('');
   const token = useRef<{ token: string; minFill: number; at: number } | null>(null);
 
   async function loadToken() {
@@ -103,9 +104,21 @@ export default function LeadForm(props: Props) {
         body: JSON.stringify(buildPayload(values, lang, token.current.token, readVisit(sessionStore()), window.location.pathname)),
       });
       const body = await res.json().catch(() => null);
-      const outcome = outcomeFromResponse(res.status, body);
-      setStatus(outcome);
-      if (outcome === 'success') setValues({ ...EMPTY, role: values.role });
+      const result = outcomeFromResponse(res.status, body);
+      const { outcome } = result;
+      if (outcome === 'field' && result.field && result.error) {
+        // The CRM refused one input: say so at the field instead of a general «could not send».
+        setStatus('idle');
+        setErrors({ [result.field]: result.error });
+        document.getElementById(id(result.field))?.focus();
+        await loadToken();
+        return;
+      }
+      setStatus(outcome === 'field' ? 'invalid' : outcome);
+      if (outcome === 'success') {
+        setRequestNumber(result.requestNumber || '');
+        setValues({ ...EMPTY, role: values.role });
+      }
       if (outcome === 'expired' || outcome === 'tooFast') await loadToken();
     } catch {
       setStatus('network');
@@ -123,7 +136,7 @@ export default function LeadForm(props: Props) {
   if (status === 'success') {
     return (
       <div className="lf lf--done" role="status" aria-live="polite">
-        <p className="lf__done-title">{tr('form.success.title')}</p>
+        <p className="lf__done-title">{requestNumber ? t(lang, 'form.success.titleNumber', { number: requestNumber }) : tr('form.success.title')}</p>
         <p>{tr('form.success.text')}</p>
       </div>
     );
@@ -178,7 +191,7 @@ export default function LeadForm(props: Props) {
       </div>
       <label htmlFor={id('contact')}>
         {tr('form.contact')}
-        <input id={id('contact')} name="contact" type="text" inputMode="email" autoComplete="tel" placeholder={tr('form.contactPh')} value={values.contact} onChange={set('contact')} aria-invalid={!!errors.contact} aria-describedby={described('contact')} />
+        <input id={id('contact')} name="contact" type="text" autoComplete="tel" placeholder={tr('form.contactPh')} value={values.contact} onChange={set('contact')} aria-invalid={!!errors.contact} aria-describedby={described('contact')} />
         {err('contact')}
       </label>
       <label htmlFor={id('text')}>
@@ -203,8 +216,8 @@ export default function LeadForm(props: Props) {
       <div aria-live="polite">
         {status !== 'idle' && status !== 'sending' && (
           <div className="lf__fail" role="alert">
-            <p>{tr(`form.error.${status === 'invalid' ? 'network' : status}`)}</p>
-            {(status === 'network' || status === 'invalid' || status === 'rate') && alternatives}
+            <p>{tr(`form.error.${status}`)}</p>
+            {(status === 'network' || status === 'rate') && alternatives}
           </div>
         )}
       </div>

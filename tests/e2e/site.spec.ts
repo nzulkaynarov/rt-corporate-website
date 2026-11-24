@@ -134,6 +134,25 @@ test('the lead form validates, sends to the CRM and confirms', async ({ page }) 
   expect((sent as unknown as { page: string }).page).toMatch(/\/contacts\/$/);
 });
 
+test('a number the CRM refuses is shown at the field, the request number at success', async ({ page }) => {
+  await mockCrm(page, { status: 422, body: { code: 'validation_failed', details: { reason: 'invalid_phone', field: 'phone' } } });
+  await page.goto('contacts/');
+  await page.locator('#request astro-island:not([ssr])').waitFor();
+  const form = page.locator('#request form');
+  await form.locator('input[name="name"]').fill('Тест Тестов');
+  await form.locator('input[name="contact"]').fill('+998 90 000-00-00');
+  await form.locator('textarea[name="text"]').fill('Проверка формы');
+  await form.locator('input[name="consent"]').check();
+  await form.getByRole('button').click();
+  await expect(form.locator('#contacts-lead-contact-err')).toBeVisible();
+  await expect(form.locator('.lf__fail')).toHaveCount(0);
+  await expect(form.locator('input[name="contact"]')).toHaveCSS('border-top-color', 'rgb(160, 49, 47)');
+  await page.unroute(CRM);
+  await page.route(CRM, (route) => route.fulfill({ status: 202, json: { lead_id: 42, request_number: 'L-0042' } }));
+  await form.getByRole('button').click();
+  await expect(page.getByRole('status')).toContainText('L-0042');
+});
+
 test('when the CRM is unreachable the form shows other channels', async ({ page }) => {
   await page.route(`${CRM}/token`, (route) => route.abort());
   await page.route(CRM, (route) => route.abort());

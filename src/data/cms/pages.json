@@ -28,7 +28,7 @@
     "title": "Контакты и реквизиты",
     "lead": "Напишите, позвоните или отправьте заявку. Клиенты и партнёры работают с нами в Кабинете.",
     "formTitle": "Отправить заявку",
-    "formText": "Менеджер свяжется с вами и пришлёт приглашение в Кабинет."
+    "formText": "Менеджер ответит в рабочее время."
   },
   "notFound": {
     "title": "Страница не найдена",
@@ -59,7 +59,7 @@
       "title": "Kontaktlar va rekvizitlar",
       "lead": "Yozing, qo'ng'iroq qiling yoki ariza yuboring. Mijozlar va hamkorlar biz bilan Kabinetda ishlaydi.",
       "formTitle": "Ariza yuborish",
-      "formText": "Menejer siz bilan bog'lanadi va Kabinetga taklifnoma yuboradi."
+      "formText": "Menejer ish vaqtida javob beradi."
     },
     "notFound": {
       "title": "Sahifa topilmadi",
@@ -91,7 +91,7 @@
       "title": "Contacts and company details",
       "lead": "Email us, call or send a request. Clients and partners work with us in the Cabinet.",
       "formTitle": "Send request",
-      "formText": "A manager will contact you and send you an invitation to the Cabinet."
+      "formText": "A manager will reply during business hours."
     },
     "notFound": {
       "title": "Page not found",

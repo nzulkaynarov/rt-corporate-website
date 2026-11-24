@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildPayload, outcomeFromResponse, parseContact, validateLead, type LeadInput } from '../src/utils/lead';
+import { buildPayload, normalizePhone, outcomeFromResponse, parseContact, validateLead, type LeadInput } from '../src/utils/lead';
 import { readVisit, recordVisit, visitFrom, VISIT_KEY } from '../src/utils/visit';
 
 const filled: LeadInput = { name: 'Алишер', company: 'Завод', contact: '+998 90 118-90-00', text: 'Нужны датчики', consent: true, role: '', website: '' };
@@ -13,6 +13,37 @@ describe('parseContact', () => {
     expect(parseContact('').error).toBe('contact');
     expect(parseContact('12-34').error).toBe('phone');
     expect(parseContact('name@').error).toBe('email');
+  });
+});
+
+// Same table as the CRM (apps/crm/backend/tests/unit/domain/test_lead_sources.py): both sides must agree.
+describe('normalizePhone', () => {
+  it.each([
+    ['+998 90 123-45-67', '+998901234567'],
+    ['998901234567', '+998901234567'],
+    ['00998901234567', '+998901234567'],
+    ['90 123 45 67', '+998901234567'],
+    ['(90) 123-45-67', '+998901234567'],
+    ['+998-(90)-123-45-67', '+998901234567'],
+    ['+7 (999) 123-45-67', '+79991234567'],
+    ['+380 44 123 45 67', '+380441234567'],
+    ['+1 650 555 0100', '+16505550100'],
+  ])('accepts %s', (raw, expected) => {
+    expect(normalizePhone(raw)).toBe(expected);
+  });
+  it.each([
+    '+998 90 118 90 0', // 11 digits: one missing
+    '+998 90 123 45 678', // 13 digits: one extra
+    '998 90 123 45',
+    '8 90 123 45 67', // local trunk prefix 8
+    '0 90 123 45 67',
+    '12345',
+    '+0998901234567',
+    '+998 90 123-45-67 доб. 12',
+    'abc',
+  ])('rejects %s', (raw) => {
+    expect(normalizePhone(raw)).toBeNull();
+    expect(parseContact(raw).error).toBe('phone');
   });
 });
 
@@ -77,12 +108,23 @@ describe('buildPayload', () => {
 
 describe('outcomeFromResponse', () => {
   it('maps CRM answers to UI messages', () => {
-    expect(outcomeFromResponse(202, { lead_id: 1 })).toBe('success');
-    expect(outcomeFromResponse(429, null)).toBe('rate');
-    expect(outcomeFromResponse(422, { details: { reason: 'form_too_fast' } })).toBe('tooFast');
-    expect(outcomeFromResponse(422, { details: { reason: 'form_token_expired' } })).toBe('expired');
-    expect(outcomeFromResponse(422, { details: { reason: 'invalid_phone' } })).toBe('invalid');
-    expect(outcomeFromResponse(500, null)).toBe('network');
+    expect(outcomeFromResponse(202, { lead_id: 1 })).toEqual({ outcome: 'success' });
+    expect(outcomeFromResponse(429, null)).toEqual({ outcome: 'rate' });
+    expect(outcomeFromResponse(422, { details: { reason: 'form_too_fast' } })).toEqual({ outcome: 'tooFast' });
+    expect(outcomeFromResponse(422, { details: { reason: 'form_token_expired' } })).toEqual({ outcome: 'expired' });
+    expect(outcomeFromResponse(422, { details: {} })).toEqual({ outcome: 'invalid' });
+    expect(outcomeFromResponse(500, null)).toEqual({ outcome: 'network' });
+  });
+  it('keeps the request number the CRM returns', () => {
+    expect(outcomeFromResponse(202, { lead_id: 42, request_number: 'L-0042' })).toEqual({ outcome: 'success', requestNumber: 'L-0042' });
+    expect(outcomeFromResponse(202, { lead_id: null })).toEqual({ outcome: 'success' });
+  });
+  it('shows a refused input at its field, not as a general failure', () => {
+    expect(outcomeFromResponse(422, { details: { reason: 'invalid_phone', field: 'phone' } })).toEqual({ outcome: 'field', field: 'contact', error: 'phone' });
+    expect(outcomeFromResponse(422, { details: { reason: 'invalid_email' } })).toEqual({ outcome: 'field', field: 'contact', error: 'email' });
+    expect(outcomeFromResponse(422, { details: { reason: 'contact_required' } })).toEqual({ outcome: 'field', field: 'contact', error: 'contact' });
+    expect(outcomeFromResponse(422, { details: { reason: 'consent_required' } })).toEqual({ outcome: 'field', field: 'consent', error: 'consent' });
+    expect(outcomeFromResponse(422, { details: { field: 'name' } })).toEqual({ outcome: 'field', field: 'name', error: 'required' });
   });
 });
 

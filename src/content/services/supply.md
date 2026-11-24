@@ -37,7 +37,7 @@ benefits:
     text: Каждая сделка по стадиям в Кабинете, документы и переписка — в одном месте
 faq:
   - q: Как отправить запрос?
-    a: Через форму на сайте, Telegram-бот или письмом на {email}. Можно приложить список позиций в Excel. Менеджер свяжется с вами и пришлёт приглашение в Кабинет.
+    a: Через форму на сайте, Telegram-бот или письмом на {email}. Можно приложить список позиций в Excel. Менеджер ответит в рабочее время.
   - q: Почему на сайте нет цен?
     a: Цена зависит от количества, условий поставки и исполнения изделия. Итоговую стоимость с логистикой и пошлинами указываем в коммерческом предложении.
   - q: Какие документы вы предоставляете?
@@ -81,7 +81,7 @@ uz:
       text: Har bir bitim Kabinetda bosqichma-bosqich, hujjatlar va yozishmalar — bir joyda
   faq:
     - q: So'rovni qanday yuborish mumkin?
-      a: Saytdagi shakl, Telegram-bot yoki {email} manziliga xat orqali. Pozitsiyalar ro'yxatini Excel faylida ilova qilishingiz mumkin. Menejer siz bilan bog'lanadi va Kabinetga taklifnoma yuboradi.
+      a: Saytdagi shakl, Telegram-bot yoki {email} manziliga xat orqali. Pozitsiyalar ro'yxatini Excel faylida ilova qilishingiz mumkin. Menejer ish vaqtida javob beradi.
     - q: Nega saytda narxlar yo'q?
       a: Narx miqdorga, yetkazib berish shartlariga va mahsulot modifikatsiyasiga bog'liq. Logistika va boj to'lovlarini o'z ichiga olgan yakuniy qiymatni tijorat taklifida ko'rsatamiz.
     - q: Qanday hujjatlarni taqdim etasiz?
@@ -136,7 +136,7 @@ en:
       text: Every deal tracked by stage in the Cabinet, with documents and correspondence in one place
   faq:
     - q: How do I send a request?
-      a: Use the form on the website, the Telegram bot or email {email}. You can attach a list of items in Excel. A manager will contact you and send you an invitation to the Cabinet.
+      a: Use the form on the website, the Telegram bot or email {email}. You can attach a list of items in Excel. A manager will reply during business hours.
     - q: Why are there no prices on the website?
       a: The price depends on the quantity, delivery terms and product version. We state the final cost, including logistics and duties, in the quotation.
     - q: What documents do you provide?

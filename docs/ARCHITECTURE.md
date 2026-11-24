@@ -134,7 +134,7 @@ src/utils/fonts.ts                  файлы шрифтов для предз�
 ```
 Посетитель ─ «Отправить заявку» ─► форма (LeadForm.tsx) ─► CRM: POST {leadEndpoint}        ─► лид «с сайта» в очереди
                                                           (токен: GET {leadEndpoint}/token)   менеджер связывается
-                                                                                               и приглашает в Кабинет
+                                                                                               и решает, как продолжить
 Клиент/партнёр ─ «Войти в Кабинет» ─► cabinet.railtech.uz/login  (вход по коду из письма или Telegram, без пароля)
 Telegram ─► t.me/<бот>?start=web  (бот CRM, источник «сайт»)
 ```
@@ -142,8 +142,11 @@ Telegram ─► t.me/<бот>?start=web  (бот CRM, источник «сай�
 - Адреса берутся из `company.json`: `leadEndpoint` (по умолчанию `https://crm.railtech.uz/api/v1/leads/web`),
   `cabinet.url` (вход `/login` и приглашение `/new-client` строятся от него в `src/utils/company.ts`), `telegramBot`.
 - Контракт приёма (платформа, `packages/contracts/openapi/crm.yaml`): `GET …/token` → `{token, expires_at, min_fill_seconds}`;
-  `POST …` JSON `{name, company?, phone?, email?, text, language, form_token, consent: true, website: "", form, page?, referrer?, utm?, landing_language?}` → `202 {lead_id}`;
-  ошибки `422 validation_failed` (`details.reason`), `429 rate_limited`. Поле `website` — ловушка для ботов, всегда пустое.
+  `POST …` JSON `{name, company?, phone?, email?, text, language, form_token, consent: true, website: "", form, page?, referrer?, utm?, landing_language?}` → `202 {lead_id, request_number, first_response_minutes}` (сайт показывает `request_number`, срок не публикует);
+  ошибки `422 validation_failed` (`details.reason`: `invalid_phone`, `invalid_email`, `contact_required`, `consent_required`, `form_token_*`, `form_too_fast`; для ошибки схемы — `details.field`), `429 rate_limited`.
+  Отказ по полю форма показывает у поля (`outcomeFromResponse` в `src/utils/lead.ts`), общее «не удалось отправить» — только для сети и 5xx.
+  Телефон проверяется так же, как в CRM (`normalizePhone`): Узбекистан — `+998` и ровно 9 цифр, локальное «8 90 …» отклоняется,
+  другие страны — код и 8–15 цифр; пробелы, дефисы и скобки допустимы. Поле `website` — ловушка для ботов, всегда пустое.
 - CRM принимает запросы только с разрешённых адресов (CORS). Чтобы форма работала с railtech.uz, на платформе в
   `infra/compose/prod.yml` к `CABINET_ORIGIN` добавляется адрес сайта. Пока этого нет, форма при ошибке сети показывает
   запасные каналы: Telegram, телефон, e-mail и ссылку `cabinet.url` + `/new-client`.
@@ -152,6 +155,7 @@ Telegram ─► t.me/<бот>?start=web  (бот CRM, источник «сай�
   как `page`, `referrer`, `utm`, `landing_language`. `form` = `site` или `site-customer` / `site-partner` — роль,
   выбранная в форме; со страниц услуг она приходит заранее (`/contacts/?role=…#request`). Описано в политике
   конфиденциальности и на странице «Cookies».
+- Тексты формы не обещают срок ответа и приглашение в Кабинет: «Менеджер ответит в рабочее время» (аудит текстов 2026-11-24).
 - Регистрации в Кабинете «с улицы» нет — только по приглашению менеджера. Поэтому на сайте нет кнопки «Зарегистрироваться».
 - Сайт не ставит cookie и не подключает аналитику; данные заявки уходят только в CRM RailTech.
 
