@@ -146,6 +146,16 @@
 | рельсовый транспорт | relsli transport | rail transport | — | на проверку носителю |
 | компьютерное (техническое) зрение | kompyuter ko'rishi (texnik ko'rish) | computer (machine) vision | — | на проверку носителю |
 | считыватель | o'qigich | reader | — | Смарт-карт, RFID, паспортов; на проверку носителю |
+| рельсовые скрепления | rels mahkamlagichlari | rail fastenings | — | Партнёры 2026-11-24 (JEZETEK); на проверку носителю |
+| затягивать / откручивать (болт) | qotirmoq / bo'shatmoq | tighten / loosen | — | на проверку носителю |
+| момент затяжки | qotirish momenti | tightening torque | — | на проверку носителю |
+| балластный / безбалластный путь | ballastli / ballastsiz yo'l | ballasted / ballastless track | — | на проверку носителю |
+| крышевой изолятор | tom izolyatori | roof insulator | — | на проверку носителю |
+| подъездные пути | shoxobcha yo'llar | sidings | — | на проверку носителю |
+| двусторонние встречи | ikki tomonlama uchrashuvlar | bilateral meetings | — | Форум ICEX 2026; на проверку носителю |
+| системы управления и сигнализации | boshqaruv va signallashtirish tizimlari | control-command and signalling systems | — | на проверку носителю |
+| контактная сеть | kontakt tarmog'i | overhead contact line | — | на проверку носителю |
+| технический надзор | texnik nazorat | technical supervision | — | на проверку носителю |
 
 ## Единицы и обозначения
 
