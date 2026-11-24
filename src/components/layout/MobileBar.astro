@@ -2,7 +2,7 @@
 /**
  * Contact bar fixed to the bottom of the screen on phones (≤ 760 px; docs/DESIGN.md → «Телефон»).
  * On a phone the header buttons live inside «Меню», so the main action stays one tap away here:
- * «Начать работу» (the request form), Telegram and a call. Not a second navigation — the same actions as the header.
+ * «Отправить заявку» (the request form), Telegram and a call. Not a second navigation — the same actions as the header.
  * No JavaScript: the bar hides while a form field has focus (the keyboard is open) and is not rendered on wider screens.
  */
 import { localeHref } from '../../i18n';
@@ -61,8 +61,10 @@ const tel = telHref();
       border-radius: var(--r-sm);
       color: var(--c-ink);
     }
-    /* the keyboard is open: give the form the whole screen */
-    :global(body:has(input:focus, textarea:focus, select:focus)) .mbar {
+    /* the keyboard is open: give the form the whole screen. Focus anywhere in the request form (its button too) keeps
+       the bar hidden: otherwise a tap on «Отправить» moves focus to the button, the bar reappears under the finger and
+       the tap ends on the bar instead of sending the form. */
+    :global(body:has(input:focus, textarea:focus, select:focus, .lf :focus)) .mbar {
       display: none;
     }
   }

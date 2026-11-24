@@ -34,10 +34,10 @@ SEO и навигации нет «ж/д», серий локомотивов и
 | `/admin/` | `src/pages/admin.astro` | Sveltia CMS (версия зафиксирована) | `public/admin/config.yml` |
 | старые адреса v1 (`catalog`, `blog`, `projects`, `about`, …) | `src/pages/[...legacy].astro` | Перенаправления для ru/uz/en (meta refresh + canonical, `noindex`, вне sitemap) | `src/data/legacy-redirects.json` |
 
-Навигация (шапка): **Услуги · Новости · Контакты** + переключатель языка + кнопки **«Начать работу»** (форма заявки,
+Навигация (шапка): **Услуги · Новости · Контакты** + переключатель языка + кнопки **«Отправить заявку»** (форма заявки,
 `/contacts/#request`) и **«Войти в Кабинет»** (`company.json → cabinet.url` + `/login`). Футер: разделы, сервисные страницы,
 контакты, ИНН. Меню одно — футер и мобильное меню строятся из `src/utils/nav.ts`.
-На телефоне (≤ 760 px) внизу экрана закреплена **панель связи** (`MobileBar`): «Начать работу» (та же форма заявки),
+На телефоне (≤ 760 px) внизу экрана закреплена **панель связи** (`MobileBar`): «Отправить заявку» (та же форма заявки),
 Telegram и звонок — это не вторая навигация, а те же действия шапки, которые на телефоне спрятаны в «Меню».
 Панель скрывается, пока посетитель печатает в поле формы.
 
@@ -131,7 +131,7 @@ src/utils/fonts.ts                  файлы шрифтов для предз�
 ## 5. Заявки и Кабинет (интеграция с платформой)
 
 ```
-Посетитель ─ «Начать работу» ─► форма (LeadForm.tsx) ─► CRM: POST {leadEndpoint}        ─► лид «с сайта» в очереди
+Посетитель ─ «Отправить заявку» ─► форма (LeadForm.tsx) ─► CRM: POST {leadEndpoint}        ─► лид «с сайта» в очереди
                                                           (токен: GET {leadEndpoint}/token)   менеджер связывается
                                                                                                и приглашает в Кабинет
 Клиент/партнёр ─ «Войти в Кабинет» ─► cabinet.railtech.uz/login  (вход по коду из письма или Telegram, без пароля)
@@ -141,11 +141,16 @@ Telegram ─► t.me/<бот>?start=web  (бот CRM, источник «сай�
 - Адреса берутся из `company.json`: `leadEndpoint` (по умолчанию `https://crm.railtech.uz/api/v1/leads/web`),
   `cabinet.url` (вход `/login` и приглашение `/new-client` строятся от него в `src/utils/company.ts`), `telegramBot`.
 - Контракт приёма (платформа, `packages/contracts/openapi/crm.yaml`): `GET …/token` → `{token, expires_at, min_fill_seconds}`;
-  `POST …` JSON `{name, company?, phone?, email?, text, language, form_token, consent: true, website: ""}` → `202 {lead_id}`;
+  `POST …` JSON `{name, company?, phone?, email?, text, language, form_token, consent: true, website: "", form, page?, referrer?, utm?, landing_language?}` → `202 {lead_id}`;
   ошибки `422 validation_failed` (`details.reason`), `429 rate_limited`. Поле `website` — ловушка для ботов, всегда пустое.
 - CRM принимает запросы только с разрешённых адресов (CORS). Чтобы форма работала с railtech.uz, на платформе в
   `infra/compose/prod.yml` к `CABINET_ORIGIN` добавляется адрес сайта. Пока этого нет, форма при ошибке сети показывает
   запасные каналы: Telegram, телефон, e-mail и ссылку `cabinet.url` + `/new-client`.
+- **Источник заявки.** `src/scripts/visit.ts` на первой странице визита запоминает в `sessionStorage` вкладки (не cookie)
+  её адрес, внешний сайт-источник (только origin) и метки `utm_*` (`src/utils/visit.ts`); форма отправляет их в CRM
+  как `page`, `referrer`, `utm`, `landing_language`. `form` = `site` или `site-customer` / `site-partner` — роль,
+  выбранная в форме; со страниц услуг она приходит заранее (`/contacts/?role=…#request`). Описано в политике
+  конфиденциальности и на странице «Cookies».
 - Регистрации в Кабинете «с улицы» нет — только по приглашению менеджера. Поэтому на сайте нет кнопки «Зарегистрироваться».
 - Сайт не ставит cookie и не подключает аналитику; данные заявки уходят только в CRM RailTech.
 

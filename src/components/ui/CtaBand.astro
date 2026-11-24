@@ -1,5 +1,5 @@
 ---
-/** Closing call to action on inner pages: «Начать работу» + «Войти в Кабинет». */
+/** Closing call to action on inner pages: «Отправить заявку» + «Войти в Кабинет». */
 import { localeHref } from '../../i18n';
 import { t } from '../../i18n/ui';
 import { START_PATH } from '../../utils/nav';
@@ -8,9 +8,13 @@ import { company, cabinet } from '../../utils/company';
 interface Props {
   title: string;
   text?: string;
+  /** Preselects the role in the request form (service pages: customers → customer, partners → partner). */
+  role?: 'customer' | 'partner';
 }
 const lang = Astro.locals.lang;
-const { title, text } = Astro.props;
+const { title, text, role } = Astro.props;
+const [startPath, startHash] = START_PATH.split('#');
+const startHref = role ? `${localeHref(startPath, lang)}?role=${role}#${startHash}` : localeHref(START_PATH, lang);
 ---
 
 <section class="cta" aria-labelledby="cta-title">
@@ -20,7 +24,7 @@ const { title, text } = Astro.props;
       {text && <p>{text}</p>}
     </div>
     <div class="btn-row">
-      <a class="btn btn--light" href={localeHref(START_PATH, lang)}>{t(lang, 'cta.start')}</a>
+      <a class="btn btn--light" href={startHref}>{t(lang, 'cta.start')}</a>
       <a class="btn btn--outline-light" href={cabinet.loginUrl}>{t(lang, 'cta.cabinet')}</a>
     </div>
   </div>

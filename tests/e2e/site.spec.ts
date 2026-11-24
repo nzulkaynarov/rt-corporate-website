@@ -112,10 +112,6 @@ test('header offers «Начать работу» and «Войти в Кабин
 });
 
 test('the lead form validates, sends to the CRM and confirms', async ({ page }) => {
-  // On touch screens the page scrolls smoothly (CSS scroll-behavior): focusing the first invalid field starts a scroll
-  // animation, and a tap during it can land as mousedown without a click. Users tap after the page stops; the test
-  // turns the animation off instead of racing it.
-  await page.emulateMedia({ reducedMotion: 'reduce' });
   await mockCrm(page, { status: 202, body: { lead_id: 42 } });
   await page.goto('contacts/');
   // The form is a React island: wait until it is hydrated (Astro removes the `ssr` attribute), then type.
@@ -134,7 +130,8 @@ test('the lead form validates, sends to the CRM and confirms', async ({ page }) 
   await form.locator('input[name="consent"]').check();
   await form.getByRole('button').click();
   await expect(page.getByRole('status')).toBeVisible();
-  expect(sent).toMatchObject({ name: 'Тест Тестов', phone: '+998900000000', text: 'Проверка формы', language: 'ru', form_token: 'test-token', consent: true, website: '' });
+  expect(sent).toMatchObject({ name: 'Тест Тестов', phone: '+998900000000', text: 'Проверка формы', language: 'ru', form_token: 'test-token', consent: true, website: '', form: 'site' });
+  expect((sent as unknown as { page: string }).page).toMatch(/\/contacts\/$/);
 });
 
 test('when the CRM is unreachable the form shows other channels', async ({ page }) => {
@@ -205,4 +202,27 @@ test.describe('languages (src/data/content-stage.json)', () => {
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
     await expect(page.locator('article')).toHaveAttribute('lang', 'ru');
   });
+});
+
+test('a service page preselects the role in the request form and the lead carries it', async ({ page }) => {
+  await mockCrm(page, { status: 202, body: { lead_id: 7 } });
+  await page.goto('services/representation/?utm_source=test');
+  const cta = page.locator('section.cta a.btn--light');
+  await expect(cta).toHaveAttribute('href', /\/contacts\/\?role=partner#request$/);
+  await cta.click();
+  await page.locator('#request astro-island:not([ssr])').waitFor();
+  const form = page.locator('#request form');
+  await expect(form.locator('input[name="role"][value="partner"]')).toBeChecked();
+  let sent: Record<string, unknown> | null = null;
+  page.on('request', (req) => {
+    if (req.method() === 'POST' && req.url() === CRM) sent = req.postDataJSON();
+  });
+  await form.locator('input[name="name"]').fill('Тест');
+  await form.locator('input[name="contact"]').fill('test@example.com');
+  await form.locator('textarea[name="text"]').fill('Проверка роли');
+  await form.locator('input[name="consent"]').check();
+  await form.getByRole('button', { name: /./ }).last().click();
+  await expect(page.getByRole('status')).toBeVisible();
+  expect(sent).toMatchObject({ form: 'site-partner', utm: { utm_source: 'test' } });
+  expect((sent as unknown as { page: string }).page).toMatch(/\/services\/representation\/$/);
 });

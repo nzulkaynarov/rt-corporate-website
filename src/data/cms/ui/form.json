@@ -8,6 +8,24 @@
       "en": "Request"
     },
     {
+      "key": "form.role.legend",
+      "ru": "Вы обращаетесь как",
+      "uz": "Kim sifatida murojaat qilyapsiz",
+      "en": "You are writing as"
+    },
+    {
+      "key": "form.role.customer",
+      "ru": "Заказчик",
+      "uz": "Buyurtmachi",
+      "en": "Customer"
+    },
+    {
+      "key": "form.role.partner",
+      "ru": "Производитель или партнёр",
+      "uz": "Ishlab chiqaruvchi yoki hamkor",
+      "en": "Manufacturer or partner"
+    },
+    {
       "key": "form.name",
       "ru": "Имя и должность",
       "uz": "Ism va lavozim",

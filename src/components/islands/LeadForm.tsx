@@ -6,7 +6,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { makeT, type Lang } from '../../i18n';
 import formUi from '../../data/cms/ui/form.json';
-import { buildPayload, outcomeFromResponse, validateLead, type FieldErrors, type LeadInput, type SubmitOutcome } from '../../utils/lead';
+import { buildPayload, outcomeFromResponse, validateLead, type FieldErrors, type LeadInput, type LeadRole, type SubmitOutcome } from '../../utils/lead';
+import { readVisit } from '../../utils/visit';
 
 const t = makeT([formUi]);
 
@@ -25,7 +26,25 @@ interface Props {
 
 type Status = 'idle' | 'sending' | SubmitOutcome;
 
-const EMPTY: LeadInput = { name: '', company: '', contact: '', text: '', consent: false, website: '' };
+const EMPTY: LeadInput = { name: '', company: '', contact: '', text: '', consent: false, role: '', website: '' };
+
+/** ?role=customer|partner in the link (service pages pass it) preselects the role. */
+function roleFromUrl(): LeadRole {
+  try {
+    const r = new URLSearchParams(window.location.search).get('role');
+    return r === 'customer' || r === 'partner' ? r : '';
+  } catch {
+    return '';
+  }
+}
+
+function sessionStore(): Storage | undefined {
+  try {
+    return window.sessionStorage;
+  } catch {
+    return undefined;
+  }
+}
 
 export default function LeadForm(props: Props) {
   const { lang, endpoint, privacyHref, newClientUrl, telegramUrl, phone, phoneHref, email, idPrefix = 'lead' } = props;
@@ -48,9 +67,12 @@ export default function LeadForm(props: Props) {
 
   useEffect(() => {
     loadToken();
+    const role = roleFromUrl();
+    if (role) setValues((v) => ({ ...v, role }));
   }, []);
 
   const id = (name: string) => `${idPrefix}-${name}`;
+  const setRole = (role: LeadRole) => () => setValues((v) => ({ ...v, role }));
   const set = (name: keyof LeadInput) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const value = name === 'consent' ? (e.target as HTMLInputElement).checked : e.target.value;
     setValues((v) => ({ ...v, [name]: value }));
@@ -78,12 +100,12 @@ export default function LeadForm(props: Props) {
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(buildPayload(values, lang, token.current.token)),
+        body: JSON.stringify(buildPayload(values, lang, token.current.token, readVisit(sessionStore()), window.location.pathname)),
       });
       const body = await res.json().catch(() => null);
       const outcome = outcomeFromResponse(res.status, body);
       setStatus(outcome);
-      if (outcome === 'success') setValues(EMPTY);
+      if (outcome === 'success') setValues({ ...EMPTY, role: values.role });
       if (outcome === 'expired' || outcome === 'tooFast') await loadToken();
     } catch {
       setStatus('network');
@@ -132,6 +154,17 @@ export default function LeadForm(props: Props) {
 
   return (
     <form className="lf" onSubmit={onSubmit} noValidate aria-label={tr('form.aria')}>
+      <fieldset className="lf__role">
+        <legend>{tr('form.role.legend')}</legend>
+        <div className="lf__role-opts">
+          {(['customer', 'partner'] as const).map((r) => (
+            <label key={r} className="lf__opt" htmlFor={id(`role-${r}`)}>
+              <input id={id(`role-${r}`)} type="radio" name="role" value={r} checked={values.role === r} onChange={setRole(r)} />
+              <span>{tr(`form.role.${r}`)}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
       <div className="lf__two">
         <label htmlFor={id('name')}>
           {tr('form.name')}
