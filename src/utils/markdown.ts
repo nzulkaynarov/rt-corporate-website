@@ -76,11 +76,21 @@ export interface TocItem {
  * and returns the list for «На странице» (src/components/ui/Toc.astro). Headings that already have an id
  * (footnotes) are left alone.
  */
+const ENTITIES: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: '\u00a0' };
+/** HTML entities of rendered text → characters (the result is plain text, escaped again where it is printed). */
+function decodeEntities(text: string): string {
+  return text.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (m, code: string) => {
+    if (code[0] !== '#') return ENTITIES[code.toLowerCase()] ?? m;
+    const n = code[1].toLowerCase() === 'x' ? parseInt(code.slice(2), 16) : parseInt(code.slice(1), 10);
+    return Number.isFinite(n) ? String.fromCodePoint(n) : m;
+  });
+}
+
 export function withToc(html: string): { html: string; toc: TocItem[] } {
   const toc: TocItem[] = [];
   const out = html.replace(/<(h[23])>([\s\S]*?)<\/\1>/g, (_m, tag: string, inner: string) => {
     const id = `s-${toc.length + 1}`;
-    toc.push({ id, text: inner.replace(/<[^>]+>/g, '').trim() });
+    toc.push({ id, text: decodeEntities(inner.replace(/<[^>]+>/g, '')).trim() });
     return `<${tag} id="${id}">${inner}</${tag}>`;
   });
   return { html: out, toc };

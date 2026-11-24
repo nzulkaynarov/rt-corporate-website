@@ -38,7 +38,7 @@ const toc = (data.sections || []).map((s: any, i: number) => ({ id: `s-${i + 1}`
       {(data.sections || []).map((s: any, i: number) => (
         <section>
           <h2 id={`s-${i + 1}`}>{i + 1}. {tField(s, 'title', lang)}</h2>
-          <p>{tField(s, 'content', lang)}</p>
+          <p class="legal__text">{tField(s, 'content', lang)}</p>
         </section>
       ))}
       <p class="muted"><a href={mailHref()}>{company.email}</a></p>
@@ -50,6 +50,10 @@ const toc = (data.sections || []).map((s: any, i: number) => ({ id: `s-${i + 1}`
   /* Same single-page layout as an article: one column, and from 1080 px «На странице» stays in view on the right. */
   .legal {
     padding-block: 28px 96px;
+  }
+  /* Section text is plain text from the CMS: a line break typed there is a line break on the page. */
+  .legal__text {
+    white-space: pre-line;
   }
   header {
     display: grid;
