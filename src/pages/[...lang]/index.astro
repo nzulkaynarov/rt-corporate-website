@@ -8,7 +8,7 @@ import CabinetBlock from '../../components/home/CabinetBlock.astro';
 import LatestNews from '../../components/home/LatestNews.astro';
 import Invite from '../../components/home/Invite.astro';
 import SectionHead from '../../components/ui/SectionHead.astro';
-import PartnerTiles from '../../components/ui/PartnerTiles.astro';
+import PartnerLogos from '../../components/ui/PartnerLogos.astro';
 import homeData from '../../data/cms/home.json';
 import { langStaticPaths, localeHref, tField, localize } from '../../i18n';
 import { t } from '../../i18n/ui';
@@ -29,7 +29,7 @@ const p = home.partners as Record<string, string>;
   <section class="section" id="partners" aria-labelledby="partners-title">
     <div class="wrap">
       <SectionHead id="partners-title" eyebrow={tField(p, 'eyebrow', lang)} title={tField(p, 'title', lang)} lead={tField(p, 'note', lang)} />
-      <PartnerTiles />
+      <PartnerLogos />
       <p class="all"><a href={localeHref('/partners/', lang)}>{t(lang, 'home.partners.all')} →</a></p>
     </div>
   </section>
