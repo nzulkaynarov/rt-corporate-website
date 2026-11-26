@@ -11,8 +11,9 @@ import { expandLangs, facts, fillFacts, localeHref, localize, tField } from '../
 import { t } from '../../../i18n/ui';
 import { formatDate } from '../../../utils/format';
 import { liftHeadings, renderBody, withToc } from '../../../utils/markdown';
-import { entrySeo, absoluteUrl, siteSeo } from '../../../utils/seo';
+import { entrySeo, absoluteUrl } from '../../../utils/seo';
 import { withBase } from '../../../utils/url';
+import { ogImagePath } from '../../../utils/og';
 import { entryContentLang, entryLangs } from '../../../utils/stage';
 
 export async function getStaticPaths() {
@@ -65,6 +66,8 @@ const crumbs = [
   { name: title, path: `/news/${entry.slug}/` },
 ];
 const url = absoluteUrl(localeHref(`/news/${entry.slug}/`, lang), Astro.site);
+// Social preview: the material's cover, otherwise a card with its title (src/pages/og/[...path].png.ts).
+const shareImage: string = d.cover || ogImagePath('news', entry.slug, lang);
 const jsonLd = {
   '@type': d.type === 'news' ? 'NewsArticle' : 'Article',
   headline: title,
@@ -73,14 +76,14 @@ const jsonLd = {
   dateModified: d.date,
   inLanguage: cl,
   url,
-  // Google requires an image for Article rich results: the cover, otherwise the site's social preview.
-  image: absoluteUrl(withBase(d.cover || siteSeo(lang).defaultImage), Astro.site),
+  // Google requires an image for Article rich results: the cover, otherwise the generated preview card.
+  image: absoluteUrl(withBase(shareImage), Astro.site),
   author: { '@id': `${absoluteUrl('/', Astro.site)}#organization` },
   publisher: { '@id': `${absoluteUrl('/', Astro.site)}#organization` },
 };
 ---
 
-<BaseLayout title={seo.title} description={seo.description} breadcrumbs={crumbs} jsonLd={jsonLd} ogType="article" image={d.cover} langs={langs}>
+<BaseLayout title={seo.title} description={seo.description} breadcrumbs={crumbs} jsonLd={jsonLd} ogType="article" image={shareImage} langs={langs}>
   <div class="wrap"><Breadcrumbs items={crumbs} /></div>
 
   <article class="wrap art" data-lightbox lang={cl !== lang ? cl : undefined}>

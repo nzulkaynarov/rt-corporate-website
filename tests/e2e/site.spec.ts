@@ -321,3 +321,33 @@ test('a missing /uz/ or /en/ address shows «not found» in that language, with 
   await expect(page.locator('html')).toHaveAttribute('lang', 'ru');
   await expect(page).toHaveURL(/\/no-such-page\/$/);
 });
+
+test('every material has its own social preview card, served as a PNG', async ({ page, request }) => {
+  await page.goto('news/partner-npo-saut/');
+  const og = await page.locator('meta[property="og:image"]').getAttribute('content');
+  expect(og).toMatch(/\/og\/ru\/news\/partner-npo-saut\.png$/);
+  const res = await request.get(new URL(og!).pathname.replace(/^\/(rt-corporate-website\/)?/, ''));
+  expect(res.status()).toBe(200);
+  expect(res.headers()['content-type']).toContain('image/png');
+});
+
+test('speculation rules are valid: materials are prerendered, pages with the lead form only prefetched', async ({ page }) => {
+  const warnings: string[] = [];
+  page.on('console', (m) => /speculation/i.test(m.text()) && warnings.push(m.text()));
+  await page.goto('');
+  const rules = JSON.parse((await page.locator('script[type="speculationrules"]').textContent()) || '{}');
+  const prerender = JSON.stringify(rules.prerender);
+  expect(prerender).toContain('/news/*');
+  expect(prerender).not.toContain('contacts');
+  expect(rules.prefetch).toHaveLength(1);
+  expect(warnings).toEqual([]);
+});
+
+test('/llms.txt describes the company and links the main pages', async ({ request }) => {
+  const res = await request.get('llms.txt');
+  expect(res.status()).toBe(200);
+  const text = await res.text();
+  expect(text).toMatch(/^# RailTech/);
+  expect(text).toContain('/services/supply/');
+  expect(text).toContain('/en/services/supply/');
+});
