@@ -12,15 +12,15 @@ partners:
 seoTitle: RailTech — официальный дилер НПО САУТ в Узбекистане
 seoDescription: 'RailTech — официальный дилер и представитель ООО «НПО САУТ» в Узбекистане: поставка, техническое консультирование, локализация.'
 uz:
-  title: RailTech — «НПО САУТ» MChJning O'zbekistondagi rasmiy dileri va vakili
-  seoTitle: RailTech — «НПО САУТ» rasmiy dileri O'zbekistonda
-  summary: "«RailTech» MChJ — «НПО САУТ» MChJning O'zbekiston Respublikasidagi rasmiy dileri va vakili. Ishimizga nimalar kirishi va bu buyurtmachilar uchun nimani anglatishini aytib beramiz."
+  title: RailTech — «NPO SAUT» MChJning O'zbekistondagi rasmiy dileri va vakili
+  seoTitle: RailTech — «NPO SAUT» rasmiy dileri O'zbekistonda
+  summary: "«RailTech» MChJ — «NPO SAUT» MChJning O'zbekiston Respublikasidagi rasmiy dileri va vakili. Ishimizga nimalar kirishi va bu buyurtmachilar uchun nimani anglatishini aytib beramiz."
   body: |-
-    2026-yil fevralida «НПО САУТ» MChJ (Yekaterinburg, Rossiya) «RailTech» MChJni O'zbekiston Respublikasidagi **rasmiy dileri va vakili** etib tayinladi.
+    2026-yil fevralida «NPO SAUT» MChJ (Yekaterinburg, Rossiya) «RailTech» MChJni O'zbekiston Respublikasidagi **rasmiy dileri va vakili** etib tayinladi.
 
-    ### «НПО САУТ» nima
+    ### «NPO SAUT» nima
 
-    «НПО САУТ» MChJ — «Tormozlashni avtomatik boshqarish tizimi» ilmiy-ishlab chiqarish birlashmasi, Yekaterinburg. Kompaniya poezdlar harakatini boshqarish va xavfsizligini ta'minlash tizimlari bilan shug'ullanadi: ilmiy tadqiqotlar va ishlanmalar, ishlab chiqarish, dasturlash va joriy etish, kafolatli xizmat ko'rsatish va servis apparaturasi.
+    «NPO SAUT» MChJ — «Tormozlashni avtomatik boshqarish tizimi» ilmiy-ishlab chiqarish birlashmasi, Yekaterinburg. Kompaniya poezdlar harakatini boshqarish va xavfsizligini ta'minlash tizimlari bilan shug'ullanadi: ilmiy tadqiqotlar va ishlanmalar, ishlab chiqarish, dasturlash va joriy etish, kafolatli xizmat ko'rsatish va servis apparaturasi.
 
     saut.ru saytida quyidagi mahsulot qatorlari taqdim etilgan:
 
@@ -32,30 +32,30 @@ uz:
 
     ### RailTech ishiga nimalar kiradi
 
-    RailTech O'zbekistonda «НПО САУТ» uchun to'rt yo'nalishni olib boradi:
+    RailTech O'zbekistonda «NPO SAUT» uchun to'rt yo'nalishni olib boradi:
 
-    1. «НПО САУТ»ning temir yo'l xavfsizligi qurilmalari va tizimlari uchun butlovchi qismlari va texnik yechimlarini **sotish, yetkazib berish va ilgari surish**.
+    1. «NPO SAUT»ning temir yo'l xavfsizligi qurilmalari va tizimlari uchun butlovchi qismlari va texnik yechimlarini **sotish, yetkazib berish va ilgari surish**.
     2. **Texnik maslahat** — loyihadan oldingi va metodologik ko'mak, pilot loyihalar, tajriba-sinov ekspluatatsiyasi va joriy etishda ishtirok etish.
     3. **Mahalliylashtirish** — O'zbekiston Respublikasining normativ, texnik va ekspluatatsion talablariga moslashtirish, alohida uzel va komponentlarni yig'ish yoki ishlab chiqarishni tashkil etish, davlat organlari, regulyatorlar va sanoat hamkorlari bilan o'zaro hamkorlik.
-    4. O'zbekistonda «НПО САУТ» **manfaatlarini ifodalash**, davlat, ta'lim va soha tashkilotlari bilan hamkorlikni rivojlantirish, texnologiyalar va bilimlar transferi.
+    4. O'zbekistonda «NPO SAUT» **manfaatlarini ifodalash**, davlat, ta'lim va soha tashkilotlari bilan hamkorlikni rivojlantirish, texnologiyalar va bilimlar transferi.
 
     ### Bu O'zbekistondagi buyurtmachilar uchun nimani anglatadi
 
-    **Yetkazib berish.** Temir yo'l va sanoat korxonalari «НПО САУТ» mahsulotlarini O'zbekistonda rasmiy diler orqali xarid qilishi mumkin. Yagona mas'uliyat nuqtasi sifatida «RailTech» arizani ko'rib chiqish, tijorat taklifi, shartnoma va hujjatlar, bojxona rasmiylashtiruvi va omborgacha yetkazib berishni o'z zimmasiga oladi. Mahsulot tanlovi va narxlar — tijorat taklifida, shartlar — [«Yetkazib berish»](/services/supply/) sahifasida.
+    **Yetkazib berish.** Temir yo'l va sanoat korxonalari «NPO SAUT» mahsulotlarini O'zbekistonda rasmiy diler orqali xarid qilishi mumkin. Yagona mas'uliyat nuqtasi sifatida «RailTech» arizani ko'rib chiqish, tijorat taklifi, shartnoma va hujjatlar, bojxona rasmiylashtiruvi va omborgacha yetkazib berishni o'z zimmasiga oladi. Mahsulot tanlovi va narxlar — tijorat taklifida, shartlar — [«Yetkazib berish»](/services/supply/) sahifasida.
 
-    **Texnik ko'mak.** «RailTech» texnik maslahat beradi: loyihadan oldingi va metodologik ko'mak, O'zbekistonda «НПО САУТ» uskunalari bo'yicha pilot loyihalar, tajriba-sinov ekspluatatsiyasi va joriy etishda ishtirok etish.
+    **Texnik ko'mak.** «RailTech» texnik maslahat beradi: loyihadan oldingi va metodologik ko'mak, O'zbekistonda «NPO SAUT» uskunalari bo'yicha pilot loyihalar, tajriba-sinov ekspluatatsiyasi va joriy etishda ishtirok etish.
 
     **Mahalliylashtirish.** «RailTech» uskunalarni O'zR talablariga moslashtiradi va O'zbekistonda alohida uzel va komponentlarni yig'ishni tashkil etadi. Bu yo'nalish [«Mahalliylashtirish»](/services/localization/) xizmati sahifasida tasvirlangan.
 
-    **Hamkorlik.** «RailTech» «НПО САУТ»ning davlat, ta'lim va soha tashkilotlari bilan aloqalarini rivojlantiradi. Batafsil — [«Vakillik» xizmati](/services/representation/) va [«НПО САУТ vakilligi» loyihasi](/news/npo-saut-representation/) sahifalarida.
+    **Hamkorlik.** «RailTech» «NPO SAUT»ning davlat, ta'lim va soha tashkilotlari bilan aloqalarini rivojlantiradi. Batafsil — [«Vakillik» xizmati](/services/representation/) va [«NPO SAUT vakilligi» loyihasi](/news/npo-saut-representation/) sahifalarida.
 
-    «НПО САУТ» mahsulotlari bo'yicha so'rovni [shakl orqali](/contacts/#request), info@railtech.uz manziliga yoki +998 90 118-90-00 telefoni orqali yuboring.
+    «NPO SAUT» mahsulotlari bo'yicha so'rovni [shakl orqali](/contacts/#request), info@railtech.uz manziliga yoki +998 90 118-90-00 telefoni orqali yuboring.
 
     ### Manbalar
 
     * RailTech maqomi haqidagi ishlab chiqaruvchi hujjati buyurtmachiga so'rov bo'yicha taqdim etiladi.
-    * «НПО САУТ» MChJ rasmiy sayti: [saut.ru](https://saut.ru/)
-  seoDescription: "RailTech — «НПО САУТ» MChJning O'zbekistondagi rasmiy dileri va vakili: yetkazib berish, texnik maslahat, mahalliylashtirish."
+    * «NPO SAUT» MChJ rasmiy sayti: [saut.ru](https://saut.ru/)
+  seoDescription: "RailTech — «NPO SAUT» MChJning O'zbekistondagi rasmiy dileri va vakili: yetkazib berish, texnik maslahat, mahalliylashtirish."
 en:
   title: RailTech Becomes Official Dealer and Representative of NPO SAUT LLC in Uzbekistan
   seoTitle: 'RailTech: Official NPO SAUT Dealer in Uzbekistan'

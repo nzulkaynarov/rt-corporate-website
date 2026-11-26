@@ -1,0 +1,92 @@
+---
+/**
+ * «Страница не найдена» in the visitor's language (Astro.locals.lang) with short notes in the other two.
+ * Used by src/pages/404.astro (Russian; GitHub Pages serves it for ANY missing URL) and by
+ * src/pages/[...lang]/404.astro (/uz/404/, /en/404/), where 404.html sends /uz/… and /en/… visitors.
+ * Texts: pages.json → notFound.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import pagesData from '../data/cms/pages.json';
+import { LANGS, LANG_META, localeHref, localize, tField } from '../i18n';
+import { t } from '../i18n/ui';
+import { pageSeo } from '../utils/seo';
+
+const lang = Astro.locals.lang;
+const seo = pageSeo('notFound', lang);
+const homeLinks = { ru: localeHref('/', 'ru'), uz: localeHref('/', 'uz'), en: localeHref('/', 'en') };
+const blocks = [lang, ...LANGS.filter((code) => code !== lang)].map((code) => ({
+  code,
+  hreflang: LANG_META[code].hreflang,
+  title: tField(localize(pagesData, code).notFound, 'title', code),
+  text: tField(localize(pagesData, code).notFound, 'text', code),
+  home: localeHref('/', code),
+  homeLabel: t(code, 'nav.home'),
+  services: localeHref('/services/', code),
+  servicesLabel: t(code, 'nav.services'),
+  contacts: localeHref('/contacts/', code),
+  contactsLabel: t(code, 'nav.contacts'),
+}));
+const [first, ...rest] = blocks;
+const uniqueRest = rest.filter((b) => b.title !== first.title);
+---
+
+
+<BaseLayout title={seo.title} description={seo.description} noindex langLinks={homeLinks}>
+  <section class="wrap nf">
+    <div lang={first.hreflang} class="nf__main">
+      <p class="nf__code" aria-hidden="true">404</p>
+      <h1>{first.title}</h1>
+      <p class="muted">{first.text}</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href={first.home}>{first.homeLabel}</a>
+        <a class="btn btn--outline" href={first.services}>{first.servicesLabel}</a>
+        <a class="btn btn--outline" href={first.contacts}>{first.contactsLabel}</a>
+      </div>
+    </div>
+    {uniqueRest.map((b) => (
+      <div lang={b.hreflang} class="nf__alt">
+        <p><b>{b.title}.</b> {b.text}</p>
+        <a href={b.home} hreflang={b.hreflang}>{b.homeLabel} →</a>
+      </div>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    padding-block: 72px 96px;
+    display: grid;
+    gap: 28px;
+    max-width: 860px;
+  }
+  .nf__main {
+    display: grid;
+    gap: 18px;
+  }
+  .nf__code {
+    font: 800 96px/1 var(--f-display);
+    color: var(--c-brand); /* large text: ≥ 3:1 on white (WCAG 1.4.3) */
+  }
+  h1 {
+    font-size: 40px;
+    font-weight: 800;
+  }
+  .nf__alt {
+    border-top: 1px solid var(--c-line);
+    padding-top: 16px;
+    color: var(--c-muted);
+  }
+  .nf__alt a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  @media (max-width: 760px) {
+    .nf__code {
+      font-size: 64px;
+    }
+    h1 {
+      font-size: 28px;
+    }
+  }
+</style>

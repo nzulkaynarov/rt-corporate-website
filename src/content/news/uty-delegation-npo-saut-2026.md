@@ -12,14 +12,14 @@ partners:
 seoTitle: Делегация «Узбекистон темир йуллари» в НПО САУТ, 2026
 seoDescription: 'Визит делегации АО «Узбекистон темир йуллари» в Астану и Екатеринбург: ALSTOM, НПО САУТ, БЛОК-М, САУТ-ЦМ/НСП, «Уральские локомотивы».'
 uz:
-  title: '«O''zbekiston temir yo''llari» delegatsiyasi «НПО САУТ»da: 2026-yil may'
-  summary: '2026-yil 20–26-may kunlari «O''zbekiston temir yo''llari» AJ delegatsiyasi Astana va Yekaterinburgda ALSTOM va «НПО САУТ» MChJning lokomotivlarni diagnostika qilish va ularga xizmat ko''rsatish tajribasini o''rgandi: БЛОК-М, САУТ-К, САУТ-ЦМ/НСП, avtoboshqaruv, ТУ-152.'
+  title: '«O''zbekiston temir yo''llari» delegatsiyasi «NPO SAUT»da: 2026-yil may'
+  summary: '2026-yil 20–26-may kunlari «O''zbekiston temir yo''llari» AJ delegatsiyasi Astana va Yekaterinburgda ALSTOM va «NPO SAUT» MChJning lokomotivlarni diagnostika qilish va ularga xizmat ko''rsatish tajribasini o''rgandi: БЛОК-М, САУТ-К, САУТ-ЦМ/НСП, avtoboshqaruv, ТУ-152.'
   body: |
-    2026-yil 20–26-may kunlari «O'zbekiston temir yo'llari» AJ delegatsiyasi Astana (Qozog'iston) va Yekaterinburgda (Rossiya) bo'ldi. Tashrif mavzusi — lokomotivlarga texnik xizmat ko'rsatish va ularni ta'mirlash tizimini modernizatsiya qilish. Bu safar 2026-yil aprelida TDTUdagi Beshinchi xalqaro konferensiyada erishilgan kelishuvlarning amaliy davomi bo'ldi. «RailTech» MChJ «НПО САУТ»ning O'zbekistondagi rasmiy dileri va vakili sifatida tadbirlarda ishtirok etdi.
+    2026-yil 20–26-may kunlari «O'zbekiston temir yo'llari» AJ delegatsiyasi Astana (Qozog'iston) va Yekaterinburgda (Rossiya) bo'ldi. Tashrif mavzusi — lokomotivlarga texnik xizmat ko'rsatish va ularni ta'mirlash tizimini modernizatsiya qilish. Bu safar 2026-yil aprelida TDTUdagi Beshinchi xalqaro konferensiyada erishilgan kelishuvlarning amaliy davomi bo'ldi. «RailTech» MChJ «NPO SAUT»ning O'zbekistondagi rasmiy dileri va vakili sifatida tadbirlarda ishtirok etdi.
 
     ### Delegatsiya nimani o'rgandi
 
-    Delegatsiya ALSTOM va «НПО САУТ» MChJ kompaniyalarining quyidagi yo'nalishlardagi tajribasini o'rgandi:
+    Delegatsiya ALSTOM va «NPO SAUT» MChJ kompaniyalarining quyidagi yo'nalishlardagi tajribasini o'rgandi:
 
     * zamonaviy diagnostika;
     * raqamli boshqaruv platformalari;
@@ -28,9 +28,9 @@ uz:
     * energiya samaradorligi;
     * muhandislik va ekspluatatsiya texnologiyalari.
 
-    ### «НПО САУТ»da: lokomotiv va stansiya tizimlari
+    ### «NPO SAUT»da: lokomotiv va stansiya tizimlari
 
-    Yekaterinburgda delegatsiyaga «НПО САУТ» ishlanmalari namoyish etildi:
+    Yekaterinburgda delegatsiyaga «NPO SAUT» ishlanmalari namoyish etildi:
 
     | Tizim | Nima ko'rsatildi |
     |---|---|
@@ -40,7 +40,7 @@ uz:
     | Avtoboshqaruv | Poezdni avtomatik boshqarish texnologiyasi |
     | **ТУ-152** elektron jurnali | Qog'oz jurnallarni almashtirish uchun mo'ljallangan |
 
-    «НПО САУТ» ma'lumotlariga ko'ra, avtoboshqaruv mashinistga yuklamani kamaytiradi va energiya samaradorligini oshiradi, ТУ-152 elektron jurnali esa qog'oz jurnallarni to'liq almashtirishga mo'ljallangan.
+    «NPO SAUT» ma'lumotlariga ko'ra, avtoboshqaruv mashinistga yuklamani kamaytiradi va energiya samaradorligini oshiradi, ТУ-152 elektron jurnali esa qog'oz jurnallarni to'liq almashtirishga mo'ljallangan.
 
     ### «Ural Locomotives» zavodiga tashrif
 
@@ -48,16 +48,16 @@ uz:
 
     ### Aprel kelishuvlarining davomi
 
-    Tashrif 2026-yil aprelida TDTUdagi konferensiya va «НПО САУТ» o'quv auditoriyasining ochilishi chog'ida boshlangan ishning davomi bo'ldi. O'shanda poezdlar harakati xavfsizligi tizimlarining uskunalari va komponentlarini O'zbekistonda mahalliylashtirish muhokama qilingan, TDTU va «НПО САУТ» o'rtasida 2026–2030-yillarga mo'ljallangan yo'l xaritasi bilan memorandum imzolangan edi. Batafsil — [aprel voqealari haqidagi maqolada](/news/tstu-conference-saut-classroom-2026/).
+    Tashrif 2026-yil aprelida TDTUdagi konferensiya va «NPO SAUT» o'quv auditoriyasining ochilishi chog'ida boshlangan ishning davomi bo'ldi. O'shanda poezdlar harakati xavfsizligi tizimlarining uskunalari va komponentlarini O'zbekistonda mahalliylashtirish muhokama qilingan, TDTU va «NPO SAUT» o'rtasida 2026–2030-yillarga mo'ljallangan yo'l xaritasi bilan memorandum imzolangan edi. Batafsil — [aprel voqealari haqidagi maqolada](/news/tstu-conference-saut-classroom-2026/).
 
-    «RailTech» rasmiy diler va vakil sifatida «НПО САУТ»ning O'zbekistondagi manfaatlarini ifodalaydi — [vakolatxona xizmati](/services/representation/) va [«НПО САУТ» vakolatxonasi loyihasi](/news/npo-saut-representation/) sahifalarida batafsil.
+    «RailTech» rasmiy diler va vakil sifatida «NPO SAUT»ning O'zbekistondagi manfaatlarini ifodalaydi — [vakolatxona xizmati](/services/representation/) va [«NPO SAUT» vakolatxonasi loyihasi](/news/npo-saut-representation/) sahifalarida batafsil.
 
     ### Manbalar
 
-    * «НПО САУТ» MChJ: [«O'zbekiston temir yo'llari» AJ delegatsiyasining tashrifi](https://saut.ru/news/2026/poseshchenie-ooo-npo-saut-delegatsiey-ao-uzbekiston-temir-yullari/)
+    * «NPO SAUT» MChJ: [«O'zbekiston temir yo'llari» AJ delegatsiyasining tashrifi](https://saut.ru/news/2026/poseshchenie-ooo-npo-saut-delegatsiey-ao-uzbekiston-temir-yullari/)
     * «Temiryo'linfratuzilma» AJ yangiliklari: [railwayinfra.uz](https://railwayinfra.uz/)
-  seoTitle: «O'zbekiston temir yo'llari» delegatsiyasi «НПО САУТ»da
-  seoDescription: '«O''zbekiston temir yo''llari» AJ delegatsiyasining Astana va Yekaterinburgga tashrifi: ALSTOM, «НПО САУТ», БЛОК-М, САУТ-ЦМ/НСП, Ural Locomotives.'
+  seoTitle: «O'zbekiston temir yo'llari» delegatsiyasi «NPO SAUT»da
+  seoDescription: '«O''zbekiston temir yo''llari» AJ delegatsiyasining Astana va Yekaterinburgga tashrifi: ALSTOM, «NPO SAUT», БЛОК-М, САУТ-ЦМ/НСП, Ural Locomotives.'
 en:
   title: 'Uzbekistan Railways Delegation Visits NPO SAUT: May 2026'
   summary: 'On May 20–26, 2026, a JSC Uzbekistan Railways delegation in Astana and Yekaterinburg studied the locomotive diagnostics and maintenance experience of ALSTOM and NPO SAUT LLC: БЛОК-М, САУТ-К, САУТ-ЦМ/НСП, automatic train operation and ТУ-152.'

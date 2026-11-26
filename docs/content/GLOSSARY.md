@@ -87,7 +87,7 @@
 | СЦБ (сигнализация, централизация, блокировка) | SMB (signallashtirish, markazlashtirish va blokirovkalash) | railway signalling (signalling & interlocking) | `ISB` | |
 | Системы обеспечения безопасности движения поездов | poezdlar harakati xavfsizligini ta'minlash tizimlari | train safety systems | — | |
 | Локомотив | lokomotiv | locomotive | — | |
-| ООО «НПО САУТ» | «НПО САУТ» MChJ | NPO SAUT LLC | — | В UZ допустимо кириллическое название в «ёлочках» |
+| ООО «НПО САУТ» | «NPO SAUT» MChJ | NPO SAUT LLC | — | В UZ латиницей, как другие российские бренды (решение владельца 2026-11-26); обозначения изделий (БЛОК-М, САУТ-ЦМ/485) — кириллицей, см. МПСУиД |
 | АО «Узбекистон темир йуллари» (УТЙ) | «O'zbekiston temir yo'llari» AJ | JSC Uzbekistan Railways | — | |
 | Ташкентский государственный транспортный университет (ТГТУ) | Toshkent davlat transport universiteti (TDTU) | Tashkent State Transport University (TSTU) | — | |
 

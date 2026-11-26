@@ -44,8 +44,8 @@ const showLangs = !RU_ONLY;
 
     <div class="hdr__cta">
       <a class="btn btn--primary" href={startHref}>{tr('cta.start')}</a>
-      <a class="btn btn--outline" href={cabinet.loginUrl}>
-        {tr('cta.cabinet')}
+      <a class="btn btn--outline" href={cabinet.loginUrl} aria-label={tr('cta.cabinet')}>
+        {tr('nav.cabinet')}
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 10L10 4M5 4h5v5"></path></svg>
       </a>
     </div>
@@ -86,8 +86,12 @@ const showLangs = !RU_ONLY;
   .hdr__in {
     display: flex;
     align-items: center;
-    gap: 16px 28px;
+    gap: 16px 24px;
     min-height: var(--hdr-h);
+  }
+  /* Header parts never shrink or wrap: when they do not fit, the menu folds (breakpoint below). */
+  .hdr__in > * {
+    flex-shrink: 0;
   }
   .brand {
     display: flex;
@@ -108,7 +112,10 @@ const showLangs = !RU_ONLY;
   }
   .nav {
     display: flex;
-    gap: 28px;
+    gap: 24px;
+  }
+  .nav a {
+    white-space: nowrap;
   }
   .nav a,
   .mmenu nav a {
@@ -167,6 +174,9 @@ const showLangs = !RU_ONLY;
     display: flex;
     gap: 10px;
   }
+  .hdr__cta .btn {
+    padding-inline: 16px;
+  }
   .mmenu {
     display: none;
   }
@@ -210,7 +220,8 @@ const showLangs = !RU_ONLY;
     gap: 10px;
   }
 
-  @media (max-width: 1080px) {
+  /* The full header needs about 1110 px of content width (Uzbek labels are the longest), i.e. a 1240 px window. */
+  @media (max-width: 1239px) {
     .nav,
     .hdr__cta {
       display: none;
@@ -219,16 +230,43 @@ const showLangs = !RU_ONLY;
       display: block;
     }
   }
-  @media (max-width: 420px) {
+  /* Phones: logo, languages and «Меню» must fit from 320 px on (no sideways scroll); e2e checks it. */
+  @media (max-width: 480px) {
+    .brand {
+      gap: 8px;
+    }
     .brand span {
       font-size: 19px;
     }
     .hdr__in {
-      gap: 10px;
+      gap: 8px;
     }
     .langs a {
       min-width: 0;
       padding: 0 6px;
+    }
+  }
+  /* Narrow phones: the menu button keeps only its icon; the word stays for screen readers. */
+  @media (max-width: 400px) {
+    .brand img {
+      width: 32px;
+      height: 32px;
+    }
+    .langs a {
+      padding: 0 5px;
+    }
+    .mmenu summary {
+      width: 44px;
+      padding: 0;
+      justify-content: center;
+    }
+    .mmenu summary span {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
     }
   }
 </style>

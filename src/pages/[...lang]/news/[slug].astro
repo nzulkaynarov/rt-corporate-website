@@ -10,7 +10,7 @@ import { getFeed, getPartners, materialsOfPartner, relatedTo, servicesOf, type F
 import { expandLangs, facts, fillFacts, localeHref, localize, tField } from '../../../i18n';
 import { t } from '../../../i18n/ui';
 import { formatDate } from '../../../utils/format';
-import { renderBody, withToc } from '../../../utils/markdown';
+import { liftHeadings, renderBody, withToc } from '../../../utils/markdown';
 import { entrySeo, absoluteUrl, siteSeo } from '../../../utils/seo';
 import { withBase } from '../../../utils/url';
 import { entryContentLang, entryLangs } from '../../../utils/stage';
@@ -33,7 +33,7 @@ const cl = entryContentLang(lang, 'news', entry.data, entry.body);
 const d = localize(entry.data, cl) as Record<string, any>;
 const title = tField(d, 'title', cl) as string;
 const localizedBody = cl === 'ru' ? undefined : (entry.data as Record<string, any>)[cl]?.body;
-const { html: bodyHtml, toc } = withToc(await renderBody(fillFacts(localizedBody || entry.body, facts(lang)), lang));
+const { html: bodyHtml, toc } = withToc(liftHeadings(await renderBody(fillFacts(localizedBody || entry.body, facts(lang)), lang)));
 const seo = entrySeo(d, cl, entry.body);
 const gallery: { image: string; alt: string }[] = (d.gallery || []).map((g: Record<string, string>) => ({ image: g.image, alt: tField(g, 'alt', cl) || '' }));
 

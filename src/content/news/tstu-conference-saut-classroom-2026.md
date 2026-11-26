@@ -12,10 +12,10 @@ partners:
 seoTitle: Конференция ТГТУ и аудитория НПО САУТ, апрель 2026
 seoDescription: 'Пятая международная конференция в ТГТУ, открытие учебной аудитории ООО «НПО САУТ» и меморандум ТГТУ–НПО САУТ: локализация, НИОКР, дуальное обучение.'
 uz:
-  title: 'TDTUdagi konferensiya va «НПО САУТ» o''quv auditoriyasining ochilishi: 2026-yil aprel'
-  summary: 2026-yil 20–23-aprel kunlari TDTUda harakatlanuvchi tarkib bo'yicha Beshinchi xalqaro ilmiy-texnik konferensiya bo'lib o'tdi. 20-aprelda «НПО САУТ» MChJning brendlangan o'quv auditoriyasi ochildi, TDTU va «НПО САУТ» o'rtasida 2026–2030-yillarga mo'ljallangan yo'l xaritasi bilan memorandum imzolandi.
+  title: 'TDTUdagi konferensiya va «NPO SAUT» o''quv auditoriyasining ochilishi: 2026-yil aprel'
+  summary: 2026-yil 20–23-aprel kunlari TDTUda harakatlanuvchi tarkib bo'yicha Beshinchi xalqaro ilmiy-texnik konferensiya bo'lib o'tdi. 20-aprelda «NPO SAUT» MChJning brendlangan o'quv auditoriyasi ochildi, TDTU va «NPO SAUT» o'rtasida 2026–2030-yillarga mo'ljallangan yo'l xaritasi bilan memorandum imzolandi.
   body: |
-    2026-yil 20–23-aprel kunlari Toshkent davlat transport universitetida (TDTU) «Temir yo'l harakatlanuvchi tarkibi: muammolar, yechimlar, istiqbollar» mavzusidagi Beshinchi xalqaro ilmiy-texnik konferensiya bo'lib o'tdi. Konferensiyaning birinchi kuni, 20-aprelda, universitetda «НПО САУТ» MChJning brendlangan o'quv auditoriyasi ochildi. «RailTech» MChJ «НПО САУТ»ning O'zbekistondagi rasmiy dileri va vakili sifatida tadbirlarda ishtirok etdi.
+    2026-yil 20–23-aprel kunlari Toshkent davlat transport universitetida (TDTU) «Temir yo'l harakatlanuvchi tarkibi: muammolar, yechimlar, istiqbollar» mavzusidagi Beshinchi xalqaro ilmiy-texnik konferensiya bo'lib o'tdi. Konferensiyaning birinchi kuni, 20-aprelda, universitetda «NPO SAUT» MChJning brendlangan o'quv auditoriyasi ochildi. «RailTech» MChJ «NPO SAUT»ning O'zbekistondagi rasmiy dileri va vakili sifatida tadbirlarda ishtirok etdi.
 
     ### Konferensiya
 
@@ -29,16 +29,16 @@ uz:
 
     Ma'ruzachilar orasida «Temiryo'linfratuzilma» AJ boshqaruv raisi S. A. Norkabilov bor edi.
 
-    ### «НПО САУТ» o'quv auditoriyasining ochilishi
+    ### «NPO SAUT» o'quv auditoriyasining ochilishi
 
-    20-aprelda «НПО САУТ» MChJning brendlangan o'quv auditoriyasi tantanali ravishda ochildi. Marosimda quyidagilar ishtirok etdi:
+    20-aprelda «NPO SAUT» MChJning brendlangan o'quv auditoriyasi tantanali ravishda ochildi. Marosimda quyidagilar ishtirok etdi:
 
     * TDTU rektori Abdulaziz Abdullayevich Gulamov;
     * transport vaziri o'rinbosari Ilhomjon Abduxalilovich Abdugafarov;
     * «Temiryo'linfratuzilma» AJ boshqaruv raisi Sirojiddin Anvarovich Norkabilov;
-    * «НПО САУТ» MChJ rahbariyati.
+    * «NPO SAUT» MChJ rahbariyati.
 
-    Auditoriya «Texnologik jarayonlarni avtomatlashtirish va boshqarish (temir yo'l transportida)» ta'lim dasturining laboratoriya bazasini kengaytirdi. U «НПО САУТ»ning investitsion ko'magi bilan, kompaniya taqdim etgan uskunalar asosida yaratilgan. Talabalar zamonaviy poezdlar harakati xavfsizligini ta'minlash tizimlarida amaliy mashg'ulotlar o'tadi; auditoriya malaka oshirish va qayta tayyorlash kurslari uchun ham mo'ljallangan.
+    Auditoriya «Texnologik jarayonlarni avtomatlashtirish va boshqarish (temir yo'l transportida)» ta'lim dasturining laboratoriya bazasini kengaytirdi. U «NPO SAUT»ning investitsion ko'magi bilan, kompaniya taqdim etgan uskunalar asosida yaratilgan. Talabalar zamonaviy poezdlar harakati xavfsizligini ta'minlash tizimlarida amaliy mashg'ulotlar o'tadi; auditoriya malaka oshirish va qayta tayyorlash kurslari uchun ham mo'ljallangan.
 
     Auditoriyada quyidagilar namoyish etildi:
 
@@ -46,11 +46,11 @@ uz:
     * **САУТ-ЦМ/НСП** stansiya apparaturasi;
     * o'quv materiallari.
 
-    Ochilishdan keyin «НПО САУТ» rahbariyati, TDTU rektori va bosh muhandis boshchiligidagi «O'zbekiston temir yo'llari» AJ delegatsiyasi uchrashuvi bo'lib o'tdi. Unda uzoq muddatli ilmiy-texnik hamkorlik, **poezdlar harakati xavfsizligi tizimlarining uskunalari va komponentlarini O'zbekistonda mahalliylashtirish**, universitetning muhandislik salohiyatidan foydalangan holda qo'shma loyihalar va qo'shma ilmiy-tadqiqot va tajriba-konstruktorlik ishlari muhokama qilindi.
+    Ochilishdan keyin «NPO SAUT» rahbariyati, TDTU rektori va bosh muhandis boshchiligidagi «O'zbekiston temir yo'llari» AJ delegatsiyasi uchrashuvi bo'lib o'tdi. Unda uzoq muddatli ilmiy-texnik hamkorlik, **poezdlar harakati xavfsizligi tizimlarining uskunalari va komponentlarini O'zbekistonda mahalliylashtirish**, universitetning muhandislik salohiyatidan foydalangan holda qo'shma loyihalar va qo'shma ilmiy-tadqiqot va tajriba-konstruktorlik ishlari muhokama qilindi.
 
-    ### TDTU va «НПО САУТ» memorandumi
+    ### TDTU va «NPO SAUT» memorandumi
 
-    Tashrif doirasida TDTU va «НПО САУТ» MChJ hamkorlik memorandumini imzoladi. Uning ustuvor yo'nalishlari:
+    Tashrif doirasida TDTU va «NPO SAUT» MChJ hamkorlik memorandumini imzoladi. Uning ustuvor yo'nalishlari:
 
     * temir yo'l avtomatikasi, telemexanikasi, signallashtirish va poezdlar harakati xavfsizligi sohasidagi mahsulotlarni ishlab chiqish va mahalliylashtirish;
     * diagnostika, sinov va texnologik uskunalarni ishlab chiqarish;
@@ -63,7 +63,7 @@ uz:
 
     ### Bu nima uchun muhim
 
-    Memorandum ta'lim, ilmiy ishlanmalar va mahalliylashtirishni bitta dasturga birlashtiradi: o'quv auditoriyasidagi uskunalar, dual ta'lim va qo'shma laboratoriyalar orqali O'zbekiston temir yo'li uchun mutaxassislar tayyorlanadi, mahalliylashtirish esa poezdlar harakati xavfsizligi tizimlarining komponentlarini mamlakat ichida yig'ish va ishlab chiqarishga yo'naltirilgan. «RailTech» rasmiy diler sifatida «НПО САУТ» uchun [mahalliylashtirish](/services/localization/) va [vakolatxona](/services/representation/) bo'yicha ishlaydi. Auditoriya haqida batafsil — [loyiha sahifasida](/news/tstu-saut-classroom/).
+    Memorandum ta'lim, ilmiy ishlanmalar va mahalliylashtirishni bitta dasturga birlashtiradi: o'quv auditoriyasidagi uskunalar, dual ta'lim va qo'shma laboratoriyalar orqali O'zbekiston temir yo'li uchun mutaxassislar tayyorlanadi, mahalliylashtirish esa poezdlar harakati xavfsizligi tizimlarining komponentlarini mamlakat ichida yig'ish va ishlab chiqarishga yo'naltirilgan. «RailTech» rasmiy diler sifatida «NPO SAUT» uchun [mahalliylashtirish](/services/localization/) va [vakolatxona](/services/representation/) bo'yicha ishlaydi. Auditoriya haqida batafsil — [loyiha sahifasida](/news/tstu-saut-classroom/).
 
     ### Manbalar
 
@@ -71,9 +71,9 @@ uz:
     * TDTU, auditoriyaning ochilishi: [tstu.uz/uz/blog/2255](https://tstu.uz/uz/blog/2255)
     * TDTU, memorandum: [tstu.uz/ru/blog/2369](https://tstu.uz/ru/blog/2369)
     * O'zbekiston Respublikasi Transport vazirligi, Telegram kanali: [t.me/Mintrans_uz/26865](https://t.me/s/Mintrans_uz/26865)
-    * «НПО САУТ» MChJ: [«НПО САУТ» Toshkentda](https://saut.ru/news/2026/ooo-npo-saut-v-tashkente/), [TDTUga tashrif](https://saut.ru/news/2026/vizit-v-tashkentskiy-gosudarstvennyy-transportnyy-universitet-/)
-  seoTitle: TDTU konferensiyasi va «НПО САУТ» auditoriyasi, 2026
-  seoDescription: 'TDTUdagi Beshinchi xalqaro konferensiya, «НПО САУТ» o''quv auditoriyasi va TDTU–«НПО САУТ» memorandumi: mahalliylashtirish, ilmiy ishlanmalar, dual ta''lim.'
+    * «NPO SAUT» MChJ: [«NPO SAUT» Toshkentda](https://saut.ru/news/2026/ooo-npo-saut-v-tashkente/), [TDTUga tashrif](https://saut.ru/news/2026/vizit-v-tashkentskiy-gosudarstvennyy-transportnyy-universitet-/)
+  seoTitle: TDTU konferensiyasi va «NPO SAUT» auditoriyasi, 2026
+  seoDescription: 'TDTUdagi Beshinchi xalqaro konferensiya, «NPO SAUT» o''quv auditoriyasi va TDTU–«NPO SAUT» memorandumi: mahalliylashtirish, ilmiy ishlanmalar, dual ta''lim.'
 en:
   title: 'TSTU Conference and Opening of the NPO SAUT Training Classroom: April 2026'
   summary: On April 20–23, 2026, TSTU hosted the Fifth International Scientific and Technical Conference on rolling stock. On April 20, the NPO SAUT LLC branded training classroom was opened, and TSTU and NPO SAUT signed a memorandum with a 2026–2030 roadmap.

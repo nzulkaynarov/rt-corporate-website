@@ -33,9 +33,9 @@
     },
     {
       "key": "form.namePh",
-      "ru": "Например, Алишер Каримов",
-      "uz": "Masalan, Alisher Karimov",
-      "en": "For example, Alisher Karimov"
+      "ru": "Алишер Каримов",
+      "uz": "Alisher Karimov",
+      "en": "Alisher Karimov"
     },
     {
       "key": "form.company",

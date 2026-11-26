@@ -31,12 +31,15 @@ SEO и навигации нет «ж/д», серий локомотивов и
 | `/news/<slug>/` | `news/[slug].astro` | Материал или статья о партнёре (`partner-<id>`); внизу — рекомендации, у партнёра — «Материалы о партнёре» | коллекции `news`, `partners` (`src/utils/feed.ts`) |
 | `/contacts/` | `contacts.astro` | Контакты, реквизиты, форма заявки | `company.json`, `pages.json → contacts` |
 | `/privacy/`, `/terms/`, `/cookies/` | `privacy.astro`, `terms.astro`, `cookies.astro` | Сервисные страницы (только в футере) | `data/cms/legal.json` |
-| `/404` | `src/pages/404.astro` | Страница не найдена | `pages.json → notFound` |
+| `/404` | `src/pages/404.astro` (+ `src/components/NotFound.astro`) | Страница не найдена. GitHub Pages отдаёт её на любой несуществующий адрес; посетителя `/uz/…` и `/en/…` скрипт переводит на `/uz/404/` или `/en/404/` (`src/pages/[...lang]/404.astro`, noindex, вне sitemap) — шапка и меню на его языке | `pages.json → notFound` |
 | `/admin/` | `src/pages/admin.astro` | Sveltia CMS (версия зафиксирована) | `public/admin/config.yml` |
 | старые адреса v1 (`catalog`, `blog`, `projects`, `about`, …) | `src/pages/[...legacy].astro` | Перенаправления для ru/uz/en (meta refresh + canonical, `noindex`, вне sitemap) | `src/data/legacy-redirects.json` |
 
 Навигация (шапка): **Услуги · Производители · Новости · Контакты** + переключатель языка + кнопки **«Отправить заявку»** (форма заявки,
-`/contacts/#request`) и **«Войти в Кабинет»** (`company.json → cabinet.url` + `/login`). Футер: разделы, сервисные страницы,
+`/contacts/#request`) и **«Кабинет ↗»** (`company.json → cabinet.url` + `/login`; для скринридера «Войти в Кабинет»,
+в мобильном меню полная подпись). Шапка целиком помещается в окно от 1240 px; уже меню сворачивается в «Меню»:
+узбекские подписи самые длинные. До 400 px от кнопки «Меню» остаётся значок (слово — для скринридера).
+Части шапки не сжимаются — проверяют e2e «the full header fits…» и «small phones … never scroll sideways». Футер: разделы, сервисные страницы,
 контакты, ИНН. Меню одно — футер и мобильное меню строятся из `src/utils/nav.ts`.
 На телефоне (≤ 760 px) внизу экрана закреплена **панель связи** (`MobileBar`): «Отправить заявку» (та же форма заявки),
 Telegram и звонок — это не вторая навигация, а те же действия шапки, которые на телефоне спрятаны в «Меню».

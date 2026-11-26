@@ -28,7 +28,8 @@ const lang = Astro.locals.lang;
   const dlg = document.querySelector<HTMLDialogElement>('dialog.lb');
   const root = document.querySelector<HTMLElement>('[data-lightbox]');
   if (dlg && root && typeof dlg.showModal === 'function') {
-    const imgs = Array.from(root.querySelectorAll<HTMLImageElement>('img')).filter((i) => !i.closest('.lb'));
+    // Partner logos in the side card are decorative (alt=""): not photos to open.
+    const imgs = Array.from(root.querySelectorAll<HTMLImageElement>('img')).filter((i) => !i.closest('.lb') && !i.closest('.aside'));
     const view = dlg.querySelector<HTMLImageElement>('.lb__img')!;
     const text = dlg.querySelector<HTMLElement>('.lb__text')!;
     const count = dlg.querySelector<HTMLElement>('.lb__count')!;

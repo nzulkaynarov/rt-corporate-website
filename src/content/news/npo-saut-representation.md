@@ -12,28 +12,28 @@ partners:
 seoTitle: 'Проект: представительство НПО САУТ в Узбекистане'
 seoDescription: 'Проект RailTech: официальное представительство ООО «НПО САУТ» в Узбекистане — поставки, инжиниринг, локализация и работа с организациями.'
 uz:
-  title: «НПО САУТ» MChJ ning O'zbekistondagi rasmiy vakilligi
-  summary: "RailTech O'zbekistonda «НПО САУТ» MChJ vakili sifatida qanday ishlaydi: ishlab chiqaruvchining vazifasi, bizning rolimiz va bu sxemaning nimasini boshqa hamkorlar uchun takrorlash mumkin."
+  title: «NPO SAUT» MChJning O'zbekistondagi rasmiy vakilligi
+  summary: "RailTech O'zbekistonda «NPO SAUT» MChJ vakili sifatida qanday ishlaydi: ishlab chiqaruvchining vazifasi, bizning rolimiz va bu sxemaning nimasini boshqa hamkorlar uchun takrorlash mumkin."
   body: |-
     ### Vazifa
 
-    «НПО САУТ» MChJ (Yekaterinburg, «Tormozlashni avtomatik boshqarish tizimi» ilmiy-ishlab chiqarish birlashmasi) poezdlar harakatini boshqarish va xavfsizligini ta'minlash tizimlarini ishlab chiqadi va ishlab chiqaradi: ilmiy tadqiqotlar va tajriba-konstruktorlik ishlari, ishlab chiqarish, dasturlash va joriy etish, kafolatli xizmat ko'rsatish, servis uskunalari. Mahsulotlar qatorida — БЛОК-М, САУТ-ЦМ/485, САУТ-К, САУТ-ЦМ/НСП stansiya apparaturasi va servis apparaturasi. O'zbekistonda ishlash uchun ishlab chiqaruvchiga doimiy mahalliy hamkor kerak.
+    «NPO SAUT» MChJ (Yekaterinburg, «Tormozlashni avtomatik boshqarish tizimi» ilmiy-ishlab chiqarish birlashmasi) poezdlar harakatini boshqarish va xavfsizligini ta'minlash tizimlarini ishlab chiqadi va ishlab chiqaradi: ilmiy tadqiqotlar va tajriba-konstruktorlik ishlari, ishlab chiqarish, dasturlash va joriy etish, kafolatli xizmat ko'rsatish, servis uskunalari. Mahsulotlar qatorida — БЛОК-М, САУТ-ЦМ/485, САУТ-К, САУТ-ЦМ/НСП stansiya apparaturasi va servis apparaturasi. O'zbekistonda ishlash uchun ishlab chiqaruvchiga doimiy mahalliy hamkor kerak.
 
     ### Yechim
 
-    2026-yil fevralida «НПО САУТ» MChJ «RailTech» MChJni O'zbekiston Respublikasidagi rasmiy dileri va vakili etib tayinladi. RailTech ishlab chiqaruvchi uchun to'rt yo'nalishni olib boradi: yetkazib berish, texnik maslahat, mahalliylashtirish va manfaatlarni ifodalash. Bu buyurtmachilar uchun nimani anglatishi — [RailTech «НПО САУТ»ning rasmiy dileri](/news/railtech-official-dealer-npo-saut/) haqidagi yangilikda.
+    2026-yil fevralida «NPO SAUT» MChJ «RailTech» MChJni O'zbekiston Respublikasidagi rasmiy dileri va vakili etib tayinladi. RailTech ishlab chiqaruvchi uchun to'rt yo'nalishni olib boradi: yetkazib berish, texnik maslahat, mahalliylashtirish va manfaatlarni ifodalash. Bu buyurtmachilar uchun nimani anglatishi — [RailTech «NPO SAUT»ning rasmiy dileri](/news/railtech-official-dealer-npo-saut/) haqidagi yangilikda.
 
     ### Natija
 
-    2026-yilda RailTech «НПО САУТ»ning O'zbekistondagi rasmiy dileri va vakili sifatida TDTUda bo'lib o'tgan «Temir yo'l harakatlanuvchi tarkibi: muammolar, yechimlar, istiqbollar» Beshinchi xalqaro ilmiy-texnik konferensiyasida (20–23-aprel), TDTUda «НПО САУТ» brendlangan auditoriyasining ochilishida ([loyiha](/news/tstu-saut-classroom/)) va «НПО САУТ»ga tashrifni o'z ichiga olgan «O'zbekiston temir yo'llari» AJ delegatsiyasi tashrifi dasturida (20–26-may) ishtirok etdi. RailTech bu huquqlarni o'z xizmatlari orqali amalga oshiradi: [yetkazib berish](/services/supply/), [injiniring](/services/engineering/), [mahalliylashtirish](/services/localization/).
+    2026-yilda RailTech «NPO SAUT»ning O'zbekistondagi rasmiy dileri va vakili sifatida TDTUda bo'lib o'tgan «Temir yo'l harakatlanuvchi tarkibi: muammolar, yechimlar, istiqbollar» Beshinchi xalqaro ilmiy-texnik konferensiyasida (20–23-aprel), TDTUda «NPO SAUT» brendlangan auditoriyasining ochilishida ([loyiha](/news/tstu-saut-classroom/)) va «NPO SAUT»ga tashrifni o'z ichiga olgan «O'zbekiston temir yo'llari» AJ delegatsiyasi tashrifi dasturida (20–26-may) ishtirok etdi. RailTech bu huquqlarni o'z xizmatlari orqali amalga oshiradi: [yetkazib berish](/services/supply/), [injiniring](/services/engineering/), [mahalliylashtirish](/services/localization/).
 
-    Batafsil — [«O'zbekiston temir yo'llari» AJ delegatsiyasining «НПО САУТ»ga tashrifi](/news/uty-delegation-npo-saut-2026/) haqidagi yangilikda.
+    Batafsil — [«O'zbekiston temir yo'llari» AJ delegatsiyasining «NPO SAUT»ga tashrifi](/news/uty-delegation-npo-saut-2026/) haqidagi yangilikda.
 
     ### Boshqa ishlab chiqaruvchilar uchun nimani takrorlay olamiz
 
     Xuddi shu sxema — diler shartnomasi, sertifikatlash, bojxona va logistika, Kabinetda ishlash — O'zbekiston bozoriga o'z ofisisiz chiqayotgan boshqa xalqaro ishlab chiqaruvchilar uchun ham ochiq: [xalqaro ishlab chiqaruvchilar vakilligi](/services/representation/).
-  seoTitle: "Loyiha: «НПО САУТ»ning O'zbekistondagi vakilligi"
-  seoDescription: "RailTech loyihasi: «НПО САУТ» MChJning O'zbekistondagi rasmiy vakilligi — yetkazib berish, injiniring, mahalliylashtirish va tashkilotlar bilan ishlash."
+  seoTitle: "Loyiha: «NPO SAUT»ning O'zbekistondagi vakilligi"
+  seoDescription: "RailTech loyihasi: «NPO SAUT» MChJning O'zbekistondagi rasmiy vakilligi — yetkazib berish, injiniring, mahalliylashtirish va tashkilotlar bilan ishlash."
 en:
   title: Official Representation of NPO SAUT LLC in Uzbekistan
   summary: "How RailTech represents NPO SAUT LLC in Uzbekistan: the manufacturer's task, our role, and what in this model can be replicated for other partners."

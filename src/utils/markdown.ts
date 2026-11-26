@@ -66,6 +66,15 @@ export async function renderBody(markdown: string | undefined, lang: Lang): Prom
   return localizeHtml(figures(await parser(lang).parse(markdown)), lang);
 }
 
+/**
+ * Editors write article sections as `###` (docs/content templates). Right under the page <h1> that skips a level
+ * (h1 → h3) for screen readers, so a body without any `##` is lifted one level: h3 → h2, h4 → h3.
+ */
+export function liftHeadings(html: string): string {
+  if (/<h2[\s>]/.test(html)) return html;
+  return html.replace(/<(\/?)h([34])([\s>])/g, (_m, slash: string, n: string, rest: string) => `<${slash}h${+n - 1}${rest}`);
+}
+
 export interface TocItem {
   id: string;
   text: string;

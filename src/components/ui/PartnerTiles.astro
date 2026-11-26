@@ -134,13 +134,19 @@ const anyLogo = partners.some((p) => p.logo);
     font-size: 14px;
     color: var(--c-muted);
   }
+  /* Country and status sit at the bottom: the same line in every tile of a row. */
+  .tile__country {
+    margin-top: auto;
+    padding-top: 4px;
+  }
   .tile__status {
     margin-top: 8px;
     align-self: flex-start;
     font-size: 13px;
     font-weight: 600;
     padding: 4px 10px;
-    border-radius: var(--r-pill);
+    /* a pill on one line; a long Uzbek status on two lines stays a neat rounded box, not an oval */
+    border-radius: 14px;
     background: var(--c-soft);
   }
   .tile--dealer {

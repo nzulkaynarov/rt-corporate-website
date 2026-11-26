@@ -274,3 +274,50 @@ test('pages work under the Content Security Policy (no violations)', async ({ pa
     expect(await page.evaluate(() => (window as unknown as { __csp: string[] }).__csp), path).toEqual([]);
   }
 });
+
+test('the full header fits without overlaps in every language; narrower windows fold the menu', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'desktop widths only');
+  for (const lang of ['', 'uz/', 'en/']) {
+    for (const width of [1240, 1280, 1366, 1920]) {
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto(lang);
+      await expect(page.locator('.hdr .nav')).toBeVisible();
+      const boxes = await page.locator('.hdr__in > *:visible').evaluateAll((els) =>
+        els.map((e) => ({ left: e.getBoundingClientRect().left, right: e.getBoundingClientRect().right, h: e.getBoundingClientRect().height, squeezed: e.scrollWidth > e.clientWidth + 1 })),
+      );
+      for (let i = 1; i < boxes.length; i++) expect(boxes[i].left, `${lang || 'ru/'} at ${width}px`).toBeGreaterThanOrEqual(boxes[i - 1].right);
+      expect(boxes.at(-1)!.right).toBeLessThanOrEqual(width);
+      expect(boxes.some((b) => b.squeezed), 'no part is narrower than its text (logo under «Услуги»)').toBe(false);
+      expect(Math.max(...boxes.map((b) => b.h)), 'menu items stay on one line').toBeLessThan(50);
+    }
+    await page.setViewportSize({ width: 1239, height: 800 });
+    await page.goto(lang);
+    await expect(page.locator('.hdr .nav')).toBeHidden();
+    await expect(page.locator('.mmenu summary')).toBeVisible();
+  }
+});
+
+test('small phones (320 and 360 px) never scroll sideways', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'phone widths only');
+  const paths = ['', 'uz/', 'en/', 'contacts/', 'uz/contacts/', 'partners/', 'services/representation/', 'news/partner-ratep-innovatsiya/', 'en/news/'];
+  for (const width of [320, 360]) {
+    await page.setViewportSize({ width, height: 740 });
+    for (const p of paths) {
+      await page.goto(p);
+      const extra = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      expect(extra, `/${p} at ${width}px`).toBeLessThanOrEqual(0);
+    }
+  }
+});
+
+test('a missing /uz/ or /en/ address shows «not found» in that language, with its header', async ({ page }) => {
+  for (const lang of ['uz', 'en']) {
+    await page.goto(`${lang}/no-such-page/`);
+    await expect(page).toHaveURL(new RegExp(`/${lang}/404/$`));
+    await expect(page.locator('html')).toHaveAttribute('lang', lang);
+    await expect(page.locator('.langs a[aria-current="true"]')).toHaveAttribute('hreflang', lang);
+  }
+  await page.goto('no-such-page/');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'ru');
+  await expect(page).toHaveURL(/\/no-such-page\/$/);
+});

@@ -132,4 +132,10 @@ const tg = telegramUrl();
       margin-bottom: 0;
     }
   }
+  /* «конфиденциальности» does not fit half of a 320–380 px screen: one column. */
+  @media (max-width: 400px) {
+    .ftr__in {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
 </style>
