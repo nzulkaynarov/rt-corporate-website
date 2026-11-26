@@ -151,7 +151,10 @@ if (jsonLd) graph.push(...(Array.isArray(jsonLd) ? jsonLd : [jsonLd]));
         <link rel="alternate" hreflang="x-default" href={absoluteUrl(alternates[DEFAULT_LANG], siteUrl)} />
       </>
     )}
+    {/* SVG for current browsers; ICO for search results and old browsers; PNG for «На экран Домой» on iOS (scripts/make-icons.mjs) */}
+    <link rel="icon" href={withBase('/favicon.ico')} sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
     <link rel="sitemap" href={withBase('/sitemap-index.xml')} />
     <meta name="theme-color" content="#2d3e50" />
 
