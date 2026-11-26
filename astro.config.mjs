@@ -22,7 +22,7 @@ const isExcluded = (pathname) => {
   // UZ/EN pages that still show Russian text → kept out of the sitemap (and noindex in BaseLayout).
   const ruOnlyRoute = stage.ruOnly === true || (stage.ruOnlySections || []).includes(route.split('/')[1] || '');
   const untranslated = Boolean(lang) && NEWS_LOCALES.has(route) && !NEWS_LOCALES.get(route).includes(lang);
-  return route === '/admin/' || LEGACY.includes(route) || (ruOnlyRoute && Boolean(lang)) || untranslated;
+  return route === '/admin/' || route === '/404/' || LEGACY.includes(route) || (ruOnlyRoute && Boolean(lang)) || untranslated;
 };
 
 export default defineConfig({

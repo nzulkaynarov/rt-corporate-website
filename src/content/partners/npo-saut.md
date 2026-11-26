@@ -13,14 +13,14 @@ date: '2026-11-04'
 title: НПО САУТ — системы безопасности движения поездов
 summary: Екатеринбургский разработчик бортовых систем безопасности и управления для локомотивов и электропоездов. RailTech — официальный дилер НПО САУТ в Узбекистане.
 uz:
-  name: НПО САУТ
-  legalName: «НПО САУТ» MChJ
-  title: НПО САУТ — poezdlar harakati xavfsizligini ta'minlash tizimlari
-  summary: Lokomotivlar va elektropoezdlar uchun bort xavfsizlik va boshqaruv tizimlarini ishlab chiquvchi Yekaterinburg kompaniyasi. RailTech — НПО САУТ kompaniyasining O'zbekistondagi rasmiy dileri.
+  name: NPO SAUT
+  legalName: «NPO SAUT» MChJ
+  title: NPO SAUT — poezdlar harakati xavfsizligini ta'minlash tizimlari
+  summary: Lokomotivlar va elektropoezdlar uchun bort xavfsizlik va boshqaruv tizimlarini ishlab chiquvchi Yekaterinburg kompaniyasi. RailTech — NPO SAUT kompaniyasining O'zbekistondagi rasmiy dileri.
   body: |-
     ### Kompaniya haqida
 
-    «НПО САУТ» MChJ — Yekaterinburgdagi muhandislik kompaniyasi. U 1994-yil noyabridan beri faoliyat yuritadi. Kompaniya VNIIJT Ural bo'limining САУТ bo'limi negizida tashkil topgan. U laboratoriyadan ishlab chiqarish korxonasiga aylandi. Kompaniya o'z mahsulotlarini mustaqil ravishda loyihalaydi, ishlab chiqaradi, dasturlaydi va joriy etadi. Sifat menejmenti tizimi ISO 9001:2015 bo'yicha sertifikatlangan.
+    «NPO SAUT» MChJ — Yekaterinburgdagi muhandislik kompaniyasi. U 1994-yil noyabridan beri faoliyat yuritadi. Kompaniya VNIIJT Ural bo'limining SAUT bo'limi negizida tashkil topgan. U laboratoriyadan ishlab chiqarish korxonasiga aylandi. Kompaniya o'z mahsulotlarini mustaqil ravishda loyihalaydi, ishlab chiqaradi, dasturlaydi va joriy etadi. Sifat menejmenti tizimi ISO 9001:2015 bo'yicha sertifikatlangan.
 
     ### Mahsulotlar va yo'nalishlar
 
@@ -38,11 +38,11 @@ uz:
 
     ### Qayerda qo'llaniladi
 
-    НПО САУТ tizimlari lokomotivlar, elektropoezdlar va maxsus o'ziyurar harakatlanuvchi tarkibga o'rnatiladi. Kompaniya saytida hamkorlar va buyurtmachilar qatorida «Rossiya temir yo'llari» OAJ (RJD), VNIIJT, NIIAS, Transmashxolding, Novocherkassk va Bryansk mashinasozlik zavodlari, Stadler Minsk va Škoda Transportation keltirilgan.
+    NPO SAUT tizimlari lokomotivlar, elektropoezdlar va maxsus o'ziyurar harakatlanuvchi tarkibga o'rnatiladi. Kompaniya saytida hamkorlar va buyurtmachilar qatorida «Rossiya temir yo'llari» OAJ (RJD), VNIIJT, NIIAS, Transmashxolding, Novocherkassk va Bryansk mashinasozlik zavodlari, Stadler Minsk va Škoda Transportation keltirilgan.
 
     ### RailTech nimalarni yetkazib beradi
 
-    «RailTech» MChJ — «НПО САУТ» MChJning O'zbekistondagi rasmiy dileri va vakili. Kompaniya mahsulotlarini O'zbekiston korxonalariga yetkazib beramiz — so'rov bo'yicha, belgilanishi bo'yicha tanlab, hujjatlari va [omboringizgacha yetkazib berish](/services/supply/) bilan. Tanlash va muddatlar bo'yicha savollar uchun [saytdagi shakl orqali so'rov yuboring](/contacts/#request).
+    «RailTech» MChJ — «NPO SAUT» MChJning O'zbekistondagi rasmiy dileri va vakili. Kompaniya mahsulotlarini O'zbekiston korxonalariga yetkazib beramiz — so'rov bo'yicha, belgilanishi bo'yicha tanlab, hujjatlari va [omboringizgacha yetkazib berish](/services/supply/) bilan. Tanlash va muddatlar bo'yicha savollar uchun [saytdagi shakl orqali so'rov yuboring](/contacts/#request).
 
     ### Manbalar
 

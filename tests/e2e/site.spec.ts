@@ -309,3 +309,15 @@ test('small phones (320 and 360 px) never scroll sideways', async ({ page, isMob
     }
   }
 });
+
+test('a missing /uz/ or /en/ address shows «not found» in that language, with its header', async ({ page }) => {
+  for (const lang of ['uz', 'en']) {
+    await page.goto(`${lang}/no-such-page/`);
+    await expect(page).toHaveURL(new RegExp(`/${lang}/404/$`));
+    await expect(page.locator('html')).toHaveAttribute('lang', lang);
+    await expect(page.locator('.langs a[aria-current="true"]')).toHaveAttribute('hreflang', lang);
+  }
+  await page.goto('no-such-page/');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'ru');
+  await expect(page).toHaveURL(/\/no-such-page\/$/);
+});

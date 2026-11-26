@@ -31,7 +31,7 @@ SEO и навигации нет «ж/д», серий локомотивов и
 | `/news/<slug>/` | `news/[slug].astro` | Материал или статья о партнёре (`partner-<id>`); внизу — рекомендации, у партнёра — «Материалы о партнёре» | коллекции `news`, `partners` (`src/utils/feed.ts`) |
 | `/contacts/` | `contacts.astro` | Контакты, реквизиты, форма заявки | `company.json`, `pages.json → contacts` |
 | `/privacy/`, `/terms/`, `/cookies/` | `privacy.astro`, `terms.astro`, `cookies.astro` | Сервисные страницы (только в футере) | `data/cms/legal.json` |
-| `/404` | `src/pages/404.astro` | Страница не найдена | `pages.json → notFound` |
+| `/404` | `src/pages/404.astro` (+ `src/components/NotFound.astro`) | Страница не найдена. GitHub Pages отдаёт её на любой несуществующий адрес; посетителя `/uz/…` и `/en/…` скрипт переводит на `/uz/404/` или `/en/404/` (`src/pages/[...lang]/404.astro`, noindex, вне sitemap) — шапка и меню на его языке | `pages.json → notFound` |
 | `/admin/` | `src/pages/admin.astro` | Sveltia CMS (версия зафиксирована) | `public/admin/config.yml` |
 | старые адреса v1 (`catalog`, `blog`, `projects`, `about`, …) | `src/pages/[...legacy].astro` | Перенаправления для ru/uz/en (meta refresh + canonical, `noindex`, вне sitemap) | `src/data/legacy-redirects.json` |
 

@@ -1,0 +1,10 @@
+---
+/** «Страница не найдена» for /uz/… and /en/…: src/pages/404.astro sends those visitors here (noindex, not in the sitemap). */
+import NotFound from '../../components/NotFound.astro';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'uz' } }, { params: { lang: 'en' } }];
+}
+---
+
+<NotFound />
