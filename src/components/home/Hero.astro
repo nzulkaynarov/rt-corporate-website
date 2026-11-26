@@ -374,9 +374,12 @@ const h = home.hero as Record<string, any>;
     .entry {
       padding: 14px 12px;
     }
+    /* The arrow goes under the title: «Я производитель» gets the whole card width (no lone «Я» on a line). */
     .entry b {
       font-size: clamp(14px, 3.9vw, 16px);
-      gap: 4px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
     }
     .entry svg {
       width: 16px;
