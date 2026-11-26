@@ -354,8 +354,9 @@ const h = home.hero as Record<string, any>;
       grid-template-columns: minmax(0, 1fr);
       min-height: 0;
     }
-    .orbit-box {
-      display: none;
+    .orbit-box,
+    .dots {
+      display: none; /* one column: the dots would sit on the second entry card */
     }
   }
   @media (max-width: 760px) {

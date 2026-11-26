@@ -12,7 +12,7 @@ partners:
 seoTitle: 'Проект: представительство НПО САУТ в Узбекистане'
 seoDescription: 'Проект RailTech: официальное представительство ООО «НПО САУТ» в Узбекистане — поставки, инжиниринг, локализация и работа с организациями.'
 uz:
-  title: «НПО САУТ» MChJ ning O'zbekistondagi rasmiy vakilligi
+  title: «НПО САУТ» MChJning O'zbekistondagi rasmiy vakilligi
   summary: "RailTech O'zbekistonda «НПО САУТ» MChJ vakili sifatida qanday ishlaydi: ishlab chiqaruvchining vazifasi, bizning rolimiz va bu sxemaning nimasini boshqa hamkorlar uchun takrorlash mumkin."
   body: |-
     ### Vazifa

@@ -141,7 +141,7 @@ const benefitsKey = d.audience === 'partners' ? 'services.benefits.partners' : '
     grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
     gap: 56px;
     align-items: start;
-    padding-block: 28px 80px;
+    padding-block: 28px 40px; /* the next section brings its own top padding */
   }
   .hero__txt {
     display: flex;
@@ -224,7 +224,7 @@ const benefitsKey = d.audience === 'partners' ? 'services.benefits.partners' : '
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* five requirements fit one row on a laptop */
     gap: 28px;
   }
   .gets li,
@@ -272,6 +272,13 @@ const benefitsKey = d.audience === 'partners' ? 'services.benefits.partners' : '
     .two {
       grid-template-columns: minmax(0, 1fr);
       gap: 28px;
+    }
+    /* One column: «Другие услуги» goes after the questions, not between their heading and the list. */
+    .two > div:first-child {
+      display: contents;
+    }
+    .others {
+      order: 1;
     }
     .flow {
       grid-template-columns: repeat(3, minmax(0, 1fr));

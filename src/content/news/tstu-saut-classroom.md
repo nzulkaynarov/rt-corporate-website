@@ -13,7 +13,7 @@ seoTitle: Аудитория НПО САУТ в ТГТУ и меморандум
 seoDescription: 'Аудитория ООО «НПО САУТ» в ТГТУ открыта 20 апреля 2026 г.; меморандум: локализация, НИОКР, дуальное обучение с 2027/2028 учебного года.'
 uz:
   title: TDTUdagi «НПО САУТ» brendlangan auditoriyasi va hamkorlik memorandumi
-  summary: 2026 yil aprelida TDTUda poezdlar harakati xavfsizligi tizimlari bilan jihozlangan «НПО САУТ» MChJ o'quv auditoriyasi ochildi, tomonlar hamkorlik memorandumini imzoladi; RailTech «НПО САУТ» ning rasmiy diler va vakili sifatida ishtirok etdi.
+  summary: 2026-yil aprelida TDTUda poezdlar harakati xavfsizligi tizimlari bilan jihozlangan «НПО САУТ» MChJ o'quv auditoriyasi ochildi, tomonlar hamkorlik memorandumini imzoladi; RailTech «НПО САУТ»ning rasmiy diler va vakili sifatida ishtirok etdi.
   body: |
     ### Vazifa
 
@@ -21,7 +21,7 @@ uz:
 
     ### Yechim
 
-    2026 yil 20 aprelda TDTUda «НПО САУТ» MChJ ning brendlangan o'quv auditoriyasi tantanali ravishda ochildi. Ochilishda TDTU rektori, O'zbekiston Respublikasi transport vazirining o'rinbosari, «Temiryo'linfratuzilma» AJ boshqaruv raisi va «НПО САУТ» MChJ rahbariyati ishtirok etdi. Auditoriya «НПО САУТ» ning investitsiyaviy ko'magi bilan va u taqdim etgan uskunalar asosida yaratilgan. Unda БЛОК-М lokomotiv kompleksi, САУТ-ЦМ/НСП stansiya apparaturasi va o'quv materiallari namoyish etildi. Talabalar zamonaviy poezdlar harakati xavfsizligi tizimlarida amaliy mashg'ulotlar o'tadi; auditoriya malaka oshirish va qayta tayyorlash kurslari uchun ham mo'ljallangan.
+    2026-yil 20-aprelda TDTUda «НПО САУТ» MChJning brendlangan o'quv auditoriyasi tantanali ravishda ochildi. Ochilishda TDTU rektori, O'zbekiston Respublikasi transport vazirining o'rinbosari, «Temiryo'linfratuzilma» AJ boshqaruv raisi va «НПО САУТ» MChJ rahbariyati ishtirok etdi. Auditoriya «НПО САУТ»ning investitsiyaviy ko'magi bilan va u taqdim etgan uskunalar asosida yaratilgan. Unda БЛОК-М lokomotiv kompleksi, САУТ-ЦМ/НСП stansiya apparaturasi va o'quv materiallari namoyish etildi. Talabalar zamonaviy poezdlar harakati xavfsizligi tizimlarida amaliy mashg'ulotlar o'tadi; auditoriya malaka oshirish va qayta tayyorlash kurslari uchun ham mo'ljallangan.
 
     Ochilishdan so'ng «НПО САУТ» rahbariyati, TDTU rektori va «O'zbekiston temir yo'llari» AJ delegatsiyasi uzoq muddatli ilmiy-texnik hamkorlikni, O'zbekistonda poezdlar harakati xavfsizligi tizimlari uskunalari va komponentlarini mahalliylashtirishni, qo'shma loyihalar va ilmiy-tadqiqot ishlarini muhokama qildi. «НПО САУТ» va TDTU hamkorlik memorandumini imzoladi. Uning ustuvor yo'nalishlari:
 
@@ -35,13 +35,13 @@ uz:
 
     ### RailTech'ning roli
 
-    RailTech ushbu tadbirlarda «НПО САУТ» ning O'zbekistondagi rasmiy diler va vakili sifatida ishtirok etdi ([vakillik haqida](/news/npo-saut-representation/)). Ta'lim va soha tashkilotlari bilan hamkorlikni rivojlantirish va texnologiyalar transferi RailTech'ning diler sifatidagi huquqlariga kiradi.
+    RailTech ushbu tadbirlarda «НПО САУТ»ning O'zbekistondagi rasmiy diler va vakili sifatida ishtirok etdi ([vakillik haqida](/news/npo-saut-representation/)). Ta'lim va soha tashkilotlari bilan hamkorlikni rivojlantirish va texnologiyalar transferi RailTech'ning diler sifatidagi huquqlariga kiradi.
 
     ### Nimani taklif qila olamiz
 
     O'quv va sinov bazalari, pilot loyihalar va mahalliylashtirish uchun uskunalar bo'yicha so'rovlarni qabul qilamiz: [injiniring](/services/engineering/), [mahalliylashtirish](/services/localization/), [yetkazib berish](/services/supply/).
   seoTitle: TDTUdagi «НПО САУТ» auditoriyasi va memorandum
-  seoDescription: 'TDTUdagi «НПО САУТ» MChJ auditoriyasi 2026 yil 20 aprelda ochildi; memorandum: mahalliylashtirish, ilmiy tadqiqotlar, 2027/2028 yildan dual ta''lim.'
+  seoDescription: 'TDTUdagi «НПО САУТ» MChJ auditoriyasi 2026-yil 20-aprelda ochildi; memorandum: mahalliylashtirish, ilmiy tadqiqotlar, 2027/2028 yildan dual ta''lim.'
 en:
   title: NPO SAUT Branded Classroom at TSTU and Cooperation Memorandum
   summary: In April 2026, an NPO SAUT LLC classroom equipped with train safety systems opened at TSTU and the parties signed a cooperation memorandum; RailTech took part as NPO SAUT's official dealer and representative.

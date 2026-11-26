@@ -215,6 +215,12 @@ a:hover {
   flex-wrap: wrap;
   gap: 10px;
 }
+/* Phones: buttons in a row stretch, so two buttons stacked on two lines get the same width. */
+@media (max-width: 480px) {
+  .btn-row .btn {
+    flex: 1 1 auto;
+  }
+}
 
 /* Long text (Markdown bodies, legal pages) */
 .prose {

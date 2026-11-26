@@ -38,15 +38,17 @@ const d = home.directions as Record<string, string>;
 </section>
 
 <style>
+  /* Both groups share the rows (heading, card, card), so cards side by side have the same height.
+     Two services per audience (src/content/services); a third one would need span 4. */
   .dirs {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 32px;
+    gap: 16px 32px;
   }
   .dirs__group {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    display: grid;
+    grid-row: span 3;
+    grid-template-rows: subgrid;
   }
   h3 {
     font: 600 14px/1.2 var(--f-body);
@@ -91,6 +93,8 @@ const d = home.directions as Record<string, string>;
       gap: 20px;
     }
     .dirs__group {
+      display: flex;
+      flex-direction: column;
       gap: 8px;
     }
     .dcard {

@@ -54,6 +54,7 @@ const toc = (data.sections || []).map((s: any, i: number) => ({ id: `s-${i + 1}`
   /* Section text is plain text from the CMS: a line break typed there is a line break on the page. */
   .legal__text {
     white-space: pre-line;
+    margin-top: 0.6em; /* not glued to its heading */
   }
   header {
     display: grid;
