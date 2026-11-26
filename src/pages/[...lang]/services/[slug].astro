@@ -13,6 +13,7 @@ import { company, cabinet } from '../../../utils/company';
 import { START_PATH } from '../../../utils/nav';
 import { entrySeo, absoluteUrl } from '../../../utils/seo';
 import { renderBody } from '../../../utils/markdown';
+import { ogImagePath } from '../../../utils/og';
 
 export async function getStaticPaths() {
   const entries = await getCollection('services');
@@ -49,7 +50,7 @@ const feed = await getFeed();
 const benefitsKey = d.audience === 'partners' ? 'services.benefits.partners' : 'services.benefits.customers';
 ---
 
-<BaseLayout title={seo.title} description={seo.description} breadcrumbs={crumbs} jsonLd={jsonLd}>
+<BaseLayout title={seo.title} description={seo.description} breadcrumbs={crumbs} jsonLd={jsonLd} image={ogImagePath('services', entry.slug, lang)}>
   <div class="wrap"><Breadcrumbs items={crumbs} /></div>
 
   <section class="wrap hero" aria-labelledby="svc-title">

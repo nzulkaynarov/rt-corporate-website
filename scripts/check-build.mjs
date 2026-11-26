@@ -129,6 +129,14 @@ for (const rel of files) {
     }
   }
 
+  // Social preview: a file of this site (cover, generated card in /og/, default) must exist, or shares show nothing.
+  const ogImage = attr(html.match(/<meta[^>]+property="og:image"[^>]*>/i)?.[0] || '', 'content');
+  if (!ogImage) err('missing og:image');
+  else if (new URL(ogImage).pathname.startsWith(`${BASE}/`)) {
+    const file = path.join(DIST, decodeURI(new URL(ogImage).pathname.slice(BASE.length)));
+    if (!fs.existsSync(file)) err(`og:image file missing: ${ogImage}`);
+  }
+
   const description = attr(html.match(/<meta[^>]+name="description"[^>]*>/i)?.[0] || '', 'content');
   if (!description) err('missing meta description');
   else if (description.length > 160 || description.length < 50) warn(`description is ${description.length} chars (50–160 recommended)`);
