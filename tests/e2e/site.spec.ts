@@ -296,3 +296,16 @@ test('the full header fits without overlaps in every language; narrower windows 
     await expect(page.locator('.mmenu summary')).toBeVisible();
   }
 });
+
+test('small phones (320 and 360 px) never scroll sideways', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'phone widths only');
+  const paths = ['', 'uz/', 'en/', 'contacts/', 'uz/contacts/', 'partners/', 'services/representation/', 'news/partner-ratep-innovatsiya/', 'en/news/'];
+  for (const width of [320, 360]) {
+    await page.setViewportSize({ width, height: 740 });
+    for (const p of paths) {
+      await page.goto(p);
+      const extra = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      expect(extra, `/${p} at ${width}px`).toBeLessThanOrEqual(0);
+    }
+  }
+});

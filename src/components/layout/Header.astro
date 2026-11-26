@@ -230,16 +230,43 @@ const showLangs = !RU_ONLY;
       display: block;
     }
   }
-  @media (max-width: 420px) {
+  /* Phones: logo, languages and «Меню» must fit from 320 px on (no sideways scroll); e2e checks it. */
+  @media (max-width: 480px) {
+    .brand {
+      gap: 8px;
+    }
     .brand span {
       font-size: 19px;
     }
     .hdr__in {
-      gap: 10px;
+      gap: 8px;
     }
     .langs a {
       min-width: 0;
       padding: 0 6px;
+    }
+  }
+  /* Narrow phones: the menu button keeps only its icon; the word stays for screen readers. */
+  @media (max-width: 400px) {
+    .brand img {
+      width: 32px;
+      height: 32px;
+    }
+    .langs a {
+      padding: 0 5px;
+    }
+    .mmenu summary {
+      width: 44px;
+      padding: 0;
+      justify-content: center;
+    }
+    .mmenu summary span {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
     }
   }
 </style>

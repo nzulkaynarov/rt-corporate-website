@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { renderBody, withToc } from '../src/utils/markdown';
+import { liftHeadings, renderBody, withToc } from '../src/utils/markdown';
 
 describe('article body formatting (src/utils/markdown.ts)', () => {
   it('one image with a title becomes a figure with a caption', async () => {
@@ -27,5 +27,15 @@ describe('article body formatting (src/utils/markdown.ts)', () => {
   it('«На странице» gets plain heading text: entities are decoded once', () => {
     const { toc } = withToc('<h3>RailTech&#39;s role &amp; <em>next</em> steps</h3><h3>A &quot;B&quot;</h3>');
     expect(toc.map((i) => i.text)).toEqual(["RailTech's role & next steps", 'A "B"']);
+  });
+});
+
+describe('liftHeadings', () => {
+  it('lifts ### sections to h2 under the page h1 (no skipped level)', () => {
+    expect(liftHeadings('<h3 id="s-1">A</h3><p>x</p><h4>B</h4>')).toBe('<h2 id="s-1">A</h2><p>x</p><h3>B</h3>');
+  });
+  it('keeps a body that already has ## sections', () => {
+    const html = '<h2>A</h2><h3>B</h3>';
+    expect(liftHeadings(html)).toBe(html);
   });
 });

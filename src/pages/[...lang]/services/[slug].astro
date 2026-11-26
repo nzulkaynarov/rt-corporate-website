@@ -63,14 +63,14 @@ const benefitsKey = d.audience === 'partners' ? 'services.benefits.partners' : '
       </div>
     </div>
     {d.highlights?.length > 0 && (
-      <aside class="brief" aria-labelledby="brief-title">
+      <section class="brief" aria-labelledby="brief-title">
         <h2 id="brief-title">{t(lang, 'services.highlights')}</h2>
         <dl>
           {d.highlights.map((h: any) => (
             <div><dt>{L(h, 'label')}</dt><dd>{L(h, 'value')}</dd></div>
           ))}
         </dl>
-      </aside>
+      </section>
     )}
   </section>
 

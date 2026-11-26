@@ -48,6 +48,8 @@ body {
   font: 400 17px/1.6 var(--f-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* A word longer than its box (РАТЕП-ИННОВАЦИЯ, «производитель» on a 320 px phone) wraps instead of running off. */
+  overflow-wrap: break-word;
 }
 @media (min-width: 1920px) {
   body {
@@ -64,6 +66,12 @@ h4 {
   letter-spacing: -0.01em;
   margin: 0;
   text-wrap: balance;
+}
+@media (max-width: 480px) {
+  h1,
+  h2 {
+    hyphens: auto;
+  }
 }
 p {
   margin: 0;

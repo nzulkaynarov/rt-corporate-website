@@ -42,7 +42,7 @@ const hasCard = Boolean(partner) || partners.length > 0 || services.length > 0;
 ---
 
 {(hasCard || toc.length > 1) && (
-  <aside class:list={['aside', { 'aside--partner': Boolean(partner), 'aside--toc-only': !hasCard }]}>
+  <div class:list={['aside', { 'aside--partner': Boolean(partner), 'aside--toc-only': !hasCard }]}>
     {hasCard && (
       <div class="card">
         {partner?.logo && <p class="logo"><img src={withBase(partner.logo)} alt="" loading="lazy" decoding="async" /></p>}
@@ -77,7 +77,7 @@ const hasCard = Boolean(partner) || partners.length > 0 || services.length > 0;
       </div>
     )}
     <div class="toc-box"><Toc items={toc} /></div>
-  </aside>
+  </div>
 )}
 
 <style>
