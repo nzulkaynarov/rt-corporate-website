@@ -351,3 +351,15 @@ test('/llms.txt describes the company and links the main pages', async ({ reques
   expect(text).toContain('/services/supply/');
   expect(text).toContain('/en/services/supply/');
 });
+
+test('raster icons and security.txt are published', async ({ page, request }) => {
+  for (const file of ['favicon.ico', 'apple-touch-icon.png']) expect((await request.get(file)).status(), file).toBe(200);
+  await page.goto('');
+  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveCount(1);
+  const res = await request.get('.well-known/security.txt');
+  expect(res.status()).toBe(200);
+  const text = await res.text();
+  expect(text).toContain(`Contact: mailto:${company.email}`);
+  const expires = new Date(text.match(/^Expires: (.+)$/m)![1]);
+  expect(expires.getTime()).toBeGreaterThan(Date.now() + 300 * 24 * 3600 * 1000);
+});

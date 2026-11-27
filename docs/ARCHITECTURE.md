@@ -35,6 +35,8 @@ SEO и навигации нет «ж/д», серий локомотивов и
 | `/admin/` | `src/pages/admin.astro` | Sveltia CMS (версия зафиксирована) | `public/admin/config.yml` |
 | `/og/<lang>/news/<slug>.png`, `/og/<lang>/services/<slug>.png` | `src/pages/og/[...path].png.ts` (+ `src/utils/og.ts`) | Превью для соцсетей и мессенджеров (1200×630), рисуются при сборке: рубрика, заголовок, логотип производителя, дата. Материал с обложкой (`cover`) показывает обложку | коллекции `news`, `partners`, `services` |
 | `/llms.txt` | `src/pages/llms.txt.ts` | Справка для ИИ-ассистентов и ИИ-поиска (llmstxt.org): о компании, контакты, услуги, производители, новости (RU и EN) | те же данные, что и сайт |
+| `/.well-known/security.txt` | `src/pages/.well-known/security.txt.ts` | Куда сообщать об уязвимостях (RFC 9116): `company.json → email`, срок действия — год от сборки | `company.json` |
+| `/favicon.ico`, `/apple-touch-icon.png` | `public/` (генерирует `scripts/make-icons.mjs` из `favicon.svg`) | Растровые иконки: поисковики и старые браузеры, «На экран Домой» на iPhone | знак `public/favicon.svg` |
 | старые адреса v1 (`catalog`, `blog`, `projects`, `about`, …) | `src/pages/[...legacy].astro` | Перенаправления для ru/uz/en (meta refresh + canonical, `noindex`, вне sitemap) | `src/data/legacy-redirects.json` |
 
 Навигация (шапка): **Услуги · Производители · Новости · Контакты** + переключатель языка + кнопки **«Отправить заявку»** (форма заявки,
